@@ -1,0 +1,7 @@
+// See https://jshint.com/docs/options/ for options
+
+{
+    "evil": true,
+    "eqeqeq": true,
+    "esversion": 11
+}

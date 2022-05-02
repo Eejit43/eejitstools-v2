@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Some useful tools for general purposes!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://eejitstools.com" />
+        <meta property="og:site_name" content="Eejit's Tools" />
+        <meta property="og:title" content="<% if (title) { %><%= title %><% } else { %>Eejit's Tools<% } %>" />
+        <title>Eejit's Tools<% if (title) { %> | <%= title %><% } %></title>
+        <meta property="og:description" content="Some useful tools for general purposes!" />
+        <meta name="keywords" content="" />
+        <meta property="og:image" content="https://eejitstools.com/favicons/icon.png" />
+        <meta property="og:image:alt" content="Eejit's Tools" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Eejit's Tools<% if (title) { %> | <%= title %><% } %>" />
+        <meta name="twitter:description" content="Some useful tools for general purposes!" />
+        <meta name="twitter:url" content="https://eejitstools.com" />
+        <meta name="twitter:image" content="https://eejitstools.com/favicons/icon.png" />
+        <meta name="twitter:image:alt" content="Eejit's Tools" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+        <link rel="manifest" href="/favicons/site.webmanifest" />
+        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#3e498a" />
+        <meta name="msapplication-TileColor" content="#3e498a" />
+        <meta name="theme-color" content="#3e498a" />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/styles/styles.css" />
+
+        <!-- Scripts -->
+        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
+        <script src="/scripts/global.js" defer></script>
+    </head>
+    <body>
+        <nav id="navbar">
+            <a href="/">
+                <span class="logo">
+                    <span style="color: #ff5555">E</span><span style="color: #ffaa00">e</span><span style="color: #ffff55">j</span><span style="color: #55ff55">i</span><span style="color: #00aa00">t</span><span style="color: #00aaaa">'</span><span style="color: #5555ff">s</span>
+                    <span style="color: #aa00aa" class="logo-tools">Tools</span>
+                </span>
+            </a>
+            <span style="float: right">
+                <div class="search-box mobilehidden">
+                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-btn fas fa-search"></i><br />
+                    <div class="search-results"></div>
+                </div>
+                <a href="/tools/time" class="timer"><span id="navtime"></span></a>
+                <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
+            </span>
+        </nav>
+        <%- body %>
+    </body>
+</html>
