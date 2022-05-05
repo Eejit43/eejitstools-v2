@@ -1,0 +1,17 @@
+<div class="toolbox">
+    <h1>NATO Phonetic Alphabet:</h1>
+    <table class="info-table" style="overflow-x: hidden; margin-top: 30px; width: 40%">
+        <thead>
+            <tr>
+                <th>Letter</th>
+                <th>Code Word</th>
+            </tr>
+        </thead>
+        <tbody><% for (let i = 0; i < alphabet.length; i++) { %>
+            <tr>
+                <td><%= alphabet[i].letter %></td>
+                <td><%= alphabet[i].codeWord %></td>
+            </tr><% } %>
+        </tbody>
+    </table>
+</div>

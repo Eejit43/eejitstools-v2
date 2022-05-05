@@ -5,7 +5,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
 const debug = require('debug')('eejitstools:server');
-const { allPageInfo } = require('./pages');
+const { allPageInfo, blankProperties } = require('./pages');
 
 const app = express();
 const server = http.createServer(app);
@@ -47,7 +47,13 @@ app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Home', page: '', additionalScript: '', additionalStyle: '' });
+    res.render('index', {
+        title: 'Home',
+        pages: Object.keys(allPageInfo).map((key) => {
+            return { name: key, ...allPageInfo[key] };
+        }),
+        ...blankProperties,
+    });
 });
 
 app.get('/headers', (req, res) => {
@@ -72,9 +78,8 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    if (!/NotFoundError: Not Found/.test(err)) console.log(err);
 
     res.status(err.status || 500);
-    res.render('error', { title: err.message, page: '', additionalScript: '', additionalStyle: '' });
+    res.render('error', { title: err.message.length > 50 ? 'Error' : err.message, message: err.message, error: err, ...blankProperties });
 });

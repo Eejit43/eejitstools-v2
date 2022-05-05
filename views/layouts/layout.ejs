@@ -8,13 +8,13 @@
         <meta property="og:url" content="https://eejitstools.com" />
         <meta property="og:site_name" content="Eejit's Tools" />
         <meta property="og:title" content="<% if (title) { %><%= title %><% } else { %>Eejit's Tools<% } %>" />
-        <title><% if (title) { %> <%= title %> | <% } %>Eejit's Tools</title>
+        <title><% if (title) { %><%= title %> | <% } %>Eejit's Tools</title>
         <meta property="og:description" content="Some useful tools for general purposes!" />
         <meta name="keywords" content="" />
         <meta property="og:image" content="https://eejitstools.com/favicons/icon.png" />
         <meta property="og:image:alt" content="Eejit's Tools" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="<% if (title) { %> <%= title %> | <% } %>Eejit's Tools" />
+        <meta name="twitter:title" content="<% if (title) { %><%= title %> | <% } %>Eejit's Tools" />
         <meta name="twitter:description" content="Some useful tools for general purposes!" />
         <meta name="twitter:url" content="https://eejitstools.com" />
         <meta name="twitter:image" content="https://eejitstools.com/favicons/icon.png" />
@@ -29,21 +29,14 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="/styles/styles.css" />
-        <!-- prettier-ignore -->
-        <% if (additionalStyle) { %>
-        <link rel="stylesheet" href="<%= additionalStyle %>" />
-        <% } %>
+        <% for (let i = 0; i < additionalStyles.length; i++) { %><link rel="stylesheet" href="<%= additionalStyles %>" /><% } %>
 
         <!-- Scripts -->
         <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
-        <% if (additionalScript) { %>
-        <script src="<%= additionalScript %>" defer></script>
-        <% } %>
+        <% for (let i = 0; i < additionalScripts.length; i++) { %><script src="<%= additionalScripts %>" defer></script><% } %>
         <script src="/scripts/global.js" defer></script>
-        <% if (page) { %>
-        <script src="/scripts/<%= page %>.js" defer></script>
-        <% } %>
+        <% if (script && page) { %><script src="/scripts/<%= page %>.js" defer></script><% } %>
     </head>
     <body>
         <noscript>

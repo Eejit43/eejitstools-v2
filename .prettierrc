@@ -1,7 +1,0 @@
-{
-    "comment": "See https://prettier.io/docs/en/options.html for options",
-
-    "singleQuote": true,
-    "tabWidth": 4,
-    "printWidth": 1000
-}

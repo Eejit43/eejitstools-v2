@@ -172,28 +172,9 @@ window.onscroll = function () {
 
 resizeNav();
 
-// String to HTML (modified from https://gomakethings.com/converting-a-string-into-markup-with-vanilla-js/)
-const DOMParserSupported = (function () {
-    if (!window.DOMParser) return false;
-    var parser = new DOMParser();
-    try {
-        parser.parseFromString('x', 'text/html');
-    } catch (err) {
-        return false;
-    }
-    return true;
-})();
-
+// String to HTML
 function stringToHTML(str) {
-    if (DOMParserSupported) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(str, 'text/html');
-        return doc;
-    } else {
-        const dom = document.createElement('div');
-        dom.innerHTML = str;
-        return dom;
-    }
+    return new DOMParser().parseFromString(str, 'text/html');
 }
 
 // Search Bar

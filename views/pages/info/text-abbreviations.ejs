@@ -1,0 +1,17 @@
+<div class="toolbox">
+    <h1>Text Abbreviations:</h1>
+    <table class="info-table" style="overflow-x: hidden; margin-top: 30px">
+        <thead>
+            <tr>
+                <th>Abbreviation</th>
+                <th>Meaning</th>
+            </tr>
+        </thead>
+        <tbody><% for (let i = 0; i < textAbbreviations.length; i++) { %>
+            <tr>
+                <td><%= textAbbreviations[i].abbreviation %></td>
+                <td><%- textAbbreviations[i].meaning %></td>
+            </tr><% } %>
+        </tbody>
+    </table>
+</div>
