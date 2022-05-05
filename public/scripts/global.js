@@ -1,5 +1,3 @@
-// const toastify = require('toastify');
-
 // Emoji parser
 function twemojiUpdate() {
     twemoji.parse(document.body, {
@@ -14,7 +12,7 @@ twemojiUpdate();
 function showAlert(text, color) {
     if (color === 'success') color = '#009c3f';
     if (color === 'error') color = '#ff5555';
-    toastify({
+    Toastify({
         text: text,
         duration: 2000,
         position: 'center',
@@ -130,11 +128,11 @@ function escapeHtml(input) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-// Navtime
-function navtime() {
+// Navigation time display
+function navTime() {
     let currentTime = new Date();
-    let fullhours = currentTime.getHours();
-    let hours = ((fullhours + 11) % 12) + 1;
+    let fullHours = currentTime.getHours();
+    let hours = ((fullHours + 11) % 12) + 1;
     let minutes = currentTime.getMinutes();
     let sec = currentTime.getSeconds();
     if (minutes < 10) {
@@ -144,20 +142,20 @@ function navtime() {
         sec = '0' + sec;
     }
 
-    let timesuffix = fullhours >= 12 ? 'PM' : 'AM';
+    let timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-    let timeemoji = fullhours >= 7 && fullhours < 17 ? '<img draggable="false" class="emoji" alt="☀️" src="https://twemoji.maxcdn.com/v/13.1.0/svg/2600.svg">' : '<img draggable="false" class="emoji" alt="🌒" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f312.svg">'; // prettier-ignore
+    let timeEmoji = fullHours >= 7 && fullHours < 17 ? '<img draggable="false" class="emoji" alt="☀️" src="https://twemoji.maxcdn.com/v/13.1.0/svg/2600.svg">' : '<img draggable="false" class="emoji" alt="🌒" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f312.svg">'; // prettier-ignore
 
-    let finaltime = `${hours}:${minutes}:${sec} ${timesuffix} ${timeemoji}`;
+    let finalTime = `${hours}:${minutes}:${sec} ${timeSuffix} ${timeEmoji}`;
 
-    if (document.getElementById('navtime').innerHTML !== finaltime) {
-        document.getElementById('navtime').innerHTML = finaltime;
+    if (document.getElementById('time-display').innerHTML !== finalTime) {
+        document.getElementById('time-display').innerHTML = finalTime;
     }
 
-    setTimeout(navtime, 100);
+    setTimeout(navTime, 100);
 }
 
-navtime();
+navTime();
 
 // Navbar resize on scroll
 function resizeNav() {
@@ -219,18 +217,18 @@ fetch('/')
         html = stringToHTML(pre_html);
         let rows = html.querySelectorAll('tr');
         for (let i = 0; i < rows.length; i++) {
-            let outerHTML = html.querySelectorAll('tr')[i].outerHTML;
-            let title = outerHTML.match(/<\/(i|span)> .*?<\/a>/g)[0].replace(/<\/(i|span|a)> ?/g, ''); // prettier-ignore
-            let link = outerHTML.match(/href=".*?"><(i|span)/g)[0].replace(/(href="|"><(i|span))/g, ''); // prettier-ignore
-            let description = outerHTML.match(/<td>.*?<\/td>/g)[0].replace(/<\/?td>/g, '').replace(/<span.*?>(.*?)<\/span>/g, '$1'); // prettier-ignore
-            let keywords = outerHTML.match(/data-keywords=".*?"/g)[0].replace(/data-keywords="(.*?)"/g, '$1').toLowerCase().split(', '); // prettier-ignore
+            const outerHTML = html.querySelectorAll('tr')[i].outerHTML;
+            const title = outerHTML.match(/<\/(i|span)> .*?<\/a>/g)[0].replace(/<\/(i|span|a)> ?/g, ''); // prettier-ignore
+            const link = outerHTML.match(/href=".*?"><(i|span)/g)[0].replace(/(href="|"><(i|span))/g, ''); // prettier-ignore
+            const description = outerHTML.match(/<td>.*?<\/td>/g)[0].replace(/<\/?td>/g, '').replace(/<span.*?>(.*?)<\/span>/g, '$1'); // prettier-ignore
+            const keywords = outerHTML.match(/data-keywords=".*?"/g)[0].replace(/data-keywords="(.*?)"/g, '$1').toLowerCase().split(', '); // prettier-ignore
             pages.push({ title: title, description: description, link: link, keywords: keywords });
         }
     });
 
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
-    let results = [];
+    const results = [];
     pages.forEach((page) => {
         if (page.title.toLowerCase().includes(value) || page.description.toLowerCase().includes(value) || page.link.toLowerCase().includes(value) || matchesKeywords(page.keywords, value)) {
             results.push(`<tr><td><a href="${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.description}</div></a></td></tr>`);

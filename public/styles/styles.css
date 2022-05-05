@@ -456,11 +456,11 @@ header {
     font-weight: 600;
     line-height: 150%;
     margin: 140px 0 0 40px;
+    max-width: 75%;
     padding: 15px 30px 20px;
     position: static;
     text-align: left;
     width: 290px;
-    max-width: 75%;
 }
 
 @media only screen and (max-width: 700px) {
@@ -471,27 +471,27 @@ header {
 
 .error-title {
     color: #ff5555;
-    font-weight: 600;
-    font-size: 500%;
     display: block;
+    font-size: 500%;
+    font-weight: 600;
     padding-top: 120px;
     text-align: center;
 }
 
 .error-warning {
-    text-align: center;
     color: lightgray;
     font-size: 20px;
     font-weight: 500;
     line-height: 150%;
     margin-top: 10px;
+    text-align: center;
 }
 
 .error-link {
-    text-align: center;
     color: #28497d;
     font-size: 20px;
     font-weight: 500;
+    text-align: center;
 }
 
 .error-link:hover {
@@ -499,13 +499,13 @@ header {
 }
 
 .error-image {
-    display: block;
-    margin: 0px auto;
-    width: 500px;
-    max-width: 60%;
-    margin-top: 40px;
-    filter: drop-shadow(0 0 0.75rem dimgray);
     border-radius: 3px;
+    display: block;
+    filter: drop-shadow(0 0 0.75rem dimgray);
+    margin: 0px auto;
+    margin-top: 40px;
+    max-width: 60%;
+    width: 500px;
 }
 
 /*
@@ -606,6 +606,30 @@ spoiler {
     .timer-time {
         font-size: 30px;
     }
+}
+
+#overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+#overlay .noscript-message {
+    color: #ff5555;
+    font-size: 50px;
+    font-weight: bold;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 /*
@@ -771,4 +795,118 @@ input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-results-button,
 input[type='search']::-webkit-search-results-decoration {
     display: none;
+}
+
+/*
+ ================
+  PAGE-SPECIFIC
+ ================
+*/
+
+a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
+    --fa-animation-duration: 10s;
+}
+
+.color-display {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #16181c;
+    margin: 8px 0 0 30px;
+    display: inline-grid;
+    position: absolute;
+    justify-content: center;
+    align-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .color-display {
+        margin: 2px 0 0 30px;
+    }
+}
+
+#random-number .odometer-animating-down .odometer-ribbon-inner,
+#random-number .odometer-animating-up .odometer-ribbon-inner {
+    -webkit-transition: -webkit-transform 0.5s !important;
+    -moz-transition: -moz-transform 0.5s !important;
+    -ms-transition: -ms-transform 0.5s !important;
+    -o-transition: -o-transform 0.5s !important;
+    transition: transform 0.5s !important;
+}
+
+#counter .odometer-animating-down .odometer-ribbon-inner,
+#counter .odometer-animating-up .odometer-ribbon-inner {
+    -webkit-transition: -webkit-transform 0.3s !important;
+    -moz-transition: -moz-transform 0.3s !important;
+    -ms-transition: -ms-transform 0.3s !important;
+    -o-transition: -o-transform 0.3s !important;
+    transition: transform 0.3s !important;
+}
+
+.keycodes {
+    background-color: #1b1e24;
+    background-color: #31363d;
+    border: 4px solid #1b1e24;
+    border-collapse: collapse;
+    color: #a8a8a8;
+    margin: 50px auto 30px;
+    overflow-y: scroll;
+    position: static;
+    width: 70%;
+}
+
+@media only screen and (max-width: 700px) {
+    .keycodes {
+        display: inline-block;
+        margin: 8px auto 30px;
+        min-width: 97%;
+    }
+}
+
+.keycodes th {
+    background-color: #31363d;
+    border-bottom: 1px solid #1b1e24;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 700px) {
+    .keycodes th {
+        font-size: 16px;
+        padding: 20px;
+    }
+}
+
+.keycodes td {
+    border: 3px solid #1b1e24;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px;
+    text-align: center;
+}
+
+.keycodes td:hover {
+    background-color: #3a3f47;
+    cursor: not-allowed;
+}
+
+@media only screen and (max-width: 700px) {
+    .keycodes td {
+        border-bottom: none;
+        font-size: 16px;
+        padding: 14px;
+    }
+}
+
+.keycodes-td-ready td {
+    cursor: pointer !important;
+}
+
+@media only screen and (max-width: 700px) {
+    .roman-numerals {
+        display: table;
+        margin: 50px 0 0;
+        min-width: 50%;
+        width: 50%;
+    }
 }

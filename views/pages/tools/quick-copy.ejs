@@ -1,0 +1,28 @@
+<div class="toolbox">
+    <h1>Quick Copy:</h1>
+    <table class="quickcopy">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="tooltext" style="font-weight: 500; color: dimgray; font-size: 16px">
+                        <button id="clear-clipboard" style="padding: 0.5rem">Clear Clipboard</button><br /><br />
+                        Zero Width Space (&ZeroWidthSpace;): <button id="copy-zws">Copy</button><br />
+                        Non-Breaking Space/Hard Space (&nbsp;): <button id="copy-nbsp">Copy</button><br />
+                        Em Space (&emsp;): <button id="copy-ems">Copy</button><br />
+                        En Space (&ensp;): <button id="copy-ens">Copy</button><br />
+                        Thin Space (&thinsp;): <button id="copy-ts">Copy</button><br />
+                        <!-- Some other space variants: https://i.stack.imgur.com/FF9ka.png -->
+                    </div>
+                </td>
+                <td>
+                    <div class="tooltext" style="line-height: 100%">
+                        Current Clipboard:<br /><br />
+                        <span class="error" style="font-size: 14px" id="clipboard-warning"><i class="fa-solid fa-exclamation-triangle"></i> Permission to read clipboard denied!<br /></span>
+                        <textarea id="copied-text" style="width: 60%" readonly></textarea><br />
+                        <button id="select-clipboard" disabled>Select Clipboard</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

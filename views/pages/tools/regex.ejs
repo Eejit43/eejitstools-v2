@@ -1,0 +1,75 @@
+<div class="toc">
+    <span style="font-size: 22px; line-height: 180%">Table of Contents:</span>
+    <br />– <a href="#duplicate-line-remover">Duplicate Line Remover</a> <br />– <a href="#whitespace-remover">Whitespace Remover</a> <br />– <a href="#regex-tester">Regex Tester</a>
+</div>
+<div class="toolbox" style="margin: 40px auto 30px">
+    <h1 id="duplicate-line-remover">Duplicate Line Remover:</h1>
+    <div class="tooltext">
+        Input:<br />
+        <textarea id="dlr-regexInput"></textarea>
+        <br /><button id="run-dlr">Run regex <i id="dlr-runResult"></i></button>
+        <button id="dlr-clear">Clear</button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <div class="tooltext">
+        Output:<br />
+        <textarea id="dlr-result" style="width: 40%" readonly></textarea>
+        <br /><button id="dlr-copy-result" disabled>Copy</button>
+    </div>
+</div>
+<div class="toolbox" style="margin: 60px auto 30px">
+    <h1 id="whitespace-remover">Whitespace Remover:</h1>
+    <div class="tooltext">
+        Input:<br />
+        <textarea id="wr-regexInput"></textarea>
+        <br /><button id="run-wr">Run regex <i id="wr-runResult"></i></button>
+        <button id="wr-clear">Clear</button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <table class="regexoutput">
+        <tbody>
+            <tr>
+                <td style="width: 33%">
+                    <div class="tooltext">
+                        Without Whitespace (keeps newlines):<br />
+                        <textarea id="wr-result" style="width: 80%" readonly></textarea>
+                        <br /><button id="wr-copy-result" disabled>Copy</button>
+                    </div>
+                </td>
+                <td style="width: 33%">
+                    <div class="tooltext">
+                        Without Whitespace & Extra Newlines:<br />
+                        <textarea id="wr-result-2" style="width: 80%" readonly></textarea>
+                        <br /><button id="wr-copy-result-2" disabled>Copy</button>
+                    </div>
+                </td>
+                <td style="width: 33%">
+                    <div class="tooltext">
+                        Without Whitespace & All Newlines:<br />
+                        <textarea id="wr-result-3" style="width: 80%" readonly></textarea>
+                        <br /><button id="wr-copy-result-3" disabled>Copy</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="toolbox" style="margin: 60px auto 30px">
+    <h1 id="regex-tester">Regex Tester:</h1>
+    <div class="tooltext">
+        Input:<br />
+        <span style="font-weight: 500; color: dimgray; font-size: 16px"
+            ><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet" target="_blank">Regex</a>: <input id="rm-regex" style="width: 20rem; max-width: 70%" />　<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags" target="_blank">Flags</a>: <input id="rm-flags" value="g" style="width: 4rem" /><br />
+            Replace string (leave empty to delete): <input id="rm-replace" style="width: 20rem; max-width: 70%" /></span
+        ><br />
+        <textarea id="rm-regexInput" style="min-width: 40%; width: 40%; max-width: 70%; min-height: 4rem; height: 6rem; max-height: 25rem; resize: both"></textarea>
+        <br /><button id="run-rm">Run regex <i id="rm-runResult"></i></button> <button id="rm-clear">Clear Input</button> <button id="rm-clear-2">Clear All</button>
+        <button id="rm-switch">Move output to input <i id="switch-runResult"></i></button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <div class="tooltext">
+        Output:<br />
+        <textarea id="rm-result" style="min-width: 40%; width: 40%; max-width: 70%; min-height: 4rem; height: 6rem; max-height: 25rem; resize: both" readonly></textarea>
+        <br /><button id="rm-copy-result" disabled>Copy</button>
+    </div>
+</div>

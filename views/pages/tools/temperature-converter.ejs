@@ -1,0 +1,23 @@
+<div class="toolbox">
+    <h1>Temperature Converter:</h1>
+    <div class="tooltext">
+        Input:<br />
+        <select style="margin-top: 20px" id="input-type">
+            <option value="1" selected>Fahrenheit</option>
+            <option value="2">Celsius</option>
+            <option value="3">Kelvin</option>
+        </select>
+        <br /><input id="input" pattern="[0-9]*" /> <br /><button id="reset">Reset</button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <div class="tooltext">
+        <span class="tooltip-bottom" data-tooltip="Rounded to the nearest thousandth">Output</span>:<br />
+        <span id="message" class="error" style="font-size: 15px"></span>
+        <select style="margin-top: 20px" id="output-type">
+            <option value="1">Fahrenheit</option>
+            <option value="2" selected>Celsius</option>
+            <option value="3">Kelvin</option>
+        </select>
+        <br /><input id="output" readonly /> <br /><button id="copy-output" disabled>Copy</button>
+    </div>
+</div>

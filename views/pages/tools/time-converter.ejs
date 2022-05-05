@@ -1,0 +1,43 @@
+<div class="toolbox">
+    <h1>Time Converter:</h1>
+    <div class="tooltext">
+        Input:<br />
+        <select style="margin-top: 20px" id="input-type">
+            <option value="1">Nanoseconds</option>
+            <option value="2">Microseconds</option>
+            <option value="3">Milliseconds</option>
+            <option value="4">Seconds</option>
+            <option value="5">Minutes</option>
+            <option value="6">Hours</option>
+            <option value="7" selected>Days</option>
+            <option value="8">Weeks</option>
+            <option value="9">Months</option>
+            <option value="10">Years</option>
+            <option value="11">Decades</option>
+            <option value="12">Centuries</option>
+            <option value="13">Millennia</option>
+        </select>
+        <br /><input id="input" pattern="[0-9]*" /> <br /><button id="reset">Reset</button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <div class="tooltext">
+        <span class="tooltip-bottom" data-tooltip="Rounded to the nearest trillionth">Output</span>:<br />
+        <span id="message" class="error" style="font-size: 15px"></span>
+        <select style="margin-top: 20px" id="output-type">
+            <option value="1">Nanoseconds</option>
+            <option value="2">Microseconds</option>
+            <option value="3">Milliseconds</option>
+            <option value="4">Seconds</option>
+            <option value="5" selected>Minutes</option>
+            <option value="6">Hours</option>
+            <option value="7">Days</option>
+            <option value="8">Weeks</option>
+            <option value="9">Months</option>
+            <option value="10">Years</option>
+            <option value="11">Decades</option>
+            <option value="12">Centuries</option>
+            <option value="13">Millennia</option>
+        </select>
+        <br /><input id="output" readonly /> <br /><button id="copy-output" disabled>Copy</button>
+    </div>
+</div>

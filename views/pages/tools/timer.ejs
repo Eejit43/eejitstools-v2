@@ -1,0 +1,14 @@
+<div class="toolbox">
+    <h1>Countdown Timer:</h1>
+    <div class="tooltext">
+        <span style="font-weight: 500; color: dimgray; font-size: 50px"> <input type="text" pattern="[0-9]*" id="hours" max="23" maxlength="2" value="0" class="invisibleinput" />h <input type="text" pattern="[0-9]*" id="minutes" max="59" maxlength="2" value="1" class="invisibleinput" />m <input type="text" pattern="[0-9]*" id="seconds" max="59" maxlength="2" value="0" class="invisibleinput" />s </span>
+        <br /><button id="start-timer">Start <i id="timer-runResult"></i></button>
+        <button id="pause-resume-timer" disabled>Pause</button>
+        <button id="reset">Reset</button>
+    </div>
+    <hr style="margin-top: 30px" />
+    <div class="tooltext" style="text-align: center; margin: 0; font-weight: 600; font-size: 90px; margin-top: 50px; line-height: 100%; padding-bottom: 25px">
+        <span id="timer">0h 0m 0s</span><br />
+        <span id="timer-time" style="font-size: 30px"></span>
+    </div>
+</div>
