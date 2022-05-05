@@ -824,8 +824,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     }
 }
 
-#random-number .odometer-animating-down .odometer-ribbon-inner,
-#random-number .odometer-animating-up .odometer-ribbon-inner {
+#random-number .odometer-ribbon-inner {
     -webkit-transition: -webkit-transform 0.5s !important;
     -moz-transition: -moz-transform 0.5s !important;
     -ms-transition: -ms-transform 0.5s !important;
@@ -833,8 +832,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     transition: transform 0.5s !important;
 }
 
-#counter .odometer-animating-down .odometer-ribbon-inner,
-#counter .odometer-animating-up .odometer-ribbon-inner {
+#counter .odometer-ribbon-inner {
     -webkit-transition: -webkit-transform 0.3s !important;
     -moz-transition: -moz-transform 0.3s !important;
     -ms-transition: -ms-transform 0.3s !important;

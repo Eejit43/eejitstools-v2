@@ -38,7 +38,7 @@ function checkInput(element) {
     if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
-let audio = new Audio('./timer-alarm.mp3');
+let audio = new Audio('/timer-alarm.mp3');
 
 function reset() {
     clearInterval(runTimer);

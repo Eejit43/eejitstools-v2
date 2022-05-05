@@ -46,7 +46,9 @@ app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
 
-app.use('/', require('./routes/index'));
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Home', page: '', additionalScript: '', additionalStyle: '' });
+});
 
 app.get('/headers', (req, res) => {
     res.status(200).json(req.headers);
@@ -60,7 +62,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
         const pageInfo = allPageInfo[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
         app.get(`/${category}/${page}`, (req, res) => {
-            res.render(`pages/${category}/${page}.ejs`, { ...pageInfo, page });
+            res.render(`pages/${category}/${page}`, { ...pageInfo, page });
         });
     });
 });

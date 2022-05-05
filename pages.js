@@ -1,6 +1,6 @@
 const imports = {
-    odometerCss: 'https://github.hubspot.com/odometer/themes/odometer-theme-default.css',
-    odometerJs: 'https://github.hubspot.com/odometer/odometer.js',
+    odometerCss: '/styles/external/odometer.css',
+    odometerJs: '/scripts/external/odometer.js',
     mathJs: 'https://unpkg.com/mathjs/lib/browser/math.js',
 };
 
