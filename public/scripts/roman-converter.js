@@ -1,69 +1,57 @@
-let integerInput = document.getElementById('integer-input');
-let integerConvert = document.getElementById('integer-convert');
-let integerReset = document.getElementById('integer-reset');
-let integerArrow = document.getElementById('integer-arrow');
-let romanOutput = document.getElementById('roman-output');
+const integerInput = document.getElementById('integer-input');
+const integerConvert = document.getElementById('integer-convert');
+const integerReset = document.getElementById('integer-reset');
+const integerArrow = document.getElementById('integer-arrow');
+const romanOutput = document.getElementById('roman-output');
 let romanOutputCopy = document.getElementById('roman-output-copy');
 let romanOutputCopy2 = document.getElementById('roman-output-copy-2');
-let romanInput = document.getElementById('roman-input');
-let romanConvert = document.getElementById('roman-convert');
-let romanReset = document.getElementById('roman-reset');
-let romanArrow = document.getElementById('roman-arrow');
-let integerOutput = document.getElementById('integer-output');
+const romanInput = document.getElementById('roman-input');
+const romanConvert = document.getElementById('roman-convert');
+const romanReset = document.getElementById('roman-reset');
+const romanArrow = document.getElementById('roman-arrow');
+const integerOutput = document.getElementById('integer-output');
 let integerOutputCopy = document.getElementById('integer-output-copy');
 
 let romanOutputVal, romanOutputVal2, integerOutputVal;
 
 /* Add event listeners */
-integerInput.addEventListener('input', function () {
-    if (parseInt(integerInput.value) === 0) {
-        integerInput.value = '';
-    }
+integerInput.addEventListener('input', () => {
+    if (parseInt(integerInput.value) === 0) integerInput.value = '';
 });
-integerInput.addEventListener('input', function () {
+integerInput.addEventListener('input', () => {
     integerInput.value = integerInput.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 });
-integerInput.addEventListener('input', function () {
-    if (integerInput.value.length > 0) {
-        integerConvert.disabled = false;
-    } else {
-        integerConvert.disabled = true;
-    }
-    if (integerInput.value.length > 0 || romanOutput.innerHTML !== '​' || integerArrow.style.color !== 'dimgray') {
-        integerReset.disabled = false;
-    } else {
-        integerReset.disabled = true;
-    }
+integerInput.addEventListener('input', () => {
+    if (integerInput.value.length > 0) integerConvert.disabled = false;
+    else integerConvert.disabled = true;
+
+    if (integerInput.value.length > 0 || romanOutput.innerHTML !== '​' || integerArrow.style.color !== 'dimgray') integerReset.disabled = false;
+    else integerReset.disabled = true;
 });
 integerConvert.addEventListener('click', convertInteger);
 integerReset.addEventListener('click', resetInteger);
-romanInput.addEventListener('input', function () {
+romanInput.addEventListener('input', () => {
     romanInput.value = romanInput.value.toUpperCase();
 });
-romanInput.addEventListener('input', function () {
+romanInput.addEventListener('input', () => {
     romanInput.value = romanInput.value.replace(/((?![IVXLCDM_]).)/gi, '');
 });
-romanInput.addEventListener('input', function () {
-    if (romanInput.value.length > 0) {
-        romanConvert.disabled = false;
-    } else {
-        romanConvert.disabled = true;
-    }
-    if (romanInput.value.length > 0 || integerOutput.value !== '' || romanArrow.style.color !== 'dimgray') {
-        romanReset.disabled = false;
-    } else {
-        romanReset.disabled = true;
-    }
+romanInput.addEventListener('input', () => {
+    if (romanInput.value.length > 0) romanConvert.disabled = false;
+    else romanConvert.disabled = true;
+
+    if (romanInput.value.length > 0 || integerOutput.value !== '' || romanArrow.style.color !== 'dimgray') romanReset.disabled = false;
+    else romanReset.disabled = true;
 });
 romanConvert.addEventListener('click', convertRoman);
 romanReset.addEventListener('click', resetRoman);
-romanOutputCopy.addEventListener('click', function () {
+romanOutputCopy.addEventListener('click', () => {
     copyVar('romanOutputVal', 'roman-output-copy', 'Copy w/ macrons');
 });
-romanOutputCopy2.addEventListener('click', function () {
+romanOutputCopy2.addEventListener('click', () => {
     copyVar('romanOutputVal2', 'roman-output-copy-2', 'Copy w/ underscores');
 });
-integerOutputCopy.addEventListener('click', function () {
+integerOutputCopy.addEventListener('click', () => {
     copyVar('integerOutputVal', 'integer-output-copy', 'Copy');
 });
 
@@ -102,8 +90,8 @@ function resetInteger() {
 function convertRoman() {
     integerOutputCopy = document.getElementById('integer-output-copy');
     romanInput.value = romanInput.value.toUpperCase();
-    let input = romanInput.value
-        .replace(/\_(\w)/g, function (match) {
+    const input = romanInput.value
+        .replace(/\_(\w)/g, (match) => {
             return match.toLowerCase();
         })
         .replace(/_/g, '');
@@ -131,15 +119,13 @@ function resetRoman() {
     integerOutputCopy.disabled = true;
 }
 
-//Some portions modified from https://blog.stevenlevithan.com/archives/javascript-roman-numeral-converter and https://iandevlin.com/files/blog/romanNumerals.html
-//HHHUUUUGEEE thanks to EmNudge#5549 from The Coding Den for their help in remaking this function!!!
+// Some portions modified from https://blog.stevenlevithan.com/archives/javascript-roman-numeral-converter and https://iandevlin.com/files/blog/romanNumerals.html
+// Huge thanks to EmNudge#5549 from The Coding Den for their help in remaking this function!!!
 
 const roman = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
 const decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
 
-function romanize(value) {
-    let num = value;
-
+function romanize(num) {
     let barredNumerals = '';
     while (num > 3999) {
         for (let i = 0; i < decimal.length - 1; i++) {
@@ -169,8 +155,8 @@ function romanize(value) {
 }
 
 function deromanize(str) {
-    let token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
-    let key = {
+    const token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
+    const key = {
         m: 1000000,
         cm: 900000,
         d: 500000,
@@ -199,6 +185,6 @@ function deromanize(str) {
     };
     let output = 0;
     let i;
-    while (i = token.exec(str)) output += key[i[0]]; // prettier-ignore
+    while ((i = token.exec(str))) output += key[i[0]];
     return output;
 }

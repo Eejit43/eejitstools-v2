@@ -1,13 +1,13 @@
-let standardInput = document.getElementById('standard-input');
-let standardInputReset = document.getElementById('standard-input-reset');
-let unixInput = document.getElementById('unix-input');
-let unixInputReset = document.getElementById('unix-input-reset');
-let unixInputSwitch = document.getElementById('unix-input-switch');
-let unixOutputCopy = document.getElementById('unix-output-copy');
-let unixOutputSwitch = document.getElementById('unix-output-switch');
-let standardOutputCopy = document.getElementById('standard-output-copy');
-let standardOutput = document.getElementById('standard-output');
-let unixOutput = document.getElementById('unix-output');
+const standardInput = document.getElementById('standard-input');
+const standardInputReset = document.getElementById('standard-input-reset');
+const unixInput = document.getElementById('unix-input');
+const unixInputReset = document.getElementById('unix-input-reset');
+const unixInputSwitch = document.getElementById('unix-input-switch');
+const unixOutputCopy = document.getElementById('unix-output-copy');
+const unixOutputSwitch = document.getElementById('unix-output-switch');
+const standardOutputCopy = document.getElementById('standard-output-copy');
+const standardOutput = document.getElementById('standard-output');
+const unixOutput = document.getElementById('unix-output');
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
@@ -15,11 +15,11 @@ standardInputReset.addEventListener('click', updateStandardTime);
 unixInput.addEventListener('input', updateStandardOutput);
 unixInputReset.addEventListener('click', updateUnixTime);
 unixInputSwitch.addEventListener('click', switchUnixInput);
-unixOutputCopy.addEventListener('click', function () {
+unixOutputCopy.addEventListener('click', () => {
     copyValue('unix-output', 'unix-output-copy');
 });
 unixOutputSwitch.addEventListener('click', switchUnixOutput);
-standardOutputCopy.addEventListener('click', function () {
+standardOutputCopy.addEventListener('click', () => {
     copyValue('standard-output', 'standard-output-copy');
 });
 
@@ -28,35 +28,28 @@ let unixOutputState = 1; // 1 = seconds, 2 = milliseconds
 
 function updateStandardTime() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let currentTime = new Date();
-    let date = currentTime.getDate();
-    let month = months[currentTime.getMonth()];
-    let year = currentTime.getFullYear();
-    let fullhours = currentTime.getHours();
-    let hours = ((fullhours + 11) % 12) + 1;
+    const currentTime = new Date();
+    const date = currentTime.getDate();
+    const month = months[currentTime.getMonth()];
+    const year = currentTime.getFullYear();
+    const fullHours = currentTime.getHours();
+    const hours = ((fullHours + 11) % 12) + 1;
     let minutes = currentTime.getMinutes();
-    let sec = currentTime.getSeconds();
+    let seconds = currentTime.getSeconds();
+    if (minutes < 10) minutes = '0' + minutes;
+    if (seconds < 10) seconds = '0' + seconds;
 
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-    if (sec < 10) {
-        sec = '0' + sec;
-    }
+    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-    let timesuffix = fullhours >= 12 ? 'PM' : 'AM';
-
-    let output = month + ' ' + date + ', ' + year + ' ' + hours + ':' + minutes + ':' + sec + ' ' + timesuffix;
-
-    standardInput.value = output;
+    standardInput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
 
     updateUnixOutput();
 }
 
 function updateUnixOutput() {
-    let standardtime = standardInput.value;
-    let valid = new Date(standardtime).getTime() > 0;
-    if (standardtime.length === 0) {
+    const standardTime = standardInput.value;
+    const valid = new Date(standardTime).getTime() > 0;
+    if (standardTime.length === 0) {
         updateArrow('standard', 'reset', 'down');
         unixOutput.value = '';
         unixOutputCopy.disabled = true;
@@ -68,30 +61,22 @@ function updateUnixOutput() {
         unixOutputSwitch.disabled = true;
     } else {
         updateArrow('standard', 'success', 'down');
-        let unixtime = new Date(standardtime).getTime();
-        if (unixOutputState === 1) {
-            unixtime = unixtime.toString().slice(0, -3);
-        }
-        unixOutput.value = unixtime;
+        let unixTime = new Date(standardTime).getTime();
+        if (unixOutputState === 1) unixTime = unixTime.toString().slice(0, -3);
+        unixOutput.value = unixTime;
         unixOutputCopy.disabled = false;
         unixOutputSwitch.disabled = false;
     }
 }
 
 function updateUnixTime() {
-    let output = new Date().getTime();
-    if (unixInputState === 1) {
-        output = output.toString().slice(0, -3);
-    }
-
-    unixInput.value = output;
-
+    unixInput.value = unixInputState === 1 ? new Date().getTime().toString().slice(0, -3) : new Date().getTime();
     updateStandardOutput();
 }
 
 function updateStandardOutput() {
-    let standardtime = parseInt(unixInput.value, 10) * 1000;
-    let valid = new Date(standardtime).getTime() > 0;
+    const standardTime = parseInt(unixInput.value) * 1000;
+    const valid = new Date(standardTime).getTime() > 0;
     if (unixInput.value.length === 0) {
         updateArrow('unix', 'reset', 'down');
         standardOutput.value = '';
@@ -103,35 +88,22 @@ function updateStandardOutput() {
     } else {
         updateArrow('unix', 'success', 'down');
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        let time = new Date(parseInt(standardtime));
-        let time2 = new Date(parseInt(standardtime.toString().slice(0, -3)));
-        if (unixInputState === 2) {
-            time = new Date(parseInt(standardtime.toString().slice(0, -3)));
-        }
-        let date = time.getDate();
-        let month = months[time.getMonth()];
-        let year = time.getFullYear();
-        let fullhours = time.getHours();
-        let hours = ((fullhours + 11) % 12) + 1;
+        const time = unixInputState === 2 ? new Date(parseInt(standardTime.toString().slice(0, -3))) : new Date(parseInt(standardTime));
+        const date = time.getDate();
+        const month = months[time.getMonth()];
+        const year = time.getFullYear();
+        const fullHours = time.getHours();
+        const hours = ((fullHours + 11) % 12) + 1;
         let minutes = time.getMinutes();
-        let sec = time.getSeconds();
-        let msec = time2.getMilliseconds();
+        let seconds = time.getSeconds();
+        const milliseconds = time.getMilliseconds();
 
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-        if (sec < 10) {
-            sec = '0' + sec;
-        }
+        if (minutes < 10) minutes = '0' + minutes;
+        if (seconds < 10) seconds = '0' + seconds;
 
-        let timesuffix = fullhours >= 12 ? 'PM' : 'AM';
-        let output;
-        if (unixInputState === 2) {
-            output = month + ' ' + date + ', ' + year + ' ' + hours + ':' + minutes + ':' + sec + '.' + msec + ' ' + timesuffix;
-        } else {
-            output = month + ' ' + date + ', ' + year + ' ' + hours + ':' + minutes + ':' + sec + ' ' + timesuffix;
-        }
-        standardOutput.value = output;
+        const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
+
+        standardOutput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds}${unixInputState === 2 ? `.${milliseconds}` : ''} ${timeSuffix}`;
         standardOutputCopy.disabled = false;
     }
 }

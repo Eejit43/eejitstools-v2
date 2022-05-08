@@ -1,20 +1,19 @@
-let input = document.getElementById('input');
-let encodeButton = document.getElementById('encode');
-let decodeButton = document.getElementById('decode');
-let clear = document.getElementById('clear');
-let result = document.getElementById('result');
+const input = document.getElementById('input');
+const encodeButton = document.getElementById('encode');
+const decodeButton = document.getElementById('decode');
+const clear = document.getElementById('clear');
+const result = document.getElementById('result');
 let copyResult = document.getElementById('copy-result');
 
 /* Add event listeners */
 encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', decode);
 clear.addEventListener('click', clearAll);
-copyResult.addEventListener('click', function () {
+copyResult.addEventListener('click', () => {
     copyValue('result', 'copy-result');
 });
 
 let clearMessageTimeout;
-
 function clearAll() {
     copyResult = document.getElementById('copy-result');
     input.value = '';

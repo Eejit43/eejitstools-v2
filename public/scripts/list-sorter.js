@@ -1,11 +1,11 @@
-let input = document.getElementById('input');
-let separator = document.getElementById('separator');
-let alphabetizeNormalButton = document.getElementById('alphabetize-normal');
-let numerizeButton = document.getElementById('numerize');
-let randomizeButton = document.getElementById('randomize');
-let reverseButton = document.getElementById('reverse');
-let clear = document.getElementById('clear');
-let result = document.getElementById('result');
+const input = document.getElementById('input');
+const separator = document.getElementById('separator');
+const alphabetizeNormalButton = document.getElementById('alphabetize-normal');
+const numerizeButton = document.getElementById('numerize');
+const randomizeButton = document.getElementById('randomize');
+const reverseButton = document.getElementById('reverse');
+const clear = document.getElementById('clear');
+const result = document.getElementById('result');
 let copyResult = document.getElementById('copy-result');
 
 /* Add event listeners */
@@ -14,12 +14,11 @@ numerizeButton.addEventListener('click', numerize);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
 clear.addEventListener('click', clearAll);
-copyResult.addEventListener('click', function () {
+copyResult.addEventListener('click', () => {
     copyValue('result', 'copy-result');
 });
 
 let clearMessageTimeout;
-
 function clearAll() {
     copyResult = document.getElementById('copy-result');
     input.value = '';
@@ -29,7 +28,7 @@ function clearAll() {
     showAlert('Cleared!', 'success');
     clear.innerHTML = 'Cleared!';
     clearTimeout(clearMessageTimeout);
-    clearMessageTimeout = setTimeout(function () {
+    clearMessageTimeout = setTimeout(() => {
         clear.innerHTML = 'Clear';
     }, 2000);
     resetResult('alphabetize');

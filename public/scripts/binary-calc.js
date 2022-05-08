@@ -1,10 +1,10 @@
-let inputType = document.getElementById('input-type');
-let input = document.getElementById('input');
-let resetButton = document.getElementById('reset');
-let message = document.getElementById('message');
-let outputType = document.getElementById('output-type');
-let output = document.getElementById('output');
-let copyOutput = document.getElementById('copy-output');
+const inputType = document.getElementById('input-type');
+const input = document.getElementById('input');
+const resetButton = document.getElementById('reset');
+const message = document.getElementById('message');
+const outputType = document.getElementById('output-type');
+const output = document.getElementById('output');
+const copyOutput = document.getElementById('copy-output');
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
@@ -71,7 +71,6 @@ function findInput() {
 
 function convert(value, type) {
     let outputTypeNumber;
-
     switch (parseInt(outputType.value)) {
         case 1:
             outputTypeNumber = 2;
@@ -94,7 +93,6 @@ function convert(value, type) {
 
 function notValid() {
     let inputTypeText;
-
     switch (parseInt(inputType.value)) {
         case 1:
             inputTypeText = 'binary';

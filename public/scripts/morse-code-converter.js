@@ -1,10 +1,10 @@
 // some stuff modified from https://stackoverflow.com/questions/43726344/js-decoding-morse-code, https://www.tutorialspoint.com/converting-string-to-morse-code-in-javascript
 
-let input = document.getElementById('input');
-let toMorseBtn = document.getElementById('to-morse');
-let fromMorseBtn = document.getElementById('from-morse');
-let clearBtn = document.getElementById('clear');
-let result = document.getElementById('result');
+const input = document.getElementById('input');
+const toMorseBtn = document.getElementById('to-morse');
+const fromMorseBtn = document.getElementById('from-morse');
+const clearBtn = document.getElementById('clear');
+const result = document.getElementById('result');
 let resultCopy = document.getElementById('copy-result');
 let resultCopy2 = document.getElementById('copy-result-2');
 let resultCopy3 = document.getElementById('copy-result-3');
@@ -15,13 +15,13 @@ let resultVar1, resultVar2, resultVar3;
 toMorseBtn.addEventListener('click', toMorse);
 fromMorseBtn.addEventListener('click', fromMorse);
 clearBtn.addEventListener('click', clear);
-resultCopy.addEventListener('click', function () {
+resultCopy.addEventListener('click', () => {
     copyVar('resultVar1', 'copy-result', 'Copy');
 });
-resultCopy2.addEventListener('click', function () {
+resultCopy2.addEventListener('click', () => {
     copyVar('resultVar2', 'copy-result-2', 'Copy with vertical slash space');
 });
-resultCopy3.addEventListener('click', function () {
+resultCopy3.addEventListener('click', () => {
     copyVar('resultVar3', 'copy-result-3', 'Copy with three space space');
 });
 
@@ -156,16 +156,14 @@ const fromMorseRef = {
     '.--.-.': '@',
 };
 
-const convertToMorse = (str) => {
+function convertToMorse(str) {
     return str
         .toLowerCase()
         .split('')
-        .map((el) => {
-            return toMorseRef[el] ? toMorseRef[el] : el;
-        })
+        .map((el) => (toMorseRef[el] ? toMorseRef[el] : el))
         .join(' ')
         .replace(/   /g, ' / ');
-};
+}
 
 function toMorse() {
     resultCopy = document.getElementById('copy-result');

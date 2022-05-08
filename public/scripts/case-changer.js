@@ -1,10 +1,10 @@
-let input = document.getElementById('input');
-let toUpperButton = document.getElementById('to-upper');
-let toLowerButton = document.getElementById('to-lower');
-let toTitleButton = document.getElementById('to-title');
-let toSentenceButton = document.getElementById('to-sentence');
-let clear = document.getElementById('clear');
-let result = document.getElementById('result');
+const input = document.getElementById('input');
+const toUpperButton = document.getElementById('to-upper');
+const toLowerButton = document.getElementById('to-lower');
+const toTitleButton = document.getElementById('to-title');
+const toSentenceButton = document.getElementById('to-sentence');
+const clear = document.getElementById('clear');
+const result = document.getElementById('result');
 let copyResult = document.getElementById('copy-result');
 
 /* Add event listeners */
@@ -13,12 +13,11 @@ toLowerButton.addEventListener('click', toLower);
 toTitleButton.addEventListener('click', toTitle);
 toSentenceButton.addEventListener('click', toSentence);
 clear.addEventListener('click', clearAll);
-copyResult.addEventListener('click', function () {
+copyResult.addEventListener('click', () => {
     copyValue('result', 'copy-result');
 });
 
 let clearMessageTimeout;
-
 function clearAll() {
     copyResult = document.getElementById('copy-result');
     input.value = '';
@@ -27,7 +26,7 @@ function clearAll() {
     showAlert('Cleared!', 'success');
     clear.innerHTML = 'Cleared!';
     clearTimeout(clearMessageTimeout);
-    clearMessageTimeout = setTimeout(function () {
+    clearMessageTimeout = setTimeout(() => {
         clear.innerHTML = 'Clear';
     }, 2000);
     resetResult('u');
@@ -59,19 +58,18 @@ function toLower() {
 }
 
 function titleCase(str) {
-    let i, j, lowers, uppers;
     str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 
-    lowers = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'From', 'If', 'In', 'Into', 'Like', 'Near', 'Nor', 'Of', 'Off', 'On', 'Once', 'Onto', 'Or', 'Over', 'Past', 'So', 'Than', 'That', 'The', 'Till', 'To', 'Up', 'Upon', 'When', 'With', 'Yet'];
-    for (i = 0, j = lowers.length; i < j; i++)
-        str = str.replace(new RegExp('\\s' + lowers[i] + '\\s', 'g'), function (txt) {
-            return txt.toLowerCase();
+    const lowers = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'From', 'If', 'In', 'Into', 'Like', 'Near', 'Nor', 'Of', 'Off', 'On', 'Once', 'Onto', 'Or', 'Over', 'Past', 'So', 'Than', 'That', 'The', 'Till', 'To', 'Up', 'Upon', 'When', 'With', 'Yet'];
+    for (let i = 0, j = lowers.length; i < j; i++)
+        str = str.replace(new RegExp(`\\s${lowers[i]}\\s`, 'g'), (text) => {
+            return text.toLowerCase();
         });
 
-    uppers = ['Id', 'Tv'];
-    for (i = 0, j = uppers.length; i < j; i++) str = str.replace(new RegExp('\\b' + uppers[i] + '\\b', 'g'), uppers[i].toUpperCase());
+    const uppers = ['Id', 'Tv'];
+    for (let i = 0, j = uppers.length; i < j; i++) str = str.replace(new RegExp(`\\b${uppers[i]}\\b`, 'g'), uppers[i].toUpperCase());
 
     return str;
 }
@@ -94,8 +92,8 @@ function toSentence() {
     } else {
         result.value = input.value
             .toLowerCase()
-            .replace(/(^\s*\w|[\.\!\?]\s*\w)/gm, function (c) {
-                return c.toUpperCase();
+            .replace(/(^\s*\w|[\.\!\?]\s*\w)/gm, (char) => {
+                return char.toUpperCase();
             })
             .replace(/(\s)i(\.|\!|\?|\s|\n|$)/gim, '$1I$2')
             .replace(/(\s)i'm(\.|\!|\?|\s|\n|$)/gim, "$1I'm$2")

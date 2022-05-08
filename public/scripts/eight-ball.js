@@ -1,16 +1,13 @@
-let userQuestion = document.getElementById('userQuestion');
-let rollBallBtn = document.getElementById('rollBall');
-let result = document.getElementById('result');
+const userQuestion = document.getElementById('userQuestion');
+const rollBallBtn = document.getElementById('rollBall');
+const result = document.getElementById('result');
 
 let eightBall, randomNumber;
 
 /* Add event listeners */
-rollBallBtn.addEventListener('click', rollBall);
-
-function rollBall() {
-    if (userQuestion.value.length === 0) {
-        showAlert("You didn't ask a question!", 'error');
-    } else {
+rollBallBtn.addEventListener('click', () => {
+    if (userQuestion.value.length === 0) showAlert("You didn't ask a question!", 'error');
+    else {
         randomNumber = Math.floor(Math.random() * 20);
         switch (randomNumber) {
             case 0:
@@ -83,4 +80,4 @@ function rollBall() {
             result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHtml(userQuestion.value)}</span><br />Response: <span style="font-weight: 500; color: dimgray; font-size: 18px">${eightBall}</span>`; // prettier-ignore
         }, 2000);
     }
-}
+});

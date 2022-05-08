@@ -232,6 +232,7 @@ const minecraftFormattingCodes = [
 ];
 
 const blankProperties = {
+    description: '',
     page: '',
     additionalScripts: [],
     additionalStyles: [],
@@ -343,7 +344,7 @@ const allPageInfo = {
         link: 'tools/ip-info',
         title: 'IP Info',
         icon: 'fa-solid fa-wifi',
-        description: 'Displays your current IP address, and IP provided information',
+        description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information',
         keywords: ['internet', 'isp'],
         additionalScripts: [],
         additionalStyles: [],
@@ -464,7 +465,7 @@ const allPageInfo = {
         title: 'Tides Info',
         icon: 'fa-solid fa-water',
         description: 'Shows current tidal information and for the next 7 days',
-        keywords: ['tidal'],
+        keywords: [],
         additionalScripts: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment.js',
         additionalStyles: [],
         script: true,

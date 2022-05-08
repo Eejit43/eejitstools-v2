@@ -1,74 +1,66 @@
-let dlrRegexInput = document.getElementById('dlr-regexInput');
-let runDlr = document.getElementById('run-dlr');
-let dlrResult = document.getElementById('dlr-result');
-let dlrResult2 = document.getElementById('dlr-result-2');
-let dlrClearButton = document.getElementById('dlr-clear');
+const dlrRegexInput = document.getElementById('dlr-regexInput');
+const runDlr = document.getElementById('run-dlr');
+const dlrResult = document.getElementById('dlr-result');
+const dlrResult2 = document.getElementById('dlr-result-2');
+const dlrClearButton = document.getElementById('dlr-clear');
 let dlrCopyResult = document.getElementById('dlr-copy-result');
-let wrRegexInput = document.getElementById('wr-regexInput');
-let runWr = document.getElementById('run-wr');
-let wrResult = document.getElementById('wr-result');
-let wrResult2 = document.getElementById('wr-result-2');
-let wrResult3 = document.getElementById('wr-result-3');
-let wrClearButton = document.getElementById('wr-clear');
+const wrRegexInput = document.getElementById('wr-regexInput');
+const runWr = document.getElementById('run-wr');
+const wrResult = document.getElementById('wr-result');
+const wrResult2 = document.getElementById('wr-result-2');
+const wrResult3 = document.getElementById('wr-result-3');
+const wrClearButton = document.getElementById('wr-clear');
 let wrCopyResult = document.getElementById('wr-copy-result');
 let wrCopyResult2 = document.getElementById('wr-copy-result-2');
 let wrCopyResult3 = document.getElementById('wr-copy-result-3');
-let rmRegexInput = document.getElementById('rm-regexInput');
-let rmRegex = document.getElementById('rm-regex');
-let rmFlags = document.getElementById('rm-flags');
-let rmReplace = document.getElementById('rm-replace');
-let runRm = document.getElementById('run-rm');
-let rmResult = document.getElementById('rm-result');
-let rmClear = document.getElementById('rm-clear');
-let rmClear2 = document.getElementById('rm-clear-2');
-let rmSwitchButton = document.getElementById('rm-switch');
+const rmRegexInput = document.getElementById('rm-regexInput');
+const rmRegex = document.getElementById('rm-regex');
+const rmFlags = document.getElementById('rm-flags');
+const rmReplace = document.getElementById('rm-replace');
+const runRm = document.getElementById('run-rm');
+const rmResult = document.getElementById('rm-result');
+const rmClear = document.getElementById('rm-clear');
+const rmClear2 = document.getElementById('rm-clear-2');
+const rmSwitchButton = document.getElementById('rm-switch');
 let rmCopyResult = document.getElementById('rm-copy-result');
 
 /* Add event listeners */
 runDlr.addEventListener('click', runDlrRegex);
 dlrClearButton.addEventListener('click', dlrClear);
-dlrCopyResult.addEventListener('click', function () {
+dlrCopyResult.addEventListener('click', () => {
     copyValue('dlr-result', 'dlr-copy-result');
 });
 runWr.addEventListener('click', runWrRegex);
 wrClearButton.addEventListener('click', wrClear);
-wrCopyResult.addEventListener('click', function () {
+wrCopyResult.addEventListener('click', () => {
     copyValue('wr-result', 'wr-copy-result');
 });
-wrCopyResult2.addEventListener('click', function () {
+wrCopyResult2.addEventListener('click', () => {
     copyValue('wr-result-2', 'wr-copy-result-2');
 });
-wrCopyResult3.addEventListener('click', function () {
+wrCopyResult3.addEventListener('click', () => {
     copyValue('wr-result-3', 'wr-copy-result-3');
 });
 runRm.addEventListener('click', runRmRegex);
 rmClear.addEventListener('click', rmClearInput);
 rmClear2.addEventListener('click', rmClearAll);
 rmSwitchButton.addEventListener('click', rmSwitch);
-rmCopyResult.addEventListener('click', function () {
+rmCopyResult.addEventListener('click', () => {
     copyValue('rm-result', 'rm-copy-result');
 });
-rmRegex.addEventListener('keyup', function (event) {
-    if (event.key === 'Enter' || event.keyCode === 13) {
-        rmRegex.value += '\\n';
-    }
+rmRegex.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') rmRegex.value += '\\n';
 });
-rmRegex.addEventListener('paste', function (event) {
+rmRegex.addEventListener('paste', (event) => {
     event.preventDefault();
-    let content = event.clipboardData.getData('text');
-    content = content.replace(/\n/g, '\\n').replace(/\r/g, '\\r');
-    rmRegex.value += content;
+    rmRegex.value += event.clipboardData.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 });
-rmReplace.addEventListener('keyup', function (event) {
-    if (event.key === 'Enter' || event.keyCode === 13) {
-        rmReplace.value += '\\n';
-    }
+rmReplace.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') rmReplace.value += '\\n';
 });
-rmReplace.addEventListener('paste', function (event) {
+rmReplace.addEventListener('paste', (event) => {
     event.preventDefault();
-    let content = event.clipboardData.getData('text');
-    content = content.replace(/\n/g, '\\n').replace(/\r/g, '\\r');
-    rmReplace.value += content;
+    rmReplace.value += event.clipboardData.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 });
 
 // Duplicate Line Remover
@@ -90,9 +82,8 @@ function runDlrRegex() {
         showAlert('Empty input!', 'error');
         showResult('dlr', 'error');
     } else {
-        let output = dlrRegexInput.value.replace(/^(.+)$(?=[\s\S]*^(\1)$[\s\S]*)/gm, '');
         showResult('dlr', 'success');
-        dlrResult.value = output;
+        dlrResult.value = dlrRegexInput.value.replace(/^(.+)$(?=[\s\S]*^(\1)$[\s\S]*)/gm, '');
         dlrCopyResult.disabled = false;
     }
 }
@@ -112,7 +103,7 @@ function wrClear() {
     showAlert('Cleared!', 'success');
     resetResult('wr');
     wrClearButton.innerHTML = 'Cleared!';
-    setTimeout(function () {
+    setTimeout(() => {
         wrClearButton.innerHTML = 'Clear';
     }, 2000);
 }
@@ -123,15 +114,12 @@ function runWrRegex() {
         showAlert('Empty input!', 'error');
         showResult('wr', 'error');
     } else {
-        let output = input.replace(/^[ \t]+|[ \t]+$/gm, '');
-        let output2 = input.replace(/^[ \t\r\n]+|[ \t]+$/gm, '');
-        let output3 = input.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gm, '');
         showResult('wr', 'success');
-        wrResult.value = output;
+        wrResult.value = input.replace(/^[ \t]+|[ \t]+$/gm, '');
         wrCopyResult.disabled = false;
-        wrResult2.value = output2;
+        wrResult2.value = input.replace(/^[ \t\r\n]+|[ \t]+$/gm, '');
         wrCopyResult2.disabled = false;
-        wrResult3.value = output3;
+        wrResult3.value = input.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gm, '');
         wrCopyResult3.disabled = false;
     }
 }
@@ -145,7 +133,7 @@ function rmClearInput() {
     showAlert('Cleared!', 'success');
     resetResult('rm');
     rmClear.innerHTML = 'Cleared!';
-    setTimeout(function () {
+    setTimeout(() => {
         rmClear.innerHTML = 'Clear Input';
     }, 2000);
 }
@@ -161,18 +149,17 @@ function rmClearAll() {
     showAlert('Cleared!', 'success');
     resetResult('rm');
     rmClear2.innerHTML = 'Cleared!';
-    setTimeout(function () {
+    setTimeout(() => {
         rmClear2.innerHTML = 'Clear All';
     }, 2000);
 }
 
 function rmSwitch() {
-    let output = rmResult.value;
-    if (output.length === 0) {
+    if (rmResult.value.length === 0) {
         showAlert('Nothing to move!', 'error');
         showResult('switch', 'error');
     } else {
-        rmRegexInput.value = output;
+        rmRegexInput.value = rmResult.value;
         rmResult.value = '';
         rmCopyResult.disabled = true;
         showAlert('Moved to input!', '#1c62d4');
@@ -184,15 +171,18 @@ function runRmRegex() {
     let isValid = true;
     try {
         new RegExp(rmRegex.value, rmFlags.value);
-    } catch (e) {
+    } catch (error) {
         isValid = false;
     }
     if (rmRegexInput.value.length === 0 || rmRegex.value.length === 0) {
         showAlert('Empty values(s)!', 'error');
         showResult('rm', 'error');
-    } else if (isValid) {
-        let finalregex = new RegExp(rmRegex.value, rmFlags.value);
-        let replace = rmReplace.value
+    } else if (!isValid) {
+        showAlert('Invalid regex!', 'error');
+        showResult('rm', 'error');
+    } else {
+        const finalRegex = new RegExp(rmRegex.value, rmFlags.value);
+        const replace = rmReplace.value
             .replace(/\\a/g, 'a')
             .replace(/\\b/g, '\b')
             .replace(/\\c/g, 'c')
@@ -203,12 +193,8 @@ function runRmRegex() {
             .replace(/\\r/g, '\r')
             .replace(/\\t/g, '\t')
             .replace(/\$(\d)/g, '$$$1');
-        let output = rmRegexInput.value.replace(finalregex, replace);
         showResult('rm', 'success');
-        rmResult.value = output;
+        rmResult.value = rmRegexInput.value.replace(finalRegex, replace);
         rmCopyResult.disabled = false;
-    } else if (isValid === false) {
-        showAlert('Invalid regex!', 'error');
-        showResult('rm', 'error');
     }
 }

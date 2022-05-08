@@ -1,8 +1,8 @@
-let minNumber = document.getElementById('min-number');
-let maxNumber = document.getElementById('max-number');
-let generate = document.getElementById('generate-number');
-let resetButton = document.getElementById('reset');
-let outputNumber = document.getElementById('random-number');
+const minNumber = document.getElementById('min-number');
+const maxNumber = document.getElementById('max-number');
+const generate = document.getElementById('generate-number');
+const resetButton = document.getElementById('reset');
+const outputNumber = document.getElementById('random-number');
 
 /* Add event listeners */
 generate.addEventListener('click', generateNumber);
@@ -11,23 +11,22 @@ resetButton.addEventListener('click', reset);
 function reset() {
     minNumber.value = '1';
     maxNumber.value = '10';
-    outputNumber.innerHTML = '';
+    outputNumber.textContent = '0';
     showAlert('Cleared!', 'success');
     resetResult('generate');
 }
 
 function generateNumber() {
-    let min = Number(minNumber.value);
-    let max = Number(maxNumber.value);
+    const min = Number(minNumber.value);
+    const max = Number(maxNumber.value);
     if (min.length === 0 || max.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('generate', 'error');
-    } else if (min > max || min === max) {
+    } else if (min >= max) {
         showAlert('The minimum must be less than the maximum!', 'error');
         showResult('generate', 'error');
     } else {
-        let output = Math.floor(Math.random() * (max - min + 1) + min).toLocaleString();
-        outputNumber.innerHTML = output;
+        outputNumber.textContent = Math.floor(Math.random() * (max - min + 1) + min).toLocaleString();
         showResult('generate', 'success');
     }
 }

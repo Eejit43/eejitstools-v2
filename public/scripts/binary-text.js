@@ -1,15 +1,15 @@
-let input = document.getElementById('input');
-let toBinaryBtn = document.getElementById('to-binary');
-let fromBinaryBtn = document.getElementById('from-binary');
-let clearBtn = document.getElementById('clear');
-let result = document.getElementById('result');
+const input = document.getElementById('input');
+const toBinaryBtn = document.getElementById('to-binary');
+const fromBinaryBtn = document.getElementById('from-binary');
+const clearBtn = document.getElementById('clear');
+const result = document.getElementById('result');
 let resultCopy = document.getElementById('copy-result');
 
 /* Add event listeners */
 toBinaryBtn.addEventListener('click', toBinary);
 fromBinaryBtn.addEventListener('click', fromBinary);
 clearBtn.addEventListener('click', clear);
-resultCopy.addEventListener('click', function () {
+resultCopy.addEventListener('click', () => {
     copyValue('result', 'copy-result');
 });
 
@@ -27,9 +27,7 @@ function clear() {
 function textToBinary(string) {
     return string
         .split('')
-        .map(function (char) {
-            return char.charCodeAt(0).toString(2);
-        })
+        .map((char) => char.charCodeAt(0).toString(2))
         .join(' ');
 }
 

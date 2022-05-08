@@ -1,71 +1,67 @@
-let startTimerButton = document.getElementById('start-timer');
-let pauseResumeTimer = document.getElementById('pause-resume-timer');
-let resetButton = document.getElementById('reset');
-let hoursButton = document.getElementById('hours');
-let minutesButton = document.getElementById('minutes');
-let secondsButton = document.getElementById('seconds');
-let timerDisplay = document.getElementById('timer');
-let timerTime = document.getElementById('timer-time');
+const startTimerButton = document.getElementById('start-timer');
+const pauseResumeTimer = document.getElementById('pause-resume-timer');
+const resetButton = document.getElementById('reset');
+const hoursInput = document.getElementById('hours');
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
+const timerDisplay = document.getElementById('timer');
+const timerTime = document.getElementById('timer-time');
 
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);
 pauseResumeTimer.addEventListener('click', pauseResume);
 resetButton.addEventListener('click', reset);
-hoursButton.addEventListener('input', function () {
-    let input = hoursButton;
-    input.value = input.value.replace(/((?![0-9]).)/g, '');
+hoursInput.addEventListener('input', () => {
+    hoursInput.value = hoursInput.value.replace(/((?![0-9]).)/g, '');
+    checkInput(hoursInput);
 });
-hoursButton.addEventListener('input', function () {
-    checkInput(this);
+minutesInput.addEventListener('input', () => {
+    minutesInput.value = minutesInput.value.replace(/((?![0-9]).)/g, '');
+    checkInput(minutesInput);
 });
-minutesButton.addEventListener('input', function () {
-    let input = minutesButton;
-    input.value = input.value.replace(/((?![0-9]).)/g, '');
-});
-minutesButton.addEventListener('input', function () {
-    checkInput(this);
-});
-secondsButton.addEventListener('input', function () {
-    let input = secondsButton;
-    input.value = input.value.replace(/((?![0-9]).)/g, '');
-});
-secondsButton.addEventListener('input', function () {
-    checkInput(this);
+secondsInput.addEventListener('input', () => {
+    secondsInput.value = secondsInput.value.replace(/((?![0-9]).)/g, '');
+    checkInput(secondsInput);
 });
 
 function checkInput(element) {
-    if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
+    if (element.value?.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
     if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
-let audio = new Audio('/timer-alarm.mp3');
+const audio = new Audio('/timer-alarm.mp3');
+
+let paused = true;
 
 function reset() {
-    clearInterval(runTimer);
+    paused = true;
+    displayTime();
+
     audio.pause();
     audio.currentTime = 0;
-    timerState = 1;
-    pauseResumeTimer.innerHTML = 'Pause';
-    timerTime.innerHTML = '';
+    pauseResumeTimer.textContent = 'Pause';
+    timerTime.textContent = '';
     startTimerButton.disabled = false;
     pauseResumeTimer.disabled = true;
-    hoursButton.value = '0';
-    minutesButton.value = '1';
-    secondsButton.value = '0';
-    timerDisplay.innerHTML = '0h 0m 0s';
+    hoursInput.value = '0';
+    minutesInput.value = '1';
+    secondsInput.value = '0';
+    timerDisplay.textContent = '0h 0m 0s';
     showAlert('Reset!', 'success');
     resetResult('timer');
 }
 
-let targettime, runTimer;
-
+let targetTime, runTimer;
 function startTimer() {
+    if (!paused) return;
+
     audio.pause();
     audio.currentTime = 0;
-    timerState = 1;
-    let hours = parseInt(hoursButton.value);
-    let minutes = parseInt(minutesButton.value);
-    let seconds = parseInt(secondsButton.value);
+    paused = false;
+    const hours = parseInt(hoursInput.value);
+    const minutes = parseInt(minutesInput.value);
+    const seconds = parseInt(secondsInput.value);
+
     if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
         showAlert('Empty input!', 'error');
         showResult('timer', 'error');
@@ -75,79 +71,63 @@ function startTimer() {
     } else {
         startTimerButton.disabled = true;
         pauseResumeTimer.disabled = false;
-        let timeuntil = (hours * 3600 + minutes * 60 + seconds) * 1000;
 
-        let curtime = new Date().getTime();
-
-        targettime = parseInt(String(curtime + timeuntil).slice(0, -3));
-
-        let distance = targettime - curtime;
-        runTimer = setInterval(timer, 500);
+        targetTime = Date.now() + (hours * 360 + minutes * 60 + seconds) * 1000;
+        requestAnimationFrame(displayTime);
     }
 }
 
-let hoursuntil, minutesuntil, secondsuntil, targettimestring;
+let remaining, secondsUntil, minutesUntil, hoursUntil;
+function displayTime() {
+    if (paused) return;
 
-function timer() {
-    let curtime = parseInt(String(new Date().getTime()).slice(0, -3));
+    remaining = (targetTime - Date.now()) / 1000;
 
-    let distance = targettime - curtime;
-
-    hoursuntil = Math.floor(distance / 3600);
-    minutesuntil = Math.floor((distance - hoursuntil * 3600) / 60);
-    secondsuntil = Math.floor(distance - hoursuntil * 3600 - minutesuntil * 60);
-
-    timerDisplay.innerHTML = `${hoursuntil}h ${minutesuntil}m ${secondsuntil}s`;
-
-    if (distance <= 0) {
-        timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: gold"></i>';
+    if (remaining <= 0) {
+        timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
         audio.play();
         audio.loop = true;
-        clearInterval(runTimer);
+        pauseResumeTimer.disabled = true;
+        return;
     }
 
-    let targettime2 = new Date(targettime * 1000);
+    secondsUntil = Math.floor(remaining % 60);
+    minutesUntil = Math.floor((remaining % 3600) / 60);
+    hoursUntil = Math.floor(remaining / 3600);
+
+    timerDisplay.textContent = `${hoursUntil}h ${minutesUntil}m ${secondsUntil}s`;
+    timerTime.textContent = '';
+
+    requestAnimationFrame(displayTime);
+
+    const targetDate = new Date(targetTime);
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let date = targettime2.getDate();
-    let month = months[targettime2.getMonth()];
-    let year = targettime2.getFullYear();
-    let fullhours = targettime2.getHours();
-    let hours = ((fullhours + 11) % 12) + 1;
-    let minutes = targettime2.getMinutes();
-    let sec = targettime2.getSeconds();
+    const date = targetDate.getDate();
+    const month = months[targetDate.getMonth()];
+    const year = targetDate.getFullYear();
+    const fullHours = targetDate.getHours();
+    const hours = ((fullHours + 11) % 12) + 1;
+    let minutes = targetDate.getMinutes();
+    let seconds = targetDate.getSeconds();
 
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-    if (sec < 10) {
-        sec = '0' + sec;
-    }
+    if (minutes < 10) minutes = '0' + minutes;
+    if (seconds < 10) seconds = '0' + seconds;
 
-    let timesuffix = fullhours >= 12 ? 'PM' : 'AM';
+    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-    timerTime.innerHTML = month + ' ' + date + ', ' + year + ' ' + hours + ':' + minutes + ':' + sec + ' ' + timesuffix;
+    timerTime.textContent = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
 }
 
-let timerState = 1; // 1 = running, 2 = paused
-
 function pauseResume() {
-    if (timerState === 1) {
-        timerState = 2;
-        pauseResumeTimer.innerHTML = 'Resume';
-        clearInterval(runTimer);
+    if (!paused) {
+        paused = true;
+        pauseResumeTimer.textContent = 'Resume';
     } else {
-        timerState = 1;
-        pauseResumeTimer.innerHTML = 'Pause';
+        paused = false;
+        pauseResumeTimer.textContent = 'Pause';
 
-        let hours2 = parseInt(hoursuntil);
-        let minutes2 = parseInt(minutesuntil);
-        let seconds2 = parseInt(secondsuntil);
-
-        let curtime = new Date().getTime();
-
-        let timeuntil = (hours2 * 3600 + minutes2 * 60 + seconds2) * 1000;
-        targettime = parseInt(String(curtime + timeuntil).slice(0, -3));
-        runTimer = setInterval(timer, 500);
+        targetTime = Date.now() + remaining * 1000;
+        displayTime();
     }
 }

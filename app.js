@@ -60,6 +60,14 @@ app.get('/headers', (req, res) => {
     res.status(200).json(req.headers);
 });
 
+app.get('/pages', (req, res) => {
+    res.status(200).json(
+        Object.keys(allPageInfo).map((key) => {
+            return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
+        })
+    );
+});
+
 fs.readdirSync('./views/pages').forEach((category) => {
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
 

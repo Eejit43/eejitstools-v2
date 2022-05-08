@@ -1,44 +1,44 @@
 // Some formulas modified from https://css-tricks.com/converting-color-spaces-in-javascript/
 
-let hexInput = document.getElementById('hex-input');
-let hexDisplay = document.getElementById('hex-display');
-let hexRgb = document.getElementById('hex-rgb');
+const hexInput = document.getElementById('hex-input');
+const hexDisplay = document.getElementById('hex-display');
+const hexRgb = document.getElementById('hex-rgb');
 let hexRgbCopy = document.getElementById('hex-rgb-copy');
-let hexHsl = document.getElementById('hex-hsl');
+const hexHsl = document.getElementById('hex-hsl');
 let hexHslCopy = document.getElementById('hex-hsl-copy');
-let rgbInput = document.getElementById('rgb-input');
-let rgbDisplay = document.getElementById('rgb-display');
-let rgbHex = document.getElementById('rgb-hex');
+const rgbInput = document.getElementById('rgb-input');
+const rgbDisplay = document.getElementById('rgb-display');
+const rgbHex = document.getElementById('rgb-hex');
 let rgbHexCopy = document.getElementById('rgb-hex-copy');
-let rgbHsl = document.getElementById('rgb-hsl');
+const rgbHsl = document.getElementById('rgb-hsl');
 let rgbHslCopy = document.getElementById('rgb-hsl-copy');
-let hslInput = document.getElementById('hsl-input');
-let hslDisplay = document.getElementById('hsl-display');
-let hslHex = document.getElementById('hsl-hex');
+const hslInput = document.getElementById('hsl-input');
+const hslDisplay = document.getElementById('hsl-display');
+const hslHex = document.getElementById('hsl-hex');
 let hslHexCopy = document.getElementById('hsl-hex-copy');
-let hslRgb = document.getElementById('hsl-rgb');
+const hslRgb = document.getElementById('hsl-rgb');
 let hslRgbCopy = document.getElementById('hsl-rgb-copy');
 
 /* Add event listeners */
 hexInput.addEventListener('input', hex);
-hexRgbCopy.addEventListener('click', function () {
+hexRgbCopy.addEventListener('click', () => {
     copyValue('hex-rgb', 'hex-rgb-copy');
 });
-hexHslCopy.addEventListener('click', function () {
+hexHslCopy.addEventListener('click', () => {
     copyValue('hex-hsl', 'hex-hsl-copy');
 });
 rgbInput.addEventListener('input', rgb);
-rgbHexCopy.addEventListener('click', function () {
+rgbHexCopy.addEventListener('click', () => {
     copyValue('rgb-hex', 'rgb-hex-copy');
 });
-rgbHslCopy.addEventListener('click', function () {
+rgbHslCopy.addEventListener('click', () => {
     copyValue('rgb-hsl', 'rgb-hsl-copy');
 });
 hslInput.addEventListener('input', hsl);
-hslHexCopy.addEventListener('click', function () {
+hslHexCopy.addEventListener('click', () => {
     copyValue('hsl-hex', 'hsl-hex-copy');
 });
-hslRgbCopy.addEventListener('click', function () {
+hslRgbCopy.addEventListener('click', () => {
     copyValue('hsl-rgb', 'hsl-rgb-copy');
 });
 

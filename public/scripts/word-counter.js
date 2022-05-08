@@ -1,49 +1,26 @@
-let input = document.getElementById('input');
-
-let characterDisplay = document.getElementById('character-count');
-let wordDisplay = document.getElementById('word-count');
-let sentenceDisplay = document.getElementById('sentence-count');
-let lineDisplay = document.getElementById('line-count');
-let paragraphDisplay = document.getElementById('paragraph-count');
-
-let characterCount, wordCount, sentenceCount, lineCount, paragraphCount;
+const input = document.getElementById('input');
+const characterDisplay = document.getElementById('character-count');
+const wordDisplay = document.getElementById('word-count');
+const sentenceDisplay = document.getElementById('sentence-count');
+const lineDisplay = document.getElementById('line-count');
+const paragraphDisplay = document.getElementById('paragraph-count');
 
 /* Add event listeners */
-document.getElementById('input').addEventListener('input', updateValues);
-document.getElementById('reset').addEventListener('click', reset);
-
-function updateValues() {
-    characterCount = input.value.length;
-    wordCount = input.value.trim()
-        ? input.value
-              .trim()
-              .split(/\s+/)
-              .filter((word) => /\w/.test(word)).length
-        : 0;
-    sentenceCount = input.value.trim()
-        ? input.value
-              .trim()
-              .split(/[.?!]/)
-              .filter((sentence) => !/^\s*$/.test(sentence)).length
-        : 0;
-    lineCount = input.value.trim() ? input.value.trim().split('\n').length : 0;
-    paragraphCount = input.value.trim() ? input.value.trim().split('\n\n').length : 0;
-
-    characterDisplay.innerHTML = characterCount;
-    wordDisplay.innerHTML = wordCount;
-    sentenceDisplay.innerHTML = sentenceCount;
-    lineDisplay.innerHTML = lineCount;
-    paragraphDisplay.innerHTML = paragraphCount;
-}
-
-function reset() {
+document.getElementById('input').addEventListener('input', () => {
+    characterDisplay.textContent = input.value.length;
+    wordDisplay.textContent = input.value.trim() ? input.value.trim().split(/\s+/) .filter((word) => /\w/.test(word)).length : 0; // prettier-ignore
+    sentenceDisplay.textContent = input.value.trim() ? input.value.trim().split(/[.?!]/).filter((sentence) => !/^\s*$/.test(sentence)).length : 0; // prettier-ignore
+    lineDisplay.textContent = input.value.trim() ? input.value.trim().split('\n').length : 0;
+    paragraphDisplay.textContent = input.value.trim() ? input.value.trim().split('\n\n').length : 0;
+});
+document.getElementById('reset').addEventListener('click', () => {
     input.value = '';
 
-    characterDisplay.innerHTML = '0';
-    wordDisplay.innerHTML = '0';
-    sentenceDisplay.innerHTML = '0';
-    lineDisplay.innerHTML = '0';
-    paragraphDisplay.innerHTML = '0';
+    characterDisplay.textContent = '0';
+    wordDisplay.textContent = '0';
+    sentenceDisplay.textContent = '0';
+    lineDisplay.textContent = '0';
+    paragraphDisplay.textContent = '0';
 
     showAlert('Reset!', 'success');
-}
+});

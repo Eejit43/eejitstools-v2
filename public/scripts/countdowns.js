@@ -1,6 +1,6 @@
 // Some dates from https://calendarific.com/api/v2/holidays?api_key=9f2483021d5643c59e75d133dc71bcab6672bfc0&country=US&year=2023&type=national
 
-let dates = [
+const dates = [
     { name: "New Year's Day", date: '2022-01-01', emoji: '🎉', id: 'new_years_day_2022' },
     { name: 'Martin Luther King Jr. Day', date: '2022-01-17', emoji: '👴🏾', id: 'martin_luther_king_jr_day_2022' },
     { name: "Valentine's Day", date: '2022-02-14', emoji: '❤️', id: 'valentines_day_2022' },
@@ -46,8 +46,7 @@ let dates = [
     { name: "New Year's Eve", date: '2023-12-31', emoji: '🕑', id: 'new_years_eve_2023' },
 ];
 
-let result = [];
-
+const result = [];
 for (let i = 0; i < dates.length; i++) {
     if (getTimeUntil(dates[i].date) !== '') {
         result.push(
@@ -56,13 +55,11 @@ for (let i = 0; i < dates.length; i++) {
     }
 }
 
-result = result.join('<br />');
-
-document.getElementById('countdowns').innerHTML = result;
+document.getElementById('countdowns').innerHTML = result.join('<br />');
 
 twemojiUpdate();
 
-setInterval(function showCountdowns() {
+setInterval(() => {
     for (let i = 0; i < dates.length; i++) {
         let result = getTimeUntil(dates[i].date);
         if (getTimeUntil(dates[i].date) !== '' && document.getElementById(dates[i].id).innerHTML !== result) {
@@ -78,36 +75,36 @@ setInterval(function showCountdowns() {
 function getTimeUntil(date) {
     let countdownDate = new Date(`${date} 00:00:00`).getTime();
 
-    let curtime = new Date().getTime();
+    let curTime = new Date().getTime();
 
-    let distance = countdownDate - curtime;
+    let distance = countdownDate - curTime;
 
     let days = Math.floor(distance / (1000 * 60 * 60 * 24));
     let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    let daysfinal = days + ' days';
-    if (days === 1) daysfinal = days + ' day';
-    if (days === 0) daysfinal = '';
+    let daysFinal = days + ' days';
+    if (days === 1) daysFinal = days + ' day';
+    if (days === 0) daysFinal = '';
 
-    let hoursfinal = hours + ' hours';
-    if (hours === 1) hoursfinal = hours + ' hour';
-    if (hours === 0) hoursfinal = '';
+    let hoursFinal = hours + ' hours';
+    if (hours === 1) hoursFinal = hours + ' hour';
+    if (hours === 0) hoursFinal = '';
 
-    let minutesfinal = minutes + ' minutes';
-    if (minutes === 1) minutesfinal = minutes + ' minute';
-    if (minutes === 0) minutesfinal = '';
+    let minutesFinal = minutes + ' minutes';
+    if (minutes === 1) minutesFinal = minutes + ' minute';
+    if (minutes === 0) minutesFinal = '';
 
-    let secondsfinal = seconds + ' seconds';
-    if (seconds === 1) secondsfinal = seconds + ' second';
-    if (seconds === 0) secondsfinal = '';
+    let secondsFinal = seconds + ' seconds';
+    if (seconds === 1) secondsFinal = seconds + ' second';
+    if (seconds === 0) secondsFinal = '';
 
     let result = [];
-    if (daysfinal !== '') result.push(daysfinal);
-    if (hoursfinal !== '') result.push(hoursfinal);
-    if (minutesfinal !== '') result.push(minutesfinal);
-    if (secondsfinal !== '') result.push(secondsfinal);
+    if (daysFinal !== '') result.push(daysFinal);
+    if (hoursFinal !== '') result.push(hoursFinal);
+    if (minutesFinal !== '') result.push(minutesFinal);
+    if (secondsFinal !== '') result.push(secondsFinal);
 
     if (distance <= 0 || distance >= 60 * 86400000) {
         // Don't show already occurred or if over 60 days away

@@ -15,14 +15,14 @@ let decimalOutputCopy = document.getElementById('decimal-output-copy');
 let scientificOutputVal, scientificOutputVal2;
 
 /* Add event listeners */
-decimalInput.addEventListener('input', function () {
-    decimalInput.value = decimalInpuvalue
+decimalInput.addEventListener('input', () => {
+    decimalInput.value = decimalInput.value
         .replace(/[^0-9\.\-\+]/g, '')
         .replace(/(\..*?)\./g, '$1')
         .replace(/(-.*?)-/g, '$1')
         .replace(/(\+.*?)\+/g, '$1');
 });
-decimalInput.addEventListener('input', function () {
+decimalInput.addEventListener('input', () => {
     if (decimalInput.value.length > 0) {
         decimalConvert.disabled = false;
     } else {
@@ -36,33 +36,28 @@ decimalInput.addEventListener('input', function () {
 });
 decimalConvert.addEventListener('click', convertDecimal);
 decimalReset.addEventListener('click', resetDecimal);
-scientificOutputCopy.addEventListener('click', function () {
+scientificOutputCopy.addEventListener('click', () => {
     copyVar('scientificOutputVal', 'scientific-output-copy', 'Copy scientific e notation');
 });
-scientificOutputCopy2.addEventListener('click', function () {
+scientificOutputCopy2.addEventListener('click', () => {
     copyVar('scientificOutputVal2', 'scientific-output-copy-2', 'Copy scientific notation');
 });
-scientificInput.addEventListener('input', function () {
-    if (scientificInput.value.length > 0) {
-        scientificConvert.disabled = false;
-    } else {
-        scientificConvert.disabled = true;
-    }
-    if (scientificInput.value.length > 0 || decimalOutput.value !== '' || scientificArrow.style.color !== 'dimgray') {
-        scientificReset.disabled = false;
-    } else {
-        scientificReset.disabled = true;
-    }
+scientificInput.addEventListener('input', () => {
+    if (scientificInput.value.length > 0) scientificConvert.disabled = false;
+    else scientificConvert.disabled = true;
+
+    if (scientificInput.value.length > 0 || decimalOutput.value !== '' || scientificArrow.style.color !== 'dimgray') scientificReset.disabled = false;
+    else scientificReset.disabled = true;
 });
 scientificConvert.addEventListener('click', convertScientific);
 scientificReset.addEventListener('click', resetScientific);
-decimalOutputCopy.addEventListener('click', function () {
+decimalOutputCopy.addEventListener('click', () => {
     copyVar('decimalOutputVal', 'decimal-output-copy', 'Copy');
 });
 
 function resetDecimal() {
-    scientificOutputVal = undefined;
-    scientificOutputVal2 = undefined;
+    scientificOutputVal = '';
+    scientificOutputVal2 = '';
     scientificOutputCopy = document.getElementById('scientific-output-copy');
     scientificOutputCopy2 = document.getElementById('scientific-output-copy-2');
     decimalInput.value = '';
@@ -94,7 +89,7 @@ function convertDecimal() {
     if (/^[+-]?([0-9]\d*)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
         scientificOutput.value = math.bignumber(decimalInput.value).toExponential();
         scientificOutputVal = math.bignumber(decimalInput.value).toExponential();
-        scientificOutputVal2 = String(math.bignumber(decimalInput.value).toExponential()).replace('e+', ' x 10^').replace('e-', ' x 10^-');
+        scientificOutputVal2 = math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
         scientificOutputCopy.disabled = false;
         scientificOutputCopy2.disabled = false;
         updateArrow('decimal', 'success');
@@ -110,10 +105,7 @@ function convertDecimal() {
 function convertScientific() {
     if (/^[+-]?\d(\.\d+)?[Ee][+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = math.format(math.bignumber(scientificInput.value), { notation: 'fixed' });
-        decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', {
-            useGrouping: false,
-            maximumFractionDigits: 20,
-        });
+        decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopy.disabled = false;
         scientificArrow.style.color = '#009c3f';
         scientificArrow.className = 'fa-solid fa-arrow-right';

@@ -12,68 +12,54 @@ Date.prototype.isDstObserved = function () {
 };
 
 function showResult(element, variable) {
-    if (document.getElementById(element).innerHTML !== eval(variable)) {
-        document.getElementById(element).innerHTML = eval(variable);
-    }
+    if (document.getElementById(element).innerHTML !== eval(variable)) document.getElementById(element).innerHTML = eval(variable);
 }
 
-let finaltime, isDst, finaldate, unixtime, finaltimezone, jptime, crtime, gbtime, utctime;
+let finalTime, isDst, finalDate, unixTime, finalTimezone, jpTime, crTime, gbTime, utcTime;
 
 function time() {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let currentTime = new Date();
-    let day = days[currentTime.getDay()];
-    let date = currentTime.getDate();
-    let month = months[currentTime.getMonth()];
-    let monthnumber = currentTime.getMonth() + 1;
-    let year = currentTime.getFullYear();
-    let shortyear = year.toString().substr(-2);
-    let fullhours = currentTime.getHours();
-    let hours = ((fullhours + 11) % 12) + 1;
+    const currentTime = new Date();
+    const day = days[currentTime.getDay()];
+    const date = currentTime.getDate();
+    const month = months[currentTime.getMonth()];
+    const monthNumber = currentTime.getMonth() + 1;
+    const year = currentTime.getFullYear();
+    const shortYear = year.toString().substr(-2);
+    const fullHours = currentTime.getHours();
+    const hours = ((fullHours + 11) % 12) + 1;
     let minutes = currentTime.getMinutes();
-    let sec = currentTime.getSeconds();
-    unixtime = currentTime.getTime();
-    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let toffset = new Date().getTimezoneOffset();
-    let offsetsign = toffset < 0 ? '+' : '-';
-    let timeoffset = offsetsign + ((toffset / 60) | 0);
-    jptime = currentTime.toLocaleString('en-US', {
-        timeZone: 'Japan',
-    });
-    crtime = currentTime.toLocaleString('en-US', {
-        timeZone: 'America/Costa_Rica',
-    });
-    gbtime = currentTime.toLocaleString('en-US', {
-        timeZone: 'Europe/London',
-    });
-    utctime = currentTime.toLocaleString('en-US', {
-        timeZone: 'Etc/UTC',
-    });
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-    if (sec < 10) {
-        sec = '0' + sec;
-    }
+    let seconds = currentTime.getSeconds();
+    unixTime = currentTime.getTime();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezoneOffset = new Date().getTimezoneOffset();
+    const offsetSign = timezoneOffset < 0 ? '+' : '-';
+    const timeOffset = offsetSign + ((timezoneOffset / 60) | 0);
+    jpTime = currentTime.toLocaleString('en-US', { timeZone: 'Japan' });
+    crTime = currentTime.toLocaleString('en-US', { timeZone: 'America/Costa_Rica' });
+    gbTime = currentTime.toLocaleString('en-US', { timeZone: 'Europe/London' });
+    utcTime = currentTime.toLocaleString('en-US', { timeZone: 'Etc/UTC' });
+    if (minutes < 10) minutes = '0' + minutes;
+    if (seconds < 10) seconds = '0' + seconds;
 
     isDst = new Date().isDstObserved() ? 'In' : 'Not';
 
-    let timesuffix = fullhours >= 12 ? 'PM' : 'AM';
+    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-    finaltime = hours + ':' + minutes + ':' + sec + ' ' + timesuffix;
-    finaldate = day + ', ' + month + ' ' + date + ', ' + year + ' (' + monthnumber + '/' + date + '/' + shortyear + ')';
-    finaltimezone = timezone + ' (UTC' + timeoffset + ')';
+    finalTime = hours + ':' + minutes + ':' + seconds + ' ' + timeSuffix;
+    finalDate = day + ', ' + month + ' ' + date + ', ' + year + ' (' + monthNumber + '/' + date + '/' + shortYear + ')';
+    finalTimezone = timezone + ' (UTC' + timeOffset + ')';
 
-    showResult('time', 'finaltime');
+    showResult('time', 'finalTime');
     showResult('dst', 'isDst');
-    showResult('date', 'finaldate');
-    showResult('unix', 'unixtime');
-    showResult('timezone', 'finaltimezone');
-    showResult('jptime', 'jptime');
-    showResult('crtime', 'crtime');
-    showResult('gbtime', 'gbtime');
-    showResult('utctime', 'utctime');
+    showResult('date', 'finalDate');
+    showResult('unix', 'unixTime');
+    showResult('timezone', 'finalTimezone');
+    showResult('jp-time', 'jpTime');
+    showResult('cr-time', 'crTime');
+    showResult('gb-time', 'gbTime');
+    showResult('utc-time', 'utcTime');
     setTimeout(time, 100);
 }
 
