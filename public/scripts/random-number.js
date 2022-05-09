@@ -6,15 +6,14 @@ const outputNumber = document.getElementById('random-number');
 
 /* Add event listeners */
 generate.addEventListener('click', generateNumber);
-resetButton.addEventListener('click', reset);
-
-function reset() {
+resetButton.addEventListener('click', () => {
     minNumber.value = '1';
     maxNumber.value = '10';
     outputNumber.textContent = '0';
+
     showAlert('Cleared!', 'success');
     resetResult('generate');
-}
+});
 
 function generateNumber() {
     const min = Number(minNumber.value);

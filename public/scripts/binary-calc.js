@@ -9,21 +9,29 @@ const copyOutput = document.getElementById('copy-output');
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
 input.addEventListener('input', findInput);
-resetButton.addEventListener('click', reset);
-outputType.addEventListener('change', findInput);
-copyOutput.addEventListener('click', function () {
-    copyValue('output', 'copy-output');
-});
-
-function reset() {
+resetButton.addEventListener('click', () => {
     input.value = '';
     output.value = '';
     message.innerHTML = '';
     inputType.value = 3;
     outputType.value = 1;
     copyOutput.disabled = true;
+
+    resetButton.disabled = true;
+    resetButton.textContent = 'Reset!';
     showAlert('Reset!', 'success');
-}
+
+    setTimeout(() => {
+        copyOutput.disabled = true;
+
+        resetButton.disabled = false;
+        resetButton.textContent = 'Reset';
+    }, 2000);
+});
+outputType.addEventListener('change', findInput);
+copyOutput.addEventListener('click', () => {
+    copyValue(copyOutput, output);
+});
 
 function findInput() {
     if (input.value !== '') {
@@ -37,30 +45,22 @@ function findInput() {
             case 1:
                 if (/^[01]*$/.test(input.value)) {
                     convert(parseInt(input.value), 2);
-                } else {
-                    notValid();
-                }
+                } else notValid();
                 break;
             case 2:
                 if (/^[0-7]*$/.test(input.value)) {
                     convert(parseInt(input.value), 8);
-                } else {
-                    notValid();
-                }
+                } else notValid();
                 break;
             case 3:
                 if (/^[0-9]*$/.test(input.value)) {
                     convert(parseInt(input.value), 10);
-                } else {
-                    notValid();
-                }
+                } else notValid();
                 break;
             case 4:
                 if (/^[0-9a-fA-F]*$/.test(input.value)) {
                     convert(input.value, 16);
-                } else {
-                    notValid();
-                }
+                } else notValid();
         }
     } else {
         message.innerHTML = '';

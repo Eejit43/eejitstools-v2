@@ -15,35 +15,30 @@ resetDate.addEventListener('click', () => {
     dateVal.value = '';
     checkApod(year, month, date);
 });
-yearVal.addEventListener('input', () => {
-    yearVal.value = yearVal.value.replace(/((?![0-9]).)/g, '');
+['input', 'paste'].forEach((event) => {
+    yearVal.addEventListener(event, () => {
+        yearVal.value = yearVal.value.replace(/((?![0-9]).)/g, '');
+        checkInput(yearVal);
+    });
 });
-yearVal.addEventListener('paste', () => {
-    yearVal.value = yearVal.value.replace(/((?![0-9]).)/g, '');
+['input', 'paste'].forEach((event) => {
+    monthVal.addEventListener(event, () => {
+        monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
+        checkInput(monthVal);
+    });
 });
-monthVal.addEventListener('input', () => {
-    monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
-});
-monthVal.addEventListener('paste', () => {
-    monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
-});
-monthVal.addEventListener('input', () => {
-    checkInput(this);
-});
-dateVal.addEventListener('input', () => {
-    dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-});
-dateVal.addEventListener('paste', () => {
-    dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-});
-dateVal.addEventListener('input', () => {
-    checkInput(this);
+['input', 'paste'].forEach((event) => {
+    dateVal.addEventListener(event, () => {
+        dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
+        checkInput(dateVal);
+    });
 });
 
 function checkInput(element) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
     if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
 }
+
 const currentTime = new Date();
 const year = currentTime.getFullYear();
 let month = currentTime.getMonth() + 1;
@@ -72,12 +67,12 @@ function fetchApod(yearInput, monthInput, dateInput) {
     if (dateInput.length === 1) dateInput = 0 + dateInput;
     fetch(`https://eejitstools.herokuapp.com/https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
         .then(async (response) => {
-            const pre_html = (await response.text()).replace(/\n/g, ' ').replace(/<a(.*?)>/g, '<a$1 target="_blank">');
-            const html = stringToHTML(pre_html);
+            const preHtml = (await response.text()).replace(/\n/g, ' ').replace(/<a(.*?)>/g, '<a$1 target="_blank">');
+            const html = stringToHTML(preHtml);
 
             const apodDate = new Date(`${yearFull}/${monthFull}/${dateFull} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-            const mediaType = /img src/gi.test(pre_html) ? 'image' : 'video';
+            const mediaType = /img src/gi.test(preHtml) ? 'image' : 'video';
 
             try {
                 if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
@@ -86,7 +81,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
             }
 
-            credit = /Credit.*?<\/center>/gis.test(pre_html) ? pre_html.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '') : false; // prettier-ignore
+            credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '') : false; // prettier-ignore
 
             if (mediaType === 'video') media = `<div style="position: relative; overflow: hidden; margin: 15px auto; width: 900px; max-width: 90%; padding-top: 40%">${html.querySelector('iframe').outerHTML.replace(/src/g, 'style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%" src')}</div>`;
             else {
@@ -120,7 +115,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
 
             resultElement.innerHTML = result.join('');
         })
-        .catch((err) => {
+        .catch(() => {
             showAlert('No APOD data found for this date!', 'error');
         });
 }

@@ -1,19 +1,32 @@
-// Emoji parser
+/**
+ * Update emojis on the loaded content
+ */
 function twemojiUpdate() {
     twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
 }
 
 twemojiUpdate();
 
-// Popup alert
+/**
+ * Displays a popup alert
+ * @param {string} text The string to display
+ * @param {string} color 'success', 'error', or color
+ */
 function showAlert(text, color) {
+    color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
     if (color === 'error') color = '#ff5555';
-    Toastify({ text: text, duration: 2000, position: 'center', style: { background: '#333', boxShadow: 'none', minWidth: '150px', textAlign: 'center', fontFamily: '"Source Sans Pro", sans-serif', fontWeight: '600', fontSize: '17px', color: color, padding: '16px 30px' } }).showToast();
+    Toastify({ text: text || 'No text specified!', duration: 2000, position: 'center', style: { background: '#333', boxShadow: 'none', minWidth: '150px', textAlign: 'center', fontFamily: '"Source Sans Pro", sans-serif', fontWeight: '600', fontSize: '17px', color: color || '#009c3f', padding: '16px 30px' } }).showToast();
 }
 
-// Button icon
-function showResult(id, type, color = undefined, icon = undefined) {
+/**
+ * Updates the icon of the specified element
+ * @param {string} id The prefix of the element ID to update
+ * @param {string} [type] The type of icon to show ('success' or 'error')
+ * @param {string} [color] The color of the icon to show
+ * @param {string} [icon] The icon of the icon to show
+ */
+function showResult(id, type, color = '#009c3f', icon = 'check') {
     const oldElement = document.getElementById(id + '-runResult');
     const newElement = oldElement.cloneNode(true);
     oldElement.parentNode.replaceChild(newElement, oldElement);
@@ -26,21 +39,29 @@ function showResult(id, type, color = undefined, icon = undefined) {
     }
     newElement.style.color = color;
     newElement.className = 'fa-solid fa-' + icon;
-    setTimeout(function () {
+    setTimeout(() => {
         newElement.style.color = '';
         newElement.className = '';
     }, 2000);
 }
 
+/**
+ * Removes the icon of the specified element
+ * @param {string} id The prefix of the element ID to update
+ */
 function resetResult(id) {
     const element = document.getElementById(id + '-runResult');
     element.style.color = '';
     element.className = '';
 }
 
-// Arrow icons
-function updateArrow(id, type, arrowType = 'right') {
-    const element = document.getElementById(id + '-arrow');
+/**
+ * Updates the arrow icon of the specified element
+ * @param {HTMLElement} element The element to update
+ * @param {string} [type] The type of icon to show ('success', 'error', or 'reset')
+ * @param {string} [arrowType='right'] The direction of the arrow (defaults to 'right')
+ */
+function updateArrow(element, type, arrowType = 'right') {
     if (type === 'success') {
         color = '#009c3f';
         icon = `arrow-${arrowType}`;
@@ -55,58 +76,72 @@ function updateArrow(id, type, arrowType = 'right') {
     element.className = 'fa-solid fa-' + icon;
 }
 
-// Copy text
-function copyValue(toCopy, button) {
-    const oldElement = document.getElementById(button);
-    const newElement = oldElement.cloneNode(true);
-    oldElement.parentNode.replaceChild(newElement, oldElement);
-    const element = document.getElementById(toCopy);
-    navigator.clipboard.writeText(element.value);
-    newElement.innerHTML = 'Copied!';
-    setTimeout(function () {
-        newElement.innerHTML = 'Copy';
-    }, 2000);
+/**
+ * Copy an element's value
+ * @param {HTMLElement} element The element to update
+ * @param {HTMLElement} copyElement The element of the value to be copied
+ */
+function copyValue(element, copyElement) {
+    navigator.clipboard.writeText(copyElement.value);
+
+    const content = element.textContent;
+
+    element.disabled = true;
+    element.textContent = 'Copied!';
     showAlert('Copied!', 'success');
 
-    newElement.addEventListener('click', function () {
-        copyValue(toCopy, button);
-    });
+    setTimeout(() => {
+        element.disabled = false;
+        element.textContent = content;
+    }, 2000);
 }
 
-function copyText(button, text) {
-    const oldElement = document.getElementById(button);
-    const newElement = oldElement.cloneNode(true);
-    oldElement.parentNode.replaceChild(newElement, oldElement);
+/**
+ * Copy a string
+ * @param {HTMLElement} element The element to update
+ * @param {string} text The text to copy
+ */
+function copyText(element, text) {
     navigator.clipboard.writeText(text);
-    newElement.innerHTML = 'Copied!';
-    setTimeout(function () {
-        newElement.innerHTML = 'Copy';
-    }, 2000);
+
+    const content = element.textContent;
+
+    element.disabled = true;
+    element.textContent = 'Copied!';
     showAlert('Copied!', 'success');
 
-    newElement.addEventListener('click', function () {
-        copyText(button, text);
-    });
+    setTimeout(() => {
+        element.disabled = false;
+        element.textContent = content;
+    }, 2000);
 }
 
-function copyVar(variable, button, message) {
-    const oldElement = document.getElementById(button);
-    const newElement = oldElement.cloneNode(true);
-    oldElement.parentNode.replaceChild(newElement, oldElement);
+/**
+ * Copy a variable
+ * @param {HTMLElement} element The element to update
+ * @param {string} variable The name of the variable to copy
+ */
+function copyVar(element, variable) {
     navigator.clipboard.writeText(eval(variable));
-    newElement.innerHTML = 'Copied!';
-    setTimeout(function () {
-        newElement.innerHTML = message;
-    }, 2000);
+
+    const content = element.textContent;
+
+    element.disabled = true;
+    element.textContent = 'Copied!';
     showAlert('Copied!', 'success');
 
-    newElement.addEventListener('click', function () {
-        copyVar(variable, button, message);
-    });
+    setTimeout(() => {
+        element.disabled = false;
+        element.textContent = content;
+    }, 2000);
 }
 
-// Escape html
-function escapeHtml(input) {
+/**
+ * Escapes HTML syntax in a string
+ * @param {string} input String to be modified
+ * @returns {string} Formatted string
+ */
+function escapeHTML(input) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
@@ -133,7 +168,9 @@ function navTime() {
 
 navTime();
 
-// Navbar resize on scroll
+/**
+ * Resizes the navigation bar on scroll
+ */
 function resizeNav() {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) document.getElementById('navbar').className = 'nav-shrunk';
     else document.getElementById('navbar').className = '';
@@ -143,21 +180,29 @@ window.addEventListener('scroll', resizeNav);
 
 resizeNav();
 
-// String to HTML
-function stringToHTML(str) {
-    return new DOMParser().parseFromString(str, 'text/html');
+/**
+ * Converts a string to HTML
+ * @param {string} string String to convert
+ * @returns {Document} HTML
+ */
+function stringToHTML(string) {
+    return new DOMParser().parseFromString(string, 'text/html');
 }
 
-// Search Bar
-const searchResult = document.querySelector('.search-results');
-const searchText = document.querySelector('.search-text');
-
-function matchesKeywords(keywords, input) {
-    for (let i = 0; i < keywords.length; i++) {
-        if (keywords[i].includes(input)) return true;
-    }
+/**
+ * Whether or not the provided keyword(s) are included in the input
+ * @param {string[]} keywords The keyword(s) to check
+ * @param {string} string The text to check the keywords against
+ * @returns {boolean}
+ */
+function matchesKeywords(keywords, string) {
+    for (let i = 0; i < keywords.length; i++) if (keywords[i].includes(string)) return true;
     return false;
 }
+
+/* Search Bar */
+const searchResult = document.querySelector('.search-results');
+const searchText = document.querySelector('.search-text');
 
 searchText.addEventListener('input', async () => {
     const pages = await (await fetch('/pages')).json();
@@ -175,13 +220,12 @@ searchText.addEventListener('input', async () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        try {
-            window.open(document.querySelector('.search-box .search-results table tbody tr td a').href, '_self');
-        } catch (err) {}
+        const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
+        if (firstResult) window.open(firstResult.href, '_self');
     }
 });
 
-// Keyboard shortcuts
+/* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
 

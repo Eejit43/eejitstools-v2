@@ -3,16 +3,16 @@ const runDlr = document.getElementById('run-dlr');
 const dlrResult = document.getElementById('dlr-result');
 const dlrResult2 = document.getElementById('dlr-result-2');
 const dlrClearButton = document.getElementById('dlr-clear');
-let dlrCopyResult = document.getElementById('dlr-copy-result');
+const dlrCopyResult = document.getElementById('dlr-copy-result');
 const wrRegexInput = document.getElementById('wr-regexInput');
 const runWr = document.getElementById('run-wr');
 const wrResult = document.getElementById('wr-result');
 const wrResult2 = document.getElementById('wr-result-2');
 const wrResult3 = document.getElementById('wr-result-3');
 const wrClearButton = document.getElementById('wr-clear');
-let wrCopyResult = document.getElementById('wr-copy-result');
-let wrCopyResult2 = document.getElementById('wr-copy-result-2');
-let wrCopyResult3 = document.getElementById('wr-copy-result-3');
+const wrCopyResult = document.getElementById('wr-copy-result');
+const wrCopyResult2 = document.getElementById('wr-copy-result-2');
+const wrCopyResult3 = document.getElementById('wr-copy-result-3');
 const rmRegexInput = document.getElementById('rm-regexInput');
 const rmRegex = document.getElementById('rm-regex');
 const rmFlags = document.getElementById('rm-flags');
@@ -22,31 +22,115 @@ const rmResult = document.getElementById('rm-result');
 const rmClear = document.getElementById('rm-clear');
 const rmClear2 = document.getElementById('rm-clear-2');
 const rmSwitchButton = document.getElementById('rm-switch');
-let rmCopyResult = document.getElementById('rm-copy-result');
+const rmCopyResult = document.getElementById('rm-copy-result');
 
 /* Add event listeners */
 runDlr.addEventListener('click', runDlrRegex);
-dlrClearButton.addEventListener('click', dlrClear);
+dlrClearButton.addEventListener('click', () => {
+    dlrRegexInput.value = '';
+    dlrResult.value = '';
+    dlrCopyResult.disabled = true;
+
+    dlrClearButton.disabled = true;
+    dlrClearButton.innerHTML = 'Cleared!';
+    showAlert('Cleared!', 'success');
+    resetResult('dlr');
+
+    setTimeout(() => {
+        dlrCopyResult.disabled = true;
+
+        dlrClearButton.disabled = false;
+        dlrClearButton.innerHTML = 'Clear';
+    }, 2000);
+});
 dlrCopyResult.addEventListener('click', () => {
-    copyValue('dlr-result', 'dlr-copy-result');
+    copyValue(dlrCopyResult, dlrResult);
 });
 runWr.addEventListener('click', runWrRegex);
-wrClearButton.addEventListener('click', wrClear);
+wrClearButton.addEventListener('click', () => {
+    wrRegexInput.value = '';
+    wrResult.value = '';
+    wrCopyResult.disabled = true;
+    wrResult2.value = '';
+    wrCopyResult2.disabled = true;
+    wrResult3.value = '';
+    wrCopyResult3.disabled = true;
+
+    wrClearButton.disabled = true;
+    wrClearButton.innerHTML = 'Cleared!';
+    showAlert('Cleared!', 'success');
+    resetResult('wr');
+
+    setTimeout(() => {
+        wrCopyResult.disabled = true;
+        wrCopyResult2.disabled = true;
+        wrCopyResult3.disabled = true;
+
+        wrClearButton.disabled = false;
+        wrClearButton.innerHTML = 'Clear';
+    }, 2000);
+});
 wrCopyResult.addEventListener('click', () => {
-    copyValue('wr-result', 'wr-copy-result');
+    copyValue(wrCopyResult, wrResult);
 });
 wrCopyResult2.addEventListener('click', () => {
-    copyValue('wr-result-2', 'wr-copy-result-2');
+    copyValue(wrCopyResult2, wrResult2);
 });
 wrCopyResult3.addEventListener('click', () => {
-    copyValue('wr-result-3', 'wr-copy-result-3');
+    copyValue(wrCopyResult3, wrResult3);
 });
 runRm.addEventListener('click', runRmRegex);
-rmClear.addEventListener('click', rmClearInput);
-rmClear2.addEventListener('click', rmClearAll);
-rmSwitchButton.addEventListener('click', rmSwitch);
+rmClear.addEventListener('click', () => {
+    rmRegexInput.value = '';
+    rmResult.value = '';
+    rmCopyResult.disabled = true;
+
+    rmClear.disabled = true;
+    rmClear.innerHTML = 'Cleared!';
+    showAlert('Cleared!', 'success');
+    resetResult('rm');
+
+    setTimeout(() => {
+        rmCopyResult.disabled = true;
+
+        rmClear.disabled = false;
+        rmClear.innerHTML = 'Clear Input';
+    }, 2000);
+});
+rmClear2.addEventListener('click', () => {
+    rmRegexInput.value = '';
+    rmResult.value = '';
+    rmCopyResult.disabled = true;
+    rmRegex.value = '';
+    rmFlags.value = 'g';
+    rmReplace.value = '';
+
+    rmClear2.disabled = true;
+    rmClear2.innerHTML = 'Cleared!';
+    showAlert('Cleared!', 'success');
+    resetResult('rm');
+
+    setTimeout(() => {
+        rmCopyResult.disabled = true;
+
+        rmClear2.disabled = false;
+        rmClear2.innerHTML = 'Clear All';
+    }, 2000);
+});
+rmSwitchButton.addEventListener('click', () => {
+    if (rmResult.value.length === 0) {
+        showAlert('Nothing to move!', 'error');
+        showResult('switch', 'error');
+    } else {
+        rmRegexInput.value = rmResult.value;
+        rmResult.value = '';
+        rmCopyResult.disabled = true;
+        showAlert('Moved to input!', '#1c62d4');
+        showResult('switch', 'custom', '#1c62d4', 'arrows-alt-v');
+    }
+});
 rmCopyResult.addEventListener('click', () => {
-    copyValue('rm-result', 'rm-copy-result');
+    copyValue(rmCopyResult, rmResult);
 });
 rmRegex.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') rmRegex.value += '\\n';
@@ -63,20 +147,6 @@ rmReplace.addEventListener('paste', (event) => {
     rmReplace.value += event.clipboardData.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 });
 
-// Duplicate Line Remover
-function dlrClear() {
-    dlrCopyResult = document.getElementById('dlr-copy-result');
-    dlrRegexInput.value = '';
-    dlrResult.value = '';
-    dlrCopyResult.disabled = true;
-    showAlert('Cleared!', 'success');
-    resetResult('dlr');
-    dlrClearButton.innerHTML = 'Cleared!';
-    setTimeout(function () {
-        dlrClearButton.innerHTML = 'Clear';
-    }, 2000);
-}
-
 function runDlrRegex() {
     if (dlrRegexInput.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -88,82 +158,18 @@ function runDlrRegex() {
     }
 }
 
-// Whitespace Remover
-function wrClear() {
-    wrCopyResult = document.getElementById('wr-copy-result');
-    wrCopyResult2 = document.getElementById('wr-copy-result-2');
-    wrCopyResult3 = document.getElementById('wr-copy-result-3');
-    wrRegexInput.value = '';
-    wrResult.value = '';
-    wrCopyResult.disabled = true;
-    wrResult2.value = '';
-    wrCopyResult2.disabled = true;
-    wrResult3.value = '';
-    wrCopyResult3.disabled = true;
-    showAlert('Cleared!', 'success');
-    resetResult('wr');
-    wrClearButton.innerHTML = 'Cleared!';
-    setTimeout(() => {
-        wrClearButton.innerHTML = 'Clear';
-    }, 2000);
-}
-
 function runWrRegex() {
-    let input = wrRegexInput.value;
-    if (input.length === 0) {
+    if (wrRegexInput.value.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('wr', 'error');
     } else {
         showResult('wr', 'success');
-        wrResult.value = input.replace(/^[ \t]+|[ \t]+$/gm, '');
+        wrResult.value = wrRegexInput.value.replace(/^[ \t]+|[ \t]+$/gm, '');
         wrCopyResult.disabled = false;
-        wrResult2.value = input.replace(/^[ \t\r\n]+|[ \t]+$/gm, '');
+        wrResult2.value = wrRegexInput.value.replace(/^[ \t\r\n]+|[ \t]+$/gm, '');
         wrCopyResult2.disabled = false;
-        wrResult3.value = input.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gm, '');
+        wrResult3.value = wrRegexInput.value.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gm, '');
         wrCopyResult3.disabled = false;
-    }
-}
-
-// Regex Maker
-function rmClearInput() {
-    rmCopyResult = document.getElementById('rm-copy-result');
-    rmRegexInput.value = '';
-    rmResult.value = '';
-    rmCopyResult.disabled = true;
-    showAlert('Cleared!', 'success');
-    resetResult('rm');
-    rmClear.innerHTML = 'Cleared!';
-    setTimeout(() => {
-        rmClear.innerHTML = 'Clear Input';
-    }, 2000);
-}
-
-function rmClearAll() {
-    rmCopyResult = document.getElementById('rm-copy-result');
-    rmRegexInput.value = '';
-    rmResult.value = '';
-    rmCopyResult.disabled = true;
-    rmRegex.value = '';
-    rmFlags.value = 'g';
-    rmReplace.value = '';
-    showAlert('Cleared!', 'success');
-    resetResult('rm');
-    rmClear2.innerHTML = 'Cleared!';
-    setTimeout(() => {
-        rmClear2.innerHTML = 'Clear All';
-    }, 2000);
-}
-
-function rmSwitch() {
-    if (rmResult.value.length === 0) {
-        showAlert('Nothing to move!', 'error');
-        showResult('switch', 'error');
-    } else {
-        rmRegexInput.value = rmResult.value;
-        rmResult.value = '';
-        rmCopyResult.disabled = true;
-        showAlert('Moved to input!', '#1c62d4');
-        showResult('switch', 'custom', '#1c62d4', 'arrows-alt-v');
     }
 }
 

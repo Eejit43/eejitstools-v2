@@ -434,7 +434,7 @@ const allPageInfo = {
         link: 'tools/scientific-notation-converter',
         title: 'Scientific Notation Converter',
         icon: 'fa-solid fa-e',
-        description: 'Convert between scientific (e) notation and decimal form',
+        description: 'Convert between scientific (<i>e</i>) notation and decimal form',
         keywords: [],
         additionalScripts: [imports.mathJs],
         additionalStyles: [],

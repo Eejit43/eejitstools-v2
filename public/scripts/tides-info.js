@@ -13,49 +13,48 @@ function getLocation() {
 
 getLocation();
 
-function getData(position) {
-    fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } }).then(async (response) => {
-        const data = await response.json();
+async function getData(position) {
+    const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } });
+    const data = await response.json();
 
-        const latitude = data.origin.latitude;
-        const longitude = data.origin.longitude;
-        const distance = `${data.origin.distance} ${data.origin.unit}`;
-        const updated = moment.unix(data.timestamp).local('').format('LLLL');
-        const state = data.heights[0].state.toLowerCase();
+    const latitude = data.origin.latitude;
+    const longitude = data.origin.longitude;
+    const distance = `${data.origin.distance} ${data.origin.unit}`;
+    const updated = moment.unix(data.timestamp).local('').format('LLLL');
+    const state = data.heights[0].state.toLowerCase();
 
-        let closest_extreme, next_extreme;
+    let closestExtreme, nextExtreme;
 
-        if (data.extremes[0].timestamp >= Math.floor(new Date().getTime() / 1000)) closest_extreme = `next ${data.extremes[0].state.toLowerCase()} is at ${moment.unix(data.extremes[0].timestamp).local('').format('hh:mm A')}`;
-        else closest_extreme = `most recent ${data.extremes[0].state.toLowerCase()} was at ${moment.unix(data.extremes[0].timestamp).local('').format('hh:mm A')}`;
+    if (data.extremes[0].timestamp >= Math.floor(new Date().getTime() / 1000)) closestExtreme = `next ${data.extremes[0].state.toLowerCase()} is at ${moment.unix(data.extremes[0].timestamp).local('').format('hh:mm A')}`;
+    else closestExtreme = `most recent ${data.extremes[0].state.toLowerCase()} was at ${moment.unix(data.extremes[0].timestamp).local('').format('hh:mm A')}`;
 
-        if (data.extremes[1].timestamp >= Math.floor(new Date().getTime() / 1000)) next_extreme = `next ${data.extremes[1].state.toLowerCase()} is at ${moment.unix(data.extremes[1].timestamp).local('').format('hh:mm A')}`;
-        else next_extreme = `most recent ${data.extremes[1].state.toLowerCase()} was at ${moment.unix(data.extremes[1].timestamp).local('').format('hh:mm A')}`;
+    if (data.extremes[1].timestamp >= Math.floor(new Date().getTime() / 1000)) nextExtreme = `next ${data.extremes[1].state.toLowerCase()} is at ${moment.unix(data.extremes[1].timestamp).local('').format('hh:mm A')}`;
+    else nextExtreme = `most recent ${data.extremes[1].state.toLowerCase()} was at ${moment.unix(data.extremes[1].timestamp).local('').format('hh:mm A')}`;
 
-        const next_extremes = `The ${closest_extreme}, and the ${next_extreme}.`;
+    const next_extremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 
-        const table = [
-            `<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">`, //
-            `<thead>`,
-            `<tr>`,
-            `<th style="width: 300px">Time</th>`,
-            `<th style="width: 100px">Type</th>`,
-            `</tr>`,
-            `</thead>`,
-            `<tbody>`,
-        ];
-        for (let i = 0; i < data.extremes.length; i++) table.push(`<tr>`, `<td>${moment.unix(data.extremes[i].timestamp).local('').format('dddd, MMMM Do – h:mm A')}</td>`, `<td>${correctCase(data.extremes[i].state)}</td>`, `</tr>`);
-        table.push(`</tbody`, `</table>`);
+    const table = [
+        `<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">`, //
+        `<thead>`,
+        `<tr>`,
+        `<th style="width: 300px">Time</th>`,
+        `<th style="width: 100px">Type</th>`,
+        `</tr>`,
+        `</thead>`,
+        `<tbody>`,
+    ];
+    for (let i = 0; i < data.extremes.length; i++) table.push(`<tr>`, `<td>${moment.unix(data.extremes[i].timestamp).local('').format('dddd, MMMM Do – h:mm A')}</td>`, `<td>${correctCase(data.extremes[i].state)}</td>`, `</tr>`);
+    table.push(`</tbody`, `</table>`);
 
-        const output = [
-            `Based on information at latitude ${latitude}, longitude ${longitude}, ${distance} away.`, //
-            `Updated on ${updated}.<br />`,
-            `The tide is currently ${state}.`,
-            `${next_extremes}<br />`,
-            `${table.join('')}`,
-        ];
+    const output = [
+        `Based on information at latitude ${latitude}, longitude ${longitude}, ${distance} away.`, //
+        `Updated on ${updated}.<br />`,
+        `The tide is currently ${state}.`,
+        `${next_extremes}<br />`,
+        `${table.join('')}`,
+    ];
 
-        result.innerHTML = output.join('<br />');
-    });
+    result.innerHTML = output.join('<br />');
 }
 
 function correctCase(input) {

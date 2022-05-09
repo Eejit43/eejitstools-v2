@@ -1,38 +1,22 @@
-// some stuff modified from https://stackoverflow.com/questions/43726344/js-decoding-morse-code, https://www.tutorialspoint.com/converting-string-to-morse-code-in-javascript
-
 const input = document.getElementById('input');
 const toMorseBtn = document.getElementById('to-morse');
 const fromMorseBtn = document.getElementById('from-morse');
 const clearBtn = document.getElementById('clear');
 const result = document.getElementById('result');
-let resultCopy = document.getElementById('copy-result');
-let resultCopy2 = document.getElementById('copy-result-2');
-let resultCopy3 = document.getElementById('copy-result-3');
+const resultCopy = document.getElementById('copy-result');
+const resultCopy2 = document.getElementById('copy-result-2');
+const resultCopy3 = document.getElementById('copy-result-3');
 
 let resultVar1, resultVar2, resultVar3;
 
 /* Add event listeners */
 toMorseBtn.addEventListener('click', toMorse);
 fromMorseBtn.addEventListener('click', fromMorse);
-clearBtn.addEventListener('click', clear);
-resultCopy.addEventListener('click', () => {
-    copyVar('resultVar1', 'copy-result', 'Copy');
-});
-resultCopy2.addEventListener('click', () => {
-    copyVar('resultVar2', 'copy-result-2', 'Copy with vertical slash space');
-});
-resultCopy3.addEventListener('click', () => {
-    copyVar('resultVar3', 'copy-result-3', 'Copy with three space space');
-});
-
-function clear() {
-    resultCopy = document.getElementById('copy-result');
-    resultCopy2 = document.getElementById('copy-result-2');
-    resultCopy3 = document.getElementById('copy-result-3');
+clearBtn.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    resetResult('e');
-    resetResult('d');
+    resetResult('encode');
+    resetResult('decode');
     resultCopy.innerHTML = 'Copy';
     resultCopy2.innerHTML = 'Copy with vertical slash space';
     resultCopy3.innerHTML = 'Copy with three space space';
@@ -40,7 +24,16 @@ function clear() {
     resultCopy2.disabled = true;
     resultCopy3.disabled = true;
     showAlert('Cleared!', 'success');
-}
+});
+resultCopy.addEventListener('click', () => {
+    copyVar(resultCopy, 'resultVar1');
+});
+resultCopy2.addEventListener('click', () => {
+    copyVar(resultCopy2, 'resultVar2');
+});
+resultCopy3.addEventListener('click', () => {
+    copyVar(resultCopy3, 'resultVar3');
+});
 
 const toMorseRef = {
     a: '.-',
@@ -103,8 +96,8 @@ const fromMorseRef = {
     '.-': 'A',
     '-...': 'B',
     '-.-.': 'C',
-    '-..': 'D',
-    '.': 'E',
+    '-..': 'decode',
+    '.': 'encode',
     '..-.': 'F',
     '--.': 'G',
     '....': 'H',
@@ -166,15 +159,12 @@ function convertToMorse(str) {
 }
 
 function toMorse() {
-    resultCopy = document.getElementById('copy-result');
-    resultCopy2 = document.getElementById('copy-result-2');
-    resultCopy3 = document.getElementById('copy-result-3');
     if (input.value.trim().length <= 0) {
         result.value = '';
         resultCopy.disabled = true;
         resultCopy2.disabled = true;
         resultCopy3.disabled = true;
-        showResult('e', 'error');
+        showResult('encode', 'error');
         showAlert('Empty input!', 'error');
     } else if (/^[ a-zA-Z0-9\.,\?\'!\/\(\)&:;=+\-_"\$@]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
@@ -184,13 +174,13 @@ function toMorse() {
         resultCopy.disabled = false;
         resultCopy2.disabled = false;
         resultCopy3.disabled = false;
-        showResult('e', 'success');
+        showResult('encode', 'success');
     } else {
         result.value = '';
         resultCopy.disabled = true;
         resultCopy2.disabled = true;
         resultCopy3.disabled = true;
-        showResult('e', 'error');
+        showResult('encode', 'error');
         showAlert('Input cannot be converted into morse code!', 'error');
     }
 }
@@ -209,15 +199,12 @@ function decodeMorse(morseCode) {
 
 function fromMorse() {
     let inputVal = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
-    resultCopy = document.getElementById('copy-result');
-    resultCopy2 = document.getElementById('copy-result-2');
-    resultCopy3 = document.getElementById('copy-result-3');
     if (inputVal.length <= 0) {
         result.value = '';
         resultCopy.disabled = true;
         resultCopy2.disabled = true;
         resultCopy3.disabled = true;
-        showResult('d', 'error');
+        showResult('decode', 'error');
         showAlert('Empty input!', 'error');
     } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[\|\/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputVal)) {
         result.value = decodeMorse(inputVal);
@@ -225,13 +212,13 @@ function fromMorse() {
         resultCopy.disabled = false;
         resultCopy2.disabled = true;
         resultCopy3.disabled = true;
-        showResult('d', 'success');
+        showResult('decode', 'success');
     } else {
         result.value = '';
         resultCopy.disabled = true;
         resultCopy2.disabled = true;
         resultCopy3.disabled = true;
-        showResult('d', 'error');
+        showResult('decode', 'error');
         showAlert('Invalid morse code!', 'error');
     }
 }

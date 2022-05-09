@@ -47,13 +47,7 @@ const dates = [
 ];
 
 const result = [];
-for (let i = 0; i < dates.length; i++) {
-    if (getTimeUntil(dates[i].date) !== '') {
-        result.push(
-            `Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${dates[i].date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}">${dates[i].name}</span>: <span id="${dates[i].id}">${getTimeUntil(dates[i].date)}</span> ${dates[i].emoji}` // prettier-ignore
-        );
-    }
-}
+for (let i = 0; i < dates.length; i++) if (getTimeUntil(dates[i].date)) result.push(`Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${dates[i].date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}">${dates[i].name}</span>: <span id="${dates[i].id}">${getTimeUntil(dates[i].date)}</span> ${dates[i].emoji}`);
 
 document.getElementById('countdowns').innerHTML = result.join('<br />');
 
@@ -61,10 +55,10 @@ twemojiUpdate();
 
 setInterval(() => {
     for (let i = 0; i < dates.length; i++) {
-        let result = getTimeUntil(dates[i].date);
-        if (getTimeUntil(dates[i].date) !== '' && document.getElementById(dates[i].id).innerHTML !== result) {
+        const result = getTimeUntil(dates[i].date);
+        if (result && document.getElementById(dates[i].id).innerHTML !== result) {
             document.getElementById(dates[i].id).innerHTML = result;
-        } else if (getTimeUntil(dates[i].date) === '') {
+        } else {
             try {
                 document.getElementById(dates[i].id).innerHTML = '<span class="error">This event has already occurred!</span>';
             } catch (error) {}
@@ -72,17 +66,22 @@ setInterval(() => {
     }
 }, 1000);
 
+/**
+ * Calculates the time until a given date
+ * @param {string} date The date to calculate time to
+ * @returns {string|null} The time until the given date, or null if it has occurred or is over 60 days away
+ */
 function getTimeUntil(date) {
-    let countdownDate = new Date(`${date} 00:00:00`).getTime();
+    const countdownDate = new Date(`${date} 00:00:00`).getTime();
 
-    let curTime = new Date().getTime();
+    const curTime = new Date().getTime();
 
-    let distance = countdownDate - curTime;
+    const distance = countdownDate - curTime;
 
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     let daysFinal = days + ' days';
     if (days === 1) daysFinal = days + ' day';
@@ -100,7 +99,7 @@ function getTimeUntil(date) {
     if (seconds === 1) secondsFinal = seconds + ' second';
     if (seconds === 0) secondsFinal = '';
 
-    let result = [];
+    const result = [];
     if (daysFinal !== '') result.push(daysFinal);
     if (hoursFinal !== '') result.push(hoursFinal);
     if (minutesFinal !== '') result.push(minutesFinal);
@@ -108,7 +107,7 @@ function getTimeUntil(date) {
 
     if (distance <= 0 || distance >= 60 * 86400000) {
         // Don't show already occurred or if over 60 days away
-        return '';
+        return null;
     } else {
         return result.join(', ');
     }

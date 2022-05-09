@@ -10,23 +10,17 @@ const yearOverviewList = document.getElementById('year-overview-list');
 /* Add event listeners */
 getDate.addEventListener('click', getFromDate);
 resetDate.addEventListener('click', getCurrent);
-monthVal.addEventListener('input', () => {
-    monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
+['input', 'paste'].forEach((event) => {
+    monthVal.addEventListener(event, () => {
+        monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
+        checkInput(monthVal);
+    });
 });
-monthVal.addEventListener('paste', () => {
-    monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
-});
-monthVal.addEventListener('input', () => {
-    checkInput(this);
-});
-dateVal.addEventListener('input', () => {
-    dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-});
-dateVal.addEventListener('paste', () => {
-    dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-});
-dateVal.addEventListener('input', () => {
-    checkInput(this);
+['input', 'paste'].forEach((event) => {
+    dateVal.addEventListener(event, () => {
+        dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
+        checkInput(dateVal);
+    });
 });
 
 function checkInput(element) {
@@ -47,23 +41,19 @@ dateVal.placeholder = date;
 yearOverview.href = `https://en.pronouns.page/calendar/${year}-overview.png`;
 yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
 
-function prepend(value, array) {
-    const newArray = array.slice();
-    newArray.unshift(value);
-    return newArray;
-}
-
 async function getFromDate() {
-    let monthInput = escapeHtml(monthVal.value);
-    let dateInput = escapeHtml(dateVal.value);
+    let monthInput = escapeHTML(monthVal.value);
+    let dateInput = escapeHTML(dateVal.value);
 
-    if (monthInput === '') monthInput = month;
+    if (!monthInput) monthInput = month;
     else if (monthInput.length === 1) monthInput = '0' + monthInput;
 
-    if (dateInput === '') dateInput = date;
+    if (!dateInput) dateInput = date;
     else if (dateInput.length === 1) dateInput = '0' + dateInput;
 
-    if (Number(monthInput) !== 0 && Number(dateInput) !== 0) {
+    if (parseInt(monthInput) === 0 || parseInt(dateInput) === 0) {
+        showAlert('Input cannot be zero!', 'error');
+    } else {
         eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
         eventsTitle.innerHTML = `Events on ${year}/${monthInput}/${dateInput}:`;
@@ -85,7 +75,7 @@ async function getFromDate() {
             if (newArray.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
             else eventsDisplay.innerHTML = newArray.join('<br />');
         });
-    } else showAlert('Input cannot be zero!', 'error');
+    }
 }
 
 async function getCurrent() {

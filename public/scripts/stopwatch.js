@@ -19,11 +19,16 @@ let paused = true;
 
 displayTime();
 
+stopButton.disabled = true;
+
 function startStopwatch() {
     if (paused) {
         paused = false;
         offset -= Date.now();
         displayTime();
+
+        startButton.disabled = true;
+        stopButton.disabled = false;
     }
 }
 
@@ -31,20 +36,19 @@ function stopStopwatch() {
     if (!paused) {
         paused = true;
         offset += Date.now();
+
+        startButton.disabled = false;
+        stopButton.disabled = true;
     }
 }
 
 function resetStopwatch() {
-    stopStopwatch();
-    if (paused) {
-        offset = 0;
-        displayTime();
-    } else offset = -Date.now();
-}
+    paused = true;
+    offset = 0;
+    displayTime();
 
-function format(value, scale, modulo, padding) {
-    value = Math.floor(value / scale) % modulo;
-    return value.toString().padStart(padding, 0);
+    startButton.disabled = false;
+    stopButton.disabled = false;
 }
 
 function displayTime() {
@@ -55,4 +59,8 @@ function displayTime() {
     minutesDisplay.textContent = format(value, 60000, 60, 2);
 
     if (!paused) requestAnimationFrame(displayTime);
+}
+
+function format(value, scale, modulo, padding) {
+    return (Math.floor(value / scale) % modulo).toString().padStart(padding, 0);
 }

@@ -1,15 +1,14 @@
 // Refer to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for time zone names
 
-// If DST code modified from https://stackoverflow.com/questions/11887934/how-to-check-if-dst-daylight-saving-time-is-in-effect-and-if-so-the-offset
-Date.prototype.stdTimezoneOffset = function () {
-    let jan = new Date(this.getFullYear(), 0, 1);
-    let jul = new Date(this.getFullYear(), 6, 1);
-    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-};
-
-Date.prototype.isDstObserved = function () {
-    return this.getTimezoneOffset() < this.stdTimezoneOffset();
-};
+/**
+ * Whether or not Daylight Savings Time is currently observed
+ * @param {Date} date The date to check
+ * @returns {boolean}
+ * @see https://stackoverflow.com/questions/11887934/how-to-check-if-dst-daylight-saving-time-is-in-effect-and-if-so-the-offset
+ */
+function isDstObserved(date) {
+    return date.getTimezoneOffset() < Math.max(new Date(date.getFullYear(), 0, 1).getTimezoneOffset(), new Date(date.getFullYear(), 6, 1).getTimezoneOffset());
+}
 
 function showResult(element, variable) {
     if (document.getElementById(element).innerHTML !== eval(variable)) document.getElementById(element).innerHTML = eval(variable);
@@ -43,7 +42,7 @@ function time() {
     if (minutes < 10) minutes = '0' + minutes;
     if (seconds < 10) seconds = '0' + seconds;
 
-    isDst = new Date().isDstObserved() ? 'In' : 'Not';
+    isDst = isDstObserved(new Date()) ? 'In' : 'Not';
 
     const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 

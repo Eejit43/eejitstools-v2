@@ -3,14 +3,14 @@ const integerConvert = document.getElementById('integer-convert');
 const integerReset = document.getElementById('integer-reset');
 const integerArrow = document.getElementById('integer-arrow');
 const romanOutput = document.getElementById('roman-output');
-let romanOutputCopy = document.getElementById('roman-output-copy');
-let romanOutputCopy2 = document.getElementById('roman-output-copy-2');
+const romanOutputCopy = document.getElementById('roman-output-copy');
+const romanOutputCopy2 = document.getElementById('roman-output-copy-2');
 const romanInput = document.getElementById('roman-input');
 const romanConvert = document.getElementById('roman-convert');
 const romanReset = document.getElementById('roman-reset');
 const romanArrow = document.getElementById('roman-arrow');
 const integerOutput = document.getElementById('integer-output');
-let integerOutputCopy = document.getElementById('integer-output-copy');
+const integerOutputCopy = document.getElementById('integer-output-copy');
 
 let romanOutputVal, romanOutputVal2, integerOutputVal;
 
@@ -29,7 +29,17 @@ integerInput.addEventListener('input', () => {
     else integerReset.disabled = true;
 });
 integerConvert.addEventListener('click', convertInteger);
-integerReset.addEventListener('click', resetInteger);
+integerReset.addEventListener('click', () => {
+    integerInput.value = '';
+    integerConvert.disabled = true;
+    integerReset.disabled = true;
+    romanOutput.textContent = '​';
+    romanOutputCopy.disabled = true;
+    romanOutputCopy2.disabled = true;
+
+    showAlert('Reset!', 'success');
+    updateArrow('integer', 'reset');
+});
 romanInput.addEventListener('input', () => {
     romanInput.value = romanInput.value.toUpperCase();
 });
@@ -44,20 +54,27 @@ romanInput.addEventListener('input', () => {
     else romanReset.disabled = true;
 });
 romanConvert.addEventListener('click', convertRoman);
-romanReset.addEventListener('click', resetRoman);
+romanReset.addEventListener('click', () => {
+    romanInput.value = '';
+    romanConvert.disabled = true;
+    romanReset.disabled = true;
+    integerOutput.value = '';
+    integerOutputCopy.disabled = true;
+
+    showAlert('Reset!', 'success');
+    updateArrow('roman', 'reset');
+});
 romanOutputCopy.addEventListener('click', () => {
-    copyVar('romanOutputVal', 'roman-output-copy', 'Copy w/ macrons');
+    copyVar(romanOutputCopy, 'romanOutputVal');
 });
 romanOutputCopy2.addEventListener('click', () => {
-    copyVar('romanOutputVal2', 'roman-output-copy-2', 'Copy w/ underscores');
+    copyVar(romanOutputCopy2, 'romanOutputVal2');
 });
 integerOutputCopy.addEventListener('click', () => {
-    copyVar('integerOutputVal', 'integer-output-copy', 'Copy');
+    copyVar(integerOutputCopy, 'integerOutputVal');
 });
 
 function convertInteger() {
-    romanOutputCopy = document.getElementById('roman-output-copy');
-    romanOutputCopy2 = document.getElementById('roman-output-copy-2');
     if (parseInt(integerInput.value) > 0) {
         romanOutput.innerHTML = romanize(integerInput.value);
         romanOutputCopy.disabled = false;
@@ -72,23 +89,7 @@ function convertInteger() {
     }
 }
 
-function resetInteger() {
-    romanOutputCopy = document.getElementById('roman-output-copy');
-    romanOutputCopy2 = document.getElementById('roman-output-copy-2');
-    showAlert('Reset!', 'success');
-    integerInput.value = '';
-    integerConvert.disabled = true;
-    integerReset.disabled = true;
-    updateArrow('integer', 'reset');
-    romanOutput.textContent = '​';
-    romanOutputCopy.disabled = true;
-    romanOutputCopy2.disabled = true;
-    romanOutputCopy = undefined;
-    romanOutputCopy2 = undefined;
-}
-
 function convertRoman() {
-    integerOutputCopy = document.getElementById('integer-output-copy');
     romanInput.value = romanInput.value.toUpperCase();
     const input = romanInput.value
         .replace(/\_(\w)/g, (match) => {
@@ -108,43 +109,35 @@ function convertRoman() {
     }
 }
 
-function resetRoman() {
-    integerOutputCopy = document.getElementById('integer-output-copy');
-    showAlert('Reset!', 'success');
-    romanInput.value = '';
-    romanConvert.disabled = true;
-    romanReset.disabled = true;
-    updateArrow('roman', 'reset');
-    integerOutput.value = '';
-    integerOutputCopy.disabled = true;
-}
-
-// Some portions modified from https://blog.stevenlevithan.com/archives/javascript-roman-numeral-converter and https://iandevlin.com/files/blog/romanNumerals.html
-// Huge thanks to EmNudge#5549 from The Coding Den for their help in remaking this function!!!
-
 const roman = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
 const decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
 
-function romanize(num) {
+/**
+ * Converts a number to roman numerals
+ * @param {string|number} number Number to convert to roman numerals
+ * @returns {string} Number in roman numerals
+ * @see https://iandevlin.com/files/blog/romanNumerals.html
+ */
+function romanize(number) {
     let barredNumerals = '';
-    while (num > 3999) {
+    while (number > 3999) {
         for (let i = 0; i < decimal.length - 1; i++) {
             const currentNumber = decimal[i] * 1000;
-            if (num < currentNumber) continue;
+            if (number < currentNumber) continue;
 
-            num -= currentNumber;
+            number -= currentNumber;
             barredNumerals += roman[i];
             break;
         }
     }
 
     let regularNumerals = '';
-    while (num > 0) {
+    while (number > 0) {
         for (let i = 0; i < decimal.length; i++) {
             const currentNumber = decimal[i];
-            if (num < currentNumber) continue;
+            if (number < currentNumber) continue;
 
-            num -= currentNumber;
+            number -= currentNumber;
             regularNumerals += roman[i];
             break;
         }
@@ -154,7 +147,13 @@ function romanize(num) {
     return `<span style="border-top:1px solid">${barredNumerals}</span>` + regularNumerals;
 }
 
-function deromanize(str) {
+/**
+ * Converts a roman numerals to a number
+ * @param {string} string Roman numeral to convert to number
+ * @returns {string} Number
+ * @author EmNudge#5549 from The Coding Den
+ */
+function deromanize(string) {
     const token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
     const key = {
         m: 1000000,
@@ -185,6 +184,6 @@ function deromanize(str) {
     };
     let output = 0;
     let i;
-    while ((i = token.exec(str))) output += key[i[0]];
+    while ((i = token.exec(string))) output += key[i[0]];
     return output;
 }

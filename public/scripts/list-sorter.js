@@ -6,45 +6,49 @@ const randomizeButton = document.getElementById('randomize');
 const reverseButton = document.getElementById('reverse');
 const clear = document.getElementById('clear');
 const result = document.getElementById('result');
-let copyResult = document.getElementById('copy-result');
+const copyResult = document.getElementById('copy-result');
+
+const separatorValue = separator.value.replace('\\n', '\n');
 
 /* Add event listeners */
 alphabetizeNormalButton.addEventListener('click', alphabetizeNormal);
 numerizeButton.addEventListener('click', numerize);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
-clear.addEventListener('click', clearAll);
-copyResult.addEventListener('click', () => {
-    copyValue('result', 'copy-result');
-});
-
-let clearMessageTimeout;
-function clearAll() {
-    copyResult = document.getElementById('copy-result');
+clear.addEventListener('click', () => {
     input.value = '';
     result.value = '';
     separator.value = '\\n';
     copyResult.disabled = true;
-    showAlert('Cleared!', 'success');
+
+    clear.disabled = true;
     clear.innerHTML = 'Cleared!';
-    clearTimeout(clearMessageTimeout);
-    clearMessageTimeout = setTimeout(() => {
-        clear.innerHTML = 'Clear';
-    }, 2000);
+    showAlert('Cleared!', 'success');
     resetResult('alphabetize');
     resetResult('numerize');
     resetResult('randomize');
     resetResult('reverse');
-}
+
+    setTimeout(() => {
+        copyResult.disabled = true;
+
+        clear.disabled = false;
+        clear.innerHTML = 'Clear';
+    }, 2000);
+});
+copyResult.addEventListener('click', () => {
+    copyValue(copyResult, result);
+});
 
 function alphabetizeNormal() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('alphabetize', 'error');
     } else {
-        let output = input.value.split(separator.value.replace('\\n', '\n'));
-        output = output.sort((a, b) => a.localeCompare(b)).join(separator.value.replace('\\n', '\n'));
-        result.value = output;
+        result.value = input.value
+            .split(separatorValue)
+            .sort((a, b) => a.localeCompare(b))
+            .join(separatorValue);
         showResult('alphabetize', 'success');
         copyResult.disabled = false;
     }
@@ -55,24 +59,15 @@ function numerize() {
         showAlert('Empty input!', 'error');
         showResult('numerize', 'error');
     } else {
-        let output = input.value.split(separator.value.replace('\\n', '\n'));
-        output = output
+        result.value = input.value
+            .split(separatorValue)
             .map((x) => parseInt(x))
             .filter((x) => x === 0 || Boolean(x))
             .sort((a, b) => a - b)
-            .join(separator.value.replace('\\n', '\n'));
-        result.value = output;
+            .join(separatorValue);
         showResult('numerize', 'success');
         copyResult.disabled = false;
     }
-}
-
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
 }
 
 function randomize() {
@@ -80,9 +75,7 @@ function randomize() {
         showAlert('Empty input!', 'error');
         showResult('randomize', 'error');
     } else {
-        let output = input.value.split(separator.value.replace('\\n', '\n'));
-        output = shuffleArray(output).join(separator.value.replace('\\n', '\n'));
-        result.value = output;
+        result.value = shuffleArray(input.value.split(separatorValue)).join(separatorValue);
         showResult('randomize', 'success');
         copyResult.disabled = false;
     }
@@ -93,10 +86,21 @@ function reverse() {
         showAlert('Empty input!', 'error');
         showResult('reverse', 'error');
     } else {
-        let output = input.value.split(separator.value.replace('\\n', '\n'));
-        output = output.reverse().join(separator.value.replace('\\n', '\n'));
-        result.value = output;
+        result.value = input.value.split(separatorValue).reverse().join(separatorValue);
         showResult('reverse', 'success');
         copyResult.disabled = false;
     }
+}
+
+/**
+ * Shuffles the order of items in an array
+ * @param {Array} array The array to shuffle
+ * @returns {Array} shuffled array
+ */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }

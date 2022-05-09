@@ -1,33 +1,33 @@
 const clearClipboardButton = document.getElementById('clear-clipboard');
-const copyZws = document.getElementById('copy-zws');
-const copyNbsp = document.getElementById('copy-nbsp');
-const copyEms = document.getElementById('copy-ems');
-const copyEns = document.getElementById('copy-ens');
-const copyTs = document.getElementById('copy-ts');
+const copyZWS = document.getElementById('copy-zws');
+const copyNBSP = document.getElementById('copy-nbsp');
+const copyEMS = document.getElementById('copy-ems');
+const copyENS = document.getElementById('copy-ens');
+const copyTS = document.getElementById('copy-ts');
 const clipboardWarning = document.getElementById('clipboard-warning');
 const copiedText = document.getElementById('copied-text');
 const selectClipboard = document.getElementById('select-clipboard');
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
-copyZws.addEventListener('click', () => {
-    copyText('copy-zws', '\u200b');
+copyZWS.addEventListener('click', () => {
+    copyText(copyZWS, '\u200b');
     clipboardDisplay();
 });
-copyNbsp.addEventListener('click', () => {
-    copyText('copy-nbsp', '\u00a0');
+copyNBSP.addEventListener('click', () => {
+    copyText(copyNBSP, '\u00a0');
     clipboardDisplay();
 });
-copyEms.addEventListener('click', () => {
-    copyText('copy-ems', '\u2003');
+copyEMS.addEventListener('click', () => {
+    copyText(copyEMS, '\u2003');
     clipboardDisplay();
 });
-copyEns.addEventListener('click', () => {
-    copyText('copy-ens', '\u2002');
+copyENS.addEventListener('click', () => {
+    copyText(copyENS, '\u2002');
     clipboardDisplay();
 });
-copyTs.addEventListener('click', () => {
-    copyText('copy-ts', '\u2009');
+copyTS.addEventListener('click', () => {
+    copyText(copyTS, '\u2009');
     clipboardDisplay();
 });
 selectClipboard.addEventListener('click', () => {
@@ -46,27 +46,28 @@ function showWarning(message) {
     if (clipboardWarning.innerHTML.replace(/<br>/g, '<br />') !== message) clipboardWarning.innerHTML = message;
 }
 
-let clipboardTimeout, url;
 function clearClipboard() {
-    clearTimeout(clipboardTimeout);
-    clearClipboardButton.innerHTML = 'Cleared!';
-    clipboardTimeout = setTimeout(() => {
-        clearClipboardButton.innerHTML = 'Clear Clipboard';
-    }, 2000);
     navigator.clipboard.writeText('');
-    url = undefined;
+
+    clearClipboardButton.disabled = true;
+    clearClipboardButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
     clipboardDisplay();
+
+    setTimeout(() => {
+        clearClipboardButton.disabled = false;
+        clearClipboardButton.innerHTML = 'Clear Clipboard';
+    }, 2000);
 }
 
-function requestPermission() {
+async function requestPermission() {
     try {
-        navigator.permissions.query({ name: 'clipboard-read' }).then((result) => {
+        const result = await navigator.permissions.query({ name: 'clipboard-read' });
+
+        handlePermission(result.state);
+
+        result.addEventListener('change', () => {
             handlePermission(result.state);
-            result.addEventListener('change', () => {
-                console.log(`Clipboard permission changed to "${result.state}", running handlePermission`);
-                handlePermission(result.state);
-            });
         });
     } catch (error) {
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Your browser does not support the <code>clipboard-read</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API#browser_compatibility" target="_blank">permission</a><br />');

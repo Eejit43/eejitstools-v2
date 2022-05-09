@@ -7,37 +7,39 @@ let number = 0;
 let key = 'Space';
 
 /* Add event listeners */
-activationButton.addEventListener('change', updateKey);
+activationButton.addEventListener('change', () => {
+    blurAll();
+    if (activationButton.value === '1') key = 'Space';
+    else if (activationButton.value === '2') key = 'Enter';
+    else if (activationButton.value === '3') key = 'KeyC';
+});
 reset.addEventListener('click', () => {
-    showAlert('Reset!', 'success');
+    blurAll();
     number = 0;
-    numberDisplay.innerHTML = 0;
+    numberDisplay.textContent = '0';
     activationButton.value = '1';
     key = 'Space';
-    blurAll();
+
+    showAlert('Reset!', 'success');
 });
 document.addEventListener('keyup', (event) => {
     blurAll();
     if (event.code === key) {
         number++;
-        numberDisplay.innerHTML = number;
+        numberDisplay.textContent = number;
     }
 });
 manualActivation.addEventListener('click', () => {
     blurAll();
     number++;
-    numberDisplay.innerHTML = number;
+    numberDisplay.textContent = number;
 });
 
+/**
+ * Removes the focus from important buttons to prevent multiple activations
+ */
 function blurAll() {
     activationButton.blur();
     manualActivation.blur();
     reset.blur();
-}
-
-function updateKey() {
-    if (activationButton.value === '1') key = 'Space';
-    else if (activationButton.value === '2') key = 'Enter';
-    else if (activationButton.value === '3') key = 'KeyC';
-    blurAll();
 }

@@ -1,8 +1,10 @@
 const standardInput = document.getElementById('standard-input');
 const standardInputReset = document.getElementById('standard-input-reset');
+const standardArrow = document.getElementById('standard-arrow');
 const unixInput = document.getElementById('unix-input');
 const unixInputReset = document.getElementById('unix-input-reset');
 const unixInputSwitch = document.getElementById('unix-input-switch');
+const unixArrow = document.getElementById('unix-arrow');
 const unixOutputCopy = document.getElementById('unix-output-copy');
 const unixOutputSwitch = document.getElementById('unix-output-switch');
 const standardOutputCopy = document.getElementById('standard-output-copy');
@@ -16,15 +18,15 @@ unixInput.addEventListener('input', updateStandardOutput);
 unixInputReset.addEventListener('click', updateUnixTime);
 unixInputSwitch.addEventListener('click', switchUnixInput);
 unixOutputCopy.addEventListener('click', () => {
-    copyValue('unix-output', 'unix-output-copy');
+    copyValue(unixOutputCopy, unixOutput);
 });
 unixOutputSwitch.addEventListener('click', switchUnixOutput);
 standardOutputCopy.addEventListener('click', () => {
-    copyValue('standard-output', 'standard-output-copy');
+    copyValue(standardOutputCopy, standardOutput);
 });
 
-let unixInputState = 1; // 1 = seconds, 2 = milliseconds
-let unixOutputState = 1; // 1 = seconds, 2 = milliseconds
+let unixInputState = 's';
+let unixOutputState = 's';
 
 function updateStandardTime() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -50,19 +52,19 @@ function updateUnixOutput() {
     const standardTime = standardInput.value;
     const valid = new Date(standardTime).getTime() > 0;
     if (standardTime.length === 0) {
-        updateArrow('standard', 'reset', 'down');
+        updateArrow(standardArrow, 'reset', 'down');
         unixOutput.value = '';
         unixOutputCopy.disabled = true;
         unixOutputSwitch.disabled = true;
     } else if (valid === false) {
-        updateArrow('standard', 'error');
+        updateArrow(standardArrow, 'error');
         unixOutput.value = '';
         unixOutputCopy.disabled = true;
         unixOutputSwitch.disabled = true;
     } else {
-        updateArrow('standard', 'success', 'down');
+        updateArrow(standardArrow, 'success', 'down');
         let unixTime = new Date(standardTime).getTime();
-        if (unixOutputState === 1) unixTime = unixTime.toString().slice(0, -3);
+        if (unixOutputState === 's') unixTime = unixTime.toString().slice(0, -3);
         unixOutput.value = unixTime;
         unixOutputCopy.disabled = false;
         unixOutputSwitch.disabled = false;
@@ -78,15 +80,15 @@ function updateStandardOutput() {
     const standardTime = parseInt(unixInput.value) * 1000;
     const valid = new Date(standardTime).getTime() > 0;
     if (unixInput.value.length === 0) {
-        updateArrow('unix', 'reset', 'down');
+        updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
         standardOutputCopy.disabled = true;
     } else if (valid === false) {
-        updateArrow('unix', 'error');
+        updateArrow(unixArrow, 'error');
         standardOutput.value = '';
         standardOutputCopy.disabled = true;
     } else {
-        updateArrow('unix', 'success', 'down');
+        updateArrow(unixArrow, 'success', 'down');
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const time = unixInputState === 2 ? new Date(parseInt(standardTime.toString().slice(0, -3))) : new Date(parseInt(standardTime));
         const date = time.getDate();
@@ -109,31 +111,29 @@ function updateStandardOutput() {
 }
 
 function switchUnixInput() {
-    let title = document.getElementById('unix-input-title');
-    let button = unixInputSwitch;
-    if (unixInputState === 1) {
-        unixInputState = 2;
+    const title = document.getElementById('unix-input-title');
+    if (unixInputState === 's') {
+        unixInputState = 'ms';
         title.innerHTML = 'UNIX Time (milliseconds):';
-        button.innerHTML = 'Switch to seconds';
-    } else if (unixInputState === 2) {
-        unixInputState = 1;
+        unixInputSwitch.innerHTML = 'Switch to seconds';
+    } else if (unixInputState === 'ms') {
+        unixInputState = 's';
         title.innerHTML = 'UNIX Time (seconds):';
-        button.innerHTML = 'Switch to milliseconds';
+        unixInputSwitch.innerHTML = 'Switch to milliseconds';
     }
     updateStandardOutput();
 }
 
 function switchUnixOutput() {
-    let title = document.getElementById('unix-output-title');
-    let button = unixOutputSwitch;
-    if (unixOutputState === 1) {
-        unixOutputState = 2;
+    const title = document.getElementById('unix-output-title');
+    if (unixOutputState === 's') {
+        unixOutputState = 'ms';
         title.innerHTML = 'UNIX Time (milliseconds):';
-        button.innerHTML = 'Switch to seconds';
-    } else if (unixOutputState === 2) {
-        unixOutputState = 1;
+        unixOutputSwitch.innerHTML = 'Switch to seconds';
+    } else if (unixOutputState === 'ms') {
+        unixOutputState = 's';
         title.innerHTML = 'UNIX Time (seconds):';
-        button.innerHTML = 'Switch to milliseconds';
+        unixOutputSwitch.innerHTML = 'Switch to milliseconds';
     }
     updateUnixOutput();
 }

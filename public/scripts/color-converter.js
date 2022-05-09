@@ -3,48 +3,46 @@
 const hexInput = document.getElementById('hex-input');
 const hexDisplay = document.getElementById('hex-display');
 const hexRgb = document.getElementById('hex-rgb');
-let hexRgbCopy = document.getElementById('hex-rgb-copy');
+const hexRgbCopy = document.getElementById('hex-rgb-copy');
 const hexHsl = document.getElementById('hex-hsl');
-let hexHslCopy = document.getElementById('hex-hsl-copy');
+const hexHslCopy = document.getElementById('hex-hsl-copy');
 const rgbInput = document.getElementById('rgb-input');
 const rgbDisplay = document.getElementById('rgb-display');
 const rgbHex = document.getElementById('rgb-hex');
-let rgbHexCopy = document.getElementById('rgb-hex-copy');
+const rgbHexCopy = document.getElementById('rgb-hex-copy');
 const rgbHsl = document.getElementById('rgb-hsl');
-let rgbHslCopy = document.getElementById('rgb-hsl-copy');
+const rgbHslCopy = document.getElementById('rgb-hsl-copy');
 const hslInput = document.getElementById('hsl-input');
 const hslDisplay = document.getElementById('hsl-display');
 const hslHex = document.getElementById('hsl-hex');
-let hslHexCopy = document.getElementById('hsl-hex-copy');
+const hslHexCopy = document.getElementById('hsl-hex-copy');
 const hslRgb = document.getElementById('hsl-rgb');
-let hslRgbCopy = document.getElementById('hsl-rgb-copy');
+const hslRgbCopy = document.getElementById('hsl-rgb-copy');
 
 /* Add event listeners */
 hexInput.addEventListener('input', hex);
 hexRgbCopy.addEventListener('click', () => {
-    copyValue('hex-rgb', 'hex-rgb-copy');
+    copyValue(hexRgbCopy, hexRgb);
 });
 hexHslCopy.addEventListener('click', () => {
-    copyValue('hex-hsl', 'hex-hsl-copy');
+    copyValue(hexHslCopy, hexHsl);
 });
 rgbInput.addEventListener('input', rgb);
 rgbHexCopy.addEventListener('click', () => {
-    copyValue('rgb-hex', 'rgb-hex-copy');
+    copyValue(rgbHexCopy, rgbHex);
 });
 rgbHslCopy.addEventListener('click', () => {
-    copyValue('rgb-hsl', 'rgb-hsl-copy');
+    copyValue(rgbHslCopy, rgbHsl);
 });
 hslInput.addEventListener('input', hsl);
 hslHexCopy.addEventListener('click', () => {
-    copyValue('hsl-hex', 'hsl-hex-copy');
+    copyValue(hslHexCopy, hslHex);
 });
 hslRgbCopy.addEventListener('click', () => {
-    copyValue('hsl-rgb', 'hsl-rgb-copy');
+    copyValue(hslRgbCopy, hslRgb);
 });
 
 function hex() {
-    hexRgbCopy = document.getElementById('hex-rgb-copy');
-    hexHslCopy = document.getElementById('hex-hsl-copy');
     let hex = hexInput.value;
     if (hex.match(/^#([\da-f]{3}){1,2}$/i)) {
         hex = hex.substring(1);
@@ -82,23 +80,23 @@ function hex() {
         r /= 255;
         g /= 255;
         b /= 255;
-        let cmin = Math.min(r, g, b),
-            cmax = Math.max(r, g, b),
-            delta = cmax - cmin,
+        let cMin = Math.min(r, g, b),
+            cMax = Math.max(r, g, b),
+            delta = cMax - cMin,
             h = 0,
             s = 0,
             l = 0;
 
         if (delta === 0) h = 0;
-        else if (cmax === r) h = ((g - b) / delta) % 6;
-        else if (cmax === g) h = (b - r) / delta + 2;
+        else if (cMax === r) h = ((g - b) / delta) % 6;
+        else if (cMax === g) h = (b - r) / delta + 2;
         else h = (r - g) / delta + 4;
 
         h = Math.round(h * 60);
 
         if (h < 0) h += 360;
 
-        l = (cmax + cmin) / 2;
+        l = (cMax + cMin) / 2;
         s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
         s = +(s * 100).toFixed(1);
         l = +(l * 100).toFixed(1);
@@ -141,23 +139,23 @@ function hex() {
         r /= 255;
         g /= 255;
         b /= 255;
-        let cmin = Math.min(r, g, b),
-            cmax = Math.max(r, g, b),
-            delta = cmax - cmin,
+        let cMin = Math.min(r, g, b),
+            cMax = Math.max(r, g, b),
+            delta = cMax - cMin,
             h = 0,
             s = 0,
             l = 0;
 
         if (delta === 0) h = 0;
-        else if (cmax === r) h = ((g - b) / delta) % 6;
-        else if (cmax === g) h = (b - r) / delta + 2;
+        else if (cMax === r) h = ((g - b) / delta) % 6;
+        else if (cMax === g) h = (b - r) / delta + 2;
         else h = (r - g) / delta + 4;
 
         h = Math.round(h * 60);
 
         if (h < 0) h += 360;
 
-        l = (cmax + cmin) / 2;
+        l = (cMax + cMin) / 2;
         s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
         s = +(s * 100).toFixed(1);
         l = +(l * 100).toFixed(1);
@@ -176,8 +174,6 @@ function hex() {
 }
 
 function rgb() {
-    rgbHexCopy = document.getElementById('rgb-hex-copy');
-    rgbHslCopy = document.getElementById('rgb-hsl-copy');
     let rgb = rgbInput.value;
     if (rgb.match(/^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i)) {
         rgbDisplay.style.backgroundColor = rgb;
@@ -211,21 +207,21 @@ function rgb() {
         r = rgb[0] / 255;
         g = rgb[1] / 255;
         b = rgb[2] / 255;
-        let cmin = Math.min(r, g, b),
-            cmax = Math.max(r, g, b),
-            delta = cmax - cmin,
+        let cMin = Math.min(r, g, b),
+            cMax = Math.max(r, g, b),
+            delta = cMax - cMin,
             h = 0,
             s = 0,
             l = 0;
         if (delta === 0) h = 0;
-        else if (cmax === r) h = ((g - b) / delta) % 6;
-        else if (cmax === g) h = (b - r) / delta + 2;
+        else if (cMax === r) h = ((g - b) / delta) % 6;
+        else if (cMax === g) h = (b - r) / delta + 2;
         else h = (r - g) / delta + 4;
 
         h = Math.round(h * 60);
 
         if (h < 0) h += 360;
-        l = (cmax + cmin) / 2;
+        l = (cMax + cMin) / 2;
 
         s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
 
@@ -246,8 +242,6 @@ function rgb() {
 }
 
 function hsl() {
-    hslHexCopy = document.getElementById('hsl-hex-copy');
-    hslRgbCopy = document.getElementById('hsl-rgb-copy');
     let hsl = hslInput.value;
     if (hsl.match(/^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i)) {
         hslDisplay.style.backgroundColor = hsl;

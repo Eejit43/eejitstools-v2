@@ -9,21 +9,29 @@ const copyOutput = document.getElementById('copy-output');
 /* Add event listeners */
 inputType.addEventListener('change', convert);
 input.addEventListener('input', convert);
-resetButton.addEventListener('click', reset);
-outputType.addEventListener('change', convert);
-copyOutput.addEventListener('click', () => {
-    copyValue('output', 'copy-output');
-});
-
-function reset() {
+resetButton.addEventListener('click', () => {
     input.value = '';
     output.value = '';
     message.innerHTML = '';
     inputType.value = 7;
     outputType.value = 5;
     copyOutput.disabled = true;
+
+    resetButton.disabled = true;
+    resetButton.innerHTML = 'Reset!';
     showAlert('Reset!', 'success');
-}
+
+    setTimeout(() => {
+        copyOutput.disabled = true;
+
+        resetButton.disabled = false;
+        resetButton.innerHTML = 'Reset';
+    }, 2000);
+});
+outputType.addEventListener('change', convert);
+copyOutput.addEventListener('click', () => {
+    copyValue(copyOutput, output);
+});
 
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {

@@ -1,46 +1,47 @@
 const input = document.getElementById('input');
 const encodeButton = document.getElementById('encode');
 const decodeButton = document.getElementById('decode');
-const clear = document.getElementById('clear');
+const clearButton = document.getElementById('clear');
 const result = document.getElementById('result');
-let copyResult = document.getElementById('copy-result');
+const copyResult = document.getElementById('copy-result');
 
 /* Add event listeners */
 encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', decode);
-clear.addEventListener('click', clearAll);
-copyResult.addEventListener('click', () => {
-    copyValue('result', 'copy-result');
-});
-
-let clearMessageTimeout;
-function clearAll() {
-    copyResult = document.getElementById('copy-result');
+clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
     copyResult.disabled = true;
+
+    clearButton.disabled = true;
+    clearButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
-    clear.innerHTML = 'Cleared!';
-    clearTimeout(clearMessageTimeout);
-    clearMessageTimeout = setTimeout(function () {
-        clear.innerHTML = 'Clear';
+    resetResult('encode');
+    resetResult('decode');
+
+    setTimeout(() => {
+        copyResult.disabled = true;
+
+        clearButton.disabled = false;
+        clearButton.innerHTML = 'Clear';
     }, 2000);
-    resetResult('e');
-    resetResult('d');
-}
+});
+copyResult.addEventListener('click', () => {
+    copyValue(copyResult, result);
+});
 
 function encode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
-        showResult('e', 'error');
+        showResult('encode', 'error');
     } else {
         try {
             result.value = btoa(input.value);
-            showResult('e', 'success');
+            showResult('encode', 'success');
             copyResult.disabled = false;
         } catch (err) {
             showAlert('Malformed input!', 'error');
-            showResult('e', 'error');
+            showResult('encode', 'error');
         }
     }
 }
@@ -48,15 +49,15 @@ function encode() {
 function decode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
-        showResult('d', 'error');
+        showResult('decode', 'error');
     } else {
         try {
             result.value = atob(input.value);
-            showResult('d', 'success');
+            showResult('decode', 'success');
             copyResult.disabled = false;
         } catch (err) {
             showAlert('Malformed input!', 'error');
-            showResult('d', 'error');
+            showResult('decode', 'error');
         }
     }
 }

@@ -1,16 +1,16 @@
-let decimalInput = document.getElementById('decimal-input');
-let decimalConvert = document.getElementById('decimal-convert');
-let decimalReset = document.getElementById('decimal-reset');
-let decimalArrow = document.getElementById('decimal-arrow');
-let scientificOutput = document.getElementById('scientific-output');
-let scientificOutputCopy = document.getElementById('scientific-output-copy');
-let scientificOutputCopy2 = document.getElementById('scientific-output-copy-2');
-let scientificInput = document.getElementById('scientific-input');
-let scientificConvert = document.getElementById('scientific-convert');
-let scientificReset = document.getElementById('scientific-reset');
-let scientificArrow = document.getElementById('scientific-arrow');
-let decimalOutput = document.getElementById('decimal-output');
-let decimalOutputCopy = document.getElementById('decimal-output-copy');
+const decimalInput = document.getElementById('decimal-input');
+const decimalConvert = document.getElementById('decimal-convert');
+const decimalReset = document.getElementById('decimal-reset');
+const decimalArrow = document.getElementById('decimal-arrow');
+const scientificOutput = document.getElementById('scientific-output');
+const scientificOutputCopy = document.getElementById('scientific-output-copy');
+const scientificOutputCopy2 = document.getElementById('scientific-output-copy-2');
+const scientificInput = document.getElementById('scientific-input');
+const scientificConvert = document.getElementById('scientific-convert');
+const scientificReset = document.getElementById('scientific-reset');
+const scientificArrow = document.getElementById('scientific-arrow');
+const decimalOutput = document.getElementById('decimal-output');
+const decimalOutputCopy = document.getElementById('decimal-output-copy');
 
 let scientificOutputVal, scientificOutputVal2;
 
@@ -35,12 +35,24 @@ decimalInput.addEventListener('input', () => {
     }
 });
 decimalConvert.addEventListener('click', convertDecimal);
-decimalReset.addEventListener('click', resetDecimal);
+decimalReset.addEventListener('click', () => {
+    scientificOutputVal = '';
+    scientificOutputVal2 = '';
+    decimalInput.value = '';
+    decimalConvert.disabled = true;
+    decimalReset.disabled = true;
+    scientificOutput.value = '';
+    scientificOutputCopy.disabled = true;
+    scientificOutputCopy2.disabled = true;
+
+    showAlert('Reset!', 'success');
+    updateArrow(decimalArrow, 'reset');
+});
 scientificOutputCopy.addEventListener('click', () => {
-    copyVar('scientificOutputVal', 'scientific-output-copy', 'Copy scientific e notation');
+    copyVar(scientificOutputCopy, 'scientificOutputVal');
 });
 scientificOutputCopy2.addEventListener('click', () => {
-    copyVar('scientificOutputVal2', 'scientific-output-copy-2', 'Copy scientific notation');
+    copyVar(scientificOutputCopy2, 'scientificOutputVal2');
 });
 scientificInput.addEventListener('input', () => {
     if (scientificInput.value.length > 0) scientificConvert.disabled = false;
@@ -50,40 +62,19 @@ scientificInput.addEventListener('input', () => {
     else scientificReset.disabled = true;
 });
 scientificConvert.addEventListener('click', convertScientific);
-scientificReset.addEventListener('click', resetScientific);
-decimalOutputCopy.addEventListener('click', () => {
-    copyVar('decimalOutputVal', 'decimal-output-copy', 'Copy');
-});
-
-function resetDecimal() {
-    scientificOutputVal = '';
-    scientificOutputVal2 = '';
-    scientificOutputCopy = document.getElementById('scientific-output-copy');
-    scientificOutputCopy2 = document.getElementById('scientific-output-copy-2');
-    decimalInput.value = '';
-    decimalConvert.disabled = true;
-    decimalReset.disabled = true;
-    updateArrow('decimal', 'reset');
-    scientificOutput.value = '';
-    scientificOutputCopy.innerHTML = 'Copy scientific e notation';
-    scientificOutputCopy2.innerHTML = 'Copy scientific notation';
-    scientificOutputCopy.disabled = true;
-    scientificOutputCopy2.disabled = true;
-    showAlert('Reset!', 'success');
-}
-
-function resetScientific() {
-    decimalOutputVal = undefined;
-    decimalOutputCopy = document.getElementById('decimal-output-copy');
+scientificReset.addEventListener('click', () => {
     scientificInput.value = '';
     scientificConvert.disabled = true;
     scientificReset.disabled = true;
-    updateArrow('scientific', 'reset');
     decimalOutput.value = '';
-    decimalOutputCopy.innerHTML = 'Copy';
     decimalOutputCopy.disabled = true;
+
     showAlert('Reset!', 'success');
-}
+    updateArrow(scientificArrow, 'reset');
+});
+decimalOutputCopy.addEventListener('click', () => {
+    copyVar(decimalOutputCopy, 'decimalOutputVal');
+});
 
 function convertDecimal() {
     if (/^[+-]?([0-9]\d*)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
@@ -92,12 +83,12 @@ function convertDecimal() {
         scientificOutputVal2 = math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
         scientificOutputCopy.disabled = false;
         scientificOutputCopy2.disabled = false;
-        updateArrow('decimal', 'success');
+        updateArrow(decimalArrow, 'success');
     } else {
         scientificOutput.value = '';
         scientificOutputCopy.disabled = true;
         scientificOutputCopy2.disabled = true;
-        updateArrow('decimal', 'error');
+        updateArrow(decimalArrow, 'error');
         showAlert('Invalid number!', 'error');
     }
 }
@@ -107,8 +98,7 @@ function convertScientific() {
         decimalOutput.value = math.format(math.bignumber(scientificInput.value), { notation: 'fixed' });
         decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopy.disabled = false;
-        scientificArrow.style.color = '#009c3f';
-        scientificArrow.className = 'fa-solid fa-arrow-right';
+        updateArrow(scientificArrow, 'success', 'right');
     } else if (/^[+-]?\d(\.\d+)? ?[xX\*] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = math.format(
             math.bignumber(
@@ -129,11 +119,11 @@ function convertScientific() {
             { notation: 'fixed' }
         );
         decimalOutputCopy.disabled = false;
-        updateArrow('scientific', 'success');
+        updateArrow(scientificArrow, 'success');
     } else {
         decimalOutput.value = '';
         decimalOutputCopy.disabled = true;
-        updateArrow('scientific', 'error');
+        updateArrow(scientificArrow, 'error');
         showAlert('Invalid scientific notation!', 'error');
     }
 }

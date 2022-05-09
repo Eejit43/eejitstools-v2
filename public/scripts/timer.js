@@ -9,8 +9,36 @@ const timerTime = document.getElementById('timer-time');
 
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);
-pauseResumeTimer.addEventListener('click', pauseResume);
-resetButton.addEventListener('click', reset);
+pauseResumeTimer.addEventListener('click', () => {
+    if (!paused) {
+        paused = true;
+        pauseResumeTimer.textContent = 'Resume';
+    } else {
+        paused = false;
+        pauseResumeTimer.textContent = 'Pause';
+
+        targetTime = Date.now() + remaining * 1000;
+        displayTime();
+    }
+});
+resetButton.addEventListener('click', () => {
+    paused = true;
+    displayTime();
+
+    audio.pause();
+    audio.currentTime = 0;
+    pauseResumeTimer.textContent = 'Pause';
+    timerTime.textContent = '';
+    startTimerButton.disabled = false;
+    pauseResumeTimer.disabled = true;
+    hoursInput.value = '0';
+    minutesInput.value = '1';
+    secondsInput.value = '0';
+    timerDisplay.textContent = '0h 0m 0s';
+
+    showAlert('Reset!', 'success');
+    resetResult('timer');
+});
 hoursInput.addEventListener('input', () => {
     hoursInput.value = hoursInput.value.replace(/((?![0-9]).)/g, '');
     checkInput(hoursInput);
@@ -32,24 +60,6 @@ function checkInput(element) {
 const audio = new Audio('/timer-alarm.mp3');
 
 let paused = true;
-
-function reset() {
-    paused = true;
-    displayTime();
-
-    audio.pause();
-    audio.currentTime = 0;
-    pauseResumeTimer.textContent = 'Pause';
-    timerTime.textContent = '';
-    startTimerButton.disabled = false;
-    pauseResumeTimer.disabled = true;
-    hoursInput.value = '0';
-    minutesInput.value = '1';
-    secondsInput.value = '0';
-    timerDisplay.textContent = '0h 0m 0s';
-    showAlert('Reset!', 'success');
-    resetResult('timer');
-}
 
 let targetTime, runTimer;
 function startTimer() {
@@ -96,7 +106,6 @@ function displayTime() {
     hoursUntil = Math.floor(remaining / 3600);
 
     timerDisplay.textContent = `${hoursUntil}h ${minutesUntil}m ${secondsUntil}s`;
-    timerTime.textContent = '';
 
     requestAnimationFrame(displayTime);
 
@@ -116,18 +125,6 @@ function displayTime() {
 
     const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-    timerTime.textContent = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
-}
-
-function pauseResume() {
-    if (!paused) {
-        paused = true;
-        pauseResumeTimer.textContent = 'Resume';
-    } else {
-        paused = false;
-        pauseResumeTimer.textContent = 'Pause';
-
-        targetTime = Date.now() + remaining * 1000;
-        displayTime();
-    }
+    const output = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
+    if (timerTime.textContent !== output) timerTime.textContent = output;
 }
