@@ -4,7 +4,8 @@ const encodeButton = document.getElementById('encode');
 const clearButton = document.getElementById('clear');
 const b64Result = document.getElementById('b64-result');
 const b64CopyResult = document.getElementById('b64-copy-result');
-let b64OpenResult = document.getElementById('b64-open-result');
+const b64OpenResultLink = document.getElementById('b64-open-result-link');
+const b64OpenResult = document.getElementById('b64-open-result');
 const input = document.getElementById('string-input');
 const decodeButton = document.getElementById('decode');
 const clearButton2 = document.getElementById('clear2');
@@ -21,7 +22,7 @@ encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', () => {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
-        showResult('d', 'error');
+        showResult('decode', 'error');
     } else {
         const string = !/data:image\/.*?;base64,/.test(input.value) ? 'data:image/png;base64,' + input.value : input.value;
         displayImage(string);
@@ -33,11 +34,12 @@ clearButton.addEventListener('click', () => {
     b64Result.value = '';
     b64CopyResult.disabled = true;
     b64OpenResult.disabled = true;
+    b64OpenResultLink.removeAttribute('href');
 
     clearButton.disabled = true;
     clearButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('e');
+    resetResult('encode');
 
     setTimeout(() => {
         clearButton.disabled = false;
@@ -51,7 +53,7 @@ clearButton2.addEventListener('click', () => {
     clearButton2.disabled = true;
     clearButton2.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('d');
+    resetResult('decode');
 
     setTimeout(() => {
         clearButton2.disabled = false;
@@ -63,11 +65,6 @@ b64CopyResult.addEventListener('click', () => {
 });
 
 function encode() {
-    const oldElement = document.getElementById('b64-open-result');
-    const newElement = oldElement.cloneNode(true);
-    oldElement.parentNode.replaceChild(newElement, oldElement);
-    b64OpenResult = document.getElementById('b64-open-result');
-
     if (fileUploadButton.value) {
         const reader = new FileReader();
         reader.readAsDataURL(fileUploadButton.files[0]);
@@ -77,20 +74,18 @@ function encode() {
             if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {
                 base64 = reader.result;
                 b64Result.value = reader.result;
-                b64OpenResult.addEventListener('click', () => {
-                    openBase64InNewTab(reader.result.replace(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
-                });
                 b64CopyResult.disabled = false;
                 b64OpenResult.disabled = false;
-                showResult('e', 'success');
+                b64OpenResultLink.href = createBase64ObjectURL(reader.result.replace(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
+                showResult('encode', 'success');
             } else {
                 showAlert('Invalid file type! (must be .png, .jpg, .jpeg, .webp, .bmp, or .gif)', 'error');
-                showResult('e', 'error');
+                showResult('encode', 'error');
             }
         });
     } else {
         showAlert('No input!', 'error');
-        showResult('e', 'error');
+        showResult('encode', 'error');
     }
 }
 
@@ -127,17 +122,18 @@ async function displayImage(string) {
     } else {
         imageOutput.src = '';
         showAlert('Malformed input!', 'error');
-        showResult('d', 'error');
+        showResult('decode', 'error');
     }
 }
 
 /**
- * Opens a valid base64 file in a new tab
- * @param {string} data The base64 to open
+ * Creates base 64 object URL
+ * @param {string} data The base64 to create an object URL for
  * @param {string} mimeType The mimeType of the given base64
- * @see https://newbedev.com/base64-image-open-in-new-tab-window-is-not-allowed-to-navigate-top-frame-navigations-to-data-urls
+ * @returns {string} image object URL
+ * @see https://stackoverflow.com/a/52092093
  */
-function openBase64InNewTab(data, mimeType) {
+function createBase64ObjectURL(data, mimeType) {
     const byteCharacters = atob(data);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -147,6 +143,5 @@ function openBase64InNewTab(data, mimeType) {
     const file = new Blob([byteArray], {
         type: mimeType + ';base64',
     });
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
+    return URL.createObjectURL(file);
 }

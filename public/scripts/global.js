@@ -204,9 +204,12 @@ function matchesKeywords(keywords, string) {
 const searchResult = document.querySelector('.search-results');
 const searchText = document.querySelector('.search-text');
 
-searchText.addEventListener('input', async () => {
-    const pages = await (await fetch('/pages')).json();
+let pages = [];
+fetch('/pages').then(async (response) => {
+    pages = await response.json();
+});
 
+searchText.addEventListener('input', async () => {
     const value = searchText.value.toLowerCase();
     const results = [];
     pages.forEach((page) => {
