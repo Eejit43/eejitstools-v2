@@ -16,7 +16,7 @@
         "fs": "^0.0.1-security",
         "http": "^0.0.1-security",
         "http-errors": "^2.0.0",
-        "pug": "^3.0.2",
+        "request": "^2.88.2",
         "toastify": "^2.0.1"
     },
     "devDependencies": {

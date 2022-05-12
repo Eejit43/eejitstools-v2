@@ -58,14 +58,14 @@ function checkApod(yearInput, monthInput, dateInput) {
 }
 
 function fetchApod(yearInput, monthInput, dateInput) {
-    resultElement.innerHTML = 'Loading...';
+    resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
     yearInput = yearFull = yearInput ? String(yearInput) : String(year);
     monthInput = monthFull = monthInput ? String(monthInput) : String(month);
     dateInput = dateFull = dateInput ? String(dateInput) : String(date);
     if (yearInput.length === 4) yearInput = yearInput.substring(2);
     if (monthInput.length === 1) monthInput = 0 + monthInput;
     if (dateInput.length === 1) dateInput = 0 + dateInput;
-    fetch(`https://eejitstools.herokuapp.com/https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
+    fetch(`/cors-anywhere?url=https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
         .then(async (response) => {
             const preHtml = (await response.text()).replace(/\n/g, ' ').replace(/<a(.*?)>/g, '<a$1 target="_blank">');
             const html = stringToHTML(preHtml);

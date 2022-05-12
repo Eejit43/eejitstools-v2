@@ -3,6 +3,7 @@ const fs = require('fs');
 const createError = require('http-errors');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const request = require('request');
 const http = require('http');
 const debug = require('debug')('eejitstools:server');
 const { allPageInfo, blankProperties } = require('./pages');
@@ -66,6 +67,17 @@ app.get('/pages', (req, res) => {
             return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
         })
     );
+});
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+
+app.get('/cors-anywhere', (req, res) => {
+    request({ url: req.query.url }, (error, response, body) => {
+        res.send(body);
+    });
 });
 
 fs.readdirSync('./views/pages').forEach((category) => {
