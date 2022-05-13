@@ -1,17 +1,22 @@
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
-const fs = require('fs');
-const createError = require('http-errors');
-const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
-const request = require('request');
-const http = require('http');
-const debug = require('debug')('eejitstools:server');
-const { allPageInfo, blankProperties } = require('./pages');
+import fs from 'fs';
+import createError from 'http-errors';
+import express from 'express';
+import expressLayouts from 'express-ejs-layouts';
+import request from 'request';
+import http from 'http';
+import debug from 'debug';
+import path from 'path';
+import { allPageInfo, blankProperties } from './pages.js';
+import 'dotenv/config';
+
+const log = debug('eejitstools:server');
 
 const app = express();
 const server = http.createServer(app);
 
 const port = process.env.PORT || 3000;
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname); // jshint ignore:line
 
 app.set('port', port);
 
@@ -35,7 +40,7 @@ server.on('error', (error) => {
 });
 
 server.on('listening', () => {
-    debug(`Listening on ${server.address().port}`);
+    log(`Listening on ${server.address().port}`);
 });
 
 app.set('views', __dirname + '/views');

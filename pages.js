@@ -231,7 +231,7 @@ const minecraftFormattingCodes = [
     { type: 'Reset color and formatting', formattingCode: 'r', motdCode: '00A7r', style: '' },
 ];
 
-const blankProperties = {
+export const blankProperties = {
     description: '',
     page: '',
     additionalScripts: [],
@@ -239,7 +239,7 @@ const blankProperties = {
     script: false,
 };
 
-const allPageInfo = {
+export const allPageInfo = {
     base64: {
         link: 'tools/base64',
         title: 'Base64 Encode/Decode',
@@ -626,5 +626,3 @@ const allPageInfo = {
         script: true,
     },
 };
-
-module.exports = { allPageInfo, blankProperties };
