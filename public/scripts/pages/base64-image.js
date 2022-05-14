@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult, copyValue, escapeHTML } from '/scripts/functions.js';
+
 const fileUploadButton = document.getElementById('file-upload');
 const fileUploadMessage = document.getElementById('file-message');
 const encodeButton = document.getElementById('encode');

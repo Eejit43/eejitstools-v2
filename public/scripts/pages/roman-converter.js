@@ -1,3 +1,5 @@
+import { showAlert, updateArrow, copyText } from '/scripts/functions.js';
+
 const integerInput = document.getElementById('integer-input');
 const integerConvert = document.getElementById('integer-convert');
 const integerReset = document.getElementById('integer-reset');
@@ -38,7 +40,7 @@ integerReset.addEventListener('click', () => {
     romanOutputCopy2.disabled = true;
 
     showAlert('Reset!', 'success');
-    updateArrow('integer', 'reset');
+    updateArrow(integerArrow, 'reset');
 });
 romanInput.addEventListener('input', () => {
     romanInput.value = romanInput.value.toUpperCase();
@@ -62,16 +64,16 @@ romanReset.addEventListener('click', () => {
     integerOutputCopy.disabled = true;
 
     showAlert('Reset!', 'success');
-    updateArrow('roman', 'reset');
+    updateArrow(romanArrow, 'reset');
 });
 romanOutputCopy.addEventListener('click', () => {
-    copyVar(romanOutputCopy, 'romanOutputVal');
+    copyText(romanOutputCopy, romanOutputVal);
 });
 romanOutputCopy2.addEventListener('click', () => {
-    copyVar(romanOutputCopy2, 'romanOutputVal2');
+    copyText(romanOutputCopy2, romanOutputVal2);
 });
 integerOutputCopy.addEventListener('click', () => {
-    copyVar(integerOutputCopy, 'integerOutputVal');
+    copyText(integerOutputCopy, integerOutputVal);
 });
 
 function convertInteger() {
@@ -79,13 +81,13 @@ function convertInteger() {
         romanOutput.innerHTML = romanize(integerInput.value);
         romanOutputCopy.disabled = false;
         romanOutputCopy2.disabled = false;
-        updateArrow('integer', 'success');
+        updateArrow(integerArrow, 'success');
     } else {
         showAlert('Value must be greater than 0!', 'error');
         romanOutput.innerHTML = '​';
         romanOutputCopy.disabled = true;
         romanOutputCopy2.disabled = true;
-        updateArrow('integer', 'error');
+        updateArrow(integerArrow, 'error');
     }
 }
 
@@ -100,12 +102,12 @@ function convertRoman() {
         integerOutputVal = deromanize(input);
         integerOutput.value = deromanize(input);
         integerOutputCopy.disabled = false;
-        updateArrow('roman', 'success');
+        updateArrow(romanArrow, 'success');
     } else {
         showAlert('Invalid roman numeral!', 'error');
         integerOutput.value = '';
         integerOutputCopy.disabled = true;
-        updateArrow('roman', 'error');
+        updateArrow(romanArrow, 'error');
     }
 }
 

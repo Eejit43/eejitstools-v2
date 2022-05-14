@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+
 const input = document.getElementById('input');
 const encodeButton = document.getElementById('encode');
 const decodeButton = document.getElementById('decode');

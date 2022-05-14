@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+
 const input = document.getElementById('input');
 const separator = document.getElementById('separator');
 const alphabetizeNormalButton = document.getElementById('alphabetize-normal');

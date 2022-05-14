@@ -1,3 +1,5 @@
+import { copyValue } from '/scripts/functions.js';
+
 // Some formulas modified from https://css-tricks.com/converting-color-spaces-in-javascript/
 
 const hexInput = document.getElementById('hex-input');

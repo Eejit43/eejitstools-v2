@@ -1,3 +1,5 @@
+import { showAlert } from '/scripts/functions.js';
+
 const ready = document.getElementById('ready');
 const key = document.getElementById('key');
 const keyCell = document.getElementById('key-cell');

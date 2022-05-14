@@ -1,7 +1,8 @@
+import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+
 const dlrRegexInput = document.getElementById('dlr-regexInput');
 const runDlr = document.getElementById('run-dlr');
 const dlrResult = document.getElementById('dlr-result');
-const dlrResult2 = document.getElementById('dlr-result-2');
 const dlrClearButton = document.getElementById('dlr-clear');
 const dlrCopyResult = document.getElementById('dlr-copy-result');
 const wrRegexInput = document.getElementById('wr-regexInput');

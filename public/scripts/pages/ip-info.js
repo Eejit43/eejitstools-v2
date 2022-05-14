@@ -1,3 +1,5 @@
+import { twemojiUpdate } from '/scripts/functions.js';
+
 //More info about api data on https://app.abstractapi.com/api/ip-geolocation/documentation
 
 fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=7dcea861f91a44579cea73ad833eff21').then(async (response) => {

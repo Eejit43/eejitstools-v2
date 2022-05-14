@@ -1,3 +1,5 @@
+import { showAlert, escapeHTML } from '/scripts/functions.js';
+
 const eventsTitle = document.getElementById('events-title');
 const eventsDisplay = document.getElementById('events');
 const monthVal = document.getElementById('month');

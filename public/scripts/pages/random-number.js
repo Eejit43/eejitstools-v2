@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult } from '/scripts/functions.js';
+
 const minNumber = document.getElementById('min-number');
 const maxNumber = document.getElementById('max-number');
 const generate = document.getElementById('generate-number');

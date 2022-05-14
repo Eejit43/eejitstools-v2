@@ -17,8 +17,7 @@
         "fs": "^0.0.1-security",
         "http": "^0.0.1-security",
         "http-errors": "^2.0.0",
-        "request": "^2.88.2",
-        "toastify": "^2.0.1"
+        "request": "^2.88.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.16"

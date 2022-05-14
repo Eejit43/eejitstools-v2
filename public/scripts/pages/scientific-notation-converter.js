@@ -1,3 +1,5 @@
+import { showAlert, updateArrow, copyText } from '/scripts/functions.js';
+
 const decimalInput = document.getElementById('decimal-input');
 const decimalConvert = document.getElementById('decimal-convert');
 const decimalReset = document.getElementById('decimal-reset');
@@ -49,10 +51,10 @@ decimalReset.addEventListener('click', () => {
     updateArrow(decimalArrow, 'reset');
 });
 scientificOutputCopy.addEventListener('click', () => {
-    copyVar(scientificOutputCopy, 'scientificOutputVal');
+    copyText(scientificOutputCopy, scientificOutputVal);
 });
 scientificOutputCopy2.addEventListener('click', () => {
-    copyVar(scientificOutputCopy2, 'scientificOutputVal2');
+    copyText(scientificOutputCopy2, scientificOutputVal2);
 });
 scientificInput.addEventListener('input', () => {
     if (scientificInput.value.length > 0) scientificConvert.disabled = false;
@@ -73,7 +75,7 @@ scientificReset.addEventListener('click', () => {
     updateArrow(scientificArrow, 'reset');
 });
 decimalOutputCopy.addEventListener('click', () => {
-    copyVar(decimalOutputCopy, 'decimalOutputVal');
+    copyText(decimalOutputCopy, decimalOutputVal);
 });
 
 function convertDecimal() {

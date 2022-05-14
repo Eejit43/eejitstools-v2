@@ -1,3 +1,5 @@
+import { showAlert, copyValue } from '/scripts/functions.js';
+
 const inputType = document.getElementById('input-type');
 const input = document.getElementById('input');
 const resetButton = document.getElementById('reset');

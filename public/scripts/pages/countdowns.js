@@ -1,3 +1,5 @@
+import { twemojiUpdate } from '/scripts/functions.js';
+
 // Some dates from https://calendarific.com/api/v2/holidays?api_key=9f2483021d5643c59e75d133dc71bcab6672bfc0&country=US&year=2023&type=national
 
 const dates = [
@@ -54,17 +56,16 @@ document.getElementById('countdowns').innerHTML = result.join('<br />');
 twemojiUpdate();
 
 setInterval(() => {
-    for (let i = 0; i < dates.length; i++) {
-        const result = getTimeUntil(dates[i].date);
-        if (result && document.getElementById(dates[i].id).innerHTML !== result) {
-            document.getElementById(dates[i].id).innerHTML = result;
-        } else {
-            try {
-                document.getElementById(dates[i].id).innerHTML = '<span class="error">This event has already occurred!</span>';
-            } catch (error) {}
-        }
+    for (const date in dates) {
+        const result = getTimeUntil(dates[date].date);
+        const timeDisplay = document.getElementById(dates[date].id);
+
+        if (!timeDisplay || timeDisplay.innerHTML === result) continue;
+
+        if (result) timeDisplay.innerHTML = result;
+        else timeDisplay.innerHTML = '<span class="error">This event has already occurred!</span>';
     }
-}, 1000);
+}, 500);
 
 /**
  * Calculates the time until a given date

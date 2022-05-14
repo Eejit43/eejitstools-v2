@@ -1,3 +1,5 @@
+import { showAlert, escapeHTML } from '/scripts/functions.js';
+
 const userQuestion = document.getElementById('userQuestion');
 const rollBallBtn = document.getElementById('rollBall');
 const result = document.getElementById('result');

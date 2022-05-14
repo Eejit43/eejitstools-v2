@@ -1,3 +1,5 @@
+import { showAlert } from '/scripts/functions.js';
+
 const numberDisplay = document.getElementById('counter');
 const activationButton = document.getElementById('activation-button');
 const reset = document.getElementById('reset');

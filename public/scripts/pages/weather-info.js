@@ -1,3 +1,5 @@
+import { twemojiUpdate } from '/scripts/functions.js';
+
 const result = document.getElementById('result');
 
 function getLocation() {

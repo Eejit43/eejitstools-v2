@@ -1,3 +1,5 @@
+import { updateArrow, copyValue } from '/scripts/functions.js';
+
 const standardInput = document.getElementById('standard-input');
 const standardInputReset = document.getElementById('standard-input-reset');
 const standardArrow = document.getElementById('standard-arrow');

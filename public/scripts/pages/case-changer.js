@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+
 const input = document.getElementById('input');
 const toUpperButton = document.getElementById('to-upper');
 const toLowerButton = document.getElementById('to-lower');

@@ -27,16 +27,16 @@
         <meta name="msapplication-TileColor" content="#3e498a" />
         <meta name="theme-color" content="#3e498a" />
 
-        <!-- Styles -->
         <link rel="stylesheet" href="/styles/styles.css" />
-        <% for (let i = 0; i < additionalStyles.length; i++) { %><link rel="stylesheet" href="<%= additionalStyles %>" /><% } %>
-
-        <!-- Scripts -->
-        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
-        <% for (let i = 0; i < additionalScripts.length; i++) { %><script src="<%= additionalScripts %>" defer></script><% } %>
-        <script src="/scripts/global.js" defer></script>
-        <% if (script && page) { %><script src="/scripts/<%= page %>.js" defer></script><% } %>
+        <% for (let i = 0; i < additionalStyles.length; i++) { %>
+        <link rel="stylesheet" href="<%= additionalStyles %>" />
+        <% } %>
+        <script src="/scripts/global.js" type="module"></script>
+        <% if (script && page) { %>
+        <script src="/scripts/pages/<%= page %>.js" type="module"></script>
+        <% } %> <% for (let i = 0; i < additionalScripts.length; i++) { %>
+        <script src="<%= additionalScripts %>" type="module"></script>
+        <% } %>
     </head>
     <body>
         <noscript>
@@ -56,7 +56,7 @@
                     <input class="search-text" type="text" placeholder="Search here..." /><i class="search-btn fas fa-search"></i><br />
                     <div class="search-results"></div>
                 </div>
-                <a href="/tools/time" class="timer"><span id="time-display"></span></a>
+                <a href="/tools/time" class="timer"><span id="time-display">Loading...</span></a>
                 <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
             </span>
         </nav>

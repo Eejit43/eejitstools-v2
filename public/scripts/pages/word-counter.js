@@ -1,3 +1,5 @@
+import { showAlert } from '/scripts/functions.js';
+
 const input = document.getElementById('input');
 const characterDisplay = document.getElementById('character-count');
 const wordDisplay = document.getElementById('word-count');

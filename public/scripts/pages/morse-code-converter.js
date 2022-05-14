@@ -1,3 +1,5 @@
+import { showAlert, showResult, resetResult, copyText } from '/scripts/functions.js';
+
 const input = document.getElementById('input');
 const toMorseBtn = document.getElementById('to-morse');
 const fromMorseBtn = document.getElementById('from-morse');
@@ -26,13 +28,13 @@ clearBtn.addEventListener('click', () => {
     showAlert('Cleared!', 'success');
 });
 resultCopy.addEventListener('click', () => {
-    copyVar(resultCopy, 'resultVar1');
+    copyText(resultCopy, resultVar1);
 });
 resultCopy2.addEventListener('click', () => {
-    copyVar(resultCopy2, 'resultVar2');
+    copyText(resultCopy2, resultVar2);
 });
 resultCopy3.addEventListener('click', () => {
-    copyVar(resultCopy3, 'resultVar3');
+    copyText(resultCopy3, resultVar3);
 });
 
 const toMorseRef = {
@@ -96,8 +98,8 @@ const fromMorseRef = {
     '.-': 'A',
     '-...': 'B',
     '-.-.': 'C',
-    '-..': 'decode',
-    '.': 'encode',
+    '-..': 'D',
+    '.': 'E',
     '..-.': 'F',
     '--.': 'G',
     '....': 'H',

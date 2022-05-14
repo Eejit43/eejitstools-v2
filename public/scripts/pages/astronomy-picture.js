@@ -1,3 +1,5 @@
+import { showAlert, stringToHTML } from '/scripts/functions.js';
+
 const resultElement = document.getElementById('result');
 const yearVal = document.getElementById('year');
 const monthVal = document.getElementById('month');
@@ -58,6 +60,8 @@ function checkApod(yearInput, monthInput, dateInput) {
 }
 
 function fetchApod(yearInput, monthInput, dateInput) {
+    let yearFull, monthFull, dateFull;
+
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
     yearInput = yearFull = yearInput ? String(yearInput) : String(year);
     monthInput = monthFull = monthInput ? String(monthInput) : String(month);
