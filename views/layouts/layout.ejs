@@ -29,13 +29,13 @@
 
         <link rel="stylesheet" href="/styles/styles.css" />
         <% for (let i = 0; i < additionalStyles.length; i++) { %>
-        <link rel="stylesheet" href="<%= additionalStyles %>" />
+        <link rel="stylesheet" href="<%= additionalStyles[i] %>" />
         <% } %>
         <script src="/scripts/global.js" type="module"></script>
         <% if (script && page) { %>
         <script src="/scripts/pages/<%= page %>.js" type="module"></script>
         <% } %> <% for (let i = 0; i < additionalScripts.length; i++) { %>
-        <script src="<%= additionalScripts %>" type="module"></script>
+        <script src="<%= additionalScripts[i] %>" type="module"></script>
         <% } %>
     </head>
     <body>

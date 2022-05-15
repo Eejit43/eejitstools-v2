@@ -1,13 +1,14 @@
-import fs from 'fs';
+import 'dotenv/config';
 import createError from 'http-errors';
+import debug from 'debug';
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
-import request from 'request';
+import fs from 'fs';
 import http from 'http';
-import debug from 'debug';
 import path from 'path';
+import request from 'request';
+
 import { allPageInfo, blankProperties } from './pages.js';
-import 'dotenv/config';
 
 const log = debug('eejitstools:server');
 
@@ -27,11 +28,11 @@ server.on('error', (error) => {
 
     switch (error.code) {
         case 'EACCES':
-            console.error(`Port ${port} requires elevated privileges`);
+            console.error(`Port ${port} requires elevated privileges!`);
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(`Port ${port} is already in use`);
+            console.error(`Port ${port} is already in use!`);
             process.exit(1);
             break;
         default:
