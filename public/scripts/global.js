@@ -1,4 +1,9 @@
 import { twemojiUpdate, matchesKeywords, showAlert } from '/scripts/functions.js';
+import { allPageInfo } from '/data/pages.js';
+
+const pages = Object.keys(allPageInfo).map((key) => {
+    return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
+});
 
 twemojiUpdate();
 
@@ -37,12 +42,7 @@ resizeNav();
 const searchResult = document.querySelector('.search-results');
 const searchText = document.querySelector('.search-text');
 
-let pages = [];
-fetch('/pages').then(async (response) => {
-    pages = await response.json();
-});
-
-searchText.addEventListener('input', async () => {
+searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
     pages.forEach((page) => {

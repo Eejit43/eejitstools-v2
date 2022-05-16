@@ -8,7 +8,7 @@ import http from 'http';
 import path from 'path';
 import request from 'request';
 
-import { allPageInfo, blankProperties } from './pages.js';
+import { allPageInfo, blankProperties } from './public/data/pages.js';
 
 const log = debug('eejitstools:server');
 
