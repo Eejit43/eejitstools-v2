@@ -1,5 +1,3 @@
-// Modified from https://jsfiddle.net/Larph/he10jyu9/
-
 const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const resetButton = document.getElementById('reset');

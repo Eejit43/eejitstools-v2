@@ -1,5 +1,5 @@
-import twemoji from 'https://twemoji.maxcdn.com/v/latest/twemoji.esm.js';
 import toastify from 'https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/toastify-es.js';
+import twemoji from 'https://twemoji.maxcdn.com/v/latest/twemoji.esm.js';
 
 /**
  * Update emojis on the loaded content

@@ -1,4 +1,4 @@
-import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const dlrRegexInput = document.getElementById('dlr-regexInput');
 const runDlr = document.getElementById('run-dlr');

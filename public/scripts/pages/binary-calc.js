@@ -1,4 +1,4 @@
-import { showAlert, copyValue } from '/scripts/functions.js';
+import { copyValue, showAlert } from '/scripts/functions.js';
 
 const inputType = document.getElementById('input-type');
 const input = document.getElementById('input');

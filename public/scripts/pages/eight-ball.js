@@ -1,4 +1,4 @@
-import { showAlert, escapeHTML } from '/scripts/functions.js';
+import { escapeHTML, showAlert } from '/scripts/functions.js';
 
 const userQuestion = document.getElementById('userQuestion');
 const rollBallBtn = document.getElementById('rollBall');

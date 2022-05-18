@@ -1,5 +1,5 @@
-import { twemojiUpdate, matchesKeywords, showAlert } from '/scripts/functions.js';
 import { allPageInfo } from '/data/pages.js';
+import { matchesKeywords, showAlert, twemojiUpdate } from '/scripts/functions.js';
 
 const pages = Object.keys(allPageInfo).map((key) => {
     return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };

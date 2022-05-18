@@ -1,4 +1,4 @@
-import { showAlert, escapeHTML } from '/scripts/functions.js';
+import { escapeHTML, showAlert } from '/scripts/functions.js';
 
 const eventsTitle = document.getElementById('events-title');
 const eventsDisplay = document.getElementById('events');

@@ -1,4 +1,4 @@
-import { showAlert, showResult, resetResult, copyValue, escapeHTML } from '/scripts/functions.js';
+import { copyValue, escapeHTML, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const fileUploadButton = document.getElementById('file-upload');
 const fileUploadMessage = document.getElementById('file-message');

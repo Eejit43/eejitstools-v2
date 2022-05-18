@@ -1,4 +1,4 @@
-import { showAlert, showResult, resetResult, copyText } from '/scripts/functions.js';
+import { copyText, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const input = document.getElementById('input');
 const toMorseBtn = document.getElementById('to-morse');

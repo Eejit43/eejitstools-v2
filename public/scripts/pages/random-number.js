@@ -1,4 +1,4 @@
-import { showAlert, showResult, resetResult } from '/scripts/functions.js';
+import { resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const minNumber = document.getElementById('min-number');
 const maxNumber = document.getElementById('max-number');

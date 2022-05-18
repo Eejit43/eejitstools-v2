@@ -1,13 +1,12 @@
-import 'dotenv/config';
-import createError from 'http-errors';
 import debug from 'debug';
+import 'dotenv/config';
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import fs from 'fs';
 import http from 'http';
+import createError from 'http-errors';
 import path from 'path';
 import request from 'request';
-
 import { allPageInfo, blankProperties } from './public/data/pages.js';
 
 const log = debug('eejitstools:server');

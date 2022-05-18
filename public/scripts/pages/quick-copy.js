@@ -1,4 +1,4 @@
-import { showAlert, copyText } from '/scripts/functions.js';
+import { copyText, showAlert } from '/scripts/functions.js';
 
 const clearClipboardButton = document.getElementById('clear-clipboard');
 const copyZWS = document.getElementById('copy-zws');

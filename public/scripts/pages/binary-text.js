@@ -1,4 +1,4 @@
-import { showAlert, showResult, resetResult, copyValue } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const input = document.getElementById('input');
 const toBinaryBtn = document.getElementById('to-binary');
