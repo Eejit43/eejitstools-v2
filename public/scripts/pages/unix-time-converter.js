@@ -74,7 +74,7 @@ function updateUnixOutput() {
 }
 
 function updateUnixTime() {
-    unixInput.value = unixInputState === 1 ? new Date().getTime().toString().slice(0, -3) : new Date().getTime();
+    unixInput.value = unixInputState === 's' ? new Date().getTime().toString().slice(0, -3) : new Date().getTime();
     updateStandardOutput();
 }
 
@@ -92,7 +92,7 @@ function updateStandardOutput() {
     } else {
         updateArrow(unixArrow, 'success', 'down');
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const time = unixInputState === 2 ? new Date(parseInt(standardTime.toString().slice(0, -3))) : new Date(parseInt(standardTime));
+        const time = unixInputState === 'ms' ? new Date(parseInt(standardTime.toString().slice(0, -3))) : new Date(parseInt(standardTime));
         const date = time.getDate();
         const month = months[time.getMonth()];
         const year = time.getFullYear();
@@ -107,7 +107,7 @@ function updateStandardOutput() {
 
         const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
 
-        standardOutput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds}${unixInputState === 2 ? `.${milliseconds}` : ''} ${timeSuffix}`;
+        standardOutput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds}${unixInputState === 'ms' ? `.${milliseconds}` : ''} ${timeSuffix}`;
         standardOutputCopy.disabled = false;
     }
 }
