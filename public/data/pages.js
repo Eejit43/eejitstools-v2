@@ -300,12 +300,12 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
-    'color-converter': {
-        link: 'tools/color-converter',
-        title: 'Color Converter',
+    'color-info': {
+        link: 'tools/color-info',
+        title: 'Color Information',
         icon: 'fa-solid fa-palette',
-        description: 'Convert between Hex codes, RGB values, and HSL values, and see those colors displayed',
-        keywords: ['hexadecimal'],
+        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors',
+        keywords: [],
         additionalScripts: [],
         additionalStyles: [],
         script: true,
