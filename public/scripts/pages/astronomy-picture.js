@@ -78,6 +78,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
 
             const mediaType = /img src/gi.test(preHtml) ? 'image' : 'video';
 
+            let title;
             try {
                 if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
                 else title = stringToHTML(html.querySelectorAll('center')[1].innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
@@ -85,8 +86,9 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
             }
 
-            credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '') : false; // prettier-ignore
+            const credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '') : false; // prettier-ignore
 
+            let media;
             if (mediaType === 'video') media = `<div style="position: relative; overflow: hidden; margin: 15px auto; width: 900px; max-width: 90%; padding-top: 40%">${html.querySelector('iframe').outerHTML.replace(/src/g, 'style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%" src')}</div>`;
             else {
                 const links = html.querySelectorAll('a');
@@ -108,7 +110,9 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 .replace(/href="(?!http)(.*?)"/g, 'href="https://apod.nasa.gov/apod/$1"')
                 .replace(/href="\/(.*?)"/g, 'href="https://apod.nasa.gov/$1"')
                 .replace(/(\w|>)\/ /g, '$1/')
-                .replace(/ \.{3}/g, '...');
+                .replace(/ \.{3}/g, '...')
+                .replace(/<br( \/)>$/g, '')
+                .replace(/<br( \/)>$/g, '');
 
             const result = [
                 `Astronomy ${mediaType === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for ${apodDate}.<br />`, //

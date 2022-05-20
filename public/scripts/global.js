@@ -61,16 +61,34 @@ searchText.addEventListener('keydown', (event) => {
     }
 });
 
+const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
+
 /* Keyboard shortcuts */
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', async (event) => {
     if (!event.altKey) return;
 
     if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
         showAlert('Cleared clipboard!', 'success');
     } else if (event.code === 'KeyH') window.open('/', '_self');
-    else if (event.code === 'KeyS') window.open('https://github.com/Eejit43/eejitstools-v2', '_blank');
-    else if (event.code === 'Slash' && document.activeElement !== document.querySelector('.search-text')) {
+    else if (event.code === 'KeyS') window.open(githubUrl, '_blank');
+    else if (!event.shiftKey && event.code === 'KeyP') {
+        const pathname = window.location.pathname;
+        let finalUrl;
+        if (pathname === '/') finalUrl = 'views/index.ejs';
+        else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '')) finalUrl = `views/pages${pathname}.ejs`;
+        else finalUrl = 'views/error.ejs';
+
+        window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
+    } else if (event.shiftKey && event.code === 'KeyP') {
+        const pathname = window.location.pathname;
+        let finalUrl;
+        if (pathname === '/') finalUrl = 'public/scripts/global.js';
+        else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '') && allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages/${pathname.replace(/^\/(tools|info|fun)\//, '')}.js`;
+        else finalUrl = 'public/scripts/global.js';
+
+        window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
+    } else if (event.code === 'Slash' && document.activeElement !== document.querySelector('.search-text')) {
         document.querySelector('.search-text').focus();
         event.preventDefault();
     }
