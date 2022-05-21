@@ -81,5 +81,24 @@
             </span>
         </nav>
         <%- body %>
+        <button id="show-shortcuts">/</button>
+        <div id="shortcuts" style="display: none">
+            <div id="shortcuts-content">
+                <div id="shortcuts-header">
+                    Keyboard Shortcuts
+                    <span id="close-shortcuts">&times;</span>
+                </div>
+                <hr style="width: 90%" />
+                <div id="shortcuts-list">
+                    <kbd>Option</kbd> + <kbd>K</kbd>: Opens keyboard shortcut menu (this menu)<br />
+                    <kbd>Option</kbd> + <kbd>C</kbd>: Clears clipboard<br />
+                    <kbd>Option</kbd> + <kbd>H</kbd>: Opens homepage (current tab)<br />
+                    <kbd>Option</kbd> + <kbd>S</kbd>: Opens GitHub repository (new tab)<br />
+                    <kbd>Option</kbd> + <kbd>P</kbd>: Opens page source (GitHub, new tab)<br />
+                    <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>: Opens page script (or global script if no script) (GitHub, new tab)<br />
+                    <kbd>Option</kbd> + <kbd>/</kbd>: Selects search bar
+                </div>
+            </div>
+        </div>
     </body>
 </html>

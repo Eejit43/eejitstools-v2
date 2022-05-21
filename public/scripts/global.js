@@ -7,7 +7,7 @@ const pages = Object.keys(allPageInfo).map((key) => {
 
 twemojiUpdate();
 
-// Navigation time display
+/* Navigation time display */
 setInterval(() => {
     const currentTime = new Date();
     const fullHours = currentTime.getHours();
@@ -67,7 +67,8 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 document.addEventListener('keydown', async (event) => {
     if (!event.altKey) return;
 
-    if (event.code === 'KeyC') {
+    if (event.code === 'KeyK') document.getElementById('shortcuts').style.display = 'block';
+    else if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
         showAlert('Cleared clipboard!', 'success');
     } else if (event.code === 'KeyH') window.open('/', '_self');
@@ -93,3 +94,54 @@ document.addEventListener('keydown', async (event) => {
         event.preventDefault();
     }
 });
+
+/* Keyboard shortcuts popup */
+const modal = document.getElementById('shortcuts');
+
+document.getElementById('show-shortcuts').addEventListener('click', () => {
+    modal.style.display = 'block';
+});
+
+document.getElementById('close-shortcuts').addEventListener('click', () => {
+    addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
+        modal.style.display = 'none';
+    });
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
+            modal.style.display = 'none';
+        });
+    }
+});
+
+window.addEventListener('keydown', (event) => {
+    if (event.code === 'Escape' && modal.style.display === 'block') {
+        addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
+            modal.style.display = 'none';
+        });
+    }
+});
+
+/**
+ * Adds an animation class to an element, and removes it upon completion
+ * @param {string} element selectors for element
+ * @param {string} animation the animation to add
+ */
+const addAnimation = (element, animation) =>
+    new Promise((resolve, reject) => {
+        const node = document.querySelector(element);
+
+        node.classList.add(animation);
+
+        node.addEventListener(
+            'animationend',
+            (event) => {
+                event.stopPropagation();
+                node.classList.remove(animation);
+                resolve('Animation ended');
+            },
+            { once: true }
+        );
+    });
