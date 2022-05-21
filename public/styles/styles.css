@@ -99,6 +99,11 @@ kbd {
     width: 32px;
 }
 
+#show-shortcuts:hover {
+    background: #2b2e35;
+    color: dimgray;
+}
+
 #shortcuts {
     background-color: #00000066;
     display: block;
