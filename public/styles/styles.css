@@ -82,119 +82,6 @@ kbd {
     white-space: nowrap;
 }
 
-#show-shortcuts {
-    background: #31353d;
-    border: none;
-    border-radius: 5px 0 0 0;
-    bottom: 0;
-    color: whitesmoke;
-    font-size: 18px;
-    height: 32px;
-    line-height: 0px;
-    margin: 0;
-    margin-top: 5px;
-    position: fixed;
-    right: 0;
-    text-align: center;
-    width: 32px;
-}
-
-#show-shortcuts:hover {
-    background: #2b2e35;
-    color: dimgray;
-}
-
-#shortcuts {
-    background-color: #00000066;
-    display: block;
-    height: 100%;
-    left: 0;
-    overflow: auto;
-    padding-top: 200px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 5000;
-}
-
-#shortcuts-content {
-    -webkit-animation-duration: 0.4s;
-    animation-duration: 0.4s;
-    -webkit-animation-name: animate-top;
-    animation-name: animate-top;
-    background-color: #1e2529;
-    border: 3px solid #31353d;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
-    margin: auto;
-    padding: 0;
-    position: relative;
-    width: 30%;
-}
-
-@-webkit-keyframes animate-top {
-    from {
-        opacity: 0;
-        top: -300px;
-    }
-    to {
-        opacity: 1;
-        top: 0;
-    }
-}
-
-@keyframes animate-top {
-    from {
-        opacity: 0;
-        top: -300px;
-    }
-    to {
-        opacity: 1;
-        top: 0;
-    }
-}
-
-#shortcuts.animate-out-top {
-    -webkit-animation-direction: reverse;
-    animation-direction: reverse;
-    -webkit-animation-duration: 0.4s;
-    animation-duration: 0.4s;
-    -webkit-animation-name: animate-top;
-    animation-name: animate-top;
-    background: none;
-}
-
-#shortcuts-header {
-    background-color: #1e2529;
-    color: whitesmoke;
-    font-size: 22px;
-    padding: 5px 15px;
-}
-
-#close-shortcuts {
-    color: whitesmoke;
-    cursor: pointer;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    right: 10px;
-    top: 0;
-}
-
-#close-shortcuts:hover,
-#close-shortcuts:focus {
-    color: dimgray;
-    text-decoration: none;
-}
-
-#shortcuts-list {
-    background-color: #1e2529;
-    color: whitesmoke;
-    font-size: 18px;
-    padding: 15px;
-    line-height: 150%;
-}
-
 /*
  ================
     NAVIGATION
@@ -468,6 +355,131 @@ header {
         font-size: 14px;
         padding: 12px;
     }
+}
+
+/*
+ ================
+    SHORTCUTS
+ ================
+*/
+
+#show-shortcuts {
+    background: #31353d;
+    border: none;
+    border-radius: 5px 0 0 0;
+    bottom: 0;
+    color: whitesmoke;
+    font-size: 18px;
+    height: 32px;
+    line-height: 0px;
+    margin: 0;
+    margin-top: 5px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    width: 32px;
+}
+
+#show-shortcuts:hover {
+    background: #2b2e35;
+    color: dimgray;
+}
+
+@media only screen and (max-width: 600px) {
+    #show-shortcuts {
+        display: none;
+    }
+}
+
+#shortcuts {
+    background-color: #00000066;
+    display: block;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    padding-top: 200px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5000;
+}
+
+#shortcuts-content {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-name: animate-top;
+    animation-name: animate-top;
+    background-color: #1e2529;
+    border: 3px solid #31353d;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
+    margin: auto;
+    padding: 0;
+    position: relative;
+    width: 30%;
+}
+
+@-webkit-keyframes animate-top {
+    from {
+        opacity: 0;
+        top: -300px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+@keyframes animate-top {
+    from {
+        opacity: 0;
+        top: -300px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+#shortcuts.animate-out-top {
+    -webkit-animation-direction: reverse;
+    animation-direction: reverse;
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-name: animate-top;
+    animation-name: animate-top;
+    background: none;
+}
+
+#shortcuts-header {
+    background-color: #1e2529;
+    color: whitesmoke;
+    font-size: 22px;
+    padding: 5px 15px;
+}
+
+#close-shortcuts {
+    color: whitesmoke;
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+
+#close-shortcuts:hover,
+#close-shortcuts:focus {
+    color: dimgray;
+    text-decoration: none;
+}
+
+#shortcuts-list {
+    background-color: #1e2529;
+    color: whitesmoke;
+    font-size: 18px;
+    padding: 15px;
+    line-height: 150%;
 }
 
 /*
