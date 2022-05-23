@@ -61,7 +61,7 @@ function toLower() {
 }
 
 function titleCase(str) {
-    str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
+    str = str.replace(/([^\W_]+[^\s-]*) */g, (txt) => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 
@@ -95,14 +95,14 @@ function toSentence() {
     } else {
         result.value = input.value
             .toLowerCase()
-            .replace(/(^\s*\w|[\.\!\?]\s*\w)/gm, (char) => {
+            .replace(/(^\s*\w|[.!?]\s*\w)/gm, (char) => {
                 return char.toUpperCase();
             })
-            .replace(/(\s)i(\.|\!|\?|\s|\n|$)/gim, '$1I$2')
-            .replace(/(\s)i'm(\.|\!|\?|\s|\n|$)/gim, "$1I'm$2")
-            .replace(/(\s)i'd(\.|\!|\?|\s|\n|$)/gim, "$1I'd$2")
-            .replace(/(\s)i'll(\.|\!|\?|\s|\n|$)/gim, "$1I'll$2")
-            .replace(/(\s)i've(\.|\!|\?|\s|\n|$)/gim, "$1I've$2");
+            .replace(/(\s)i(\.|!|\?|\s|\n|$)/gim, '$1I$2')
+            .replace(/(\s)i'm(\.|!|\?|\s|\n|$)/gim, "$1I'm$2")
+            .replace(/(\s)i'd(\.|!|\?|\s|\n|$)/gim, "$1I'd$2")
+            .replace(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
+            .replace(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
         showResult('sentence', 'success');
         copyResult.disabled = false;
     }

@@ -157,7 +157,7 @@ function convertToMorse(str) {
         .split('')
         .map((el) => (toMorseRef[el] ? toMorseRef[el] : el))
         .join(' ')
-        .replace(/   /g, ' / ');
+        .replace(/ {3}/g, ' / ');
 }
 
 function toMorse() {
@@ -168,7 +168,7 @@ function toMorse() {
         resultCopy3.disabled = true;
         showResult('encode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[ a-zA-Z0-9\.,\?\'!\/\(\)&:;=+\-_"\$@]*$/.test(input.value.trim())) {
+    } else if (/^[ a-zA-Z0-9.,?'!/()&:;=+\-_"$@]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
         resultVar1 = convertToMorse(input.value);
         resultVar2 = convertToMorse(input.value).replace(/ \/ /g, ' | ');
@@ -189,7 +189,7 @@ function toMorse() {
 
 function decodeMorse(morseCode) {
     return morseCode
-        .split(/ {2,}| *[\|\/] */)
+        .split(/ {2,}| *[|/] */)
         .map((a) =>
             a
                 .split(' ')
@@ -208,7 +208,7 @@ function fromMorse() {
         resultCopy3.disabled = true;
         showResult('decode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[\|\/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputVal)) {
+    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[|/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputVal)) {
         result.value = decodeMorse(inputVal);
         resultVar1 = decodeMorse(inputVal);
         resultCopy.disabled = false;

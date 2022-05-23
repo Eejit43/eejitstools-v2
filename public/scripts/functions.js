@@ -146,3 +146,12 @@ export function matchesKeywords(keywords, string) {
     for (let i = 0; i < keywords.length; i++) if (keywords[i].includes(string)) return true;
     return false;
 }
+
+/**
+ * Updates an elements innerHTML to the provided string if it isn't the same as the provided string
+ * @param {HTMLElement} element the element to update
+ * @param {string} string the content to update the element with
+ */
+export function updateInnerHTML(element, string) {
+    if (element.innerHTML !== string) element.innerHTML = string;
+}

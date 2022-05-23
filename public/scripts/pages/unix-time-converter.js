@@ -31,43 +31,29 @@ let unixInputState = 's';
 let unixOutputState = 's';
 
 function updateStandardTime() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const currentTime = new Date();
-    const date = currentTime.getDate();
-    const month = months[currentTime.getMonth()];
-    const year = currentTime.getFullYear();
-    const fullHours = currentTime.getHours();
-    const hours = ((fullHours + 11) % 12) + 1;
-    let minutes = currentTime.getMinutes();
-    let seconds = currentTime.getSeconds();
-    if (minutes < 10) minutes = '0' + minutes;
-    if (seconds < 10) seconds = '0' + seconds;
 
-    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
-
-    standardInput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
+    standardInput.value = `${currentTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${currentTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
 
     updateUnixOutput();
 }
 
 function updateUnixOutput() {
-    const standardTime = standardInput.value;
-    const valid = new Date(standardTime).getTime() > 0;
+    const standardTime = new Date(standardInput.value);
     if (standardTime.length === 0) {
         updateArrow(standardArrow, 'reset', 'down');
         unixOutput.value = '';
         unixOutputCopy.disabled = true;
         unixOutputSwitch.disabled = true;
-    } else if (valid === false) {
+    } else if (isNaN(standardTime.getTime())) {
         updateArrow(standardArrow, 'error');
         unixOutput.value = '';
         unixOutputCopy.disabled = true;
         unixOutputSwitch.disabled = true;
     } else {
         updateArrow(standardArrow, 'success', 'down');
-        let unixTime = new Date(standardTime).getTime();
-        if (unixOutputState === 's') unixTime = unixTime.toString().slice(0, -3);
-        unixOutput.value = unixTime;
+
+        unixOutput.value = unixOutputState === 'ms' ? standardTime.getTime() : standardTime.getTime().toString().slice(0, -3);
         unixOutputCopy.disabled = false;
         unixOutputSwitch.disabled = false;
     }
@@ -79,35 +65,20 @@ function updateUnixTime() {
 }
 
 function updateStandardOutput() {
-    const standardTime = parseInt(unixInput.value) * 1000;
-    const valid = new Date(standardTime).getTime() > 0;
+    const unixTime = unixInputState === 'ms' ? new Date(parseInt(unixInput.value)) : new Date(parseInt(unixInput.value) * 1000);
     if (unixInput.value.length === 0) {
         updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
         standardOutputCopy.disabled = true;
-    } else if (valid === false) {
+    } else if (isNaN(unixTime.getTime())) {
         updateArrow(unixArrow, 'error');
         standardOutput.value = '';
         standardOutputCopy.disabled = true;
     } else {
         updateArrow(unixArrow, 'success', 'down');
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const time = unixInputState === 'ms' ? new Date(parseInt(standardTime.toString().slice(0, -3))) : new Date(parseInt(standardTime));
-        const date = time.getDate();
-        const month = months[time.getMonth()];
-        const year = time.getFullYear();
-        const fullHours = time.getHours();
-        const hours = ((fullHours + 11) % 12) + 1;
-        let minutes = time.getMinutes();
-        let seconds = time.getSeconds();
-        const milliseconds = time.getMilliseconds();
 
-        if (minutes < 10) minutes = '0' + minutes;
-        if (seconds < 10) seconds = '0' + seconds;
-
-        const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
-
-        standardOutput.value = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds}${unixInputState === 'ms' ? `.${milliseconds}` : ''} ${timeSuffix}`;
+        const timeString = unixTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+        standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds()} $1`) : timeString}, ${unixTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
         standardOutputCopy.disabled = false;
     }
 }

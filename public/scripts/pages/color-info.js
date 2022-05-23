@@ -1,3 +1,5 @@
+/* global chroma */
+
 import 'https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js';
 import { copyValue } from '/scripts/functions.js';
 

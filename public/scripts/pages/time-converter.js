@@ -1,3 +1,5 @@
+/* global math */
+
 import { copyValue, showAlert } from '/scripts/functions.js';
 
 const inputType = document.getElementById('input-type');
@@ -37,6 +39,7 @@ copyOutput.addEventListener('click', () => {
 
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
+        let inputTypeName, outputTypeName;
         if (inputType.value === '1') inputTypeName = 'nanoseconds';
         else if (inputType.value === '2') inputTypeName = 'microseconds';
         else if (inputType.value === '3') inputTypeName = 'milliseconds';

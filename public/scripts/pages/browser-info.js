@@ -3,8 +3,8 @@
 const navigatorVersion = navigator.appVersion;
 const navigatorAgent = navigator.userAgent;
 let browserName = navigator.appName;
-let fullVersion = parseFloat(navigator.appVersion).toString();
-let majorVersion = parseInt(navigator.appVersion, 10);
+let fullVersion = parseFloat(navigatorVersion).toString();
+let majorVersion = parseInt(navigatorVersion, 10);
 let nameOffset, versionOffset, ix;
 
 if ((versionOffset = navigatorAgent.indexOf('Opera')) !== -1) {
@@ -37,15 +37,15 @@ if ((ix = fullVersion.indexOf(' ')) !== -1) fullVersion = fullVersion.substring(
 
 majorVersion = parseInt('' + fullVersion, 10);
 if (isNaN(majorVersion)) {
-    fullVersion = '' + parseFloat(navigator.appVersion);
-    majorVersion = parseInt(navigator.appVersion, 10);
+    fullVersion = '' + parseFloat(navigatorVersion);
+    majorVersion = parseInt(navigatorVersion, 10);
 }
 
 let OSName = 'Unknown OS';
-if (navigator.appVersion.indexOf('Win') !== -1) OSName = 'Windows';
-if (navigator.appVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
-if (navigator.appVersion.indexOf('X11') !== -1) OSName = 'UNIX';
-if (navigator.appVersion.indexOf('Linux') !== -1) OSName = 'Linux';
+if (navigatorVersion.indexOf('Win') !== -1) OSName = 'Windows';
+if (navigatorVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
+if (navigatorVersion.indexOf('X11') !== -1) OSName = 'UNIX';
+if (navigatorVersion.indexOf('Linux') !== -1) OSName = 'Linux';
 
 const result = [
     `Operating System: ${OSName}`, //

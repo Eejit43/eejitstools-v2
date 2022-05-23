@@ -55,10 +55,11 @@ function displayTime() {
     millisecondsDisplay.textContent = format(value, 1, 1000, 3);
     secondsDisplay.textContent = format(value, 1000, 60, 2);
     minutesDisplay.textContent = format(value, 60000, 60, 2);
+    hoursDisplay.textContent = format(value, 3600000, null, 2);
 
     if (!paused) requestAnimationFrame(displayTime);
 }
 
 function format(value, scale, modulo, padding) {
-    return (Math.floor(value / scale) % modulo).toString().padStart(padding, 0);
+    return modulo ? (Math.floor(value / scale) % modulo).toString().padStart(padding, 0) : (Math.floor(value / scale)).toString().padStart(padding, 0); // prettier-ignore
 }

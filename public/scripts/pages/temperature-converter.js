@@ -1,3 +1,5 @@
+/* global math */
+
 import { copyValue, showAlert } from '/scripts/functions.js';
 
 const inputType = document.getElementById('input-type');

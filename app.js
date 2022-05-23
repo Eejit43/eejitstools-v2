@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import debug from 'debug';
 import 'dotenv/config';
 import express from 'express';
@@ -16,7 +18,7 @@ const server = http.createServer(app);
 
 const port = process.env.PORT || 3000;
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname); // jshint ignore:line
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 app.set('port', port);
 
@@ -102,7 +104,7 @@ app.use((req, res, next) => {
     next(createError(404));
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     if (!/NotFoundError: Not Found/.test(err)) console.log(err);
 
     res.status(err.status || 500);

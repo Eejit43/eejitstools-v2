@@ -1,5 +1,5 @@
 import { allPageInfo } from '/data/pages.js';
-import { matchesKeywords, showAlert, twemojiUpdate } from '/scripts/functions.js';
+import { matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
 
 const pages = Object.keys(allPageInfo).map((key) => {
     return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
@@ -8,22 +8,15 @@ const pages = Object.keys(allPageInfo).map((key) => {
 twemojiUpdate();
 
 /* Navigation time display */
+const timeDisplay = document.getElementById('time-display');
 setInterval(() => {
     const currentTime = new Date();
-    const fullHours = currentTime.getHours();
-    const hours = ((fullHours + 11) % 12) + 1;
-    let minutes = currentTime.getMinutes();
-    let seconds = currentTime.getSeconds();
-    if (minutes < 10) minutes = '0' + minutes;
-    if (seconds < 10) seconds = '0' + seconds;
 
-    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
+    const timeEmoji = currentTime.getHours() >= 7 && currentTime.getHours() < 17 ? '<img draggable="false" class="emoji" alt="☀️" src="https://twemoji.maxcdn.com/v/13.1.0/svg/2600.svg">' : '<img draggable="false" class="emoji" alt="🌒" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f312.svg">';
 
-    const timeEmoji = fullHours >= 7 && fullHours < 17 ? '<img draggable="false" class="emoji" alt="☀️" src="https://twemoji.maxcdn.com/v/13.1.0/svg/2600.svg">' : '<img draggable="false" class="emoji" alt="🌒" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f312.svg">';
+    const finalTime = `${new Date().toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })} ${timeEmoji}`;
 
-    const finalTime = `${hours}:${minutes}:${seconds} ${timeSuffix} ${timeEmoji}`;
-
-    if (document.getElementById('time-display').innerHTML !== finalTime) document.getElementById('time-display').innerHTML = finalTime;
+    updateInnerHTML(timeDisplay, finalTime);
 }, 100);
 
 /**
@@ -130,7 +123,7 @@ window.addEventListener('keydown', (event) => {
  * @param {string} animation the animation to add
  */
 const addAnimation = (element, animation) =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
         const node = document.querySelector(element);
 
         node.classList.add(animation);

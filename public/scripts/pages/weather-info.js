@@ -63,11 +63,11 @@ async function getData(position) {
 
     const output = [
         `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`, //
-        `Updated on ${moment.unix(data.ts).local('').format('LLLL')}<br />`,
+        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}<br />`,
         `Active Alerts: ${alerts}`,
-        `<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>`,
-        `Sunrise: ${moment.utc(data.sunrise, 'HH:mm').local().format('hh:mm A')}`,
-        `Sunset: ${moment.utc(data.sunset, 'HH:mm').local().format('hh:mm A')}`,
+        '<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>',
+        `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
+        `Sunset: ${new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
         `Weather: ${data.weather.description} <img height="25" width="25" style="transform: translateY(6px)" src="https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png" alt="${data.weather.description}">`,
         `Precipitation: ${data.precip} inches/hour`,
         `Snowfall: ${data.snow} inches/hour`,
@@ -80,7 +80,7 @@ async function getData(position) {
         `Pressure: ${data.pres} millibars`,
         `UV Index: ${uvIndex}`,
         `Air Quality: ${airQuality}`,
-        `Moon Phase: <span id="moon-phase">Loading...</span>`,
+        'Moon Phase: <span id="moon-phase">Loading...</span>',
     ];
 
     result.innerHTML = output.join('<br />');
@@ -106,7 +106,7 @@ async function getData(position) {
 
     document.getElementById('moon-phase').innerHTML = html;
 }
-
+// eslint-disable-next-line no-unused-vars
 function showWeatherAlert(alert) {
     const alertDisplay = document.getElementById('alert-display');
     if (alertDisplay.value !== finalAlerts[alert] || alertDisplay.style.display !== 'unset') {

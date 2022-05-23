@@ -72,9 +72,7 @@ function encode() {
         reader.readAsDataURL(fileUploadButton.files[0]);
         reader.addEventListener('loadend', () => {
             const imageType = reader.result.replace(/^data:image\/(.*?);base64,.*$/g, '$1');
-
             if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {
-                base64 = reader.result;
                 b64Result.value = reader.result;
                 b64CopyResult.disabled = false;
                 b64OpenResult.disabled = false;

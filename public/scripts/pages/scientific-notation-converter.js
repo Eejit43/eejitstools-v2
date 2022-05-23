@@ -1,3 +1,5 @@
+/* global math */
+
 import { copyText, showAlert, updateArrow } from '/scripts/functions.js';
 
 const decimalInput = document.getElementById('decimal-input');
@@ -14,12 +16,12 @@ const scientificArrow = document.getElementById('scientific-arrow');
 const decimalOutput = document.getElementById('decimal-output');
 const decimalOutputCopy = document.getElementById('decimal-output-copy');
 
-let scientificOutputVal, scientificOutputVal2;
+let decimalOutputVal, scientificOutputVal, scientificOutputVal2;
 
 /* Add event listeners */
 decimalInput.addEventListener('input', () => {
     decimalInput.value = decimalInput.value
-        .replace(/[^0-9\.\-\+]/g, '')
+        .replace(/[^0-9.\-+]/g, '')
         .replace(/(\..*?)\./g, '$1')
         .replace(/(-.*?)-/g, '$1')
         .replace(/(\+.*?)\+/g, '$1');
@@ -101,22 +103,22 @@ function convertScientific() {
         decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopy.disabled = false;
         updateArrow(scientificArrow, 'success', 'right');
-    } else if (/^[+-]?\d(\.\d+)? ?[xX\*] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
+    } else if (/^[+-]?\d(\.\d+)? ?[xX*] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = math.format(
             math.bignumber(
                 scientificInput.value
-                    .replace(/ ?[xX\*] ?10\^(\d)/g, 'e+$1')
-                    .replace(/ ?[xX\*] ?10\^-/g, 'e-')
-                    .replace(/ ?[xX\*] ?10\^\+/g, 'e')
+                    .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
+                    .replace(/ ?[xX*] ?10\^-/g, 'e-')
+                    .replace(/ ?[xX*] ?10\^\+/g, 'e')
             ),
             { notation: 'fixed' }
         );
         decimalOutputVal = math.format(
             math.bignumber(
                 scientificInput.value
-                    .replace(/ ?[xX\*] ?10\^(\d)/g, 'e+$1')
-                    .replace(/ ?[xX\*] ?10\^-/g, 'e-')
-                    .replace(/ ?[xX\*] ?10\^\+/g, 'e')
+                    .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
+                    .replace(/ ?[xX*] ?10\^-/g, 'e-')
+                    .replace(/ ?[xX*] ?10\^\+/g, 'e')
             ),
             { notation: 'fixed' }
         );

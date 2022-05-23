@@ -94,7 +94,7 @@ function convertInteger() {
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
     const input = romanInput.value
-        .replace(/\_(\w)/g, (match) => {
+        .replace(/_(\w)/g, (match) => {
             return match.toLowerCase();
         })
         .replace(/_/g, '');

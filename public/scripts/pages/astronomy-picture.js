@@ -55,8 +55,8 @@ dateVal.placeholder = date;
 checkApod(year, month, date);
 
 function checkApod(yearInput, monthInput, dateInput) {
-    if (new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() >= new Date(`1995/06/16 00:00:00`).getTime() && new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() <= new Date(`${year}/${month}/${date} 00:00:00`).getTime()) fetchApod(yearInput, monthInput, dateInput);
-    else showAlert(`Date out of range! Must be between ${new Date(`1995/06/16 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive) and ${new Date(`${year}/${month}/${date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
+    if (new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() >= new Date('1995/06/16 00:00:00').getTime() && new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() <= new Date(`${year}/${month}/${date} 00:00:00`).getTime()) fetchApod(yearInput, monthInput, dateInput);
+    else showAlert(`Date out of range! Must be between ${new Date('1995/06/16 00:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive) and ${new Date(`${year}/${month}/${date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
 }
 
 function fetchApod(yearInput, monthInput, dateInput) {
@@ -94,7 +94,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 const links = html.querySelectorAll('a');
                 for (let i = 0; i < links.length; i++) {
                     if (/img/g.test(links[i].innerHTML)) {
-                        media = stringToHTML(links[i].outerHTML.replace(/("|')image\//g, '$1https://apod.nasa.gov/apod/image/').replace(/a href=/g, 'a style="display: block; margin: 15px auto; width: 900px; max-width: 90%" href=').replace(/<img/g, '<img style="width: 100%"').replace(/  /g, ' ').replace(/will download the/g, 'will open the')).querySelector('a'); // prettier-ignore
+                        media = stringToHTML(links[i].outerHTML.replace(/("|')image\//g, '$1https://apod.nasa.gov/apod/image/').replace(/a href=/g, 'a style="display: block; margin: 15px auto; width: 900px; max-width: 90%" href=').replace(/<img/g, '<img style="width: 100%"').replace(/ {2}/g, ' ').replace(/will download the/g, 'will open the')).querySelector('a'); // prettier-ignore
                         break;
                     }
                 }
