@@ -104,7 +104,8 @@ app.use((req, res, next) => {
     next(createError(404));
 });
 
-app.use((err, req, res) => {
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
     if (!/NotFoundError: Not Found/.test(err)) console.log(err);
 
     res.status(err.status || 500);
