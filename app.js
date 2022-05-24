@@ -64,6 +64,10 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/search', (req, res) => {
+    res.render('search', { title: 'Search', description: '', page: '', additionalScripts: ['/scripts/search.js'], additionalStyles: [], script: false });
+});
+
 app.get('/headers', (req, res) => {
     res.status(200).json(req.headers);
 });

@@ -166,6 +166,7 @@ nav {
     position: absolute;
     transform: translate(-100%, -20%);
 }
+
 .search-box .search-btn {
     align-items: center;
     color: #c5c5cc;
@@ -177,6 +178,7 @@ nav {
     transition: 0.4s;
     width: 30px;
 }
+
 .search-box .search-text {
     background-color: #242424 !important;
     border: none !important;
@@ -444,8 +446,8 @@ header {
 #shortcuts.animate-out-top {
     -webkit-animation-direction: reverse;
     animation-direction: reverse;
-    -webkit-animation-duration: 0.4s;
-    animation-duration: 0.4s;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
     -webkit-animation-name: animate-top;
     animation-name: animate-top;
     background: none;
@@ -478,8 +480,8 @@ header {
     background-color: #1e2529;
     color: whitesmoke;
     font-size: 18px;
-    padding: 15px;
     line-height: 150%;
+    padding: 15px;
 }
 
 /*
@@ -648,19 +650,19 @@ header {
  ================
 */
 
-.mobilehidden {
+.mobile-hidden {
     display: unset;
 }
 
-.mobileonly {
+.mobile-only {
     display: none;
 }
 
 @media only screen and (max-width: 700px) {
-    .mobilehidden {
+    .mobile-hidden {
         display: none;
     }
-    .mobileonly {
+    .mobile-only {
         display: unset;
     }
 }
@@ -1130,4 +1132,93 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     position: absolute;
     top: 0;
     width: 100%;
+}
+
+.large-search-box {
+    align-items: center;
+    background-color: #242424;
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
+    color: #c5c5cc;
+    display: block;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    max-width: 90%;
+    padding: 6px 8px;
+    width: 700px;
+}
+
+.large-search-box .large-search-btn {
+    color: #c5c5cc;
+    float: right;
+    font-size: 25px;
+    margin: 8px 10px 0 0;
+}
+
+.large-search-box .large-search-text {
+    background-color: #242424 !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #c5c5cc !important;
+    font-size: 20px !important;
+    height: 100% !important;
+    padding: 6px 8px !important;
+    width: 85% !important;
+}
+
+.large-search-box .large-search-text::placeholder,
+.large-search-box .large-search-text:-ms-input-placeholder,
+.large-search-box .large-search-text::-webkit-input-placeholder,
+.large-search-box .large-search-text::-moz-placeholder {
+    color: #c5c5cc;
+}
+
+.large-search-results {
+    z-index: -100;
+}
+
+.large-search-results table {
+    align-self: flex-end;
+    background-color: #242424;
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
+    color: #c5c5cc;
+    display: block;
+    font-size: 18px;
+    margin-top: 1px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 8px;
+    width: 100%;
+}
+
+.large-search-results table td {
+    border-top: 2px solid #4c6072;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.large-search-results table tr:first-of-type > td {
+    border-top: none;
+    padding-top: 0px;
+}
+
+.large-search-results table tr:last-of-type > td {
+    padding-bottom: 0px;
+}
+
+.large-search-results table td .results-title {
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.large-search-results table td,
+.large-search-results table td a {
+    color: #4c6072;
+}
+
+.large-search-results table td a:hover {
+    color: #364c5f;
 }
