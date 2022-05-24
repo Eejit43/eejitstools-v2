@@ -1,4 +1,4 @@
-/* global chroma */
+/* global chroma, Color */
 
 import 'https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js';
 import { copyValue } from '/scripts/functions.js';
@@ -146,7 +146,7 @@ copyAlpha.addEventListener('click', () => {
 
 /**
  * Updates a color to all values
- * @param {Color} color
+ * @param {Color} color the color to update results for
  */
 function updateResults(color) {
     resetBorder(colorPicker);

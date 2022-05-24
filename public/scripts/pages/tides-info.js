@@ -1,5 +1,10 @@
+/* global GeolocationPosition */
+
 const result = document.getElementById('result');
 
+/**
+ * Requests the browser's current location and handles any errors
+ */
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(getData, (error) => {
@@ -13,6 +18,10 @@ function getLocation() {
 
 getLocation();
 
+/**
+ * Fetches tidal information for the specified permission and displays the information
+ * @param {GeolocationPosition} position the position to fetch location for
+ */
 async function getData(position) {
     const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } }); // cspell:disable-line
     const data = await response.json();
@@ -43,7 +52,7 @@ async function getData(position) {
         '</thead>',
         '<tbody>',
     ];
-    for (let i = 0; i < data.extremes.length; i++) table.push('<tr>', `<td>${new Date(data.extremes[i].timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.extremes[i].timestamp * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${correctCase(data.extremes[i].state)}</td>`, '</tr>');
+    for (let i = 0; i < data.extremes.length; i++) table.push('<tr>', `<td>${new Date(data.extremes[i].timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.extremes[i].timestamp * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${titleCase(data.extremes[i].state)}</td>`, '</tr>');
     table.push('</tbody', '</table>');
 
     const output = [
@@ -57,8 +66,13 @@ async function getData(position) {
     result.innerHTML = output.join('<br />');
 }
 
-function correctCase(input) {
-    return input
+/**
+ * Converts a string to title case
+ * @param {string} string the string to convert
+ * @returns {string} the string in title case
+ */
+function titleCase(string) {
+    return string
         .split(' ')
         .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
         .join(' ');

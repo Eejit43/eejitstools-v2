@@ -45,13 +45,21 @@ window.addEventListener('blur', () => {
     ready.innerHTML = '<span style="color:#FF5555"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
 });
 
-function copyKeycodeInfo(variable) {
+/**
+ * If a key has been pressed, copies the provided string
+ * @param {string} string the text to copy
+ */
+function copyKeycodeInfo(string) {
     if (valExist) {
-        navigator.clipboard.writeText(variable);
+        navigator.clipboard.writeText(string);
         showAlert('Copied!', 'success');
     }
 }
 
+/**
+ * Updates information for the key that is pressed
+ * @param {KeyboardEvent} event the event
+ */
 function keyInfo(event) {
     valExist = true;
     document.getElementById('key-results').className = 'keycodes-td-ready';

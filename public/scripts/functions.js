@@ -140,7 +140,7 @@ export function stringToHTML(string) {
  * Whether or not the provided keyword(s) are included in the input
  * @param {string[]} keywords The keyword(s) to check
  * @param {string} string The text to check the keywords against
- * @returns {boolean}
+ * @returns {boolean} whether or not the provided keyword(s) are included in the input
  */
 export function matchesKeywords(keywords, string) {
     for (let i = 0; i < keywords.length; i++) if (keywords[i].includes(string)) return true;
@@ -155,3 +155,26 @@ export function matchesKeywords(keywords, string) {
 export function updateInnerHTML(element, string) {
     if (element.innerHTML !== string) element.innerHTML = string;
 }
+
+/**
+ * Adds an animation class to an element, and removes it upon completion
+ * @param {string} element selectors for element
+ * @param {string} animation the animation to add
+ * @returns {Promise<void>}
+ */
+export const addAnimation = (element, animation) =>
+    new Promise((resolve) => {
+        const node = document.querySelector(element);
+
+        node.classList.add(animation);
+
+        node.addEventListener(
+            'animationend',
+            (event) => {
+                event.stopPropagation();
+                node.classList.remove(animation);
+                resolve('Animation ended');
+            },
+            { once: true }
+        );
+    });

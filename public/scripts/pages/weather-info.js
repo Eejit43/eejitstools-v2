@@ -1,7 +1,12 @@
+/* global GeolocationPosition */
+
 import { twemojiUpdate } from '/scripts/functions.js';
 
 const result = document.getElementById('result');
 
+/**
+ * Requests the browser's current location and handles any errors
+ */
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(getData, (error) => {
@@ -17,6 +22,10 @@ getLocation();
 
 const finalAlerts = [];
 
+/**
+ * Fetches weather information for the specified permission and displays the information
+ * @param {GeolocationPosition} position the position to fetch location for
+ */
 async function getData(position) {
     const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${position.coords.latitude}&lon=${position.coords.longitude}&key=8cb466c81e01454d8044dd368b240a6a&include=alerts&units=I`);
     const fullData = await response.json();
@@ -106,6 +115,11 @@ async function getData(position) {
 
     document.getElementById('moon-phase').innerHTML = html;
 }
+
+/**
+ * Shows the specified weather alert
+ * @param {number} alert the alert number
+ */
 // eslint-disable-next-line no-unused-vars
 function showWeatherAlert(alert) {
     const alertDisplay = document.getElementById('alert-display');

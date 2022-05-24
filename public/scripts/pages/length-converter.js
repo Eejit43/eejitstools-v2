@@ -39,6 +39,9 @@ copyOutput.addEventListener('click', () => {
 
 math.createUnit('nauticalmile', { definition: '1852 meter' });
 
+/**
+ * Converts the provided length value and displays the result
+ */
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         let inputTypeName, outputTypeName;

@@ -66,6 +66,9 @@ b64CopyResult.addEventListener('click', () => {
     copyValue(b64CopyResult, b64Result);
 });
 
+/**
+ * Encodes the base64 image and displays the result
+ */
 function encode() {
     if (fileUploadButton.value) {
         const reader = new FileReader();

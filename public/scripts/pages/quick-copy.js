@@ -1,3 +1,5 @@
+/* global PermissionState */
+
 import { copyText, showAlert } from '/scripts/functions.js';
 
 const clearClipboardButton = document.getElementById('clear-clipboard');
@@ -44,10 +46,17 @@ window.addEventListener('blur', () => {
 
 let clipboardReadAllowed = false;
 
+/**
+ * Displays the given message if that wasn't already displayed
+ * @param {string} message the message to display
+ */
 function showWarning(message) {
     if (clipboardWarning.innerHTML.replace(/<br>/g, '<br />') !== message) clipboardWarning.innerHTML = message;
 }
 
+/**
+ * Clears the clipboard
+ */
 function clearClipboard() {
     navigator.clipboard.writeText('');
 
@@ -62,6 +71,9 @@ function clearClipboard() {
     }, 2000);
 }
 
+/**
+ * Requests permission to read the clipboard (`clipboard-read`)
+ */
 async function requestPermission() {
     try {
         const result = await navigator.permissions.query({ name: 'clipboard-read' });
@@ -79,13 +91,18 @@ async function requestPermission() {
 requestPermission();
 
 let interval;
+
+/**
+ * Handles the state of the `clipboard-read` permission request
+ * @param {PermissionState} state the state to handle
+ */
 function handlePermission(state) {
     if (state === 'granted' || state === 'prompt') {
         clearInterval(interval);
         clipboardDisplay();
         if (clipboardReadAllowed === false) interval = setInterval(clipboardDisplay, 500);
         clipboardReadAllowed = true;
-    } else if (state === 'denied') {
+    } else {
         clearInterval(interval);
         clipboardReadAllowed = false;
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Permission to read clipboard denied!<br />');
@@ -93,6 +110,11 @@ function handlePermission(state) {
 }
 
 let storedData;
+
+/**
+ * Displays the current clipboard
+ * @returns {Promise<void>}
+ */
 async function clipboardDisplay() {
     try {
         const data = await navigator.clipboard.read();

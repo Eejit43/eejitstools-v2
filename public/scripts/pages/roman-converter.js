@@ -76,6 +76,9 @@ integerOutputCopy.addEventListener('click', () => {
     copyText(integerOutputCopy, integerOutputVal);
 });
 
+/**
+ * Converts the provided integer to roman numerals and displays the result
+ */
 function convertInteger() {
     if (parseInt(integerInput.value) > 0) {
         romanOutput.innerHTML = romanize(integerInput.value);
@@ -91,6 +94,9 @@ function convertInteger() {
     }
 }
 
+/**
+ * Converts the provided roman numerals to a number and displays the result
+ */
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
     const input = romanInput.value

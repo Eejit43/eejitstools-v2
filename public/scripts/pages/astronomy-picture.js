@@ -36,17 +36,20 @@ resetDate.addEventListener('click', () => {
     });
 });
 
+/**
+ * Checks and updates an elements value if needed
+ * @param {HTMLElement} element the element to check and update
+ */
 function checkInput(element) {
+    console.log(element.max);
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
+    if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
 const currentTime = new Date();
 const year = currentTime.getFullYear();
-let month = currentTime.getMonth() + 1;
-let date = currentTime.getDate();
-if (month < 10) month = '0' + month;
-if (date < 10) date = '0' + date;
+const month = (currentTime.getMonth() + 1).toString().padStart(2, 0);
+const date = currentTime.getDate().toString().padStart(2, 0);
 
 yearVal.placeholder = year;
 monthVal.placeholder = month;
@@ -54,33 +57,42 @@ dateVal.placeholder = date;
 
 checkApod(year, month, date);
 
+/**
+ * Checks the provided date to ensure it is between June 16th, 1995, and the current date
+ * @param {number} yearInput the year input
+ * @param {number} monthInput the month input
+ * @param {number} dateInput the date input
+ */
 function checkApod(yearInput, monthInput, dateInput) {
-    if (new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() >= new Date('1995/06/16 00:00:00').getTime() && new Date(`${yearInput}/${monthInput}/${dateInput} 00:00:00`).getTime() <= new Date(`${year}/${month}/${date} 00:00:00`).getTime()) fetchApod(yearInput, monthInput, dateInput);
-    else showAlert(`Date out of range! Must be between ${new Date('1995/06/16 00:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive) and ${new Date(`${year}/${month}/${date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
+    if (new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() && new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= new Date().getTime()) fetchApod(yearInput, monthInput, dateInput);
+    else showAlert(`Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
 }
 
+/**
+ * Fetches the Astronomy Picture of the Day (APOD) for the provided date
+ * @param {number} yearInput the year input
+ * @param {number} monthInput the month input
+ * @param {number} dateInput the date input
+ */
 function fetchApod(yearInput, monthInput, dateInput) {
-    let yearFull, monthFull, dateFull;
-
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
-    yearInput = yearFull = yearInput ? String(yearInput) : String(year);
-    monthInput = monthFull = monthInput ? String(monthInput) : String(month);
-    dateInput = dateFull = dateInput ? String(dateInput) : String(date);
-    if (yearInput.length === 4) yearInput = yearInput.substring(2);
-    if (monthInput.length === 1) monthInput = 0 + monthInput;
-    if (dateInput.length === 1) dateInput = 0 + dateInput;
+
+    yearInput = yearInput ? yearInput.toString().slice(-2) : year.toString().slice(-2);
+    monthInput = monthInput ? monthInput.toString().padStart(2, 0) : month.toString().padStart(2, 0);
+    dateInput = dateInput ? dateInput.toString().padStart(2, 0) : date.toString().padStart(2, 0);
+
     fetch(`/cors-anywhere?url=https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
         .then(async (response) => {
             const preHtml = (await response.text()).replace(/\n/g, ' ').replace(/<a(.*?)>/g, '<a$1 target="_blank">');
             const html = stringToHTML(preHtml);
 
-            const apodDate = new Date(`${yearFull}/${monthFull}/${dateFull} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const apodDate = new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
             const mediaType = /img src/gi.test(preHtml) ? 'image' : 'video';
 
             let title;
             try {
-                if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
+                if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, '');
                 else title = stringToHTML(html.querySelectorAll('center')[1].innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
             } catch (error) {
                 title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
@@ -103,7 +115,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
             const explanation = html.body.outerHTML
                 .match(/Explanation:.*?Tomorrow|Explanation<\/b>:.*?Tomorrow|Explanation:.*?<hr>/gs)[0]
                 .replace(/(\n| {2,3})/g, ' ')
-                .replace(/(Explanation: ?<\/b> |Explanation<\/b>: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$)/g, '')
+                .replace(/(Explanation: ?<\/b> |Explanation<\/b>: |Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$)/g, '')
                 .replace(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
                 .replace(/<b> (.*?) <\/b>/g, '$1')
                 .replace(/--/g, '–')

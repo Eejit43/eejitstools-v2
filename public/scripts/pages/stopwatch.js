@@ -19,6 +19,9 @@ displayTime();
 
 stopButton.disabled = true;
 
+/**
+ * Starts the stopwatch
+ */
 function startStopwatch() {
     if (paused) {
         paused = false;
@@ -30,6 +33,9 @@ function startStopwatch() {
     }
 }
 
+/**
+ * Stops (pauses) the stopwatch
+ */
 function stopStopwatch() {
     if (!paused) {
         paused = true;
@@ -40,6 +46,9 @@ function stopStopwatch() {
     }
 }
 
+/**
+ * Stops and resets the stopwatch
+ */
 function resetStopwatch() {
     paused = true;
     offset = 0;
@@ -49,6 +58,9 @@ function resetStopwatch() {
     stopButton.disabled = false;
 }
 
+/**
+ * Displays the stopwatch's current time
+ */
 function displayTime() {
     const value = paused ? offset : Date.now() + offset;
 
@@ -60,6 +72,14 @@ function displayTime() {
     if (!paused) requestAnimationFrame(displayTime);
 }
 
+/**
+ * Formats a time (unix, milliseconds)
+ * @param {number} value the value to format
+ * @param {number} scale the scale (number to divide by)
+ * @param {number|null} modulo the number to divide by and return the remainder (`null` = no division)
+ * @param {number} padding the length of the number to pad the start of the ending value with
+ * @returns {number} the formatted value
+ */
 function format(value, scale, modulo, padding) {
     return modulo ? (Math.floor(value / scale) % modulo).toString().padStart(padding, 0) : (Math.floor(value / scale)).toString().padStart(padding, 0); // prettier-ignore
 }

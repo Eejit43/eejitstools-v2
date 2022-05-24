@@ -37,6 +37,9 @@ copyOutput.addEventListener('click', () => {
     copyValue(copyOutput, output);
 });
 
+/**
+ * Converts the provided time value and displays the result
+ */
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         let inputTypeName, outputTypeName;

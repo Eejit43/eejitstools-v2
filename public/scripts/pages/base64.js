@@ -32,6 +32,9 @@ copyResult.addEventListener('click', () => {
     copyValue(copyResult, result);
 });
 
+/**
+ * Encodes the base64 and displays the result
+ */
 function encode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -48,6 +51,9 @@ function encode() {
     }
 }
 
+/**
+ * Decodes the base64 and displays the result
+ */
 function decode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');

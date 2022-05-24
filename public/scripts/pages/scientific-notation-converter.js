@@ -80,6 +80,9 @@ decimalOutputCopy.addEventListener('click', () => {
     copyText(decimalOutputCopy, decimalOutputVal);
 });
 
+/**
+ * Converts a decimal to scientific notation and displays the result
+ */
 function convertDecimal() {
     if (/^[+-]?([0-9]\d*)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
         scientificOutput.value = math.bignumber(decimalInput.value).toExponential();
@@ -97,6 +100,9 @@ function convertDecimal() {
     }
 }
 
+/**
+ * Converts a number in scientific notation to a decimal and displays the result
+ */
 function convertScientific() {
     if (/^[+-]?\d(\.\d+)?[Ee][+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = math.format(math.bignumber(scientificInput.value), { notation: 'fixed' });

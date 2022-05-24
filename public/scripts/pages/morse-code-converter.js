@@ -151,8 +151,13 @@ const fromMorseRef = {
     '.--.-.': '@',
 };
 
-function convertToMorse(str) {
-    return str
+/**
+ * Coverts a string to Morse Code
+ * @param {string} string the string to convert
+ * @returns {string} the string in Morse Code
+ */
+function convertToMorse(string) {
+    return string
         .toLowerCase()
         .split('')
         .map((el) => (toMorseRef[el] ? toMorseRef[el] : el))
@@ -160,6 +165,9 @@ function convertToMorse(str) {
         .replace(/ {3}/g, ' / ');
 }
 
+/**
+ * Converts the provided string to Morse Code and displays the result
+ */
 function toMorse() {
     if (input.value.trim().length <= 0) {
         result.value = '';
@@ -187,6 +195,11 @@ function toMorse() {
     }
 }
 
+/**
+ * Converts Morse Code to a human-readable string
+ * @param {string} morseCode the Morse Code to convert
+ * @returns {string} the converted string
+ */
 function decodeMorse(morseCode) {
     return morseCode
         .split(/ {2,}| *[|/] */)
@@ -199,6 +212,9 @@ function decodeMorse(morseCode) {
         .join(' ');
 }
 
+/**
+ * Converts the provided string from Morse Code and displays the result
+ */
 function fromMorse() {
     let inputVal = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
     if (inputVal.length <= 0) {

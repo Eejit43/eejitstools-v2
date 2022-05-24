@@ -35,6 +35,9 @@ copyOutput.addEventListener('click', () => {
     copyValue(copyOutput, output);
 });
 
+/**
+ * Checks the input value and gives an error message if the input is invalid
+ */
 function findInput() {
     if (input.value !== '') {
         switch (parseInt(inputType.value)) {
@@ -71,7 +74,12 @@ function findInput() {
     }
 }
 
-function convert(value, type) {
+/**
+ * Converts the given value and displays the converted value
+ * @param {number} value the value to convert
+ * @param {number} radix the base of the input value
+ */
+function convert(value, radix) {
     let outputTypeNumber;
     switch (parseInt(outputType.value)) {
         case 1:
@@ -89,10 +97,13 @@ function convert(value, type) {
     }
 
     message.innerHTML = '';
-    output.value = parseInt(value, type).toString(outputTypeNumber);
+    output.value = parseInt(value, radix).toString(outputTypeNumber);
     copyOutput.disabled = false;
 }
 
+/**
+ * Handles an invalid input
+ */
 function notValid() {
     let inputTypeText;
     switch (parseInt(inputType.value)) {

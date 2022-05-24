@@ -30,6 +30,9 @@ standardOutputCopy.addEventListener('click', () => {
 let unixInputState = 's';
 let unixOutputState = 's';
 
+/**
+ * Updates the standard time input and triggers the update of the unix time output
+ */
 function updateStandardTime() {
     const currentTime = new Date();
 
@@ -38,6 +41,9 @@ function updateStandardTime() {
     updateUnixOutput();
 }
 
+/**
+ * Updates the unix time output
+ */
 function updateUnixOutput() {
     const standardTime = new Date(standardInput.value);
     if (standardTime.length === 0) {
@@ -59,11 +65,17 @@ function updateUnixOutput() {
     }
 }
 
+/**
+ * Updates the unix time input and triggers the update of the standard time output
+ */
 function updateUnixTime() {
     unixInput.value = unixInputState === 's' ? new Date().getTime().toString().slice(0, -3) : new Date().getTime();
     updateStandardOutput();
 }
 
+/**
+ * Updates the standard time output
+ */
 function updateStandardOutput() {
     const unixTime = unixInputState === 'ms' ? new Date(parseInt(unixInput.value)) : new Date(parseInt(unixInput.value) * 1000);
     if (unixInput.value.length === 0) {
@@ -78,25 +90,14 @@ function updateStandardOutput() {
         updateArrow(unixArrow, 'success', 'down');
 
         const timeString = unixTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
-        standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds()} $1`) : timeString}, ${unixTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
+        standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, 0)} $1`) : timeString}, ${unixTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
         standardOutputCopy.disabled = false;
     }
 }
 
-function switchUnixInput() {
-    const title = document.getElementById('unix-input-title');
-    if (unixInputState === 's') {
-        unixInputState = 'ms';
-        title.innerHTML = 'UNIX Time (milliseconds):';
-        unixInputSwitch.innerHTML = 'Switch to seconds';
-    } else if (unixInputState === 'ms') {
-        unixInputState = 's';
-        title.innerHTML = 'UNIX Time (seconds):';
-        unixInputSwitch.innerHTML = 'Switch to milliseconds';
-    }
-    updateStandardOutput();
-}
-
+/**
+ * Switches the state of the unix time output (seconds to milliseconds and vice versa)
+ */
 function switchUnixOutput() {
     const title = document.getElementById('unix-output-title');
     if (unixOutputState === 's') {
@@ -109,6 +110,23 @@ function switchUnixOutput() {
         unixOutputSwitch.innerHTML = 'Switch to milliseconds';
     }
     updateUnixOutput();
+}
+
+/**
+ * Switches the state of the unix time input (seconds to milliseconds and vice versa)
+ */
+function switchUnixInput() {
+    const title = document.getElementById('unix-input-title');
+    if (unixInputState === 's') {
+        unixInputState = 'ms';
+        title.innerHTML = 'UNIX Time (milliseconds):';
+        unixInputSwitch.innerHTML = 'Switch to seconds';
+    } else if (unixInputState === 'ms') {
+        unixInputState = 's';
+        title.innerHTML = 'UNIX Time (seconds):';
+        unixInputSwitch.innerHTML = 'Switch to milliseconds';
+    }
+    updateStandardOutput();
 }
 
 updateStandardTime();

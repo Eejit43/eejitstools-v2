@@ -1,5 +1,5 @@
 import { allPageInfo } from '/data/pages.js';
-import { matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
+import { addAnimation, matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
 
 const pages = Object.keys(allPageInfo).map((key) => {
     return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
@@ -116,25 +116,3 @@ window.addEventListener('keydown', (event) => {
         });
     }
 });
-
-/**
- * Adds an animation class to an element, and removes it upon completion
- * @param {string} element selectors for element
- * @param {string} animation the animation to add
- */
-const addAnimation = (element, animation) =>
-    new Promise((resolve) => {
-        const node = document.querySelector(element);
-
-        node.classList.add(animation);
-
-        node.addEventListener(
-            'animationend',
-            (event) => {
-                event.stopPropagation();
-                node.classList.remove(animation);
-                resolve('Animation ended');
-            },
-            { once: true }
-        );
-    });

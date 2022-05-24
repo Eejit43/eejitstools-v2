@@ -17,6 +17,9 @@ resetButton.addEventListener('click', () => {
     resetResult('generate');
 });
 
+/**
+ * Generates and displays a random number
+ */
 function generateNumber() {
     const min = Number(minNumber.value);
     const max = Number(maxNumber.value);

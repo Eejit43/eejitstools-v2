@@ -39,6 +39,9 @@ copyOutput.addEventListener('click', () => {
 
 let inputTypeName, outputTypeName;
 
+/**
+ * Converts a temperature to the specified output type and displays the result
+ */
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         if (inputType.value === '1') inputTypeName = 'degF';

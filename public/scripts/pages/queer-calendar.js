@@ -25,17 +25,20 @@ resetDate.addEventListener('click', getCurrent);
     });
 });
 
+/**
+ * Checks and updates an elements value if needed
+ * @param {HTMLElement} element the element to check and update
+ */
 function checkInput(element) {
+    console.log(element.max);
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
+    if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
 const currentTime = new Date();
 const year = currentTime.getFullYear();
-let month = currentTime.getMonth() + 1;
-let date = currentTime.getDate();
-if (month < 10) month = '0' + month;
-if (date < 10) date = '0' + date;
+const month = (currentTime.getMonth() + 1).toString().padStart(2, 0);
+const date = currentTime.getDate().toString().padStart(2, 0);
 
 monthVal.placeholder = month;
 dateVal.placeholder = date;
@@ -43,15 +46,12 @@ dateVal.placeholder = date;
 yearOverview.href = `https://en.pronouns.page/calendar/${year}-overview.png`;
 yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
 
+/**
+ * Fetches calendar information for the specified date
+ */
 async function getFromDate() {
-    let monthInput = escapeHTML(monthVal.value);
-    let dateInput = escapeHTML(dateVal.value);
-
-    if (!monthInput) monthInput = month;
-    else if (monthInput.length === 1) monthInput = '0' + monthInput;
-
-    if (!dateInput) dateInput = date;
-    else if (dateInput.length === 1) dateInput = '0' + dateInput;
+    const monthInput = escapeHTML(monthVal.value || month).padStart(2, 0);
+    const dateInput = escapeHTML(dateVal.value || date).padStart(2, 0);
 
     if (parseInt(monthInput) === 0 || parseInt(dateInput) === 0) {
         showAlert('Input cannot be zero!', 'error');
@@ -63,23 +63,23 @@ async function getFromDate() {
         fetch(`https://en.pronouns.page/api/calendar/${year}-${monthInput}-${dateInput}`).then(async (response) => {
             const data = await response.json();
 
-            let events = data.events;
-            let eventsRaw = data.eventsRaw;
+            const events = data.events;
+            const eventsRaw = data.eventsRaw;
 
-            const newArray = [];
+            const newEvents = [];
             for (let i = 0; i < events.length; i++) {
-                if (eventsRaw[i].flag !== null) {
-                    newArray.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
-                } else {
-                    newArray.push(`– ${events[i]}`);
-                }
+                if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
+                else newEvents.push(`– ${events[i]}`);
             }
-            if (newArray.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
-            else eventsDisplay.innerHTML = newArray.join('<br />');
+            if (newEvents.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
+            else eventsDisplay.innerHTML = newEvents.join('<br />');
         });
     }
 }
 
+/**
+ * Fetches calendar information for the current date
+ */
 async function getCurrent() {
     eventsTitle.innerHTML = 'Current Events:';
     eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
@@ -90,19 +90,16 @@ async function getCurrent() {
     fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`).then(async (response) => {
         const data = await response.json();
 
-        let events = data.events;
-        let eventsRaw = data.eventsRaw;
+        const events = data.events;
+        const eventsRaw = data.eventsRaw;
 
-        const newArray = [];
+        const newEvents = [];
         for (let i = 0; i < events.length; i++) {
-            if (eventsRaw[i].flag !== null) {
-                newArray.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
-            } else {
-                newArray.push(`– ${events[i]}`);
-            }
+            if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
+            else newEvents.push(`– ${events[i]}`);
         }
-        if (newArray.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
-        else eventsDisplay.innerHTML = newArray.join('<br />');
+        if (newEvents.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
+        else eventsDisplay.innerHTML = newEvents.join('<br />');
     });
 }
 

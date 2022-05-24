@@ -32,6 +32,9 @@ resultCopy.addEventListener('click', () => {
     copyValue(resultCopy, result);
 });
 
+/**
+ * Converts the provided string to binary and displays the result
+ */
 function toBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';
@@ -45,6 +48,9 @@ function toBinary() {
     }
 }
 
+/**
+ * Converts the provided string from binary and displays the result
+ */
 function fromBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';

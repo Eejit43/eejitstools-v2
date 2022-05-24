@@ -54,16 +54,26 @@ secondsInput.addEventListener('input', () => {
     checkInput(secondsInput);
 });
 
+/**
+ * Checks and updates an elements value if needed
+ * @param {HTMLElement} element the element to check and update
+ */
 function checkInput(element) {
-    if (element.value?.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if (element.value > element.max || element.value < 1) element.value = element.value.slice(0, 1);
+    console.log(element.max);
+    if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
+    if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
 const audio = new Audio('/timer-alarm.mp3');
 
 let paused = true;
 
-let targetTime, runTimer;
+let targetTime;
+
+/**
+ * Starts the timer
+ * @returns {void}
+ */
 function startTimer() {
     if (!paused) return;
 
@@ -90,6 +100,11 @@ function startTimer() {
 }
 
 let remaining, secondsUntil, minutesUntil, hoursUntil;
+
+/**
+ * Displays the current timer time
+ * @returns {void}
+ */
 function displayTime() {
     if (paused) return;
 
@@ -113,20 +128,6 @@ function displayTime() {
 
     const targetDate = new Date(targetTime);
 
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const date = targetDate.getDate();
-    const month = months[targetDate.getMonth()];
-    const year = targetDate.getFullYear();
-    const fullHours = targetDate.getHours();
-    const hours = ((fullHours + 11) % 12) + 1;
-    let minutes = targetDate.getMinutes();
-    let seconds = targetDate.getSeconds();
-
-    if (minutes < 10) minutes = '0' + minutes;
-    if (seconds < 10) seconds = '0' + seconds;
-
-    const timeSuffix = fullHours >= 12 ? 'PM' : 'AM';
-
-    const output = `${month} ${date}, ${year} ${hours}:${minutes}:${seconds} ${timeSuffix}`;
+    const output = `${targetDate.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${targetDate.toLocaleDateString([], { weekday: 'long' })}`;
     if (timerTime.textContent !== output) timerTime.textContent = output;
 }

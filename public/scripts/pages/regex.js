@@ -148,6 +148,9 @@ rmReplace.addEventListener('paste', (event) => {
     rmReplace.value += event.clipboardData.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 });
 
+/**
+ * Runs the duplicate line remover regex
+ */
 function runDlrRegex() {
     if (dlrRegexInput.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -159,6 +162,9 @@ function runDlrRegex() {
     }
 }
 
+/**
+ * Runs the whitespace remover regex
+ */
 function runWrRegex() {
     if (wrRegexInput.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -174,6 +180,9 @@ function runWrRegex() {
     }
 }
 
+/**
+ * Runs the regex maker (regex tester) regex
+ */
 function runRmRegex() {
     let isValid = true;
     try {

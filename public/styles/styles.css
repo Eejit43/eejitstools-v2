@@ -1048,7 +1048,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     width: 100%;
 }
 
-.color-box-sm {
+.color-box div {
     cursor: pointer;
     flex-grow: 1;
     height: 10px;
@@ -1056,31 +1056,31 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     transition: all 0.8s ease-in-out;
 }
 
-.color-box-sm:hover {
+.color-box div:hover {
     flex-grow: 5;
 }
 
-.red {
+.color-box .red {
     background-color: #ff5852;
 }
 
-.orange {
+.color-box .orange {
     background-color: #ff9000;
 }
 
-.yellow {
+.color-box .yellow {
     background-color: #ffd300;
 }
 
-.green {
+.color-box .green {
     background-color: #3dcd49;
 }
 
-.blue {
+.color-box .blue {
     background-color: #0089d7;
 }
 
-.purple {
+.color-box .purple {
     background-color: #9e44c4;
 }
 

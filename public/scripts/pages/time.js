@@ -3,7 +3,7 @@ import { updateInnerHTML } from '/scripts/functions.js';
 setInterval(() => {
     const currentTime = new Date();
 
-    updateInnerHTML(document.getElementById('time'), currentTime.toLocaleTimeString());
+    updateInnerHTML(document.getElementById('time'), currentTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' }));
     updateInnerHTML(document.getElementById('dst'), isDstObserved(currentTime) ? 'In' : 'Not');
     updateInnerHTML(document.getElementById('date'), `${currentTime.toLocaleDateString([], { year: 'numeric', month: 'long', weekday: 'long', day: 'numeric' })} (${currentTime.toLocaleDateString()})`);
     updateInnerHTML(document.getElementById('unix'), currentTime.getTime());

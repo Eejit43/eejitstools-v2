@@ -42,6 +42,9 @@ copyResult.addEventListener('click', () => {
     copyValue(copyResult, result);
 });
 
+/**
+ * Alphabetizes the provided string and displays the result
+ */
 function alphabetizeNormal() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -56,6 +59,9 @@ function alphabetizeNormal() {
     }
 }
 
+/**
+ * Numerizes the provided string and displays the result
+ */
 function numerize() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -72,6 +78,9 @@ function numerize() {
     }
 }
 
+/**
+ * Randomizes the provided string and displays the result
+ */
 function randomize() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
@@ -83,6 +92,9 @@ function randomize() {
     }
 }
 
+/**
+ * Reverses the provided string and displays the result
+ */
 function reverse() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
