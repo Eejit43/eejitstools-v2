@@ -134,14 +134,22 @@ rmCopyResult.addEventListener('click', () => {
     copyValue(rmCopyResult, rmResult);
 });
 rmRegex.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') rmRegex.value += '\\n';
+    if (event.key === 'Enter') {
+        const newPosition = event.target.selectionStart + 2;
+        rmRegex.value = [rmRegex.value.slice(0, event.target.selectionStart), '\\n', rmRegex.value.slice(event.target.selectionStart)].join('');
+        rmRegex.setSelectionRange(newPosition, newPosition);
+    }
 });
 rmRegex.addEventListener('paste', (event) => {
     event.preventDefault();
     rmRegex.value += event.clipboardData.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 });
 rmReplace.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') rmReplace.value += '\\n';
+    if (event.key === 'Enter') {
+        const newPosition = event.target.selectionStart + 2;
+        rmReplace.value = [rmReplace.value.slice(0, event.target.selectionStart), '\\n', rmReplace.value.slice(event.target.selectionStart)].join('');
+        rmReplace.setSelectionRange(newPosition, newPosition);
+    }
 });
 rmReplace.addEventListener('paste', (event) => {
     event.preventDefault();
