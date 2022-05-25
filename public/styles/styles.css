@@ -68,6 +68,7 @@ hr {
     width: 100%;
 }
 
+/* Keyboard input */
 kbd {
     background-color: #eee;
     border: 1px solid #b4b4b4;
@@ -257,19 +258,19 @@ nav {
     display: unset;
 }
 
-.timer {
+.nav-time {
     color: #145791;
     font-weight: 700;
     margin-left: 40px;
     margin-right: 100px;
 }
 
-.timer:hover {
+.nav-time:hover {
     color: #0e4474;
 }
 
 @media only screen and (max-width: 600px) {
-    .timer {
+    .nav-time {
         margin-right: 20px;
     }
 }
@@ -327,7 +328,7 @@ header {
     }
 }
 
-.toolstable {
+.tools-table {
     background-color: #1b1e24;
     border-collapse: collapse;
     color: #a8a8a8;
@@ -337,11 +338,11 @@ header {
     width: 70%;
 }
 
-.toolstable tr {
+.tools-table tr {
     background-color: #2f343a;
 }
 
-.toolstable td {
+.tools-table td {
     border: 4px solid #1b1e24;
     font-size: 19px;
     font-weight: 500;
@@ -350,10 +351,10 @@ header {
 }
 
 @media only screen and (max-width: 700px) {
-    .toolstable {
+    .tools-table {
         width: 85%;
     }
-    .toolstable td {
+    .tools-table td {
         font-size: 14px;
         padding: 12px;
     }
@@ -570,18 +571,14 @@ header {
     }
 }
 
-.regexoutput,
-.quickcopy,
-.unixtable,
-.base64output {
-    width: 100%;
+.basic-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 400px), 1fr));
 }
 
-.regexoutput td,
-.quickcopy td,
-.unixtable td,
-.base64output td {
-    width: 50%;
+.basic-grid div {
+    margin-top: 15px;
 }
 
 .toc {
@@ -601,7 +598,7 @@ header {
 
 @media only screen and (max-width: 700px) {
     .toc {
-        width: 40%;
+        max-width: 70%;
     }
 }
 
