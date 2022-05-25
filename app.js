@@ -1,61 +1,27 @@
 /* eslint-env node */
 
-import debug from 'debug';
+import fastifyStatic from '@fastify/static';
 import 'dotenv/config';
-import express from 'express';
-import expressLayouts from 'express-ejs-layouts';
+import ejs from 'ejs';
+import Fastify from 'fastify';
 import fs from 'fs';
-import http from 'http';
-import createError from 'http-errors';
 import path from 'path';
-import request from 'request';
+import pointOfView from 'point-of-view';
+import Request from 'request';
 import { allPageInfo, blankProperties } from './public/data/pages.js';
 
-const log = debug('eejitstools:server');
+// Load layouts and static assets
+const fastify = Fastify();
 
-const app = express();
-const server = http.createServer(app);
-
-const port = process.env.PORT || 3000;
+fastify.register(pointOfView, { engine: { ejs }, root: 'views', layout: '/layouts/layout.ejs' });
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-app.set('port', port);
+fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
 
-server.listen(port);
-
-server.on('error', (error) => {
-    if (error.syscall !== 'listen') throw error;
-
-    switch (error.code) {
-        case 'EACCES':
-            console.error(`Port ${port} requires elevated privileges!`);
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(`Port ${port} is already in use!`);
-            process.exit(1);
-            break;
-        default:
-            throw error;
-    }
-});
-
-server.on('listening', () => {
-    log(`Listening on ${server.address().port}`);
-});
-
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-app.set('json spaces', 2);
-
-app.set('layout', 'layouts/layout');
-app.use(expressLayouts);
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', (req, res) => {
-    res.render('index', {
+// Register pages
+fastify.get('/', (request, reply) => {
+    reply.view('/index.ejs', {
         title: 'Home',
         pages: Object.keys(allPageInfo).map((key) => {
             return { name: key, ...allPageInfo[key] };
@@ -64,30 +30,25 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/search', (req, res) => {
-    res.render('search', { title: 'Search', description: '', page: '', additionalScripts: ['/scripts/search.js'], additionalStyles: [], script: false });
+fastify.get('/search', (request, reply) => {
+    reply.view('/search.ejs', { title: 'Search', description: '', page: '', additionalScripts: ['/scripts/search.js'], additionalStyles: [], script: false });
 });
 
-app.get('/headers', (req, res) => {
-    res.status(200).json(req.headers);
+fastify.get('/headers', (request, reply) => {
+    reply.status(200).send(JSON.stringify(request.headers, null, 2));
 });
 
-app.get('/pages', (req, res) => {
-    res.status(200).json(
-        Object.keys(allPageInfo).map((key) => {
-            return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
-        })
-    );
+const pagesInfo = Object.keys(allPageInfo).map((key) => {
+    return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
 });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
+fastify.get('/pages', (request, reply) => {
+    reply.status(200).send(JSON.stringify(pagesInfo, null, 2));
 });
 
-app.get('/cors-anywhere', (req, res) => {
-    request({ url: req.query.url }, (error, response, body) => {
-        res.send(body);
+fastify.get('/cors-anywhere', (request, reply) => {
+    Request({ url: request.query.url }, (error, response, body) => {
+        reply.header('Access-Control-Allow-Origin', '*').send(body);
     });
 });
 
@@ -98,20 +59,27 @@ fs.readdirSync('./views/pages').forEach((category) => {
         page = page.replace('.ejs', '');
         const pageInfo = allPageInfo[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
-        app.get(`/${category}/${page}`, (req, res) => {
-            res.render(`pages/${category}/${page}`, { ...pageInfo, page });
+        fastify.get(`/${category}/${page}`, (request, reply) => {
+            reply.view(`pages/${category}/${page}.ejs`, { ...pageInfo, page });
         });
     });
 });
 
-app.use((req, res, next) => {
-    next(createError(404));
+// Setup error handlers
+fastify.setErrorHandler((error, request, reply) => {
+    console.log(error);
+    reply.status(error.statusCode || 500).view('/error.ejs', { title: error.message.length > 50 ? 'Internal Server Error' : error.message, message: error.message, error, ...blankProperties });
 });
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-    if (!/NotFoundError: Not Found/.test(err)) console.log(err);
+fastify.setNotFoundHandler((request, reply) => {
+    reply.status(404).view('/error.ejs', { title: 'Not Found', message: 'Not Found', error: { status: 404 }, ...blankProperties });
+});
 
-    res.status(err.status || 500);
-    res.render('error', { title: err.message.length > 50 ? 'Error' : err.message, message: err.message, error: err, ...blankProperties });
+// Start server
+fastify.listen({ port: process.env.PORT || 3000 }, (error) => {
+    if (error) {
+        fastify.log.error(error);
+        process.exit(1);
+    }
+    console.log('Server is now listening on http://localhost:3000');
 });
