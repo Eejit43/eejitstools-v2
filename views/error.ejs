@@ -1,3 +1,3 @@
-<span class="error-title"><% if (message.length > 50) { %>Error<% } else { %><%= message %><% } %> <i class="fa-regular fa-face-sad-tear" style="font-size: 80%"></i></span>
+<span class="error-title"><% if (message.length > 50) { %>Internal Server Error<% } else { %><%= message %><% } %> <i class="fa-regular fa-face-sad-tear" style="font-size: 80%"></i></span>
 <div class="error-warning">Looks like an error occurred...<br /><a href="/" class="error-link">Take me back to safety!</a></div>
 <img src="https://http.cat/<%= error.status || 500 %>" alt="<%= error.status || 500 %>" class="error-image" />
