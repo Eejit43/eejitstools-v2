@@ -450,6 +450,16 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
+    'svg-to-png': {
+        link: 'tools/svg-to-png',
+        title: 'SVG to PNG',
+        icon: 'fa-solid fa-image',
+        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span>',
+        keywords: [],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
     'temperature-converter': {
         link: 'tools/temperature-converter',
         title: 'Temperature Converter',

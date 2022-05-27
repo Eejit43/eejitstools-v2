@@ -1219,3 +1219,13 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 .large-search-results table td a:hover {
     color: #364c5f;
 }
+
+#svg-preview,
+#png-canvas {
+    border: 4px solid #16181c;
+    height: 200px;
+    margin-top: 15px;
+    padding: 5px;
+    width: 200px;
+    color: black;
+}
