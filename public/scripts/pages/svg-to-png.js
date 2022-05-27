@@ -19,10 +19,13 @@ document.getElementById('load-svg').addEventListener('click', () => {
 });
 
 document.getElementById('save-png').addEventListener('click', () => {
-    svg.setAttribute('width', width.value);
-    svg.setAttribute('height', height.value);
+    const preWidth = svg.getAttribute('width');
+    const preHeight = svg.getAttribute('height');
+    if ((width.value || 100) >= 10000 || (width.value || 100) <= 0 || (height.value || 100) >= 10000 || (height.value || 100) <= 0) return showAlert('Height and width must be between 0 and 10,000 (exclusive)', 'error');
     canvas.width = width.value || 100;
     canvas.height = height.value || 100;
+    svg.setAttribute('width', width.value || 100);
+    svg.setAttribute('height', height.value || 100);
     const data = new XMLSerializer().serializeToString(svg);
     const image = new Image();
     const blob = new Blob([data], { type: 'image/svg+xml' });
@@ -44,6 +47,8 @@ document.getElementById('save-png').addEventListener('click', () => {
     });
     if (svg.width.baseVal.value >= 200) svg.removeAttribute('width');
     if (svg.height.baseVal.value >= 200) svg.removeAttribute('height');
+    if (preWidth) svg.setAttribute('width', preWidth);
+    if (preHeight) svg.setAttribute('height', preHeight);
 });
 
 document.getElementById('clear').addEventListener('click', () => {
