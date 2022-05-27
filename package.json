@@ -6,7 +6,8 @@
     "main": "app.js",
     "scripts": {
         "start": "node app.js",
-        "dev": "nodemon app.js"
+        "dev": "nodemon app.js",
+        "deploy": "gcloud app deploy --project=tough-anagram-350016 --quiet"
     },
     "dependencies": {
         "@fastify/static": "^5.0.2",
