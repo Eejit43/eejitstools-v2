@@ -240,9 +240,82 @@ export const audioTracks = {
             duration: '3:53',
         },
     ],
+    zelda_and_chill_2: [
+        {
+            name: "Zelda's Lullaby",
+            file: "Zelda's Lullaby.mp3",
+            duration: '3:06',
+        },
+        {
+            name: 'The Great Sea',
+            file: 'The Great Sea.mp3',
+            duration: '2:50',
+        },
+        {
+            name: 'Korok Forest',
+            file: 'Korok Forest.mp3',
+            duration: '2:41',
+        },
+        {
+            name: "Kass' Theme",
+            file: "Kass' Theme.mp3",
+            duration: '2:46',
+        },
+        {
+            name: 'Serenade of Water',
+            file: 'Serenade of Water.mp3',
+            duration: '2:50',
+        },
+        {
+            name: 'Hyrule Castle',
+            file: 'Hyrule Castle.mp3',
+            duration: '2:28',
+        },
+        {
+            name: 'Song of Healing',
+            file: 'Song of Healing.mp3',
+            duration: '3:00',
+        },
+        {
+            name: "Revali's Theme",
+            file: "Revali's Theme.mp3",
+            duration: '2:28',
+        },
+        {
+            name: 'Outset Island',
+            file: 'Outset Island.mp3',
+            duration: '2:51',
+        },
+        {
+            name: 'Spirit Tracks',
+            file: 'Spirit Tracks.mp3',
+            duration: '3:02',
+        },
+        {
+            name: "Midna's Lament",
+            file: "Midna's Lament.mp3",
+            duration: '3:13',
+        },
+        {
+            name: 'Tal Tal Heights',
+            file: 'Tal Tal Heights.mp3',
+            duration: '2:28',
+        },
+        {
+            name: 'The Legendary Hero',
+            file: 'The Legendary Hero.mp3',
+            duration: '3:02',
+        },
+        {
+            name: "Fi's Farewell",
+            file: "Fi's Farewell.mp3",
+            duration: '2:15',
+        },
+    ],
 };
 
 export const audioTrackNames = {
     general: 'General',
     hypixel: 'Hypixel (SkyBlock) OST/BGM',
+    zelda_and_chill_2: 'Zelda and Chill 2 - Mikel and Gamechops',
 };
