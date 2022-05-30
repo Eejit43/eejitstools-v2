@@ -1,0 +1,21 @@
+<div class="toolbox">
+    <h1>State Abbreviations:</h1>
+    <table class="info-table" style="overflow-x: hidden; margin-top: 30px">
+        <thead>
+            <tr>
+                <th>State</th>
+                <th>Postal Abbreviation</th>
+                <th>Standard Abbreviation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < stateAbbreviations.length; i++) { %>
+            <tr>
+                <td><%= stateAbbreviations[i].state %></td>
+                <td><%= stateAbbreviations[i].postal %></td>
+                <td><%= stateAbbreviations[i].standard %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

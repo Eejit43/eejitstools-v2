@@ -1,3 +1,4 @@
+import { audioTracks } from '/data/audio-tracks.js';
 import { titleCase } from '/scripts/functions.js';
 
 const audio = document.getElementById('audio');
@@ -67,256 +68,6 @@ function createTrackItem(category, index, name, duration) {
     document.getElementById(`playlist-track-${category}-${index}`).appendChild(trackDurationItem);
 }
 
-// Don't question my music choices...
-/* cSpell:disable */
-const audioTracks = {
-    general: [
-        {
-            name: 'Electroswing Revival - Gee',
-            file: '/files/mp3-player/general/Electroswing Revival.mp3',
-            duration: '3:03',
-        },
-        {
-            name: "Yoshi's Lounge - KryptoDigital",
-            file: "/files/mp3-player/general/Yoshi's Lounge.mp3",
-            duration: '3:13',
-        },
-        {
-            name: 'Cantina Band - John Williams',
-            file: '/files/mp3-player/general/Cantina Band.mp3',
-            duration: '13:13',
-        },
-        {
-            name: 'Pink Panther Theme - Henry Mancini',
-            file: '/files/mp3-player/general/Pink Panther Theme.mp3',
-            duration: '2:41',
-        },
-        {
-            name: 'Blue - Eiffel 65',
-            file: '/files/mp3-player/general/Blue.mp3',
-            duration: '3:48',
-        },
-        {
-            name: "Thomas the Tank Engine Theme - Mike O'Donnell",
-            file: '/files/mp3-player/general/Thomas the Tank Engine Theme.mp3',
-            duration: '2:43',
-        },
-        {
-            name: 'Scatman - Scatman John',
-            file: '/files/mp3-player/general/Scatman.mp3',
-            duration: '3:30',
-        },
-        {
-            name: 'Mr. Blue Sky - Electric Light Orchestra',
-            file: '/files/mp3-player/general/Mr. Blue Sky.mp3',
-            duration: '4:54',
-        },
-        {
-            name: 'crystal dolphin - engelwood',
-            file: '/files/mp3-player/general/crystal dolphin.mp3',
-            duration: '1:53',
-        },
-        {
-            name: 'Pata Pata - Miriam Makeba (Matt Cherne Remix)',
-            file: '/files/mp3-player/general/Pata Pata.mp3',
-            duration: '1:11',
-        },
-        {
-            name: 'sans. (015) - Toby Fox (Undertale OST)',
-            file: '/files/mp3-player/general/sans.mp3',
-            duration: '0:50',
-        },
-        {
-            name: 'How Amusing! - Yasunori Nishiki (Octopath Traveler OST)',
-            file: '/files/mp3-player/general/How Amusing!.mp3',
-            duration: '3:17',
-        },
-        {
-            name: 'Yakety Sax - Benny Hill',
-            file: '/files/mp3-player/general/Yakety Sax.mp3',
-            duration: '4:32',
-        },
-        {
-            name: 'Y.M.C.A. - Village People',
-            file: '/files/mp3-player/general/YMCA.mp3',
-            duration: '3:39',
-        },
-        {
-            name: 'Waluigi Pinball (Mario Kart DS) (Eurobeat Remix) - Dominic Ninmark',
-            file: '/files/mp3-player/general/Waluigi Pinball.mp3',
-            duration: '5:19',
-        },
-        {
-            name: 'Wii Shop Channel (Remix) - Nicky Flowers',
-            file: '/files/mp3-player/general/Wii Shop Channel.mp3',
-            duration: '2:46',
-        },
-        {
-            name: 'make a move - nelward',
-            file: '/files/mp3-player/general/make a move.mp3',
-            duration: '2:23',
-        },
-    ],
-    hypixel: [
-        {
-            name: 'Nyny (Stereo Pants) - Unknown',
-            file: '/files/mp3-player/hypixel/Nyny.mp3',
-            duration: '2:12',
-        },
-        {
-            name: 'Pump it Up (Stereo Pants) - Hyperdon',
-            file: '/files/mp3-player/hypixel/Pump it Up.mp3',
-            duration: '3:26',
-        },
-        {
-            name: 'Flowering Nights (Stereo Pants) - Hyperdon',
-            file: '/files/mp3-player/hypixel/Flowering Nights.mp3',
-            duration: '2:11',
-        },
-        {
-            name: 'Chased by Creeper (Stereo Pants) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Chased by Creeper.mp3',
-            duration: '4:44',
-        },
-        {
-            name: 'Gamemode8 (Stereo Pants) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Gamemode8.mp3',
-            duration: '5:03',
-        },
-        {
-            name: 'Original (Stereo Pants) - MusicByPedro',
-            file: '/files/mp3-player/hypixel/Original (MusicByPedro).mp3',
-            duration: '0:47',
-        },
-        {
-            name: 'Red House (Stereo Pants) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Red House.mp3',
-            duration: '4:03',
-        },
-        {
-            name: 'Sky of Trees (Forest Island) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Sky of Trees.mp3',
-            duration: '5:37',
-        },
-        {
-            name: 'Dungeon Drama!! (Boss Theme 2) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Dungeon Drama.mp3',
-            duration: '5:05',
-        },
-        {
-            name: 'blastin banter battle (Battle of Jerry Mountain) - Shinkonet',
-            file: '/files/mp3-player/hypixel/blastin banter battle.mp3',
-            duration: '4:37',
-        },
-        {
-            name: 'The Watcher (Dungeons Miniboss) - Shinkonet',
-            file: '/files/mp3-player/hypixel/The Watcher.mp3',
-            duration: '3:59',
-        },
-        {
-            name: 'Ambient Caves (Deep Caverns) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Ambient Caves.mp3',
-            duration: '3:09',
-        },
-        {
-            name: 'Abstract Ringing (Wilderness) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Abstract Ringing.mp3',
-            duration: '4:39',
-        },
-        {
-            name: 'Let Them Eat Cake (Winter Island Theme) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Let Them Eat Cake.mp3',
-            duration: '3:28',
-        },
-        {
-            name: 'Hallow Hallow (Halloween Event) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Hallow Hallow.mp3',
-            duration: '3:58',
-        },
-        {
-            name: "Dark and Seedy (Dante's Theme) - Shinkonet",
-            file: '/files/mp3-player/hypixel/Dark and Seedy.mp3',
-            duration: '5:57',
-        },
-        {
-            name: "Dark and Seedy (Pre-Uprising Version) (Dante's Theme 2) - Shinkonet",
-            file: '/files/mp3-player/hypixel/Dark and Seedy (Pre-Uprising Version).mp3',
-            duration: '7:23',
-        },
-        {
-            name: 'Breathless Encounter (Dante Uprising / Revolt Theme) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Breathless Encounter.mp3',
-            duration: '2:40',
-        },
-        {
-            name: 'Dwarven Mines - Shinkonet',
-            file: '/files/mp3-player/hypixel/Dwarven Mines.mp3',
-            duration: '3:38',
-        },
-        {
-            name: 'Journey in the Sky (Spider Den) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Journey in the Sky.mp3',
-            duration: '6:16',
-        },
-        {
-            name: 'Necron Doom (Boss Theme 3) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Necron Doom.mp3',
-            duration: '4:45',
-        },
-        {
-            name: 'Light From Afar (Farming Island) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Light From Afar.mp3',
-            duration: '3:40',
-        },
-        {
-            name: 'Mythic Warfare (Enderdragon Boss) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Mythic Warfare.mp3',
-            duration: '5:22',
-        },
-        {
-            name: 'Going Even Deeper (Crystal Hollows) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Going Even Deeper.mp3',
-            duration: '2:35',
-        },
-        {
-            name: 'The Wither King (Boss Theme 4) - Shinkonet',
-            file: '/files/mp3-player/hypixel/The Wither King.mp3',
-            duration: '5:51',
-        },
-        {
-            name: 'Lava Kraken (Kuudra Fight) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Lava Kraken.mp3',
-            duration: '5:16',
-        },
-        {
-            name: 'Blockjitsu (Nether Dojo) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Blockjitsu.mp3',
-            duration: '4:40',
-        },
-        {
-            name: 'Magetown (Scarleton) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Magetown.mp3',
-            duration: '6:19',
-        },
-        {
-            name: 'Fires of Fishermen (Volcano, Crimson Isle) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Fires of Fishermen.mp3',
-            duration: '5:51',
-        },
-        {
-            name: 'Forsaken Village (Dragontail, Crimson Isle) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Forsaken Village.mp3',
-            duration: '3:08',
-        },
-        {
-            name: 'Always Nether (Crimson Isle) - Shinkonet',
-            file: '/files/mp3-player/hypixel/Always Nether.mp3',
-            duration: '3:53',
-        },
-    ],
-};
-/* cSpell:enable */
-
 Object.keys(audioTracks).forEach((key) => {
     const sectionTitleLink = document.createElement('a');
     sectionTitleLink.href = `#${key.replace(/_/g, '-')}`;
@@ -343,7 +94,7 @@ let audioIndex = 0;
  * @param {number} index the index of the track
  */
 function loadNewTrack(category, index) {
-    sourceAudio.src = audioTracks[category][index].file;
+    sourceAudio.src = `/files/mp3-player/${category}/${audioTracks[category][index].file}`;
     title.innerHTML = audioTracks[category][index].name;
     audio.load();
     toggleAudio();
@@ -373,7 +124,7 @@ function loadClickedTrack(event) {
     }
 }
 
-sourceAudio.src = audioTracks[audioCategory][audioIndex].file;
+sourceAudio.src = `/files/mp3-player/${audioCategory}/${audioTracks[audioCategory][audioIndex].file}`;
 title.textContent = audioTracks[audioCategory][audioIndex].name;
 
 audio.load();

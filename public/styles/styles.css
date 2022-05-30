@@ -452,10 +452,10 @@ header {
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
     margin: auto;
+    min-width: 300px;
     padding: 0;
     position: relative;
     width: 30%;
-    min-width: 300px;
 }
 
 @-webkit-keyframes animate-top {
@@ -700,13 +700,13 @@ header {
     }
 }
 
-tab {
+.tab {
     display: inline-block;
     margin-left: 25px;
 }
 
 @media only screen and (max-width: 700px) {
-    tab {
+    .tab {
         margin-left: 15px;
     }
 }
@@ -1268,15 +1268,15 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 
 .player,
 .playlists {
-    border-radius: 15px;
-    width: 450px;
-    height: min-content;
-    max-width: 70%;
-    padding: 10px;
     background-color: #1e2529;
     border: 3px solid #31353d;
+    border-radius: 15px;
+    height: min-content;
     margin: auto;
     margin-top: 200px;
+    max-width: 70%;
+    padding: 10px;
+    width: 450px;
 }
 
 #mp3-grid {
