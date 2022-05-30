@@ -82,6 +82,11 @@ export const audioTracks = {
             file: 'make a move.mp3',
             duration: '2:23',
         },
+        {
+            name: 'Treaty (Radio Mix) - Yothu Yindi',
+            file: 'Treaty (Radio Mix).mp3',
+            duration: '4:03',
+        },
     ],
     hypixel: [
         {
@@ -312,10 +317,103 @@ export const audioTracks = {
             duration: '2:15',
         },
     ],
+    folk_rewind: [
+        {
+            name: 'Both Sides Now - Judy Collins',
+            file: 'Both Sides Now.mp3',
+            duration: '3:15',
+        },
+        {
+            name: 'Lemon Tree - Trini Lopez',
+            file: 'Lemon Tree.mp3',
+            duration: '2:55',
+        },
+        {
+            name: 'Kisses Sweeter Than Wine - Jimmie Rodgers',
+            file: 'Kisses Sweeter Than Wine.mp3',
+            duration: '2:23',
+        },
+        {
+            name: "Baby Don't Go - Sonny & Cher",
+            file: "Baby Don't Go.mp3",
+            duration: '3:10',
+        },
+        {
+            name: 'Walk Right In - The Rooftop Singers',
+            file: 'Walk Right In.mp3',
+            duration: '2:35',
+        },
+        {
+            name: "(Sittin' On) The Dock of the Bay - Otis Redding",
+            file: "(Sittin' On) The Dock of the Bay.mp3",
+            duration: '2:42',
+        },
+        {
+            name: 'The Motorcycle Song - Arlo Guthrie',
+            file: 'The Motorcycle Song.mp3',
+            duration: '2:50',
+        },
+        {
+            name: 'Georgy Girl - The Seekers',
+            file: 'Georgy Girl.mp3',
+            duration: '2:22',
+        },
+        {
+            name: "Walkin' My Cat Named Dog - Norma Tanega",
+            file: "Walkin' My Cat Named Dog.mp3",
+            duration: '3:00',
+        },
+        {
+            name: 'Love Minus Zero/No Limit - Joan Baez',
+            file: 'Love Minus Zero_No Limit.mp3',
+            duration: '2:43',
+        },
+        {
+            name: "The 59th Street Bridge Song (Feelin' Groovy) - Harpers Bizarre",
+            file: 'The 59th Street Bridge Song.mp3',
+            duration: '2:21',
+        },
+        {
+            name: 'If I Were A Carpenter - Bobby Darin',
+            file: 'If I Were A Carpenter.mp3',
+            duration: '2:21',
+        },
+        {
+            name: 'Hide Your Love Away - Barry McGuire with The Mamas & The Papas',
+            file: 'Hide Your Love Away.mp3',
+            duration: '2:47',
+        },
+        {
+            name: 'All My Trials - Dick & Dee Dee',
+            file: 'All My Trials.mp3',
+            duration: '2:54',
+        },
+        {
+            name: "Mama Don't Allow - The Rooftop Singers",
+            file: "Mama Don't Allow.mp3",
+            duration: '2:43',
+        },
+        {
+            name: 'In My Life - Judy Collins',
+            file: 'In My Life.mp3',
+            duration: '2:57',
+        },
+        {
+            name: 'The Last Thing On My Mind - Tom Paxton',
+            file: 'The Last Thing On My Mind.mp3',
+            duration: '3:00',
+        },
+        {
+            name: 'A Summer Song - Chad & Jeremy',
+            file: 'A Summer Song.mp3',
+            duration: '3:00',
+        },
+    ],
 };
 
 export const audioTrackNames = {
     general: 'General',
     hypixel: 'Hypixel (SkyBlock) OST/BGM',
     zelda_and_chill_2: 'Zelda and Chill 2 - Mikel and Gamechops',
+    folk_rewind: 'Folk Rewind Volume Three (My Music - Original Masters)',
 };
