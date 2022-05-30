@@ -28,11 +28,6 @@ export const audioTracks = {
             duration: '3:48',
         },
         {
-            name: "Thomas the Tank Engine Theme - Mike O'Donnell",
-            file: 'Thomas the Tank Engine Theme.mp3',
-            duration: '2:43',
-        },
-        {
             name: 'Scatman - Scatman John',
             file: 'Scatman.mp3',
             duration: '3:30',
@@ -245,4 +240,9 @@ export const audioTracks = {
             duration: '3:53',
         },
     ],
+};
+
+export const audioTrackNames = {
+    general: 'General',
+    hypixel: 'Hypixel (SkyBlock) OST/BGM',
 };

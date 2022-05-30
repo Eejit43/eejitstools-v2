@@ -1,5 +1,4 @@
-import { audioTracks } from '/data/audio-tracks.js';
-import { titleCase } from '/scripts/functions.js';
+import { audioTracks, audioTrackNames } from '/data/audio-tracks.js';
 
 const audio = document.getElementById('audio');
 const sourceAudio = document.getElementById('source-audio');
@@ -17,6 +16,8 @@ const playPauseButton = document.getElementById('play-pause');
 const forwardButton = document.getElementById('forward');
 const nextButton = document.getElementById('next');
 const toggleMuteButton = document.getElementById('toggle-mute');
+
+const playlistsList = document.getElementById('playlists-list');
 
 const playlist = document.getElementById('playlist');
 
@@ -75,10 +76,20 @@ Object.keys(audioTracks).forEach((key) => {
     const sectionTitle = document.createElement('div');
     sectionTitle.setAttribute('class', 'playlist-section-title');
     sectionTitle.setAttribute('id', key.replace(/_/g, '-'));
-    sectionTitle.textContent = key === 'hypixel' ? 'Hypixel (SkyBlock) OST/BGM' : titleCase(key.replace(/_/g, ' '));
+    sectionTitle.textContent = audioTrackNames[key];
 
     sectionTitleLink.appendChild(sectionTitle);
     playlist.appendChild(sectionTitleLink);
+
+    const playlistsListItem = document.createElement('li');
+
+    const playlistsListItemLink = document.createElement('a');
+    playlistsListItemLink.href = `#${key.replace(/_/g, '-')}`;
+    playlistsListItemLink.textContent = audioTrackNames[key];
+
+    playlistsListItem.appendChild(playlistsListItemLink);
+
+    playlistsList.appendChild(playlistsListItem);
 
     audioTracks[key].forEach((track, index) => {
         createTrackItem(key, index, track.name, track.duration);
@@ -103,10 +114,10 @@ function loadNewTrack(category, index) {
     audioIndex = index;
 }
 
-const playListItems = document.querySelectorAll('.playlist-track');
+const playlistItems = document.querySelectorAll('.playlist-track');
 
-for (let i = 0; i < playListItems.length; i++) {
-    playListItems[i].addEventListener('click', loadClickedTrack);
+for (let i = 0; i < playlistItems.length; i++) {
+    playlistItems[i].addEventListener('click', loadClickedTrack);
 }
 
 /**
@@ -114,8 +125,8 @@ for (let i = 0; i < playListItems.length; i++) {
  * @param {MouseEvent} event the click event
  */
 function loadClickedTrack(event) {
-    for (let i = 0; i < playListItems.length; i++) {
-        if (playListItems[i] === event.target) {
+    for (let i = 0; i < playlistItems.length; i++) {
+        if (playlistItems[i] === event.target) {
             const clickedCategory = event.target.getAttribute('data-category');
             const clickedIndex = event.target.getAttribute('data-index');
             if (clickedCategory === audioCategory && clickedIndex === audioIndex) toggleAudio();

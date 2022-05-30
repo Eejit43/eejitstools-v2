@@ -1271,6 +1271,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     background-color: #1e2529;
     border: 3px solid #31353d;
     border-radius: 15px;
+    color: #ffc266;
     height: min-content;
     margin: auto;
     margin-top: 200px;
@@ -1296,8 +1297,23 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     z-index: 100;
 }
 
+.player ~ .playlists {
+    position: sticky;
+    top: 395px;
+    z-index: 100;
+}
+
+.player ~ .playlists ul li::marker {
+    content: '—   ';
+}
+
 @media screen and (max-width: 1010px) {
     .player {
+        position: static;
+        top: unset;
+        z-index: unset;
+    }
+    .player ~ .playlists {
         position: static;
         top: unset;
         z-index: unset;
@@ -1323,6 +1339,10 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 .information div {
     color: #ffc266;
     margin-bottom: 8px;
+}
+
+#playlists-list a {
+    color: #ffc266;
 }
 
 .playlist-section-title {
