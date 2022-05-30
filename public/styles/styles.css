@@ -613,7 +613,7 @@ header {
     grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 400px), 1fr));
 }
 
-.basic-grid div {
+.basic-grid > div {
     margin-top: 15px;
 }
 
@@ -1274,7 +1274,6 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     color: #ffc266;
     height: min-content;
     margin: auto;
-    margin-top: 200px;
     max-width: 70%;
     padding: 10px;
     width: 450px;
@@ -1283,6 +1282,10 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 #mp3-grid {
     margin-top: 175px;
     --min-width: 500px;
+}
+
+#mp3-grid > div {
+    margin-top: 0px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -1299,7 +1302,6 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 
 .player ~ .playlists {
     position: sticky;
-    top: 395px;
     z-index: 100;
 }
 
@@ -1357,7 +1359,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     border-radius: 5px;
     cursor: pointer;
     display: flex;
-    margin-top: 3px;
+    margin-top: 15px !important;
 }
 
 .playlist-track:hover {

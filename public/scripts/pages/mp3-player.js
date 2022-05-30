@@ -23,6 +23,10 @@ const playlist = document.getElementById('playlist');
 
 progressBarContainer.addEventListener('click', handleProgressBarClick);
 
+audio.addEventListener('loadedmetadata', () => {
+    duration.textContent = getMinutes(audio.duration);
+});
+
 audio.addEventListener('timeupdate', onTimeUpdate);
 previousButton.addEventListener('click', previous);
 rewindButton.addEventListener('click', rewind);
@@ -99,19 +103,25 @@ Object.keys(audioTracks).forEach((key) => {
 let audioCategory = 'general';
 let audioIndex = 0;
 
+const player = document.querySelector('.player');
+const playlistsListContainer = document.querySelector('.player ~ .playlists');
+
 /**
  * Loads a new track
  * @param {string} category the category of the track
  * @param {number} index the index of the track
+ * @param {boolean} [play=true] whether or not to play the track
  */
-function loadNewTrack(category, index) {
+function loadNewTrack(category, index, play = true) {
     sourceAudio.src = `/files/mp3-player/${category}/${audioTracks[category][index].file}`;
     title.innerHTML = audioTracks[category][index].name;
     audio.load();
-    toggleAudio();
-    updateActiveTrackStyle(audioCategory, audioIndex, category, index);
+    if (play) toggleAudio();
+    updateActiveTrackStyle(audioCategory, audioIndex, category, index, false);
     audioCategory = category;
     audioIndex = index;
+
+    playlistsListContainer.style.top = `${175 + player.offsetHeight + 15}px`;
 }
 
 const playlistItems = document.querySelectorAll('.playlist-track');
@@ -135,14 +145,7 @@ function loadClickedTrack(event) {
     }
 }
 
-sourceAudio.src = `/files/mp3-player/${audioCategory}/${audioTracks[audioCategory][audioIndex].file}`;
-title.textContent = audioTracks[audioCategory][audioIndex].name;
-
-audio.load();
-
-audio.addEventListener('loadedmetadata', () => {
-    duration.textContent = getMinutes(audio.duration);
-});
+loadNewTrack(audioCategory, audioIndex, false);
 
 /**
  * Toggles the audio's play state
@@ -255,12 +258,13 @@ function previous() {
  * @param {number} oldIndex the index of the old track
  * @param {string} newCategory the category of the new track
  * @param {number} newIndex the index of the new track
+ * @param {boolean} [play=true] whether or not to mark the track as playing
  */
-function updateActiveTrackStyle(oldCategory, oldIndex, newCategory, newIndex) {
+function updateActiveTrackStyle(oldCategory, oldIndex, newCategory, newIndex, play = true) {
     document.getElementById(`playlist-track-${oldCategory}-${oldIndex}`).classList.remove('active-track');
-    pauseToPlay(oldCategory, oldIndex);
+    if (play) pauseToPlay(oldCategory, oldIndex);
     document.getElementById(`playlist-track-${newCategory}-${newIndex}`).classList.add('active-track');
-    playToPause(newCategory, newIndex);
+    if (play) playToPause(newCategory, newIndex);
 }
 
 /**
