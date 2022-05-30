@@ -63,8 +63,7 @@ async function getFromDate() {
         fetch(`https://en.pronouns.page/api/calendar/${year}-${monthInput}-${dateInput}`).then(async (response) => {
             const data = await response.json();
 
-            const events = data.events;
-            const eventsRaw = data.eventsRaw;
+            const { events, eventsRaw } = data;
 
             const newEvents = [];
             for (let i = 0; i < events.length; i++) {
@@ -90,8 +89,7 @@ async function getCurrent() {
     fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`).then(async (response) => {
         const data = await response.json();
 
-        const events = data.events;
-        const eventsRaw = data.eventsRaw;
+        const { events, eventsRaw } = data;
 
         const newEvents = [];
         for (let i = 0; i < events.length; i++) {

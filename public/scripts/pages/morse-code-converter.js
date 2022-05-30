@@ -216,7 +216,7 @@ function decodeMorse(morseCode) {
  * Converts the provided string from Morse Code and displays the result
  */
 function fromMorse() {
-    let inputVal = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
+    const inputVal = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
     if (inputVal.length <= 0) {
         result.value = '';
         resultCopy.disabled = true;

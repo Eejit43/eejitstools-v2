@@ -64,7 +64,7 @@ function checkInput(element) {
     if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
 }
 
-const audio = new Audio('/timer-alarm.mp3');
+const audio = new Audio('/files/timer-alarm.mp3');
 
 let paused = true;
 

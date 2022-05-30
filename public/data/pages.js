@@ -615,6 +615,16 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
+    'mp3-player': {
+        link: 'fun/mp3-player',
+        title: 'MP3 Player',
+        icon: 'fa-solid fa-music',
+        description: 'Play some music!',
+        keywords: [],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
     'random-fact': {
         link: 'fun/random-fact',
         title: 'Random Fact',

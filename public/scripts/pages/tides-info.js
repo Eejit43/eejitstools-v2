@@ -1,5 +1,7 @@
 /* global GeolocationPosition */
 
+import { titleCase } from '/scripts/functions.js';
+
 const result = document.getElementById('result');
 
 /**
@@ -26,8 +28,8 @@ async function getData(position) {
     const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } }); // cspell:disable-line
     const data = await response.json();
 
-    const latitude = data.origin.latitude;
-    const longitude = data.origin.longitude;
+    const { latitude } = data.origin;
+    const { longitude } = data.origin;
     const distance = `${data.origin.distance} ${data.origin.unit}`;
     const updated = `${new Date(data.timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.timestamp * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
     const state = data.heights[0].state.toLowerCase();
@@ -64,16 +66,4 @@ async function getData(position) {
     ];
 
     result.innerHTML = output.join('<br />');
-}
-
-/**
- * Converts a string to title case
- * @param {string} string the string to convert
- * @returns {string} the string in title case
- */
-function titleCase(string) {
-    return string
-        .split(' ')
-        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
-        .join(' ');
 }

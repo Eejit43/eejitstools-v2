@@ -73,7 +73,7 @@
             </a>
             <span style="float: right">
                 <div class="search-box mobile-hidden">
-                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-btn fas fa-search"></i><br />
+                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-btn fa-solid fa-search"></i><br />
                     <div class="search-results"></div>
                 </div>
                 <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span></a>
@@ -81,7 +81,10 @@
             </span>
         </nav>
         <%- body %>
-        <button id="show-shortcuts">⌘</button>
+        <div class="footer-utils">
+            <button id="scroll-to-top"><i class="fa-solid fa-arrow-up"></i></button>
+            <button id="show-shortcuts">⌘</button>
+        </div>
         <div id="shortcuts" style="display: none">
             <div id="shortcuts-content">
                 <div id="shortcuts-header">

@@ -57,17 +57,18 @@ searchText.addEventListener('keydown', (event) => {
 const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 
 /* Keyboard shortcuts */
-document.addEventListener('keydown', async (event) => {
+document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
 
     if (event.code === 'KeyK') document.getElementById('shortcuts').style.display = 'block';
+    else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
     else if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
         showAlert('Cleared clipboard!', 'success');
     } else if (event.code === 'KeyH') window.open('/', '_self');
     else if (event.code === 'KeyS') window.open(githubUrl, '_blank');
     else if (!event.shiftKey && event.code === 'KeyP') {
-        const pathname = window.location.pathname;
+        const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'views/index.ejs';
         else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '')) finalUrl = `views/pages${pathname}.ejs`;
@@ -75,7 +76,7 @@ document.addEventListener('keydown', async (event) => {
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
     } else if (event.shiftKey && event.code === 'KeyP') {
-        const pathname = window.location.pathname;
+        const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'public/scripts/global.js';
         else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '') && allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages/${pathname.replace(/^\/(tools|info|fun)\//, '')}.js`;
@@ -86,6 +87,11 @@ document.addEventListener('keydown', async (event) => {
         document.querySelector('.search-text').focus();
         event.preventDefault();
     }
+});
+
+/* Scroll to top button */
+document.getElementById('scroll-to-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 /* Keyboard shortcuts popup */

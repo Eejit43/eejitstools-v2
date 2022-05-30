@@ -178,3 +178,15 @@ export const addAnimation = (element, animation) =>
             { once: true }
         );
     });
+
+/**
+ * Converts a string to title case
+ * @param {string} string the string to convert
+ * @returns {string} the string in title case
+ */
+export function titleCase(string) {
+    return string
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
+}

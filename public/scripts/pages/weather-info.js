@@ -46,7 +46,7 @@ async function getData(position) {
     if (airQuality >= 201 && airQuality < 301) airQuality = `${airQuality} (<span style="color: #a2064a">Very Unhealthy</span>)`;
     if (airQuality >= 301) airQuality = `${airQuality} (<span style="color: #891a1c">Hazardous</span>)`;
 
-    let alerts = fullData.alerts;
+    let { alerts } = fullData;
     if (alerts.length === 0) alerts = 'None';
     else {
         const newAlerts = [];
@@ -100,7 +100,7 @@ async function getData(position) {
     const lunarData = await lunarResponse.json();
 
     const day = new Date().getDate();
-    let phaseName = lunarData.phase[day].phaseName;
+    let { phaseName } = lunarData.phase[day];
     const lighting = Math.round(lunarData.phase[day].lighting);
     if (phaseName === 'Waxing' && lighting < 50) phaseName = 'Waxing crescent';
     else if (phaseName === 'Waxing' && lighting > 50) phaseName = 'Waxing gibbous';

@@ -1,35 +1,32 @@
 // Modified from https://stackoverflow.com/questions/11219582/how-to-detect-my-browser-version-and-operating-system-using-javascript
 
-const navigatorVersion = navigator.appVersion;
-const navigatorAgent = navigator.userAgent;
-let browserName = navigator.appName;
-let fullVersion = parseFloat(navigatorVersion).toString();
-let majorVersion = parseInt(navigatorVersion, 10);
+const { appVersion, userAgent } = navigator;
+let { appName } = navigator;
+let fullVersion = parseFloat(appVersion).toString();
+let majorVersion = parseInt(appVersion, 10);
 let nameOffset, versionOffset, ix;
 
-if ((versionOffset = navigatorAgent.indexOf('Opera')) !== -1) {
-    browserName = 'Opera';
-    fullVersion = navigatorAgent.substring(versionOffset + 6);
-    if ((versionOffset = navigatorAgent.indexOf('Version')) !== -1) fullVersion = navigatorAgent.substring(versionOffset + 8);
-} else if ((versionOffset = navigatorAgent.indexOf('MSIE')) !== -1) {
-    browserName = 'Microsoft Internet Explorer';
-    fullVersion = navigatorAgent.substring(versionOffset + 5);
-} else if ((versionOffset = navigatorAgent.indexOf('Chrome')) !== -1) {
-    browserName = 'Chrome';
-    fullVersion = navigatorAgent.substring(versionOffset + 7);
-} else if ((versionOffset = navigatorAgent.indexOf('Safari')) !== -1) {
-    browserName = 'Safari';
-    fullVersion = navigatorAgent.substring(versionOffset + 7);
-    if ((versionOffset = navigatorAgent.indexOf('Version')) !== -1) fullVersion = navigatorAgent.substring(versionOffset + 8);
-} else if ((versionOffset = navigatorAgent.indexOf('Firefox')) !== -1) {
-    browserName = 'Firefox';
-    fullVersion = navigatorAgent.substring(versionOffset + 8);
-} else if ((nameOffset = navigatorAgent.lastIndexOf(' ') + 1) < (versionOffset = navigatorAgent.lastIndexOf('/'))) {
-    browserName = navigatorAgent.substring(nameOffset, versionOffset);
-    fullVersion = navigatorAgent.substring(versionOffset + 1);
-    if (browserName.toLowerCase() === browserName.toUpperCase()) {
-        browserName = navigator.appName;
-    }
+if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
+    appName = 'Opera';
+    fullVersion = userAgent.substring(versionOffset + 6);
+    if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
+} else if ((versionOffset = userAgent.indexOf('MSIE')) !== -1) {
+    appName = 'Microsoft Internet Explorer';
+    fullVersion = userAgent.substring(versionOffset + 5);
+} else if ((versionOffset = userAgent.indexOf('Chrome')) !== -1) {
+    appName = 'Chrome';
+    fullVersion = userAgent.substring(versionOffset + 7);
+} else if ((versionOffset = userAgent.indexOf('Safari')) !== -1) {
+    appName = 'Safari';
+    fullVersion = userAgent.substring(versionOffset + 7);
+    if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
+} else if ((versionOffset = userAgent.indexOf('Firefox')) !== -1) {
+    appName = 'Firefox';
+    fullVersion = userAgent.substring(versionOffset + 8);
+} else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) < (versionOffset = userAgent.lastIndexOf('/'))) {
+    appName = userAgent.substring(nameOffset, versionOffset);
+    fullVersion = userAgent.substring(versionOffset + 1);
+    if (appName.toLowerCase() === appName.toUpperCase()) appName = navigator.appName; // eslint-disable-line prefer-destructuring
 }
 
 if ((ix = fullVersion.indexOf(';')) !== -1) fullVersion = fullVersion.substring(0, ix);
@@ -37,15 +34,15 @@ if ((ix = fullVersion.indexOf(' ')) !== -1) fullVersion = fullVersion.substring(
 
 majorVersion = parseInt('' + fullVersion, 10);
 if (isNaN(majorVersion)) {
-    fullVersion = '' + parseFloat(navigatorVersion);
-    majorVersion = parseInt(navigatorVersion, 10);
+    fullVersion = '' + parseFloat(appVersion);
+    majorVersion = parseInt(appVersion, 10);
 }
 
 let OSName = 'Unknown OS';
-if (navigatorVersion.indexOf('Win') !== -1) OSName = 'Windows';
-if (navigatorVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
-if (navigatorVersion.indexOf('X11') !== -1) OSName = 'UNIX';
-if (navigatorVersion.indexOf('Linux') !== -1) OSName = 'Linux';
+if (appVersion.indexOf('Win') !== -1) OSName = 'Windows';
+if (appVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
+if (appVersion.indexOf('X11') !== -1) OSName = 'UNIX';
+if (appVersion.indexOf('Linux') !== -1) OSName = 'Linux';
 
 const result = [
     `Operating System: ${OSName}`, //
@@ -53,7 +50,7 @@ const result = [
     `Language: ${navigator.language}`,
     `Online: ${navigator.onLine}`,
     `Cookies Enabled: ${navigator.cookieEnabled}`,
-    `Browser: ${browserName}`,
+    `Browser: ${appName}`,
     `Browser Version: ${fullVersion}`,
     `Main Browser Version: ${majorVersion}`,
     `navigator.appName: ${navigator.appName}`,
