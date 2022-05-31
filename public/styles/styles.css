@@ -1282,7 +1282,7 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 }
 
 #mp3-grid {
-    margin-top: 175px;
+    margin-top: 150px;
     --min-width: 500px;
 }
 
@@ -1296,40 +1296,31 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     }
 }
 
-.player {
+.mp3-grid-left {
     position: sticky;
-    top: 175px;
+    top: 150px;
     z-index: 100;
 }
 
-.player ~ .playlists {
-    position: sticky;
-    z-index: 100;
-}
-
-.player ~ .playlists ul {
+#playlists-list {
+    font-size: 15px;
     margin-bottom: 5px;
 }
 
-.player ~ .playlists ul li {
+#playlists-list li {
     margin-top: 10px;
 }
 
-.player ~ .playlists ul li:first-of-type {
+#playlists-list li:first-of-type {
     margin-top: 0;
 }
 
-.player ~ .playlists ul li::marker {
+#playlists-list li::marker {
     content: '—   ';
 }
 
 @media screen and (max-width: 1010px) {
-    .player {
-        position: static;
-        top: unset;
-        z-index: unset;
-    }
-    .player ~ .playlists {
+    #mp3-grid-left {
         position: static;
         top: unset;
         z-index: unset;

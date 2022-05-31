@@ -103,9 +103,6 @@ Object.keys(audioTracks).forEach((key) => {
 let audioCategory = 'general';
 let audioIndex = 0;
 
-const player = document.querySelector('.player');
-const playlistsListContainer = document.querySelector('.player ~ .playlists');
-
 /**
  * Loads a new track
  * @param {string} category the category of the track
@@ -120,8 +117,6 @@ function loadNewTrack(category, index, play = true) {
     updateActiveTrackStyle(audioCategory, audioIndex, category, index, play);
     audioCategory = category;
     audioIndex = index;
-
-    playlistsListContainer.style.top = `${175 + player.offsetHeight + 15}px`;
 }
 
 const playlistItems = document.querySelectorAll('.playlist-track');

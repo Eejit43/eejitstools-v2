@@ -655,6 +655,73 @@ export const audioTracks = {
             duration: '3:31',
         },
     ],
+    video_games: [
+        {
+            name: 'Introduction - Cuphead',
+            file: 'Introduction (Cuphead).mp3',
+            duration: '3:28',
+        },
+        {
+            name: 'Ruse Of An Ooze - Cuphead',
+            file: 'Ruse Of An Ooze.mp3',
+            duration: '4:22',
+        },
+        {
+            name: 'Botanic Panic - Cuphead',
+            file: 'Botanic Panic.mp3',
+            duration: '3:58',
+        },
+        {
+            name: 'One Hell Of A Time - Cuphead',
+            file: 'One Hell Of A Time.mp3',
+            duration: '3:02',
+        },
+        {
+            name: 'CheetahMen Theme (also used in Cat Mario) - Action 52',
+            file: 'CheetahMen Theme.mp3',
+            duration: '4:22',
+        },
+        {
+            name: 'Onett Theme - Earthbound',
+            file: 'Onett Theme.mp3',
+            duration: '2:24',
+        },
+        {
+            name: 'The Moon Theme - DuckTales (NES)',
+            file: 'The Moon Theme.mp3',
+            duration: '1:32',
+        },
+        {
+            name: 'Theme A - Tetris',
+            file: 'Theme A (Tetris).mp3',
+            duration: '1:21',
+        },
+        {
+            name: "Flower Garden - Yoshi's Island",
+            file: 'Flower Garden.mp3',
+            duration: '2:54',
+        },
+        {
+            name: "Athletic Theme - Yoshi's Island",
+            file: 'Athletic Theme.mp3',
+            duration: '2:11',
+        },
+        {
+            name: 'Gourmet Race (Kirby) - Super Smash Bros. Brawl',
+            file: 'Gourmet Race (Kirby).mp3',
+            duration: '2:20',
+        },
+        {
+            name: 'Mii Channel Theme (Wii)',
+            file: 'Mii Channel Theme (Wii).mp3',
+            duration: '1:53',
+        },
+        {
+            name: 'Honeyhive Galaxy - Super Mario Galaxy',
+            file: 'Honeyhive Galaxy.mp3',
+            duration: '1:56',
+        },
+    ],
 };
 
 export const audioTrackNames = {
@@ -665,4 +732,5 @@ export const audioTrackNames = {
     inkas_wasi: 'Inkas Wasi - Peru (Waqra Fiesta - Traditional Vol. V)',
     records_jazz: 'Records/Jazz',
     classical: 'Classical',
+    video_games: 'Video Games',
 };
