@@ -30,7 +30,6 @@ resetDate.addEventListener('click', getCurrent);
  * @param {HTMLElement} element the element to check and update
  */
 function checkInput(element) {
-    console.log(element.max);
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
     if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
 }
