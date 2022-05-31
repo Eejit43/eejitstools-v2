@@ -563,6 +563,98 @@ export const audioTracks = {
             duration: '25:12',
         },
     ],
+    classical: [
+        {
+            name: 'An Der Schonen Blauen Donau - Strauss',
+            file: 'An Der Schonen Blauen Donau.mp3',
+            duration: '6:35',
+        },
+        {
+            name: 'Moonlight Sonata - Ludwig van Beethoven',
+            file: 'Moonlight Sonata.mp3',
+            duration: '15:00',
+        },
+        {
+            name: 'Prelude to Act 1 Of Carmen - Bizet',
+            file: 'Prelude to Act 1 Of Carmen.mp3',
+            duration: '2:15',
+        },
+        {
+            name: 'Habanera (Carmen) - Bizet',
+            file: 'Habanera (Carmen).mp3',
+            duration: '2:08',
+        },
+        {
+            name: 'Dance of the Reed Flutes - Tchaikovsky',
+            file: 'Dance of the Reed Flutes.mp3',
+            duration: '2:35',
+        },
+        {
+            name: 'Eine Kleine Nachtmusik - Mozart',
+            file: 'Eine Kleine Nachtmusik.mp3',
+            duration: '5:47',
+        },
+        {
+            name: 'Rondo Alla Turca - Mozart',
+            file: 'Rondo Alla Turca.mp3',
+            duration: '3:28',
+        },
+        {
+            name: 'Flight Of The Bumblebee - Rimsky-Korsakov',
+            file: 'Flight Of The Bumblebee.mp3',
+            duration: '3:25',
+        },
+        {
+            name: 'In the Hall Of the Mountain King - Grieg',
+            file: 'In the Hall Of the Mountain King.mp3',
+            duration: '2:41',
+        },
+        {
+            name: 'Für Elise - Ludwig van Beethoven',
+            file: 'Für Elise.mp3',
+            duration: '3:02',
+        },
+        {
+            name: 'Can Can Music - Offenbach',
+            file: 'Can Can Music.mp3',
+            duration: '2:11',
+        },
+        {
+            name: 'Ride Of The Valkyries - Richard Wagner',
+            file: 'Ride Of The Valkyries.mp3',
+            duration: '5:00',
+        },
+        {
+            name: 'Entry Of The Gladiators - Julius Fucik',
+            file: 'Entry Of The Gladiators.mp3',
+            duration: '3:05',
+        },
+        {
+            name: 'Symphony 5 - Beethoven',
+            file: 'Symphony 5 (Beethoven).mp3',
+            duration: '8:19',
+        },
+        {
+            name: '1812 Overture - Tchaikovsky',
+            file: '1812 Overture.mp3',
+            duration: '15:08',
+        },
+        {
+            name: 'Spring (The Four Seasons) - Vivaldi',
+            file: 'Spring (The Four Seasons).mp3',
+            duration: '3:10',
+        },
+        {
+            name: 'Toccata and Fugue in D Minor - J.S. Bach',
+            file: 'Toccata and Fugue in D Minor.mp3',
+            duration: '9:20',
+        },
+        {
+            name: 'William Tell Overture - Rossini',
+            file: 'William Tell Overture.mp3',
+            duration: '3:31',
+        },
+    ],
 };
 
 export const audioTrackNames = {
@@ -572,4 +664,5 @@ export const audioTrackNames = {
     folk_rewind: 'Folk Rewind Volume Three (My Music - Original Masters)',
     inkas_wasi: 'Inkas Wasi - Peru (Waqra Fiesta - Traditional Vol. V)',
     records_jazz: 'Records/Jazz',
+    classical: 'Classical',
 };
