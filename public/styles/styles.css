@@ -1305,6 +1305,18 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     z-index: 100;
 }
 
+.player ~ .playlists ul {
+    margin-bottom: 5px;
+}
+
+.player ~ .playlists ul li {
+    margin-top: 10px;
+}
+
+.player ~ .playlists ul li:first-of-type {
+    margin-top: 0;
+}
+
 .player ~ .playlists ul li::marker {
     content: '—   ';
 }
@@ -1347,11 +1359,19 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     color: #ffc266;
 }
 
+#playlists-list a:hover {
+    color: #f1a93c;
+}
+
 .playlist-section-title {
     color: #ffc266;
     font-size: 20px;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+.playlist-section-title:hover {
+    color: #f1a93c;
 }
 
 .playlist-track {

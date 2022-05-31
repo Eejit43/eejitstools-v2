@@ -409,6 +409,73 @@ export const audioTracks = {
             duration: '3:00',
         },
     ],
+    inkas_wasi: [
+        {
+            name: 'Encounters',
+            file: 'Encounters.mp3',
+            duration: '2:55',
+        },
+        {
+            name: 'Aymara Party',
+            file: 'Aymara Party.mp3',
+            duration: '2:44',
+        },
+        {
+            name: 'One Day Flower',
+            file: 'One Day Flower.mp3',
+            duration: '3:05',
+        },
+        {
+            name: 'Memories Of The Past',
+            file: 'Memories Of The Past.mp3',
+            duration: '3:04',
+        },
+        {
+            name: 'Chapara',
+            file: 'Chapara.mp3',
+            duration: '5:22',
+        },
+        {
+            name: 'Cow Bull',
+            file: 'Cow Bull.mp3',
+            duration: '5:28',
+        },
+        {
+            name: 'Ascent',
+            file: 'Ascent.mp3',
+            duration: '2:56',
+        },
+        {
+            name: 'Atacameños',
+            file: 'Atacameños.mp3',
+            duration: '2:46',
+        },
+        {
+            name: 'The Flight Of The Condor',
+            file: 'The Flight Of The Condor.mp3',
+            duration: '5:22',
+        },
+        {
+            name: 'At The Party',
+            file: 'At The Party.mp3',
+            duration: '2:18',
+        },
+        {
+            name: 'Socoroma',
+            file: 'Socoroma.mp3',
+            duration: '3:08',
+        },
+        {
+            name: 'Chogui, Campana & Bikina',
+            file: 'Chogui, Campana & Bikina.mp3',
+            duration: '5:45',
+        },
+        {
+            name: 'Celia',
+            file: 'Celia.mp3',
+            duration: '4:57',
+        },
+    ],
 };
 
 export const audioTrackNames = {
@@ -416,4 +483,5 @@ export const audioTrackNames = {
     hypixel: 'Hypixel (SkyBlock) OST/BGM',
     zelda_and_chill_2: 'Zelda and Chill 2 - Mikel and Gamechops',
     folk_rewind: 'Folk Rewind Volume Three (My Music - Original Masters)',
+    inkas_wasi: 'Inkas Wasi - Peru (Waqra Fiesta - Traditional Vol. V)',
 };

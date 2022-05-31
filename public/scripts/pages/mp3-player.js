@@ -117,7 +117,7 @@ function loadNewTrack(category, index, play = true) {
     title.innerHTML = audioTracks[category][index].name;
     audio.load();
     if (play) toggleAudio();
-    updateActiveTrackStyle(audioCategory, audioIndex, category, index, false);
+    updateActiveTrackStyle(audioCategory, audioIndex, category, index, play);
     audioCategory = category;
     audioIndex = index;
 
