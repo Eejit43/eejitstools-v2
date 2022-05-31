@@ -560,7 +560,6 @@ header {
 }
 
 .info-table {
-    background-color: #31363d;
     border-collapse: collapse;
     color: #a8a8a8;
     margin: 50px auto 30px;
@@ -590,6 +589,10 @@ header {
         font-size: 14px;
         padding: 20px;
     }
+}
+
+.info-table tr {
+    background-color: #31363d;
 }
 
 .info-table td {
@@ -1119,14 +1122,13 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     background-color: #9e44c4;
 }
 
-.mc-scroll-msg {
+.scroll-message {
     display: none;
 }
 
 @media only screen and (max-width: 700px) {
-    .mc-scroll-msg {
+    .scroll-message {
         display: initial;
-        padding-left: 10px;
     }
 }
 

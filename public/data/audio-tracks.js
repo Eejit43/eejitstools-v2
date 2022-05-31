@@ -476,6 +476,93 @@ export const audioTracks = {
             duration: '4:57',
         },
     ],
+    records_jazz: [
+        {
+            name: 'Sing, Sing, Sing - Benny Goodman',
+            file: 'Sing, Sing, Sing.mp3',
+            duration: '8:40',
+        },
+        {
+            name: "Your Feet's Too Big - Fats Waller",
+            file: "Your Feet's Too Big.mp3",
+            duration: '3:09',
+        },
+        {
+            name: 'Jazz Today (Side 1) - Chris Barber',
+            file: 'Jazz Today (Side 1).mp3',
+            duration: '11:31',
+        },
+        {
+            name: 'Jazz Today (Side 2) - Chris Barber',
+            file: 'Jazz Today (Side 2).mp3',
+            duration: '13:02',
+        },
+        {
+            name: 'Teddy Bear Picnic',
+            file: 'Teddy Bear Picnic.mp3',
+            duration: '2:28',
+        },
+        {
+            name: 'Winnie The Pooh',
+            file: 'Winnie The Pooh.mp3',
+            duration: '2:28',
+        },
+        {
+            name: 'This Is Blues Alley (Side 1) - Tommy Gwaltney',
+            file: 'This Is Blues Alley (Side 1).mp3',
+            duration: '17:40',
+        },
+        {
+            name: 'This Is Blues Alley (Side 2) - Tommy Gwaltney',
+            file: 'This Is Blues Alley (Side 2).mp3',
+            duration: '19:26',
+        },
+        {
+            name: 'Music Box Dancer - Frank Mills',
+            file: 'Music Box Dancer.mp3',
+            duration: '3:14',
+        },
+        {
+            name: 'Black Jazz/Smoke Rings (Side 1) - Casa Loma (Glen Gray)', // Yeah...
+            file: 'Black Jazz_Smoke Rings.mp3',
+            duration: '6:03',
+        },
+        {
+            name: 'No Name Jive (Side 2) - Casa Loma (Glen Gray)',
+            file: 'No Name Jive.mp3',
+            duration: '6:21',
+        },
+        {
+            name: 'The RCA Victor Encyclopedia of Recorded Jazz, Album 1 (Side 1) - Assorted',
+            file: 'RCA Victor Encyclopedia (Side 1).mp3',
+            duration: '15:06',
+        },
+        {
+            name: 'The RCA Victor Encyclopedia of Recorded Jazz, Album 1 (Side 2) - Assorted',
+            file: 'RCA Victor Encyclopedia (Side 2).mp3',
+            duration: '15:26',
+        },
+        {
+            name: 'Tommy Gwaltney Plays Great Jazz (Side A)',
+            file: 'Tommy Gwaltney Plays Great Jazz (Side A).mp3',
+            duration: '18:10',
+        },
+        {
+            name: 'Tommy Gwaltney Plays Great Jazz (Side B)',
+            file: 'Tommy Gwaltney Plays Great Jazz (Side B).mp3',
+            duration: '17:32',
+        },
+        {
+            name: "Louis Armstrong's Greatest Hits (Side 1)",
+            file: "Louis Armstrong's Greatest Hits (Side 1).mp3",
+            duration: '27:01',
+        },
+        {
+            name: "Louis Armstrong's Greatest Hits (Side 2)",
+            file: "Louis Armstrong's Greatest Hits (Side 2).mp3",
+            duration: '25:12',
+        },
+    ],
 };
 
 export const audioTrackNames = {
@@ -484,4 +571,5 @@ export const audioTrackNames = {
     zelda_and_chill_2: 'Zelda and Chill 2 - Mikel and Gamechops',
     folk_rewind: 'Folk Rewind Volume Three (My Music - Original Masters)',
     inkas_wasi: 'Inkas Wasi - Peru (Waqra Fiesta - Traditional Vol. V)',
+    records_jazz: 'Records/Jazz',
 };
