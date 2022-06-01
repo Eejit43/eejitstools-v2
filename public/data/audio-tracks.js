@@ -864,7 +864,88 @@ export const audioTracks = {
             duration: '3:44',
         },
     ],
-    // yoshis_wooly_world: [{}],
+    yoshis_woolly_world: [
+        {
+            name: "Welcome to Yoshi's Woolly World!",
+            file: "Welcome to Yoshi's Woolly World!.mp3",
+            duration: '3:01',
+        },
+        {
+            name: 'Title Screen',
+            file: 'Title Screen.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Yoshi Hut',
+            file: 'Yoshi Hut.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Scrapbook Theatre',
+            file: 'Scrapbook Theatre.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Bonus Game',
+            file: 'Bonus Game.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Craft Island',
+            file: 'Craft Island.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'World 1',
+            file: 'World 1.mp3',
+            duration: '2:37',
+        },
+        {
+            name: 'World 2',
+            file: 'World 2.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Yarn Yoshi Takes Shape!',
+            file: 'Yarn Yoshi Takes Shape!.mp3',
+            duration: '3:07',
+        },
+        {
+            name: 'Yoshi Transformed',
+            file: 'Yoshi Transformed.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Fort Course',
+            file: 'Fort Course.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Bounceabout Woods',
+            file: 'Bounceabout Woods.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Clawdaddy Beach',
+            file: 'Clawdaddy Beach.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Vs Big Montogomery',
+            file: 'Vs Big Montogomery.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Vs Burt the Bashful',
+            file: 'Vs Burt the Bashful.mp3',
+            duration: '3:01',
+        },
+        {
+            name: 'Vs Knot Wing the Koopa',
+            file: 'Vs Knot Wing the Koopa.mp3',
+            duration: '3:01',
+        },
+    ],
     // zelda: [{}],
     // breath_of_the_wild: [{}],
 };
@@ -879,7 +960,7 @@ export const audioTrackNames = {
     classical: 'Classical',
     video_games: 'Video Games',
     mario: 'Various Mario OSTs',
-    // yoshis_wooly_world: "Yoshi's Wooly World OST",
+    yoshis_woolly_world: "Yoshi's Woolly World OST",
     // zelda: 'Various Legend of Zelda OSTs',
     // breath_of_the_wild: 'Breath of the Wild OST',
 };
