@@ -24,7 +24,7 @@ const playlist = document.getElementById('playlist');
 progressBarContainer.addEventListener('click', handleProgressBarClick);
 
 audio.addEventListener('loadedmetadata', () => {
-    duration.textContent = getMinutes(audio.duration);
+    duration.textContent = formatTime(audio.duration);
 });
 
 audio.addEventListener('timeupdate', onTimeUpdate);
@@ -164,7 +164,7 @@ function toggleAudio() {
  * Updates the progress bar
  */
 function onTimeUpdate() {
-    timer.textContent = getMinutes(audio.currentTime);
+    timer.textContent = formatTime(audio.currentTime);
     setBarProgress();
     if (audio.ended) {
         playPauseButton.classList.add('fa-play');
@@ -182,19 +182,19 @@ function setBarProgress() {
 }
 
 /**
- * Gets the minutes from a time in seconds
+ * Formats the time in seconds to minutes and seconds
  * @param {number} time the time
  * @returns {string} the minutes and seconds
  */
-function getMinutes(time) {
-    const min = parseInt(time / 60)
+function formatTime(time) {
+    const minutes = parseInt(time / 60)
         .toString()
-        .padStart(2, '0');
-    const sec = parseInt(time % 60)
+        .padStart(1, '0');
+    const seconds = parseInt(time % 60)
         .toString()
         .padStart(2, '0');
 
-    return `${min}:${sec}`;
+    return `${minutes}:${seconds}`;
 }
 
 /**

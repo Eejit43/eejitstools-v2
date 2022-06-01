@@ -81,5 +81,5 @@ function displayTime() {
  * @returns {number} the formatted value
  */
 function format(value, scale, modulo, padding) {
-    return modulo ? (Math.floor(value / scale) % modulo).toString().padStart(padding, 0) : (Math.floor(value / scale)).toString().padStart(padding, 0); // prettier-ignore
+    return modulo ? (Math.floor(value / scale) % modulo).toString().padStart(padding, '0') : (Math.floor(value / scale)).toString().padStart(padding, '0'); // prettier-ignore
 }

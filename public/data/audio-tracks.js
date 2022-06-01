@@ -946,7 +946,63 @@ export const audioTracks = {
             duration: '3:01',
         },
     ],
-    // zelda: [{}],
+    zelda: [
+        {
+            name: 'Intro/Main Theme - The Legend Of Zelda (NES)',
+            file: 'Intro_Main Theme (Legend Of Zelda, NES).mp3',
+            duration: '1:20',
+        },
+        {
+            name: 'Underworld - The Legend Of Zelda (NES)',
+            file: 'Underworld (Legend Of Zelda, NES).mp3',
+            duration: '0:43',
+        },
+        {
+            name: 'Gerudo Valley - Ocarina Of Time',
+            file: 'Gerudo Valley (Ocarina Of Time).mp3',
+            duration: '2:55',
+        },
+        {
+            name: "Overworld - The Legend of Zelda Link's Awakening (Switch)",
+            file: "Overworld (Link's Awakening).mp3",
+            duration: '1:49',
+        },
+        {
+            name: "Sword Search on Koholint Island - The Legend of Zelda Link's Awakening (Switch)",
+            file: "Sword Search on Koholint Island (Link's Awakening).mp3",
+            duration: '2:41',
+        },
+        {
+            name: 'Title Theme - The Wind Waker',
+            file: 'Title Theme (Wind Waker).mp3',
+            duration: '2:01',
+        },
+        {
+            name: 'File Select - The Wind Waker',
+            file: 'File Select (Wind Waker).mp3',
+            duration: '1:00',
+        },
+        {
+            name: 'Outset Island - The Wind Waker',
+            file: 'Outset Island (Wind Waker).mp3',
+            duration: '2:05',
+        },
+        {
+            name: 'Windfall Island - The Wind Waker',
+            file: 'Windfall Island (Wind Waker).mp3',
+            duration: '2:16',
+        },
+        {
+            name: 'Battle - The Wind Waker',
+            file: 'Battle (Wind Waker).mp3',
+            duration: '2:33',
+        },
+        {
+            name: 'Forsaken Fortress - The Wind Waker',
+            file: 'Forsaken Fortress (Wind Waker).mp3',
+            duration: '1:41',
+        },
+    ],
     // breath_of_the_wild: [{}],
 };
 
@@ -961,6 +1017,6 @@ export const audioTrackNames = {
     video_games: 'Video Games',
     mario: 'Various Mario OSTs',
     yoshis_woolly_world: "Yoshi's Woolly World OST",
-    // zelda: 'Various Legend of Zelda OSTs',
+    zelda: 'Various Legend of Zelda OSTs',
     // breath_of_the_wild: 'Breath of the Wild OST',
 };

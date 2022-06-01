@@ -90,7 +90,7 @@ function updateStandardOutput() {
         updateArrow(unixArrow, 'success', 'down');
 
         const timeString = unixTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
-        standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, 0)} $1`) : timeString}, ${unixTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
+        standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, '0')} $1`) : timeString}, ${unixTime.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}`;
         standardOutputCopy.disabled = false;
     }
 }

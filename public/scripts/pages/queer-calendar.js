@@ -36,8 +36,8 @@ function checkInput(element) {
 
 const currentTime = new Date();
 const year = currentTime.getFullYear();
-const month = (currentTime.getMonth() + 1).toString().padStart(2, 0);
-const date = currentTime.getDate().toString().padStart(2, 0);
+const month = (currentTime.getMonth() + 1).toString().padStart(2, '0');
+const date = currentTime.getDate().toString().padStart(2, '0');
 
 monthVal.placeholder = month;
 dateVal.placeholder = date;
@@ -49,8 +49,8 @@ yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
  * Fetches calendar information for the specified date
  */
 async function getFromDate() {
-    const monthInput = escapeHTML(monthVal.value || month).padStart(2, 0);
-    const dateInput = escapeHTML(dateVal.value || date).padStart(2, 0);
+    const monthInput = escapeHTML(monthVal.value || month).padStart(2, '0');
+    const dateInput = escapeHTML(dateVal.value || date).padStart(2, '0');
 
     if (parseInt(monthInput) === 0 || parseInt(dateInput) === 0) {
         showAlert('Input cannot be zero!', 'error');

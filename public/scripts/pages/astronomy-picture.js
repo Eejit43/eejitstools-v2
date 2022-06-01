@@ -47,8 +47,8 @@ function checkInput(element) {
 
 const currentTime = new Date();
 const year = currentTime.getFullYear();
-const month = (currentTime.getMonth() + 1).toString().padStart(2, 0);
-const date = currentTime.getDate().toString().padStart(2, 0);
+const month = (currentTime.getMonth() + 1).toString().padStart(2, '0');
+const date = currentTime.getDate().toString().padStart(2, '0');
 
 yearVal.placeholder = year;
 monthVal.placeholder = month;
@@ -77,8 +77,8 @@ function fetchApod(yearInput, monthInput, dateInput) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
     yearInput = yearInput ? yearInput.toString().slice(-2) : year.toString().slice(-2);
-    monthInput = monthInput ? monthInput.toString().padStart(2, 0) : month.toString().padStart(2, 0);
-    dateInput = dateInput ? dateInput.toString().padStart(2, 0) : date.toString().padStart(2, 0);
+    monthInput = monthInput ? monthInput.toString().padStart(2, '0') : month.toString().padStart(2, '0');
+    dateInput = dateInput ? dateInput.toString().padStart(2, '0') : date.toString().padStart(2, '0');
 
     fetch(`/cors-anywhere?url=https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
         .then(async (response) => {
