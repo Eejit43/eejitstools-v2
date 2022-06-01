@@ -97,7 +97,6 @@ nav {
     justify-content: space-between;
     left: 0px;
     padding: 35px 25px;
-    position: -webkit-fixed;
     position: fixed;
     right: 0px;
     top: 0px;
@@ -1303,12 +1302,14 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 }
 
 #playlists-list {
+    column-count: 2;
+    column-gap: 30px;
     font-size: 15px;
     margin-bottom: 5px;
 }
 
 #playlists-list li {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 #playlists-list li:first-of-type {

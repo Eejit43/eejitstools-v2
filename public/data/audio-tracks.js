@@ -722,6 +722,151 @@ export const audioTracks = {
             duration: '1:56',
         },
     ],
+    mario: [
+        {
+            name: 'Coconut Mall - Mario Kart Wii',
+            file: 'Coconut Mall (MKW).mp3',
+            duration: '2:21',
+        },
+        {
+            name: 'Delfino Plaza - Super Mario Sunshine',
+            file: 'Delfino Plaza (SMS).mp3',
+            duration: '2:57',
+        },
+        {
+            name: 'Ground Theme (Super Bell Hill) - Super Mario 3D World',
+            file: 'Ground Theme (Super Bell Hill) (SM3DW).mp3',
+            duration: '2:01',
+        },
+        {
+            name: 'Overworld Theme - New Super Mario Bros. U',
+            file: 'Overworld Theme (NSMBU).mp3',
+            duration: '2:55',
+        },
+        {
+            name: 'Overworld 1 - Super Mario Bros. 3',
+            file: 'Overworld 1 (SMB3).mp3',
+            duration: '2:48',
+        },
+        {
+            name: 'Athletic - Super Mario Bros. 3',
+            file: 'Athletic (SMB3).mp3',
+            duration: '1:09',
+        },
+        {
+            name: 'Athletic - Super Mario World',
+            file: 'Athletic (SMW).mp3',
+            duration: '2:41',
+        },
+        {
+            name: 'Overworld Theme - Super Mario World',
+            file: 'Overworld Theme (SMW).mp3',
+            duration: '3:02',
+        },
+        {
+            name: 'Bob-Omb Battlefield - Super Mario 64',
+            file: 'Bob-Omb Battlefield (SM64).mp3',
+            duration: '2:21',
+        },
+        {
+            name: 'Slide - Super Mario 64',
+            file: 'Slide (SM64).mp3',
+            duration: '2:48',
+        },
+        {
+            name: 'Snow Mountain - Super Mario 64',
+            file: 'Snow Mountain (SM64).mp3',
+            duration: '2:57',
+        },
+        {
+            name: 'Main Theme - Super Mario Bros.',
+            file: 'Main Theme (SMB).mp3',
+            duration: '2:00',
+        },
+        {
+            name: 'Overworld Theme - Super Mario Bros. 2',
+            file: 'Overworld Theme (SMB2).mp3',
+            duration: '2:55',
+        },
+        {
+            name: 'Overworld Theme - Super Mario Land',
+            file: 'Overworld Theme (SML).mp3',
+            duration: '1:02',
+        },
+        {
+            name: 'Main Theme - Mario Kart 8',
+            file: 'Main Theme (MK8).mp3',
+            duration: '4:08',
+        },
+        {
+            name: 'Menu - Mario Kart 8',
+            file: 'Menu (MK8).mp3',
+            duration: '1:22',
+        },
+        {
+            name: 'Mario Kart Stadium - Mario Kart 8',
+            file: 'Mario Kart Stadium (MK8).mp3',
+            duration: '2:17',
+        },
+        {
+            name: 'Fever - Dr. Mario',
+            file: 'Fever (DM).mp3',
+            duration: '1:52',
+        },
+        {
+            name: 'Bonus Screen - Super Mario World',
+            file: 'Bonus Screen (SMW).mp3',
+            duration: '1:10',
+        },
+        {
+            name: 'Enemy Battle - Super Mario Bros. 3',
+            file: 'Enemy Battle (SMB3).mp3',
+            duration: '0:43',
+        },
+        {
+            name: 'Forest Theme - Super Mario Bros. (Super Mario Maker 2)',
+            file: 'Forest Theme (SMB, SMM2).mp3',
+            duration: '1:29',
+        },
+        {
+            name: 'Fortress Boss - Super Mario Bros. 3',
+            file: 'Fortress Boss (SMB3).mp3',
+            duration: '0:48',
+        },
+        {
+            name: 'Grass Land - Super Mario Bros. 3',
+            file: 'Grass Land (SMB3).mp3',
+            duration: '0:40',
+        },
+        {
+            name: 'Underwater - Super Mario Bros. 3',
+            file: 'Underwater (SMB3).mp3',
+            duration: '1:07',
+        },
+        {
+            name: 'Underwater - Super Mario Bros.',
+            file: 'Underwater (SMB).mp3',
+            duration: '1:02',
+        },
+        {
+            name: 'Desert Theme - Super Mario World (Super Mario Maker 2)',
+            file: 'Desert Theme (SMW, SMM2).mp3',
+            duration: '2:11',
+        },
+        {
+            name: 'Player Select - Super Mario Bros. 2',
+            file: 'Player Select (SMB2).mp3',
+            duration: '1:03',
+        },
+        {
+            name: 'Gusty Garden Galaxy -  Super Mario Galaxy',
+            file: 'Gusty Garden Galaxy (SMG).mp3',
+            duration: '3:44',
+        },
+    ],
+    // yoshis_wooly_world: [{}],
+    // zelda: [{}],
+    // breath_of_the_wild: [{}],
 };
 
 export const audioTrackNames = {
@@ -733,4 +878,8 @@ export const audioTrackNames = {
     records_jazz: 'Records/Jazz',
     classical: 'Classical',
     video_games: 'Video Games',
+    mario: 'Various Mario OSTs',
+    // yoshis_wooly_world: "Yoshi's Wooly World OST",
+    // zelda: 'Various Legend of Zelda OSTs',
+    // breath_of_the_wild: 'Breath of the Wild OST',
 };
