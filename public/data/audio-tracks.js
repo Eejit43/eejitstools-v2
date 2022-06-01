@@ -1003,7 +1003,143 @@ export const audioTracks = {
             duration: '1:41',
         },
     ],
-    // breath_of_the_wild: [{}],
+    breath_of_the_wild: [
+        {
+            name: 'Main Theme',
+            file: 'Main Theme.mp3',
+            duration: '1:56',
+        },
+        {
+            name: 'Wii U Channel Menu',
+            file: 'Wii U Channel Menu.mp3',
+            duration: '0:49',
+        },
+        {
+            name: 'Shrine',
+            file: 'Shrine.mp3',
+            duration: '4:05',
+        },
+        {
+            name: "Kass' Theme",
+            file: "Kass' Theme.mp3",
+            duration: '1:10',
+        },
+        {
+            name: 'Great Fairy Fountain',
+            file: 'Great Fairy Fountain.mp3',
+            duration: '1:41',
+        },
+        {
+            name: 'Field (Day)',
+            file: 'Field (Day).mp3',
+            duration: '2:45',
+        },
+        {
+            name: 'Field (Freezing Cold)',
+            file: 'Field (Freezing Cold).mp3',
+            duration: '1:18',
+        },
+        {
+            name: 'Riding (Day)',
+            file: 'Riding (Day).mp3',
+            duration: '1:53',
+        },
+        {
+            name: 'Stables',
+            file: 'Stables.mp3',
+            duration: '2:25',
+        },
+        {
+            name: 'Waterfront',
+            file: 'Waterfront.mp3',
+            duration: '3:31',
+        },
+        {
+            name: 'Kakariko Village (Day)',
+            file: 'Kakariko Village (Day).mp3',
+            duration: '3:53',
+        },
+        {
+            name: "Zora's Domain (Day)",
+            file: "Zora's Domain (Day).mp3",
+            duration: '3:34',
+        },
+        {
+            name: 'Rito Village (Day)',
+            file: 'Rito Village (Day).mp3',
+            duration: '5:15',
+        },
+        {
+            name: 'Goron City (Day)',
+            file: 'Goron City (Day).mp3',
+            duration: '2:54',
+        },
+        {
+            name: 'Gerudo Town (Day)',
+            file: 'Gerudo Town (Day).mp3',
+            duration: '2:42',
+        },
+        {
+            name: 'Lurelin Village (Day)',
+            file: 'Lurelin Village (Day).mp3',
+            duration: '3:27',
+        },
+        {
+            name: 'Korok Forest (Day)',
+            file: 'Korok Forest (Day).mp3',
+            duration: '2:44',
+        },
+        {
+            name: 'Guardian Battle',
+            file: 'Guardian Battle.mp3',
+            duration: '3:19',
+        },
+        {
+            name: 'Hyrule Castle (Exterior)',
+            file: 'Hyrule Castle (Exterior).mp3',
+            duration: '4:41',
+        },
+        {
+            name: 'Field Battle',
+            file: 'Field Battle.mp3',
+            duration: '2:02',
+        },
+        {
+            name: 'Battle (Shrine)',
+            file: 'Battle (Shrine).mp3',
+            duration: '1:47',
+        },
+        {
+            name: 'Blight Ganon Battle',
+            file: 'Blight Ganon Battle.mp3',
+            duration: '2:57',
+        },
+        {
+            name: 'Talus Battle',
+            file: 'Talus Battle.mp3',
+            duration: '1:57',
+        },
+        {
+            name: 'Hinox Battle',
+            file: 'Hinox Battle.mp3',
+            duration: '3:37',
+        },
+        {
+            name: 'Molduga Battle',
+            file: 'Molduga Battle.mp3',
+            duration: '2:42',
+        },
+        {
+            name: 'Tarrey Town',
+            file: 'Tarrey Town.mp3',
+            duration: '9:50',
+        },
+        {
+            name: 'Yiga Clan Hideout',
+            file: 'Yiga Clan Hideout.mp3',
+            duration: '2:02',
+        },
+    ],
 };
 
 export const audioTrackNames = {
@@ -1018,5 +1154,5 @@ export const audioTrackNames = {
     mario: 'Various Mario OSTs',
     yoshis_woolly_world: "Yoshi's Woolly World OST",
     zelda: 'Various Legend of Zelda OSTs',
-    // breath_of_the_wild: 'Breath of the Wild OST',
+    breath_of_the_wild: 'Breath of the Wild OST',
 };
