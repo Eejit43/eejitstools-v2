@@ -6,6 +6,8 @@ import 'dotenv/config';
 import ejs from 'ejs';
 import Fastify from 'fastify';
 import fs from 'fs';
+import fetch from 'node-fetch';
+import Canvas from 'canvas';
 import path from 'path';
 import pointOfView from 'point-of-view';
 import Request from 'request';
@@ -64,6 +66,18 @@ fs.readdirSync('./views/pages').forEach((category) => {
             reply.view(`pages/${category}/${page}.ejs`, { ...pageInfo, page });
         });
     });
+});
+
+// Twemoji images
+fastify.get('/twemoji/:id', async (request, reply) => {
+    const response = await fetch(`https://abs.twimg.com/emoji/v2/svg/${request.params.id}.svg`);
+    if (!response.ok) return reply.type('image/png').send();
+
+    const canvas = Canvas.createCanvas(500, 500);
+    const image = await Canvas.loadImage(await response.buffer());
+    image.height = image.width = 500;
+    canvas.getContext('2d').drawImage(image, 0, 0, 500, 500);
+    reply.type('image/png').send(canvas.toBuffer());
 });
 
 // Setup error handlers
