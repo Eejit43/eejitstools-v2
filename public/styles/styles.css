@@ -28,6 +28,8 @@ html {
     background-color: #1f2229;
     /* Modified from https://www.gradientmagic.com/collection/basicgrid/gradient/1589410524740 */
     background-image: repeating-linear-gradient(90deg, hsla(280, 0%, 67%, 0.06) 0, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(0deg, hsla(280, 0%, 67%, 0.06) 0, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(0deg, hsla(280, 0%, 67%, 0.09) 0, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(90deg, hsla(280, 0%, 67%, 0.09) 0, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), linear-gradient(90deg, rgb(31, 34, 41), rgb(31, 34, 41));
+    scroll-behavior: smooth;
+    scroll-padding-top: 125px;
 }
 
 body {

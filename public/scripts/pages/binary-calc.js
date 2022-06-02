@@ -39,33 +39,27 @@ copyOutput.addEventListener('click', () => {
  * Checks the input value and gives an error message if the input is invalid
  */
 function findInput() {
-    if (input.value !== '') {
-        switch (parseInt(inputType.value)) {
-            /*
-            1: Binary (2)
-            2: Octal (8)
-            3: Decimal (10)
-            4: Hex (16)
-            */
-            case 1:
-                if (/^[01]*$/.test(input.value)) {
-                    convert(parseInt(input.value), 2);
-                } else notValid();
-                break;
+    if (input.value.length > 0) {
+        switch (radices[inputType.value].number) {
             case 2:
-                if (/^[0-7]*$/.test(input.value)) {
-                    convert(parseInt(input.value), 8);
-                } else notValid();
+                if (/^[01]*$/.test(input.value)) convert(input.value, 2);
+                else notValid();
                 break;
-            case 3:
-                if (/^[0-9]*$/.test(input.value)) {
-                    convert(parseInt(input.value), 10);
-                } else notValid();
+            case 8:
+                if (/^[0-7]*$/.test(input.value)) convert(input.value, 8);
+                else notValid();
                 break;
-            case 4:
-                if (/^[0-9a-fA-F]*$/.test(input.value)) {
-                    convert(input.value, 16);
-                } else notValid();
+            case 10:
+                if (/^[0-9]*$/.test(input.value)) convert(input.value, 10);
+                else notValid();
+                break;
+            case 16:
+                if (/^[0-9a-fA-F]*$/.test(input.value)) convert(input.value, 16);
+                else notValid();
+                break;
+            default:
+                notValid();
+                break;
         }
     } else {
         message.innerHTML = '';
@@ -80,24 +74,8 @@ function findInput() {
  * @param {number} radix the base of the input value
  */
 function convert(value, radix) {
-    let outputTypeNumber;
-    switch (parseInt(outputType.value)) {
-        case 1:
-            outputTypeNumber = 2;
-            break;
-        case 2:
-            outputTypeNumber = 8;
-            break;
-        case 3:
-            outputTypeNumber = 10;
-            break;
-        case 4:
-            outputTypeNumber = 16;
-            break;
-    }
-
     message.innerHTML = '';
-    output.value = parseInt(value, radix).toString(outputTypeNumber);
+    output.value = parseInt(value, radix).toString(radices[outputType.value].number);
     copyOutput.disabled = false;
 }
 
@@ -105,23 +83,14 @@ function convert(value, radix) {
  * Handles an invalid input
  */
 function notValid() {
-    let inputTypeText;
-    switch (parseInt(inputType.value)) {
-        case 1:
-            inputTypeText = 'binary';
-            break;
-        case 2:
-            inputTypeText = 'octal';
-            break;
-        case 3:
-            inputTypeText = 'decimal';
-            break;
-        case 4:
-            inputTypeText = 'hex';
-            break;
-    }
-
-    message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input (should be in ${inputTypeText} format)!<br />`;
+    message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${radices[inputType.value] ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
     output.value = '';
     copyOutput.disabled = true;
 }
+
+const radices = {
+    1: { number: 2, name: 'binary' },
+    2: { number: 8, name: 'octal' },
+    3: { number: 10, name: 'decimal' },
+    4: { number: 16, name: 'hexadecimal' },
+};

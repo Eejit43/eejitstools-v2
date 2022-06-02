@@ -121,7 +121,7 @@ async function clipboardDisplay() {
 
         for (let i = 0; i < data.length; i++) {
             if (data[i].types.includes('text/plain')) {
-                const blob = await data[i].getType('text/plain');
+                const blob = await data[i].getType('text/plain'); // eslint-disable-line no-await-in-loop
 
                 const reader = new FileReader();
                 reader.readAsText(blob);
@@ -139,7 +139,7 @@ async function clipboardDisplay() {
                     }
                 });
             } else if (data[i].types.includes('image/png')) {
-                const blob = await data[i].getType('image/png');
+                const blob = await data[i].getType('image/png'); // eslint-disable-line no-await-in-loop
 
                 const url = URL.createObjectURL(blob);
                 copiedText.value = '';

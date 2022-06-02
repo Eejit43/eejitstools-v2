@@ -101,15 +101,11 @@ function getTimeUntil(date) {
     if (seconds === 0) secondsFinal = '';
 
     const result = [];
-    if (daysFinal !== '') result.push(daysFinal);
-    if (hoursFinal !== '') result.push(hoursFinal);
-    if (minutesFinal !== '') result.push(minutesFinal);
-    if (secondsFinal !== '') result.push(secondsFinal);
+    if (daysFinal.length > 0) result.push(daysFinal);
+    if (hoursFinal.length > 0) result.push(hoursFinal);
+    if (minutesFinal.length > 0) result.push(minutesFinal);
+    if (secondsFinal.length > 0) result.push(secondsFinal);
 
-    if (distance <= 0 || distance >= 60 * 86400000) {
-        // Don't show already occurred or if over 60 days away
-        return null;
-    } else {
-        return result.join(', ');
-    }
+    if (distance <= 0 || distance >= 60 * 86400000) return; // Don't show already occurred or if over 60 days away
+    else return result.join(', ');
 }

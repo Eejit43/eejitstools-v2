@@ -37,23 +37,13 @@ copyOutput.addEventListener('click', () => {
     copyValue(copyOutput, output);
 });
 
-let inputTypeName, outputTypeName;
-
 /**
  * Converts a temperature to the specified output type and displays the result
  */
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
-        if (inputType.value === '1') inputTypeName = 'degF';
-        else if (inputType.value === '2') inputTypeName = 'degC';
-        else if (inputType.value === '3') inputTypeName = 'K';
-
-        if (outputType.value === '1') outputTypeName = 'degF';
-        else if (outputType.value === '2') outputTypeName = 'degC';
-        else if (outputType.value === '3') outputTypeName = 'K';
-
         message.innerHTML = '';
-        output.value = Number(math.format(math.evaluate(`${input.value} ${inputTypeName} to ${outputTypeName}`), { notation: 'fixed', precision: 4 }).replace(/[^0-9-.]/g, '')).toLocaleString();
+        output.value = Number(math.format(math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 4 }).replace(/[^0-9-.]/g, '')).toLocaleString();
         copyOutput.disabled = false;
     } else {
         if (input.value !== '') message.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Input is not a number!<br />';
@@ -63,3 +53,9 @@ function convert() {
         copyOutput.disabled = true;
     }
 }
+
+const types = {
+    1: 'degF',
+    2: 'degC',
+    3: 'K',
+};

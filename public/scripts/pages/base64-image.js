@@ -97,15 +97,12 @@ function encode() {
  * @param {string} base64 The base64 to check
  * @returns {Promise<boolean>} Whether or not the base64 is a valid image
  */
-async function isBase64Image(base64) {
+function isBase64Image(base64) {
     const image = new Image();
     image.src = escapeHTML(base64);
-    return await new Promise((resolve) => {
+    return new Promise((resolve) => {
         image.addEventListener('load', () => {
-            if (image.height === 0 || image.width === 0) {
-                resolve(false);
-                return;
-            }
+            if (image.height === 0 || image.width === 0) return resolve(false);
             resolve(true);
         });
         image.addEventListener('error', () => {

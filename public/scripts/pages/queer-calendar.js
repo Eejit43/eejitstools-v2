@@ -48,7 +48,7 @@ yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
 /**
  * Fetches calendar information for the specified date
  */
-async function getFromDate() {
+function getFromDate() {
     const monthInput = escapeHTML(monthVal.value || month).padStart(2, '0');
     const dateInput = escapeHTML(dateVal.value || date).padStart(2, '0');
 
@@ -78,7 +78,7 @@ async function getFromDate() {
 /**
  * Fetches calendar information for the current date
  */
-async function getCurrent() {
+function getCurrent() {
     eventsTitle.innerHTML = 'Current Events:';
     eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 

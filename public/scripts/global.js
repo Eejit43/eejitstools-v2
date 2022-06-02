@@ -19,12 +19,14 @@ setInterval(() => {
     updateInnerHTML(timeDisplay, finalTime);
 }, 100);
 
+const navbar = document.getElementById('navbar');
+
 /**
  * Resizes the navigation bar on scroll
  */
 function resizeNav() {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) document.getElementById('navbar').className = 'nav-shrunk';
-    else document.getElementById('navbar').className = '';
+    if (document.documentElement.scrollTop > 80) navbar.classList.add('nav-shrunk');
+    else navbar.classList.remove('nav-shrunk');
 }
 
 window.addEventListener('scroll', resizeNav);

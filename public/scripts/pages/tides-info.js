@@ -42,7 +42,7 @@ async function getData(position) {
     if (data.extremes[1].timestamp >= Math.floor(new Date().getTime() / 1000)) nextExtreme = `next ${data.extremes[1].state.toLowerCase()} is at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`;
     else nextExtreme = `most recent ${data.extremes[1].state.toLowerCase()} was at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`;
 
-    const next_extremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
+    const nextExtremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 
     const table = [
         '<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">', //
@@ -61,7 +61,7 @@ async function getData(position) {
         `Based on information at latitude ${latitude}, longitude ${longitude}, ${distance} away.`, //
         `Updated at ${updated}.<br />`,
         `The tide is currently ${state}.`,
-        `${next_extremes}<br />`,
+        `${nextExtremes}<br />`,
         `${table.join('')}`,
     ];
 
