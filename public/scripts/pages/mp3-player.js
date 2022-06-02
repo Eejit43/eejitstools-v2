@@ -300,6 +300,8 @@ function toggleMute() {
 }
 
 window.addEventListener('keydown', (event) => {
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+
     if (event.code === 'Space') {
         event.preventDefault();
         toggleAudio();

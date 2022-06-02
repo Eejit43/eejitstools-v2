@@ -61,6 +61,7 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
 
     if (event.code === 'KeyK') document.getElementById('shortcuts').style.display = 'block';
     else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -85,7 +86,7 @@ document.addEventListener('keydown', (event) => {
         else finalUrl = 'public/scripts/global.js';
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
-    } else if (event.code === 'Slash' && document.activeElement !== document.querySelector('.search-text')) {
+    } else if (event.code === 'Slash') {
         document.querySelector('.search-text').focus();
         event.preventDefault();
     }
