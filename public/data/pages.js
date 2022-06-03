@@ -392,6 +392,16 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
+    'image-converter': {
+        link: 'tools/image-converter',
+        title: 'Image Converter',
+        icon: 'fa-solid fa-image',
+        description: 'Convert images to and from various formats',
+        keywords: [],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
     'ip-info': {
         link: 'tools/ip-info',
         title: 'IP Info',

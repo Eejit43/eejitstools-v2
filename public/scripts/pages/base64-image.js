@@ -15,10 +15,8 @@ const imageOutput = document.getElementById('image-output');
 
 /* Add event listeners */
 fileUploadButton.addEventListener('change', () => {
-    const file = fileUploadButton;
-    const fileMsg = fileUploadMessage;
-    const fileName = file.value.split('\\').pop();
-    fileMsg.innerHTML = 'Uploaded: ' + escapeHTML(fileName);
+    const fileName = fileUploadButton.files[0].name;
+    fileUploadMessage.textContent = `Uploaded: <code>${escapeHTML(fileName)}</code>`;
 });
 encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', () => {
@@ -32,7 +30,7 @@ decodeButton.addEventListener('click', () => {
 });
 clearButton.addEventListener('click', () => {
     fileUploadButton.value = '';
-    fileUploadMessage.innerHTML = '';
+    fileUploadMessage.textContent = '';
     b64Result.value = '';
     b64CopyResult.disabled = true;
     b64OpenResult.disabled = true;

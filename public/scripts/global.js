@@ -52,7 +52,7 @@ searchText.addEventListener('input', () => {
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
-        if (firstResult) window.open(firstResult.href, '_self');
+        if (firstResult) window.open(firstResult.href, event.metaKey ? '_blank' : '_self');
     }
 });
 
@@ -68,7 +68,7 @@ document.addEventListener('keydown', (event) => {
     else if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
         showAlert('Cleared clipboard!', 'success');
-    } else if (event.code === 'KeyH') window.open('/', '_self');
+    } else if (event.code === 'KeyH') window.open('/', event.metaKey ? '_blank' : '_self');
     else if (event.code === 'KeyS') window.open(githubUrl, '_blank');
     else if (!event.shiftKey && event.code === 'KeyP') {
         const { pathname } = window.location;
