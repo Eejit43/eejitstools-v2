@@ -12,12 +12,13 @@ export function twemojiUpdate() {
  * Displays a popup alert
  * @param {string} text The string to display
  * @param {string} color 'success', 'error', or color
+ * @param {number} duration The duration of the popup in milliseconds
  */
-export function showAlert(text, color) {
+export function showAlert(text, color, duration) {
     color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
     if (color === 'error') color = '#ff5555';
-    toastify({ text: text || 'No text specified!', duration: 2000, position: 'center', style: { background: '#333', boxShadow: 'none', minWidth: '150px', textAlign: 'center', fontFamily: '"Source Sans Pro", sans-serif', fontWeight: '600', fontSize: '17px', color: color || '#009c3f', padding: '16px 30px' } }).showToast();
+    toastify({ text: text || 'No text specified!', duration: duration || 2000, position: 'center', style: { background: '#333', boxShadow: 'none', minWidth: '150px', textAlign: 'center', fontFamily: '"Source Sans Pro", sans-serif', fontWeight: '600', fontSize: '17px', color: color || '#009c3f', padding: '16px 30px' } }).showToast();
 }
 
 /**

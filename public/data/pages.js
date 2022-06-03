@@ -2,6 +2,7 @@ const imports = {
     odometerCss: '/styles/external/odometer.css',
     odometerJs: '/scripts/external/odometer.js',
     mathJs: 'https://unpkg.com/mathjs/lib/browser/math.js',
+    heic2any: '/scripts/external/heic2any.js',
 };
 
 const alphabet = [
@@ -389,6 +390,16 @@ export const allPageInfo = {
         description: 'Shows information for various currency conversions',
         keywords: ['usd', 'money'],
         additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
+    'heic-converter': {
+        link: 'tools/heic-converter',
+        title: 'HEIC Converter',
+        icon: 'fa-solid fa-file-image',
+        description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats',
+        keywords: [],
+        additionalScripts: [imports.heic2any],
         additionalStyles: [],
         script: true,
     },

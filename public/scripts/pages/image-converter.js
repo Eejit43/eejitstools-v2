@@ -10,14 +10,16 @@ const convertButton = document.getElementById('convert');
 const imageOutput = document.getElementById('image-output');
 const openConvertedResultLink = document.getElementById('open-converted-link');
 const openConvertedResult = document.getElementById('open-converted-result');
+const downloadConvertedResultLink = document.getElementById('download-converted-link');
+const downloadConvertedResult = document.getElementById('download-converted-result');
 
 /* Add event listeners */
 fileUploadButton.addEventListener('change', () => {
     const file = fileUploadButton.files[0];
 
     if (file) {
-        if (!file.type.startsWith('image/')) return showAlert('Invalid file type!', 'error');
-        if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+        if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
+        if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool! Use "heic-converter" instead!', 'error');
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
 
         loadButton.disabled = false;
@@ -36,8 +38,12 @@ clearButton.addEventListener('click', () => {
     outputTypePicker.disable = true;
     outputTypePicker.value = 'png';
     convertButton.disabled = true;
+    imageOutput.src = '';
     openConvertedResultLink.removeAttribute('href');
     openConvertedResult.disabled = true;
+    downloadConvertedResultLink.removeAttribute('href');
+    downloadConvertedResultLink.removeAttribute('download');
+    downloadConvertedResult.disabled = true;
 
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
@@ -77,8 +83,10 @@ function loadImage() {
 function convert() {
     const url = imagePreview.toDataURL(`image/${outputTypePicker.value}`);
     imageOutput.src = url;
-    openConvertedResultLink.href = createBase64ObjectURL(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
-    openConvertedResult.disabled = false;
+    const blobUrl = createBase64ObjectURL(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
+    openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
+    openConvertedResult.disabled = downloadConvertedResult.disabled = false;
+    downloadConvertedResultLink.setAttribute('download', `${fileUploadButton.files[0].name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
 }
 
 /**

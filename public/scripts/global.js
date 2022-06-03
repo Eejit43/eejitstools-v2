@@ -67,7 +67,7 @@ document.addEventListener('keydown', (event) => {
     else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
     else if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
-        showAlert('Cleared clipboard!', 'success');
+        showAlert('Cleared clipboard!', 'success', 500);
     } else if (event.code === 'KeyH') window.open('/', event.metaKey ? '_blank' : '_self');
     else if (event.code === 'KeyS') window.open(githubUrl, '_blank');
     else if (!event.shiftKey && event.code === 'KeyP') {
@@ -87,8 +87,8 @@ document.addEventListener('keydown', (event) => {
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
     } else if (event.code === 'Slash') {
-        document.querySelector('.search-text').focus();
         event.preventDefault();
+        document.querySelector('.search-text').focus();
     }
 });
 

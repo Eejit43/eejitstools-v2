@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
+/* cSpell:disable */
+
 // Don't question my music choices...
-// cSpell:disable
 export const audioTracks = {
     general: [
         {
