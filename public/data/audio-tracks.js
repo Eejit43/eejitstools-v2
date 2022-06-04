@@ -89,6 +89,11 @@ export const audioTracks = {
             file: 'Treaty (Radio Mix).mp3',
             duration: '4:03',
         },
+        {
+            name: 'Mahna Mahna - The Muppets (on The Ed Sullivan Show)',
+            file: 'Mahna Mahna.mp3',
+            duration: '2:51',
+        },
     ],
     hypixel: [
         {
