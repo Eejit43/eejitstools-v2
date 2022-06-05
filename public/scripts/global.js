@@ -53,6 +53,10 @@ searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
         if (firstResult) window.open(firstResult.href, event.metaKey ? '_blank' : '_self');
+    } else if (event.key === 'Escape') {
+        searchText.value = '';
+        searchResult.innerHTML = '';
+        searchText.blur();
     }
 });
 

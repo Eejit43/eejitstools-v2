@@ -1,8 +1,8 @@
 const imports = {
     odometerCss: '/styles/external/odometer.css',
-    odometerJs: '/scripts/external/odometer.js',
-    mathJs: 'https://unpkg.com/mathjs/lib/browser/math.js',
-    heic2any: '/scripts/external/heic2any.js',
+    odometerJs: { link: '/scripts/external/odometer.js', module: true },
+    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false },
+    heic2any: { link: '/scripts/external/heic2any.js', module: true },
 };
 
 const alphabet = [

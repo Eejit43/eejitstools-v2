@@ -55,7 +55,7 @@
         <% if (script && page) { %>
         <script src="/scripts/pages/<%= page %>.js" type="module"></script>
         <% } %> <% for (let i = 0; i < additionalScripts.length; i++) { %>
-        <script src="<%= additionalScripts[i] %>" defer></script>
+        <script src="<%= additionalScripts[i].link %>"<% if (additionalScripts[i].module) { %> type="module"<% } %>></script>
         <% } %>
     </head>
     <body>

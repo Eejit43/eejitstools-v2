@@ -34,7 +34,7 @@ fastify.get('/', (request, reply) => {
 });
 
 fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { title: 'Search', description: '', page: '', additionalScripts: ['/scripts/search.js'], additionalStyles: [], script: false });
+    reply.view('/search.ejs', { title: 'Search', description: '', page: '', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [], script: false });
 });
 
 fastify.get('/headers', (request, reply) => {
