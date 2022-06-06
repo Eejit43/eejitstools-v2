@@ -57,7 +57,7 @@ fastify.get('/cors-anywhere', async (request, reply) => {
     } else {
         let response = await fetch(request.query.url);
 
-        if (!response.ok) return reply.type('image/png').send();
+        if (!response.ok) return reply.header('Access-Control-Allow-Origin', '*').type('image/png').send();
 
         response = await response.buffer();
 
@@ -81,7 +81,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
     const response = await fetch(`https://abs.twimg.com/emoji/v2/svg/${request.params.id}.svg`);
-    if (!response.ok) return reply.type('image/png').send();
+    if (!response.ok) return reply.header('Access-Control-Allow-Origin', '*').type('image/png').send();
 
     const canvas = Canvas.createCanvas(500, 500);
     const image = await Canvas.loadImage(await response.buffer());
