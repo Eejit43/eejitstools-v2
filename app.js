@@ -49,10 +49,21 @@ fastify.get('/pages', (request, reply) => {
     reply.status(200).send(JSON.stringify(pagesInfo, null, 2));
 });
 
-fastify.get('/cors-anywhere', (request, reply) => {
-    Request({ url: request.query.url }, (error, response, body) => {
-        reply.header('Access-Control-Allow-Origin', '*').send(body);
-    });
+fastify.get('/cors-anywhere', async (request, reply) => {
+    if (!request.query.image) {
+        Request({ url: request.query.url }, (error, response, body) => {
+            reply.header('Access-Control-Allow-Origin', '*').send(body);
+        });
+    } else {
+        const response = await fetch(request.query.url);
+
+        if (!response.ok) return reply.type('image/png').send();
+
+        const image = await Canvas.loadImage(await response.buffer());
+        const canvas = Canvas.createCanvas(image.width, image.height);
+        canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+        reply.type('image/png').send(canvas.toBuffer());
+    }
 });
 
 fs.readdirSync('./views/pages').forEach((category) => {
