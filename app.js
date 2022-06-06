@@ -55,14 +55,13 @@ fastify.get('/cors-anywhere', async (request, reply) => {
             reply.header('Access-Control-Allow-Origin', '*').send(body);
         });
     } else {
-        const response = await fetch(request.query.url);
+        let response = await fetch(request.query.url);
 
         if (!response.ok) return reply.type('image/png').send();
 
-        const image = await Canvas.loadImage(await response.buffer());
-        const canvas = Canvas.createCanvas(image.width, image.height);
-        canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-        reply.type('image/png').send(canvas.toBuffer());
+        response = await response.buffer();
+
+        reply.header('Access-Control-Allow-Origin', '*').type('image/png').send(response);
     }
 });
 
