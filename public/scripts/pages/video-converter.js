@@ -6,7 +6,7 @@ const clearButton = document.getElementById('clear');
 const outputTypePicker = document.getElementById('output-type');
 const convertButton = document.getElementById('convert');
 const convertingMessage = document.getElementById('converting-message');
-const audioOutput = document.getElementById('audio-output');
+const videoOutput = document.getElementById('video-output');
 const openConvertedResultLink = document.getElementById('open-converted-link');
 const openConvertedResult = document.getElementById('open-converted-result');
 const downloadConvertedResultLink = document.getElementById('download-converted-link');
@@ -17,7 +17,7 @@ fileUploadButton.addEventListener('change', () => {
     const file = fileUploadButton.files[0];
 
     if (file) {
-        if (!file.type.startsWith('audio/')) return showAlert('File must be audio!', 'error');
+        if (!file.type.startsWith('video/')) return showAlert('File must be a video!', 'error');
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
 
         outputTypePicker.disabled = false;
@@ -36,7 +36,7 @@ clearButton.addEventListener('click', () => {
     outputTypePicker.value = 'png';
     convertButton.disabled = true;
     convertingMessage.textContent = '';
-    audioOutput.src = '';
+    videoOutput.src = '';
     openConvertedResultLink.removeAttribute('href');
     openConvertedResult.disabled = true;
     downloadConvertedResultLink.removeAttribute('href');
@@ -65,10 +65,10 @@ async function convert() {
     const result = await convertAudio(blob, `audio/${outputTypePicker.value}`).catch(() => {
         convertingMessage.textContent = '';
         convertButton.disabled = false;
-        return showAlert('Failed to convert audio!', 'error');
+        return showAlert('Failed to convert video!', 'error');
     });
 
-    audioOutput.src = result;
+    videoOutput.src = result;
     openConvertedResultLink.href = downloadConvertedResultLink.href = result;
     openConvertedResult.disabled = downloadConvertedResult.disabled = false;
     downloadConvertedResultLink.download = `${fileUploadButton.files[0].name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value}`;
