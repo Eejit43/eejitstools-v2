@@ -62,7 +62,7 @@ async function convert() {
     convertButton.disabled = true;
 
     const blob = fileUploadButton.files[0];
-    const result = await convertAudio(blob, `audio/${outputTypePicker.value}`).catch(() => {
+    const result = await convertVideo(blob, `audio/${outputTypePicker.value}`).catch(() => {
         convertingMessage.textContent = '';
         convertButton.disabled = false;
         return showAlert('Failed to convert video!', 'error');
@@ -78,15 +78,15 @@ async function convert() {
 }
 
 /**
- * Converts audio to target format
- * @param {string} audioFileData audio file data
+ * Converts video to target format
+ * @param {string} videoFileData video file data
  * @param {string} targetFormat output target format
  * @returns {Promise<Blob>} output blob url
- * @see https://github.com/suvro404/convert-audio/blob/main/index.js
+ * @see https://github.com/suvro404/convert-video/blob/main/index.js
  */
-function convertAudio(audioFileData, targetFormat) {
+function convertVideo(videoFileData, targetFormat) {
     const reader = new FileReader();
-    reader.readAsDataURL(audioFileData);
+    reader.readAsDataURL(videoFileData);
     return new Promise((resolve) => {
         reader.addEventListener('load', (event) => {
             const data = event.target.result.split(',');

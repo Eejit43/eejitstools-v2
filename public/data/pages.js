@@ -613,6 +613,16 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
+    'video-to-audio': {
+        link: 'tools/video-to-audio',
+        title: 'Video to Audio Converter',
+        icon: 'fa-solid fa-volume-up',
+        description: 'Convert video files to various audio formats',
+        keywords: [],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
     'weather-info': {
         link: 'tools/weather-info',
         title: 'Weather Info',
