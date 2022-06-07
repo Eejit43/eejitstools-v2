@@ -1,0 +1,34 @@
+<div class="toolbox">
+    <h1>Audio Converter:</h1>
+    <div class="tooltext">
+        <div class="tooltext">
+            Audio:<br /><br />
+            <label for="file-upload" class="file-upload"><i class="fa-solid fa-file-upload"></i> Upload</label>
+            <input id="file-upload" type="file" accept="audio/*" /><br /><span style="font-size: 14px; color: dimgray" id="file-message"></span> <br />
+            <button id="clear">Clear</button>
+        </div>
+        <hr style="margin-top: 30px" />
+        <div class="basic-grid" style="--min-width: 450px">
+            <div class="tooltext">
+                Output Type:<br />
+                <select id="output-type" disabled>
+                    <option value="mp3" selected>MP3 (MPEG-3 Audio)</option>
+                    <option value="wav">WAV (Waveform Audio)</option>
+                    <option value="ogg">OGG (Ogg Vorbis)</option>
+                    <option value="flac">FLAC (Free Lossless Audio Codec)</option>
+                    <option value="aac">AAC (Advanced Audio Coding)</option>
+                    <option value="m4a">M4A (MPEG-4 Audio)</option>
+                </select>
+                <br />
+                <button id="convert" disabled>Convert</button>
+                <span id="converting-message"></span>
+            </div>
+            <div class="tooltext">
+                Converted Audio:<br />
+                <audio id="audio-output" style="max-width: 80%" src="" controls></audio> <br />
+                <a id="open-converted-link" target="_blank"><button id="open-converted-result" disabled>Open in new tab</button></a>
+                <a id="download-converted-link" target="_blank" download><button id="download-converted-result" disabled>Download</button></a>
+            </div>
+        </div>
+    </div>
+</div>

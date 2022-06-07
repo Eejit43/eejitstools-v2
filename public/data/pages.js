@@ -293,6 +293,16 @@ export const blankProperties = {
 };
 
 export const allPageInfo = {
+    'audio-converter': {
+        link: 'tools/audio-converter',
+        title: 'Audio Converter',
+        icon: 'fa-solid fa-volume-up',
+        description: 'Convert audio files to and from various formats',
+        keywords: [],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
     base64: {
         link: 'tools/base64',
         title: 'Base64 Encode/Decode',
