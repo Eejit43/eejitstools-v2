@@ -1,7 +1,5 @@
 /* global GeolocationPosition */
 
-import { twemojiUpdate } from '/scripts/functions.js';
-
 const result = document.getElementById('result');
 
 /**
@@ -20,7 +18,22 @@ function getLocation() {
 
 getLocation();
 
-const finalAlerts = [];
+const uvIndexes = {
+    0: { color: '#83c88b', text: 'Low' },
+    1: { color: '#fedc00', text: 'Moderate' },
+    2: { color: '#f89c1b', text: 'High' },
+    3: { color: '#ee1d23', text: 'Very High' },
+    4: { color: '#d83484', text: 'Extreme' },
+};
+
+const airQualities = {
+    0: { color: '#a6ce39', text: 'Good' },
+    1: { color: '#fff201', text: 'Moderate' },
+    2: { color: '#f6901e', text: 'Unhealthy for Sensitive Groups' },
+    3: { color: '#ed1d24', text: 'Unhealthy' },
+    4: { color: '#a2064a', text: 'Very Unhealthy' },
+    5: { color: '#891a1c', text: 'Hazardous' },
+};
 
 /**
  * Fetches weather information for the specified permission and displays the information
@@ -31,49 +44,29 @@ async function getData(position) {
     const fullData = await response.json();
     const data = fullData.data[0];
 
-    let uvIndex = data.uv;
-    if (uvIndex > 0 && uvIndex < 3) uvIndex = `${uvIndex} (<span style="color: #83c88b">Low</span>)`;
-    if (uvIndex >= 3 && uvIndex < 6) uvIndex = `${uvIndex} (<span style="color: #fedc00">Moderate</span>)`;
-    if (uvIndex >= 6 && uvIndex < 8) uvIndex = `${uvIndex} (<span style="color: #f89c1b">High</span>)`;
-    if (uvIndex >= 8 && uvIndex < 11) uvIndex = `${uvIndex} (<span style="color: #ee1d23">Very High</span>)`;
-    if (uvIndex >= 11) uvIndex = `${uvIndex} (<span style="color: #d83484">Extreme</span>)`;
+    let uvIndexDescription;
 
-    let airQuality = data.aqi;
-    if (airQuality >= 0 && airQuality < 51) airQuality = `${airQuality} (<span style="color: #a6ce39">Good</span>)`;
-    if (airQuality >= 51 && airQuality < 101) airQuality = `${airQuality} (<span style="color: #fff201">Moderate</span>)`;
-    if (airQuality >= 101 && airQuality < 151) airQuality = `${airQuality} (<span style="color: #f6901e">Unhealthy for Sensitive Groups</span>)`;
-    if (airQuality >= 151 && airQuality < 201) airQuality = `${airQuality} (<span style="color: #ed1d24">Unhealthy</span>)`;
-    if (airQuality >= 201 && airQuality < 301) airQuality = `${airQuality} (<span style="color: #a2064a">Very Unhealthy</span>)`;
-    if (airQuality >= 301) airQuality = `${airQuality} (<span style="color: #891a1c">Hazardous</span>)`;
+    const uvIndex = data.uv;
+    if (uvIndex > 0 && uvIndex < 3) uvIndexDescription = uvIndexes[0];
+    else if (uvIndex >= 3 && uvIndex < 6) uvIndexDescription = uvIndexes[1];
+    else if (uvIndex >= 6 && uvIndex < 8) uvIndexDescription = uvIndexes[2];
+    else if (uvIndex >= 8 && uvIndex < 11) uvIndexDescription = uvIndexes[3];
+    else if (uvIndex >= 11) uvIndexDescription = uvIndexes[4];
 
-    let { alerts } = fullData;
-    if (alerts.length === 0) alerts = 'None';
-    else {
-        const newAlerts = [];
-        for (let i = 0; i < alerts.length; i++) {
-            if (!/has been replaced/g.test(alerts[i].title) && Math.floor(new Date(alerts[i].ends_local).getTime() / 1000) >= Math.floor(new Date().getTime() / 1000)) {
-                newAlerts.push(alerts[i]);
-            }
-        }
-        for (let i = 0; i < newAlerts.length; i++) {
-            finalAlerts.push(
-                `${newAlerts[i].title}\n\n${newAlerts[i].description
-                    .replace(/\n/g, ' ')
-                    .replace(/^\* (.*?)\.{3}/g, '– $1:\n ')
-                    .replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${newAlerts[i].regions}`
-            );
-        }
-        const abbrAlerts = [];
-        for (let i = 0; i < newAlerts.length; i++) {
-            abbrAlerts.push(`<span style="text-decoration: underline dotted; cursor: pointer" onclick="showWeatherAlert(${i})">${newAlerts[i].title.replace(/ issued.*/g, '')} (${newAlerts[i].severity})</span>`); // prettier-ignore
-        }
-        alerts = abbrAlerts.join(', ');
-    }
+    let airQualityDescription;
 
-    const output = [
+    const airQuality = data.aqi;
+    if (airQuality >= 0 && airQuality < 51) airQualityDescription = airQualities[0];
+    else if (airQuality >= 51 && airQuality < 101) airQualityDescription = airQualities[1];
+    else if (airQuality >= 101 && airQuality < 151) airQualityDescription = airQualities[2];
+    else if (airQuality >= 151 && airQuality < 201) airQualityDescription = airQualities[3];
+    else if (airQuality >= 201 && airQuality < 301) airQualityDescription = airQualities[4];
+    else if (airQuality >= 301) airQualityDescription = airQualities[5];
+
+    result.innerHTML = [
         `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`, //
         `Updated at ${new Date(data.ts * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}<br />`,
-        `Active Alerts: ${alerts}`,
+        'Active Alerts: <span id="alerts"></span>',
         '<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>',
         `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
         `Sunset: ${new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
@@ -87,14 +80,31 @@ async function getData(position) {
         `Dew Point: ${data.dewpt}°F`,
         `Visibility: ${data.vis} miles`,
         `Pressure: ${data.pres} millibars`,
-        `UV Index: ${uvIndex}`,
-        `Air Quality: ${airQuality}`,
+        `UV Index: ${uvIndex}${uvIndexDescription ? ` (<span style="color: ${uvIndexDescription.color}">${uvIndexDescription.text}</span>)` : ''}`,
+        `Air Quality: ${airQuality}${airQualityDescription ? ` (<span style="color: ${airQualityDescription.color}">${airQualityDescription.text}</span>)` : ''}`,
         'Moon Phase: <span id="moon-phase">Loading...</span>',
-    ];
+    ].join('<br />');
 
-    result.innerHTML = output.join('<br />');
+    const { alerts } = fullData;
 
-    twemojiUpdate();
+    const newAlerts = [];
+    for (const alert of alerts) {
+        if (!/has been replaced/g.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(new Date().getTime() / 1000)) newAlerts.push(alert);
+    }
+
+    const alertsList = document.getElementById('alerts');
+
+    if (newAlerts.length > 0) {
+        newAlerts.forEach((alert) => {
+            const alertElement = document.createElement('span');
+            alertElement.classList.add('alert');
+            alertElement.textContent = `${alert.title.replace(/ issued.*/g, '')} (${alert.severity})`;
+
+            const appendedElement = alertsList.appendChild(alertElement);
+
+            appendedElement.addEventListener('click', () => showWeatherAlert(alert));
+        });
+    } else alertsList.textContent = 'None';
 
     const lunarResponse = await fetch(`https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=${new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000}`);
     const lunarData = await lunarResponse.json();
@@ -120,11 +130,13 @@ async function getData(position) {
  * Shows the specified weather alert
  * @param {number} alert the alert number
  */
-// eslint-disable-next-line no-unused-vars
 function showWeatherAlert(alert) {
     const alertDisplay = document.getElementById('alert-display');
-    if (alertDisplay.value !== finalAlerts[alert] || alertDisplay.style.display !== 'unset') {
+
+    const alertText = `${alert.title}\n\n${alert.description.replace(/\n/g, ' ').replace(/^\* (.*?)\.{3}/g, '– $1:\n ').replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions}`; // prettier-ignore
+
+    if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
         alertDisplay.style.display = 'unset';
-        alertDisplay.value = finalAlerts[alert];
+        alertDisplay.value = alertText;
     } else alertDisplay.style.display = 'none';
 }

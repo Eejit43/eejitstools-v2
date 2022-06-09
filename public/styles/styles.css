@@ -1469,3 +1469,8 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
 .player-icon:hover {
     color: #f1a93c;
 }
+
+.alert {
+    cursor: pointer;
+    text-decoration: underline dotted;
+}
