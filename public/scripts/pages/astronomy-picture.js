@@ -97,7 +97,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
             }
 
-            const credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '') : false; // prettier-ignore
+            const credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '').replace(/href="lib\/(.*?)"/g, 'href="https://apod.nasa.gov/apod/lib/$1"') : false; // prettier-ignore
 
             let media;
             if (mediaType === 'video') media = `<div style="position: relative; overflow: hidden; margin: 15px auto; width: 900px; max-width: 90%; padding-top: 40%">${html.querySelector('iframe').outerHTML.replace(/src/g, 'style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%" src')}</div>`;
