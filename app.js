@@ -93,11 +93,11 @@ fastify.get('/twemoji/:id', async (request, reply) => {
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
     console.log(error);
-    reply.status(error.statusCode || 500).view('/error.ejs', { title: error.message.length > 30 ? 'Internal Server Error' : error.message, message: 'Looks like an error occurred!', error, ...blankProperties });
+    reply.status(error.statusCode || 500).view('/error.ejs', { title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500, ...blankProperties });
 });
 
 fastify.setNotFoundHandler((request, reply) => {
-    reply.status(404).view('/error.ejs', { title: 'Not Found', message: 'Unable to find the requested page!', error: { status: 404 }, ...blankProperties });
+    reply.status(404).view('/error.ejs', { title: 'Not Found', message: 'Unable to find the requested page!', status: 404, ...blankProperties });
 });
 
 // Start server
