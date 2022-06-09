@@ -1,7 +1,7 @@
 /* global chroma, Color */
 
 import 'https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js';
-import { copyValue } from '/scripts/functions.js';
+import { copyValue, showAlert } from '/scripts/functions.js';
 
 const generateRandom = document.getElementById('generate-random');
 const colorDisplay = document.getElementById('color-display');
@@ -28,8 +28,21 @@ const copyCmyk = document.getElementById('copy-cmyk');
 const copyAlpha = document.getElementById('copy-alpha');
 const luminance = document.getElementById('luminance');
 const temperature = document.getElementById('temperature');
+const colorHistory = document.getElementById('color-history');
+const fullColor = document.getElementById('full-color');
 
 generateRandom.addEventListener('click', generateRandomColor);
+
+document.addEventListener('keydown', (event) => {
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+    if (event.altKey && event.code === 'KeyR') generateRandomColor();
+    if (event.altKey && event.code === 'KeyL') {
+        navigator.clipboard.writeText(colorPicker.value);
+        showAlert('Copied current color!', 'success');
+    }
+});
+
+colorDisplay.addEventListener('click', () => (fullColor.style.display = 'block'));
 
 colorPicker.addEventListener('input', () => {
     if (chroma.valid(colorPicker.value)) {
@@ -38,29 +51,17 @@ colorPicker.addEventListener('input', () => {
     } else setRedBorder(colorPicker);
 });
 
-darken.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).darken(0.5));
-});
+darken.addEventListener('click', () => updateResults(chroma(hexValue.value).darken(0.5)));
 
-brighten.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).brighten(0.5));
-});
+brighten.addEventListener('click', () => updateResults(chroma(hexValue.value).brighten(0.5)));
 
-saturate.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).saturate(0.5));
-});
+saturate.addEventListener('click', () => updateResults(chroma(hexValue.value).saturate(0.5)));
 
-desaturate.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).desaturate(0.5));
-});
+desaturate.addEventListener('click', () => updateResults(chroma(hexValue.value).desaturate(0.5)));
 
-increaseLuminance.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).luminance(chroma(hexValue.value).luminance() * 1.5));
-});
+increaseLuminance.addEventListener('click', () => updateResults(chroma(hexValue.value).luminance(chroma(hexValue.value).luminance() * 1.5)));
 
-decreaseLuminance.addEventListener('click', () => {
-    updateResults(chroma(hexValue.value).luminance(chroma(hexValue.value).luminance() * 0.5));
-});
+decreaseLuminance.addEventListener('click', () => updateResults(chroma(hexValue.value).luminance(chroma(hexValue.value).luminance() * 0.5)));
 
 nameValue.addEventListener('blur', () => {
     if (chroma.valid(nameValue.value)) {
@@ -116,32 +117,24 @@ alphaValue.addEventListener('blur', () => {
     } else setRedBorder(alphaValue);
 });
 
-copyName.addEventListener('click', () => {
-    copyValue(copyName, nameValue);
-});
+copyName.addEventListener('click', () => copyValue(copyName, nameValue));
 
-copyHex.addEventListener('click', () => {
-    copyValue(copyHex, hexValue);
-});
+copyHex.addEventListener('click', () => copyValue(copyHex, hexValue));
 
-copyDecimal.addEventListener('click', () => {
-    copyValue(copyDecimal, decimalValue);
-});
+copyDecimal.addEventListener('click', () => copyValue(copyDecimal, decimalValue));
 
-copyRgb.addEventListener('click', () => {
-    copyValue(copyRgb, rgbValue);
-});
+copyRgb.addEventListener('click', () => copyValue(copyRgb, rgbValue));
 
-copyHsl.addEventListener('click', () => {
-    copyValue(copyHsl, hslValue);
-});
+copyHsl.addEventListener('click', () => copyValue(copyHsl, hslValue));
 
-copyCmyk.addEventListener('click', () => {
-    copyValue(copyCmyk, cmykValue);
-});
+copyCmyk.addEventListener('click', () => copyValue(copyCmyk, cmykValue));
 
-copyAlpha.addEventListener('click', () => {
-    copyValue(copyAlpha, alphaValue);
+copyAlpha.addEventListener('click', () => copyValue(copyAlpha, alphaValue));
+
+fullColor.addEventListener('click', () => (fullColor.style.display = 'none'));
+
+document.addEventListener('keydown', (event) => {
+    if (fullColor.style.display === 'block' && event.code === 'Escape') fullColor.style.display = 'none';
 });
 
 /**
@@ -149,14 +142,7 @@ copyAlpha.addEventListener('click', () => {
  * @param {Color} color the color to update results for
  */
 function updateResults(color) {
-    resetBorder(colorPicker);
-    resetBorder(nameValue);
-    resetBorder(hexValue);
-    resetBorder(decimalValue);
-    resetBorder(rgbValue);
-    resetBorder(hslValue);
-    resetBorder(cmykValue);
-    resetBorder(alphaValue);
+    [colorPicker, nameValue, hexValue, decimalValue, rgbValue, hslValue, cmykValue, alphaValue].forEach((element) => resetBorder(element));
 
     colorDisplay.style.color = color.hex();
     colorPicker.value = color.alpha(1).hex();
@@ -169,6 +155,16 @@ function updateResults(color) {
     alphaValue.value = color.alpha();
     luminance.value = color.luminance().toLocaleString();
     temperature.value = color.temperature();
+
+    const colorHistoryElement = document.createElement('li');
+    colorHistoryElement.style.color = color.hex();
+    colorHistoryElement.textContent = color.hex();
+
+    const appendedElement = colorHistory.appendChild(colorHistoryElement);
+
+    appendedElement.addEventListener('click', () => updateResults(color));
+
+    fullColor.style.backgroundColor = colorDisplay.style.color;
 }
 
 /**

@@ -1,27 +1,19 @@
 /* Modified from https://codepen.io/cbracco/pen/nufHz */
 
 /* Base styles for the element that has a tooltip */
-
 [data-tooltip],
 .tooltip {
     cursor: pointer;
     position: relative;
     text-align: center;
     text-decoration: underline dotted;
-    text-decoration-line: underline;
-    -webkit-text-decoration-line: underline;
-    text-decoration-style: dotted;
-    -webkit-text-decoration-style: dotted;
 }
 
 /* Base styles for the entire tooltip */
-
 [data-tooltip]:before,
 [data-tooltip]:after,
 .tooltip:before,
 .tooltip:after {
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
     pointer-events: none;
     position: absolute;
@@ -35,7 +27,6 @@
 }
 
 /* Show the entire tooltip on hover and focus */
-
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after,
 [data-tooltip]:focus:before,
@@ -44,14 +35,11 @@
 .tooltip:hover:after,
 .tooltip:focus:before,
 .tooltip:focus:after {
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
     visibility: visible;
 }
 
 /* Base styles for the tooltip's directional arrow */
-
 .tooltip:before,
 [data-tooltip]:before {
     background: transparent;
@@ -61,7 +49,6 @@
 }
 
 /* Base styles for the tooltip's content area */
-
 .tooltip:after,
 [data-tooltip]:after {
     background-color: #000;
@@ -79,7 +66,6 @@
 /* Directions */
 
 /* Top (default) */
-
 [data-tooltip]:before,
 [data-tooltip]:after,
 .tooltip:before,
@@ -100,7 +86,6 @@
 }
 
 /* Horizontally align top/bottom tooltips */
-
 [data-tooltip]:after,
 .tooltip:after,
 .tooltip-top:after {
@@ -125,7 +110,6 @@
 }
 
 /* Left */
-
 .tooltip-left:before,
 .tooltip-left:after {
     bottom: 50%;
@@ -152,7 +136,6 @@
 }
 
 /* Bottom */
-
 .tooltip-bottom:before,
 .tooltip-bottom:after {
     bottom: auto;
@@ -178,7 +161,6 @@
 }
 
 /* Right */
-
 .tooltip-right:before,
 .tooltip-right:after {
     bottom: 50%;
@@ -203,14 +185,12 @@
 }
 
 /* Move directional arrows down a bit for left/right tooltips */
-
 .tooltip-left:before,
 .tooltip-right:before {
     top: 3px;
 }
 
 /* Vertically center tooltip content for left/right tooltips */
-
 .tooltip-left:after,
 .tooltip-right:after {
     margin-bottom: -16px;
