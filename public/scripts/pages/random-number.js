@@ -13,7 +13,7 @@ resetButton.addEventListener('click', () => {
     maxNumber.value = '10';
     outputNumber.textContent = '0';
 
-    showAlert('Cleared!', 'success');
+    showAlert('Reset!', 'success');
     resetResult('generate');
 });
 
