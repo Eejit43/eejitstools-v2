@@ -20,24 +20,12 @@ let valExist = false;
 
 /* Add event listeners */
 document.addEventListener('keydown', keyInfo);
-keyCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyVal);
-});
-keyRepeatingCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyRepeatingVal);
-});
-keyLocationCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyLocationVal);
-});
-keyCodeCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyCodeVal);
-});
-keyAsciiCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyAsciiVal);
-});
-keyUnicodeCell.addEventListener('click', () => {
-    copyKeycodeInfo(keyUnicodeVal);
-});
+keyCell.addEventListener('click', () => copyKeycodeInfo(keyVal));
+keyRepeatingCell.addEventListener('click', () => copyKeycodeInfo(keyRepeatingVal));
+keyLocationCell.addEventListener('click', () => copyKeycodeInfo(keyLocationVal));
+keyCodeCell.addEventListener('click', () => copyKeycodeInfo(keyCodeVal));
+keyAsciiCell.addEventListener('click', () => copyKeycodeInfo(keyAsciiVal));
+keyUnicodeCell.addEventListener('click', () => copyKeycodeInfo(keyUnicodeVal));
 window.addEventListener('focus', () => {
     ready.innerHTML = '<span style="color:#009c3f"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
 });

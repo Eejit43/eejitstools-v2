@@ -52,12 +52,8 @@ decimalReset.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(decimalArrow, 'reset');
 });
-scientificOutputCopy.addEventListener('click', () => {
-    copyText(scientificOutputCopy, scientificOutputVal);
-});
-scientificOutputCopy2.addEventListener('click', () => {
-    copyText(scientificOutputCopy2, scientificOutputVal2);
-});
+scientificOutputCopy.addEventListener('click', () => copyText(scientificOutputCopy, scientificOutputVal));
+scientificOutputCopy2.addEventListener('click', () => copyText(scientificOutputCopy2, scientificOutputVal2));
 scientificInput.addEventListener('input', () => {
     if (scientificInput.value.length > 0) scientificConvert.disabled = false;
     else scientificConvert.disabled = true;
@@ -76,9 +72,7 @@ scientificReset.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(scientificArrow, 'reset');
 });
-decimalOutputCopy.addEventListener('click', () => {
-    copyText(decimalOutputCopy, decimalOutputVal);
-});
+decimalOutputCopy.addEventListener('click', () => copyText(decimalOutputCopy, decimalOutputVal));
 
 /**
  * Converts a decimal to scientific notation and displays the result

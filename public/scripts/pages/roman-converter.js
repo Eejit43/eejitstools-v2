@@ -66,15 +66,9 @@ romanReset.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(romanArrow, 'reset');
 });
-romanOutputCopy.addEventListener('click', () => {
-    copyText(romanOutputCopy, romanOutputVal);
-});
-romanOutputCopy2.addEventListener('click', () => {
-    copyText(romanOutputCopy2, romanOutputVal2);
-});
-integerOutputCopy.addEventListener('click', () => {
-    copyText(integerOutputCopy, integerOutputVal);
-});
+romanOutputCopy.addEventListener('click', () => copyText(romanOutputCopy, romanOutputVal));
+romanOutputCopy2.addEventListener('click', () => copyText(romanOutputCopy2, romanOutputVal2));
+integerOutputCopy.addEventListener('click', () => copyText(integerOutputCopy, integerOutputVal));
 
 /**
  * Converts the provided integer to roman numerals and displays the result

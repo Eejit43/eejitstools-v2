@@ -130,9 +130,7 @@ rmSwitchButton.addEventListener('click', () => {
         showResult('switch', 'custom', '#1c62d4', 'arrows-alt-v');
     }
 });
-rmCopyResult.addEventListener('click', () => {
-    copyValue(rmCopyResult, rmResult);
-});
+rmCopyResult.addEventListener('click', () => copyValue(rmCopyResult, rmResult));
 rmRegex.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         const newPosition = event.target.selectionStart + 2;

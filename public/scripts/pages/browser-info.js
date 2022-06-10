@@ -3,7 +3,7 @@
 const { appVersion, userAgent } = navigator;
 let { appName } = navigator;
 let fullVersion = parseFloat(appVersion).toString();
-let majorVersion = parseInt(appVersion, 10);
+let majorVersion = parseInt(appVersion);
 let nameOffset, versionOffset, ix;
 
 if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
@@ -32,10 +32,10 @@ if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
 if ((ix = fullVersion.indexOf(';')) !== -1) fullVersion = fullVersion.substring(0, ix);
 if ((ix = fullVersion.indexOf(' ')) !== -1) fullVersion = fullVersion.substring(0, ix);
 
-majorVersion = parseInt('' + fullVersion, 10);
+majorVersion = parseInt(fullVersion);
 if (isNaN(majorVersion)) {
-    fullVersion = '' + parseFloat(appVersion);
-    majorVersion = parseInt(appVersion, 10);
+    fullVersion = parseFloat(appVersion);
+    majorVersion = parseInt(appVersion);
 }
 
 let OSName = 'Unknown OS';

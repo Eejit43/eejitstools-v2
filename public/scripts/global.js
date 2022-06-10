@@ -29,7 +29,7 @@ function resizeNav() {
     else navbar.classList.remove('nav-shrunk');
 }
 
-window.addEventListener('scroll', resizeNav);
+document.addEventListener('scroll', resizeNav);
 
 resizeNav();
 
@@ -109,20 +109,14 @@ document.getElementById('show-shortcuts').addEventListener('click', () => {
 });
 
 document.getElementById('close-shortcuts').addEventListener('click', () => {
-    addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
-        modal.style.display = 'none';
-    });
+    addAnimation('#shortcuts', 'animate-out-top', '').then(() => (modal.style.display = 'none'));
 });
 
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
-            modal.style.display = 'none';
-        });
-    }
+document.addEventListener('click', (event) => {
+    if (event.target === modal) addAnimation('#shortcuts', 'animate-out-top', '').then(() => (modal.style.display = 'none'));
 });
 
-window.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (event) => {
     if (event.code === 'Escape' && modal.style.display === 'block') {
         addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
             modal.style.display = 'none';

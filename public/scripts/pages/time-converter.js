@@ -33,9 +33,7 @@ resetButton.addEventListener('click', () => {
     }, 2000);
 });
 outputType.addEventListener('change', convert);
-copyOutput.addEventListener('click', () => {
-    copyValue(copyOutput, output);
-});
+copyOutput.addEventListener('click', () => copyValue(copyOutput, output));
 
 /**
  * Converts the provided time value and displays the result

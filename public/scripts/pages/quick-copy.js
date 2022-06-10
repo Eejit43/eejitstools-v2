@@ -3,35 +3,35 @@
 import { copyText, showAlert } from '/scripts/functions.js';
 
 const clearClipboardButton = document.getElementById('clear-clipboard');
-const copyZWS = document.getElementById('copy-zws');
-const copyNBSP = document.getElementById('copy-nbsp');
-const copyEMS = document.getElementById('copy-ems');
-const copyENS = document.getElementById('copy-ens');
-const copyTS = document.getElementById('copy-ts');
+const copyZws = document.getElementById('copy-zws');
+const copyNbsp = document.getElementById('copy-nbsp');
+const copyEms = document.getElementById('copy-ems');
+const copyEns = document.getElementById('copy-ens');
+const copyTs = document.getElementById('copy-ts');
 const clipboardWarning = document.getElementById('clipboard-warning');
 const copiedText = document.getElementById('copied-text');
 const selectClipboard = document.getElementById('select-clipboard');
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
-copyZWS.addEventListener('click', () => {
-    copyText(copyZWS, '\u200b');
+copyZws.addEventListener('click', () => {
+    copyText(copyZws, '\u200b');
     clipboardDisplay();
 });
-copyNBSP.addEventListener('click', () => {
-    copyText(copyNBSP, '\u00a0');
+copyNbsp.addEventListener('click', () => {
+    copyText(copyNbsp, '\u00a0');
     clipboardDisplay();
 });
-copyEMS.addEventListener('click', () => {
-    copyText(copyEMS, '\u2003');
+copyEms.addEventListener('click', () => {
+    copyText(copyEms, '\u2003');
     clipboardDisplay();
 });
-copyENS.addEventListener('click', () => {
-    copyText(copyENS, '\u2002');
+copyEns.addEventListener('click', () => {
+    copyText(copyEns, '\u2002');
     clipboardDisplay();
 });
-copyTS.addEventListener('click', () => {
-    copyText(copyTS, '\u2009');
+copyTs.addEventListener('click', () => {
+    copyText(copyTs, '\u2009');
     clipboardDisplay();
 });
 selectClipboard.addEventListener('click', () => {
