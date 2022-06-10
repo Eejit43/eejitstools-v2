@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/Eejit43/Eejit43.github.io/main/favicons/icon.png" alt="Eejit's Tools Logo (Wrench)" width="30"/> Eejit's Tools
+# <img src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2/main/public/favicons/icon.png" alt="Eejit's Tools Logo (Wrench)" width="30"/> Eejit's Tools
 
 ![60-percent-of-the-time-works-every-time](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)
 ![0-percent-optimized](https://forthebadge.com/images/badges/0-percent-optimized.svg)
