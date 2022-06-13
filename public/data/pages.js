@@ -1,8 +1,8 @@
 const imports = {
+    heic2any: { link: '/scripts/external/heic2any.js', module: true },
+    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false },
     odometerCss: '/styles/external/odometer.css',
     odometerJs: { link: '/scripts/external/odometer.js', module: true },
-    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false },
-    heic2any: { link: '/scripts/external/heic2any.js', module: true },
 };
 
 const alphabet = [
@@ -293,6 +293,7 @@ export const blankProperties = {
 };
 
 export const allPageInfo = {
+    // Tools
     'audio-converter': {
         link: 'tools/audio-converter',
         title: 'Audio Converter',
@@ -303,21 +304,21 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
-    base64: {
-        link: 'tools/base64',
-        title: 'Base64 Encode/Decode',
-        icon: 'fa-solid fa-code',
-        description: 'Encode and decode to and from Base64 format (binary)',
-        keywords: ['b64'],
-        additionalScripts: [],
-        additionalStyles: [],
-        script: true,
-    },
     'base64-image': {
         link: 'tools/base64-image',
         title: 'Base64 Image Encode/Decode',
         icon: 'fa-solid fa-file-image',
         description: 'Encode and decode images to and from Base64 format',
+        keywords: ['b64'],
+        additionalScripts: [],
+        additionalStyles: [],
+        script: true,
+    },
+    base64: {
+        link: 'tools/base64',
+        title: 'Base64 Encode/Decode',
+        icon: 'fa-solid fa-code',
+        description: 'Encode and decode to and from Base64 format (binary)',
         keywords: ['b64'],
         additionalScripts: [],
         additionalStyles: [],
@@ -563,16 +564,6 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
-    time: {
-        link: 'tools/time',
-        title: 'Time',
-        icon: 'fa-regular fa-clock',
-        description: 'Displays the current time and date (in your time zone), as well as detailed time information',
-        keywords: [],
-        additionalScripts: [],
-        additionalStyles: [],
-        script: true,
-    },
     'time-converter': {
         link: 'tools/time-converter',
         title: 'Time Converter',
@@ -580,6 +571,16 @@ export const allPageInfo = {
         description: 'Convert between units of time',
         keywords: [],
         additionalScripts: [imports.mathJs],
+        additionalStyles: [],
+        script: true,
+    },
+    time: {
+        link: 'tools/time',
+        title: 'Time',
+        icon: 'fa-regular fa-clock',
+        description: 'Displays the current time and date (in your time zone), as well as detailed time information',
+        keywords: [],
+        additionalScripts: [],
         additionalStyles: [],
         script: true,
     },
@@ -643,6 +644,7 @@ export const allPageInfo = {
         additionalStyles: [],
         script: true,
     },
+    // Info
     'minecraft-codes': {
         link: 'info/minecraft-codes',
         title: 'Minecraft Formatting Codes',
@@ -709,6 +711,7 @@ export const allPageInfo = {
         script: false,
         toneIndicators,
     },
+    // Fun
     'astronomy-picture': {
         link: 'fun/astronomy-picture',
         title: 'Astronomy Picture of the Day',
