@@ -170,9 +170,10 @@ nav {
     transform: translate(-100%, -20%);
 }
 
-.search-box .search-btn {
+.search-box .search-button {
     align-items: center;
     color: #c5c5cc;
+    cursor: pointer;
     display: flex;
     float: right;
     height: 30px;
@@ -1231,8 +1232,9 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     width: 700px;
 }
 
-.large-search-box .large-search-btn {
+.large-search-box .large-search-button {
     color: #c5c5cc;
+    cursor: pointer;
     float: right;
     font-size: 25px;
     margin: 8px 10px 0 0;

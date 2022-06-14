@@ -10,7 +10,7 @@
         <!-- Search Engine -->
         <meta name="title" content="<%= title || "Eejit's Tools" %>" />
         <meta name="description" content="<%= descriptionParsed || 'Some useful tools for general purposes!'%>" />
-        <meta name="keywords" content="eejitstools" />
+        <meta name="keywords" content="eejitstools,eejits tools,eejit's tools,eejit43<%- keywords.length > 0 ? `,${keywords.join(',')}` : ''%>" />
         <meta property="image" content="https://eejitstools.com/favicons/icon.png" />
         <!-- Schema.org for Google -->
         <meta itemprop="name" content="<%= title || "Eejit's Tools" %>" />
@@ -73,7 +73,7 @@
             </a>
             <span style="float: right">
                 <div class="search-box mobile-hidden">
-                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-btn fa-solid fa-search"></i><br />
+                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-button fa-solid fa-search"></i><br />
                     <div class="search-results"></div>
                 </div>
                 <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span></a>

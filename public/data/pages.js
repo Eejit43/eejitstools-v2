@@ -293,6 +293,7 @@ export const blankProperties = {
     additionalScripts: [],
     additionalStyles: [],
     script: false,
+    keywords: [],
 };
 
 const allPageInfo = {

@@ -15,3 +15,16 @@ searchText.addEventListener('input', () => {
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
 });
+
+searchText.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const firstResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a');
+        if (firstResult) window.open(firstResult.href, event.metaKey ? '_blank' : '_self');
+    } else if (event.key === 'Escape') {
+        searchText.value = '';
+        searchResult.innerHTML = '';
+        searchText.blur();
+    }
+});
+
+document.querySelector('.large-search-button').addEventListener('click', () => searchText.focus());

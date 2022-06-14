@@ -56,6 +56,8 @@ searchText.addEventListener('keydown', (event) => {
     }
 });
 
+document.querySelector('.search-button').addEventListener('click', () => searchText.focus());
+
 const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 
 /* Keyboard shortcuts */
