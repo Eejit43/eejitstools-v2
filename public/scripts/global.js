@@ -1,9 +1,5 @@
-import { allPageInfo } from '/data/pages.js';
+import { pagesParsedValues } from '/data/pages.js';
 import { addAnimation, matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
-
-const pages = Object.keys(allPageInfo).map((key) => {
-    return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
-});
 
 twemojiUpdate();
 
@@ -40,9 +36,9 @@ const searchText = document.querySelector('.search-text');
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
-    pages.forEach((page) => {
-        if (page.title.toLowerCase().includes(value) || page.description.toLowerCase().includes(value) || page.link.toLowerCase().includes(value) || matchesKeywords(page.keywords, value)) {
-            results.push(`<tr><td><a href="/${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.description}</div></a></td></tr>`);
+    pagesParsedValues.forEach((page) => {
+        if (page.title.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.name.toLowerCase().includes(value) || matchesKeywords(page.keywords, value)) {
+            results.push(`<tr><td><a href="${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
         }
     });
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
@@ -78,7 +74,7 @@ document.addEventListener('keydown', (event) => {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'views/index.ejs';
-        else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '')) finalUrl = `views/pages${pathname}.ejs`;
+        else if (pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '')) finalUrl = `views/pages${pathname}.ejs`;
         else finalUrl = 'views/error.ejs';
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
@@ -86,7 +82,7 @@ document.addEventListener('keydown', (event) => {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'public/scripts/global.js';
-        else if (allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '') && allPageInfo[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages/${pathname.replace(/^\/(tools|info|fun)\//, '')}.js`;
+        else if (pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '') && pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages/${pathname.replace(/^\/(tools|info|fun)\//, '')}.js`;
         else finalUrl = 'public/scripts/global.js';
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');

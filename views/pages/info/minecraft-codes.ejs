@@ -13,13 +13,15 @@
                 <th>Hex Code</th>
             </tr>
         </thead>
-        <tbody><% for (let i = 0; i < minecraftColorCodes.length; i++) { %>
-            <tr<% if (minecraftColorCodes[i]) { %> style="background-color: #<%- minecraftColorCodes[i].backgroundColor %>; color: #<%- minecraftColorCodes[i].textColor %>"<% } %>>
-                <td><%= minecraftColorCodes[i].color %><br />(<code class="color-name"><%= minecraftColorCodes[i].colorName %></code>)</td>
-                <td>§<%= minecraftColorCodes[i].colorCode %></td>
-                <td>\u<%= minecraftColorCodes[i].motdCode %></td>
-                <td>#<%= minecraftColorCodes[i].hexCode %></td>
-            </tr><% } %>
+        <tbody>
+            <% for (const color of minecraftColorCodes) { %>
+            <tr style="background-color: #<%- color.backgroundColor %>; color: #<%- color.textColor %>">
+                <td><%= color.color %><br />(<code class="color-name"><%= color.colorName %></code>)</td>
+                <td>§<%= color.colorCode %> (&<%= color.colorCode %>)</td>
+                <td>\u<%= color.motdCode %></td>
+                <td>#<%= color.hexCode %></td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 
@@ -31,12 +33,14 @@
                 <th><span class="tooltip-bottom" data-tooltip="Message of the Day">MOTD</span> Code</th>
             </tr>
         </thead>
-        <tbody><% for (let i = 0; i < minecraftFormattingCodes.length; i++) { %>
+        <tbody>
+            <% for (const formatter of minecraftFormattingCodes) { %>
             <tr>
-                <td<% if (minecraftFormattingCodes[i].style) { %> style="<%- minecraftFormattingCodes[i].style %>"<% } %>><%= minecraftFormattingCodes[i].type %></td>
-                <td>§<%= minecraftFormattingCodes[i].formattingCode %></td>
-                <td>\u<%= minecraftFormattingCodes[i].motdCode %></td>
-            </tr><% } %>
+                <td style="<%- formatter.style %>"><%= formatter.type %></td>
+                <td>§<%= formatter.formattingCode %> (&<%= formatter.formattingCode %>)</td>
+                <td>\u<%= formatter.motdCode %></td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 </div>

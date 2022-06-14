@@ -12,12 +12,12 @@
 </header>
 <table class="tools-table">
     <tbody>
-        <% for (let i = 0; i < pages.length; i++) { if (/tools\//.test(pages[i].link)) { %>
+        <% for (const page of pages) { if (page.category === 'tools') { %>
         <tr>
             <td style="width: 15vw">
-                <a href="<%- pages[i].link %>"><i class="<%- pages[i].icon %>" style="margin-right: 3px"></i> <%- pages[i].title %></a>
+                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
             </td>
-            <td><%- pages[i].description %></td>
+            <td><%- page.description %></td>
         </tr>
         <% } } %>
     </tbody>
@@ -25,12 +25,12 @@
 
 <table class="tools-table" style="margin-top: 70px">
     <tbody>
-        <% for (let i = 0; i < pages.length; i++) { if (/info\//.test(pages[i].link)) { %>
+        <% for (const page of pages) { if (page.category === 'info') { %>
         <tr>
             <td style="width: 15vw">
-                <a href="<%- pages[i].link %>"><i class="<%- pages[i].icon %>" style="margin-right: 3px"></i> <%- pages[i].title %></a>
+                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
             </td>
-            <td><%- pages[i].description %></td>
+            <td><%- page.description %></td>
         </tr>
         <% } } %>
     </tbody>
@@ -38,12 +38,12 @@
 
 <table class="tools-table" style="margin-top: 70px">
     <tbody>
-        <% for (let i = 0; i < pages.length; i++) { if (/fun\//.test(pages[i].link)) { %>
+        <% for (const page of pages) { if (page.category === 'fun') { %>
         <tr>
             <td style="width: 15vw">
-                <a href="<%- pages[i].link %>"><i class="<%- pages[i].icon %>" style="margin-right: 3px"></i> <%- pages[i].title %></a>
+                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
             </td>
-            <td><%- pages[i].description %></td>
+            <td><%- page.description %></td>
         </tr>
         <% } } %>
     </tbody>

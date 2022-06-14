@@ -11,7 +11,7 @@ import Canvas from 'canvas';
 import path from 'path';
 import pointOfView from 'point-of-view';
 import Request from 'request';
-import { allPageInfo, blankProperties } from './public/data/pages.js';
+import { pagesParsed, pagesParsedValues, blankProperties } from './public/data/pages.js';
 
 // Load layouts and static assets
 const fastify = Fastify();
@@ -24,29 +24,21 @@ fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
 
 // Register pages
 fastify.get('/', (request, reply) => {
-    reply.view('/index.ejs', {
-        title: 'Home',
-        pages: Object.keys(allPageInfo).map((key) => {
-            return { name: key, ...allPageInfo[key] };
-        }),
-        ...blankProperties,
-    });
+    reply.view('/index.ejs', { title: 'Home', pages: pagesParsedValues, ...blankProperties });
 });
 
 fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { title: 'Search', description: '', page: '', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [], script: false });
+    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [], script: false });
 });
 
 fastify.get('/headers', (request, reply) => {
     reply.status(200).send(JSON.stringify(request.headers, null, 2));
 });
 
-const pagesInfo = Object.keys(allPageInfo).map((key) => {
-    return { title: allPageInfo[key].title, link: allPageInfo[key].link, description: allPageInfo[key].description.replace(/<span.*?>(.*?)<\/span>/g, '$1'), keywords: allPageInfo[key].keywords };
-});
+const shortPagesInfo = pagesParsedValues.map((page) => ({ title: page.title, name: page.name, description: page.descriptionParsed, keywords: page.keywords }));
 
 fastify.get('/pages', (request, reply) => {
-    reply.status(200).send(JSON.stringify(pagesInfo, null, 2));
+    reply.status(200).send(JSON.stringify(shortPagesInfo, null, 2));
 });
 
 fastify.get('/cors-anywhere', async (request, reply) => {
@@ -65,15 +57,16 @@ fastify.get('/cors-anywhere', async (request, reply) => {
     }
 });
 
+// Render each tool/info/fun page
 fs.readdirSync('./views/pages').forEach((category) => {
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
 
     pages.forEach((page) => {
         page = page.replace('.ejs', '');
-        const pageInfo = allPageInfo[page];
+        const pageInfo = pagesParsed[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
         fastify.get(`/${category}/${page}`, (request, reply) => {
-            reply.view(`pages/${category}/${page}.ejs`, { ...pageInfo, page });
+            reply.view(`pages/${category}/${page}.ejs`, pageInfo);
         });
     });
 });

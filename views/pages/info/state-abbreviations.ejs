@@ -10,11 +10,11 @@
             </tr>
         </thead>
         <tbody>
-            <% for (let i = 0; i < stateAbbreviations.length; i++) { %>
+            <% for (const state of stateAbbreviations) { %>
             <tr>
-                <td><%= stateAbbreviations[i].state %></td>
-                <td><%= stateAbbreviations[i].postal %></td>
-                <td><%= stateAbbreviations[i].standard %></td>
+                <td><%= state.name %></td>
+                <td><%= state.postal %></td>
+                <td><%= state.standard %></td>
             </tr>
             <% } %>
         </tbody>

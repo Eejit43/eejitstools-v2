@@ -7,11 +7,13 @@
                 <th>Meaning</th>
             </tr>
         </thead>
-        <tbody><% for (let i = 0; i < textAbbreviations.length; i++) { %>
+        <tbody>
+            <% for (const entry of textAbbreviations) { %>
             <tr>
-                <td><%= textAbbreviations[i].abbreviation %></td>
-                <td><%- textAbbreviations[i].meaning %></td>
-            </tr><% } %>
+                <td><%= entry.abbreviation %></td>
+                <td><%- entry.meaning %></td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 </div>

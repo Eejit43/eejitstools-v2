@@ -8,11 +8,13 @@
                 <th>Meaning</th>
             </tr>
         </thead>
-        <tbody><% for (let i = 0; i < toneIndicators.length; i++) { %>
+        <tbody>
+            <% for (const entry of toneIndicators) { %>
             <tr>
-                <td>/<%= toneIndicators[i].toneIndicator %></td>
-                <td><%- toneIndicators[i].meaning %></td>
-            </tr><% } %>
+                <td>/<%= entry.indicator %></td>
+                <td><%- entry.meaning %></td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 </div>
