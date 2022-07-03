@@ -870,6 +870,11 @@ export const audioTracks = {
             file: 'Gusty Garden Galaxy (SMG).mp3',
             duration: '3:44',
         },
+        {
+            name: 'Jump Up, Super Star! - The Super Mario Players feat. Kate Davis (Super Mario Odyssey)',
+            file: 'Jump Up, Super Star!.mp3',
+            duration: '4:08',
+        },
     ],
     yoshis_woolly_world: [
         {
