@@ -871,8 +871,33 @@ export const audioTracks = {
             duration: '3:44',
         },
         {
-            name: 'Jump Up, Super Star! - The Super Mario Players feat. Kate Davis (Super Mario Odyssey)',
-            file: 'Jump Up, Super Star!.mp3',
+            name: 'Steam Gardens - Super Mario Odyssey',
+            file: 'Steam Gardens (SMO).mp3',
+            duration: '3:44',
+        },
+        {
+            name: 'New Donk City - Super Mario Odyssey',
+            file: 'New Donk City (SMO).mp3',
+            duration: '3:22',
+        },
+        {
+            name: 'Mollusque-Lanceur Battle - Super Mario Odyssey',
+            file: 'Mollusque-Lanceur Battle (SMO).mp3',
+            duration: '3:29',
+        },
+        {
+            name: 'Crazy Cap (Shop) - Super Mario Odyssey',
+            file: 'Crazy Cap (Shop) (SMO).mp3',
+            duration: '3:10',
+        },
+        {
+            name: 'Run, Jump, Throw! 2 - Super Mario Odyssey',
+            file: 'Run, Jump, Throw! 2 (SMO).mp3',
+            duration: '2:06',
+        },
+        {
+            name: 'Jump Up, Super Star! - Super Mario Odyssey',
+            file: 'Jump Up, Super Star! (SMO).mp3',
             duration: '4:08',
         },
     ],
