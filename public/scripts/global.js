@@ -47,8 +47,8 @@ searchText.addEventListener('input', () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
-        if (firstResult) window.open(firstResult.href, event.metaKey ? '_blank' : '_self');
+        const result = document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a');
+        if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';
         searchResult.innerHTML = '';
@@ -57,6 +57,29 @@ searchText.addEventListener('keydown', (event) => {
 });
 
 document.querySelector('.search-button').addEventListener('click', () => searchText.focus());
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
+        if (firstResult) {
+            const currentResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
+
+            const nextTrElement = event.key === 'ArrowUp' ? currentResult?.parentElement.parentElement.previousElementSibling : currentResult?.parentElement.parentElement.nextElementSibling;
+
+            if (nextTrElement) {
+                if (currentResult) currentResult.classList.remove('selected');
+                nextTrElement.querySelector('td').querySelector('a').classList.add('selected');
+            } else if (!currentResult) {
+                firstResult.classList.add('selected');
+            }
+
+            const selectedResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
+            if (selectedResult) {
+                selectedResult.parentElement.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+});
 
 const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 

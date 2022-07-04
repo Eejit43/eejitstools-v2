@@ -244,7 +244,8 @@ nav {
     color: #4c6072;
 }
 
-.search-results table td a:hover {
+.search-results table td a:hover,
+.search-results table td a.selected {
     color: #364c5f;
 }
 
@@ -1302,7 +1303,8 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     color: #4c6072;
 }
 
-.large-search-results table td a:hover {
+.large-search-results table td a:hover,
+.large-search-results table td a.selected {
     color: #364c5f;
 }
 
