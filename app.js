@@ -2,16 +2,16 @@
 /* eslint-disable no-console */
 
 import fastifyStatic from '@fastify/static';
+import pointOfView from '@fastify/view';
+import Canvas from 'canvas';
 import 'dotenv/config';
 import ejs from 'ejs';
 import Fastify from 'fastify';
 import fs from 'fs';
 import fetch from 'node-fetch';
-import Canvas from 'canvas';
 import path from 'path';
-import pointOfView from 'point-of-view';
 import Request from 'request';
-import { pagesParsed, pagesParsedValues, blankProperties } from './public/data/pages.js';
+import { blankProperties, pagesParsed, pagesParsedValues } from './public/data/pages.js';
 
 // Load layouts and static assets
 const fastify = Fastify();

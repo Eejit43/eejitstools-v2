@@ -18,7 +18,23 @@ export function showAlert(text, color, duration) {
     color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
     if (color === 'error') color = '#ff5555';
-    toastify({ text: text || 'No text specified!', duration: duration || 2000, position: 'center', style: { background: '#333', boxShadow: 'none', minWidth: '150px', textAlign: 'center', fontFamily: '"Source Sans Pro", sans-serif', fontWeight: '600', fontSize: '17px', color: color || '#009c3f', padding: '16px 30px' } }).showToast();
+    toastify({
+        text: text || 'No text specified!',
+        duration: duration || 2000,
+        position: 'center',
+        style: {
+            background: '#333',
+            borderRadius: '5px',
+            boxShadow: 'none',
+            color: color || '#009c3f',
+            fontFamily: '"Source Sans Pro", sans-serif',
+            fontSize: '17px',
+            fontWeight: '600',
+            minWidth: '150px',
+            padding: '16px 30px',
+            textAlign: 'center',
+        },
+    }).showToast();
 }
 
 /**
