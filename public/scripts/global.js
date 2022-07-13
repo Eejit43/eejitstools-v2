@@ -144,3 +144,30 @@ document.addEventListener('keydown', (event) => {
         });
     }
 });
+
+const fileUploads = document.querySelectorAll('.file-upload');
+
+fileUploads.forEach((element) => {
+    element.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+    element.addEventListener('drop', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const { items, files } = event.dataTransfer;
+        if (files && files.length > 0) {
+            for (const file of files) {
+                console.log(file);
+            }
+        } else if (items && items.length > 0) {
+            for (const item of items) {
+                if (item.kind === 'file') {
+                    const file = item.getAsFile();
+                    console.log(file);
+                }
+            }
+        }
+    });
+});
