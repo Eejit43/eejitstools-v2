@@ -52,7 +52,7 @@ async function getData(position) {
         '<th style="width: 100px">Type</th>',
         '</tr>',
         '</thead>',
-        '<tbody>',
+        '<tbody>'
     ];
     for (let i = 0; i < data.extremes.length; i++) table.push('<tr>', `<td>${new Date(data.extremes[i].timestamp * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.extremes[i].timestamp * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${titleCase(data.extremes[i].state)}</td>`, '</tr>');
     table.push('</tbody', '</table>');
@@ -62,7 +62,7 @@ async function getData(position) {
         `Updated at ${updated}.<br />`,
         `The tide is currently ${state}.`,
         `${nextExtremes}<br />`,
-        `${table.join('')}`,
+        `${table.join('')}`
     ];
 
     result.innerHTML = output.join('<br />');

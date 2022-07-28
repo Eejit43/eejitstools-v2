@@ -65,5 +65,5 @@ const types = {
     8: 'yard',
     9: 'foot',
     10: 'inch',
-    11: 'nauticalMile',
+    11: 'nauticalMile'
 };

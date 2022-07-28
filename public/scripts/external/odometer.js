@@ -212,7 +212,7 @@
                                 },
                                 set: function (val) {
                                     return _this.update(val);
-                                },
+                                }
                             });
                         })(property);
                     }
@@ -257,7 +257,7 @@
         Odometer.prototype.startWatchingMutations = function () {
             if (this.watchMutations) {
                 return this.observer.observe(this.el, {
-                    childList: true,
+                    childList: true
                 });
             }
         };
@@ -330,7 +330,7 @@
             return (this.format = {
                 repeating: repeating,
                 radix: radix,
-                precision: precision,
+                precision: precision
             });
         };
 
@@ -660,7 +660,7 @@
             _results.push(
                 (el.odometer = new Odometer({
                     el: el,
-                    value: (_ref1 = el.innerText) != null ? _ref1 : el.textContent,
+                    value: (_ref1 = el.innerText) != null ? _ref1 : el.textContent
                 }))
             );
         }

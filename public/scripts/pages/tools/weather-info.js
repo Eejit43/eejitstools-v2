@@ -23,7 +23,7 @@ const uvIndexes = {
     1: { color: '#fedc00', text: 'Moderate' },
     2: { color: '#f89c1b', text: 'High' },
     3: { color: '#ee1d23', text: 'Very High' },
-    4: { color: '#d83484', text: 'Extreme' },
+    4: { color: '#d83484', text: 'Extreme' }
 };
 
 const airQualities = {
@@ -32,7 +32,7 @@ const airQualities = {
     2: { color: '#f6901e', text: 'Unhealthy for Sensitive Groups' },
     3: { color: '#ed1d24', text: 'Unhealthy' },
     4: { color: '#a2064a', text: 'Very Unhealthy' },
-    5: { color: '#891a1c', text: 'Hazardous' },
+    5: { color: '#891a1c', text: 'Hazardous' }
 };
 
 /**
@@ -82,7 +82,7 @@ async function getData(position) {
         `Pressure: ${data.pres} millibars`,
         `UV Index: ${uvIndex}${uvIndexDescription ? ` (<span style="color: ${uvIndexDescription.color}">${uvIndexDescription.text}</span>)` : ''}`,
         `Air Quality: ${airQuality}${airQualityDescription ? ` (<span style="color: ${airQualityDescription.color}">${airQualityDescription.text}</span>)` : ''}`,
-        'Moon Phase: <span id="moon-phase">Loading...</span>',
+        'Moon Phase: <span id="moon-phase">Loading...</span>'
     ].join('<br />');
 
     const { alerts } = fullData;

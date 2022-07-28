@@ -64,5 +64,5 @@ const types = {
     10: 'years',
     11: 'decades',
     12: 'centuries',
-    13: 'millennia',
+    13: 'millennia'
 };

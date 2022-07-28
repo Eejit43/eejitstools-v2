@@ -129,7 +129,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
                 `Astronomy ${mediaType === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for ${apodDate}.<br />`, //
                 `<div style="text-align: center; font-size: 30px">${title}</div>`,
                 `${mediaType === 'video' ? `${media} ${credit ? `<center>${credit}</center><br />` : ''}` : `${media.outerHTML} ${credit ? `<center>${credit}</center><br />` : ''}`}`,
-                `${explanation}`,
+                `${explanation}`
             ];
 
             resultElement.innerHTML = result.join('');

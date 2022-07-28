@@ -57,5 +57,5 @@ function convert() {
 const types = {
     1: 'degF',
     2: 'degC',
-    3: 'K',
+    3: 'K'
 };

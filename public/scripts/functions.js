@@ -32,8 +32,8 @@ export function showAlert(text, color, duration) {
             fontWeight: '600',
             minWidth: '150px',
             padding: '16px 30px',
-            textAlign: 'center',
-        },
+            textAlign: 'center'
+        }
     }).showToast();
 }
 

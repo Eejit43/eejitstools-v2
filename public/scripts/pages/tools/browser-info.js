@@ -54,7 +54,7 @@ const result = [
     `Browser Version: ${fullVersion}`,
     `Main Browser Version: ${majorVersion}`,
     `navigator.appName: ${navigator.appName}`,
-    `navigator.userAgent: ${navigator.userAgent}`,
+    `navigator.userAgent: ${navigator.userAgent}`
 ];
 
 document.getElementById('browser-info').innerHTML = result.join('<br />');

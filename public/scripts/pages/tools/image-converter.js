@@ -104,7 +104,7 @@ function createBase64ObjectURL(data, mimeType) {
     }
     const byteArray = new Uint8Array(byteNumbers);
     const file = new Blob([byteArray], {
-        type: mimeType + ';base64',
+        type: mimeType + ';base64'
     });
     return URL.createObjectURL(file);
 }

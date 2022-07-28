@@ -45,7 +45,7 @@ const dates = [
     { name: 'Winter Solstice', date: '2023-12-21', emoji: '❄️', id: 'winter_solstice_2023' },
     { name: 'Christmas Eve', date: '2023-12-24', emoji: '🎅🏻', id: 'christmas_eve_2023' },
     { name: 'Christmas Day', date: '2023-12-25', emoji: '🎄', id: 'christmas_day_2023' },
-    { name: "New Year's Eve", date: '2023-12-31', emoji: '🕑', id: 'new_years_eve_2023' },
+    { name: "New Year's Eve", date: '2023-12-31', emoji: '🕑', id: 'new_years_eve_2023' }
 ];
 
 const result = [];

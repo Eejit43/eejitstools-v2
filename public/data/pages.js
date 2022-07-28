@@ -3,7 +3,7 @@ const imports = {
     mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false },
     minecraftCss: '/styles/minecraft.css',
     odometerCss: '/styles/external/odometer.css',
-    odometerJs: { link: '/scripts/external/odometer.js', module: true },
+    odometerJs: { link: '/scripts/external/odometer.js', module: true }
 };
 
 const phoneticAlphabet = [
@@ -32,7 +32,7 @@ const phoneticAlphabet = [
     { letter: 'W', codeWord: 'Whiskey' },
     { letter: 'X', codeWord: 'X-Ray' },
     { letter: 'Y', codeWord: 'Yankee' },
-    { letter: 'Z', codeWord: 'Zulu' },
+    { letter: 'Z', codeWord: 'Zulu' }
 ];
 
 const textAbbreviations = [
@@ -114,7 +114,7 @@ const textAbbreviations = [
     { abbreviation: 'WTH', meaning: 'what the heck/hell' },
     { abbreviation: 'YK', meaning: 'you know' },
     { abbreviation: 'YOLO', meaning: 'you only live once' },
-    { abbreviation: 'YW', meaning: "you're welcome" },
+    { abbreviation: 'YW', meaning: "you're welcome" }
 ];
 
 const toneIndicators = [
@@ -201,7 +201,7 @@ const toneIndicators = [
     { indicator: 'tic', meaning: 'tics' },
     { indicator: 'ui', meaning: 'unironic' },
     { indicator: 'vu', meaning: 'very upset' },
-    { indicator: 'wp', meaning: 'wrong proxy' },
+    { indicator: 'wp', meaning: 'wrong proxy' }
 ];
 
 const minecraftColorCodes = [
@@ -220,7 +220,7 @@ const minecraftColorCodes = [
     { color: 'White', colorName: 'white', colorCode: 'f', motdCode: '00A7f', hexCode: 'ffffff', backgroundColor: 'ffffff', textColor: '000000' },
     { color: 'Gray', colorName: 'gray', colorCode: '7', motdCode: '00A77', hexCode: 'aaaaaa', backgroundColor: 'aaaaaa', textColor: '000000' },
     { color: 'Dark Gray', colorName: 'dark_gray', colorCode: '8', motdCode: '00A78', hexCode: '555555', backgroundColor: '555555', textColor: 'fafafa' },
-    { color: 'Black', colorName: 'black', colorCode: '0', motdCode: '00A70', hexCode: '000000', backgroundColor: '000000', textColor: 'fafafa' },
+    { color: 'Black', colorName: 'black', colorCode: '0', motdCode: '00A70', hexCode: '000000', backgroundColor: '000000', textColor: 'fafafa' }
 ];
 
 const minecraftFormattingCodes = [
@@ -229,7 +229,7 @@ const minecraftFormattingCodes = [
     { type: 'Strikethrough', formattingCode: 'm', motdCode: '00A7m', style: 'text-decoration: line-through' },
     { type: 'Underline', formattingCode: 'n', motdCode: '00A7n', style: 'text-decoration: underline' },
     { type: 'Italic', formattingCode: 'o', motdCode: '00A7o', style: 'font-style: italic' },
-    { type: 'Reset color and formatting', formattingCode: 'r', motdCode: '00A7r', style: '' },
+    { type: 'Reset color and formatting', formattingCode: 'r', motdCode: '00A7r', style: '' }
 ];
 
 const stateAbbreviations = [
@@ -282,7 +282,7 @@ const stateAbbreviations = [
     { name: 'Washington', postal: 'WA', standard: 'Wash.' },
     { name: 'West Virginia', postal: 'WV', standard: 'W.Va.' },
     { name: 'Wisconsin', postal: 'WI', standard: 'Wis.' },
-    { name: 'Wyoming', postal: 'WY', standard: 'Wyo.' },
+    { name: 'Wyoming', postal: 'WY', standard: 'Wyo.' }
 ];
 
 export const blankProperties = {
@@ -293,7 +293,7 @@ export const blankProperties = {
     additionalScripts: [],
     additionalStyles: [],
     script: false,
-    keywords: [],
+    keywords: []
 };
 
 const allPageInfo = {
@@ -306,7 +306,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'base64-converter': {
         title: 'Base64 Encode/Decode',
@@ -316,7 +316,7 @@ const allPageInfo = {
         keywords: ['b64'],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'base64-image-converter': {
         title: 'Base64 Image Encode/Decode',
@@ -326,7 +326,7 @@ const allPageInfo = {
         keywords: ['b64'],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'binary-calc': {
         title: 'Binary Calculator',
@@ -336,7 +336,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'binary-text': {
         title: 'Binary Text Converter',
@@ -346,7 +346,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'browser-info': {
         title: 'Browser Info',
@@ -356,7 +356,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'case-changer': {
         title: 'Case Changer',
@@ -366,7 +366,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'color-info': {
         title: 'Color Information',
@@ -376,7 +376,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     countdowns: {
         title: 'Countdowns',
@@ -386,7 +386,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     counter: {
         title: 'Counter',
@@ -396,7 +396,7 @@ const allPageInfo = {
         keywords: ['spacebar'],
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss],
-        script: true,
+        script: true
     },
     'currency-exchange': {
         title: 'Currency Exchange Rates',
@@ -406,7 +406,7 @@ const allPageInfo = {
         keywords: ['usd', 'money'],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'heic-converter': {
         title: 'HEIC Converter',
@@ -416,7 +416,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.heic2any],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'image-converter': {
         title: 'Image Converter',
@@ -426,7 +426,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'ip-info': {
         title: 'IP Info',
@@ -436,7 +436,7 @@ const allPageInfo = {
         keywords: ['internet', 'isp'],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'keycode-info': {
         title: 'KeyCode Information',
@@ -446,7 +446,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'length-converter': {
         title: 'Length Converter',
@@ -456,7 +456,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.mathJs],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'list-sorter': {
         title: 'List Sorter',
@@ -466,7 +466,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'morse-code-converter': {
         title: 'Morse Code Converter',
@@ -476,7 +476,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'quick-copy': {
         title: 'Quick Copy',
@@ -486,7 +486,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'random-number': {
         title: 'Random Number Generator',
@@ -496,7 +496,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss],
-        script: true,
+        script: true
     },
     regex: {
         title: 'Regex Tools',
@@ -506,7 +506,7 @@ const allPageInfo = {
         keywords: ['regular expression'],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'roman-converter': {
         title: 'Roman Numeral Converter',
@@ -516,7 +516,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'scientific-notation-converter': {
         title: 'Scientific Notation Converter',
@@ -526,7 +526,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.mathJs],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     stopwatch: {
         title: 'Stopwatch',
@@ -536,7 +536,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'svg-to-png': {
         title: 'SVG to PNG',
@@ -546,7 +546,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'temperature-converter': {
         title: 'Temperature Converter',
@@ -556,7 +556,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.mathJs],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'tides-info': {
         title: 'Tides Info',
@@ -566,7 +566,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'time-converter': {
         title: 'Time Converter',
@@ -576,7 +576,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [imports.mathJs],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     time: {
         title: 'Time',
@@ -586,7 +586,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     timer: {
         title: 'Countdown Timer',
@@ -596,7 +596,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'unix-time-converter': {
         title: 'UNIX Time Converter',
@@ -606,7 +606,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'video-converter': {
         title: 'Video Converter',
@@ -616,7 +616,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'video-to-audio': {
         title: 'Video to Audio Converter',
@@ -626,7 +626,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'weather-info': {
         title: 'Weather Info',
@@ -636,7 +636,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'word-counter': {
         title: 'Word Counter',
@@ -646,7 +646,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     // Info
     'minecraft-codes': {
@@ -659,7 +659,7 @@ const allPageInfo = {
         additionalStyles: [imports.minecraftCss],
         script: false,
         minecraftColorCodes,
-        minecraftFormattingCodes,
+        minecraftFormattingCodes
     },
     'phonetic-alphabet': {
         title: 'NATO Phonetic Alphabet',
@@ -670,7 +670,7 @@ const allPageInfo = {
         additionalScripts: [],
         additionalStyles: [],
         script: false,
-        phoneticAlphabet,
+        phoneticAlphabet
     },
     'queer-calendar': {
         title: 'Queer Calendar',
@@ -680,7 +680,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'state-abbreviations': {
         title: 'State Abbreviations',
@@ -691,7 +691,7 @@ const allPageInfo = {
         additionalScripts: [],
         additionalStyles: [],
         script: false,
-        stateAbbreviations,
+        stateAbbreviations
     },
     'text-abbreviations': {
         title: 'Text Abbreviations',
@@ -702,7 +702,7 @@ const allPageInfo = {
         additionalScripts: [],
         additionalStyles: [],
         script: false,
-        textAbbreviations,
+        textAbbreviations
     },
     'tone-indicators': {
         title: 'Tone Indicators',
@@ -713,7 +713,7 @@ const allPageInfo = {
         additionalScripts: [],
         additionalStyles: [],
         script: false,
-        toneIndicators,
+        toneIndicators
     },
     // Fun
     'astronomy-picture': {
@@ -724,7 +724,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'eight-ball': {
         title: 'Magic Eight Ball',
@@ -734,7 +734,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'mp3-player': {
         title: 'MP3 Player',
@@ -744,7 +744,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'random-fact': {
         title: 'Random Fact',
@@ -754,7 +754,7 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
+        script: true
     },
     'random-joke': {
         title: 'Random Joke',
@@ -764,8 +764,8 @@ const allPageInfo = {
         keywords: [],
         additionalScripts: [],
         additionalStyles: [],
-        script: true,
-    },
+        script: true
+    }
 };
 
 const pages = {};
@@ -775,7 +775,7 @@ Object.keys(allPageInfo).forEach((key) => {
         name: key,
         descriptionParsed: allPageInfo[key].description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
         link: `/${allPageInfo[key].category}/${key}`,
-        ...allPageInfo[key],
+        ...allPageInfo[key]
     };
 });
 
