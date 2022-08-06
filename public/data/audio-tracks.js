@@ -93,6 +93,11 @@ export const audioTracks = {
             name: 'Mahna Mahna - The Muppets (on The Ed Sullivan Show)',
             file: 'Mahna Mahna.mp3',
             duration: '2:51'
+        },
+        {
+            name: 'Deja Vu - Dave Rodgers',
+            file: 'Deja Vu.mp3',
+            duration: '3:00'
         }
     ],
     hypixel: [
