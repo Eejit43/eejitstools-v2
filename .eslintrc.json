@@ -51,6 +51,7 @@
         "semi": ["error", "always"],
         "yoda": ["error", "never"],
         "jsdoc/newline-after-description": ["error", "never"],
-        "jsdoc/no-undefined-types": ["error"]
+        "jsdoc/no-undefined-types": ["error"],
+        "jsdoc/valid-types": ["off"]
     }
 }

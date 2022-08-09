@@ -13,7 +13,7 @@
     "dependencies": {
         "@fastify/static": "^6.4.0",
         "@fastify/view": "^7.0.0",
-        "canvas": "^2.9.1",
+        "canvas": "^2.9.3",
         "dotenv": "^16.0.0",
         "ejs": "^3.1.8",
         "fastify": "^4.2.0",
