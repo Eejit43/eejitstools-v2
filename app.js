@@ -10,7 +10,6 @@ import Fastify from 'fastify';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
-import Request from 'request';
 import { blankProperties, pagesParsed, pagesParsedValues } from './public/data/pages.js';
 
 // Load layouts and static assets
@@ -32,20 +31,21 @@ fastify.get('/search', (request, reply) => {
 });
 
 fastify.get('/headers', (request, reply) => {
-    reply.status(200).send(JSON.stringify(request.headers, null, 2));
+    reply.send(JSON.stringify(request.headers, null, 2));
 });
 
 const shortPagesInfo = pagesParsedValues.map((page) => ({ title: page.title, name: page.name, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
 
 fastify.get('/pages', (request, reply) => {
-    reply.status(200).send(JSON.stringify(shortPagesInfo, null, 2));
+    reply.send(JSON.stringify(shortPagesInfo, null, 2));
 });
 
 fastify.get('/cors-anywhere', async (request, reply) => {
     if (!request.query.image) {
-        Request({ url: request.query.url }, (error, response, body) => {
-            reply.header('Access-Control-Allow-Origin', '*').send(body);
-        });
+        if (!request.query.url) reply.send('No URL provided');
+
+        const body = await (await fetch(request.query.url)).text();
+        reply.header('Access-Control-Allow-Origin', '*').send(body);
     } else {
         let response = await fetch(request.query.url);
 

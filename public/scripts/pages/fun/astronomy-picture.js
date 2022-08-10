@@ -93,7 +93,7 @@ function fetchApod(yearInput, monthInput, dateInput) {
             try {
                 if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, '');
                 else title = stringToHTML(html.querySelectorAll('center')[1].innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
-            } catch (error) {
+            } catch {
                 title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
             }
 

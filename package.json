@@ -17,8 +17,7 @@
         "dotenv": "^16.0.0",
         "ejs": "^3.1.8",
         "fastify": "^4.2.0",
-        "node-fetch": "^3.2.5",
-        "request": "^2.88.2"
+        "node-fetch": "^3.2.5"
     },
     "devDependencies": {
         "eslint": "^8.16.0",
