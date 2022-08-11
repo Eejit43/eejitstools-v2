@@ -12,6 +12,8 @@
 # below:
 .git
 .gitignore
+# Ignore all files that are ignored in .gitignore
+#!include:.gitignore
 
 # Node.js dependencies:
 node_modules/
