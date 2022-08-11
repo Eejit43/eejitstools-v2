@@ -44,8 +44,9 @@ fastify.get('/cors-anywhere', async (request, reply) => {
     if (!request.query.image) {
         if (!request.query.url) reply.send('No URL provided');
 
-        const body = await (await fetch(request.query.url)).text();
-        reply.header('Access-Control-Allow-Origin', '*').send(body);
+        const response = await fetch(request.query.url);
+        const body = await response.text();
+        reply.header('Access-Control-Allow-Origin', '*').status(response.status).send(body);
     } else {
         let response = await fetch(request.query.url);
 
