@@ -10,7 +10,8 @@ import Fastify from 'fastify';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
-import { blankProperties, pagesParsed, pagesParsedValues } from './public/data/pages.js';
+import { fetchApod } from './apod-fetcher.js';
+import { blankProperties, pagesParsed } from './public/data/pages.js';
 
 // Load layouts and static assets
 const fastify = Fastify();
@@ -23,7 +24,7 @@ fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
 
 // Register pages
 fastify.get('/', (request, reply) => {
-    reply.view('/index.ejs', { title: 'Home', pages: pagesParsedValues, ...blankProperties });
+    reply.view('/index.ejs', { title: 'Home', pages: Object.values(pagesParsed), ...blankProperties });
 });
 
 fastify.get('/search', (request, reply) => {
@@ -34,7 +35,7 @@ fastify.get('/headers', (request, reply) => {
     reply.send(JSON.stringify(request.headers, null, 2));
 });
 
-const shortPagesInfo = pagesParsedValues.map((page) => ({ title: page.title, name: page.name, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
+const shortPagesInfo = Object.values(pagesParsed).map((page) => ({ title: page.title, name: page.name, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
 
 fastify.get('/pages', (request, reply) => {
     reply.send(JSON.stringify(shortPagesInfo, null, 2));
@@ -82,6 +83,12 @@ fastify.get('/twemoji/:id', async (request, reply) => {
     image.height = image.width = 500;
     canvas.getContext('2d').drawImage(image, 0, 0, 500, 500);
     reply.type('image/png').send(canvas.toBuffer());
+});
+
+// Astronomy Picture of the Day (NASA)
+fastify.get('/apod/:year/:month/:day', async (request, reply) => {
+    const response = await fetchApod(request.params.year, request.params.month, request.params.day);
+    reply.send(JSON.stringify(response, null, 2));
 });
 
 // Setup error handlers

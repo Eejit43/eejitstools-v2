@@ -768,17 +768,12 @@ const allPageInfo = {
     }
 };
 
-const pages = {};
-
-Object.keys(allPageInfo).forEach((key) => {
-    pages[key] = {
-        name: key,
-        descriptionParsed: allPageInfo[key].description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
-        link: `/${allPageInfo[key].category}/${key}`,
-        ...allPageInfo[key]
+export const pagesParsed = Object.keys(allPageInfo).reduce((pages, page) => {
+    pages[page] = {
+        name: page,
+        descriptionParsed: allPageInfo[page].description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
+        link: `/${allPageInfo[page].category}/${page}`,
+        ...allPageInfo[page]
     };
-});
-
-export const pagesParsed = pages;
-
-export const pagesParsedValues = Object.values(pagesParsed);
+    return pages;
+}, {});

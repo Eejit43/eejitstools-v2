@@ -1,4 +1,4 @@
-import { showAlert, stringToHTML } from '/scripts/functions.js';
+import { showAlert } from '/scripts/functions.js';
 
 const resultElement = document.getElementById('result');
 const yearVal = document.getElementById('year');
@@ -9,7 +9,7 @@ const resetDate = document.getElementById('reset-date');
 
 /* Add event listeners */
 getDate.addEventListener('click', () => {
-    checkApod(yearVal.value !== '' ? yearVal.value : year, monthVal.value !== '' ? monthVal.value : month, dateVal.value !== '' ? dateVal.value : date);
+    checkApod(yearVal.value || year, monthVal.value || month, dateVal.value || date);
 });
 resetDate.addEventListener('click', () => {
     yearVal.value = '';
@@ -33,6 +33,11 @@ resetDate.addEventListener('click', () => {
     dateVal.addEventListener(event, () => {
         dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
         checkInput(dateVal);
+    });
+});
+[yearVal, monthVal, dateVal].forEach((element) => {
+    element.addEventListener('keydown', (event) => {
+        if (event.code === 'Enter') checkApod(yearVal.value || year, monthVal.value || month, dateVal.value || date);
     });
 });
 
@@ -68,73 +73,50 @@ function checkApod(yearInput, monthInput, dateInput) {
 }
 
 /**
+ * @typedef {import('../../../../apod-fetcher.js').apodEntry} apodEntry
+ * @typedef {import('../../../../apod-fetcher.js').apodEntryMedia} apodEntryMedia
+ */
+
+/**
  * Fetches the Astronomy Picture of the Day (APOD) for the provided date
  * @param {number} yearInput the year input
  * @param {number} monthInput the month input
  * @param {number} dateInput the date input
  */
-function fetchApod(yearInput, monthInput, dateInput) {
+async function fetchApod(yearInput, monthInput, dateInput) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
-    yearInput = yearInput ? yearInput.toString().slice(-2) : year.toString().slice(-2);
-    monthInput = monthInput ? monthInput.toString().padStart(2, '0') : month.toString().padStart(2, '0');
-    dateInput = dateInput ? dateInput.toString().padStart(2, '0') : date.toString().padStart(2, '0');
+    /** @type {apodEntry} */
+    const response = await (await fetch(`/apod/${yearInput}/${monthInput}/${dateInput}`)).json();
 
-    fetch(`/cors-anywhere?url=https://apod.nasa.gov/apod/ap${yearInput}${monthInput}${dateInput}.html`)
-        .then(async (response) => {
-            const preHtml = (await response.text()).replace(/\n/g, ' ').replace(/<a(.*?)>/g, '<a$1 target="_blank">');
-            const html = stringToHTML(preHtml);
+    const { success, error, source, date, title, credit, explanation, media } = response;
 
-            const apodDate = new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    if (!success) return showAlert(error, 'error');
 
-            const mediaType = /img src/gi.test(preHtml) ? 'image' : 'video';
+    const result = [
+        `Astronomy ${media.type === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for <a href="${source}" target="_blank">${date}</a>:<br /><br />`, //
+        `<center style="font-size: 30px">${title}</center>`,
+        getMediaElement(media),
+        credit ? `<center>${credit}</center><br />` : '',
+        explanation
+    ].filter((section) => section);
 
-            let title;
-            try {
-                if (html.querySelectorAll('center').length === 2) title = stringToHTML(html.querySelector('center').innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, '');
-                else title = stringToHTML(html.querySelectorAll('center')[1].innerHTML).querySelector('b').innerHTML.trim().replace(/<br>\n Credit:/g, ''); // prettier-ignore
-            } catch {
-                title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
-            }
+    resultElement.innerHTML = result.join('');
 
-            const credit = /Credit.*?<\/center>/gis.test(preHtml) ? preHtml.match(/Credit.*?<\/center>/gis)[0].trim().replace(/ <\/b>/gi, '').replace(/ ?<\/center>/gi, '').replace(/href="lib\/(.*?)"/g, 'href="https://apod.nasa.gov/apod/lib/$1"') : false; // prettier-ignore
+    if (media.annotated) {
+        const imageElement = document.querySelector('a#apod-link > img');
+        imageElement.parentElement.addEventListener('mouseover', () => (imageElement.src = media.annotated));
+        imageElement.parentElement.addEventListener('mouseout', () => (imageElement.src = media.src));
+    }
+}
 
-            let media;
-            if (mediaType === 'video') media = `<div style="position: relative; overflow: hidden; margin: 15px auto; width: 900px; max-width: 90%; padding-top: 40%">${html.querySelector('iframe').outerHTML.replace(/src/g, 'style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%" src')}</div>`;
-            else {
-                const links = html.querySelectorAll('a');
-                for (let i = 0; i < links.length; i++) {
-                    if (/img/g.test(links[i].innerHTML)) {
-                        media = stringToHTML(links[i].outerHTML.replace(/("|')image\//g, '$1https://apod.nasa.gov/apod/image/').replace(/a href=/g, 'a style="display: block; margin: 15px auto; width: 900px; max-width: 90%" href=').replace(/<img/g, '<img style="width: 100%"').replace(/ {2}/g, ' ').replace(/will download the/g, 'will open the')).querySelector('a'); // prettier-ignore
-                        break;
-                    }
-                }
-            }
-
-            const explanation = html.body.outerHTML
-                .match(/Explanation:.*?Tomorrow|Explanation<\/b>:.*?Tomorrow|Explanation:.*?<hr>/gs)[0]
-                .replace(/(\n| {2,3})/g, ' ')
-                .replace(/(Explanation: ?<\/b> |Explanation<\/b>: |Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$)/g, '')
-                .replace(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
-                .replace(/<b> (.*?) <\/b>/g, '$1')
-                .replace(/--/g, '–')
-                .replace(/href="(?!http)(.*?)"/g, 'href="https://apod.nasa.gov/apod/$1"')
-                .replace(/href="\/(.*?)"/g, 'href="https://apod.nasa.gov/$1"')
-                .replace(/(\w|>)\/ /g, '$1/')
-                .replace(/ \.{3}/g, '...')
-                .replace(/<br( \/)>$/g, '')
-                .replace(/<br( \/)>$/g, '');
-
-            const result = [
-                `Astronomy ${mediaType === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for ${apodDate}.<br />`, //
-                `<div style="text-align: center; font-size: 30px">${title}</div>`,
-                `${mediaType === 'video' ? `${media} ${credit ? `<center>${credit}</center><br />` : ''}` : `${media.outerHTML} ${credit ? `<center>${credit}</center><br />` : ''}`}`,
-                `${explanation}`
-            ];
-
-            resultElement.innerHTML = result.join('');
-        })
-        .catch(() => {
-            showAlert('No APOD data found for this date!', 'error');
-        });
+/**
+ * Gets a viewable element (`img` or `iframe` embed) for an APOD entry media
+ * @param {apodEntryMedia} media the media to get the element for
+ * @returns {string} the media element
+ */
+function getMediaElement(media) {
+    const { type, src, highResolution, alt } = media;
+    if (type === 'image') return `<a id="apod-link" href="${highResolution || src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`;
+    else return `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }

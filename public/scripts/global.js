@@ -1,4 +1,4 @@
-import { pagesParsedValues } from '/data/pages.js';
+import { pagesParsed } from '/data/pages.js';
 import { addAnimation, matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
 
 twemojiUpdate();
@@ -36,7 +36,7 @@ const searchText = document.querySelector('.search-text');
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
-    pagesParsedValues.forEach((page) => {
+    Object.values(pagesParsed).forEach((page) => {
         if (page.title.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.name.toLowerCase().includes(value) || matchesKeywords(page.keywords, value)) {
             results.push(`<tr><td><a href="${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
         }
@@ -86,7 +86,7 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.contentEditable === 'true') return;
 
     if (event.code === 'KeyK') document.getElementById('shortcuts').style.display = 'block';
     else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -99,7 +99,7 @@ document.addEventListener('keydown', (event) => {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'views/index.ejs';
-        else if (pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '')) finalUrl = `views/pages${pathname}.ejs`;
+        else if (pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname) finalUrl = `views/pages${pathname}.ejs`;
         else finalUrl = 'views/error.ejs';
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
@@ -107,7 +107,7 @@ document.addEventListener('keydown', (event) => {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'public/scripts/global.js';
-        else if (pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname.replace(/^\//, '') && pagesParsedValues[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages/${pathname.replace(/^\/(tools|info|fun)\//, '')}.js`;
+        else if (pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname && pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages${pathname}.js`;
         else finalUrl = 'public/scripts/global.js';
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');

@@ -1477,3 +1477,33 @@ a[href='/tools/countdowns'] i.fa-regular.fa-hourglass {
     cursor: pointer;
     text-decoration: underline dotted;
 }
+
+a#apod-link {
+    display: block;
+    margin: 20px auto;
+    width: 900px;
+    max-width: 90%;
+}
+
+a#apod-link > img {
+    width: 100%;
+}
+
+div#apod-embed-container {
+    position: relative;
+    overflow: hidden;
+    margin: 15px auto;
+    width: 900px;
+    max-width: 90%;
+    padding-top: 40%;
+}
+
+div#apod-embed-container > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
