@@ -154,17 +154,6 @@ export function stringToHTML(string) {
 }
 
 /**
- * Whether or not the provided keyword(s) are included in the input
- * @param {string[]} keywords The keyword(s) to check
- * @param {string} string The text to check the keywords against
- * @returns {boolean} whether or not the provided keyword(s) are included in the input
- */
-export function matchesKeywords(keywords, string) {
-    for (let i = 0; i < keywords.length; i++) if (keywords[i].includes(string)) return true;
-    return false;
-}
-
-/**
  * Updates an elements innerHTML to the provided string if it isn't the same as the provided string
  * @param {HTMLElement} element the element to update
  * @param {string} string the content to update the element with

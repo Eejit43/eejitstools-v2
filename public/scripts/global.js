@@ -1,5 +1,5 @@
 import { pagesParsed } from '/data/pages.js';
-import { addAnimation, matchesKeywords, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
+import { addAnimation, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
 
 twemojiUpdate();
 
@@ -37,7 +37,7 @@ searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
     Object.values(pagesParsed).forEach((page) => {
-        if (page.title.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.name.toLowerCase().includes(value) || matchesKeywords(page.keywords, value)) {
+        if (page.title.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.name.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) {
             results.push(`<tr><td><a href="${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
         }
     });
