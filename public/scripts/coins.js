@@ -242,9 +242,9 @@ async function loadCoinsList() {
                 obtained.textContent = coin.obtained ? 'Yes' : 'No';
                 row.appendChild(obtained);
 
-                const upgrade = document.createElement('td');
-                upgrade.textContent = coin.upgrade ? 'Yes' : 'No';
-                row.appendChild(upgrade);
+                const needsUpgrade = document.createElement('td');
+                needsUpgrade.textContent = coin.obtained ? (coin.upgrade ? 'Yes' : 'No') : 'N/A';
+                row.appendChild(needsUpgrade);
 
                 coinVariantTableBody.appendChild(row);
             });
