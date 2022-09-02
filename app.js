@@ -67,6 +67,7 @@ fastify.get('/cors-anywhere', async (request, reply) => {
 
     if (response.headers.get('content-type').startsWith('image/'))
         reply
+            .header('Access-Control-Allow-Origin', '*')
             .type('image/png')
             .status(response.status)
             .send(await response.buffer());
