@@ -7,14 +7,15 @@
     "scripts": {
         "start": "node app.js",
         "dev": "nodemon app.js",
-        "deploy": "gcloud app deploy --project=eejits-tools --quiet",
-        "logs": "gcloud app logs tail --project=eejits-tools"
+        "deploy": "npm run parse-app-yaml && gcloud app deploy --project=eejits-tools --quiet",
+        "logs": "gcloud app logs tail --project=eejits-tools",
+        "parse-app-yaml": "node parse-app-yaml.js"
     },
     "dependencies": {
         "@fastify/static": "^6.4.0",
         "@fastify/view": "^7.0.0",
         "canvas": "^2.9.3",
-        "dotenv": "^16.0.0",
+        "dotenv": "^16.0.1",
         "ejs": "^3.1.8",
         "fastify": "^4.2.0",
         "node-fetch": "^3.2.5",

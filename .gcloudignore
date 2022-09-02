@@ -28,3 +28,4 @@ CODEOWNERS
 LICENSE
 README.md
 SECURITY.md
+!coin-data.js

@@ -47,7 +47,9 @@
         <!-- Styles -->
         <link rel="stylesheet" href="/styles/styles.css" />
         <% for (const style of additionalStyles) { %>
-        <link rel="stylesheet" href="<%= style %>" />
+        <link rel="stylesheet" href="/styles/<%= style %>" />
+        <% } %> <% if (style) { %>
+        <link rel="stylesheet" href="/styles/pages/<%= category %>/<%= name %>.css" />
         <% } %>
 
         <!-- Scripts -->
@@ -55,7 +57,7 @@
         <% if (script) { %>
         <script src="/scripts/pages/<%= category %>/<%= name %>.js" type="module"></script>
         <% } %> <% for (const script of additionalScripts) { %>
-        <script src="<%= script.link %>"<%- script.module ? 'type="module"' : '' %>></script>
+        <script src="/scripts/<%= script.link %>"<%- script.module ? ' type="module"' : '' %>></script>
         <% } %>
     </head>
     <body>

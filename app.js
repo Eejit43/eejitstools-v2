@@ -11,6 +11,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
+import coins from './coin-data.js';
 import { blankProperties, pagesParsed } from './public/data/pages.js';
 
 // Load layouts and static assets
@@ -28,7 +29,20 @@ fastify.get('/', (request, reply) => {
 });
 
 fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [], keywords: [], script: false });
+    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: 'search.js', module: true }], additionalStyles: [], keywords: [], script: false, style: false });
+});
+
+fastify.get('/coins', (request, reply) => {
+    reply.view('/coins.ejs', { title: 'Coins', descriptionParsed: 'A list of coins I have/need', page: '', additionalScripts: [{ link: 'coins.js', module: true }], additionalStyles: ['coins.css'], keywords: [], script: false, style: false });
+});
+
+fastify.get('/coins-login', (request, reply) => {
+    reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2));
+});
+
+fastify.get('/coins-list', (request, reply) => {
+    if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+    reply.send(JSON.stringify(coins, null, 2));
 });
 
 fastify.get('/headers', (request, reply) => {
@@ -42,21 +56,25 @@ fastify.get('/pages', (request, reply) => {
 });
 
 fastify.get('/cors-anywhere', async (request, reply) => {
-    if (!request.query.image) {
-        if (!request.query.url) reply.send('No URL provided');
+    if (!request.query.url) reply.status(400).send('No URL provided');
 
-        const response = await fetch(request.query.url);
-        const body = await response.text();
-        reply.header('Access-Control-Allow-Origin', '*').status(response.status).send(body);
-    } else {
-        let response = await fetch(request.query.url);
-
-        if (!response.ok) return reply.header('Access-Control-Allow-Origin', '*').type('image/png').send();
-
-        response = await response.buffer();
-
-        reply.header('Access-Control-Allow-Origin', '*').type('image/png').send(response);
+    let response;
+    try {
+        response = await fetch(request.query.url);
+    } catch {
+        reply.status(400).send('Invalid URL');
     }
+
+    if (response.headers.get('content-type').startsWith('image/'))
+        reply
+            .type('image/png')
+            .status(response.status)
+            .send(await response.buffer());
+    else
+        reply
+            .header('Access-Control-Allow-Origin', '*')
+            .status(response.status)
+            .send(await response.text());
 });
 
 // Render each tool/info/fun page
@@ -64,7 +82,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
 
     pages.forEach((page) => {
-        page = page.replace('.ejs', '');
+        page = page.replace(/.ejs$/, '');
         const pageInfo = pagesParsed[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
         fastify.get(`/${category}/${page}`, (request, reply) => {
@@ -76,7 +94,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
     const response = await fetch(`https://abs.twimg.com/emoji/v2/svg/${request.params.id}.svg`);
-    if (!response.ok) return reply.header('Access-Control-Allow-Origin', '*').type('image/png').send();
+    if (!response.ok) return reply.type('image/png').send();
 
     const canvas = Canvas.createCanvas(500, 500);
     const image = await Canvas.loadImage(await response.buffer());
@@ -101,11 +119,13 @@ fastify.setNotFoundHandler((request, reply) => {
     reply.status(404).view('/error.ejs', { title: 'Not Found', message: 'Unable to find the requested page!', status: 404, ...blankProperties });
 });
 
+const port = process.env.PORT || 3000;
+
 // Start server
-fastify.listen({ port: process.env.PORT || 3000 }, (error) => {
+fastify.listen({ port }, (error) => {
     if (error) {
         fastify.log.error(error);
         process.exit(1);
     }
-    console.log('Server is now listening on http://localhost:3000');
+    console.log(`Server is now listening on http://localhost:${port}`);
 });

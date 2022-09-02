@@ -43,8 +43,9 @@ export function showAlert(text, color, duration) {
  * @param {string} [type] The type of icon to show ('success' or 'error')
  * @param {string} [color] The color of the icon to show
  * @param {string} [icon] The icon of the icon to show
+ * @param {boolean} [remove] Whether or not to the remove the icon after 2 seconds
  */
-export function showResult(id, type, color = '#009c3f', icon = 'check') {
+export function showResult(id, type, color = '#009c3f', icon = 'check', remove = true) {
     const oldElement = document.getElementById(id + '-runResult');
     const newElement = oldElement.cloneNode(true);
     oldElement.parentNode.replaceChild(newElement, oldElement);
@@ -57,10 +58,11 @@ export function showResult(id, type, color = '#009c3f', icon = 'check') {
     }
     newElement.style.color = color;
     newElement.className = 'fa-solid fa-' + icon;
-    setTimeout(() => {
-        newElement.style.color = '';
-        newElement.className = '';
-    }, 2000);
+    if (remove)
+        setTimeout(() => {
+            newElement.style.color = '';
+            newElement.className = '';
+        }, 2000);
 }
 
 /**
