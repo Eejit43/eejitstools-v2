@@ -35,12 +35,12 @@ loginButton.addEventListener('click', async () => {
 });
 
 const mintMarks = {
-    P: 'Philadelphia (PA)',
-    D: 'Denver (CO)',
-    S: 'San Francisco (CA)',
-    W: 'West Point (NY)',
-    CC: 'Carson City (NV)',
-    C: 'Charlotte (NC)'
+    P: 'Philadelphia (Pennsylvania)',
+    D: 'Denver (Colorado)',
+    S: 'San Francisco (California)',
+    W: 'West Point (New York)',
+    CC: 'Carson City (Nevada)',
+    C: 'Charlotte (North Carolina)'
 };
 
 /**
@@ -161,38 +161,57 @@ async function loadCoinsList() {
                 }
             });
 
-            const showNeedsUpgradeCoinsButton = document.createElement('button');
-            showNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
-            showNeedsUpgradeCoinsButton.dataset.shown = true;
-            showNeedsUpgradeCoinsButton.addEventListener('click', () => {
-                if (showNeedsUpgradeCoinsButton.dataset.shown === 'true') {
-                    showNeedsUpgradeCoinsButton.dataset.shown = false;
-                    showNeedsUpgradeCoinsButton.textContent = 'Show coins needing upgrade';
+            const toggleNeedsUpgradeCoinsButton = document.createElement('button');
+            toggleNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
+            toggleNeedsUpgradeCoinsButton.dataset.shown = true;
+            toggleNeedsUpgradeCoinsButton.addEventListener('click', () => {
+                if (toggleNeedsUpgradeCoinsButton.dataset.shown === 'true') {
+                    toggleNeedsUpgradeCoinsButton.dataset.shown = false;
+                    toggleNeedsUpgradeCoinsButton.textContent = 'Show coins needing upgrade';
                     coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
                         if (coin.dataset.upgrade === 'true') coin.classList.add('hidden');
                     });
                 } else {
-                    showNeedsUpgradeCoinsButton.dataset.shown = true;
-                    showNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
+                    toggleNeedsUpgradeCoinsButton.dataset.shown = true;
+                    toggleNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
                     coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
                         if (coin.dataset.upgrade === 'true') coin.classList.remove('hidden');
                     });
                 }
             });
 
-            const showObtainedCoinsButton = document.createElement('button');
-            showObtainedCoinsButton.textContent = 'Show obtained coins';
-            showObtainedCoinsButton.dataset.shown = false;
-            showObtainedCoinsButton.addEventListener('click', () => {
-                if (showObtainedCoinsButton.dataset.shown === 'true') {
-                    showObtainedCoinsButton.dataset.shown = false;
-                    showObtainedCoinsButton.textContent = 'Show obtained coins';
+            const toggleMissingCoinsButton = document.createElement('button');
+            toggleMissingCoinsButton.textContent = 'Hide missing coins';
+            toggleMissingCoinsButton.dataset.shown = true;
+            toggleMissingCoinsButton.addEventListener('click', () => {
+                if (toggleMissingCoinsButton.dataset.shown === 'true') {
+                    toggleMissingCoinsButton.dataset.shown = false;
+                    toggleMissingCoinsButton.textContent = 'Show missing coins';
+                    coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
+                        if (coin.dataset.obtained === 'false') coin.classList.add('hidden');
+                    });
+                } else {
+                    toggleMissingCoinsButton.dataset.shown = true;
+                    toggleMissingCoinsButton.textContent = 'Hide missing coins';
+                    coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
+                        if (coin.dataset.obtained === 'false') coin.classList.remove('hidden');
+                    });
+                }
+            });
+
+            const toggleObtainedCoinsButton = document.createElement('button');
+            toggleObtainedCoinsButton.textContent = 'Show obtained coins';
+            toggleObtainedCoinsButton.dataset.shown = false;
+            toggleObtainedCoinsButton.addEventListener('click', () => {
+                if (toggleObtainedCoinsButton.dataset.shown === 'true') {
+                    toggleObtainedCoinsButton.dataset.shown = false;
+                    toggleObtainedCoinsButton.textContent = 'Show obtained coins';
                     coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
                         if (coin.dataset.obtained === 'true' && coin.dataset.upgrade !== 'true') coin.classList.add('hidden');
                     });
                 } else {
-                    showObtainedCoinsButton.dataset.shown = true;
-                    showObtainedCoinsButton.textContent = 'Hide obtained coins';
+                    toggleObtainedCoinsButton.dataset.shown = true;
+                    toggleObtainedCoinsButton.textContent = 'Hide obtained coins';
                     coinVariantTable.querySelectorAll('tbody tr').forEach((coin) => {
                         if (coin.dataset.obtained === 'true' && coin.dataset.upgrade !== 'true') coin.classList.remove('hidden');
                     });
@@ -205,7 +224,7 @@ async function loadCoinsList() {
             const coinVariantTableHead = document.createElement('thead');
             const coinVariantTableHeadRow = document.createElement('tr');
 
-            ['Year', 'Mint Mark', 'Note', 'Obtained', 'Needs Upgrade'].forEach((header) => {
+            ['Year', 'Mint Mark', 'Specification', 'Obtained', 'Needs Upgrade'].forEach((header) => {
                 const infoHeader = document.createElement('th');
                 infoHeader.textContent = header;
                 coinVariantTableHeadRow.appendChild(infoHeader);
@@ -218,8 +237,8 @@ async function loadCoinsList() {
 
             coinVariant.coins.forEach((coin) => {
                 const row = document.createElement('tr');
-                if (coin.obtained) row.dataset.obtained = true;
-                if (coin.upgrade) row.dataset.upgrade = true;
+                row.dataset.obtained = coin.obtained ?? false;
+                row.dataset.upgrade = coin.upgrade ?? false;
                 if (coin.obtained && !coin.upgrade) row.classList.add('hidden');
 
                 const year = document.createElement('td');
@@ -229,14 +248,14 @@ async function loadCoinsList() {
                 const mintMark = document.createElement('td');
                 const tooltip = document.createElement('span');
                 tooltip.classList.add('tooltip-bottom');
-                tooltip.dataset.tooltip = mintMarks[coin.mintMark] || 'Likely Philadelphia (PA)';
+                tooltip.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
                 tooltip.textContent = coin.mintMark || 'None';
                 mintMark.appendChild(tooltip);
                 row.appendChild(mintMark);
 
-                const note = document.createElement('td');
-                note.textContent = coin.note || '';
-                row.appendChild(note);
+                const specification = document.createElement('td');
+                specification.textContent = coin.specification || '';
+                row.appendChild(specification);
 
                 const obtained = document.createElement('td');
                 obtained.textContent = coin.obtained ? 'Yes' : 'No';
@@ -253,8 +272,9 @@ async function loadCoinsList() {
 
             coinVariantDiv.prepend(coinVariantImg);
             coinVariantDiv.appendChild(coinVariantButton);
-            coinVariantDiv.appendChild(showNeedsUpgradeCoinsButton);
-            coinVariantDiv.appendChild(showObtainedCoinsButton);
+            coinVariantDiv.appendChild(toggleNeedsUpgradeCoinsButton);
+            coinVariantDiv.appendChild(toggleMissingCoinsButton);
+            coinVariantDiv.appendChild(toggleObtainedCoinsButton);
             coinVariantDiv.appendChild(coinVariantTable);
 
             coinTypeDiv.appendChild(coinVariantDiv);
