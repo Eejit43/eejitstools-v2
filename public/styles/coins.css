@@ -123,3 +123,15 @@ button.coin-type-expand {
         width: 90%;
     }
 }
+
+tr[data-obtained='false'] {
+    background-color: #944646;
+}
+
+tr[data-obtained='true'] {
+    background-color: #378036;
+}
+
+tr[data-upgrade='true'] {
+    background-color: #414187;
+}
