@@ -224,7 +224,7 @@ async function loadCoinsList() {
             const coinVariantTableHead = document.createElement('thead');
             const coinVariantTableHeadRow = document.createElement('tr');
 
-            ['Year', 'Mint Mark', 'Specification', 'Obtained', 'Needs Upgrade'].forEach((header) => {
+            ['Year', 'Mint Mark', 'Specification/Notes', 'Obtained', 'Needs Upgrade'].forEach((header) => {
                 const infoHeader = document.createElement('th');
                 infoHeader.textContent = header;
                 coinVariantTableHeadRow.appendChild(infoHeader);
