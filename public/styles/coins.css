@@ -135,3 +135,7 @@ tr[data-obtained='true'] {
 tr[data-upgrade='true'] {
     background-color: #414187;
 }
+
+.coin-variant-note {
+    text-decoration: none;
+}
