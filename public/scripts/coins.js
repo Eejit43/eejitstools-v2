@@ -88,7 +88,7 @@ async function loadCoinsList() {
         coinTypeDiv.textContent = coinType.name;
 
         const coinTypeImg = document.createElement('img');
-        coinTypeImg.src = `/files/coins/${coinType.coins[coinType.coins.length - 1]?.image || 'default.png'}`;
+        coinTypeImg.src = `/files/coins/${coinType.id}/${coinType.coins[coinType.coins.length - 1]?.image || 'default'}.png`;
         coinTypeImg.classList.add('coin-type-image', 'popup-image');
         coinTypeImg.alt = coinType.name;
 
@@ -126,7 +126,7 @@ async function loadCoinsList() {
             }
 
             const coinVariantImg = document.createElement('img');
-            coinVariantImg.src = `/files/coins/${coinVariant.image || 'default.png'}`;
+            coinVariantImg.src = `/files/coins/${coinType.id}/${coinVariant.image || 'default'}.png`;
             coinVariantImg.classList.add('coin-variant-image', 'popup-image');
             coinVariantImg.alt = coinVariant.name;
 
@@ -235,6 +235,15 @@ async function loadCoinsList() {
 
                 const year = document.createElement('td');
                 year.textContent = coin.year;
+
+                if (coin.image) {
+                    const image = document.createElement('sup');
+                    image.classList.add('coin-image-text', 'fa-solid', 'fa-image');
+                    image.dataset.image = `/files/coins/${coinType.id}/${coin.image}.png`;
+                    image.dataset.name = `${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+                    year.appendChild(image);
+                }
+
                 row.appendChild(year);
 
                 const mintMark = document.createElement('td');
@@ -246,7 +255,19 @@ async function loadCoinsList() {
                 row.appendChild(mintMark);
 
                 const specification = document.createElement('td');
-                specification.textContent = coin.specification || '';
+                if (coin.comparison) {
+                    const comparison = document.createElement('span');
+                    comparison.classList.add('coin-type-comparison');
+                    comparison.textContent = 'View type comparison';
+                    comparison.dataset.image = `/files/coins/${coinType.id}/${coin.comparison}.png`;
+                    comparison.dataset.name = `Type Comparison: ${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+
+                    if (coin.specification) {
+                        specification.textContent = `${coin.specification} `;
+                        comparison.textContent = `(${comparison.textContent})`;
+                        specification.appendChild(comparison);
+                    } else specification.appendChild(comparison);
+                } else specification.textContent = coin.specification || '';
                 row.appendChild(specification);
 
                 const obtained = document.createElement('td');
@@ -301,6 +322,8 @@ if (password) {
 function loadPopupImages() {
     const modal = document.getElementById('modal');
     const images = document.querySelectorAll('img.popup-image');
+    const imageTextButtons = document.querySelectorAll('sup.coin-image-text');
+    const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison');
     const modalImage = document.getElementById('modal-image');
     const modalCaption = document.getElementById('modal-caption');
     const closeButton = document.getElementById('close-modal');
@@ -308,8 +331,22 @@ function loadPopupImages() {
     for (const image of images)
         image.addEventListener('click', () => {
             modal.style.display = 'block';
-            modalImage.src = image.src;
-            modalCaption.innerHTML = image.alt;
+            if (modalImage.src !== image.src) modalImage.src = image.src;
+            if (modalCaption.textContent !== image.alt) modalCaption.textContent = image.alt;
+        });
+
+    for (const imageTextButton of imageTextButtons)
+        imageTextButton.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image;
+            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name;
+        });
+
+    for (const coinTypeComparisonButton of coinTypeComparisonButtons)
+        coinTypeComparisonButton.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image;
+            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name;
         });
 
     [closeButton, modal].forEach((element) => {

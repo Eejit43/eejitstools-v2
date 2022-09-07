@@ -13,9 +13,9 @@ button.show-all-button {
 }
 
 .coin-type-image {
+    margin-right: 6px;
     max-height: 30px;
     vertical-align: middle;
-    margin-right: 6px;
 }
 
 button.coin-type-expand {
@@ -29,9 +29,9 @@ button.coin-type-expand {
 }
 
 .coin-variant-image {
+    margin-right: 6px;
     max-height: 18px;
     vertical-align: middle;
-    margin-right: 6px;
 }
 
 .hidden {
@@ -138,4 +138,15 @@ tr[data-upgrade='true'] {
 
 .coin-variant-note {
     text-decoration: none;
+}
+
+.coin-image-text {
+    cursor: pointer;
+    display: unset;
+    padding-left: 2px;
+}
+
+.coin-type-comparison {
+    cursor: pointer;
+    text-decoration: underline dotted;
 }
