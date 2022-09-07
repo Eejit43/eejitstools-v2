@@ -238,7 +238,7 @@ async function loadCoinsList() {
 
                 if (coin.image) {
                     const image = document.createElement('sup');
-                    image.classList.add('coin-image-text', 'fa-solid', 'fa-image');
+                    image.classList.add('coin-image-icon', 'fa-solid', 'fa-image');
                     image.dataset.image = `/files/coins/${coinType.id}/${coin.image}.png`;
                     image.dataset.name = `${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
                     year.appendChild(image);
@@ -322,7 +322,7 @@ if (password) {
 function loadPopupImages() {
     const modal = document.getElementById('modal');
     const images = document.querySelectorAll('img.popup-image');
-    const imageTextButtons = document.querySelectorAll('sup.coin-image-text');
+    const imageTextButtons = document.querySelectorAll('sup.coin-image-icon');
     const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison');
     const modalImage = document.getElementById('modal-image');
     const modalCaption = document.getElementById('modal-caption');

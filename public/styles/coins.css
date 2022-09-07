@@ -140,10 +140,15 @@ tr[data-upgrade='true'] {
     text-decoration: none;
 }
 
-.coin-image-text {
+.coin-image-icon {
     cursor: pointer;
     display: unset;
     padding-left: 2px;
+    transition: 0.3s;
+}
+
+.coin-image-icon:hover {
+    color: #929292;
 }
 
 .coin-type-comparison {
