@@ -1,9 +1,9 @@
 const imports = {
-    heic2any: { link: 'external/heic2any.js', module: true },
-    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false },
+    heic2any: { link: 'external/heic2any.js', external: false, module: true },
+    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', external: true, module: false },
     minecraftCss: '/styles/minecraft.css',
     odometerCss: '/styles/external/odometer.css',
-    odometerJs: { link: 'external/odometer.js', module: true }
+    odometerJs: { link: 'external/odometer.js', external: false, module: true }
 };
 
 const phoneticAlphabet = [

@@ -29,11 +29,11 @@ fastify.get('/', (request, reply) => {
 });
 
 fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: 'search.js', module: true }], additionalStyles: [], keywords: [], script: false, style: false });
+    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: [], keywords: [], script: false, style: false });
 });
 
 fastify.get('/coins', (request, reply) => {
-    reply.view('/coins.ejs', { title: 'Coins', descriptionParsed: 'A list of coins I have/need', page: '', additionalScripts: [{ link: 'coins.js', module: true }], additionalStyles: ['coins.css'], keywords: [], script: false, style: false });
+    reply.view('/coins.ejs', { title: 'Coins', descriptionParsed: 'A list of coins I have/need', page: '', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'], keywords: [], script: false, style: false });
 });
 
 fastify.get('/coins-login', (request, reply) => {

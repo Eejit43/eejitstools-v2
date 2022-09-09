@@ -57,7 +57,7 @@
         <% if (script) { %>
         <script src="/scripts/pages/<%= category %>/<%= name %>.js" type="module"></script>
         <% } %> <% for (const script of additionalScripts) { %>
-        <script src="/scripts/<%= script.link %>"<%- script.module ? ' type="module"' : '' %>></script>
+        <script src="<%- !script.external ? '/scripts/' : '' %><%= script.link %>"<%- script.module ? ' type="module"' : '' %>></script>
         <% } %>
     </head>
     <body>
