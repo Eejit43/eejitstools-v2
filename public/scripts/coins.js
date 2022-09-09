@@ -112,15 +112,17 @@ async function loadCoinsList() {
         coinTypeDiv.appendChild(coinTypeButton);
 
         coinType.coins.forEach((coinVariant) => {
-            const amountTooltip = document.createElement('span');
-            amountTooltip.dataset.tooltip = `${Math.ceil((coinVariant.coins.filter((coin) => coin.obtained).length / coinVariant.coins.length) * 10000) / 100}%, ${coinVariant.coins.length - coinVariant.coins.filter((coin) => coin.obtained).length} missing`;
-            amountTooltip.textContent = `${coinVariant.coins.filter((coin) => coin.obtained).length}/${coinVariant.coins.length}`;
+            const obtainedCoins = coinVariant.coins.filter((coin) => coin.obtained).length;
+            const upgradeCoins = coinVariant.coins.filter((coin) => coin.upgrade).length;
+            const totalCoins = coinVariant.coins.length;
 
-            const upgrade = coinVariant.coins.filter((coin) => coin.upgrade).length;
+            const amountTooltip = document.createElement('span');
+            amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}%, ${totalCoins - obtainedCoins} missing`;
+            amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
 
             const coinVariantDiv = document.createElement('div');
             coinVariantDiv.classList.add('coin-variant', 'hidden');
-            coinVariantDiv.innerHTML = `${coinVariant.name} (${coinVariant.years}) (${amountTooltip.outerHTML}${upgrade > 0 ? `, ${upgrade} needing upgrade` : ''})`;
+            coinVariantDiv.innerHTML = `${coinVariant.name} (${coinVariant.years}) (${amountTooltip.outerHTML}${upgradeCoins > 0 ? `, ${upgradeCoins} needing upgrade` : ''})`;
 
             if (coinVariant.note) {
                 const coinVariantNote = document.createElement('span');
