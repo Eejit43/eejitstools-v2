@@ -47,6 +47,9 @@ const mintMarks = {
  * Load the coins list
  */
 async function loadCoinsList() {
+    /**
+     * @type {import('../../coin-data.js').CoinType[]}
+     */
     const coins = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
 
     coinsList.innerHTML = '';
@@ -117,7 +120,7 @@ async function loadCoinsList() {
             const totalCoins = coinVariant.coins.length;
 
             const amountTooltip = document.createElement('span');
-            amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}%, ${totalCoins - obtainedCoins} missing`;
+            amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
             amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
 
             const coinVariantDiv = document.createElement('div');
