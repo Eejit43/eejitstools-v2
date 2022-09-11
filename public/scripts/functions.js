@@ -11,7 +11,7 @@ export function twemojiUpdate() {
 /**
  * Displays a popup alert
  * @param {string} text The string to display
- * @param {string} color 'success', 'error', or color
+ * @param {'success'|'error'} color 'success', 'error', or color
  * @param {number} duration The duration of the popup in milliseconds
  */
 export function showAlert(text, color, duration) {
@@ -40,10 +40,10 @@ export function showAlert(text, color, duration) {
 /**
  * Updates the icon of the specified element
  * @param {string} id The prefix of the element ID to update
- * @param {string} [type] The type of icon to show ('success' or 'error')
- * @param {string} [color] The color of the icon to show
- * @param {string} [icon] The icon of the icon to show
- * @param {boolean} [remove] Whether or not to the remove the icon after 2 seconds
+ * @param {'success'|'error'} [type] The type of icon to show ('success' or 'error')
+ * @param {string} [color='#009c3f'] The color of the icon to show
+ * @param {string} [icon='check'] The icon of the icon to show
+ * @param {boolean} [remove=true] Whether or not to the remove the icon after 2 seconds (default: true)
  */
 export function showResult(id, type, color = '#009c3f', icon = 'check', remove = true) {
     const oldElement = document.getElementById(id + '-runResult');
@@ -78,7 +78,7 @@ export function resetResult(id) {
 /**
  * Updates the arrow icon of the specified element
  * @param {HTMLElement} element The element to update
- * @param {string} [type] The type of icon to show ('success', 'error', or 'reset')
+ * @param {'success'|'error'|'reset'} [type] The type of icon to show ('success', 'error', or 'reset')
  * @param {string} [arrowType='right'] The direction of the arrow (defaults to 'right')
  */
 export function updateArrow(element, type, arrowType = 'right') {
