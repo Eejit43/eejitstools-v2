@@ -309,7 +309,7 @@ const allPageInfo = {
         title: 'Base64 Encode/Decode',
         icon: 'fa-solid fa-code',
         category: 'tools',
-        description: 'Encode and decode to and from Base64 format (binary)',
+        description: 'Encode and decode to and from Base64 format',
         keywords: ['b64']
     },
     'base64-image-converter': {

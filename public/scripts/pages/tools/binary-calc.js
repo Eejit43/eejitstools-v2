@@ -7,6 +7,7 @@ const message = document.getElementById('message');
 const outputType = document.getElementById('output-type');
 const output = document.getElementById('output');
 const copyOutput = document.getElementById('copy-output');
+const toggleSpacers = document.getElementById('toggle-spacers');
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
@@ -18,6 +19,7 @@ resetButton.addEventListener('click', () => {
     inputType.value = 3;
     outputType.value = 1;
     copyOutput.disabled = true;
+    toggleSpacers.disabled = true;
 
     resetButton.disabled = true;
     resetButton.textContent = 'Reset!';
@@ -25,6 +27,7 @@ resetButton.addEventListener('click', () => {
 
     setTimeout(() => {
         copyOutput.disabled = true;
+        toggleSpacers.disabled = true;
 
         resetButton.disabled = false;
         resetButton.textContent = 'Reset';
@@ -33,6 +36,12 @@ resetButton.addEventListener('click', () => {
 outputType.addEventListener('change', findInput);
 copyOutput.addEventListener('click', () => {
     copyValue(copyOutput, output);
+});
+
+let addSpacers = true;
+toggleSpacers.addEventListener('click', () => {
+    addSpacers = !addSpacers;
+    findInput();
 });
 
 /**
@@ -65,6 +74,7 @@ function findInput() {
         message.innerHTML = '';
         output.value = '';
         copyOutput.disabled = true;
+        toggleSpacers.disabled = true;
     }
 }
 
@@ -74,9 +84,23 @@ function findInput() {
  * @param {number} radix the base of the input value
  */
 function convert(value, radix) {
+    let result = parseInt(value, radix).toString(radices[outputType.value].number);
+
+    switch (radices[outputType.value].name) {
+        case 'binary':
+            result = addSpacers ? addBinarySpacers(result) : result;
+            break;
+        case 'decimal':
+            result = addSpacers ? parseInt(result).toLocaleString() : result;
+            break;
+        default:
+            break;
+    }
+
     message.innerHTML = '';
-    output.value = parseInt(value, radix).toString(radices[outputType.value].number);
+    output.value = result;
     copyOutput.disabled = false;
+    toggleSpacers.disabled = false;
 }
 
 /**
@@ -86,6 +110,19 @@ function notValid() {
     message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${radices[inputType.value] ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
     output.value = '';
     copyOutput.disabled = true;
+    toggleSpacers.disabled = true;
+}
+
+/**
+ * Adds spaces to a binary number
+ * @param {string} binary the binary number to add spaces to
+ * @returns {string} the binary number with spaces
+ */
+function addBinarySpacers(binary) {
+    return binary
+        .padStart(Math.round(binary.length / 4) * 4, '0')
+        .match(/\d{4}/g)
+        .join(' ');
 }
 
 const radices = {
