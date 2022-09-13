@@ -120,7 +120,7 @@ function notValid() {
  */
 function addBinarySpacers(binary) {
     return binary
-        .padStart(Math.round(binary.length / 4) * 4, '0')
+        .padStart(Math.ceil(binary.length / 4) * 4, '0')
         .match(/\d{4}/g)
         .join(' ');
 }
