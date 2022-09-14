@@ -51,19 +51,19 @@ function findInput() {
     if (input.value.length > 0) {
         switch (radices[inputType.value].number) {
             case 2:
-                if (/^[01]*$/.test(input.value)) convert(input.value, 2);
+                if (/^-?[01]+$/.test(input.value)) convert(input.value, 2);
                 else notValid();
                 break;
             case 8:
-                if (/^[0-7]*$/.test(input.value)) convert(input.value, 8);
+                if (/^-?[0-7]+$/.test(input.value)) convert(input.value, 8);
                 else notValid();
                 break;
             case 10:
-                if (/^[0-9]*$/.test(input.value)) convert(input.value, 10);
+                if (/^-?[0-9]+$/.test(input.value)) convert(input.value, 10);
                 else notValid();
                 break;
             case 16:
-                if (/^[0-9a-fA-F]*$/.test(input.value)) convert(input.value, 16);
+                if (/^-?[0-9a-fA-F]+$/.test(input.value)) convert(input.value, 16);
                 else notValid();
                 break;
             default:
@@ -119,10 +119,16 @@ function notValid() {
  * @returns {string} the binary number with spaces
  */
 function addBinarySpacers(binary) {
-    return binary
-        .padStart(Math.ceil(binary.length / 4) * 4, '0')
-        .match(/\d{4}/g)
-        .join(' ');
+    console.log(binary);
+    const sign = binary.startsWith('-') ? '-' : '';
+    return (
+        sign +
+        binary
+            .replace(/^-/, '')
+            .padStart(Math.ceil(binary.length / 4) * 4, '0')
+            .match(/\d{4}/g)
+            .join(' ')
+    );
 }
 
 const radices = {
