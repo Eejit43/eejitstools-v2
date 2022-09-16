@@ -204,17 +204,7 @@ function runRmRegex() {
         showResult('rm', 'error');
     } else {
         const finalRegex = new RegExp(rmRegex.value, rmFlags.value);
-        const replace = rmReplace.value
-            .replace(/\\a/g, 'a')
-            .replace(/\\b/g, '\b')
-            .replace(/\\c/g, 'c')
-            .replace(/\\e/g, 'e')
-            .replace(/\\f/g, '\f')
-            .replace(/\\n/g, '\n')
-            .replace(/\\o/g, 'o')
-            .replace(/\\r/g, '\r')
-            .replace(/\\t/g, '\t')
-            .replace(/\$(\d)/g, '$$$1');
+        const replace = JSON.parse(`"${rmReplace.value.replaceAll('"', '\\"')}"`);
         showResult('rm', 'success');
         rmResult.value = rmRegexInput.value.replace(finalRegex, replace);
         rmCopyResult.disabled = false;
