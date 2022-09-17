@@ -1,0 +1,157 @@
+.player,
+.playlists {
+    background-color: #1e2529;
+    border: 3px solid #31353d;
+    border-radius: 15px;
+    color: #ffc266;
+    height: min-content;
+    margin: auto;
+    max-width: 70%;
+    padding: 10px;
+    width: 450px;
+}
+
+#mp3-grid {
+    margin-top: 150px;
+    --min-width: 500px;
+}
+
+#mp3-grid > div {
+    margin-top: 0px;
+}
+
+@media only screen and (max-width: 700px) {
+    #mp3-grid {
+        --min-width: unset;
+    }
+}
+
+.mp3-grid-left {
+    position: sticky;
+    top: 150px;
+    z-index: 100;
+}
+
+#playlists-list {
+    column-count: 2;
+    column-gap: 30px;
+    font-size: 15px;
+    margin-block: 1em;
+    margin-bottom: 5px;
+    padding-inline-start: 40px;
+}
+
+#playlists-list li {
+    margin-top: 8px;
+}
+
+#playlists-list li:first-of-type {
+    margin-top: 0;
+}
+
+#playlists-list li::marker {
+    content: '—   ';
+}
+
+@media screen and (max-width: 1010px) {
+    #mp3-grid-left {
+        position: static;
+        top: unset;
+        z-index: unset;
+    }
+}
+
+.buttons,
+.information {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons i {
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 18px;
+    padding: 18px;
+    padding-top: 10px;
+    width: 30px;
+}
+
+.information div {
+    color: #ffc266;
+    margin-bottom: 8px;
+}
+
+#playlists-list a {
+    color: #ffc266;
+}
+
+#playlists-list a:hover {
+    color: #f1a93c;
+}
+
+.playlist-section-title {
+    color: #ffc266;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.playlist-section-title:hover {
+    color: #f1a93c;
+}
+
+.playlist-track {
+    background-color: #3b3d43;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    margin-top: 15px !important;
+}
+
+.playlist-track:hover {
+    background: #31353d;
+}
+
+.active-track {
+    background: #31353d;
+    font-weight: bold;
+}
+
+.playlist-track > div {
+    margin: 10px;
+}
+
+.playlist-info-track {
+    width: 80%;
+}
+
+.playlist-info-track,
+.playlist-duration {
+    color: #e9cc95;
+    font-size: 14px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    pointer-events: none;
+}
+
+.active-track > .playlist-info-track,
+.active-track > .playlist-duration,
+.active-track > .playlist-play {
+    color: #ffc266 !important;
+}
+
+.playlist-play {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    pointer-events: none;
+}
+
+.player-icon {
+    color: #ffc266;
+    font-size: 20px;
+}
+
+.player-icon:hover {
+    color: #f1a93c;
+}

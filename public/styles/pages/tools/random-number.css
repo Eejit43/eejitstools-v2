@@ -1,0 +1,7 @@
+#random-number .odometer-ribbon-inner {
+    -webkit-transition: -webkit-transform 0.5s !important;
+    -moz-transition: -moz-transform 0.5s !important;
+    -ms-transition: -ms-transform 0.5s !important;
+    -o-transition: -o-transform 0.5s !important;
+    transition: transform 0.5s !important;
+}

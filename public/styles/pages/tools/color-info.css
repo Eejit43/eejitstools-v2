@@ -1,0 +1,75 @@
+.color-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.color-grid div {
+    margin-top: 20px;
+}
+
+#color-display {
+    background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
+    border: 4px solid #16181c;
+    cursor: pointer;
+    height: 100px;
+    margin-top: 15px;
+    position: absolute;
+    width: 100px;
+}
+
+#color-display::after {
+    background-color: currentColor;
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#color-history {
+    border: 4px solid #16181c;
+    height: 105px;
+    max-width: 90%;
+    overflow-y: scroll;
+    padding: 15px;
+    padding-left: 10px;
+    width: 90%;
+}
+
+#color-history li {
+    cursor: pointer;
+    display: inline-block;
+    list-style-type: none;
+    margin-inline: 5px;
+}
+
+#color-history li:hover {
+    filter: brightness(0.7);
+}
+
+#full-color {
+    background-color: #16181c;
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+#full-color-message {
+    background-color: #d8d8d8;
+    border-top-left-radius: 10px;
+    bottom: 0;
+    color: black;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+}

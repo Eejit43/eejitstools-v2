@@ -1,0 +1,90 @@
+.large-search-box {
+    align-items: center;
+    background-color: #242424;
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
+    color: #c5c5cc;
+    display: block;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    max-width: 90%;
+    padding: 6px 8px;
+    width: 700px;
+}
+
+.large-search-box .large-search-button {
+    color: #c5c5cc;
+    cursor: pointer;
+    float: right;
+    font-size: 25px;
+    margin: 8px 10px 0 0;
+}
+
+.large-search-box .large-search-text {
+    background-color: #242424 !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #c5c5cc !important;
+    font-size: 20px !important;
+    height: 100% !important;
+    padding: 6px 8px !important;
+    width: 85% !important;
+}
+
+.large-search-box .large-search-text::placeholder,
+.large-search-box .large-search-text:-ms-input-placeholder,
+.large-search-box .large-search-text::-webkit-input-placeholder,
+.large-search-box .large-search-text::-moz-placeholder {
+    color: #c5c5cc;
+}
+
+.large-search-results {
+    z-index: -100;
+}
+
+.large-search-results table {
+    align-self: flex-end;
+    background-color: #242424;
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
+    color: #c5c5cc;
+    display: block;
+    font-size: 18px;
+    margin-top: 1px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 8px;
+    width: 100%;
+}
+
+.large-search-results table td {
+    border-top: 2px solid #4c6072;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.large-search-results table tr:first-of-type > td {
+    border-top: none;
+    padding-top: 0px;
+}
+
+.large-search-results table tr:last-of-type > td {
+    padding-bottom: 0px;
+}
+
+.large-search-results table td .results-title {
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.large-search-results table td,
+.large-search-results table td a {
+    color: #4c6072;
+}
+
+.large-search-results table td a:hover,
+.large-search-results table td a.selected {
+    color: #364c5f;
+}

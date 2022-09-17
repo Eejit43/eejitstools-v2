@@ -1,0 +1,9 @@
+#svg-preview,
+#png-canvas {
+    border: 4px solid #16181c;
+    color: black;
+    height: 200px;
+    margin-top: 15px;
+    padding: 5px;
+    width: 200px;
+}

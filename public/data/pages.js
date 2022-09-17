@@ -1,8 +1,8 @@
 const imports = {
     heic2any: { link: 'external/heic2any.js', external: false, module: true },
     mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', external: true, module: false },
-    minecraftCss: '/styles/minecraft.css',
-    odometerCss: '/styles/external/odometer.css',
+    minecraftCss: 'minecraft.css',
+    odometerCss: 'external/odometer.css',
     odometerJs: { link: 'external/odometer.js', external: false, module: true }
 };
 
@@ -347,7 +347,8 @@ const allPageInfo = {
         title: 'Color Information',
         icon: 'fa-solid fa-palette',
         category: 'tools',
-        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors'
+        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors',
+        style: true
     },
     countdowns: {
         title: 'Countdowns',
@@ -361,6 +362,7 @@ const allPageInfo = {
         category: 'tools',
         description: 'Press a key/button to add one to a counter',
         keywords: ['spacebar'],
+        style: true,
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss]
     },
@@ -395,7 +397,8 @@ const allPageInfo = {
         title: 'KeyCode Information',
         icon: 'fa-solid fa-keyboard',
         category: 'tools',
-        description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)'
+        description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)',
+        style: true
     },
     'length-converter': {
         title: 'Length Converter',
@@ -427,6 +430,7 @@ const allPageInfo = {
         icon: 'fa-solid fa-hashtag',
         category: 'tools',
         description: 'Generate a random number between two numbers',
+        style: true,
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss]
     },
@@ -441,7 +445,8 @@ const allPageInfo = {
         title: 'Roman Numeral Converter',
         icon: 'fa-solid fa-i',
         category: 'tools',
-        description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)'
+        description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)',
+        style: true
     },
     'scientific-notation-converter': {
         title: 'Scientific Notation Converter',
@@ -460,7 +465,8 @@ const allPageInfo = {
         title: 'SVG to PNG',
         icon: 'fa-solid fa-image',
         category: 'tools',
-        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images'
+        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images',
+        style: true
     },
     'temperature-converter': {
         title: 'Temperature Converter',
@@ -516,7 +522,8 @@ const allPageInfo = {
         title: 'Weather Info',
         icon: 'fa-solid fa-cloud-sun-rain',
         category: 'tools',
-        description: 'Shows current weather information and alerts'
+        description: 'Shows current weather information and alerts',
+        style: true
     },
     'word-counter': {
         title: 'Word Counter',
@@ -532,6 +539,7 @@ const allPageInfo = {
         description: 'List of all Minecraft color and formatting codes',
         additionalStyles: [imports.minecraftCss],
         script: false,
+        style: true,
         minecraftColorCodes,
         minecraftFormattingCodes
     },
@@ -547,7 +555,8 @@ const allPageInfo = {
         title: 'Queer Calendar',
         icon: 'fa-solid fa-calendar-days',
         category: 'info',
-        description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year'
+        description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year',
+        style: true
     },
     'state-abbreviations': {
         title: 'State Abbreviations',
@@ -578,7 +587,8 @@ const allPageInfo = {
         title: 'Astronomy Picture of the Day',
         icon: 'fa-solid fa-meteor',
         category: 'fun',
-        description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)'
+        description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)',
+        style: true
     },
     'eight-ball': {
         title: 'Magic Eight Ball',
@@ -590,7 +600,8 @@ const allPageInfo = {
         title: 'MP3 Player',
         icon: 'fa-solid fa-music',
         category: 'fun',
-        description: 'Play some music!'
+        description: 'Play some music!',
+        style: true
     },
     'random-fact': {
         title: 'Random Fact',
@@ -611,17 +622,17 @@ export const pagesParsed = Object.fromEntries(
         page,
         {
             name: page,
-            title: info.title || 'MISSING_TITLE',
-            icon: info.icon || 'fa-solid fa-triangle-exclamation',
-            category: info.category || 'tools',
-            description: info.description || '',
-            descriptionParsed: (info.description || '').replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
+            title: info.title ?? 'MISSING_TITLE',
+            icon: info.icon ?? 'fa-solid fa-triangle-exclamation',
+            category: info.category ?? 'tools',
+            description: info.description ?? '',
+            descriptionParsed: (info.description ?? '').replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
             link: `/${info.category}/${page}`,
-            keywords: info.keywords || [],
-            additionalScripts: info.additionalScripts || [],
-            additionalStyles: info.additionalStyles || [],
-            script: info.script || true,
-            style: info.style || false,
+            keywords: info.keywords ?? [],
+            additionalScripts: info.additionalScripts ?? [],
+            additionalStyles: info.additionalStyles ?? [],
+            script: info.script ?? true,
+            style: info.style ?? false,
             ...Object.fromEntries(Object.entries(info).filter(([key]) => key !== 'title' && key !== 'icon' && key !== 'category' && key !== 'description' && key !== 'keywords' && key !== 'additionalScripts' && key !== 'additionalStyles' && key !== 'script' && key !== 'style'))
         }
     ])

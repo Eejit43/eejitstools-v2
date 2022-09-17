@@ -1,0 +1,44 @@
+/* Modified from https://codepen.io/alexakasanjeev/pen/RPxGXY */
+
+.color-box {
+    display: flex;
+    height: 10px;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.color-box div {
+    cursor: pointer;
+    flex-grow: 1;
+    height: 10px;
+    margin: 0;
+    transition: all 0.8s ease-in-out;
+}
+
+.color-box div:hover {
+    flex-grow: 5;
+}
+
+.color-box .red {
+    background-color: #ff5852;
+}
+
+.color-box .orange {
+    background-color: #ff9000;
+}
+
+.color-box .yellow {
+    background-color: #ffd300;
+}
+
+.color-box .green {
+    background-color: #3dcd49;
+}
+
+.color-box .blue {
+    background-color: #0089d7;
+}
+
+.color-box .purple {
+    background-color: #9e44c4;
+}

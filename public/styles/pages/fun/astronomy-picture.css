@@ -1,0 +1,29 @@
+a#apod-link {
+    display: block;
+    margin: 20px auto;
+    max-width: 90%;
+    width: 900px;
+}
+
+a#apod-link > img {
+    width: 100%;
+}
+
+div#apod-embed-container {
+    margin: 15px auto;
+    max-width: 90%;
+    overflow: hidden;
+    padding-top: 40%;
+    position: relative;
+    width: 900px;
+}
+
+div#apod-embed-container > iframe {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}

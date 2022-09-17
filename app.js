@@ -25,15 +25,15 @@ fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
 
 // Register pages
 fastify.get('/', (request, reply) => {
-    reply.view('/index.ejs', { title: 'Home', pages: Object.values(pagesParsed), ...blankProperties });
+    reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: Object.values(pagesParsed), additionalStyles: ['index.css'] });
 });
 
 fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { title: 'Search', descriptionParsed: 'Search the site!', page: '', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: [], keywords: [], script: false, style: false });
+    reply.view('/search.ejs', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: ['search.css'] });
 });
 
 fastify.get('/coins', (request, reply) => {
-    reply.view('/coins.ejs', { title: 'Coins', descriptionParsed: 'A list of coins I have/need', page: '', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'], keywords: [], script: false, style: false });
+    reply.view('/coins.ejs', { ...blankProperties, title: 'Coins', descriptionParsed: 'A list of coins I have/need', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'] });
 });
 
 fastify.get('/coins-login', (request, reply) => {
@@ -113,11 +113,11 @@ fastify.get('/apod/:year/:month/:day', async (request, reply) => {
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
     console.log(error);
-    reply.status(error.statusCode || 500).view('/error.ejs', { title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500, ...blankProperties });
+    reply.status(error.statusCode || 500).view('/error.ejs', { ...blankProperties, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) => {
-    reply.status(404).view('/error.ejs', { title: 'Not Found', message: 'Unable to find the requested page!', status: 404, ...blankProperties });
+    reply.status(404).view('/error.ejs', { ...blankProperties, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
 });
 
 const port = process.env.PORT || 3000;
