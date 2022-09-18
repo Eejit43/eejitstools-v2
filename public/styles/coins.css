@@ -155,3 +155,7 @@ tr[data-upgrade='true'] {
     cursor: pointer;
     text-decoration: underline dotted;
 }
+
+button.coin-variant-expand {
+    margin-left: 5px;
+}
