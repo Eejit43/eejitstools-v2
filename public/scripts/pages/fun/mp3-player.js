@@ -1,4 +1,6 @@
-import { audioTracks, audioTrackNames } from '/data/audio-tracks.js';
+import audioTracks from '/data/audio-tracks.js';
+
+const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
 const audio = document.getElementById('audio');
 const sourceAudio = document.getElementById('source-audio');
@@ -39,48 +41,50 @@ toggleMuteButton.addEventListener('click', toggleMute);
  * Creates a new track item
  * @param {string} category the category of the track
  * @param {number} index the index of the track
- * @param {string} name the name of the track
- * @param {string} duration the duration of the track
+ * @param {object} track the track item
  */
-function createTrackItem(category, index, name, duration) {
+function createTrackItem(category, index, track) {
     const trackItem = document.createElement('div');
-    trackItem.setAttribute('class', 'playlist-track');
-    trackItem.setAttribute('id', `playlist-track-${category}-${index}`);
-    trackItem.setAttribute('data-category', category);
-    trackItem.setAttribute('data-index', index);
-    playlist.appendChild(trackItem);
+    trackItem.classList.add('playlist-track');
+    trackItem.id = `playlist-track-${category.id}-${index}`;
+    trackItem.dataset.category = category.id;
+    trackItem.dataset.index = index;
 
     const playButtonItem = document.createElement('div');
-    playButtonItem.setAttribute('class', 'playlist-play');
-    playButtonItem.setAttribute('id', `play-${category}-${index}`);
-    document.getElementById(`playlist-track-${category}-${index}`).appendChild(playButtonItem);
+    playButtonItem.classList.add('playlist-play');
+    playButtonItem.id = `play-${category.id}-${index}`;
 
     const buttonIcon = document.createElement('i');
-    buttonIcon.setAttribute('class', 'player-icon fa-solid fa-play');
-    buttonIcon.setAttribute('height', '40');
-    buttonIcon.setAttribute('width', '40');
-    buttonIcon.setAttribute('id', `player-icon-${category}-${index}`);
-    document.getElementById(`play-${category}-${index}`).appendChild(buttonIcon);
+    buttonIcon.classList.add('player-icon', 'fa-solid', 'fa-play');
+    buttonIcon.height = 40;
+    buttonIcon.width = 40;
+    buttonIcon.id = `player-icon-${category.id}-${index}`;
+
+    playButtonItem.appendChild(buttonIcon);
+    trackItem.appendChild(playButtonItem);
 
     const trackInfoItem = document.createElement('div');
-    trackInfoItem.setAttribute('class', 'playlist-info-track');
-    trackInfoItem.textContent = name;
-    document.getElementById(`playlist-track-${category}-${index}`).appendChild(trackInfoItem);
+    trackInfoItem.classList.add('playlist-info-track');
+    trackInfoItem.textContent = track.name;
+
+    trackItem.appendChild(trackInfoItem);
 
     const trackDurationItem = document.createElement('div');
-    trackDurationItem.setAttribute('class', 'playlist-duration');
-    trackDurationItem.textContent = duration;
-    document.getElementById(`playlist-track-${category}-${index}`).appendChild(trackDurationItem);
+    trackDurationItem.classList.add('playlist-duration');
+    trackDurationItem.textContent = track.duration;
+
+    trackItem.appendChild(trackDurationItem);
+    playlist.appendChild(trackItem);
 }
 
-Object.keys(audioTracks).forEach((key) => {
+audioTracks.forEach((category) => {
     const sectionTitleLink = document.createElement('a');
-    sectionTitleLink.href = `#${key.replace(/_/g, '-')}`;
+    sectionTitleLink.href = `#${category.id}`;
 
     const sectionTitle = document.createElement('div');
-    sectionTitle.setAttribute('class', 'playlist-section-title');
-    sectionTitle.setAttribute('id', key.replace(/_/g, '-'));
-    sectionTitle.textContent = audioTrackNames[key];
+    sectionTitle.classList.add('playlist-section-title');
+    sectionTitle.id = category.id;
+    sectionTitle.textContent = category.name;
 
     sectionTitleLink.appendChild(sectionTitle);
     playlist.appendChild(sectionTitleLink);
@@ -88,16 +92,14 @@ Object.keys(audioTracks).forEach((key) => {
     const playlistsListItem = document.createElement('li');
 
     const playlistsListItemLink = document.createElement('a');
-    playlistsListItemLink.href = `#${key.replace(/_/g, '-')}`;
-    playlistsListItemLink.textContent = audioTrackNames[key];
+    playlistsListItemLink.href = `#${category.id}`;
+    playlistsListItemLink.textContent = category.name;
 
     playlistsListItem.appendChild(playlistsListItemLink);
 
     playlistsList.appendChild(playlistsListItem);
 
-    audioTracks[key].forEach((track, index) => {
-        createTrackItem(key, index, track.name, track.duration);
-    });
+    category.tracks.forEach((track, index) => createTrackItem(category, index, track));
 });
 
 let audioCategory = 'general';
@@ -110,8 +112,9 @@ let audioIndex = 0;
  * @param {boolean} [play=true] whether or not to play the track
  */
 function loadNewTrack(category, index, play = true) {
-    sourceAudio.src = `/files/mp3-player/${category}/${audioTracks[category][index].file}`;
-    title.innerHTML = audioTracks[category][index].name;
+    const track = tracksByCategory[category].tracks[index];
+    sourceAudio.src = `/files/mp3-player/${category}/${track.file}`;
+    title.textContent = track.name;
     audio.load();
     if (play) toggleAudio();
     updateActiveTrackStyle(audioCategory, audioIndex, category, index, play);
@@ -119,25 +122,18 @@ function loadNewTrack(category, index, play = true) {
     audioIndex = index;
 }
 
-const playlistItems = document.querySelectorAll('.playlist-track');
+const loadedTracks = document.querySelectorAll('.playlist-track');
 
-for (let i = 0; i < playlistItems.length; i++) {
-    playlistItems[i].addEventListener('click', loadClickedTrack);
-}
+for (const track of loadedTracks) track.addEventListener('click', loadClickedTrack);
 
 /**
  * Loads the clicked track
  * @param {MouseEvent} event the click event
  */
 function loadClickedTrack(event) {
-    for (let i = 0; i < playlistItems.length; i++) {
-        if (playlistItems[i] === event.target) {
-            const clickedCategory = event.target.getAttribute('data-category');
-            const clickedIndex = event.target.getAttribute('data-index');
-            if (clickedCategory === audioCategory && clickedIndex === audioIndex) toggleAudio();
-            else loadNewTrack(clickedCategory, clickedIndex);
-        }
-    }
+    const { category, index } = event.target.dataset;
+    if (category === audioCategory && index === audioIndex) toggleAudio();
+    else loadNewTrack(category, index);
 }
 
 loadNewTrack(audioCategory, audioIndex, false);
@@ -170,7 +166,7 @@ function onTimeUpdate() {
         playPauseButton.classList.add('fa-play');
         playPauseButton.classList.remove('fa-pause');
         pauseToPlay(audioCategory, audioIndex);
-        if (audioIndex < audioTracks[audioCategory].length - 1) loadNewTrack(audioCategory, parseInt(audioIndex) + 1);
+        if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, parseInt(audioIndex) + 1);
     }
 }
 
@@ -227,7 +223,7 @@ function rewind() {
  * Switches to the next song
  */
 function next() {
-    if (audioIndex < audioTracks[audioCategory].length - 1) {
+    if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) {
         const oldIndex = audioIndex;
         audioIndex++;
         updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
@@ -239,7 +235,7 @@ function next() {
  * Switches to the previous song
  */
 function previous() {
-    if (audioIndex > 0 && audioTracks[audioCategory].length > 0) {
+    if (audioIndex > 0 && tracksByCategory[audioCategory].tracks.length > 0) {
         const oldIndex = audioIndex;
         audioIndex--;
         updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
