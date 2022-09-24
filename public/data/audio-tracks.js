@@ -108,6 +108,26 @@ export default [
         id: 'hypixel',
         tracks: [
             {
+                name: 'Vanishing Groove (Pixel Party) - Shinkonet',
+                file: 'Vanishing Groove.mp3',
+                duration: '3:57'
+            },
+            {
+                name: 'Granularity (Pixel Party) - Shinkonet',
+                file: 'Granularity.mp3',
+                duration: '4:05'
+            },
+            {
+                name: 'House Set of Hypixel (Pixel Party) - Shinkonet',
+                file: 'House Set of Hypixel.mp3',
+                duration: '6:02'
+            },
+            {
+                name: 'Jawbreaker (Pixel Party) - Shinkonet',
+                file: 'Jawbreaker.mp3',
+                duration: '3:58'
+            },
+            {
                 name: 'Nyny (Stereo Pants) - Unknown',
                 file: 'Nyny.mp3',
                 duration: '2:12'
@@ -767,6 +787,11 @@ export default [
                 name: 'Honeyhive Galaxy - Super Mario Galaxy',
                 file: 'Honeyhive Galaxy.mp3',
                 duration: '1:56'
+            },
+            {
+                name: 'Spamton Battle - Deltarune',
+                file: 'Spamton Battle.mp3',
+                duration: '1:05'
             }
         ]
     },
