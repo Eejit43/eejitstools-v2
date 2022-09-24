@@ -13,6 +13,8 @@ const timerTime = document.getElementById('timer-time');
 startTimerButton.addEventListener('click', startTimer);
 pauseResumeTimer.addEventListener('click', () => {
     if (!paused) {
+        clearTimeout(timeout);
+        timeout = null;
         paused = true;
         pauseResumeTimer.textContent = 'Resume';
     } else {
@@ -24,6 +26,9 @@ pauseResumeTimer.addEventListener('click', () => {
     }
 });
 resetButton.addEventListener('click', () => {
+    clearTimeout(timeout);
+    timeout = null;
+
     paused = true;
     displayTime();
 
@@ -64,6 +69,9 @@ function checkInput(element) {
 }
 
 const audio = new Audio('/files/timer-alarm.mp3');
+audio.loop = true;
+
+window.audio = audio;
 
 let paused = true;
 
@@ -100,6 +108,8 @@ function startTimer() {
 
 let remaining, secondsUntil, minutesUntil, hoursUntil;
 
+let timeout;
+
 /**
  * Displays the current timer time
  * @returns {void}
@@ -109,13 +119,9 @@ function displayTime() {
 
     remaining = (targetTime - Date.now()) / 1000;
 
-    if (remaining <= 0) {
-        timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
-        audio.play();
-        audio.loop = true;
-        pauseResumeTimer.disabled = true;
-        return;
-    }
+    if (!timeout) timeout = setTimeout(timerEnd, remaining * 1000);
+
+    if (remaining <= 0) return;
 
     secondsUntil = Math.floor(remaining % 60);
     minutesUntil = Math.floor((remaining % 3600) / 60);
@@ -129,4 +135,13 @@ function displayTime() {
 
     const output = `${targetDate.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${targetDate.toLocaleDateString([], { weekday: 'long' })}`;
     if (timerTime.textContent !== output) timerTime.textContent = output;
+}
+
+/**
+ * The function called when the timer ends
+ */
+function timerEnd() {
+    timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
+    audio.play();
+    pauseResumeTimer.disabled = true;
 }
