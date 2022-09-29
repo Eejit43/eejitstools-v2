@@ -3,8 +3,13 @@
 }
 
 button.reload-button,
+button.show-all-variants,
 button.show-all-button {
     margin-bottom: 20px;
+}
+
+button.show-all-variants {
+    margin-left: 5px;
 }
 
 .coin-type {

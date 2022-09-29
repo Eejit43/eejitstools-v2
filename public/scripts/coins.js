@@ -64,7 +64,7 @@ async function loadCoinsList() {
 
     const showAllVariantsButton = document.createElement('button');
     showAllVariantsButton.textContent = 'Show all variants';
-    showAllVariantsButton.classList.add('show-all-button');
+    showAllVariantsButton.classList.add('show-all-variants');
     showAllVariantsButton.dataset.expanded = false;
     showAllVariantsButton.addEventListener('click', () => {
         if (showAllVariantsButton.dataset.expanded === 'true') {
