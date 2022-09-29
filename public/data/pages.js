@@ -3,7 +3,8 @@ const imports = {
     mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', external: true, module: false },
     minecraftCss: 'minecraft.css',
     odometerCss: 'external/odometer.css',
-    odometerJs: { link: 'external/odometer.js', external: false, module: true }
+    odometerJs: { link: 'external/odometer.js', external: false, module: true },
+    mathJax: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', external: true, module: false }
 };
 
 const phoneticAlphabet = [
@@ -454,6 +455,14 @@ const allPageInfo = {
         category: 'tools',
         description: 'Convert between scientific (<i>e</i>) notation and decimal form',
         additionalScripts: [imports.mathJs]
+    },
+    'radical-simplifier': {
+        title: 'Radical Simplifier',
+        icon: 'fa-solid fa-square-root-variable',
+        category: 'tools',
+        description: 'Simplify radical expressions',
+        keywords: ['radical', 'root', 'square root'],
+        additionalScripts: [imports.mathJax]
     },
     stopwatch: {
         title: 'Stopwatch',

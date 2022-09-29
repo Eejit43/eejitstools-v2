@@ -48,7 +48,8 @@ h1 {
     padding-block: 20px;
 }
 
-code {
+code,
+.code {
     background-color: #2f3136;
     border-radius: 3px;
     font-family: monospace;
@@ -608,6 +609,10 @@ nav {
      GENERAL
  ================
 */
+
+.hidden {
+    display: none;
+}
 
 .mobile-hidden {
     display: unset;
