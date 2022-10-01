@@ -79,6 +79,16 @@ fastify.get('/cors-anywhere', async (request, reply) => {
 });
 
 // Render each tool/info/fun page
+const pagesWithScripts = fs
+    .readdirSync('public/scripts/pages')
+    .map((category) => fs.readdirSync(`public/scripts/pages/${category}`).map((script) => `${category}/${script.replace(/\.js$/, '')}`))
+    .flat();
+
+const pagesWithStyles = fs
+    .readdirSync('public/styles/pages')
+    .map((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`))
+    .flat();
+
 fs.readdirSync('./views/pages').forEach((category) => {
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
 
@@ -87,7 +97,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
         const pageInfo = pagesParsed[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
         fastify.get(`/${category}/${page}`, (request, reply) => {
-            reply.view(`pages/${category}/${page}.ejs`, pageInfo);
+            reply.view(`pages/${category}/${page}.ejs`, { script: pageInfo.script ?? pagesWithScripts.includes(`${category}/${page}`), style: pageInfo.style ?? pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
 });

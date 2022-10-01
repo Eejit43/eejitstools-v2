@@ -348,8 +348,7 @@ const allPageInfo = {
         title: 'Color Information',
         icon: 'fa-solid fa-palette',
         category: 'tools',
-        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors',
-        style: true
+        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors'
     },
     countdowns: {
         title: 'Countdowns',
@@ -363,7 +362,6 @@ const allPageInfo = {
         category: 'tools',
         description: 'Press a key/button to add one to a counter',
         keywords: ['spacebar'],
-        style: true,
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss]
     },
@@ -398,8 +396,7 @@ const allPageInfo = {
         title: 'KeyCode Information',
         icon: 'fa-solid fa-keyboard',
         category: 'tools',
-        description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)',
-        style: true
+        description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)'
     },
     'length-converter': {
         title: 'Length Converter',
@@ -431,7 +428,6 @@ const allPageInfo = {
         icon: 'fa-solid fa-hashtag',
         category: 'tools',
         description: 'Generate a random number between two numbers',
-        style: true,
         additionalScripts: [imports.odometerJs],
         additionalStyles: [imports.odometerCss]
     },
@@ -446,8 +442,7 @@ const allPageInfo = {
         title: 'Roman Numeral Converter',
         icon: 'fa-solid fa-i',
         category: 'tools',
-        description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)',
-        style: true
+        description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)'
     },
     'scientific-notation-converter': {
         title: 'Scientific Notation Converter',
@@ -474,8 +469,7 @@ const allPageInfo = {
         title: 'SVG to PNG',
         icon: 'fa-solid fa-image',
         category: 'tools',
-        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images',
-        style: true
+        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images'
     },
     'temperature-converter': {
         title: 'Temperature Converter',
@@ -531,8 +525,7 @@ const allPageInfo = {
         title: 'Weather Info',
         icon: 'fa-solid fa-cloud-sun-rain',
         category: 'tools',
-        description: 'Shows current weather information and alerts',
-        style: true
+        description: 'Shows current weather information and alerts'
     },
     'word-counter': {
         title: 'Word Counter',
@@ -547,8 +540,6 @@ const allPageInfo = {
         category: 'info',
         description: 'List of all Minecraft color and formatting codes',
         additionalStyles: [imports.minecraftCss],
-        script: false,
-        style: true,
         minecraftColorCodes,
         minecraftFormattingCodes
     },
@@ -557,22 +548,19 @@ const allPageInfo = {
         icon: 'fa-solid fa-arrow-down-a-z',
         category: 'info',
         description: 'Code words used by the military/police for letters',
-        script: false,
         phoneticAlphabet
     },
     'queer-calendar': {
         title: 'Queer Calendar',
         icon: 'fa-solid fa-calendar-days',
         category: 'info',
-        description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year',
-        style: true
+        description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year'
     },
     'state-abbreviations': {
         title: 'State Abbreviations',
         icon: 'fa-solid fa-map-marked-alt',
         category: 'info',
         description: 'List of all state abbreviations',
-        script: false,
         stateAbbreviations
     },
     'text-abbreviations': {
@@ -580,7 +568,6 @@ const allPageInfo = {
         icon: 'fa-solid fa-spell-check',
         category: 'info',
         description: 'List of common abbreviations used in text',
-        script: false,
         textAbbreviations
     },
     'tone-indicators': {
@@ -588,7 +575,6 @@ const allPageInfo = {
         icon: 'fa-solid fa-slash',
         category: 'info',
         description: 'List of common tone indicators',
-        script: false,
         toneIndicators
     },
     // Fun
@@ -596,8 +582,7 @@ const allPageInfo = {
         title: 'Astronomy Picture of the Day',
         icon: 'fa-solid fa-meteor',
         category: 'fun',
-        description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)',
-        style: true
+        description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)'
     },
     'eight-ball': {
         title: 'Magic Eight Ball',
@@ -609,8 +594,7 @@ const allPageInfo = {
         title: 'MP3 Player',
         icon: 'fa-solid fa-music',
         category: 'fun',
-        description: 'Play some music!',
-        style: true
+        description: 'Play some music!'
     },
     'random-fact': {
         title: 'Random Fact',
@@ -640,8 +624,6 @@ export const pagesParsed = Object.fromEntries(
             keywords: info.keywords ?? [],
             additionalScripts: info.additionalScripts ?? [],
             additionalStyles: info.additionalStyles ?? [],
-            script: info.script ?? true,
-            style: info.style ?? false,
             ...Object.fromEntries(Object.entries(info).filter(([key]) => key !== 'title' && key !== 'icon' && key !== 'category' && key !== 'description' && key !== 'keywords' && key !== 'additionalScripts' && key !== 'additionalStyles' && key !== 'script' && key !== 'style'))
         }
     ])
