@@ -4,6 +4,7 @@
 import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
+import chalk from 'chalk';
 import 'dotenv/config';
 import ejs from 'ejs';
 import Fastify from 'fastify';
@@ -56,6 +57,8 @@ fastify.get('/pages', (request, reply) => {
 });
 
 fastify.get('/cors-anywhere', async (request, reply) => {
+    logApiRequest(request);
+
     if (!request.query.url) reply.status(400).send('No URL provided');
 
     let response;
@@ -89,10 +92,15 @@ const pagesWithStyles = fs
     .map((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`))
     .flat();
 
+let totalCategories = 0,
+    totalPages = 0;
+
 fs.readdirSync('./views/pages').forEach((category) => {
+    totalCategories++;
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
 
     pages.forEach((page) => {
+        totalPages++;
         page = page.replace(/.ejs$/, '');
         const pageInfo = pagesParsed[page];
         if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
@@ -102,8 +110,11 @@ fs.readdirSync('./views/pages').forEach((category) => {
     });
 });
 
+console.log(chalk.blue(`Successfully parsed and auto-loaded ${totalPages} pages in ${totalCategories} categories!`));
+
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
+    logApiRequest(request);
     const response = await fetch(`https://abs.twimg.com/emoji/v2/svg/${request.params.id}.svg`);
     if (!response.ok) return reply.type('image/png').send();
 
@@ -116,6 +127,7 @@ fastify.get('/twemoji/:id', async (request, reply) => {
 
 // Astronomy Picture of the Day (NASA)
 fastify.get('/apod/:year/:month/:day', async (request, reply) => {
+    logApiRequest(request);
     const response = await fetchApod(request.params.year, request.params.month, request.params.day);
     reply.send(JSON.stringify(response, null, 2));
 });
@@ -138,5 +150,13 @@ fastify.listen({ port }, (error) => {
         fastify.log.error(error);
         process.exit(1);
     }
-    console.log(`Server is now listening on http://localhost:${port}`);
+    console.log(chalk.green('Server is now listening on ') + chalk.blueBright(`http://localhost:${port}`));
 });
+
+/**
+ * Logs information about an API request
+ * @param {import('fastify').FastifyRequest} request the request object
+ */
+function logApiRequest(request) {
+    console.log(`${chalk.green('[API request]')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
+}
