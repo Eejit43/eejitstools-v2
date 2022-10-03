@@ -1,7 +1,7 @@
 @import '/styles/tooltip-styles.css';
 
 /* For Font Awesome icons, see: https://fontawesome.com/v6/search?m=free&s=solid */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css'); /* https://cdnjs.com/libraries/font-awesome */
+@import url('/styles/external/font-awesome.css');
 
 @import url('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
@@ -268,6 +268,18 @@ nav {
 
 .nav-time:hover {
     color: #0e4474;
+}
+
+.nav-time > #time-icon.fa-triangle-exclamation {
+    color: #f55;
+}
+
+.nav-time > #time-icon.fa-sun-bright {
+    color: #ffac33;
+}
+
+.nav-time > #time-icon.fa-moon-stars {
+    color: wheat;
 }
 
 @media only screen and (max-width: 600px) {

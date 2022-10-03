@@ -5,14 +5,18 @@ twemojiUpdate();
 
 /* Navigation time display */
 const timeDisplay = document.getElementById('time-display');
+const timeIcon = document.getElementById('time-icon');
 setInterval(() => {
     const currentTime = new Date();
 
-    const timeEmoji = currentTime.getHours() >= 7 && currentTime.getHours() < 17 ? '<img draggable="false" class="emoji" alt="☀️" src="https://twemoji.maxcdn.com/v/13.1.0/svg/2600.svg">' : '<img draggable="false" class="emoji" alt="🌒" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f312.svg">';
-
-    const finalTime = `${new Date().toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })} ${timeEmoji}`;
+    const finalTime = new Date().toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
     updateInnerHTML(timeDisplay, finalTime);
+
+    const currentHours = currentTime.getHours();
+
+    if (currentHours >= 7 && currentHours < 17 && !timeIcon.classList.contains('fa-sun-bright')) timeIcon.classList = 'fa-solid fa-sun-bright';
+    else if ((currentHours >= 17 || currentHours < 7) && !timeIcon.classList.contains('fa-moon-stars')) timeIcon.classList = 'fa-solid fa-moon-stars';
 }, 100);
 
 const navbar = document.getElementById('navbar');
