@@ -50,12 +50,6 @@ fastify.get('/headers', (request, reply) => {
     reply.send(JSON.stringify(request.headers, null, 2));
 });
 
-const shortPagesInfo = Object.values(pagesParsed).map((page) => ({ title: page.title, name: page.name, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
-
-fastify.get('/pages', (request, reply) => {
-    reply.send(JSON.stringify(shortPagesInfo, null, 2));
-});
-
 fastify.get('/cors-anywhere', async (request, reply) => {
     logApiRequest(request);
 
