@@ -270,6 +270,10 @@ nav {
     color: #0e4474;
 }
 
+.nav-time > #time-icon {
+    margin-left: 2px;
+}
+
 .nav-time > #time-icon.fa-triangle-exclamation {
     color: #f55;
 }
