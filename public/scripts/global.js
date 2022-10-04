@@ -15,8 +15,8 @@ setInterval(() => {
 
     const currentHours = currentTime.getHours();
 
-    if (currentHours >= 7 && currentHours < 17 && !timeIcon.classList.contains('fa-sun-bright')) timeIcon.classList = 'fa-solid fa-sun-bright';
-    else if ((currentHours >= 17 || currentHours < 7) && !timeIcon.classList.contains('fa-moon-stars')) timeIcon.classList = 'fa-solid fa-moon-stars';
+    if (currentHours >= 6 && currentHours < 19 && !timeIcon.classList.contains('fa-sun-bright')) timeIcon.classList = 'fa-solid fa-sun-bright';
+    else if ((currentHours >= 19 || currentHours < 6) && !timeIcon.classList.contains('fa-moon-stars')) timeIcon.classList = 'fa-solid fa-moon-stars';
 }, 100);
 
 const navbar = document.getElementById('navbar');
