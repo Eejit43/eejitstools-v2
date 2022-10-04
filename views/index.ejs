@@ -10,41 +10,18 @@
         <span class="mobile-only"><br /><br /><a href="/search">Search the site!</a></span>
     </div>
 </header>
+
+<% for (const category of Object.values(pages)) { %>
 <table class="tools-table">
     <tbody>
-        <% for (const page of pages) { if (page.category === 'tools') { %>
+        <% for (const page of Object.values(category)) { %>
         <tr>
             <td style="width: 15vw">
-                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
+                <a href="<%- page.link %>"><i class="page-icon fa-regular fa-<%- page.icon %>"></i><%- page.title %></a>
             </td>
             <td><%- page.description %></td>
         </tr>
-        <% } } %>
+        <% } %>
     </tbody>
 </table>
-
-<table class="tools-table" style="margin-top: 70px">
-    <tbody>
-        <% for (const page of pages) { if (page.category === 'info') { %>
-        <tr>
-            <td style="width: 15vw">
-                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
-            </td>
-            <td><%- page.description %></td>
-        </tr>
-        <% } } %>
-    </tbody>
-</table>
-
-<table class="tools-table" style="margin-top: 70px">
-    <tbody>
-        <% for (const page of pages) { if (page.category === 'fun') { %>
-        <tr>
-            <td style="width: 15vw">
-                <a href="<%- page.link %>"><i class="<%- page.icon %>" style="margin-right: 3px"></i> <%- page.title %></a>
-            </td>
-            <td><%- page.description %></td>
-        </tr>
-        <% } } %>
-    </tbody>
-</table>
+<% } %>

@@ -49,13 +49,13 @@
         <% for (const style of additionalStyles) { %>
         <link rel="stylesheet" href="/styles/<%= style %>" />
         <% } %> <% if (style) { %>
-        <link rel="stylesheet" href="/styles/pages/<%= category %>/<%= name %>.css" />
+        <link rel="stylesheet" href="/styles/pages<%= link %>.css" />
         <% } %>
 
         <!-- Scripts -->
         <script src="/scripts/global.js" type="module"></script>
         <% if (script) { %>
-        <script src="/scripts/pages/<%= category %>/<%= name %>.js" type="module"></script>
+        <script src="/scripts/pages<%= link %>.js" type="module"></script>
         <% } %> <% for (const script of additionalScripts) { %>
         <script src="<%- !script.external ? '/scripts/' : '' %><%= script.link %>"<%- script.module ? ' type="module"' : '' %>></script>
         <% } %>

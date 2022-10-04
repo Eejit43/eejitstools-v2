@@ -287,344 +287,94 @@ const stateAbbreviations = [
 ];
 
 export const blankProperties = {
-    category: '',
+    title: '',
+    id: '',
+    icon: '',
     description: '',
     descriptionParsed: '',
-    page: '',
-    additionalScripts: [],
-    additionalStyles: [],
     script: false,
     style: false,
+    additionalScripts: [],
+    additionalStyles: [],
     keywords: []
 };
 
 const allPageInfo = {
-    // Tools
-    'audio-converter': {
-        title: 'Audio Converter',
-        icon: 'fa-regular fa-file-audio',
-        category: 'tools',
-        description: 'Convert audio files to and from various formats'
-    },
-    'base64-converter': {
-        title: 'Base64 Encode/Decode',
-        icon: 'fa-regular fa-code',
-        category: 'tools',
-        description: 'Encode and decode to and from Base64 format',
-        keywords: ['b64']
-    },
-    'base64-image-converter': {
-        title: 'Base64 Image Encode/Decode',
-        icon: 'fa-regular fa-file-image',
-        category: 'tools',
-        description: 'Encode and decode images to and from Base64 format',
-        keywords: ['b64']
-    },
-    'binary-calc': {
-        title: 'Binary Calculator',
-        icon: 'fa-regular fa-binary',
-        category: 'tools',
-        description: 'Convert to/from binary/octal/decimal/hex'
-    },
-    'binary-text': {
-        title: 'Binary Text Converter',
-        icon: 'fa-regular fa-file-binary',
-        category: 'tools',
-        description: 'Convert to/from binary text'
-    },
-    'browser-info': {
-        title: 'Browser Info',
-        icon: 'fa-regular fa-laptop',
-        category: 'tools',
-        description: 'Shows basic information about your browser and operating system'
-    },
-    'case-changer': {
-        title: 'Case Changer',
-        icon: 'fa-regular fa-font-case',
-        category: 'tools',
-        description: 'Change a string to uppercase, lowercase, title case, or sentence case'
-    },
-    'color-info': {
-        title: 'Color Information',
-        icon: 'fa-regular fa-palette',
-        category: 'tools',
-        description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors'
-    },
-    countdowns: {
-        title: 'Countdowns',
-        icon: 'fa-regular fa-hourglass-half',
-        category: 'tools',
-        description: 'Shows various countdowns until major upcoming holidays'
-    },
-    counter: {
-        title: 'Counter',
-        icon: 'fa-regular fa-calculator',
-        category: 'tools',
-        description: 'Press a key/button to add one to a counter',
-        keywords: ['spacebar'],
-        additionalScripts: [imports.odometerJs],
-        additionalStyles: [imports.odometerCss]
-    },
-    'currency-exchange': {
-        title: 'Currency Exchange Rates',
-        icon: 'fa-regular fa-coins',
-        category: 'tools',
-        description: 'Shows information for various currency conversions',
-        keywords: ['usd', 'money']
-    },
-    'heic-converter': {
-        title: 'HEIC Converter',
-        icon: 'fa-regular fa-file-image',
-        category: 'tools',
-        description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats',
-        additionalScripts: [imports.heic2any]
-    },
-    'image-converter': {
-        title: 'Image Converter',
-        icon: 'fa-regular fa-file-image',
-        category: 'tools',
-        description: 'Convert images to and from various formats'
-    },
-    'ip-info': {
-        title: 'IP Info',
-        icon: 'fa-regular fa-router',
-        category: 'tools',
-        description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information',
-        keywords: ['internet', 'isp']
-    },
-    'keycode-info': {
-        title: 'KeyCode Information',
-        icon: 'fa-regular fa-keyboard',
-        category: 'tools',
-        description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)'
-    },
-    'length-converter': {
-        title: 'Length Converter',
-        icon: 'fa-regular fa-ruler-horizontal',
-        category: 'tools',
-        description: 'Convert between United States standard length measurements and imperial length units',
-        additionalScripts: [imports.mathJs]
-    },
-    'list-sorter': {
-        title: 'List Sorter',
-        icon: 'fa-regular fa-arrow-down-wide-short',
-        category: 'tools',
-        description: 'Alphabetize, numerize, randomize, and reverse lists that can be defined with custom separators'
-    },
-    'morse-code-converter': {
-        title: 'Morse Code Converter',
-        icon: 'fa-regular fa-message-dots',
-        category: 'tools',
-        description: 'Convert to/from Morse code'
-    },
-    'quick-copy': {
-        title: 'Quick Copy',
-        icon: 'fa-regular fa-clipboard',
-        category: 'tools',
-        description: 'Clipboard display, clear clipboard button, and useful characters'
-    },
-    'random-number': {
-        title: 'Random Number Generator',
-        icon: 'fa-regular fa-hashtag',
-        category: 'tools',
-        description: 'Generate a random number between two numbers',
-        additionalScripts: [imports.odometerJs],
-        additionalStyles: [imports.odometerCss]
-    },
-    regex: {
-        title: 'Regex Tools',
-        icon: 'fa-regular fa-highlighter',
-        category: 'tools',
-        description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester',
-        keywords: ['regular expression']
-    },
-    'roman-converter': {
-        title: 'Roman Numeral Converter',
-        icon: 'fa-regular fa-i',
-        category: 'tools',
-        description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)'
-    },
-    'scientific-notation-converter': {
-        title: 'Scientific Notation Converter',
-        icon: 'fa-regular fa-e',
-        category: 'tools',
-        description: 'Convert between scientific (<i>e</i>) notation and decimal form',
-        additionalScripts: [imports.mathJs]
-    },
-    'radical-simplifier': {
-        title: 'Radical Simplifier',
-        icon: 'fa-regular fa-square-root-variable',
-        category: 'tools',
-        description: 'Simplify radical expressions',
-        keywords: ['radical', 'root', 'square root'],
-        additionalScripts: [imports.mathJax]
-    },
-    stopwatch: {
-        title: 'Stopwatch',
-        icon: 'fa-regular fa-stopwatch',
-        category: 'tools',
-        description: 'Simple stopwatch (displays down to milliseconds)'
-    },
-    'svg-to-png': {
-        title: 'SVG to PNG',
-        icon: 'fa-regular fa-file-image',
-        category: 'tools',
-        description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images'
-    },
-    'temperature-converter': {
-        title: 'Temperature Converter',
-        icon: 'fa-regular fa-temperature-list',
-        category: 'tools',
-        description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin',
-        additionalScripts: [imports.mathJs]
-    },
-    'tides-info': {
-        title: 'Tides Info',
-        icon: 'fa-regular fa-water',
-        category: 'tools',
-        description: 'Shows current tidal information and for the next 7 days'
-    },
-    'time-converter': {
-        title: 'Time Converter',
-        icon: 'fa-regular fa-hourglass-clock',
-        category: 'tools',
-        description: 'Convert between units of time',
-        additionalScripts: [imports.mathJs]
-    },
-    time: {
-        title: 'Time',
-        icon: 'fa-regular fa-clock',
-        category: 'tools',
-        description: 'Displays the current time and date (in your time zone), as well as detailed time information'
-    },
-    timer: {
-        title: 'Countdown Timer',
-        icon: 'fa-regular fa-bell fa-shake',
-        category: 'tools',
-        description: 'Simple countdown timer with end time display'
-    },
-    'unix-time-converter': {
-        title: 'UNIX Time Converter',
-        icon: 'fa-regular fa-calendar-clock',
-        category: 'tools',
-        description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back'
-    },
-    'video-converter': {
-        title: 'Video Converter',
-        icon: 'fa-regular fa-file-video',
-        category: 'tools',
-        description: 'Convert video files to and from various formats'
-    },
-    'video-to-audio': {
-        title: 'Video to Audio Converter',
-        icon: 'fa-regular fa-photo-film-music',
-        category: 'tools',
-        description: 'Convert video files to various audio formats'
-    },
-    'weather-info': {
-        title: 'Weather Info',
-        icon: 'fa-regular fa-cloud-sun-rain',
-        category: 'tools',
-        description: 'Shows current weather information and alerts'
-    },
-    'word-counter': {
-        title: 'Word Counter',
-        icon: 'fa-regular fa-file-word',
-        category: 'tools',
-        description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text'
-    },
-    // Info
-    'minecraft-codes': {
-        title: 'Minecraft Formatting Codes',
-        icon: 'fa-regular fa-gamepad-modern',
-        category: 'info',
-        description: 'List of all Minecraft color and formatting codes',
-        additionalStyles: [imports.minecraftCss],
-        minecraftColorCodes,
-        minecraftFormattingCodes
-    },
-    'phonetic-alphabet': {
-        title: 'NATO Phonetic Alphabet',
-        icon: 'fa-regular fa-arrow-down-a-z',
-        category: 'info',
-        description: 'Code words used by the military/police for letters',
-        phoneticAlphabet
-    },
-    'queer-calendar': {
-        title: 'Queer Calendar',
-        icon: 'fa-regular fa-calendar-days',
-        category: 'info',
-        description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year'
-    },
-    'state-abbreviations': {
-        title: 'State Abbreviations',
-        icon: 'fa-regular fa-map-location-dot',
-        category: 'info',
-        description: 'List of all state abbreviations',
-        stateAbbreviations
-    },
-    'text-abbreviations': {
-        title: 'Text Abbreviations',
-        icon: 'fa-regular fa-text',
-        category: 'info',
-        description: 'List of common abbreviations used in text',
-        textAbbreviations
-    },
-    'tone-indicators': {
-        title: 'Tone Indicators',
-        icon: 'fa-regular fa-slash-back',
-        category: 'info',
-        description: 'List of common tone indicators',
-        toneIndicators
-    },
-    // Fun
-    'astronomy-picture': {
-        title: 'Astronomy Picture of the Day',
-        icon: 'fa-regular fa-planet-ringed',
-        category: 'fun',
-        description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)'
-    },
-    'eight-ball': {
-        title: 'Magic Eight Ball',
-        icon: 'fa-regular fa-pool-8-ball',
-        category: 'fun',
-        description: 'Ask a question, and it will give you an answer!'
-    },
-    'mp3-player': {
-        title: 'MP3 Player',
-        icon: 'fa-regular fa-music',
-        category: 'fun',
-        description: 'Play some music!'
-    },
-    'random-fact': {
-        title: 'Random Fact',
-        icon: 'fa-regular fa-circle-info',
-        category: 'fun',
-        description: 'Generate a random fact'
-    },
-    'random-joke': {
-        title: 'Random Joke',
-        icon: 'fa-regular fa-face-grin-tears',
-        category: 'fun',
-        description: 'Generate a random joke'
-    }
+    tools: [
+        { title: 'Audio Converter', id: 'audio-converter', icon: 'file-audio', description: 'Convert audio files to and from various formats' },
+        { title: 'Base64 Encode/Decode', id: 'base64-converter', icon: 'code', description: 'Encode and decode to and from Base64 format' },
+        { title: 'Base64 Image Encode/Decode', id: 'base64-image-converter', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
+        { title: 'Binary Calculator', id: 'binary-calc', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
+        { title: 'Binary Text Converter', id: 'binary-text', icon: 'file-binary', description: 'Convert to/from binary text' },
+        { title: 'Browser Info', id: 'browser-info', icon: 'laptop', description: 'Shows basic information about your browser and operating system' },
+        { title: 'Case Changer', id: 'case-changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
+        { title: 'Color Information', id: 'color-info', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors' },
+        { title: 'Countdowns', id: 'countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
+        { title: 'Counter', id: 'counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
+        { title: 'Currency Exchange Rates', id: 'currency-exchange', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
+        { title: 'HEIC Converter', id: 'heic-converter', icon: 'file-image', description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats', additionalScripts: [imports.heic2any] },
+        { title: 'Image Converter', id: 'image-converter', icon: 'file-image', description: 'Convert images to and from various formats' },
+        { title: 'IP Info', id: 'ip-info', icon: 'router', description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information', keywords: ['internet', 'isp'] },
+        { title: 'KeyCode Information', id: 'keycode-info', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
+        { title: 'Length Converter', id: 'length-converter', icon: 'ruler-horizontal', description: 'Convert between United States standard length measurements and imperial length units', additionalScripts: [imports.mathJs] },
+        { title: 'List Sorter', id: 'list-sorter', icon: 'arrow-down-wide-short', description: 'Alphabetize, numerize, randomize, and reverse lists that can be defined with custom separators' },
+        { title: 'Morse Code Converter', id: 'morse-code-converter', icon: 'message-dots', description: 'Convert to/from Morse code' },
+        { title: 'Quick Copy', id: 'quick-copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
+        { title: 'Random Number Generator', id: 'random-number', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
+        { title: 'Regex Tools', id: 'regex', icon: 'highlighter', description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester', keywords: ['regular expression'] },
+        { title: 'Roman Numeral Converter', id: 'roman-converter', icon: 'i', description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)' },
+        { title: 'Scientific Notation Converter', id: 'scientific-notation-converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs] },
+        { title: 'Radical Simplifier', id: 'radical-simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['radical', 'root', 'square root'], additionalScripts: [imports.mathJax] },
+        { title: 'Stopwatch', id: 'stopwatch', icon: 'stopwatch', description: 'Simple stopwatch (displays down to milliseconds)' },
+        { title: 'SVG to PNG', id: 'svg-to-png', icon: 'file-image', description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images' },
+        { title: 'Temperature Converter', id: 'temperature-converter', icon: 'temperature-list', description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin', additionalScripts: [imports.mathJs] },
+        { title: 'Tides Info', id: 'tides-info', icon: 'water', description: 'Shows current tidal information and for the next 7 days' },
+        { title: 'Time Converter', id: 'time-converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs] },
+        { title: 'Time', id: 'time', icon: 'clock', description: 'Displays the current time and date (in your time zone), as well as detailed time information' },
+        { title: 'Countdown Timer', id: 'timer', icon: 'bell', description: 'Simple countdown timer with end time display' },
+        { title: 'UNIX Time Converter', id: 'unix-time-converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
+        { title: 'Video Converter', id: 'video-converter', icon: 'file-video', description: 'Convert video files to and from various formats' },
+        { title: 'Video to Audio Converter', id: 'video-to-audio', icon: 'photo-film-music', description: 'Convert video files to various audio formats' },
+        { title: 'Weather Info', id: 'weather-info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts' },
+        { title: 'Word Counter', id: 'word-counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' }
+    ],
+    info: [
+        { title: 'Minecraft Formatting Codes', id: 'minecraft-codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraftCss], additionalData: { minecraftColorCodes, minecraftFormattingCodes } },
+        { title: 'NATO Phonetic Alphabet', id: 'phonetic-alphabet', icon: 'arrow-down-a-z', description: 'Code words used by the military/police for letters', additionalData: { phoneticAlphabet } },
+        { title: 'Queer Calendar', id: 'queer-calendar', icon: 'calendar-days', description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year' },
+        { title: 'State Abbreviations', id: 'state-abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },
+        { title: 'Text Abbreviations', id: 'text-abbreviations', icon: 'text', description: 'List of common abbreviations used in text', additionalData: { textAbbreviations } },
+        { title: 'Tone Indicators', id: 'tone-indicators', icon: 'slash-back', description: 'List of common tone indicators', additionalData: { toneIndicators } }
+    ],
+    fun: [
+        { title: 'Astronomy Picture of the Day', id: 'astronomy-picture', icon: 'planet-ringed', description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)' },
+        { title: 'Magic Eight Ball', id: 'eight-ball', icon: 'pool-8-ball', description: 'Ask a question, and it will give you an answer!' },
+        { title: 'MP3 Player', id: 'mp3-player', icon: 'music', description: 'Play some music!' },
+        { title: 'Random Fact', id: 'random-fact', icon: 'circle-info', description: 'Generate a random fact' },
+        { title: 'Random Joke', id: 'random-joke', icon: 'face-grin-tears', description: 'Generate a random joke' }
+    ]
 };
 
 export const pagesParsed = Object.fromEntries(
-    Object.entries(allPageInfo).map(([page, info]) => [
-        page,
-        {
-            name: page,
-            title: info.title ?? 'MISSING TITLE',
-            icon: info.icon ?? 'fa-regular fa-triangle-exclamation',
-            category: info.category ?? 'tools',
-            description: info.description ?? '',
-            descriptionParsed: (info.description ?? '').replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
-            link: `/${info.category}/${page}`,
-            keywords: info.keywords ?? [],
-            additionalScripts: info.additionalScripts ?? [],
-            additionalStyles: info.additionalStyles ?? [],
-            ...Object.fromEntries(Object.entries(info).filter(([key]) => key !== 'title' && key !== 'icon' && key !== 'category' && key !== 'description' && key !== 'keywords' && key !== 'additionalScripts' && key !== 'additionalStyles' && key !== 'script' && key !== 'style'))
-        }
+    Object.entries(allPageInfo).map(([category, pages]) => [
+        category,
+        Object.fromEntries(
+            pages.map((page) => {
+                const result = [
+                    page.id,
+                    {
+                        ...blankProperties,
+                        ...page,
+                        descriptionParsed: page.description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
+                        link: `/${category}/${page.id}`
+                    }
+                ];
+
+                if (!Object.hasOwn(page, 'script')) delete result[1].script;
+                if (!Object.hasOwn(page, 'style')) delete result[1].style;
+
+                return result;
+            })
+        )
     ])
 );

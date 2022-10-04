@@ -6,11 +6,14 @@ const searchText = document.querySelector('.large-search-text');
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
-    Object.values(pagesParsed).forEach((page) => {
-        if (page.title.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.name.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) {
-            results.push(`<tr><td><a href="${page.link}"><div class="results-title">${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
-        }
-    });
+    Object.values(pagesParsed)
+        .map((value) => Object.values(value))
+        .flat()
+        .forEach((page) => {
+            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) {
+                results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
+            }
+        });
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
 });

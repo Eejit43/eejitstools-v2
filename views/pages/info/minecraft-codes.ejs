@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <% for (const color of minecraftColorCodes) { %>
+            <% for (const color of additionalData.minecraftColorCodes) { %>
             <tr style="background-color: #<%- color.backgroundColor %>; color: #<%- color.textColor %>">
                 <td><%= color.color %><br />(<code class="color-name"><%= color.colorName %></code>)</td>
                 <td>§<%= color.colorCode %> (&<%= color.colorCode %>)</td>
@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <% for (const formatter of minecraftFormattingCodes) { %>
+            <% for (const formatter of additionalData.minecraftFormattingCodes) { %>
             <tr>
                 <td style="<%- formatter.style %>"><%= formatter.type %></td>
                 <td>§<%= formatter.formattingCode %> (&<%= formatter.formattingCode %>)</td>

@@ -26,7 +26,7 @@ fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
 
 // Register pages
 fastify.get('/', (request, reply) => {
-    reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: Object.values(pagesParsed), additionalStyles: ['index.css'] });
+    reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: ['index.css'] });
 });
 
 fastify.get('/search', (request, reply) => {
@@ -98,19 +98,19 @@ let totalCategories = 0,
 fs.readdirSync('./views/pages').forEach((category) => {
     totalCategories++;
     const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
+    totalPages += pages.length;
 
     pages.forEach((page) => {
-        totalPages++;
         page = page.replace(/.ejs$/, '');
-        const pageInfo = pagesParsed[page];
-        if (!pageInfo) return console.log(`Unable to find page information: ${category}/${page}`);
-        fastify.get(`/${category}/${page}`, (request, reply) => {
-            reply.view(`pages/${category}/${page}.ejs`, { script: pageInfo.script ?? pagesWithScripts.includes(`${category}/${page}`), style: pageInfo.style ?? pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
+        const pageInfo = pagesParsed[category]?.[page];
+        if (!pageInfo) return console.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
+        fastify.get(pageInfo.link, (request, reply) => {
+            reply.view(`pages/${category}/${page}.ejs`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
 });
 
-console.log(chalk.blue(`Successfully parsed and auto-loaded ${totalPages} pages in ${totalCategories} categories!`));
+console.log(chalk.blue(`[Page Auto-Loader] Successfully parsed and auto-loaded ${totalPages} pages in ${totalCategories} categories!`));
 
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
