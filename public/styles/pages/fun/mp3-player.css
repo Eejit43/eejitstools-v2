@@ -68,15 +68,6 @@
     justify-content: center;
 }
 
-.buttons i {
-    cursor: pointer;
-    display: inline-block;
-    margin-top: 18px;
-    padding: 18px;
-    padding-top: 10px;
-    width: 30px;
-}
-
 .information div {
     color: #ffc266;
     margin-bottom: 8px;
@@ -147,27 +138,50 @@
     pointer-events: none;
 }
 
-.player-icon {
+.buttons > span {
+    /* display: inline-block; */
+    text-align: center;
+    margin-bottom: 15px;
+    margin-inline: 2px;
+    margin-top: 25px;
+    width: 30px;
+}
+
+.buttons .player-icon,
+#shuffle-icon {
     color: #ffc266;
+    cursor: pointer;
     font-size: 20px;
 }
 
-.player-icon:hover {
+.player-icon:hover,
+#toggle-shuffle:hover #shuffle-icon,
+#toggle-shuffle:hover #shuffle-status {
     color: #f1a93c;
 }
 
-.progress {
-    width: 100%;
-    background-color: #d9d9f2;
-    cursor: pointer;
+#shuffle-status {
+    background-color: #1e2529;
     border-radius: 10px;
+    transform: translate(-8px, 2px);
+    font-size: 10px;
+    padding: 1.5px;
+    width: 10px;
+    cursor: pointer;
+}
+
+.progress {
+    background-color: #d9d9f2;
+    border-radius: 10px;
+    cursor: pointer;
     margin-top: 15px;
+    width: 100%;
 }
 
 #progress-bar {
-    max-width: 100%;
-    width: 0%;
-    height: 5px;
     background-color: #ffc266;
     border-radius: 10px;
+    height: 5px;
+    max-width: 100%;
+    width: 0%;
 }

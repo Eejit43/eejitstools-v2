@@ -12,6 +12,8 @@ const duration = document.getElementById('duration');
 const progressBarContainer = document.querySelector('.progress');
 const progressBar = document.getElementById('progress-bar');
 
+const toggleShuffleButton = document.getElementById('toggle-shuffle');
+const shuffleStatusIcon = document.getElementById('shuffle-status');
 const previousButton = document.getElementById('previous');
 const rewindButton = document.getElementById('rewind');
 const playPauseButton = document.getElementById('play-pause');
@@ -30,6 +32,8 @@ audio.addEventListener('loadedmetadata', () => {
 });
 
 audio.addEventListener('timeupdate', onTimeUpdate);
+
+toggleShuffleButton.addEventListener('click', toggleShuffle);
 previousButton.addEventListener('click', previous);
 rewindButton.addEventListener('click', rewind);
 playPauseButton.addEventListener('click', toggleAudio);
@@ -158,6 +162,7 @@ function toggleAudio() {
 
 /**
  * Updates the progress bar
+ * @returns {void}
  */
 function onTimeUpdate() {
     timer.textContent = formatTime(audio.currentTime);
@@ -166,6 +171,8 @@ function onTimeUpdate() {
         playPauseButton.classList.add('fa-play');
         playPauseButton.classList.remove('fa-pause');
         pauseToPlay(audioCategory, audioIndex);
+
+        if (shuffled) return loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
         if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, parseInt(audioIndex) + 1);
     }
 }
@@ -221,8 +228,10 @@ function rewind() {
 
 /**
  * Switches to the next song
+ * @returns {void}
  */
 function next() {
+    if (shuffled) return loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
     if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) {
         const oldIndex = audioIndex;
         audioIndex++;
@@ -258,6 +267,23 @@ function updateActiveTrackStyle(oldCategory, oldIndex, newCategory, newIndex, pl
     if (play) playToPause(newCategory, newIndex);
 }
 
+let shuffled = false;
+
+/**
+ * Toggles shuffle mode
+ */
+function toggleShuffle() {
+    if (shuffled) {
+        shuffled = false;
+        shuffleStatusIcon.classList.remove('fa-check');
+        shuffleStatusIcon.classList.add('fa-xmark');
+    } else {
+        shuffled = true;
+        shuffleStatusIcon.classList.remove('fa-xmark');
+        shuffleStatusIcon.classList.add('fa-check');
+    }
+}
+
 /**
  * Pauses the playing audio
  * @param {string} category the category of the track
@@ -286,8 +312,8 @@ function pauseToPlay(category, index) {
 function toggleMute() {
     if (audio.muted === false) {
         audio.muted = true;
-        toggleMuteButton.classList.add('fa-volume-mute');
         toggleMuteButton.classList.remove('fa-volume-up');
+        toggleMuteButton.classList.add('fa-volume-mute');
     } else {
         audio.muted = false;
         toggleMuteButton.classList.remove('fa-volume-mute');
