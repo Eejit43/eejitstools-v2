@@ -333,10 +333,13 @@ let shuffled = false;
 function toggleShuffle() {
     if (shuffled) {
         shuffled = false;
+        shuffledQueue = [];
         shuffleStatusIcon.classList.remove('fa-check');
         shuffleStatusIcon.classList.add('fa-xmark');
     } else {
         shuffled = true;
+        const tracks = tracksByCategory[audioCategory].tracks.map((track, index) => ({ ...track, index }));
+        shuffledQueue = shuffleArray(tracks);
         shuffleStatusIcon.classList.remove('fa-xmark');
         shuffleStatusIcon.classList.add('fa-check');
     }
