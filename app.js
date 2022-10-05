@@ -50,7 +50,10 @@ fastify.get('/headers', (request, reply) => {
     reply.send(JSON.stringify(request.headers, null, 2));
 });
 
-const shortPagesInfo = Object.values(pagesParsed).map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
+const shortPagesInfo = Object.values(pagesParsed)
+    .map((category) => Object.values(category))
+    .flat()
+    .map((page) => ({ title: page.title, id: page.id, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
 
 fastify.get('/pages', (request, reply) => {
     reply.send(JSON.stringify(shortPagesInfo, null, 2));
