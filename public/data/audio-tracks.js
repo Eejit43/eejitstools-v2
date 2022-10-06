@@ -318,5 +318,43 @@ export default [
             { name: 'Tarrey Town', file: 'Tarrey Town.mp3', duration: '9:50' },
             { name: 'Yiga Clan Hideout', file: 'Yiga Clan Hideout.mp3', duration: '2:02' }
         ]
+    },
+    {
+        name: 'Minecraft OST',
+        id: 'minecraft',
+        tracks: [
+            { name: 'Minecraft - C418', file: 'Minecraft.mp3', duration: '4:20' },
+            { name: 'Clark - C418', file: 'Clark.mp3', duration: '3:21' },
+            { name: 'Sweden - C418', file: 'Sweden.mp3', duration: '3:49' },
+            { name: 'Biome Fest - C418', file: 'Biome Fest.mp3', duration: '6:22' },
+            { name: 'Blind Spots - C418', file: 'Blind Spots.mp3', duration: '5:32' },
+            { name: 'Haunt Muskie - C418', file: 'Haunt Muskie.mp3', duration: '6:01' },
+            { name: 'Aria Math - C418', file: 'Aria Math.mp3', duration: '5:09' },
+            { name: 'Dreiton - C418', file: 'Dreiton.mp3', duration: '8:17' },
+            { name: 'Taswell - C418', file: 'Taswell.mp3', duration: '8:35' },
+            { name: 'Subwoofer Lullaby - C418', file: 'Subwoofer Lullaby.mp3', duration: '3:29' },
+            { name: 'Living Mice - C418', file: 'Living Mice.mp3', duration: '3:08' },
+            { name: 'Haggstrom - C418', file: 'Haggstrom.mp3', duration: '3:11' },
+            { name: 'Danny - C418', file: 'Danny.mp3', duration: '4:15' },
+            { name: 'Dry Hands - C418', file: 'Dry Hands.mp3', duration: '1:08' },
+            { name: 'Wet Hands - C418', file: 'Wet Hands.mp3', duration: '1:29' },
+            { name: 'Mice on Venus - C418', file: 'Mice on Venus.mp3', duration: '4:40' },
+            { name: 'Mutation - C418', file: 'Mutation.mp3', duration: '3:14' },
+            { name: 'Moog City 2 - C418', file: 'Moog City 2.mp3', duration: '3:03' },
+            { name: 'Beginning 2 - C418', file: 'Beginning 2.mp3', duration: '3:02' },
+            { name: 'Floating Trees - C418', file: 'Floating Trees.mp3', duration: '4:04' },
+            { name: 'Cat (Music Disc) - C418', file: 'Cat.mp3', duration: '3:05' },
+            { name: 'Blocks (Music Disc) - C418', file: 'Blocks.mp3', duration: '5:45' },
+            { name: 'Chirp (Music Disc) - C418', file: 'Chirp.mp3', duration: '3:05' },
+            { name: 'Far (Music Disc) - C418', file: 'Far.mp3', duration: '2:54' },
+            { name: 'Mall (Music Disc) - C418', file: 'Mall.mp3', duration: '3:17' },
+            { name: 'Mellohi (Music Disc) - C418', file: 'Mellohi.mp3', duration: '1:36' },
+            { name: 'Stal (Music Disc) - C418', file: 'Stal.mp3', duration: '2:30' },
+            { name: 'Strad (Music Disc) - C418', file: 'Strad.mp3', duration: '3:08' },
+            { name: 'Ward (Music Disc) - C418', file: 'Ward.mp3', duration: '4:11' },
+            { name: 'Wait (Music Disc) - C418', file: 'Wait.mp3', duration: '3:57' },
+            { name: 'Pigstep (Music Disc) - Lena Raine', file: 'Pigstep.mp3', duration: '2:28' },
+            { name: 'Otherside (Music Disc) - Lena Raine', file: 'Otherside.mp3', duration: '3:15' }
+        ]
     }
 ];
