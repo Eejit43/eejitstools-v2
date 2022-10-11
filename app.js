@@ -20,44 +20,36 @@ const fastify = Fastify();
 
 fastify.register(pointOfView, { engine: { ejs }, root: 'views', layout: '/layouts/layout.ejs' });
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-fastify.register(fastifyStatic, { root: path.join(__dirname, 'public') });
+fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.meta.url).pathname), 'public') });
 
 // Register pages
-fastify.get('/', (request, reply) => {
-    reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: ['index.css'] });
-});
+fastify.get('/', (request, reply) => reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: ['index.css'] }));
 
-fastify.get('/search', (request, reply) => {
-    reply.view('/search.ejs', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: ['search.css'] });
-});
+fastify.get('/search', (request, reply) => reply.view('/search.ejs', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: ['search.css'] }));
 
-fastify.get('/coins', (request, reply) => {
-    reply.view('/coins.ejs', { ...blankProperties, title: 'Coins', descriptionParsed: 'A list of coins I have/need', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'] });
-});
+fastify.get('/coins', (request, reply) => reply.view('/coins.ejs', { ...blankProperties, title: 'Coins', descriptionParsed: 'A list of coins I have/need', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'] }));
 
-fastify.get('/coins-login', (request, reply) => {
-    reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2));
-});
+fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
 
 fastify.get('/coins-list', (request, reply) => {
     if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
     reply.send(JSON.stringify(coins, null, 2));
 });
 
-fastify.get('/headers', (request, reply) => {
-    reply.send(JSON.stringify(request.headers, null, 2));
-});
+fastify.get('/headers', (request, reply) => reply.send(JSON.stringify(request.headers, null, 2)));
 
-const shortPagesInfo = Object.values(pagesParsed)
-    .map((category) => Object.values(category))
-    .flat()
-    .map((page) => ({ title: page.title, id: page.id, link: page.link, description: page.descriptionParsed, keywords: page.keywords }));
-
-fastify.get('/pages', (request, reply) => {
-    reply.send(JSON.stringify(shortPagesInfo, null, 2));
-});
+fastify.get('/pages', (request, reply) =>
+    reply.send(
+        JSON.stringify(
+            Object.values(pagesParsed)
+                .map((category) => Object.values(category))
+                .flat()
+                .map((page) => ({ title: page.title, id: page.id, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
+            null,
+            2
+        )
+    )
+);
 
 fastify.get('/cors-anywhere', async (request, reply) => {
     logApiRequest(request);
