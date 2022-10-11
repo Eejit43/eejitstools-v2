@@ -4,7 +4,7 @@
 ![0-percent-optimized](https://forthebadge.com/images/badges/0-percent-optimized.svg)
 ![contains-tasty-spaghetti-code](https://forthebadge.com/images/badges/contains-tasty-spaghetti-code.svg)
 
-Some (kinda) handy tools I made whilst learning HTML, CSS, and JavaScript
+Some (kinda) handy tools I made whilst learning HTML, CSS, and JavaScript!
 
 Created with <img src="https://raw.githubusercontent.com/Eejit43/files/main/fastify.png" alt="Fastify Logo" width="12" /> [Fastify](https://fastify.io), a web framework for <img src="https://cdn.freebiesupply.com/logos/large/2x/nodejs-icon-logo-png-transparent.png" alt="Node.js Logo" width="10"/> [Node.js](https://nodejs.org/en), and hosted with Google's <img src="https://diginomica.com/sites/default/files/images/2020-02/Google_Cloud_logo_col-700x563.png" alt="Google Cloud App Engine Logo" width="12"/> [Google Cloud App Engine](https://cloud.google.com/appengine)
 
