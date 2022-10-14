@@ -13,7 +13,7 @@ import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
 import coins from './coin-data.js';
-import { blankProperties, pagesParsed } from './public/data/pages.js';
+import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
 
 // Load layouts and static assets
 const fastify = Fastify();
@@ -35,6 +35,8 @@ fastify.get('/coins-list', (request, reply) => {
     if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
     reply.send(JSON.stringify(coins, null, 2));
 });
+
+fastify.get('/tone-indicators', (request, reply) => reply.send(JSON.stringify(toneIndicators, null, 2)));
 
 fastify.get('/headers', (request, reply) => reply.send(JSON.stringify(request.headers, null, 2)));
 

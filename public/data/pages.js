@@ -118,7 +118,7 @@ const textAbbreviations = [
     { abbreviation: 'YW', meaning: "you're welcome" }
 ];
 
-const toneIndicators = [
+export const toneIndicators = [
     { indicator: '!', meaning: 'surprise or excitement' },
     { indicator: '?!', meaning: 'excited or surprised question' },
     { indicator: '?', meaning: 'confusion' },
