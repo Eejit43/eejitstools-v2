@@ -48,6 +48,10 @@ h1 {
     padding-block: 20px;
 }
 
+h1 > i.fa-regular {
+    font-size: 0.8em;
+}
+
 code,
 .code {
     background-color: #2f3136;

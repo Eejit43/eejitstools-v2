@@ -1,20 +1,17 @@
-<div class="toolbox">
-    <h1>Tone Indicators:</h1>
-    <p class="info">Tone Indicators can be used to express tones or emotions in online messages, and are usually appended to a message.</p>
-    <table class="info-table" style="overflow-x: hidden; margin-top: 30px">
-        <thead>
-            <tr>
-                <th>Tone Indicator</th>
-                <th>Meaning</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (const entry of additionalData.toneIndicators) { %>
-            <tr>
-                <td>/<%= entry.indicator %></td>
-                <td><%- entry.meaning %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+<p class="info">Tone Indicators can be used to express tones or emotions in online messages, and are usually appended to a message.</p>
+<table class="info-table" style="overflow-x: hidden; margin-top: 30px">
+    <thead>
+        <tr>
+            <th>Tone Indicator</th>
+            <th>Meaning</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const entry of additionalData.toneIndicators) { %>
+        <tr>
+            <td>/<%= entry.indicator %></td>
+            <td><%- entry.meaning %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

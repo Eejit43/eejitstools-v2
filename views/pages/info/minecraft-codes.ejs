@@ -1,46 +1,41 @@
-<div class="toolbox">
-    <h1>
-        <span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes:
-    </h1>
-    <p class="info">For more information about formatting codes, see <a href="https://minecraft.fandom.com/wiki/Formatting_codes" target="_blank">here</a>.</p>
-    <div class="warning scroll-message">Scroll →</div>
-    <table class="info-table">
-        <thead>
-            <tr>
-                <th>Color & Minecraft Name</th>
-                <th>Color Code</th>
-                <th><span class="tooltip-bottom" data-tooltip="Message of the Day">MOTD</span> Code</th>
-                <th>Hex Code</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (const color of additionalData.minecraftColorCodes) { %>
-            <tr style="background-color: #<%- color.backgroundColor %>; color: #<%- color.textColor %>">
-                <td><%= color.color %><br />(<code class="color-name"><%= color.colorName %></code>)</td>
-                <td>§<%= color.colorCode %> (&<%= color.colorCode %>)</td>
-                <td>\u<%= color.motdCode %></td>
-                <td>#<%= color.hexCode %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
+<p class="info">For more information about formatting codes, see <a href="https://minecraft.fandom.com/wiki/Formatting_codes" target="_blank">here</a>.</p>
+<div class="warning scroll-message">Scroll →</div>
+<table class="info-table">
+    <thead>
+        <tr>
+            <th>Color & Minecraft Name</th>
+            <th>Color Code</th>
+            <th><span class="tooltip-bottom" data-tooltip="Message of the Day">MOTD</span> Code</th>
+            <th>Hex Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const color of additionalData.minecraftColorCodes) { %>
+        <tr style="background-color: #<%- color.backgroundColor %>; color: #<%- color.textColor %>">
+            <td><%= color.color %><br />(<code class="color-name"><%= color.colorName %></code>)</td>
+            <td>§<%= color.colorCode %> (&<%= color.colorCode %>)</td>
+            <td>\u<%= color.motdCode %></td>
+            <td>#<%= color.hexCode %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>
 
-    <table class="info-table" style="overflow-x: hidden; margin-top: 30px">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Chat Code</th>
-                <th><span class="tooltip-bottom" data-tooltip="Message of the Day">MOTD</span> Code</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (const formatter of additionalData.minecraftFormattingCodes) { %>
-            <tr>
-                <td style="<%- formatter.style %>"><%= formatter.type %></td>
-                <td>§<%= formatter.formattingCode %> (&<%= formatter.formattingCode %>)</td>
-                <td>\u<%= formatter.motdCode %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+<table class="info-table" style="overflow-x: hidden; margin-top: 30px">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Chat Code</th>
+            <th><span class="tooltip-bottom" data-tooltip="Message of the Day">MOTD</span> Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const formatter of additionalData.minecraftFormattingCodes) { %>
+        <tr>
+            <td style="<%- formatter.style %>"><%= formatter.type %></td>
+            <td>§<%= formatter.formattingCode %> (&<%= formatter.formattingCode %>)</td>
+            <td>\u<%= formatter.motdCode %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

@@ -1,22 +1,19 @@
-<div class="toolbox">
-    <h1>State Abbreviations:</h1>
-    <div class="warning scroll-message">Scroll →</div>
-    <table class="info-table">
-        <thead>
-            <tr>
-                <th>State</th>
-                <th>Postal Abbreviation</th>
-                <th>Standard Abbreviation</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (const state of additionalData.stateAbbreviations) { %>
-            <tr>
-                <td><%= state.name %></td>
-                <td><%= state.postal %></td>
-                <td><%= state.standard %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+<div class="warning scroll-message">Scroll →</div>
+<table class="info-table">
+    <thead>
+        <tr>
+            <th>State</th>
+            <th>Postal Abbreviation</th>
+            <th>Standard Abbreviation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const state of additionalData.stateAbbreviations) { %>
+        <tr>
+            <td><%= state.name %></td>
+            <td><%= state.postal %></td>
+            <td><%= state.standard %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

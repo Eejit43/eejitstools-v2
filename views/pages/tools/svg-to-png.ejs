@@ -1,30 +1,27 @@
-<div class="toolbox">
-    <h1><span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter</h1>
-    <div class="basic-grid" style="--min-width: 450px">
-        <div>
-            <span class="tooltext">SVG:</span>
-            <br />
-            <textarea id="svg-input" style="width: 450px; max-width: 70%; height: 200px; max-height: 350px; resize: both"></textarea><br />
-            <button id="load-svg" style="margin-left: 0">Load SVG</button> <button id="clear">Clear</button>
-        </div>
-        <div>
-            <span class="tooltext">Loaded SVG (auto-shrunk to fit):</span>
-            <br />
-            <div id="svg-preview"></div>
-        </div>
+<div class="basic-grid" style="--min-width: 450px">
+    <div>
+        <span class="tooltext">SVG:</span>
+        <br />
+        <textarea id="svg-input" style="width: 450px; max-width: 70%; height: 200px; max-height: 350px; resize: both"></textarea><br />
+        <button id="load-svg" style="margin-left: 0">Load SVG</button> <button id="clear">Clear</button>
     </div>
-    <div class="basic-grid" style="--min-width: 450px">
-        <div style="line-height: 200%">
-            <span class="tooltext">Save Options:</span>
-            <br />
-            Width: <input id="width-input" style="width: 75px" type="number" min="1" max="9999" placeholder="100" /><br />
-            Height: <input id="height-input" style="width: 75px" type="number" min="1" max="9999" placeholder="100" /><br />
-            <button id="save-png" style="margin-left: 0">Save PNG</button>
-        </div>
-        <div>
-            <span class="tooltext">Converted PNG (auto-shrunk to fit):</span>
-            <br />
-            <canvas id="png-canvas"></canvas>
-        </div>
+    <div>
+        <span class="tooltext">Loaded SVG (auto-shrunk to fit):</span>
+        <br />
+        <div id="svg-preview"></div>
+    </div>
+</div>
+<div class="basic-grid" style="--min-width: 450px">
+    <div style="line-height: 200%">
+        <span class="tooltext">Save Options:</span>
+        <br />
+        Width: <input id="width-input" style="width: 75px" type="number" min="1" max="9999" placeholder="100" /><br />
+        Height: <input id="height-input" style="width: 75px" type="number" min="1" max="9999" placeholder="100" /><br />
+        <button id="save-png" style="margin-left: 0">Save PNG</button>
+    </div>
+    <div>
+        <span class="tooltext">Converted PNG (auto-shrunk to fit):</span>
+        <br />
+        <canvas id="png-canvas"></canvas>
     </div>
 </div>

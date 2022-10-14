@@ -292,6 +292,9 @@ export const blankProperties = {
     icon: '',
     description: '',
     descriptionParsed: '',
+    toolbox: false,
+    iconStyle: null,
+    toolboxTitle: null,
     script: false,
     style: false,
     additionalScripts: [],
@@ -312,7 +315,7 @@ const allPageInfo = {
         { title: 'Countdowns', id: 'countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
         { title: 'Counter', id: 'counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
         { title: 'Currency Exchange Rates', id: 'currency-exchange', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
-        { title: 'HEIC Converter', id: 'heic-converter', icon: 'file-image', description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats', additionalScripts: [imports.heic2any] },
+        { title: 'HEIC Converter', id: 'heic-converter', icon: 'file-image', description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats', additionalScripts: [imports.heic2any], toolboxTitle: '<span data-tooltip="High Efficiency Image File">HEIC</span> Converter' },
         { title: 'Image Converter', id: 'image-converter', icon: 'file-image', description: 'Convert images to and from various formats' },
         { title: 'IP Info', id: 'ip-info', icon: 'router', description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information', keywords: ['internet', 'isp'] },
         { title: 'KeyCode Information', id: 'keycode-info', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
@@ -321,12 +324,12 @@ const allPageInfo = {
         { title: 'Morse Code Converter', id: 'morse-code-converter', icon: 'message-dots', description: 'Convert to/from Morse code' },
         { title: 'Quick Copy', id: 'quick-copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
         { title: 'Random Number Generator', id: 'random-number', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
-        { title: 'Regex Tools', id: 'regex', icon: 'highlighter', description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester', keywords: ['regular expression'] },
+        { title: 'Regex Tools', id: 'regex', icon: 'highlighter', description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester', keywords: ['regular expression'], toolbox: false },
         { title: 'Roman Numeral Converter', id: 'roman-converter', icon: 'i', description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)' },
         { title: 'Scientific Notation Converter', id: 'scientific-notation-converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs] },
         { title: 'Radical Simplifier', id: 'radical-simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['radical', 'root', 'square root'], additionalScripts: [imports.mathJax] },
         { title: 'Stopwatch', id: 'stopwatch', icon: 'stopwatch', description: 'Simple stopwatch (displays down to milliseconds)' },
-        { title: 'SVG to PNG', id: 'svg-to-png', icon: 'file-image', description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images' },
+        { title: 'SVG to PNG', id: 'svg-to-png', icon: 'file-image', description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images', toolboxTitle: '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter' },
         { title: 'Temperature Converter', id: 'temperature-converter', icon: 'temperature-list', description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin', additionalScripts: [imports.mathJs] },
         { title: 'Tides Info', id: 'tides-info', icon: 'water', description: 'Shows current tidal information and for the next 7 days' },
         { title: 'Time Converter', id: 'time-converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs] },
@@ -339,9 +342,9 @@ const allPageInfo = {
         { title: 'Word Counter', id: 'word-counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' }
     ],
     info: [
-        { title: 'Minecraft Formatting Codes', id: 'minecraft-codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraftCss], additionalData: { minecraftColorCodes, minecraftFormattingCodes } },
+        { title: 'Minecraft Formatting Codes', id: 'minecraft-codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraftCss], additionalData: { minecraftColorCodes, minecraftFormattingCodes }, iconStyle: 'padding-right: 5px', toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes' },
         { title: 'NATO Phonetic Alphabet', id: 'phonetic-alphabet', icon: 'arrow-down-a-z', description: 'Code words used by the military/police for letters', additionalData: { phoneticAlphabet } },
-        { title: 'Queer Calendar', id: 'queer-calendar', icon: 'calendar-days', description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year' },
+        { title: 'Queer Calendar', id: 'queer-calendar', icon: 'calendar-days', description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year', iconStyle: 'color: #e73636', toolboxTitle: '<span style="color: #e78236">Q</span><span style="color: #e7ce36">u</span><span style="color: #b5e736">e</span><span style="color: #69e736">e</span><span style="color: #36e74f">r</span> <span style="color: #36e79b">C</span><span style="color: #36e7e7">a</span><span style="color: #369be7">l</span><span style="color: #364fe7">e</span><span style="color: #6936e7">n</span><span style="color: #b536e7">d</span><span style="color: #e736ce">a</span><span style="color: #e73682">r</span> 🏳️‍🌈' },
         { title: 'State Abbreviations', id: 'state-abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },
         { title: 'Text Abbreviations', id: 'text-abbreviations', icon: 'text', description: 'List of common abbreviations used in text', additionalData: { textAbbreviations } },
         { title: 'Tone Indicators', id: 'tone-indicators', icon: 'slash-back', description: 'List of common tone indicators', additionalData: { toneIndicators } }
@@ -349,7 +352,7 @@ const allPageInfo = {
     fun: [
         { title: 'Astronomy Picture of the Day', id: 'astronomy-picture', icon: 'planet-ringed', description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)' },
         { title: 'Magic Eight Ball', id: 'eight-ball', icon: 'pool-8-ball', description: 'Ask a question, and it will give you an answer!' },
-        { title: 'MP3 Player', id: 'mp3-player', icon: 'music', description: 'Play some music!' },
+        { title: 'MP3 Player', id: 'mp3-player', icon: 'music', description: 'Play some music!', toolbox: false },
         { title: 'Random Fact', id: 'random-fact', icon: 'circle-info', description: 'Generate a random fact' },
         { title: 'Random Joke', id: 'random-joke', icon: 'face-grin-tears', description: 'Generate a random joke' }
     ]
@@ -366,7 +369,8 @@ export const pagesParsed = Object.fromEntries(
                         ...blankProperties,
                         ...page,
                         descriptionParsed: page.description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
-                        link: `/${category}/${page.id}`
+                        link: `/${category}/${page.id}`,
+                        toolbox: page.toolbox ?? true
                     }
                 ];
 

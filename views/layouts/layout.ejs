@@ -82,7 +82,12 @@
                 <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
             </span>
         </nav>
-        <%- body %>
+        <% if (toolbox) { %>
+        <div class="toolbox">
+            <h1><i class="fa-regular fa-<%= icon %>" <% if (iconStyle) { %> style="<%= iconStyle %>" <% } %>></i> <%- toolboxTitle || title || "Eejit's Tools" %>:</h1>
+            <% } %> <%- body %> <% if (toolbox) { %>
+        </div>
+        <% } %>
         <div class="footer-utils">
             <button id="scroll-to-top"><i class="fa-solid fa-arrow-up"></i></button>
             <button id="show-shortcuts">⌘</button>

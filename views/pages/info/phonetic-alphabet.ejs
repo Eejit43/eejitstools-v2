@@ -1,19 +1,16 @@
-<div class="toolbox">
-    <h1>NATO Phonetic Alphabet:</h1>
-    <table class="info-table" style="overflow-x: hidden; margin-top: 30px; width: 40%">
-        <thead>
-            <tr>
-                <th>Letter</th>
-                <th>Code Word</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (const entry of additionalData.phoneticAlphabet) { %>
-            <tr>
-                <td><%= entry.letter %></td>
-                <td><%= entry.codeWord %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+<table class="info-table" style="overflow-x: hidden; margin-top: 30px; width: 40%">
+    <thead>
+        <tr>
+            <th>Letter</th>
+            <th>Code Word</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const entry of additionalData.phoneticAlphabet) { %>
+        <tr>
+            <td><%= entry.letter %></td>
+            <td><%= entry.codeWord %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

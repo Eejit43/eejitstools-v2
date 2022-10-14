@@ -1,39 +1,36 @@
-<div class="toolbox">
-    <h1>Length Converter:</h1>
-    <div class="tooltext">
-        Input:<br />
-        <select style="margin-top: 20px" id="input-type">
-            <option value="1">Kilometer</option>
-            <option value="2">Meter</option>
-            <option value="3">Centimeter</option>
-            <option value="4">Millimeter</option>
-            <option value="5">Micrometer</option>
-            <option value="6">Nanometer</option>
-            <option value="7">Mile</option>
-            <option value="8">Yard</option>
-            <option value="9" selected>Foot</option>
-            <option value="10">Inch</option>
-            <option value="11">Nautical mile</option>
-        </select>
-        <br /><input id="input" pattern="[0-9]*" /> <br /><button id="reset">Reset</button>
-    </div>
-    <hr style="margin-top: 30px" />
-    <div class="tooltext">
-        <span class="tooltip-bottom" data-tooltip="Rounded to the nearest trillionth">Output</span>:<br />
-        <span id="message" class="error" style="font-size: 15px"></span>
-        <select style="margin-top: 20px" id="output-type">
-            <option value="1">Kilometer</option>
-            <option value="2">Meter</option>
-            <option value="3">Centimeter</option>
-            <option value="4">Millimeter</option>
-            <option value="5">Micrometer</option>
-            <option value="6">Nanometer</option>
-            <option value="7" selected>Mile</option>
-            <option value="8">Yard</option>
-            <option value="9">Foot</option>
-            <option value="10">Inch</option>
-            <option value="11">Nautical mile</option>
-        </select>
-        <br /><input id="output" readonly /> <br /><button id="copy-output" disabled>Copy</button>
-    </div>
+<div class="tooltext">
+    Input:<br />
+    <select style="margin-top: 20px" id="input-type">
+        <option value="1">Kilometer</option>
+        <option value="2">Meter</option>
+        <option value="3">Centimeter</option>
+        <option value="4">Millimeter</option>
+        <option value="5">Micrometer</option>
+        <option value="6">Nanometer</option>
+        <option value="7">Mile</option>
+        <option value="8">Yard</option>
+        <option value="9" selected>Foot</option>
+        <option value="10">Inch</option>
+        <option value="11">Nautical mile</option>
+    </select>
+    <br /><input id="input" pattern="[0-9]*" /> <br /><button id="reset">Reset</button>
+</div>
+<hr style="margin-top: 30px" />
+<div class="tooltext">
+    <span class="tooltip-bottom" data-tooltip="Rounded to the nearest trillionth">Output</span>:<br />
+    <span id="message" class="error" style="font-size: 15px"></span>
+    <select style="margin-top: 20px" id="output-type">
+        <option value="1">Kilometer</option>
+        <option value="2">Meter</option>
+        <option value="3">Centimeter</option>
+        <option value="4">Millimeter</option>
+        <option value="5">Micrometer</option>
+        <option value="6">Nanometer</option>
+        <option value="7" selected>Mile</option>
+        <option value="8">Yard</option>
+        <option value="9">Foot</option>
+        <option value="10">Inch</option>
+        <option value="11">Nautical mile</option>
+    </select>
+    <br /><input id="output" readonly /> <br /><button id="copy-output" disabled>Copy</button>
 </div>
