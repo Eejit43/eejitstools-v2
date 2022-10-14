@@ -27,8 +27,6 @@ fastify.get('/', (request, reply) => reply.view('/index.ejs', { ...blankProperti
 
 fastify.get('/search', (request, reply) => reply.view('/search.ejs', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: ['search.css'] }));
 
-fastify.get('/coins', (request, reply) => reply.view('/coins.ejs', { ...blankProperties, title: 'Coins List', descriptionParsed: 'A list of coins I have/need', additionalScripts: [{ link: 'coins.js', external: false, module: true }], additionalStyles: ['coins.css'] }));
-
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
 
 fastify.get('/coins-list', (request, reply) => {

@@ -48,7 +48,7 @@ const mintMarks = {
  */
 async function loadCoinsList() {
     /**
-     * @type {import('../../coin-data.js').CoinType[]}
+     * @type {import('../../../../coin-data.js').CoinType[]}
      */
     const coins = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
 
