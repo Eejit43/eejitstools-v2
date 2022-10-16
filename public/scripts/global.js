@@ -106,16 +106,28 @@ document.addEventListener('keydown', (event) => {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'views/index.ejs';
-        else if (pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname) finalUrl = `views/pages${pathname}.ejs`;
-        else finalUrl = 'views/error.ejs';
+        else if (pathname === '/search') finalUrl = 'views/search.ejs';
+        else {
+            const category = pathname.split('/')[1];
+            const page = pagesParsed[category]?.[pathname.split('/')[2]];
+
+            if (!page) finalUrl = 'views/error.ejs';
+            else finalUrl = `views/pages/${category}/${page.id}.ejs`;
+        }
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
     } else if (event.shiftKey && event.code === 'KeyP') {
         const { pathname } = window.location;
         let finalUrl;
         if (pathname === '/') finalUrl = 'public/scripts/global.js';
-        else if (pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.link === pathname && pagesParsed[pathname.replace(/^\/(tools|info|fun)\//, '')]?.script) finalUrl = `public/scripts/pages${pathname}.js`;
-        else finalUrl = 'public/scripts/global.js';
+        else if (pathname === '/search') finalUrl = 'public/scripts/search.js';
+        else {
+            const category = pathname.split('/')[1];
+            const page = pagesParsed[category]?.[pathname.split('/')[2]];
+
+            if (!page) finalUrl = 'public/scripts/global.js';
+            else finalUrl = `public/scripts/pages/${category}/${page.id}.js`;
+        }
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
     } else if (event.code === 'Slash') {
