@@ -44,7 +44,7 @@ fastify.get('/pages', (request, reply) =>
             Object.values(pagesParsed)
                 .map((category) => Object.values(category))
                 .flat()
-                .map((page) => ({ title: page.title, id: page.id, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
+                .map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
             null,
             2
         )
