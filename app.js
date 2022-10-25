@@ -12,7 +12,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
-import coins from './coin-data.js';
+import coins from './public/data/coins-data.js';
 import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
 
 // Load layouts and static assets
