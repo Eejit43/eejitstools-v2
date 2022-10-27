@@ -19,7 +19,7 @@ fileUploadButton.addEventListener('change', () => {
 
     if (file) {
         if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
-        if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool! Use "heic-converter" instead!', 'error');
+        if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
 
         loadButton.disabled = false;

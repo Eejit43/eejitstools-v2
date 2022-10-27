@@ -1,5 +1,4 @@
 const imports = {
-    heic2any: { link: 'external/heic2any.js', external: false, module: true },
     mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', external: true, module: false },
     minecraftCss: 'minecraft.css',
     odometerCss: 'external/odometer.css',
@@ -304,7 +303,6 @@ export const blankProperties = {
 
 const allPageInfo = {
     tools: [
-        { title: 'Audio Converter', id: 'audio-converter', icon: 'file-audio', description: 'Convert audio files to and from various formats' },
         { title: 'Base64 Encode/Decode', id: 'base64-converter', icon: 'code', description: 'Encode and decode to and from Base64 format' },
         { title: 'Base64 Image Encode/Decode', id: 'base64-image-converter', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
         { title: 'Binary Calculator', id: 'binary-calc', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
@@ -316,7 +314,6 @@ const allPageInfo = {
         { title: 'Countdowns', id: 'countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
         { title: 'Counter', id: 'counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
         { title: 'Currency Exchange Rates', id: 'currency-exchange', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
-        { title: 'HEIC Converter', id: 'heic-converter', icon: 'file-image', description: 'Convert <span data-tooltip="High Efficiency Image File">HEIC</span> files to various formats', additionalScripts: [imports.heic2any], toolboxTitle: '<span data-tooltip="High Efficiency Image File">HEIC</span> Converter' },
         { title: 'Image Converter', id: 'image-converter', icon: 'file-image', description: 'Convert images to and from various formats' },
         { title: 'IP Info', id: 'ip-info', icon: 'router', description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information', keywords: ['internet', 'isp'] },
         { title: 'KeyCode Information', id: 'keycode-info', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
@@ -336,8 +333,6 @@ const allPageInfo = {
         { title: 'Time Converter', id: 'time-converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs] },
         { title: 'Time', id: 'time', icon: 'clock', description: 'Displays the current time and date (in your time zone), as well as detailed time information' },
         { title: 'UNIX Time Converter', id: 'unix-time-converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
-        { title: 'Video Converter', id: 'video-converter', icon: 'file-video', description: 'Convert video files to and from various formats' },
-        { title: 'Video to Audio Converter', id: 'video-to-audio', icon: 'photo-film-music', description: 'Convert video files to various audio formats' },
         { title: 'Weather Info', id: 'weather-info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts' },
         { title: 'Word Counter', id: 'word-counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' }
     ],
