@@ -170,7 +170,7 @@ export default [
             { name: 'Eine Kleine Nachtmusik - Mozart', file: 'Eine Kleine Nachtmusik.mp3', duration: '5:47' },
             { name: 'Rondo Alla Turca - Mozart', file: 'Rondo Alla Turca.mp3', duration: '3:28' },
             { name: 'Flight Of The Bumblebee - Rimsky-Korsakov', file: 'Flight Of The Bumblebee.mp3', duration: '3:25' },
-            { name: 'In the Hall Of the Mountain King - Grieg', file: 'In the Hall Of the Mountain King.mp3', duration: '2:41' },
+            { name: 'In the Hall of the Mountain King - Grieg', file: 'In the Hall of the Mountain King.mp3', duration: '2:41' },
             { name: 'Für Elise - Ludwig van Beethoven', file: 'Für Elise.mp3', duration: '3:02' },
             { name: 'Can Can Music - Offenbach', file: 'Can Can Music.mp3', duration: '2:11' },
             { name: 'Ride Of The Valkyries - Richard Wagner', file: 'Ride Of The Valkyries.mp3', duration: '5:00' },
