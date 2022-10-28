@@ -125,7 +125,7 @@ let audioIndex = 0;
  */
 function loadNewTrack(category, index, play = true) {
     const track = tracksByCategory[category].tracks[index];
-    sourceAudio.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/mp3-player/${category}/${track.file}`;
+    sourceAudio.src = `/files/mp3-player/${category}/${track.file}.mp3`;
     title.textContent = track.name;
     audio.load();
     if (play) toggleAudio();
