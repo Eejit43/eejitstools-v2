@@ -105,7 +105,7 @@ fs.readdirSync('./views/pages').forEach((category) => {
     });
 });
 
-console.log(chalk.blue(`[Page Auto-Loader] Successfully parsed and auto-loaded ${totalPages} pages in ${totalCategories} categories!`));
+console.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
 
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
@@ -142,9 +142,11 @@ const port = process.env.PORT || 3000;
 // Start server
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
-        fastify.log.error(error);
+        if (error.code === 'EADDRINUSE') console.log(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
+        else console.log(`${chalk.red('[Startup error]:')} ${error}`);
         process.exit(1);
     }
+
     console.log(chalk.green('Server is now listening on ') + chalk.blueBright(`http://localhost:${port}`));
 });
 
@@ -153,5 +155,5 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
  * @param {import('fastify').FastifyRequest} request the request object
  */
 function logApiRequest(request) {
-    console.log(`${chalk.green('[API request]')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
+    console.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
