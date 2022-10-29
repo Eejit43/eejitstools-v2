@@ -91,7 +91,7 @@ async function loadCoinsList() {
         coinTypeDiv.textContent = coinType.name;
 
         const coinTypeImg = document.createElement('img');
-        coinTypeImg.src = `/files/coins-list/${coinType.id}/${coinType.coins[coinType.coins.length - 1]?.image || 'default'}.png`;
+        coinTypeImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinType.coins[coinType.coins.length - 1]?.image || 'default'}.png`;
         coinTypeImg.classList.add('coin-type-image', 'popup-image');
         coinTypeImg.alt = coinType.name;
 
@@ -137,7 +137,7 @@ async function loadCoinsList() {
             }
 
             const coinVariantImg = document.createElement('img');
-            coinVariantImg.src = `/files/coins-list/${coinType.id}/${coinVariant.image || 'default'}.png`;
+            coinVariantImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.image || 'default'}.png`;
             coinVariantImg.classList.add('coin-variant-image', 'popup-image');
             coinVariantImg.alt = coinVariant.name;
 
@@ -250,7 +250,7 @@ async function loadCoinsList() {
                 if (coin.image) {
                     const image = document.createElement('sup');
                     image.classList.add('coin-image-icon', 'fa-solid', 'fa-image');
-                    image.dataset.image = `/files/coins-list/${coinType.id}/${coin.image}.png`;
+                    image.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coin.image}.png`;
                     image.dataset.name = `${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
                     year.appendChild(image);
                 }
@@ -270,7 +270,7 @@ async function loadCoinsList() {
                     const comparison = document.createElement('span');
                     comparison.classList.add('coin-type-comparison');
                     comparison.textContent = 'View type comparison';
-                    comparison.dataset.image = `/files/coins-list/${coinType.id}/${coin.comparison}.png`;
+                    comparison.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coin.comparison}.png`;
                     comparison.dataset.name = `Type Comparison: ${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
 
                     if (coin.specification) {
