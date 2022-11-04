@@ -1,11 +1,31 @@
-const imports = {
-    mathJs: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', external: true, module: false },
-    minecraftCss: 'minecraft.css',
-    odometerCss: 'external/odometer.css',
-    odometerJs: { link: 'external/odometer.js', external: false, module: true },
-    mathJax: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', external: true, module: false }
+const preImports = {
+    mathJs: {
+        script: { link: 'https://unpkg.com/mathjs/lib/browser/math.js', module: false }
+    },
+    minecraft: {
+        style: { link: 'minecraft.css' }
+    },
+    odometer: {
+        style: { link: 'external/odometer.css' },
+        script: { link: 'external/odometer.js', external: false }
+    },
+    mathJax: {
+        script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', module: false }
+    }
 };
 
+const imports = Object.fromEntries(
+    Object.entries(preImports).map(([key, value]) => {
+        const { script, style } = value;
+        return [
+            key,
+            {
+                script: script ? { link: `${!script.external ? '/scripts/' : ''}${script.link}`, module: script.module ?? true } : null,
+                style: style ? { link: style.link } : null
+            }
+        ];
+    })
+);
 const phoneticAlphabet = [
     { letter: 'A', codeWord: 'Alpha' },
     { letter: 'B', codeWord: 'Bravo' },
@@ -304,25 +324,25 @@ const allPageInfo = {
         { title: 'Color Information', id: 'color-info', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors' },
         { title: 'Countdown Timer', id: 'timer', icon: 'bell', description: 'Simple countdown timer with end time display' },
         { title: 'Countdowns', id: 'countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
-        { title: 'Counter', id: 'counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
+        { title: 'Counter', id: 'counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },
         { title: 'Currency Exchange Rates', id: 'currency-exchange', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
         { title: 'Image Converter', id: 'image-converter', icon: 'file-image', description: 'Convert images to and from various formats' },
         { title: 'IP Info', id: 'ip-info', icon: 'router', description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information', keywords: ['internet', 'isp'] },
         { title: 'KeyCode Information', id: 'keycode-info', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
-        { title: 'Length Converter', id: 'length-converter', icon: 'ruler-horizontal', description: 'Convert between United States standard length measurements and imperial length units', additionalScripts: [imports.mathJs] },
+        { title: 'Length Converter', id: 'length-converter', icon: 'ruler-horizontal', description: 'Convert between United States standard length measurements and imperial length units', additionalScripts: [imports.mathJs.script] },
         { title: 'List Sorter', id: 'list-sorter', icon: 'arrow-down-wide-short', description: 'Alphabetize, numerize, randomize, and reverse lists that can be defined with custom separators' },
         { title: 'Morse Code Converter', id: 'morse-code-converter', icon: 'message-dots', description: 'Convert to/from Morse code' },
         { title: 'Quick Copy', id: 'quick-copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
-        { title: 'Radical Simplifier', id: 'radical-simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['root', 'square root'], additionalScripts: [imports.mathJax] },
-        { title: 'Random Number Generator', id: 'random-number', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometerJs], additionalStyles: [imports.odometerCss] },
+        { title: 'Radical Simplifier', id: 'radical-simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['root', 'square root'], additionalScripts: [imports.mathJax.script] },
+        { title: 'Random Number Generator', id: 'random-number', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },
         { title: 'Regex Tools', id: 'regex', icon: 'highlighter', description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester', keywords: ['regular expression'], toolbox: false },
         { title: 'Roman Numeral Converter', id: 'roman-converter', icon: 'i', description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)' },
-        { title: 'Scientific Notation Converter', id: 'scientific-notation-converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs] },
+        { title: 'Scientific Notation Converter', id: 'scientific-notation-converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs.script] },
         { title: 'Stopwatch', id: 'stopwatch', icon: 'stopwatch', description: 'Simple stopwatch (displays down to milliseconds)' },
         { title: 'SVG to PNG', id: 'svg-to-png', icon: 'file-image', description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images', toolboxTitle: '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter' },
-        { title: 'Temperature Converter', id: 'temperature-converter', icon: 'temperature-list', description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin', additionalScripts: [imports.mathJs] },
+        { title: 'Temperature Converter', id: 'temperature-converter', icon: 'temperature-list', description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin', additionalScripts: [imports.mathJs.script] },
         { title: 'Tides Info', id: 'tides-info', icon: 'water', description: 'Shows current tidal information and for the next 7 days' },
-        { title: 'Time Converter', id: 'time-converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs] },
+        { title: 'Time Converter', id: 'time-converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs.script] },
         { title: 'Time', id: 'time', icon: 'clock', description: 'Displays the current time and date (in your time zone), as well as detailed time information' },
         { title: 'UNIX Time Converter', id: 'unix-time-converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
         { title: 'Weather Info', id: 'weather-info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts' },
@@ -330,7 +350,7 @@ const allPageInfo = {
     ],
     info: [
         { title: 'Coins List', id: 'coins-list', icon: 'coins', description: 'A list of coins I have/need' },
-        { title: 'Minecraft Formatting Codes', id: 'minecraft-codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraftCss], additionalData: { minecraftColorCodes, minecraftFormattingCodes }, iconStyle: 'padding-right: 5px', toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes' },
+        { title: 'Minecraft Formatting Codes', id: 'minecraft-codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraft.style], additionalData: { minecraftColorCodes, minecraftFormattingCodes }, iconStyle: 'padding-right: 5px', toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes' },
         { title: 'NATO Phonetic Alphabet', id: 'phonetic-alphabet', icon: 'arrow-down-a-z', description: 'Code words used by the military/police for letters', additionalData: { phoneticAlphabet } },
         { title: 'Queer Calendar', id: 'queer-calendar', icon: 'calendar-days', description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year', iconStyle: 'color: #e73636', toolboxTitle: '<span style="color: #e78236">Q</span><span style="color: #e7ce36">u</span><span style="color: #b5e736">e</span><span style="color: #69e736">e</span><span style="color: #36e74f">r</span> <span style="color: #36e79b">C</span><span style="color: #36e7e7">a</span><span style="color: #369be7">l</span><span style="color: #364fe7">e</span><span style="color: #6936e7">n</span><span style="color: #b536e7">d</span><span style="color: #e736ce">a</span><span style="color: #e73682">r</span> 🏳️‍🌈' },
         { title: 'State Abbreviations', id: 'state-abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },

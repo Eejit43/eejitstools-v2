@@ -8,12 +8,12 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const state of additionalData.stateAbbreviations) { %>
+        {{#each additionalData.stateAbbreviations}}
         <tr>
-            <td><%= state.name %></td>
-            <td><%= state.postal %></td>
-            <td><%= state.standard %></td>
+            <td>{{this.name}}</td>
+            <td>{{this.postal}}</td>
+            <td>{{this.standard}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>

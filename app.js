@@ -6,26 +6,29 @@ import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
 import chalk from 'chalk';
 import 'dotenv/config';
-import ejs from 'ejs';
 import Fastify from 'fastify';
 import fs from 'fs';
+import handlebars from 'handlebars';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
 import coins from './public/data/coins-data.js';
 import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
 
+// Add Handlebars helper functions
+handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
+
 // Load layouts and static assets
 const fastify = Fastify();
 
-fastify.register(pointOfView, { engine: { ejs }, root: 'views', layout: '/layouts/layout.ejs' });
+fastify.register(pointOfView, { engine: { handlebars }, root: 'views', includeViewExtension: true, layout: '/layouts/layout' });
 
 fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.meta.url).pathname), 'public') });
 
 // Register pages
-fastify.get('/', (request, reply) => reply.view('/index.ejs', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: ['index.css'] }));
+fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: [{ link: 'index.css' }] }));
 
-fastify.get('/search', (request, reply) => reply.view('/search.ejs', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', external: false, module: true }], additionalStyles: ['search.css'] }));
+fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
 
@@ -92,15 +95,15 @@ let totalCategories = 0,
 
 fs.readdirSync('./views/pages').forEach((category) => {
     totalCategories++;
-    const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.ejs'));
+    const pages = fs.readdirSync(`./views/pages/${category}`).filter((file) => file.endsWith('.hbs'));
     totalPages += pages.length;
 
     pages.forEach((page) => {
-        page = page.replace(/.ejs$/, '');
+        page = page.replace(/.hbs$/, '');
         const pageInfo = pagesParsed[category]?.[page];
         if (!pageInfo) return console.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
         fastify.get(pageInfo.link, (request, reply) => {
-            reply.view(`pages/${category}/${page}.ejs`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
+            reply.view(`pages/${category}/${page}`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
 });
@@ -130,11 +133,11 @@ fastify.get('/apod/:year/:month/:day', async (request, reply) => {
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
     console.log(error);
-    reply.status(error.statusCode || 500).view('/error.ejs', { ...blankProperties, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
+    reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) => {
-    reply.status(404).view('/error.ejs', { ...blankProperties, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
+    reply.status(404).view('/error.hbs', { ...blankProperties, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
 });
 
 const port = process.env.PORT || 3000;

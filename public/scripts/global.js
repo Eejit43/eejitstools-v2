@@ -105,14 +105,14 @@ document.addEventListener('keydown', (event) => {
     else if (!event.shiftKey && event.code === 'KeyP') {
         const { pathname } = window.location;
         let finalUrl;
-        if (pathname === '/') finalUrl = 'views/index.ejs';
-        else if (pathname === '/search') finalUrl = 'views/search.ejs';
+        if (pathname === '/') finalUrl = 'views/index.hbs';
+        else if (pathname === '/search') finalUrl = 'views/search.hbs';
         else {
             const category = pathname.split('/')[1];
             const page = pagesParsed[category]?.[pathname.split('/')[2]];
 
-            if (!page) finalUrl = 'views/error.ejs';
-            else finalUrl = `views/pages/${category}/${page.id}.ejs`;
+            if (!page) finalUrl = 'views/error.hbs';
+            else finalUrl = `views/pages/${category}/${page.id}.hbs`;
         }
 
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');

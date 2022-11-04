@@ -6,11 +6,11 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const entry of additionalData.textAbbreviations) { %>
+        {{#each additionalData.textAbbreviations}}
         <tr>
-            <td><%= entry.abbreviation %></td>
-            <td><%- entry.meaning %></td>
+            <td>{{this.abbreviation}}</td>
+            <td>{{{this.meaning}}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>

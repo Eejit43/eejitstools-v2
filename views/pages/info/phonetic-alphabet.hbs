@@ -6,11 +6,11 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const entry of additionalData.phoneticAlphabet) { %>
+        {{#each additionalData.phoneticAlphabet}}
         <tr>
-            <td><%= entry.letter %></td>
-            <td><%= entry.codeWord %></td>
+            <td>{{this.letter}}</td>
+            <td>{{this.codeWord}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>

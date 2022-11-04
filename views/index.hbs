@@ -11,17 +11,17 @@
     </div>
 </header>
 
-<% for (const category of Object.values(pages)) { %>
+{{#each pages}}
 <table class="tools-table">
     <tbody>
-        <% for (const page of Object.values(category)) { %>
+        {{#each this}}
         <tr>
-            <td style="width: 15vw">
-                <a href="<%- page.link %>"><i class="page-icon fa-regular fa-<%- page.icon %>"></i><%- page.title %></a>
+            <td>
+                <a href="{{this.link}}"><i class="page-icon fa-regular fa-{{this.icon}}"></i>{{this.title}}</a>
             </td>
-            <td><%- page.description %></td>
+            <td>{{{this.description}}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>
-<% } %>
+{{/each}}

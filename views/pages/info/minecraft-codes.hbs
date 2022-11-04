@@ -10,14 +10,14 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const color of additionalData.minecraftColorCodes) { %>
-        <tr style="background-color: #<%- color.backgroundColor %>; color: #<%- color.textColor %>">
-            <td><%= color.color %><br />(<code class="color-name"><%= color.colorName %></code>)</td>
-            <td>§<%= color.colorCode %> (&<%= color.colorCode %>)</td>
-            <td>\u<%= color.motdCode %></td>
-            <td>#<%= color.hexCode %></td>
+        {{#each additionalData.minecraftColorCodes}}
+        <tr style="background-color: #{{this.backgroundColor}}; color: #{{this.textColor}}">
+            <td>{{this.color}}<br />(<code class="color-name">{{this.colorName}}</code>)</td>
+            <td>§{{this.colorCode}} (&{{this.colorCode}})</td>
+            <td>\u{{this.motdCode}}</td>
+            <td>#{{this.hexCode}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>
 
@@ -30,12 +30,12 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const formatter of additionalData.minecraftFormattingCodes) { %>
+        {{#each additionalData.minecraftFormattingCodes}}
         <tr>
-            <td style="<%- formatter.style %>"><%= formatter.type %></td>
-            <td>§<%= formatter.formattingCode %> (&<%= formatter.formattingCode %>)</td>
-            <td>\u<%= formatter.motdCode %></td>
+            <td style="{{this.style}}">{{this.type}}</td>
+            <td>§{{this.formattingCode}} (&{{this.formattingCode}})</td>
+            <td>\u{{this.motdCode}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>

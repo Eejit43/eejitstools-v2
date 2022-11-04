@@ -7,11 +7,11 @@
         </tr>
     </thead>
     <tbody>
-        <% for (const entry of additionalData.toneIndicators) { %>
+        {{#each additionalData.toneIndicators}}
         <tr>
-            <td>/<%= entry.indicator %></td>
-            <td><%- entry.meaning %></td>
+            <td>/{{this.indicator}}</td>
+            <td>{{{this.meaning}}}</td>
         </tr>
-        <% } %>
+        {{/each}}
     </tbody>
 </table>

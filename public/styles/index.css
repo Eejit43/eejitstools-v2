@@ -59,6 +59,10 @@ header {
     text-align: left;
 }
 
+.tools-table > tbody > tr > td:first-of-type {
+    width: 15vw;
+}
+
 @media only screen and (max-width: 700px) {
     .tools-table {
         width: 85%;
