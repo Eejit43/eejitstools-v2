@@ -87,6 +87,10 @@ kbd {
     white-space: nowrap;
 }
 
+.toastify {
+    cursor: unset;
+}
+
 /*
  ================
     NAVIGATION
