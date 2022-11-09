@@ -20,7 +20,7 @@ const imports = Object.fromEntries(
         return [
             key,
             {
-                script: script ? { link: `${!script.external ? '/scripts/' : ''}${script.link}`, module: script.module ?? true } : null,
+                script: script ? { link: `${!(script.external ?? true) ? '/scripts/' : ''}${script.link}`, module: script.module ?? true } : null,
                 style: style ? { link: style.link } : null
             }
         ];
