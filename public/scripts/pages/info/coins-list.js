@@ -31,6 +31,8 @@ loginButton.addEventListener('click', async () => {
     } else {
         showAlert('Incorrect password!', 'error');
         showResult('login', 'error', null, null, false);
+        loginButton.disabled = true;
+        setTimeout(() => (loginButton.disabled = false), 1000);
     }
 });
 

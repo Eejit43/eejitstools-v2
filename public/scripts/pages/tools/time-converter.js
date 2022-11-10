@@ -5,6 +5,7 @@ import { copyValue, showAlert } from '/scripts/functions.js';
 const inputType = document.getElementById('input-type');
 const input = document.getElementById('input');
 const resetButton = document.getElementById('reset');
+const switchButton = document.getElementById('switch');
 const message = document.getElementById('message');
 const outputType = document.getElementById('output-type');
 const output = document.getElementById('output');
@@ -31,6 +32,21 @@ resetButton.addEventListener('click', () => {
         resetButton.disabled = false;
         resetButton.innerHTML = 'Reset';
     }, 2000);
+});
+switchButton.addEventListener('click', () => {
+    const inputValue = input.value;
+    const inputTypeValue = inputType.value;
+    const outputValue = output.value;
+    const outputTypeValue = outputType.value;
+
+    input.value = outputValue;
+    inputType.value = outputTypeValue;
+    output.value = inputValue;
+    outputType.value = inputTypeValue;
+
+    convert();
+
+    showAlert('Moved to input!', '#1c62d4');
 });
 outputType.addEventListener('change', convert);
 copyOutput.addEventListener('click', () => copyValue(copyOutput, output));

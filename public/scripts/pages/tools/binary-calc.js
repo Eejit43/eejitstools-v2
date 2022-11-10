@@ -89,7 +89,7 @@ function convert(value, radix) {
 
     let result = parseNumberWithRadix(value, radix).toString(radices[outputType.value].number);
 
-    if (!result || isNaN(result)) return notValid();
+    if (!result || result.toString() === 'NaN') return notValid(); // Not using isNaN() as it won't account for hex values
 
     switch (radices[outputType.value].name) {
         case 'binary':
