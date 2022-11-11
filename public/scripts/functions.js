@@ -1,4 +1,4 @@
-import toastify from 'https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/toastify-es.js';
+import toastify from 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify-es.js';
 import twemoji from 'https://twemoji.maxcdn.com/v/latest/twemoji.esm.js';
 
 /**
@@ -11,7 +11,7 @@ export function twemojiUpdate() {
 /**
  * Displays a popup alert
  * @param {string} text The string to display
- * @param {'success'|'error'} color 'success', 'error', or color
+ * @param {'success'|'error'|string} color 'success', 'error', or color
  * @param {number} duration The duration of the popup in milliseconds
  */
 export function showAlert(text, color, duration) {
@@ -46,7 +46,7 @@ export function showAlert(text, color, duration) {
  * @param {boolean} [remove=true] Whether or not to the remove the icon after 2 seconds (default: true)
  */
 export function showResult(id, type, color = '#009c3f', icon = 'check', remove = true) {
-    const oldElement = document.getElementById(id + '-runResult');
+    const oldElement = document.getElementById(id + '-result');
     const newElement = oldElement.cloneNode(true);
     oldElement.parentNode.replaceChild(newElement, oldElement);
     if (type === 'success') {
@@ -70,7 +70,7 @@ export function showResult(id, type, color = '#009c3f', icon = 'check', remove =
  * @param {string} id The prefix of the element ID to update
  */
 export function resetResult(id) {
-    const element = document.getElementById(id + '-runResult');
+    const element = document.getElementById(id + '-result');
     element.style.color = '';
     element.className = '';
 }

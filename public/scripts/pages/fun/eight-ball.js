@@ -1,21 +1,21 @@
 import { escapeHTML, showAlert } from '/scripts/functions.js';
 
-const userQuestion = document.getElementById('userQuestion');
-const rollBallBtn = document.getElementById('rollBall');
+const question = document.getElementById('question');
+const rollButton = document.getElementById('roll');
 const result = document.getElementById('result');
 
 /* Add event listeners */
-rollBallBtn.addEventListener('click', () => {
-    if (userQuestion.value.length === 0) showAlert("You didn't ask a question!", 'error');
+rollButton.addEventListener('click', () => {
+    if (question.value.length === 0) showAlert("You didn't ask a question!", 'error');
     else {
-        rollBallBtn.disabled = true;
-        rollBallBtn.innerHTML = 'Rolling!';
-        result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(userQuestion.value)}</span><br />Response: <span style="font-weight: 500; color:#ffba24; font-size: 18px">Predicting... <i class="fa-solid fa-spinner fa-spin-pulse"></i></span>`;
+        rollButton.disabled = true;
+        rollButton.innerHTML = 'Rolling!';
+        result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(question.value)}</span><br />Response: <span style="font-weight: 500; color:#ffba24; font-size: 18px">Predicting... <i class="fa-solid fa-spinner fa-spin-pulse"></i></span>`;
 
         setTimeout(() => {
-            rollBallBtn.disabled = false;
-            rollBallBtn.innerHTML = 'Roll ball!';
-            result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(userQuestion.value)}</span><br />Response: <span style="font-weight: 500; color: dimgray; font-size: 18px">${results[Math.floor(Math.random() * 20)]}</span>`;
+            rollButton.disabled = false;
+            rollButton.innerHTML = 'Roll ball!';
+            result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(question.value)}</span><br />Response: <span style="font-weight: 500; color: dimgray; font-size: 18px">${results[Math.floor(Math.random() * 20)]}</span>`;
         }, 2000);
     }
 });

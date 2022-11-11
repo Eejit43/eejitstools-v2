@@ -1,13 +1,18 @@
 <div class="toc">
     <span style="font-size: 22px; line-height: 180%">Table of Contents:</span>
-    <br />– <a href="#duplicate-line-remover">Duplicate Line Remover</a> <br />– <a href="#whitespace-remover">Whitespace Remover</a> <br />– <a href="#regex-tester">Regex Tester</a>
+    <br />–
+    <a href="#duplicate-line-remover">Duplicate Line Remover</a>
+    <br />–
+    <a href="#whitespace-remover">Whitespace Remover</a>
+    <br />–
+    <a href="#regex-tester">Regex Tester</a>
 </div>
 <div class="toolbox" style="margin: 40px auto 30px">
     <h1 id="duplicate-line-remover">Duplicate Line Remover:</h1>
     <div class="tooltext">
         Input:<br />
         <textarea id="dlr-regexInput" style="width: 500px; max-width: 70%"></textarea>
-        <br /><button id="run-dlr">Run regex <i id="dlr-runResult"></i></button>
+        <br /><button id="run-dlr">Run regex <i id="dlr-result"></i></button>
         <button id="dlr-clear">Clear</button>
     </div>
     <hr style="margin-top: 30px" />
@@ -22,7 +27,7 @@
     <div class="tooltext">
         Input:<br />
         <textarea id="wr-regexInput" style="width: 500px; max-width: 70%"></textarea>
-        <br /><button id="run-wr">Run regex <i id="wr-runResult"></i></button>
+        <br /><button id="run-wr">Run regex <i id="wr-result"></i></button>
         <button id="wr-clear">Clear</button>
     </div>
     <hr style="margin-top: 30px" />
@@ -48,13 +53,16 @@
     <h1 id="regex-tester">Regex Tester:</h1>
     <div class="tooltext">
         Input:<br />
-        <span style="font-weight: 500; color: dimgray; font-size: 16px"
-            ><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet" target="_blank">Regex</a>: <input id="rm-regex" style="width: 320px; max-width: 70%" />　<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags" target="_blank">Flags</a>: <input id="rm-flags" value="g" style="width: 4rem" /><br />
-            Replace string (leave empty to delete): <input id="rm-replace" style="width: 320px; max-width: 70%" /></span
-        ><br />
+        <span style="font-weight: 500; color: dimgray; font-size: 16px"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet" target="_blank">Regex</a>:
+            <input id="rm-regex" style="width: 320px; max-width: 70%" />　<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags" target="_blank">Flags</a>:
+            <input id="rm-flags" value="g" style="width: 4rem" /><br />
+            Replace string (leave empty to delete):
+            <input id="rm-replace" style="width: 320px; max-width: 70%" /></span><br />
         <textarea id="rm-regexInput" style="width: 450px; max-width: 70%; height: 100px; max-height: 350px; resize: both"></textarea>
-        <br /><button id="run-rm">Run regex <i id="rm-runResult"></i></button> <button id="rm-clear">Clear Input</button> <button id="rm-clear-2">Clear All</button>
-        <button id="rm-switch">Move output to input <i id="switch-runResult"></i></button>
+        <br /><button id="run-rm">Run regex <i id="rm-result"></i></button>
+        <button id="rm-clear">Clear Input</button>
+        <button id="rm-clear-2">Clear All</button>
+        <button id="rm-switch">Move output to input <i id="switch-result"></i></button>
     </div>
     <hr style="margin-top: 30px" />
     <div class="tooltext">

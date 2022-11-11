@@ -6,7 +6,12 @@
     <br />
     <div class="message">
         Welcome to my site! Here are some handy tools I made whilst learning
-        <i class="fa-brands fa-html5"></i> <span class="tooltip-bottom" data-tooltip="Hypertext Markup Language">HTML</span>, <i class="fa-brands fa-css3-alt"></i> <span class="tooltip-bottom" data-tooltip="Cascading Style Sheets">CSS</span>, and <i class="fa-brands fa-square-js"></i> JavaScript!
+        <i class="fa-brands fa-html5"></i>
+        <span class="tooltip-bottom" data-tooltip="Hypertext Markup Language">HTML</span>,
+        <i class="fa-brands fa-css3-alt"></i>
+        <span class="tooltip-bottom" data-tooltip="Cascading Style Sheets">CSS</span>, and
+        <i class="fa-brands fa-square-js"></i>
+        JavaScript!
         <span class="mobile-only"><br /><br /><a href="/search">Search the site!</a></span>
     </div>
 </header>
@@ -15,12 +20,12 @@
 <table class="tools-table">
     <tbody>
         {{#each this}}
-        <tr>
-            <td>
-                <a href="{{this.link}}"><i class="page-icon fa-regular fa-{{this.icon}}"></i>{{this.title}}</a>
-            </td>
-            <td>{{{this.description}}}</td>
-        </tr>
+            <tr>
+                <td>
+                    <a href="{{this.link}}"><i class="page-icon fa-regular fa-{{this.icon}}"></i>{{this.title}}</a>
+                </td>
+                <td>{{{this.description}}}</td>
+            </tr>
         {{/each}}
     </tbody>
 </table>

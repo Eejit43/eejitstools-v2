@@ -1,7 +1,18 @@
 <div class="tooltext">
     <span style="font-weight: 500; color: dimgray; font-size: 18px">A letter with a bar over it multiplies that value by 1,000. For example, <span style="border-top: 1px solid">M</span> equals 1,000,000. These numbers can be entered by putting an underscore before the letter, for example, _M will mean <span style="border-top: 1px solid">M</span>.<br /><em>Technically</em>, 4 million or above cannot be represented in roman numerals, however I have added functionality for it.</span><br /><br />
-    Integer: <input type="text" pattern="[0-9]*" id="integer-input" style="width: 10rem" /> <button id="integer-convert" disabled>Convert</button><button id="integer-reset" style="margin-right: 40px" disabled>Reset</button> <i id="integer-arrow" class="fa-solid fa-arrow-right" style="color: dimgray"></i> <button id="roman-output" class="fakeinput" style="width: 10rem; margin-left: 40px">​</button> <button id="roman-output-copy" disabled>Copy w/ macrons</button><button id="roman-output-copy-2" disabled>Copy w/ underscores</button> <br />Roman Numeral: <input id="roman-input" style="width: 10rem; text-transform: unset" /> <button id="roman-convert" disabled>Convert</button><button id="roman-reset" style="margin-right: 40px" disabled>Reset</button> <i id="roman-arrow" class="fa-solid fa-arrow-right" style="color: dimgray"></i> <input id="integer-output" style="width: 10rem; margin-left: 40px" readonly /> <button id="integer-output-copy" disabled>Copy</button> <br /><br />All Roman
-    Numerals:
+    Integer:
+    <input type="text" pattern="[0-9]*" id="integer-input" style="width: 10rem" />
+    <button id="integer-convert" disabled>Convert</button><button id="integer-reset" style="margin-right: 40px" disabled>Reset</button>
+    <i id="integer-arrow" class="fa-solid fa-arrow-right" style="color: dimgray"></i>
+    <button id="roman-output" class="fakeinput" style="width: 10rem; margin-left: 40px">​</button>
+    <button id="roman-output-copy" disabled>Copy w/ macrons</button><button id="roman-output-copy-2" disabled>Copy w/ underscores</button>
+    <br />Roman Numeral:
+    <input id="roman-input" style="width: 10rem; text-transform: unset" />
+    <button id="roman-convert" disabled>Convert</button><button id="roman-reset" style="margin-right: 40px" disabled>Reset</button>
+    <i id="roman-arrow" class="fa-solid fa-arrow-right" style="color: dimgray"></i>
+    <input id="integer-output" style="width: 10rem; margin-left: 40px" readonly />
+    <button id="integer-output-copy" disabled>Copy</button>
+    <br /><br />All Roman Numerals:
     <table class="info-table roman-numerals" style="overflow-x: hidden; width: 15em; margin: 15px 0">
         <tbody>
             <tr>
