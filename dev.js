@@ -4,15 +4,14 @@
 import chalk from 'chalk';
 import { exec, spawn } from 'child_process';
 import { watch } from 'chokidar';
-import 'dotenv/config';
 import * as readline from 'readline';
 
 readline.emitKeypressEvents(process.stdin);
 
 const config = {
     command: {
-        name: 'node',
-        args: ['app.js']
+        name: 'railway',
+        args: ['run', 'node', 'app.js']
     },
     watch: ['js', 'hbs', 'css'].map((ext) => `**/*.${ext}`),
     ignore: '**/node_modules/**'

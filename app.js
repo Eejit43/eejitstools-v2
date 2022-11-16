@@ -5,7 +5,6 @@ import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
 import chalk from 'chalk';
-import 'dotenv/config';
 import Fastify from 'fastify';
 import fs from 'fs';
 import handlebars from 'handlebars';
