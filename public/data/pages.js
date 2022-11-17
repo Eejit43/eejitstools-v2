@@ -335,7 +335,7 @@ const allPageInfo = {
         { title: 'Quick Copy', id: 'quick-copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
         { title: 'Radical Simplifier', id: 'radical-simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['root', 'square root'], additionalScripts: [imports.mathJax.script] },
         { title: 'Random Number Generator', id: 'random-number', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },
-        { title: 'Regex Tools', id: 'regex', icon: 'highlighter', description: 'Some useful regex tools (duplicate line remover, whitespace remover), as well as a regex tester', keywords: ['regular expression'], toolbox: false },
+        { title: 'Regex Tester', id: 'regex-tester', icon: 'highlighter', description: 'Test and run regex', keywords: ['regular expression'] },
         { title: 'Roman Numeral Converter', id: 'roman-converter', icon: 'i', description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)' },
         { title: 'Scientific Notation Converter', id: 'scientific-notation-converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs.script] },
         { title: 'Stopwatch', id: 'stopwatch', icon: 'stopwatch', description: 'Simple stopwatch (displays down to milliseconds)' },
