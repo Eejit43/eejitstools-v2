@@ -16,7 +16,7 @@
         "canvas": "^2.9.3",
         "chalk": "^5.0.1",
         "chokidar": "^3.5.3",
-        "fastify": "^4.8.1",
+        "fastify": "^4.10.2",
         "handlebars": "^4.7.7",
         "node-fetch": "^3.2.5",
         "node-html-parser": "^5.4.1"
