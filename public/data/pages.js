@@ -320,6 +320,7 @@ const allPageInfo = {
         { title: 'Binary Calculator', id: 'binary-calc', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
         { title: 'Binary Text Converter', id: 'binary-text', icon: 'file-binary', description: 'Convert to/from binary text' },
         { title: 'Browser Info', id: 'browser-info', icon: 'laptop', description: 'Shows basic information about your browser and operating system' },
+        { title: 'Calendar', id: 'calendar', icon: 'calendar', description: 'A simple calendar with personal to-do list', toolbox: false },
         { title: 'Case Changer', id: 'case-changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
         { title: 'Color Information', id: 'color-info', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors' },
         { title: 'Countdown Timer', id: 'timer', icon: 'bell', description: 'Simple countdown timer with end time display' },

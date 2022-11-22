@@ -3,3 +3,5 @@
 
 node_modules/
 .env
+
+calendar-events-cache.json

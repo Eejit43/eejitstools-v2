@@ -6,7 +6,7 @@ import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
 import chalk from 'chalk';
 import Fastify from 'fastify';
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 import handlebars from 'handlebars';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -34,6 +34,33 @@ fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ succ
 fastify.get('/coins-list', (request, reply) => {
     if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
     reply.send(JSON.stringify(coins, null, 2));
+});
+
+fastify.get('/calendar-events', async (request, reply) => {
+    let cache;
+    try {
+        cache = readFileSync('calendar-events-cache.json');
+    } catch {
+        cache = null;
+    }
+
+    if (cache) return reply.send(cache);
+
+    const holidays = (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY}`)).json()).items
+        .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
+        .filter((holiday) => !holiday.name.includes(' (substitute)'))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+    const moonPhases = (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY}`)).json()).items
+        .map((moonPhase) => ({
+            phase: moonPhase.summary.match(/([\w ]+) \d/)[1],
+            date: moonPhase.start.date,
+            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)[1].replace(/(\d)([ap]m)/, '$1 $2')
+        }))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+    const result = { holidays, moonPhases };
+
+    fs.writeFileSync('calendar-events-cache.json', JSON.stringify(result, null, 2));
+    reply.send(JSON.stringify(result, null, 2));
 });
 
 fastify.get('/tone-indicators', (request, reply) => reply.send(JSON.stringify(toneIndicators, null, 2)));

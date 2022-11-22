@@ -1,0 +1,127 @@
+#calendar-grid {
+    margin-top: 150px;
+    --min-width: 575px;
+}
+
+#calendar-grid > div {
+    margin-top: 0px;
+}
+
+@media only screen and (max-width: 700px) {
+    #calendar-grid {
+        --min-width: unset;
+    }
+}
+
+#main-calendar,
+#date-display {
+    background-color: #1e2529;
+    border: 3px solid #31353d;
+    border-radius: 15px;
+    color: #ffecd1;
+    margin: auto;
+    margin: auto;
+    padding: 15px;
+    width: 85%;
+}
+
+#month-year {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+#calendar {
+    border-collapse: collapse;
+    font-size: 20px;
+    margin: auto;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#calendar th {
+    padding: 5px;
+    text-align: center;
+}
+
+#calendar td {
+    border: 1px solid #31353d;
+    height: 100%;
+    padding: 5px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+#calendar td:hover:not(.no-date) {
+    background-color: #31353d;
+    cursor: pointer;
+}
+
+.selected-date {
+    background-color: #2b3d47;
+}
+
+.selected-date:hover {
+    background-color: #344a56 !important;
+}
+
+.current-date {
+    background-color: #348037;
+}
+
+.current-date:hover {
+    background-color: #4c9a4f !important;
+}
+
+.holiday {
+    color: #145791;
+}
+
+.moon-icon {
+    float: right;
+    font-size: 16px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    #calendar td {
+        font-size: 15px;
+    }
+    .moon-icon {
+        font-size: 12px;
+    }
+}
+
+#buttons {
+    margin-top: 20px;
+}
+
+#buttons button:last-of-type {
+    margin-left: 10px;
+}
+
+#date-display {
+    font-size: 25px;
+    text-align: center;
+}
+
+#display-date {
+    font-size: 70px;
+    margin-block: 5px;
+}
+
+.events {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+#events-list {
+    margin-left: 40px;
+}
+
+#events-list li::marker {
+    content: '—   ';
+}

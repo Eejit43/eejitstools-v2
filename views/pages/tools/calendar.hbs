@@ -1,0 +1,54 @@
+<div id="calendar-grid" class="basic-grid">
+    <div id="main-calendar">
+        <div id="month-year">Loading...</div>
+        <table id="calendar">
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+
+        <div style="margin-top: 10px"><span class="holiday">Blue text</span> = Holiday</div>
+
+        <div id="buttons">
+            <button id="previous-month">Previous Month</button>
+            <button id="next-month">Next Month</button>
+            <button id="current-date">Current Date</button>
+        </div>
+
+        <br />Jump to:
+        <select id="jump-month" style="width: fit-content">
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+
+        <select id="jump-year" style="width: fit-content"></select>
+    </div>
+    <div id="date-display">
+        <div id="display-day"></div>
+        <div id="display-date"></div>
+        <div id="display-month-year"></div>
+        <div class="events">Events:
+            <ul id="events-list">None!</ul>
+        </div>
+        <div id="todo-list"></div>
+    </div>
+</div>

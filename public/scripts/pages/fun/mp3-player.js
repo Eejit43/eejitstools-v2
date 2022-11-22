@@ -383,7 +383,7 @@ function toggleMute() {
 }
 
 document.addEventListener('keydown', (event) => {
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey) return;
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
 
     if (event.code === 'Space') {
         event.preventDefault();

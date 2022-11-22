@@ -106,6 +106,6 @@ function getTimeUntil(date) {
     if (minutesFinal.length > 0) result.push(minutesFinal);
     if (secondsFinal.length > 0) result.push(secondsFinal);
 
-    if (distance <= 0 || distance >= 60 * 86400000) return; // Don't show already occurred or if over 60 days away
+    if (distance <= 0 || distance >= 60 * 86400000) return null; // Don't show already occurred or if over 60 days away
     else return result.join(', ');
 }
