@@ -43,6 +43,12 @@
     text-align: center;
 }
 
+@media only screen and (max-width: 700px) {
+    #calendar th {
+        font-size: 15px;
+    }
+}
+
 #calendar td {
     border: 1px solid #31353d;
     height: 100%;
@@ -91,6 +97,15 @@
     }
     .moon-icon {
         font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #calendar td {
+        font-size: 13px;
+    }
+    .moon-icon {
+        font-size: 9px;
     }
 }
 

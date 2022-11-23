@@ -562,7 +562,7 @@ nav,
 .basic-grid {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 400px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 300px), 1fr));
 }
 
 .basic-grid > div {

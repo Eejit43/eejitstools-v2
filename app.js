@@ -28,7 +28,7 @@ fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.me
 // Register pages
 fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: [{ link: 'index.css' }] }));
 
-fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: 'search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
+fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
 
