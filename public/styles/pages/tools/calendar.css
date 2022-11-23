@@ -112,7 +112,8 @@
     margin-block: 5px;
 }
 
-.events {
+.events,
+.todo-list {
     font-size: 20px;
     margin-top: 20px;
     text-align: left;
@@ -124,4 +125,17 @@
 
 #events-list li::marker {
     content: '—   ';
+}
+
+#login-password {
+    width: 50px;
+    margin-top: 15px;
+}
+
+#todo-list {
+    margin-left: 40px;
+}
+
+.todo-checkbox {
+    margin-right: 10px;
 }

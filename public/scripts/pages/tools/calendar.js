@@ -1,4 +1,4 @@
-import { twemojiUpdate } from '/scripts/functions.js';
+import { twemojiUpdate, showAlert, showResult } from '/scripts/functions.js';
 
 const monthYearDisplay = document.getElementById('month-year');
 const calendarBody = document.getElementById('calendar-body');
@@ -13,10 +13,47 @@ const displayDate = document.getElementById('display-date');
 const displayMonthYear = document.getElementById('display-month-year');
 const eventsList = document.getElementById('events-list');
 
+const loginPassword = document.getElementById('login-password');
+const loginButton = document.getElementById('login-button');
+const todoList = document.getElementById('todo-list');
+
 previousMonthButton.addEventListener('click', previousMonth);
 nextMonthButton.addEventListener('click', nextMonth);
 currentDateButton.addEventListener('click', currentDate);
 [jumpMonthSelection, jumpYearSelection].forEach((element) => element.addEventListener('change', jump));
+
+loginPassword.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && loginPassword.value.length > 0) loginButton.click();
+});
+
+let todoData;
+
+loginButton.addEventListener('click', async () => {
+    const result = await (await fetch(`/calendar-todo?password=${loginPassword.value}`)).json();
+
+    if (!result.error) {
+        todoData = result;
+
+        showAlert('Logged in!', 'success');
+
+        todoList.dataset.password = loginPassword.value;
+
+        loadTodoList(displayedDate, displayedMonth, displayedYear);
+    } else {
+        showAlert('Incorrect password!', 'error');
+        showResult('login', 'error', null, null, false);
+        loginButton.disabled = true;
+        setTimeout(() => (loginButton.disabled = false), 1000);
+    }
+});
+
+const params = new URLSearchParams(window.location.search);
+const password = params.get('password');
+
+if (password) {
+    loginPassword.value = password;
+    loginButton.click();
+}
 
 document.addEventListener('keydown', (event) => {
     if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
@@ -252,6 +289,8 @@ function updateDisplayedDate(date, month, year) {
 
         twemojiUpdate();
     } else eventsList.innerHTML = 'None';
+
+    if (todoData) loadTodoList();
 }
 
 /**
@@ -283,4 +322,73 @@ function loadCalendarEvents() {
     });
 
     twemojiUpdate();
+}
+
+// eslint-disable-next-line jsdoc/require-returns
+/**
+ * Loads the todo list
+ */
+function loadTodoList() {
+    if (!todoList) return showAlert('Please log in to use the todo list!', 'error');
+
+    const todoListDate = new Date(displayedYear, displayedMonth, displayedDate);
+
+    todoList.innerHTML = '';
+
+    todoData.todo.forEach((todo, index) => {
+        if (
+            todo.frequency === 'daily' ||
+            (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
+            (/days:/.test(todo.frequency) &&
+                todo.frequency
+                    .replace('days:', '')
+                    .split(',')
+                    .some((day) => parseInt(day) === todoListDate.getDay()))
+        ) {
+            const todoElement = document.createElement('div');
+            todoElement.classList.add('todo');
+            todoElement.dataset.index = index;
+
+            const todoCheckbox = document.createElement('input');
+            todoCheckbox.type = 'checkbox';
+            todoCheckbox.classList.add('todo-checkbox');
+            todoCheckbox.dataset.index = index;
+            todoCheckbox.checked = todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.split('')?.[index] === '1';
+            todoCheckbox.addEventListener('change', async () => {
+                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = true));
+
+                const todoFinal = new Array(todoData.todo.length).fill('0');
+                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.index] = checkbox.checked ? '1' : '0'));
+
+                const result = await (
+                    await fetch('/calendar-todo-edit', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            password: todoList.dataset.password,
+                            date: displayedDate,
+                            month: displayedMonth + 1,
+                            year: displayedYear,
+                            todo: todoFinal.join('')
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                ).json();
+
+                if (result.error) showAlert(result.error, 'error');
+
+                todoData = result;
+                loadTodoList();
+            });
+
+            const todoText = document.createElement('span');
+            todoText.textContent = todo.title;
+
+            todoElement.appendChild(todoCheckbox);
+            todoElement.appendChild(todoText);
+
+            todoList.appendChild(todoElement);
+        }
+    });
 }

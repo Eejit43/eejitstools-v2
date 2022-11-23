@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import Fastify from 'fastify';
 import fs, { readFileSync } from 'fs';
 import handlebars from 'handlebars';
+import { connect, model, Schema } from 'mongoose';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
@@ -61,6 +62,39 @@ fastify.get('/calendar-events', async (request, reply) => {
 
     fs.writeFileSync('calendar-events-cache.json', JSON.stringify(result, null, 2));
     reply.send(JSON.stringify(result, null, 2));
+});
+
+const todoModel = model('todo', new Schema({ year: String, dates: Object }));
+
+fastify.get('/calendar-todo', async (request, reply) => {
+    if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+    const todo = JSON.parse(process.env.CALENDAR_TODO);
+    const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+
+    reply.send(JSON.stringify({ todo, data }, null, 2));
+});
+
+fastify.post('/calendar-todo-edit', async (request, reply) => {
+    const { password, date, month, year, todo } = request.body;
+
+    if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+
+    let yearEntry = await todoModel.findOne({ year });
+    if (!yearEntry) {
+        await todoModel.create({ year, dates: {} });
+        yearEntry = await todoModel.findOne({ year });
+    }
+
+    if (!yearEntry.dates) yearEntry.dates = {};
+    if (!yearEntry.dates[month]) yearEntry.dates[month] = {};
+    yearEntry.dates[month][date] = todo;
+
+    await todoModel.replaceOne({ year }, yearEntry);
+
+    const todoData = JSON.parse(process.env.CALENDAR_TODO);
+    const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+
+    reply.send(JSON.stringify({ todo: todoData, data }, null, 2));
 });
 
 fastify.get('/tone-indicators', (request, reply) => reply.send(JSON.stringify(toneIndicators, null, 2)));
@@ -186,3 +220,6 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
 function logApiRequest(request) {
     console.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
+
+await connect(process.env.DATABASE_URL);
+console.log(`${chalk.green('[Database]:')} Successfully connected to the database!`);
