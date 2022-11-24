@@ -252,9 +252,9 @@ function showCalendar(date, month, year) {
         calendarBody.appendChild(row);
     }
 
-    if (date) updateDisplayedDate(date, month, year);
-
     loadCalendarEvents();
+
+    if (date) updateDisplayedDate(date, month, year);
 }
 
 /**
