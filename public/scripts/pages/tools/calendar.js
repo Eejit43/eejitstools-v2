@@ -113,7 +113,7 @@ const holidayEmojis = {
     'Winter Solstice': '❄️',
     'Christmas Eve': '🎅🏻',
     'Christmas Day': '🎄',
-    "New Year's Eve": '🕑'
+    "New Year's Eve": '🕛'
 };
 
 const moonEmojis = {
