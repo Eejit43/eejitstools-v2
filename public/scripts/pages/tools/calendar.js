@@ -363,16 +363,14 @@ function loadTodoList() {
                 const result = await (
                     await fetch('/calendar-todo-edit', {
                         method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             password: todoList.dataset.password,
                             date: displayedDate,
                             month: displayedMonth + 1,
                             year: displayedYear,
                             todo: todoFinal.join('')
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                        })
                     })
                 ).json();
 

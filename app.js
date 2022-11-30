@@ -12,7 +12,7 @@ import { connect, model, Schema } from 'mongoose';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
-import coins from './public/data/coins-data.js';
+import coinsData from './public/data/coins-data.js';
 import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
 
 // Add Handlebars helper functions
@@ -32,9 +32,61 @@ fastify.get('/search', (request, reply) => reply.view('/search', { ...blankPrope
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
 
-fastify.get('/coins-list', (request, reply) => {
+const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
+
+fastify.get('/coins-list', async (request, reply) => {
     if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
-    reply.send(JSON.stringify(coins, null, 2));
+
+    const mergedCoinsData = await Promise.all(
+        coinsData.map(async (coinType) => {
+            let coinsDatabaseEntry = await coinsModel.findOne({ id: coinType.id });
+            if (!coinsDatabaseEntry) {
+                coinsDatabaseEntry = coinsModel.create({
+                    name: coinType.name,
+                    id: coinType.id,
+                    coins: coinType.coins?.map((variant) => ({
+                        ...variant,
+                        coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9000000000 + 1000000000) }))
+                    }))
+                });
+            }
+            return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
+        })
+    );
+
+    reply.send(JSON.stringify(mergedCoinsData, null, 2));
+});
+
+fastify.post('/coins-list-edit', async (request, reply) => {
+    const { coinTypeId, coinVariantId, coinId, data, password } = request.body;
+
+    if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+
+    const databaseCoinType = await coinsModel.findOne({ id: coinTypeId });
+    if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
+
+    databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
+        if (coinVariant.id === coinVariantId) {
+            return {
+                ...coinVariant,
+
+                coins: coinVariant.coins.map((coin) => {
+                    if (coin.id === coinId) {
+                        Object.entries(data).forEach(([key, value]) => {
+                            if (value === null) delete coin[key];
+                            else coin[key] = value;
+                        });
+                    }
+                    return coin;
+                })
+            };
+        }
+        return coinVariant;
+    });
+
+    await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
+
+    reply.send(JSON.stringify({ success: true }, null, 2));
 });
 
 fastify.get('/calendar-events', async (request, reply) => {

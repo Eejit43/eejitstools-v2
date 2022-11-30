@@ -2,14 +2,12 @@
     padding-top: 20px;
 }
 
-button.reload-button,
-button.show-all-variants,
-button.show-all-button {
-    margin-bottom: 20px;
+div#toggle-buttons button {
+    margin: 0 5px 20px 5px;
 }
 
-button.show-all-variants {
-    margin-left: 5px;
+div#toggle-buttons button:first-of-type {
+    margin-left: 0;
 }
 
 .coin-type {
@@ -46,6 +44,10 @@ button.coin-type-expand {
 .coin-variant-table {
     margin: 20px auto;
     width: 50%;
+}
+
+.coin-table-message td {
+    text-align: center;
 }
 
 /* Popup images */
