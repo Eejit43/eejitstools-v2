@@ -1,5 +1,6 @@
 import { copyValue, escapeHTML, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
+const fileUploadButtonLabel = document.getElementById('file-upload-label');
 const fileUploadButton = document.getElementById('file-upload');
 const fileUploadMessage = document.getElementById('file-message');
 const encodeButton = document.getElementById('encode');
@@ -13,10 +14,39 @@ const decodeButton = document.getElementById('decode');
 const clearButton2 = document.getElementById('clear2');
 const imageOutput = document.getElementById('image-output');
 
+let uploadedFile = null;
+
 /* Add event listeners */
 fileUploadButton.addEventListener('change', () => {
-    const fileName = fileUploadButton.files[0].name;
-    fileUploadMessage.textContent = `Uploaded: <code>${escapeHTML(fileName)}</code>`;
+    if (fileUploadButton.files[0]) {
+        uploadedFile = fileUploadButton.files[0];
+        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+    } else {
+        uploadedFile = null;
+        fileUploadMessage.textContent = '';
+    }
+});
+fileUploadButtonLabel.addEventListener('drop', (event) => {
+    event.preventDefault();
+
+    if (event.dataTransfer.items) {
+        const firstItem = event.dataTransfer.items[0];
+
+        if (firstItem.kind === 'file') {
+            uploadedFile = firstItem.getAsFile();
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+        }
+    } else {
+        const firstFile = event.dataTransfer.files[0];
+
+        if (firstFile) {
+            uploadedFile = firstFile;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+        }
+    }
+});
+fileUploadButtonLabel.addEventListener('dragover', (event) => {
+    event.preventDefault();
 });
 encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', () => {
@@ -36,6 +66,8 @@ clearButton.addEventListener('click', () => {
     b64OpenResult.disabled = true;
     b64OpenResultLink.removeAttribute('href');
 
+    uploadedFile = null;
+
     clearButton.disabled = true;
     clearButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
@@ -49,6 +81,8 @@ clearButton.addEventListener('click', () => {
 clearButton2.addEventListener('click', () => {
     input.value = '';
     imageOutput.src = '';
+
+    uploadedFile = null;
 
     clearButton2.disabled = true;
     clearButton2.innerHTML = 'Cleared!';
@@ -68,9 +102,9 @@ b64CopyResult.addEventListener('click', () => {
  * Encodes the base64 image and displays the result
  */
 function encode() {
-    if (fileUploadButton.value) {
+    if (uploadedFile) {
         const reader = new FileReader();
-        reader.readAsDataURL(fileUploadButton.files[0]);
+        reader.readAsDataURL(uploadedFile);
         reader.addEventListener('loadend', () => {
             const imageType = reader.result.replace(/^data:image\/(.*?);base64,.*$/g, '$1');
             if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {

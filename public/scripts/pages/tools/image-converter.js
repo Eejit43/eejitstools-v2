@@ -1,5 +1,6 @@
 import { escapeHTML, showAlert } from '/scripts/functions.js';
 
+const fileUploadButtonLabel = document.getElementById('file-upload-label');
 const fileUploadButton = document.getElementById('file-upload');
 const fileUploadMessage = document.getElementById('file-message');
 const loadButton = document.getElementById('load');
@@ -13,6 +14,8 @@ const openConvertedResult = document.getElementById('open-converted-result');
 const downloadConvertedResultLink = document.getElementById('download-converted-link');
 const downloadConvertedResult = document.getElementById('download-converted-result');
 
+let uploadedImage = null;
+
 /* Add event listeners */
 fileUploadButton.addEventListener('change', () => {
     const file = fileUploadButton.files[0];
@@ -20,6 +23,7 @@ fileUploadButton.addEventListener('change', () => {
     if (file) {
         if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
         if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+        uploadedImage = file;
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
 
         loadButton.disabled = false;
@@ -27,6 +31,35 @@ fileUploadButton.addEventListener('change', () => {
         fileUploadMessage.textContent = '';
         loadButton.disabled = true;
     }
+});
+fileUploadButtonLabel.addEventListener('drop', (event) => {
+    event.preventDefault();
+
+    if (event.dataTransfer.items) {
+        const firstItem = event.dataTransfer.items[0];
+
+        if (firstItem.kind === 'file') {
+            const file = firstItem.getAsFile();
+            if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
+            if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+            uploadedImage = file;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
+
+            loadButton.disabled = false;
+        }
+    } else {
+        const firstFile = event.dataTransfer.files;
+
+        if (!firstFile.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
+        if (firstFile.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+        uploadedImage = firstFile;
+        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(firstFile.name)}</code>`;
+
+        loadButton.disabled = false;
+    }
+});
+fileUploadButtonLabel.addEventListener('dragover', (event) => {
+    event.preventDefault();
 });
 loadButton.addEventListener('click', loadImage);
 clearButton.addEventListener('click', () => {
@@ -60,12 +93,10 @@ convertButton.addEventListener('click', convert);
  * Encodes the base64 image and displays the result
  */
 function loadImage() {
-    const file = fileUploadButton.files[0];
-
     const ctx = imagePreview.getContext('2d');
     ctx.clearRect(0, 0, imagePreview.width, imagePreview.height);
     const image = new Image();
-    image.src = URL.createObjectURL(file);
+    image.src = URL.createObjectURL(uploadedImage);
 
     image.addEventListener('load', () => {
         imagePreview.width = image.width;
@@ -86,7 +117,7 @@ function convert() {
     const blobUrl = createBase64ObjectURL(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
     openConvertedResult.disabled = downloadConvertedResult.disabled = false;
-    downloadConvertedResultLink.setAttribute('download', `${fileUploadButton.files[0].name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
+    downloadConvertedResultLink.setAttribute('download', `${uploadedImage.name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
 }
 
 /**
