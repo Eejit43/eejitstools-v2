@@ -91,7 +91,7 @@ export async function fetchApod(year, month, date) {
             .replace(/<b> (.*?) <\/b>/g, '$1')
             .replace(/(\w|>)\/ /g, '$1/')
             .replace(/ \.{3}/g, '...')
-            .replace(/(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi, '')
+            .replace(/(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +Your Sky Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi, '')
             .replace(/<br( \/)?> *$/, '')
             .trim();
 
