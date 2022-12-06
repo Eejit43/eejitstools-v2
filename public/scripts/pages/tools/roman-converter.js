@@ -75,13 +75,13 @@ integerOutputCopy.addEventListener('click', () => copyText(integerOutputCopy, in
  */
 function convertInteger() {
     if (parseInt(integerInput.value) > 0) {
-        romanOutput.innerHTML = romanize(integerInput.value);
+        romanOutput.textContent = romanize(integerInput.value);
         romanOutputCopy.disabled = false;
         romanOutputCopy2.disabled = false;
         updateArrow(integerArrow, 'success');
     } else {
         showAlert('Value must be greater than 0!', 'error');
-        romanOutput.innerHTML = '​';
+        romanOutput.textContent = '​';
         romanOutputCopy.disabled = true;
         romanOutputCopy2.disabled = true;
         updateArrow(integerArrow, 'error');

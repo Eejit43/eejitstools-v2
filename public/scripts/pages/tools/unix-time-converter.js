@@ -98,12 +98,12 @@ function switchUnixOutput() {
     const title = document.getElementById('unix-output-title');
     if (unixOutputState === 's') {
         unixOutputState = 'ms';
-        title.innerHTML = 'UNIX Time (milliseconds):';
-        unixOutputSwitch.innerHTML = 'Switch to seconds';
+        title.textContent = 'UNIX Time (milliseconds):';
+        unixOutputSwitch.textContent = 'Switch to seconds';
     } else if (unixOutputState === 'ms') {
         unixOutputState = 's';
-        title.innerHTML = 'UNIX Time (seconds):';
-        unixOutputSwitch.innerHTML = 'Switch to milliseconds';
+        title.textContent = 'UNIX Time (seconds):';
+        unixOutputSwitch.textContent = 'Switch to milliseconds';
     }
     updateUnixOutput();
 }
@@ -115,12 +115,12 @@ function switchUnixInput() {
     const title = document.getElementById('unix-input-title');
     if (unixInputState === 's') {
         unixInputState = 'ms';
-        title.innerHTML = 'UNIX Time (milliseconds):';
-        unixInputSwitch.innerHTML = 'Switch to seconds';
+        title.textContent = 'UNIX Time (milliseconds):';
+        unixInputSwitch.textContent = 'Switch to seconds';
     } else if (unixInputState === 'ms') {
         unixInputState = 's';
-        title.innerHTML = 'UNIX Time (seconds):';
-        unixInputSwitch.innerHTML = 'Switch to milliseconds';
+        title.textContent = 'UNIX Time (seconds):';
+        unixInputSwitch.textContent = 'Switch to milliseconds';
     }
     updateStandardOutput();
 }

@@ -61,13 +61,13 @@ function clearClipboard() {
     navigator.clipboard.writeText('');
 
     clearClipboardButton.disabled = true;
-    clearClipboardButton.innerHTML = 'Cleared!';
+    clearClipboardButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     clipboardDisplay();
 
     setTimeout(() => {
         clearClipboardButton.disabled = false;
-        clearClipboardButton.innerHTML = 'Clear Clipboard';
+        clearClipboardButton.textContent = 'Clear Clipboard';
     }, 2000);
 }
 

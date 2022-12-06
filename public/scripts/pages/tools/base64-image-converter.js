@@ -69,13 +69,13 @@ clearButton.addEventListener('click', () => {
     uploadedFile = null;
 
     clearButton.disabled = true;
-    clearButton.innerHTML = 'Cleared!';
+    clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('encode');
 
     setTimeout(() => {
         clearButton.disabled = false;
-        clearButton.innerHTML = 'Clear';
+        clearButton.textContent = 'Clear';
     }, 2000);
 });
 clearButton2.addEventListener('click', () => {
@@ -85,13 +85,13 @@ clearButton2.addEventListener('click', () => {
     uploadedFile = null;
 
     clearButton2.disabled = true;
-    clearButton2.innerHTML = 'Cleared!';
+    clearButton2.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('decode');
 
     setTimeout(() => {
         clearButton2.disabled = false;
-        clearButton2.innerHTML = 'Clear';
+        clearButton2.textContent = 'Clear';
     }, 2000);
 });
 b64CopyResult.addEventListener('click', () => {

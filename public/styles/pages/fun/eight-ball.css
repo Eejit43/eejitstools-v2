@@ -1,0 +1,14 @@
+#question-display,
+#answer-output {
+    font-weight: 500;
+    color: dimgray;
+    font-size: 18px;
+}
+
+#answer-output.rolling {
+    color: #ffba24;
+}
+
+i.fa-spinner {
+    margin-left: 5px;
+}

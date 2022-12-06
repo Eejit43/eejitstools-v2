@@ -218,7 +218,7 @@ function showCalendar(date, month, year) {
 
     calendarBody.innerHTML = '';
 
-    monthYearDisplay.innerHTML = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
+    monthYearDisplay.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
     jumpYearSelection.value = year;
     jumpMonthSelection.value = month;
 

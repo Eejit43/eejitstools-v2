@@ -19,9 +19,9 @@ clearBtn.addEventListener('click', () => {
     result.value = '';
     resetResult('encode');
     resetResult('decode');
-    resultCopy.innerHTML = 'Copy';
-    resultCopy2.innerHTML = 'Copy with vertical slash space';
-    resultCopy3.innerHTML = 'Copy with three space space';
+    resultCopy.textContent = 'Copy';
+    resultCopy2.textContent = 'Copy with vertical slash space';
+    resultCopy3.textContent = 'Copy with three space space';
     resultCopy.disabled = true;
     resultCopy2.disabled = true;
     resultCopy3.disabled = true;

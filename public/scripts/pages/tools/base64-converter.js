@@ -16,7 +16,7 @@ clearButton.addEventListener('click', () => {
     copyResult.disabled = true;
 
     clearButton.disabled = true;
-    clearButton.innerHTML = 'Cleared!';
+    clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('encode');
     resetResult('decode');
@@ -25,7 +25,7 @@ clearButton.addEventListener('click', () => {
         copyResult.disabled = true;
 
         clearButton.disabled = false;
-        clearButton.innerHTML = 'Clear';
+        clearButton.textContent = 'Clear';
     }, 2000);
 });
 copyResult.addEventListener('click', () => {

@@ -15,7 +15,7 @@ input.addEventListener('input', findInput);
 resetButton.addEventListener('click', () => {
     input.value = '';
     output.value = '';
-    message.innerHTML = '';
+    message.textContent = '';
     inputType.value = 3;
     outputType.value = 1;
     copyOutput.disabled = true;
@@ -71,7 +71,7 @@ function findInput() {
                 break;
         }
     } else {
-        message.innerHTML = '';
+        message.textContent = '';
         output.value = '';
         copyOutput.disabled = true;
         toggleSpacers.disabled = true;
@@ -102,7 +102,7 @@ function convert(value, radix) {
             break;
     }
 
-    message.innerHTML = '';
+    message.textContent = '';
     output.value = result;
     copyOutput.disabled = false;
     toggleSpacers.disabled = false;

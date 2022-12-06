@@ -12,7 +12,7 @@ export function twemojiUpdate() {
  * Displays a popup alert
  * @param {string} text The string to display
  * @param {'success'|'error'|string} color 'success', 'error', or color
- * @param {number} duration The duration of the popup in milliseconds
+ * @param {number} [duration] The duration of the popup in milliseconds
  */
 export function showAlert(text, color, duration) {
     color = color.toLowerCase();
@@ -156,7 +156,7 @@ export function stringToHTML(string) {
 }
 
 /**
- * Updates an elements innerHTML to the provided string if it isn't the same as the provided string
+ * Updates an element's innerHTML to the provided string if it isn't the same as the provided string
  * @param {HTMLElement} element the element to update
  * @param {string} string the content to update the element with
  */

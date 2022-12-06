@@ -1,22 +1,31 @@
-import { escapeHTML, showAlert } from '/scripts/functions.js';
+import { showAlert } from '/scripts/functions.js';
 
-const question = document.getElementById('question');
+const questionInput = document.getElementById('question-input');
 const rollButton = document.getElementById('roll');
-const result = document.getElementById('result');
+const questionDisplay = document.getElementById('question-display');
+const answerOutput = document.getElementById('answer-output');
 
 /* Add event listeners */
 rollButton.addEventListener('click', () => {
-    if (question.value.length === 0) showAlert("You didn't ask a question!", 'error');
+    if (questionInput.value.length === 0) showAlert("You didn't ask a question!", 'error');
     else {
         rollButton.disabled = true;
-        rollButton.innerHTML = 'Rolling!';
-        result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(question.value)}</span><br />Response: <span style="font-weight: 500; color:#ffba24; font-size: 18px">Predicting... <i class="fa-solid fa-spinner fa-spin-pulse"></i></span>`;
+        rollButton.textContent = 'Rolling!';
+
+        questionDisplay.textContent = questionInput.value;
+        answerOutput.textContent = 'Rolling...';
+        answerOutput.classList.add('rolling');
+
+        const spinner = document.createElement('i');
+        spinner.classList.add('fa-solid', 'fa-spinner', 'fa-spin-pulse');
+        answerOutput.appendChild(spinner);
 
         setTimeout(() => {
             rollButton.disabled = false;
-            rollButton.innerHTML = 'Roll ball!';
-            result.innerHTML = `<hr>You asked: <span style="font-weight: 500; color: dimgray; font-size: 18px">${escapeHTML(question.value)}</span><br />Response: <span style="font-weight: 500; color: dimgray; font-size: 18px">${results[Math.floor(Math.random() * 20)]}</span>`;
-        }, 2000);
+            rollButton.textContent = 'Roll ball!';
+            answerOutput.textContent = results[Math.floor(Math.random() * 20)];
+            answerOutput.classList.remove('rolling');
+        }, 1000);
     }
 });
 

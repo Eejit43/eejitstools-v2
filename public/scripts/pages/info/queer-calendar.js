@@ -57,7 +57,7 @@ function getFromDate() {
     } else {
         eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
-        eventsTitle.innerHTML = `Events on ${year}/${monthInput}/${dateInput}:`;
+        eventsTitle.textContent = `Events on ${year}/${monthInput}/${dateInput}:`;
 
         fetch(`https://en.pronouns.page/api/calendar/${year}-${monthInput}-${dateInput}`).then(async (response) => {
             const data = await response.json();
@@ -69,7 +69,7 @@ function getFromDate() {
                 if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
                 else newEvents.push(`– ${events[i]}`);
             }
-            if (newEvents.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
+            if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
             else eventsDisplay.innerHTML = newEvents.join('<br />');
         });
     }
@@ -79,7 +79,7 @@ function getFromDate() {
  * Fetches calendar information for the current date
  */
 function getCurrent() {
-    eventsTitle.innerHTML = 'Current Events:';
+    eventsTitle.textContent = 'Current Events:';
     eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
     monthVal.value = '';
@@ -95,7 +95,7 @@ function getCurrent() {
             if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
             else newEvents.push(`– ${events[i]}`);
         }
-        if (newEvents.length === 0) eventsDisplay.innerHTML = 'No events found on this date!';
+        if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
         else eventsDisplay.innerHTML = newEvents.join('<br />');
     });
 }

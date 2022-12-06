@@ -53,7 +53,7 @@ document.getElementById('save-png').addEventListener('click', () => {
 
 document.getElementById('clear').addEventListener('click', () => {
     svgInput.value = '';
-    svgPreview.innerHTML = '';
+    svgPreview.textContent = '';
     width.value = '';
     height.value = '';
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);

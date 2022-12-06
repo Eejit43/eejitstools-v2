@@ -51,22 +51,22 @@ function copyKeycodeInfo(string) {
 function keyInfo(event) {
     valExist = true;
     document.getElementById('key-results').className = 'keycodes-td-ready';
-    key.innerHTML = event.key;
+    key.textContent = event.key;
     keyVal = event.key;
-    if (event.key === ' ') key.innerHTML = 'Space ( )';
+    if (event.key === ' ') key.textContent = 'Space ( )';
     else if (event.key === '\u00a0') key.innerHTML = '<span class="tooltip-bottom" data-tooltip="Non breaking space">NBSP</span> (\u00a0)';
-    keyRepeating.innerHTML = event.repeat;
+    keyRepeating.textContent = event.repeat;
     keyRepeatingVal = event.repeat;
-    keyLocation.innerHTML = event.location;
+    keyLocation.textContent = event.location;
     keyLocationVal = event.location;
     if (event.location === 0) keyLocation.innerHTML = '0<br />(general)';
     else if (event.location === 1) keyLocation.innerHTML = '1<br />(left)';
     else if (event.location === 2) keyLocation.innerHTML = '2<br />(right)';
     else if (event.location === 3) keyLocation.innerHTML = '3<br />(numpad)';
-    keyCode.innerHTML = event.code;
+    keyCode.textContent = event.code;
     keyCodeVal = event.code;
-    keyAscii.innerHTML = event.which;
+    keyAscii.textContent = event.which;
     keyAsciiVal = event.which;
-    keyUnicode.innerHTML = String(event.key).charCodeAt(0);
+    keyUnicode.textContent = String(event.key).charCodeAt(0);
     keyUnicodeVal = String(event.key).charCodeAt(0);
 }

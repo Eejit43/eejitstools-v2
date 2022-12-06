@@ -17,20 +17,20 @@ input.addEventListener('input', convert);
 resetButton.addEventListener('click', () => {
     input.value = '';
     output.value = '';
-    message.innerHTML = '';
+    message.textContent = '';
     inputType.value = 7;
     outputType.value = 5;
     copyOutput.disabled = true;
 
     resetButton.disabled = true;
-    resetButton.innerHTML = 'Reset!';
+    resetButton.textContent = 'Reset!';
     showAlert('Reset!', 'success');
 
     setTimeout(() => {
         copyOutput.disabled = true;
 
         resetButton.disabled = false;
-        resetButton.innerHTML = 'Reset';
+        resetButton.textContent = 'Reset';
     }, 2000);
 });
 switchButton.addEventListener('click', () => {
@@ -56,12 +56,12 @@ copyOutput.addEventListener('click', () => copyValue(copyOutput, output));
  */
 function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
-        message.innerHTML = '';
+        message.textContent = '';
         output.value = math.number(math.format(math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replace(/[^0-9-.]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });
         copyOutput.disabled = false;
     } else {
         if (input.value !== '') message.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Input is not a number!<br />';
-        else message.innerHTML = '';
+        else message.textContent = '';
         output.value = '';
         copyOutput.disabled = true;
     }

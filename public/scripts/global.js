@@ -58,7 +58,7 @@ searchText.addEventListener('keydown', (event) => {
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';
-        searchResult.innerHTML = '';
+        searchResult.textContent = '';
         searchText.blur();
     }
 });

@@ -11,31 +11,21 @@ const resetDate = document.getElementById('reset-date');
 getDate.addEventListener('click', () => {
     checkApod(yearVal.value || year, monthVal.value || month, dateVal.value || date);
 });
+
 resetDate.addEventListener('click', () => {
     yearVal.value = '';
     monthVal.value = '';
     dateVal.value = '';
     checkApod(year, month, date);
 });
-['input', 'paste'].forEach((event) => {
-    yearVal.addEventListener(event, () => {
-        yearVal.value = yearVal.value.replace(/((?![0-9]).)/g, '');
-        checkInput(yearVal);
+
+[dateVal, monthVal, yearVal].forEach((element) => {
+    ['input', 'paste'].forEach((event) => {
+        element.addEventListener(event, () => {
+            element.value = element.value.replace(/((?![0-9]).)/g, '');
+            checkInput(element);
+        });
     });
-});
-['input', 'paste'].forEach((event) => {
-    monthVal.addEventListener(event, () => {
-        monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
-        checkInput(monthVal);
-    });
-});
-['input', 'paste'].forEach((event) => {
-    dateVal.addEventListener(event, () => {
-        dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-        checkInput(dateVal);
-    });
-});
-[yearVal, monthVal, dateVal].forEach((element) => {
     element.addEventListener('keydown', (event) => {
         if (event.code === 'Enter') checkApod(yearVal.value || year, monthVal.value || month, dateVal.value || date);
     });
@@ -87,9 +77,7 @@ async function fetchApod(yearInput, monthInput, dateInput) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
     /** @type {apodEntry} */
-    const response = await (await fetch(`/apod/${yearInput}/${monthInput}/${dateInput}`)).json();
-
-    const { success, error, source, date, title, credit, explanation, media } = response;
+    const { success, error, source, date, title, credit, explanation, media } = await (await fetch(`/apod/${yearInput}/${monthInput}/${dateInput}`)).json();
 
     if (!success) return showAlert(error, 'error');
 
@@ -99,7 +87,7 @@ async function fetchApod(yearInput, monthInput, dateInput) {
         getMediaElement(media),
         credit ? `<center>${credit}</center><br />` : '',
         explanation
-    ].filter((section) => section);
+    ].filter(Boolean);
 
     resultElement.innerHTML = result.join('');
 

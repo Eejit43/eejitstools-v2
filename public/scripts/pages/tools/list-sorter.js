@@ -24,7 +24,7 @@ clear.addEventListener('click', () => {
     copyResult.disabled = true;
 
     clear.disabled = true;
-    clear.innerHTML = 'Cleared!';
+    clear.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('alphabetize');
     resetResult('numerize');
@@ -35,7 +35,7 @@ clear.addEventListener('click', () => {
         copyResult.disabled = true;
 
         clear.disabled = false;
-        clear.innerHTML = 'Clear';
+        clear.textContent = 'Clear';
     }, 2000);
 });
 copyResult.addEventListener('click', () => {
