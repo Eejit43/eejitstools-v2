@@ -8,7 +8,7 @@ import chalk from 'chalk';
 import Fastify from 'fastify';
 import fs, { readFileSync } from 'fs';
 import handlebars from 'handlebars';
-import { connect, model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
@@ -273,5 +273,7 @@ function logApiRequest(request) {
     console.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
 
-await connect(process.env.DATABASE_URL);
+mongoose.set('strictQuery', true);
+
+await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 console.log(`${chalk.green('[Database]:')} Successfully connected to the database!`);
