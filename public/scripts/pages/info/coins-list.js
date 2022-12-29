@@ -3,6 +3,7 @@ import { showAlert, showResult } from '/scripts/functions.js';
 const loginPassword = document.getElementById('login-password');
 const loginButton = document.getElementById('login-button');
 const coinsList = document.getElementById('coins-list');
+const changeHistory = document.getElementById('change-history');
 
 ['input', 'paste'].forEach((type) => {
     loginPassword.addEventListener(type, () => {
@@ -50,7 +51,7 @@ const mintMarks = {
  */
 async function loadCoinsList() {
     /**
-     * @type {import('../../../../coin-data.js').CoinType[]}
+     * @type {import('../../../data/coins-data.js').CoinType[]}
      */
     const coins = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
 
@@ -64,6 +65,24 @@ async function loadCoinsList() {
     reloadButton.addEventListener('click', async () => {
         await loadCoinsList();
         showAlert('Reloaded!', 'success');
+
+        if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
+
+        const historyEntry = document.createElement('li');
+        historyEntry.textContent = 'Reloaded coins list from database';
+
+        const timeTooltip = document.createElement('span');
+        timeTooltip.classList.add('time-tooltip');
+        timeTooltip.dataset.tooltip = new Date().toLocaleString();
+
+        const timeIcon = document.createElement('i');
+        timeIcon.classList.add('fa-solid', 'fa-clock');
+
+        timeTooltip.appendChild(timeIcon);
+
+        historyEntry.appendChild(timeTooltip);
+
+        changeHistory.appendChild(historyEntry);
     });
 
     const showAllVariantsButton = document.createElement('button');
@@ -144,6 +163,17 @@ async function loadCoinsList() {
     buttonsDiv.appendChild(toggleNeedsUpgradeCoinsButton);
 
     coinsList.appendChild(buttonsDiv);
+
+    document.addEventListener('keydown', (event) => {
+        if (!event.altKey) return;
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.contentEditable === 'true') return;
+
+        if (event.code === 'KeyR') reloadButton.click();
+        else if (event.code === 'KeyA') showAllVariantsButton.click();
+        else if (event.code === 'KeyM') toggleMissingCoinsButton.click();
+        else if (event.code === 'KeyO') toggleObtainedCoinsButton.click();
+        else if (event.code === 'KeyU') toggleNeedsUpgradeCoinsButton.click();
+    });
 
     coins.forEach((coinType) => {
         const coinTypeDiv = document.createElement('div');
@@ -243,12 +273,20 @@ async function loadCoinsList() {
                 if (coin.obtained && !coin.upgrade) row.classList.add('hidden');
 
                 const year = document.createElement('td');
+                year.dataset.value = coin.year;
 
                 const yearEditor = document.createElement('span');
                 yearEditor.textContent = coin.year;
                 yearEditor.contentEditable = true;
                 yearEditor.addEventListener('blur', async () => {
-                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: yearEditor.textContent || 'UNKNOWN' });
+                    const newValue = yearEditor.textContent || 'UNKNOWN';
+                    if (newValue === year.dataset.value) return;
+
+                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: newValue });
+
+                    addChangeEntry({ coin: coinVariant.name, year: newValue, mintMark: mintMark.dataset.value, specification: specification.dataset.value, type: 'year', oldValue: year.dataset.value, newValue });
+
+                    year.dataset.value = newValue;
                 });
                 year.appendChild(yearEditor);
 
@@ -263,6 +301,7 @@ async function loadCoinsList() {
                 row.appendChild(year);
 
                 const mintMark = document.createElement('td');
+                mintMark.dataset.value = coin.mintMark ?? 'None';
                 const tooltip = document.createElement('span');
                 tooltip.classList.add('tooltip-bottom');
                 tooltip.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
@@ -278,17 +317,30 @@ async function loadCoinsList() {
                     tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
                     tooltip.classList.add('tooltip-bottom');
 
+                    if (tooltip.textContent === mintMark.dataset.value) return;
+
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintMark: tooltip.textContent && tooltip.textContent !== 'None' ? tooltip.textContent : null });
+
+                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: tooltip.textContent, specification: specification.dataset.value, type: 'mint mark', oldValue: mintMark.dataset.value, newValue: tooltip.textContent });
+
+                    mintMark.dataset.value = tooltip.textContent;
                 });
                 mintMark.appendChild(tooltip);
                 row.appendChild(mintMark);
 
                 const specification = document.createElement('td');
+                specification.dataset.value = coin.specification ?? '';
                 if (!coin.comparison) {
                     specification.contentEditable = true;
                     specification.textContent = coin.specification ?? '';
                     specification.addEventListener('blur', async () => {
+                        if (specification.textContent === specification.dataset.value) return;
+
                         await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specification.textContent || null });
+
+                        addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.textContent, type: 'specification', oldValue: specification.dataset.value, newValue: specification.textContent });
+
+                        specification.dataset.value = specification.textContent;
                     });
                 }
                 if (coin.comparison) {
@@ -303,7 +355,13 @@ async function loadCoinsList() {
                         specificationEditor.textContent = coin.specification;
                         specificationEditor.contentEditable = true;
                         specificationEditor.addEventListener('blur', async () => {
+                            if (specificationEditor.textContent === specification.dataset.value) return;
+
                             await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent || null });
+
+                            addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specificationEditor.textContent, type: 'specification', oldValue: specification.dataset.value, newValue: specificationEditor.textContent });
+
+                            specification.dataset.value = specificationEditor.textContent;
                         });
                         specification.appendChild(specificationEditor);
                         specification.appendChild(document.createTextNode(' '));
@@ -322,6 +380,8 @@ async function loadCoinsList() {
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { obtained: obtainedCheck.checked || null });
                     updateRowVisibility(row);
 
+                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.dataset.value, changeText: `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}` });
+
                     if (needsUpgradeCheck.checked) needsUpgradeCheck.click();
                     needsUpgradeCheck.disabled = !obtainedCheck.checked;
                 });
@@ -337,6 +397,8 @@ async function loadCoinsList() {
                     row.dataset.upgrade = needsUpgradeCheck.checked;
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { upgrade: needsUpgradeCheck.checked || null });
                     updateRowVisibility(row);
+
+                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.dataset.value, changeText: `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}` });
                 });
                 needsUpgrade.appendChild(needsUpgradeCheck);
                 row.appendChild(needsUpgrade);
@@ -371,7 +433,7 @@ function getCoinYears(variant) {
 
     const endYear = variant.active ? 'date' : variant.coins[variant.coins.length - 1].year;
 
-    return startYear === endYear ? startYear : `${startYear}-${endYear}`;
+    return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
 
 /**
@@ -446,6 +508,42 @@ async function updateCoinData(coinTypeId, coinVariantId, coinId, data) {
         if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
         checkbox.removeAttribute('data-disabled');
     });
+}
+
+/**
+ * @typedef {object} ChangeEntry
+ * @property {string} coin The coin that was changed
+ * @property {string} year The year of the coin that was changed
+ * @property {string} mintMark The mint mark of the coin that was changed
+ * @property {string} specification The specification of the coin that was changed
+ * @property {string} [type] The value that was changed (not required if `changeText` is provided)
+ * @property {string} [oldValue] The old value before the change (not required if `changeText` is provided)
+ * @property {string} [newValue] The new value after the change (not required if `changeText` is provided)
+ * @property {string} [changeText] The text to display for the change (if `oldValue` and `newValue` are not provided)
+ */
+
+/**
+ * Adds a given entry to the changes log
+ * @param {ChangeEntry} entry The entry to add
+ */
+function addChangeEntry({ coin, year, mintMark, specification, type, oldValue, newValue, changeText }) {
+    if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
+
+    const entry = document.createElement('li');
+    entry.textContent = `${year} ${mintMark || '(No mint mark)'} ${coin}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : `'s ${type} was changed from "${oldValue}" to "${newValue}"`}`;
+
+    const timeTooltip = document.createElement('span');
+    timeTooltip.classList.add('time-tooltip');
+    timeTooltip.dataset.tooltip = new Date().toLocaleString();
+
+    const timeIcon = document.createElement('i');
+    timeIcon.classList.add('fa-solid', 'fa-clock');
+
+    timeTooltip.appendChild(timeIcon);
+
+    entry.appendChild(timeTooltip);
+
+    changeHistory.appendChild(entry);
 }
 
 const params = new URLSearchParams(window.location.search);
