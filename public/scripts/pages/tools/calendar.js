@@ -352,6 +352,7 @@ function loadTodoList() {
             const todoCheckbox = document.createElement('input');
             todoCheckbox.type = 'checkbox';
             todoCheckbox.classList.add('todo-checkbox');
+            todoCheckbox.id = `todo-${index}`;
             todoCheckbox.dataset.index = index;
             todoCheckbox.checked = todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.split('')?.[index] === '1';
             todoCheckbox.addEventListener('change', async () => {
@@ -380,7 +381,8 @@ function loadTodoList() {
                 loadTodoList();
             });
 
-            const todoText = document.createElement('span');
+            const todoText = document.createElement('label');
+            todoText.htmlFor = `todo-${index}`;
             todoText.textContent = todo.title;
 
             todoElement.appendChild(todoCheckbox);
