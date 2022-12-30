@@ -474,7 +474,7 @@ function updateRowVisibility(row) {
 
     if (!obtained && document.getElementById('toggle-missing-coins').dataset.shown === 'false') row.classList.add('hidden');
     else if (needsUpgrade && document.getElementById('toggle-needs-upgrade-coins').dataset.shown === 'false') row.classList.add('hidden');
-    else if (obtained && document.getElementById('toggle-obtained-coins').dataset.shown === 'false') row.classList.add('hidden');
+    else if (obtained && document.getElementById('toggle-obtained-coins').dataset.shown === 'false' && !needsUpgrade) row.classList.add('hidden');
     else row.classList.remove('hidden');
 
     updateNoCoinsMessage(row.closest('table'));
