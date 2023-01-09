@@ -1,11 +1,11 @@
 import toastify from 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify-es.js';
-import twemoji from 'https://twemoji.maxcdn.com/v/latest/twemoji.esm.js';
+import twemoji from 'https://unpkg.com/twemoji@14.0.2/dist/twemoji.esm.js';
 
 /**
  * Update emojis on the loaded content
  */
 export function twemojiUpdate() {
-    twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
+    twemoji.parse(document.body, { base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/', folder: 'svg', ext: '.svg' });
 }
 
 /**
