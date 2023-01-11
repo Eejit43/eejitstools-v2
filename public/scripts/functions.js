@@ -1,5 +1,5 @@
 import toastify from 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify-es.js';
-import twemoji from 'https://unpkg.com/twemoji@14.0.2/dist/twemoji.esm.js';
+import twemoji from 'https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.esm.js';
 
 /**
  * Update emojis on the loaded content
