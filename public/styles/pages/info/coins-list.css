@@ -131,6 +131,12 @@ button.coin-type-expand {
     }
 }
 
+#coins-list.obtained-hidden tr[data-obtained='true'][data-upgrade='false'],
+#coins-list.upgrade-hidden tr[data-upgrade='true'],
+#coins-list.missing-hidden tr[data-upgrade='false'] {
+    display: none;
+}
+
 tr[data-obtained='false'] {
     background-color: #944646;
 }
@@ -141,6 +147,10 @@ tr[data-obtained='true'] {
 
 tr[data-upgrade='true'] {
     background-color: #414187;
+}
+
+.new-row-message i.fa-plus {
+    padding-right: 6px;
 }
 
 .coin-variant-note {

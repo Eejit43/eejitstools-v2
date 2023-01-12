@@ -46,6 +46,8 @@ const mintMarks = {
     C: 'Charlotte (North Carolina)'
 };
 
+let coinsData = null;
+
 /**
  * Load the coins list
  */
@@ -53,9 +55,12 @@ async function loadCoinsList() {
     /**
      * @type {import('../../../data/coins-data.js').CoinType[]}
      */
-    const coins = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
+    const coinsDataUnparsed = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
+
+    coinsData = Object.fromEntries(coinsDataUnparsed.map((coinType) => [coinType.id, { ...coinType, coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])) }]));
 
     coinsList.innerHTML = '';
+    coinsList.classList.add('obtained-hidden');
 
     const buttonsDiv = document.createElement('div');
     buttonsDiv.id = 'toggle-buttons';
@@ -112,13 +117,12 @@ async function loadCoinsList() {
         if (toggleMissingCoinsButton.dataset.shown === 'true') {
             toggleMissingCoinsButton.dataset.shown = false;
             toggleMissingCoinsButton.textContent = 'Show missing coins';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.add('missing-hidden');
         } else {
             toggleMissingCoinsButton.dataset.shown = true;
             toggleMissingCoinsButton.textContent = 'Hide missing coins';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.remove('missing-hidden');
         }
-        updateNoCoinsMessage();
     });
 
     const toggleObtainedCoinsButton = document.createElement('button');
@@ -129,13 +133,12 @@ async function loadCoinsList() {
         if (toggleObtainedCoinsButton.dataset.shown === 'true') {
             toggleObtainedCoinsButton.dataset.shown = false;
             toggleObtainedCoinsButton.textContent = 'Show obtained coins';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.add('obtained-hidden');
         } else {
             toggleObtainedCoinsButton.dataset.shown = true;
             toggleObtainedCoinsButton.textContent = 'Hide obtained coins';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.remove('obtained-hidden');
         }
-        updateNoCoinsMessage();
     });
 
     const toggleNeedsUpgradeCoinsButton = document.createElement('button');
@@ -146,13 +149,12 @@ async function loadCoinsList() {
         if (toggleNeedsUpgradeCoinsButton.dataset.shown === 'true') {
             toggleNeedsUpgradeCoinsButton.dataset.shown = false;
             toggleNeedsUpgradeCoinsButton.textContent = 'Show coins needing upgrade';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.add('upgrade-hidden');
         } else {
             toggleNeedsUpgradeCoinsButton.dataset.shown = true;
             toggleNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
-            document.querySelectorAll('table.coin-variant-table tbody tr').forEach(updateRowVisibility);
+            coinsList.classList.remove('upgrade-hidden');
         }
-        updateNoCoinsMessage();
     });
 
     buttonsDiv.appendChild(reloadButton);
@@ -175,7 +177,7 @@ async function loadCoinsList() {
         else if (event.code === 'KeyU') toggleNeedsUpgradeCoinsButton.click();
     });
 
-    coins.forEach((coinType) => {
+    coinsDataUnparsed.forEach((coinType) => {
         const coinTypeDiv = document.createElement('div');
         coinTypeDiv.classList.add('coin-type');
         coinTypeDiv.textContent = coinType.name;
@@ -205,17 +207,19 @@ async function loadCoinsList() {
         coinTypeDiv.appendChild(coinTypeButton);
 
         coinType.coins.forEach((coinVariant) => {
-            const obtainedCoins = coinVariant.coins.filter((coin) => coin.obtained).length;
-            const upgradeCoins = coinVariant.coins.filter((coin) => coin.upgrade).length;
-            const totalCoins = coinVariant.coins.length;
-
             const amountTooltip = document.createElement('span');
-            amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
-            amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
+            amountTooltip.id = `${coinVariant.id}-amount-tooltip`;
 
             const coinVariantDiv = document.createElement('div');
             coinVariantDiv.classList.add('coin-variant', 'hidden');
-            coinVariantDiv.innerHTML = `${coinVariant.name} (${getCoinYears(coinVariant)}) (${amountTooltip.outerHTML}${upgradeCoins > 0 ? `, ${upgradeCoins} needing upgrade` : ''})`;
+
+            const coinVariantYears = document.createElement('span');
+            coinVariantYears.id = `${coinVariant.id}-years`;
+
+            const needsUpgradeTotal = document.createElement('span');
+            needsUpgradeTotal.id = `${coinVariant.id}-needs-upgrade`;
+
+            coinVariantDiv.innerHTML = `${coinVariant.name} (${coinVariantYears.outerHTML}) (${amountTooltip.outerHTML}${needsUpgradeTotal.outerHTML})`;
 
             if (coinVariant.note) {
                 const coinVariantNote = document.createElement('span');
@@ -245,7 +249,6 @@ async function loadCoinsList() {
                     coinVariantButton.textContent = 'Hide coin table';
                     coinVariantTable.classList.remove('hidden');
                 }
-                updateNoCoinsMessage(coinVariantTable);
             });
 
             const coinVariantTable = document.createElement('table');
@@ -270,23 +273,21 @@ async function loadCoinsList() {
                 row.dataset.id = coin.id;
                 row.dataset.obtained = coin.obtained ?? false;
                 row.dataset.upgrade = coin.upgrade ?? false;
-                if (coin.obtained && !coin.upgrade) row.classList.add('hidden');
 
                 const year = document.createElement('td');
-                year.dataset.value = coin.year;
 
                 const yearEditor = document.createElement('span');
                 yearEditor.textContent = coin.year;
                 yearEditor.contentEditable = true;
                 yearEditor.addEventListener('blur', async () => {
                     const newValue = yearEditor.textContent || 'UNKNOWN';
-                    if (newValue === year.dataset.value) return;
+                    if (newValue === coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].year) return;
+
+                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'year', { year: newValue });
+
+                    coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].year = newValue;
 
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: newValue });
-
-                    addChangeEntry({ coin: coinVariant.name, year: newValue, mintMark: mintMark.dataset.value, specification: specification.dataset.value, type: 'year', oldValue: year.dataset.value, newValue });
-
-                    year.dataset.value = newValue;
                 });
                 year.appendChild(yearEditor);
 
@@ -301,7 +302,6 @@ async function loadCoinsList() {
                 row.appendChild(year);
 
                 const mintMark = document.createElement('td');
-                mintMark.dataset.value = coin.mintMark ?? 'None';
                 const tooltip = document.createElement('span');
                 tooltip.classList.add('tooltip-bottom');
                 tooltip.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
@@ -317,30 +317,31 @@ async function loadCoinsList() {
                     tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
                     tooltip.classList.add('tooltip-bottom');
 
-                    if (tooltip.textContent === mintMark.dataset.value) return;
+                    const newValue = tooltip.textContent && tooltip.textContent !== 'None' ? tooltip.textContent : null;
 
-                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintMark: tooltip.textContent && tooltip.textContent !== 'None' ? tooltip.textContent : null });
+                    if (tooltip.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark || 'None')) return;
 
-                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: tooltip.textContent, specification: specification.dataset.value, type: 'mint mark', oldValue: mintMark.dataset.value, newValue: tooltip.textContent });
+                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'mint mark', { mintMark: tooltip.textContent });
 
-                    mintMark.dataset.value = tooltip.textContent;
+                    coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark = newValue;
+
+                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintMark: newValue });
                 });
                 mintMark.appendChild(tooltip);
                 row.appendChild(mintMark);
 
                 const specification = document.createElement('td');
-                specification.dataset.value = coin.specification ?? '';
                 if (!coin.comparison) {
                     specification.contentEditable = true;
                     specification.textContent = coin.specification ?? '';
                     specification.addEventListener('blur', async () => {
-                        if (specification.textContent === specification.dataset.value) return;
+                        if (specification.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification || '')) return;
+
+                        addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specification.textContent });
+
+                        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specification.textContent || null;
 
                         await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specification.textContent || null });
-
-                        addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.textContent, type: 'specification', oldValue: specification.dataset.value, newValue: specification.textContent });
-
-                        specification.dataset.value = specification.textContent;
                     });
                 }
                 if (coin.comparison) {
@@ -355,13 +356,13 @@ async function loadCoinsList() {
                         specificationEditor.textContent = coin.specification;
                         specificationEditor.contentEditable = true;
                         specificationEditor.addEventListener('blur', async () => {
-                            if (specificationEditor.textContent === specification.dataset.value) return;
+                            if (specificationEditor.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification || '')) return;
+
+                            addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specificationEditor.textContent });
+
+                            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specificationEditor.textContent || null;
 
                             await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent || null });
-
-                            addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specificationEditor.textContent, type: 'specification', oldValue: specification.dataset.value, newValue: specificationEditor.textContent });
-
-                            specification.dataset.value = specificationEditor.textContent;
                         });
                         specification.appendChild(specificationEditor);
                         specification.appendChild(document.createTextNode(' '));
@@ -377,12 +378,17 @@ async function loadCoinsList() {
                 obtainedCheck.checked = coin.obtained ?? false;
                 obtainedCheck.addEventListener('change', async () => {
                     row.dataset.obtained = obtainedCheck.checked;
-                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { obtained: obtainedCheck.checked || null });
-                    updateRowVisibility(row);
 
-                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.dataset.value, changeText: `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}` });
+                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'obtained', { obtained: obtainedCheck.checked }, `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}`);
+
+                    coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].obtained = obtainedCheck.checked || null;
+
+                    loadVariantTotals(coinType.id, coinVariant.id);
+
+                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { obtained: obtainedCheck.checked || null });
 
                     if (needsUpgradeCheck.checked) needsUpgradeCheck.click();
+
                     needsUpgradeCheck.disabled = !obtainedCheck.checked;
                 });
                 obtained.appendChild(obtainedCheck);
@@ -395,16 +401,35 @@ async function loadCoinsList() {
                 needsUpgradeCheck.disabled = !coin.obtained;
                 needsUpgradeCheck.addEventListener('change', async () => {
                     row.dataset.upgrade = needsUpgradeCheck.checked;
-                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { upgrade: needsUpgradeCheck.checked || null });
-                    updateRowVisibility(row);
 
-                    addChangeEntry({ coin: coinVariant.name, year: year.dataset.value, mintMark: mintMark.dataset.value, specification: specification.dataset.value, changeText: `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}` });
+                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'upgrade', { upgrade: needsUpgradeCheck.checked }, `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}`);
+
+                    coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].upgrade = needsUpgradeCheck.checked || null;
+
+                    loadVariantTotals(coinType.id, coinVariant.id);
+
+                    await updateCoinData(coinType.id, coinVariant.id, coin.id, { upgrade: needsUpgradeCheck.checked || null });
                 });
                 needsUpgrade.appendChild(needsUpgradeCheck);
                 row.appendChild(needsUpgrade);
 
                 coinVariantTableBody.appendChild(row);
             });
+
+            const newRowMessage = document.createElement('tr');
+            newRowMessage.classList.add('new-row-message');
+
+            const newRowMessageCell = document.createElement('td');
+            newRowMessageCell.colSpan = 5;
+            newRowMessageCell.textContent = 'Add new row';
+
+            const plusIcon = document.createElement('i');
+            plusIcon.classList.add('fa-solid', 'fa-plus');
+
+            newRowMessageCell.prepend(plusIcon);
+
+            newRowMessage.appendChild(newRowMessageCell);
+            coinVariantTableBody.appendChild(newRowMessage);
 
             coinVariantTable.appendChild(coinVariantTableBody);
 
@@ -418,7 +443,33 @@ async function loadCoinsList() {
         coinsList.appendChild(coinTypeDiv);
     });
 
+    coinsDataUnparsed.forEach((coinType) => coinType.coins.forEach((coinVariant) => loadVariantTotals(coinType.id, coinVariant.id)));
+
     loadPopupImages();
+}
+
+/**
+ * Loads the coin variant totals for a given variant
+ * @param {string} type The type to load the totals for
+ * @param {string} variant The variant to load the totals for
+ */
+function loadVariantTotals(type, variant) {
+    const variantData = coinsData[type].coins[variant];
+
+    const obtainedCoins = Object.values(variantData.coins).filter((coin) => coin.obtained).length;
+    const needsUpgradeCoins = Object.values(variantData.coins).filter((coin) => coin.upgrade).length;
+    const totalCoins = Object.values(variantData.coins).length;
+
+    const amountTooltip = document.getElementById(`${variant}-amount-tooltip`);
+    const yearSpan = document.getElementById(`${variant}-years`);
+    const upgradeSpan = document.getElementById(`${variant}-needs-upgrade`);
+
+    amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
+    amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
+
+    yearSpan.textContent = getCoinYears(variantData);
+
+    upgradeSpan.textContent = needsUpgradeCoins > 0 ? `, ${needsUpgradeCoins} needing upgrade` : '';
 }
 
 /**
@@ -429,55 +480,13 @@ async function loadCoinsList() {
 function getCoinYears(variant) {
     if (variant.years) return variant.years;
 
-    const startYear = variant.coins[0].year;
+    const coinValues = Object.values(variant.coins);
 
-    const endYear = variant.active ? 'date' : variant.coins[variant.coins.length - 1].year;
+    const startYear = coinValues[0].year;
+
+    const endYear = variant.active ? 'date' : coinValues[coinValues.length - 1].year;
 
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
-}
-
-/**
- * Checks if no coins are shown, and displays a message if so
- * @param {HTMLElement} [table] the table to check, or all tables if not specified
- */
-function updateNoCoinsMessage(table) {
-    if (!table) {
-        const tables = document.querySelectorAll('table.coin-variant-table');
-        tables.forEach((table) => updateNoCoinsMessage(table));
-        return;
-    }
-    if (![...table.querySelectorAll('tbody tr')].some((row) => !row.classList.contains('hidden'))) {
-        table.querySelector('.coin-table-message')?.remove();
-
-        const messageElement = document.createElement('tr');
-        messageElement.classList.add('coin-table-message');
-
-        const messageCell = document.createElement('td');
-        messageCell.colSpan = 5;
-        messageCell.textContent = 'No coins to show!';
-
-        messageElement.appendChild(messageCell);
-        table.querySelector('tbody').appendChild(messageElement);
-    } else {
-        table.querySelector('.coin-table-message')?.remove();
-    }
-}
-
-/**
- * Updates the visibility of a row based on the current filter settings
- * @param {HTMLElement} row The row to update
- * @returns {void}
- */
-function updateRowVisibility(row) {
-    const obtained = row.dataset.obtained === 'true';
-    const needsUpgrade = row.dataset.upgrade === 'true';
-
-    if (!obtained && document.getElementById('toggle-missing-coins').dataset.shown === 'false') row.classList.add('hidden');
-    else if (needsUpgrade && document.getElementById('toggle-needs-upgrade-coins').dataset.shown === 'false') row.classList.add('hidden');
-    else if (obtained && document.getElementById('toggle-obtained-coins').dataset.shown === 'false' && !needsUpgrade) row.classList.add('hidden');
-    else row.classList.remove('hidden');
-
-    updateNoCoinsMessage(row.closest('table'));
 }
 
 /**
@@ -511,26 +520,20 @@ async function updateCoinData(coinTypeId, coinVariantId, coinId, data) {
 }
 
 /**
- * @typedef {object} ChangeEntry
- * @property {string} coin The coin that was changed
- * @property {string} year The year of the coin that was changed
- * @property {string} mintMark The mint mark of the coin that was changed
- * @property {string} specification The specification of the coin that was changed
- * @property {string} [type] The value that was changed (not required if `changeText` is provided)
- * @property {string} [oldValue] The old value before the change (not required if `changeText` is provided)
- * @property {string} [newValue] The new value after the change (not required if `changeText` is provided)
- * @property {string} [changeText] The text to display for the change (if `oldValue` and `newValue` are not provided)
- */
-
-/**
  * Adds a given entry to the changes log
- * @param {ChangeEntry} entry The entry to add
+ * @param {import('../../../data/coins-data.js').Coin} coinData The coin data before the change
+ * @param {string} variant The variant of the coin that was changed
+ * @param {string} type The type of change that was made
+ * @param {object} [changes] The changes that were made
+ * @param {string} [changeText] The text to display for the change (if `changes` is not provided)
  */
-function addChangeEntry({ coin, year, mintMark, specification, type, oldValue, newValue, changeText }) {
+function addChangeEntry(coinData, variant, type, changes, changeText) {
+    const { year, mintMark, specification } = coinData;
+
     if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
 
     const entry = document.createElement('li');
-    entry.textContent = `${year} ${mintMark || '(No mint mark)'} ${coin}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : `'s ${type} was changed from "${oldValue}" to "${newValue}"`}`;
+    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes)[0]] ? `'s ${type} was changed from "${coinData[Object.keys(changes)[0]]}" to "${Object.values(changes)[0]}"` : `'s ${type} was set to "${Object.values(changes)[0]}"`}`;
 
     const timeTooltip = document.createElement('span');
     timeTooltip.classList.add('time-tooltip');

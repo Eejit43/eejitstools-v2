@@ -10,6 +10,7 @@
 /**
  * @typedef {object} CoinVariant
  * @property {string} name The name of the coin variant
+ * @property {string} id The id of the coin variant (used in image filenames)
  * @property {string} [note] A note about the coin variant
  * @property {string} years The years the coin variant was minted
  * @property {string} image The relative url to the image of the coin variant (not including file extension or coin type identifier (e.g. `pennies/`))
