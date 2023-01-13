@@ -4,6 +4,7 @@ const loginPassword = document.getElementById('login-password');
 const loginButton = document.getElementById('login-button');
 const coinsList = document.getElementById('coins-list');
 const changeHistory = document.getElementById('change-history');
+const exportDataButton = document.getElementById('export-data');
 
 ['input', 'paste'].forEach((type) => {
     loginPassword.addEventListener(type, () => {
@@ -29,6 +30,8 @@ loginButton.addEventListener('click', async () => {
         showResult('login', 'success', null, null, false);
 
         loadCoinsList();
+
+        exportDataButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
         showResult('login', 'error', null, null, false);
@@ -610,3 +613,21 @@ function loadPopupImages() {
         if (event.key === 'Escape' && modal.style.display === 'block') modal.style.display = 'none';
     });
 }
+
+exportDataButton.addEventListener('click', async () => {
+    /**
+     * @type {import('../../../data/coins-data.js').CoinType[]}
+     */
+    const coinsData = await (await fetch(`/coins-list?password=${loginPassword.dataset.input}`)).json();
+
+    if (coinsData.error) return showAlert(coinsData.error, 'error');
+
+    const file = new Blob([JSON.stringify(coinsData)], { type: 'application/json' });
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = 'coins-data.json';
+    a.click();
+
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+});
