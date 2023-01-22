@@ -171,7 +171,7 @@ export default [
             { name: 'Rondo Alla Turca - Mozart', file: 'Rondo Alla Turca', duration: '3:28' },
             { name: 'Flight Of The Bumblebee - Rimsky-Korsakov', file: 'Flight Of The Bumblebee', duration: '3:25' },
             { name: 'In the Hall of the Mountain King - Grieg', file: 'In the Hall of the Mountain King', duration: '2:41' },
-            { name: 'Für Elise - Ludwig van Beethoven', file: 'Für Elise', duration: '3:02' },
+            { name: 'Für Elise - Ludwig van Beethoven', file: 'Für Elise', duration: '3:02' },
             { name: 'Can Can Music - Offenbach', file: 'Can Can Music', duration: '2:11' },
             { name: 'Ride Of The Valkyries - Richard Wagner', file: 'Ride Of The Valkyries', duration: '5:00' },
             { name: 'Entry Of The Gladiators - Julius Fucik', file: 'Entry Of The Gladiators', duration: '3:05' },
