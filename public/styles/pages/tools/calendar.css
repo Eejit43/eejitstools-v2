@@ -152,5 +152,115 @@
 }
 
 .todo-checkbox {
-    margin-right: 10px;
+    display: none;
+}
+
+/* Inspired by https://codepen.io/avstorm/pen/yjLGGN */
+.todo-label {
+    margin: auto;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.todo-label span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+}
+
+.todo-label .checkbox-container {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 1px solid #9098a9;
+    transition: all 200ms ease;
+}
+
+.todo-label .checkbox-container svg {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 300ms ease;
+    transition-delay: 100ms;
+    transform: translate3d(0, 0, 0);
+}
+
+.todo-label .checkbox-container:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #506eec;
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+}
+
+.todo-label .todo-label-text {
+    padding-inline: 18px;
+    margin-left: -5px;
+}
+
+.todo-label .todo-label-text:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 2px;
+    background-color: currentColor;
+    position: absolute;
+    top: 50%;
+    left: 7.5%;
+    transform: translateY(-50%);
+    transition: width 200ms ease-in-out;
+}
+
+.todo-label:hover .checkbox-container {
+    border-color: #506eec;
+}
+
+.todo-checkbox:checked + .todo-label .checkbox-container {
+    background: #506eec;
+    border-color: #506eec;
+    animation: wave 400ms ease;
+}
+
+.todo-checkbox:checked + .todo-label .checkbox-container svg {
+    stroke-dashoffset: 0;
+}
+
+.todo-checkbox:checked + .todo-label .checkbox-container:before {
+    transform: scale(2.5);
+    opacity: 0;
+    transition: all 400ms ease;
+}
+
+.todo-checkbox:checked + .todo-label .todo-label-text:after {
+    width: 85%;
+}
+
+.todo-checkbox:disabled + .todo-label .checkbox-container {
+    background: #9098a94c;
+    border-color: #9098a9;
+}
+
+.todo-checkbox:checked:disabled + .todo-label .checkbox-container {
+    background: #9098a9;
+    border-color: #9098a9;
+}
+
+@keyframes wave {
+    50% {
+        transform: scale(0.9);
+    }
 }

@@ -378,15 +378,37 @@ function loadTodoList() {
                 if (result.error) showAlert(result.error, 'error');
 
                 todoData = result;
-                loadTodoList();
+
+                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = false));
             });
 
-            const todoText = document.createElement('label');
-            todoText.htmlFor = `todo-${index}`;
-            todoText.textContent = todo.title;
+            const todoLabel = document.createElement('label');
+            todoLabel.classList.add('todo-label');
+            todoLabel.htmlFor = `todo-${index}`;
+
+            const checkboxSpan = document.createElement('span');
+            checkboxSpan.classList.add('checkbox-container');
+
+            const checkboxSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            checkboxSvg.setAttribute('width', '12px');
+            checkboxSvg.setAttribute('height', '10px');
+            checkboxSvg.setAttribute('viewBox', '0 0 12 10');
+
+            const checkboxPolyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+            checkboxPolyline.setAttribute('points', '1.5 6 4.5 9 10.5 1');
+
+            checkboxSvg.appendChild(checkboxPolyline);
+            checkboxSpan.appendChild(checkboxSvg);
+
+            const todoLabelText = document.createElement('span');
+            todoLabelText.classList.add('todo-label-text');
+            todoLabelText.textContent = todo.title;
+
+            todoLabel.appendChild(checkboxSpan);
+            todoLabel.appendChild(todoLabelText);
 
             todoElement.appendChild(todoCheckbox);
-            todoElement.appendChild(todoText);
+            todoElement.appendChild(todoLabel);
 
             todoList.appendChild(todoElement);
         }
