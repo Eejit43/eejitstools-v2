@@ -220,7 +220,7 @@
     background-color: currentColor;
     position: absolute;
     top: 50%;
-    left: 7.5%;
+    left: 13px;
     transform: translateY(-50%);
     transition: width 200ms ease-in-out;
 }
@@ -246,7 +246,7 @@
 }
 
 .todo-checkbox:checked + .todo-label .todo-label-text:after {
-    width: 85%;
+    width: 88%;
 }
 
 .todo-checkbox:disabled + .todo-label .checkbox-container {
