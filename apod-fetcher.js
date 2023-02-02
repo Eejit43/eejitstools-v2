@@ -41,7 +41,7 @@ export async function fetchApod(year, month, date) {
 
     const response = await fetch(`https://eejitstools.com/cors-anywhere?url=${url}`);
     const apodPage = await response.text();
-    if (!response.ok) return { success: false, error: 'No APOD data exists for the given date', date: apodDate };
+    if (!response.ok) return { success: false, error: 'No APOD data exists for the given date!', date: apodDate };
 
     try {
         const html = parse(
@@ -57,7 +57,10 @@ export async function fetchApod(year, month, date) {
 
         const mediaType = html.querySelector('iframe') ? 'embed' : 'image';
 
-        const title = html.querySelector('title').innerHTML.split(' - ')[1].trim();
+        const title = html
+            .querySelector('title')
+            .innerHTML.split(/\s[–-]\s/)[1]
+            .trim();
 
         const credit = html.innerHTML
             .match(/Credit.*?<\/center>/is)?.[0]
@@ -106,6 +109,6 @@ export async function fetchApod(year, month, date) {
         };
     } catch (error) {
         console.error(error); // eslint-disable-line no-console
-        return { success: false, error: 'Failed to parse APOD data for this date', date: apodDate };
+        return { success: false, error: 'Failed to parse APOD data for this date!', date: apodDate };
     }
 }
