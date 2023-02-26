@@ -154,7 +154,7 @@ export const toneIndicators = [
     { indicator: 'f', meaning: 'fake' },
     { indicator: 'fex', meaning: 'for example' },
     { indicator: 'fl', meaning: 'flirting' },
-    { indicator: 'g or /gene', meaning: 'genuine / genuine statement' },
+    { indicator: 'g or /gen', meaning: 'genuine / genuine statement' },
     { indicator: 'gq', meaning: 'genuine question' },
     { indicator: 'hj', meaning: 'half joking' },
     { indicator: 'hlh', meaning: 'half lighthearted' },
