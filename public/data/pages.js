@@ -169,7 +169,6 @@ export const toneIndicators = [
     { indicator: 'li', meaning: 'literal / literally' },
     { indicator: 'lj or /lhj', meaning: 'light (hearted) joke' },
     { indicator: 'lu', meaning: 'little upset' },
-    { indicator: 'ly', meaning: 'lyrics' },
     { indicator: 'm', meaning: 'metaphor / metaphorically <i>OR</i> mocking' },
     { indicator: 'met', meaning: 'metaphorical' },
     { indicator: 'mhly', meaning: 'misheard lyrics' },
