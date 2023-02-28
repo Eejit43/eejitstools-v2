@@ -95,14 +95,15 @@ async function getData(position) {
     const alertsList = document.getElementById('alerts');
 
     if (newAlerts.length > 0) {
-        newAlerts.forEach((alert) => {
+        newAlerts.forEach((alert, index) => {
             const alertElement = document.createElement('span');
             alertElement.classList.add('alert');
             alertElement.textContent = `${alert.title.replace(/ issued.*/g, '')} (${alert.severity})`;
+            alertElement.addEventListener('click', () => showWeatherAlert(alert));
 
-            const appendedElement = alertsList.appendChild(alertElement);
+            alertsList.appendChild(alertElement);
 
-            appendedElement.addEventListener('click', () => showWeatherAlert(alert));
+            if (index !== newAlerts.length - 1) alertsList.appendChild(document.createTextNode(', '));
         });
     } else alertsList.textContent = 'None';
 

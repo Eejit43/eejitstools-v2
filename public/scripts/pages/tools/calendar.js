@@ -1,4 +1,5 @@
-import { twemojiUpdate, showAlert, showResult } from '/scripts/functions.js';
+import { holidayEmojis, moonEmojis } from '/data/pages.js';
+import { showAlert, showResult, twemojiUpdate } from '/scripts/functions.js';
 
 const monthYearDisplay = document.getElementById('month-year');
 const calendarBody = document.getElementById('calendar-body');
@@ -76,52 +77,6 @@ let displayedYear = currentTime.getFullYear();
  * @type {{holidays: {name: string, date: string}[], moonPhases: {name: string, date: string}[]}}
  */
 const events = await (await fetch('/calendar-events')).json();
-
-const holidayEmojis = {
-    "New Year's Day": '🎉',
-    'Martin Luther King Jr. Day': '👴🏾',
-    'First Day of Black History Month': '✊🏿',
-    "Valentine's Day": '❤️',
-    "Presidents' Day": '🤵',
-    "First Day of Women's History Month": '👩',
-    "St. Patrick's Day": '☘️',
-    'Daylight Saving Time starts': '🕑',
-    'Easter Sunday': '🐇',
-    'Tax Day': '💰',
-    'Easter Monday': '🐇',
-    'First Day of Asian Pacific American Heritage Month': '🌏',
-    'Cinco de Mayo': '🥳',
-    "Mother's Day": '🤱',
-    'Memorial Day': '🪦',
-    'First Day of LGBTQ+ Pride Month': '🏳️‍🌈',
-    'Flag Day': '🇺🇸',
-    "Father's Day": '👨',
-    Juneteenth: '✊🏿',
-    'Summer Solstice': '☀️',
-    'Independence Day': '🇺🇸',
-    'Labor Day': '🛠',
-    'First Day of Hispanic Heritage Month': '🌎',
-    "Indigenous Peoples' Day": '🪶',
-    'Columbus Day': '⛵️',
-    Halloween: '🎃',
-    'First Day of American Indian Heritage Month': '🪶',
-    'Daylight Saving Time ends': '🕑',
-    'Election Day': '🗳️',
-    'Veterans Day': '🎖️',
-    'Thanksgiving Day': '🦃',
-    'Native American Heritage Day': '🪶',
-    'Winter Solstice': '❄️',
-    'Christmas Eve': '🎅🏻',
-    'Christmas Day': '🎄',
-    "New Year's Eve": '🕛'
-};
-
-const moonEmojis = {
-    'New moon': '🌑',
-    'First quarter': '🌓',
-    'Full moon': '🌕',
-    'Last quarter': '🌗'
-};
 
 showCalendar(displayedDate, currentMonth, currentYear);
 
