@@ -246,7 +246,7 @@
 }
 
 .todo-checkbox:checked + .todo-label .todo-label-text:after {
-    width: 88%;
+    width: calc(100% - 25px);
 }
 
 .todo-checkbox:disabled + .todo-label .checkbox-container {
