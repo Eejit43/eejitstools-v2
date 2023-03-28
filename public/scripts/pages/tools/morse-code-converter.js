@@ -1,43 +1,41 @@
 import { copyText, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const input = document.getElementById('input');
-const toMorseBtn = document.getElementById('to-morse');
-const fromMorseBtn = document.getElementById('from-morse');
-const clearBtn = document.getElementById('clear');
+const toMorseButton = document.getElementById('to-morse');
+const fromMorseButton = document.getElementById('from-morse');
+const clearButton = document.getElementById('clear');
 const result = document.getElementById('result');
 const resultCopy = document.getElementById('copy-result');
-const resultCopy2 = document.getElementById('copy-result-2');
-const resultCopy3 = document.getElementById('copy-result-3');
-
-let resultVar1, resultVar2, resultVar3;
+const resultCopyVertical = document.getElementById('copy-result-2');
+const resultCopySpaces = document.getElementById('copy-result-3');
 
 /* Add event listeners */
-toMorseBtn.addEventListener('click', toMorse);
-fromMorseBtn.addEventListener('click', fromMorse);
-clearBtn.addEventListener('click', () => {
+toMorseButton.addEventListener('click', toMorse);
+fromMorseButton.addEventListener('click', fromMorse);
+clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
     resetResult('encode');
     resetResult('decode');
     resultCopy.textContent = 'Copy';
-    resultCopy2.textContent = 'Copy with vertical slash space';
-    resultCopy3.textContent = 'Copy with three space space';
+    resultCopyVertical.textContent = 'Copy with vertical slash spacer';
+    resultCopySpaces.textContent = 'Copy with three space spacer';
     resultCopy.disabled = true;
-    resultCopy2.disabled = true;
-    resultCopy3.disabled = true;
+    resultCopyVertical.disabled = true;
+    resultCopySpaces.disabled = true;
     showAlert('Cleared!', 'success');
 });
 resultCopy.addEventListener('click', () => {
-    copyText(resultCopy, resultVar1);
+    copyText(resultCopy, result.value);
 });
-resultCopy2.addEventListener('click', () => {
-    copyText(resultCopy2, resultVar2);
+resultCopyVertical.addEventListener('click', () => {
+    copyText(resultCopyVertical, result.value.replace(/ \/ /g, ' | '));
 });
-resultCopy3.addEventListener('click', () => {
-    copyText(resultCopy3, resultVar3);
+resultCopySpaces.addEventListener('click', () => {
+    copyText(resultCopySpaces, result.value.replace(/ {3}/g, '   '));
 });
 
-const toMorseRef = {
+const morseConversion = {
     a: '.-',
     b: '-...',
     c: '-.-.',
@@ -74,168 +72,112 @@ const toMorseRef = {
     8: '---..',
     9: '----.',
     0: '-----',
-    '.': '.-.-.-',
+    _: '..--.-',
+    '-': '-....-',
     ',': '--..--',
-    '?': '..--..',
-    "'": '.----.',
+    ';': '-.-.-.',
+    ':': '---...',
     '!': '-.-.--',
-    '/': '-..-.',
+    '?': '..--..',
+    '"': '.-..-.',
     '(': '-.--.',
     ')': '-.--.-',
+    '@': '.--.-.',
+    '/': '-..-.',
     '&': '.-...',
-    ':': '---...',
-    ';': '-.-.-.',
-    '=': '-...-',
     '+': '.-.-.',
-    '-': '-....-',
-    _: '..--.-',
-    '"': '.-..-.',
+    '=': '-...-',
+    "'": '.----.',
     $: '...-..-',
-    '@': '.--.-.'
-};
-
-const fromMorseRef = {
-    '.-': 'A',
-    '-...': 'B',
-    '-.-.': 'C',
-    '-..': 'D',
-    '.': 'E',
-    '..-.': 'F',
-    '--.': 'G',
-    '....': 'H',
-    '..': 'I',
-    '.---': 'J',
-    '-.-': 'K',
-    '.-..': 'L',
-    '--': 'M',
-    '-.': 'N',
-    '---': 'O',
-    '.--.': 'P',
-    '--.-': 'Q',
-    '.-.': 'R',
-    '...': 'S',
-    '-': 'T',
-    '..-': 'U',
-    '...-': 'V',
-    '.--': 'W',
-    '-..-': 'X',
-    '-.--': 'Y',
-    '--..': 'Z',
-    '.----': '1',
-    '..---': '2',
-    '...--': '3',
-    '....-': '4',
-    '.....': '5',
-    '-....': '6',
-    '--...': '7',
-    '---..': '8',
-    '----.': '9',
-    '-----': '0',
-    '.-.-.-': '.',
-    '--..--': ',',
-    '..--..': '?',
-    '.----.': "'",
-    '-.-.--': '!',
-    '-..-.': '/',
-    '-.--.': '(',
-    '-.--.-': ')',
-    '.-...': '&',
-    '---...': ':',
-    '-.-.-.': ';',
-    '-...-': '=',
-    '.-.-.': '+',
-    '-....-': '-',
-    '..--.-': '_',
-    '.-..-.': '"',
-    '...-..-': '$',
-    '.--.-.': '@'
+    '.': '.-.-.-'
 };
 
 /**
- * Coverts a string to Morse Code
+ * Coverts a string to Morse code
  * @param {string} string the string to convert
- * @returns {string} the string in Morse Code
+ * @returns {string} the string in Morse code
  */
 function convertToMorse(string) {
     return string
         .toLowerCase()
         .split('')
-        .map((el) => (toMorseRef[el] ? toMorseRef[el] : el))
+        .map((character) => (morseConversion[character] ? morseConversion[character] : character))
         .join(' ')
         .replace(/ {3}/g, ' / ');
 }
 
 /**
- * Converts the provided string to Morse Code and displays the result
+ * Converts the provided string to Morse code and displays the result
  */
 function toMorse() {
     if (input.value.trim().length <= 0) {
         result.value = '';
         resultCopy.disabled = true;
-        resultCopy2.disabled = true;
-        resultCopy3.disabled = true;
+        resultCopyVertical.disabled = true;
+        resultCopySpaces.disabled = true;
         showResult('encode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[ a-zA-Z0-9.,?'!/()&:;=+\-_"$@]*$/.test(input.value.trim())) {
+    } else if (/^[ |\\a-zA-Z0-9!"$&'()+,\-./:;=?@_]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
-        resultVar1 = convertToMorse(input.value);
-        resultVar2 = convertToMorse(input.value).replace(/ \/ /g, ' | ');
-        resultVar3 = convertToMorse(input.value).replace(/ \/ /g, '   ');
         resultCopy.disabled = false;
-        resultCopy2.disabled = false;
-        resultCopy3.disabled = false;
+        resultCopyVertical.disabled = false;
+        resultCopySpaces.disabled = false;
         showResult('encode', 'success');
     } else {
         result.value = '';
         resultCopy.disabled = true;
-        resultCopy2.disabled = true;
-        resultCopy3.disabled = true;
+        resultCopyVertical.disabled = true;
+        resultCopySpaces.disabled = true;
         showResult('encode', 'error');
         showAlert('Input cannot be converted into morse code!', 'error');
     }
 }
 
 /**
- * Converts Morse Code to a human-readable string
- * @param {string} morseCode the Morse Code to convert
+ * Converts Morse code to a human-readable string
+ * @param {string} morseCode the Morse code to convert
  * @returns {string} the converted string
  */
 function decodeMorse(morseCode) {
     return morseCode
         .split(/ {2,}| *[|/] */)
-        .map((a) =>
-            a
+        .map((word) =>
+            word
                 .split(' ')
-                .map((b) => fromMorseRef[b])
+                .map(
+                    (letter) =>
+                        Object.keys(morseConversion)
+                            .find((key) => morseConversion[key] === letter)
+                            ?.toUpperCase() || letter
+                )
                 .join('')
         )
         .join(' ');
 }
 
 /**
- * Converts the provided string from Morse Code and displays the result
+ * Converts the provided string from Morse code and displays the result
  */
 function fromMorse() {
-    const inputVal = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
-    if (inputVal.length <= 0) {
+    const inputValue = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
+    if (inputValue.length <= 0) {
         result.value = '';
         resultCopy.disabled = true;
-        resultCopy2.disabled = true;
-        resultCopy3.disabled = true;
+        resultCopyVertical.disabled = true;
+        resultCopySpaces.disabled = true;
         showResult('decode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[|/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputVal)) {
-        result.value = decodeMorse(inputVal);
-        resultVar1 = decodeMorse(inputVal);
+    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[|/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
+        result.value = decodeMorse(inputValue);
         resultCopy.disabled = false;
-        resultCopy2.disabled = true;
-        resultCopy3.disabled = true;
+        resultCopyVertical.disabled = true;
+        resultCopySpaces.disabled = true;
         showResult('decode', 'success');
     } else {
         result.value = '';
         resultCopy.disabled = true;
-        resultCopy2.disabled = true;
-        resultCopy3.disabled = true;
+        resultCopyVertical.disabled = true;
+        resultCopySpaces.disabled = true;
         showResult('decode', 'error');
         showAlert('Invalid morse code!', 'error');
     }
