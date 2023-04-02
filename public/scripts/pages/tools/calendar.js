@@ -290,7 +290,7 @@ function loadTodoList() {
 
     todoList.innerHTML = '';
 
-    todoData.todo.forEach((todo, index) => {
+    todoData.todo.forEach((todo) => {
         if (
             todo.frequency === 'daily' ||
             (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
@@ -302,19 +302,19 @@ function loadTodoList() {
         ) {
             const todoElement = document.createElement('div');
             todoElement.classList.add('todo');
-            todoElement.dataset.index = index;
+            todoElement.dataset.id = todo.id;
 
             const todoCheckbox = document.createElement('input');
             todoCheckbox.type = 'checkbox';
             todoCheckbox.classList.add('todo-checkbox');
-            todoCheckbox.id = `todo-${index}`;
-            todoCheckbox.dataset.index = index;
-            todoCheckbox.checked = todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.split('')?.[index] === '1';
+            todoCheckbox.id = `todo-${todo.id}`;
+            todoCheckbox.dataset.id = todo.id;
+            todoCheckbox.checked = todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', async () => {
                 todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = true));
 
-                const todoFinal = new Array(todoData.todo.length).fill('0');
-                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.index] = checkbox.checked ? '1' : '0'));
+                const todoFinal = {};
+                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.id] = checkbox.checked));
 
                 const result = await (
                     await fetch('/calendar-todo-edit', {
@@ -325,7 +325,7 @@ function loadTodoList() {
                             date: displayedDate,
                             month: displayedMonth + 1,
                             year: displayedYear,
-                            todo: todoFinal.join('')
+                            todo: todoFinal
                         })
                     })
                 ).json();
@@ -339,7 +339,7 @@ function loadTodoList() {
 
             const todoLabel = document.createElement('label');
             todoLabel.classList.add('todo-label');
-            todoLabel.htmlFor = `todo-${index}`;
+            todoLabel.htmlFor = `todo-${todo.id}`;
 
             const checkboxSpan = document.createElement('span');
             checkboxSpan.classList.add('checkbox-container');
