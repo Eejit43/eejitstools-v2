@@ -119,11 +119,13 @@ fastify.get('/calendar-events', async (request, reply) => {
 const todoModel = model('todo', new Schema({ year: String, dates: Object }));
 
 const todoOptionsModel = model('todo-options', new Schema({ data: Array }));
-const todoOptions = (await todoOptionsModel.findOne({})).data;
+let todoOptions;
 
 fastify.get('/calendar-todo', async (request, reply) => {
     if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
     const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+
+    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({})).data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
@@ -146,6 +148,8 @@ fastify.post('/calendar-todo-edit', async (request, reply) => {
     await todoModel.replaceOne({ year }, yearEntry);
 
     const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+
+    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({})).data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
