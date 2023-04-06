@@ -1,7 +1,5 @@
 .DS_Store
-.vscode/settings.json
 
 node_modules/
-.env
 
 calendar-events-cache.json
