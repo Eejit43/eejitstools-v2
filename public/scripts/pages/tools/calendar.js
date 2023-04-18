@@ -64,6 +64,10 @@ document.addEventListener('keydown', (event) => {
     else if (event.code === 'ArrowLeft') previousDay();
     else if (event.code === 'ArrowRight') nextDay();
     else if (event.code === 'KeyC') currentDate();
+    else if (event.code === 'KeyS') {
+        const saveButton = document.getElementById('todo-save-button');
+        if (saveButton && !saveButton.disabled) saveButton.click();
+    }
 });
 
 let currentTime = new Date();
