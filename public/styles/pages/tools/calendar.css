@@ -264,3 +264,7 @@
         transform: scale(0.9);
     }
 }
+
+#todo-save-button {
+    margin-top: 20px;
+}

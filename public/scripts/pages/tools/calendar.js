@@ -309,32 +309,13 @@ function loadTodoList() {
             todoCheckbox.classList.add('todo-checkbox');
             todoCheckbox.id = `todo-${todo.id}`;
             todoCheckbox.dataset.id = todo.id;
-            todoCheckbox.checked = todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
-            todoCheckbox.addEventListener('change', async () => {
-                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = true));
-
+            todoCheckbox.checked = !!todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
+            todoCheckbox.addEventListener('change', () => {
                 const todoFinal = {};
                 todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.id] = checkbox.checked));
 
-                const result = await (
-                    await fetch('/calendar-todo-edit', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            password: todoList.dataset.password,
-                            date: displayedDate,
-                            month: displayedMonth + 1,
-                            year: displayedYear,
-                            todo: todoFinal
-                        })
-                    })
-                ).json();
-
-                if (result.error) showAlert(result.error, 'error');
-
-                todoData = result;
-
-                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = false));
+                if (Object.entries(todoFinal).some(([id, checked]) => !!todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
+                else todoSaveButton.disabled = true;
             });
 
             const todoLabel = document.createElement('label');
@@ -368,4 +349,38 @@ function loadTodoList() {
             todoList.appendChild(todoElement);
         }
     });
+
+    const todoSaveButton = document.createElement('button');
+    todoSaveButton.id = 'todo-save-button';
+    todoSaveButton.textContent = 'Save changes';
+    todoSaveButton.disabled = true;
+    todoSaveButton.addEventListener('click', async () => {
+        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = true));
+        todoSaveButton.disabled = true;
+
+        const todoFinal = {};
+        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.id] = checkbox.checked));
+
+        const result = await (
+            await fetch('/calendar-todo-edit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    password: todoList.dataset.password,
+                    date: displayedDate,
+                    month: displayedMonth + 1,
+                    year: displayedYear,
+                    todo: todoFinal
+                })
+            })
+        ).json();
+
+        if (result.error) showAlert(result.error, 'error');
+
+        todoData = result;
+
+        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = false));
+    });
+
+    todoList.appendChild(todoSaveButton);
 }
