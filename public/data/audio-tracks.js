@@ -184,7 +184,8 @@ export default [
             { name: 'O Fortuna (Carmina Burana) - Carl Orff', file: 'O Fortuna', duration: '5:21' },
             { name: 'Flower Duet (from Lakmé) - Léo Delibes', file: 'Flower Duet', duration: '4:54' },
             { name: 'Also Sprach Zarathustra - Strauss', file: 'Also Sprach Zarathustra', duration: '1:48' },
-            { name: 'Cello Suite No. 1 (G Major) - Bach', file: 'Cello Suite', duration: '2:19' }
+            { name: 'Cello Suite No. 1 (G Major) - Bach', file: 'Cello Suite', duration: '2:19' },
+            { name: 'Clair de lune - Claude Debussy', file: 'Clair de lune', duration: '4:55' }
         ]
     },
     {
