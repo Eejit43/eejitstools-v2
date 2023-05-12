@@ -230,7 +230,7 @@ console.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-l
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
     logApiRequest(request);
-    const response = await fetch(`https://abs.twimg.com/emoji/v2/svg/${request.params.id}.svg`);
+    const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${request.params.id}.svg`);
     if (!response.ok) return reply.type('image/png').send();
 
     const canvas = Canvas.createCanvas(500, 500);
