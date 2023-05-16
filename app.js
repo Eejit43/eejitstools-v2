@@ -131,9 +131,16 @@ fastify.get('/calendar-todo', async (request, reply) => {
 });
 
 fastify.post('/calendar-todo-edit', async (request, reply) => {
-    const { password, date, month, year, todo } = request.body;
+    const { password, todo } = request.body;
+    const year = parseInt(request.body.year);
+    const month = parseInt(request.body.month);
+    const date = parseInt(request.body.date);
 
     if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+
+    if (isNaN(year) || isNaN(month) || isNaN(date)) return reply.send(JSON.stringify({ error: 'A date parameter is NaN!' }, null, 2));
+    if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
+    if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
     let yearEntry = await todoModel.findOne({ year });
     if (!yearEntry) {
