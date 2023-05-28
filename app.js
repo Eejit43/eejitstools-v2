@@ -183,9 +183,14 @@ fastify.get('/cors-anywhere', async (request, reply) => {
 
     if (!request.query.url) reply.status(400).send('No URL provided');
 
+    const url = new URL(request.query.url);
+    Object.entries(request.query).forEach(([key, value]) => {
+        if (key !== 'url') url.searchParams.append(key, value);
+    });
+
     let response;
     try {
-        response = await fetch(request.query.url);
+        response = await fetch(url.toString());
     } catch {
         reply.status(400).send('Invalid URL');
     }
