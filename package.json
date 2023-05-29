@@ -26,7 +26,6 @@
     "devDependencies": {
         "eslint": "^8.41.0",
         "eslint-plugin-jsdoc": "^45.0.0",
-        "shelljs": "^0.8.5",
         "tree-kill": "^1.2.2"
     }
 }
