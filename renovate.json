@@ -1,6 +1,3 @@
 {
-  "extends": [
-    "config:base",
-    "group:all"
-  ]
+    "extends": ["github>Eejit43/renovate-config"]
 }
