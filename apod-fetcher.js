@@ -1,3 +1,4 @@
+import { consola } from 'consola';
 import fetch from 'node-fetch';
 import { parse } from 'node-html-parser';
 
@@ -108,7 +109,7 @@ export async function fetchApod(year, month, date) {
             media
         };
     } catch (error) {
-        console.error(error); // eslint-disable-line no-console
+        consola.error(error);
         return { success: false, error: 'Failed to parse APOD data for this date!', date: apodDate };
     }
 }

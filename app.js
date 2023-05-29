@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable no-console */
 
 import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
@@ -14,6 +13,7 @@ import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
 import coinsData from './public/data/coins-data.js';
 import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
+import { consola } from 'consola';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
@@ -230,14 +230,14 @@ fs.readdirSync('./views/pages').forEach((category) => {
     pages.forEach((page) => {
         page = page.replace(/.hbs$/, '');
         const pageInfo = pagesParsed[category]?.[page];
-        if (!pageInfo) return console.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
+        if (!pageInfo) return consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
         fastify.get(pageInfo.link, (request, reply) => {
             reply.view(`pages/${category}/${page}`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
 });
 
-console.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
+consola.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
 
 // Twemoji images
 fastify.get('/twemoji/:id', async (request, reply) => {
@@ -261,7 +261,7 @@ fastify.get('/apod/:year/:month/:day', async (request, reply) => {
 
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
-    console.log(error);
+    consola.error(error);
     reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
 });
 
@@ -274,12 +274,12 @@ const port = process.env.PORT || 3000;
 // Start server
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
-        if (error.code === 'EADDRINUSE') console.log(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
-        else console.log(`${chalk.red('[Startup error]:')} ${error}`);
+        if (error.code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
+        else consola.error(`${chalk.red('[Startup error]:')} ${error}`);
         process.exit(1);
     }
 
-    console.log(`${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV !== 'production' ? ` (${chalk.blueBright(`http://localhost:${port}`)})` : ''}`);
+    consola.success(`${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV !== 'production' ? ` (${chalk.blueBright(`http://localhost:${port}`)})` : ''}`);
 });
 
 /**
@@ -287,10 +287,10 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
  * @param {import('fastify').FastifyRequest} request the request object
  */
 function logApiRequest(request) {
-    console.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
+    consola.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
 
 mongoose.set('strictQuery', true);
 
 await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
-console.log(`${chalk.green('[Database]:')} Successfully connected to the database!`);
+consola.success(`${chalk.green('[Database]:')} Successfully connected to the database!`);
