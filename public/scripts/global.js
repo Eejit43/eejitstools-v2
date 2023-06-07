@@ -3,6 +3,31 @@ import { addAnimation, showAlert, twemojiUpdate, updateInnerHTML } from '/script
 
 twemojiUpdate();
 
+/* Funky logo hover effect */
+const logo = document.querySelector('.logo');
+logo.addEventListener('mouseover', () => {
+    const letters = logo.querySelectorAll('span');
+    letters.forEach((letter, index) => {
+        const beforeContent = letter.dataset.value;
+
+        let iterations = 0;
+
+        const interval = setInterval(() => {
+            letter.textContent = beforeContent
+                .split('')
+                .map(() => String.fromCharCode(Math.floor(Math.random() * 94) + 33))
+                .join('');
+
+            if (iterations >= 10) {
+                clearInterval(interval);
+                letter.textContent = beforeContent;
+            }
+
+            iterations++;
+        }, 30 + index * 10);
+    });
+});
+
 /* Navigation time display */
 const timeDisplay = document.getElementById('time-display');
 const timeIcon = document.getElementById('time-icon');
