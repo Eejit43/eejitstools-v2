@@ -4,16 +4,15 @@ import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
 import chalk from 'chalk';
+import { consola } from 'consola';
 import Fastify from 'fastify';
 import fs, { readFileSync } from 'fs';
 import handlebars from 'handlebars';
 import mongoose, { model, Schema } from 'mongoose';
-import fetch from 'node-fetch';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
 import coinsData from './public/data/coins-data.js';
 import { blankProperties, pagesParsed, toneIndicators } from './public/data/pages.js';
-import { consola } from 'consola';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
