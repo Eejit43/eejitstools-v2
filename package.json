@@ -2,7 +2,7 @@
     "name": "eejitstools",
     "private": true,
     "type": "module",
-    "packageManager": "pnpm@8.6.2",
+    "packageManager": "pnpm@8.6.3",
     "scripts": {
         "start": "node --max-old-space-size=100 app.js",
         "dev": "node ./dev.js",
@@ -18,11 +18,11 @@
         "consola": "^3.1.0",
         "fastify": "^4.18.0",
         "handlebars": "^4.7.7",
-        "mongoose": "^7.2.4",
+        "mongoose": "^7.3.0",
         "node-html-parser": "^6.1.5"
     },
     "devDependencies": {
-        "eslint": "^8.42.0",
+        "eslint": "^8.43.0",
         "eslint-plugin-jsdoc": "^46.2.6",
         "tree-kill": "^1.2.2"
     }
