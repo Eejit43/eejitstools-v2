@@ -182,7 +182,13 @@ fastify.get('/cors-anywhere', async (request, reply) => {
 
     if (!request.query.url) reply.status(400).send('No URL provided');
 
-    const url = new URL(request.query.url);
+    let url;
+    try {
+        url = new URL(request.query.url);
+    } catch {
+        reply.status(400).send('Invalid URL');
+    }
+
     Object.entries(request.query).forEach(([key, value]) => {
         if (key !== 'url') url.searchParams.append(key, value);
     });
@@ -194,12 +200,14 @@ fastify.get('/cors-anywhere', async (request, reply) => {
         reply.status(400).send('Invalid URL');
     }
 
+    if (!response) return;
+
     if (response.headers.get('content-type').startsWith('image/'))
         reply
             .header('Access-Control-Allow-Origin', '*')
             .type('image/png')
             .status(response.status)
-            .send(await response.buffer());
+            .send(Buffer.from(await response.arrayBuffer()));
     else
         reply
             .header('Access-Control-Allow-Origin', '*')
