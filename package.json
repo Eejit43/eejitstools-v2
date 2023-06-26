@@ -2,7 +2,7 @@
     "name": "eejitstools",
     "private": true,
     "type": "module",
-    "packageManager": "pnpm@8.6.3",
+    "packageManager": "pnpm@8.6.4",
     "scripts": {
         "start": "node --max-old-space-size=100 app.js",
         "dev": "node ./dev.js",
@@ -23,7 +23,7 @@
     },
     "devDependencies": {
         "eslint": "^8.43.0",
-        "eslint-plugin-jsdoc": "^46.2.6",
+        "eslint-plugin-jsdoc": "^46.3.0",
         "tree-kill": "^1.2.2"
     }
 }
