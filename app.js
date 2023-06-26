@@ -6,7 +6,7 @@ import Canvas from 'canvas';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import Fastify from 'fastify';
-import fs, { readFileSync } from 'fs';
+import fs from 'fs';
 import handlebars from 'handlebars';
 import mongoose, { model, Schema } from 'mongoose';
 import path from 'path';
@@ -88,15 +88,10 @@ fastify.post('/coins-list-edit', async (request, reply) => {
     reply.send(JSON.stringify({ success: true }, null, 2));
 });
 
-fastify.get('/calendar-events', async (request, reply) => {
-    let cache;
-    try {
-        cache = readFileSync('calendar-events-cache.json');
-    } catch {
-        cache = null;
-    }
+let calendarEventsCache = null;
 
-    if (cache) return reply.send(cache);
+fastify.get('/calendar-events', async (request, reply) => {
+    if (calendarEventsCache) return reply.send(calendarEventsCache);
 
     const holidays = (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY}`)).json()).items
         .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
@@ -111,8 +106,8 @@ fastify.get('/calendar-events', async (request, reply) => {
         .sort((a, b) => new Date(a.date) - new Date(b.date));
     const result = { holidays, moonPhases };
 
-    fs.writeFileSync('calendar-events-cache.json', JSON.stringify(result, null, 2));
-    reply.send(JSON.stringify(result, null, 2));
+    calendarEventsCache = JSON.stringify(result, null, 2);
+    reply.send(calendarEventsCache);
 });
 
 const todoModel = model('todo', new Schema({ year: String, dates: Object }));
