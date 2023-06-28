@@ -1,3 +1,9 @@
 .DS_Store
 
 node_modules/
+
+app.js
+dev.js
+apod-fetcher.js
+public/scripts/*.js
+public/scripts/pages/**/*.js
