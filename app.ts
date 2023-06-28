@@ -69,7 +69,7 @@ fastify.get('/coins-list', async (request, reply) => {
     const mergedCoinsData = await Promise.all(
         coinsData.map(async (coinType) => {
             let coinsDatabaseEntry = await coinsModel.findOne({ id: coinType.id });
-            if (!coinsDatabaseEntry) {
+            if (!coinsDatabaseEntry)
                 coinsDatabaseEntry = coinsModel.create({
                     name: coinType.name,
                     id: coinType.id,
@@ -78,7 +78,7 @@ fastify.get('/coins-list', async (request, reply) => {
                         coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9000000000 + 1000000000) }))
                     }))
                 });
-            }
+
             return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
         })
     );
@@ -331,3 +331,5 @@ mongoose.set('strictQuery', true);
 
 await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 consola.success(`${chalk.green('[Database]:')} Successfully connected to the database!`);
+
+console.log(process.env);

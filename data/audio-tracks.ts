@@ -1,6 +1,3 @@
-/* eslint-disable camelcase */
-/* cSpell:disable */
-
 export default [
     {
         name: 'General',

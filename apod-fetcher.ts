@@ -1,35 +1,33 @@
 import { consola } from 'consola';
 import { parse } from 'node-html-parser';
 
-/**
- * @typedef {object} apodEntry Astronomy Picture of the Day (APOD) entry
- * @property {boolean} success whether or not the entry was fetched successfully
- * @property {string} [error] the error message (if success is `false`)
- * @property {string} source the source url of the entry
- * @property {string} date the date of the entry
- * @property {string} title the title of the entry
- * @property {string} [credit] the credit (and possibly copyright) of the entry (full string)
- * @property {string} explanation the explanation of the entry's media
- * @property {apodEntryMedia} media the media of the entry
- */
+interface ApodEntry {
+    success: boolean;
+    error?: string;
+    source: string;
+    date: string;
+    title: string;
+    credit?: string;
+    explanation: string;
+    media: ApodEntryMedia;
+}
 
-/**
- * @typedef {object} apodEntryMedia
- * @property {'image'|'embed'} type the media type
- * @property {string} src the media source url
- * @property {string} [highResolution] the high resolution image source url (only, but not always, if media `type` is `image`)
- * @property {string} [annotated] the annotated image source url (only, but not always, if media `type` is `image`)
- * @property {string} [alt] the alternate text for the image (only, but not always, if media `type` is `image`)
- */
+interface ApodEntryMedia {
+    type: 'image' | 'embed';
+    src: string;
+    highResolution?: string;
+    annotated?: string;
+    alt?: string;
+}
 
 /**
  * Fetches the Astronomy Picture of the Day (APOD) for the provided date
  * @param {string} year the year to fetch
  * @param {string} month the month to fetch
  * @param {string} date the date to fetch
- * @returns {Promise<apodEntry>} the APOD data for the provided date
+ * @returns {Promise<ApodEntry>} the APOD data for the provided date
  */
-export async function fetchApod(year, month, date) {
+export async function fetchApod(year: string, month: string, date: string): Promise<ApodEntry> {
     year = year.padStart(2, '0');
     year = year.length === 2 ? year : year.slice(-2);
     month = month.padStart(2, '0');
@@ -68,9 +66,7 @@ export async function fetchApod(year, month, date) {
             ?.replace(/ ?<\/center>/gi, '')
             ?.trim();
 
-        const media = {
-            type: mediaType
-        };
+        const media = { type: mediaType } as ApodEntryMedia;
 
         if (mediaType === 'embed')
             media.src = html

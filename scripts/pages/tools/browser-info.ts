@@ -1,32 +1,32 @@
 // Modified from https://stackoverflow.com/questions/11219582/how-to-detect-my-browser-version-and-operating-system-using-javascript
 
 const { appVersion, userAgent } = navigator;
-let { appName } = navigator;
+let { appName: browser } = navigator;
 let fullVersion = parseFloat(appVersion).toString();
 let majorVersion = parseInt(appVersion);
 let nameOffset, versionOffset, ix;
 
 if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
-    appName = 'Opera';
+    browser = 'Opera';
     fullVersion = userAgent.substring(versionOffset + 6);
     if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
 } else if ((versionOffset = userAgent.indexOf('MSIE')) !== -1) {
-    appName = 'Microsoft Internet Explorer';
+    browser = 'Microsoft Internet Explorer';
     fullVersion = userAgent.substring(versionOffset + 5);
 } else if ((versionOffset = userAgent.indexOf('Chrome')) !== -1) {
-    appName = 'Chrome';
+    browser = 'Chrome';
     fullVersion = userAgent.substring(versionOffset + 7);
 } else if ((versionOffset = userAgent.indexOf('Safari')) !== -1) {
-    appName = 'Safari';
+    browser = 'Safari';
     fullVersion = userAgent.substring(versionOffset + 7);
     if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
 } else if ((versionOffset = userAgent.indexOf('Firefox')) !== -1) {
-    appName = 'Firefox';
+    browser = 'Firefox';
     fullVersion = userAgent.substring(versionOffset + 8);
 } else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) < (versionOffset = userAgent.lastIndexOf('/'))) {
-    appName = userAgent.substring(nameOffset, versionOffset);
+    browser = userAgent.substring(nameOffset, versionOffset);
     fullVersion = userAgent.substring(versionOffset + 1);
-    if (appName.toLowerCase() === appName.toUpperCase()) appName = navigator.appName; // eslint-disable-line prefer-destructuring
+    if (browser.toLowerCase() === browser.toUpperCase()) browser = navigator.appName; // eslint-disable-line prefer-destructuring
 }
 
 if ((ix = fullVersion.indexOf(';')) !== -1) fullVersion = fullVersion.substring(0, ix);
@@ -38,22 +38,21 @@ if (isNaN(majorVersion)) {
     majorVersion = parseInt(appVersion);
 }
 
-let OSName = 'Unknown OS';
-if (appVersion.indexOf('Win') !== -1) OSName = 'Windows';
-if (appVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
-if (appVersion.indexOf('X11') !== -1) OSName = 'UNIX';
-if (appVersion.indexOf('Linux') !== -1) OSName = 'Linux';
+let operatingSystem = 'Unknown OS';
+if (appVersion.indexOf('Win') !== -1) operatingSystem = 'Windows';
+if (appVersion.indexOf('Mac') !== -1) operatingSystem = 'MacOS';
+if (appVersion.indexOf('X11') !== -1) operatingSystem = 'UNIX';
+if (appVersion.indexOf('Linux') !== -1) operatingSystem = 'Linux';
 
 const result = [
-    `Operating System: ${OSName}`, //
+    `Operating System: ${operatingSystem}`, //
     `Platform: ${navigator.platform}`,
     `Language: ${navigator.language}`,
     `Online: ${navigator.onLine}`,
     `Cookies Enabled: ${navigator.cookieEnabled}`,
-    `Browser: ${appName}`,
+    `Browser: ${browser}`,
     `Browser Version: ${fullVersion}`,
     `Main Browser Version: ${majorVersion}`,
-    `navigator.appName: ${navigator.appName}`,
     `navigator.userAgent: ${navigator.userAgent}`
 ];
 
