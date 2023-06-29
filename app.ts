@@ -67,7 +67,7 @@ const commitInfo = commitSha ? { sha: commitSha, message: commitMessage, author:
 // Register pages
 fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));
 
-fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
+fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, commitInfo, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: (request.query as { password: string }).password === process.env.COINS_PASSWORD }, null, 2)));
 
@@ -306,7 +306,7 @@ fs.readdirSync('views/pages').forEach((category) => {
         const pageInfo = allPages[category]?.[page];
         if (!pageInfo) return consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
         fastify.get(pageInfo.link as string, (request, reply) => {
-            reply.view(`pages/${category}/${page}`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
+            reply.view(`pages/${category}/${page}`, { commitInfo, script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
 });
@@ -338,11 +338,11 @@ fastify.get('/apod/:year/:month/:day', async (request: FastifyRequest<{ Params: 
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
     consola.error(error);
-    reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
+    reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) => {
-    reply.status(404).view('/error.hbs', { ...blankProperties, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
+    reply.status(404).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
 });
 
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
