@@ -9,5 +9,5 @@
             "@data/*": ["./data/*"]
         }
     },
-    "include": ["dev.ts", "app.ts"]
+    "include": ["dev.ts", "app.ts", "apod-fetcher.ts"]
 }

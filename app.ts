@@ -1,16 +1,17 @@
+import fastifyRateLimit from '@fastify/rate-limit';
 import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
 import Canvas from 'canvas';
 import chalk from 'chalk';
 import { consola } from 'consola';
-import Fastify from 'fastify';
+import Fastify, { FastifyError, FastifyRequest } from 'fastify';
 import fs from 'fs';
 import handlebars from 'handlebars';
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
-import coinsData from './data/coins-data.js';
-import { blankProperties, pagesParsed, toneIndicators } from './data/pages.js';
+import coinsData, { Coin, CoinType } from './data/coins-data.js';
+import { blankProperties, allPages, toneIndicators } from './data/pages.js';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
@@ -54,21 +55,30 @@ fastify.register(pointOfView, { engine: { handlebars }, root: 'views', includeVi
 
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
 
+fastify.register(fastifyRateLimit.default, { max: 100, timeWindow: '1 minute' });
+
+// Define latest commit info
+const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.substring(0, 7);
+const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE;
+const commitAuthor = process.env.RAILWAY_GIT_AUTHOR;
+
+const commitInfo = commitSha ? { sha: commitSha, message: commitMessage, author: commitAuthor } : null;
+
 // Register pages
-fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, title: 'Home', pages: pagesParsed, additionalStyles: [{ link: 'index.css' }] }));
+fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));
 
 fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
 
-fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)));
+fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: (request.query as { password: string }).password === process.env.COINS_PASSWORD }, null, 2)));
 
 const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
 
 fastify.get('/coins-list', async (request, reply) => {
-    if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+    if ((request.query as { password: string }).password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
     const mergedCoinsData = await Promise.all(
         coinsData.map(async (coinType) => {
-            let coinsDatabaseEntry = await coinsModel.findOne({ id: coinType.id });
+            let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as CoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
             if (!coinsDatabaseEntry)
                 coinsDatabaseEntry = coinsModel.create({
                     name: coinType.name,
@@ -77,7 +87,7 @@ fastify.get('/coins-list', async (request, reply) => {
                         ...variant,
                         coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9000000000 + 1000000000) }))
                     }))
-                });
+                }) as unknown as CoinType;
 
             return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
         })
@@ -87,29 +97,28 @@ fastify.get('/coins-list', async (request, reply) => {
 });
 
 fastify.post('/coins-list-edit', async (request, reply) => {
-    const { coinTypeId, coinVariantId, coinId, data, password } = request.body;
+    const { coinTypeId, coinVariantId, coinId, data, password } = request.body as { coinTypeId: string; coinVariantId: string; coinId: string; data: Partial<Coin>; password: string };
 
     if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-    const databaseCoinType = await coinsModel.findOne({ id: coinTypeId });
+    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
     if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
 
     databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
-        if (coinVariant.id === coinVariantId) {
+        if (coinVariant.id === coinVariantId)
             return {
                 ...coinVariant,
-
                 coins: coinVariant.coins.map((coin) => {
-                    if (coin.id === coinId) {
+                    if (coin.id === coinId)
                         Object.entries(data).forEach(([key, value]) => {
-                            if (value === null) delete coin[key];
-                            else coin[key] = value;
+                            if (value === null) delete coin[key as keyof Coin];
+                            else coin[key as keyof Coin] = value as never;
                         });
-                    }
+
                     return coin;
                 })
             };
-        }
+
         return coinVariant;
     });
 
@@ -118,43 +127,68 @@ fastify.post('/coins-list-edit', async (request, reply) => {
     reply.send(JSON.stringify({ success: true }, null, 2));
 });
 
-let calendarEventsCache = null;
+let calendarEventsCache: string | null = null;
+
+interface Calendar {
+    items: {
+        summary: string;
+        start: { date: string };
+    }[];
+}
 
 fastify.get('/calendar-events', async (request, reply) => {
     if (calendarEventsCache) return reply.send(calendarEventsCache);
 
-    const holidays = (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY}`)).json()).items
+    const holidays = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY as string}`)).json()) as Calendar).items
         .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
         .filter((holiday) => !holiday.name.includes(' (substitute)'))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-    const moonPhases = (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY}`)).json()).items
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const moonPhases = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY as string}`)).json()) as Calendar).items
         .map((moonPhase) => ({
-            phase: moonPhase.summary.match(/([\w ]+) \d/)[1],
+            phase: moonPhase.summary.match(/([\w ]+) \d/)?.[1],
             date: moonPhase.start.date,
-            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)[1].replace(/(\d)([ap]m)/, '$1 $2')
+            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)?.[1].replace(/(\d)([ap]m)/, '$1 $2')
         }))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const result = { holidays, moonPhases };
 
     calendarEventsCache = JSON.stringify(result, null, 2);
     reply.send(calendarEventsCache);
 });
 
+interface TodoData {
+    year: string;
+    dates: {
+        [month: string]: {
+            [day: string]: {
+                [id: string]: boolean;
+            };
+        };
+    };
+}
+
+interface TodoOption {
+    title: string;
+    id: string;
+    frequency: string;
+}
+
 const todoModel = model('todo', new Schema({ year: String, dates: Object }));
-
 const todoOptionsModel = model('todo-options', new Schema({ data: Array }));
-let todoOptions;
+let todoOptions: TodoOption[] | null = null;
 
-fastify.get('/calendar-todo', async (request, reply) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
     if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
-    const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
-    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({})).data;
+    if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
 
-fastify.post('/calendar-todo-edit', async (request, reply) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: { [id: string]: boolean }; year: string; month: string; date: string } }>, reply) => {
     const { password, todo } = request.body;
     const year = parseInt(request.body.year);
     const month = parseInt(request.body.month);
@@ -166,10 +200,10 @@ fastify.post('/calendar-todo-edit', async (request, reply) => {
     if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
     if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
-    let yearEntry = await todoModel.findOne({ year });
+    let yearEntry: TodoData | null = await todoModel.findOne({ year });
     if (!yearEntry) {
         await todoModel.create({ year, dates: {} });
-        yearEntry = await todoModel.findOne({ year });
+        yearEntry = (await todoModel.findOne({ year })) as TodoData;
     }
 
     if (!yearEntry.dates) yearEntry.dates = {};
@@ -178,9 +212,9 @@ fastify.post('/calendar-todo-edit', async (request, reply) => {
 
     await todoModel.replaceOne({ year }, yearEntry);
 
-    const data = Object.fromEntries((await todoModel.find({})).map((todo) => [todo.year, todo.dates]));
+    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
-    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({})).data;
+    if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
@@ -192,7 +226,7 @@ fastify.get('/headers', (request, reply) => reply.send(JSON.stringify(request.he
 fastify.get('/pages', (request, reply) =>
     reply.send(
         JSON.stringify(
-            Object.values(pagesParsed)
+            Object.values(allPages)
                 .map((category) => Object.values(category))
                 .flat()
                 .map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
@@ -202,20 +236,23 @@ fastify.get('/pages', (request, reply) =>
     )
 );
 
-fastify.get('/cors-anywhere', async (request, reply) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { url: string } }>, reply) => {
     logApiRequest(request);
 
     if (!request.query.url) reply.status(400).send('No URL provided');
 
-    let url;
+    let url: URL | null = null;
     try {
         url = new URL(request.query.url);
     } catch {
         reply.status(400).send('Invalid URL');
     }
 
+    if (!url) return;
+
     Object.entries(request.query).forEach(([key, value]) => {
-        if (key !== 'url') url.searchParams.append(key, value);
+        if (key !== 'url') (url as URL).searchParams.append(key, value);
     });
 
     let response;
@@ -227,7 +264,7 @@ fastify.get('/cors-anywhere', async (request, reply) => {
 
     if (!response) return;
 
-    if (response.headers.get('content-type').startsWith('image/'))
+    if ((response.headers.get('content-type') as string).startsWith('image/'))
         reply
             .header('Access-Control-Allow-Origin', '*')
             .type('image/png')
@@ -266,9 +303,9 @@ fs.readdirSync('views/pages').forEach((category) => {
 
     pages.forEach((page) => {
         page = page.replace(/.hbs$/, '');
-        const pageInfo = pagesParsed[category]?.[page];
+        const pageInfo = allPages[category]?.[page];
         if (!pageInfo) return consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
-        fastify.get(pageInfo.link, (request, reply) => {
+        fastify.get(pageInfo.link as string, (request, reply) => {
             reply.view(`pages/${category}/${page}`, { script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
         });
     });
@@ -277,20 +314,22 @@ fs.readdirSync('views/pages').forEach((category) => {
 consola.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
 
 // Twemoji images
-fastify.get('/twemoji/:id', async (request, reply) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+fastify.get('/twemoji/:id', async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
     logApiRequest(request);
     const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${request.params.id}.svg`);
     if (!response.ok) return reply.type('image/png').send();
 
     const canvas = Canvas.createCanvas(500, 500);
-    const image = await Canvas.loadImage(await response.buffer());
+    const image = await Canvas.loadImage(Buffer.from(await response.arrayBuffer()));
     image.height = image.width = 500;
     canvas.getContext('2d').drawImage(image, 0, 0, 500, 500);
     reply.type('image/png').send(canvas.toBuffer());
 });
 
 // Astronomy Picture of the Day (NASA)
-fastify.get('/apod/:year/:month/:day', async (request, reply) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+fastify.get('/apod/:year/:month/:day', async (request: FastifyRequest<{ Params: { year: string; month: string; day: string } }>, reply) => {
     logApiRequest(request);
     const response = await fetchApod(request.params.year, request.params.month, request.params.day);
     reply.send(JSON.stringify(response, null, 2));
@@ -306,13 +345,13 @@ fastify.setNotFoundHandler((request, reply) => {
     reply.status(404).view('/error.hbs', { ...blankProperties, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 // Start server
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
-        if (error.code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
-        else consola.error(`${chalk.red('[Startup error]:')} ${error}`);
+        if ((error as FastifyError).code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
+        else consola.error(error);
         process.exit(1);
     }
 
@@ -321,15 +360,13 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
 
 /**
  * Logs information about an API request
- * @param {import('fastify').FastifyRequest} request the request object
+ * @param {FastifyRequest} request the request object
  */
-function logApiRequest(request) {
+function logApiRequest(request: FastifyRequest) {
     consola.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
 
 mongoose.set('strictQuery', true);
 
-await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+await mongoose.connect(process.env.DATABASE_URL as string);
 consola.success(`${chalk.green('[Database]:')} Successfully connected to the database!`);
-
-console.log(process.env);

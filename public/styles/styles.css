@@ -309,6 +309,16 @@ nav,
     color: #505050;
 }
 
+#last-commit-info {
+    color: #b4b4b4;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+#last-commit-info:after {
+    margin-bottom: -50px;
+}
+
 /*
  ================
    FOOTER UTILS

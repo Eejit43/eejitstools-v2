@@ -82,6 +82,7 @@
                 </div>
                 <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span> <i id="time-icon" class="fa-solid fa-triangle-exclamation"></i></a>
                 <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
+                {{#if commitInfo}}<code id="last-commit-info" class="tooltip-left" data-tooltip="&quot;{{commitInfo.message}}&quot; by {{commitInfo.author}}"><i class="fa-solid fa-code-commit" style="padding-right: 5px"></i>{{commitInfo.sha}}</code>{{/if}}
             </span>
         </nav>
         {{#if toolbox}}

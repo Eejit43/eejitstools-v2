@@ -1,5 +1,5 @@
-import { pagesParsed } from '/data/pages.js';
-import { addAnimation, showAlert, twemojiUpdate, updateInnerHTML } from '/scripts/functions.js';
+import { allPages } from '../data/pages.js';
+import { addAnimation, showAlert, twemojiUpdate, updateInnerHTML } from './functions.js';
 
 twemojiUpdate();
 
@@ -65,7 +65,7 @@ const searchText = document.querySelector('.search-text');
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
-    Object.values(pagesParsed)
+    Object.values(allPages)
         .map((value) => Object.values(value))
         .flat()
         .forEach((page) => {
@@ -134,7 +134,7 @@ document.addEventListener('keydown', (event) => {
         else if (pathname === '/search') finalUrl = 'views/search.hbs';
         else {
             const category = pathname.split('/')[1];
-            const page = pagesParsed[category]?.[pathname.split('/')[2]];
+            const page = allPages[category]?.[pathname.split('/')[2]];
 
             if (!page) finalUrl = 'views/error.hbs';
             else finalUrl = `views/pages/${category}/${page.id}.hbs`;
@@ -148,7 +148,7 @@ document.addEventListener('keydown', (event) => {
         else if (pathname === '/search') finalUrl = 'public/scripts/search.js';
         else {
             const category = pathname.split('/')[1];
-            const page = pagesParsed[category]?.[pathname.split('/')[2]];
+            const page = allPages[category]?.[pathname.split('/')[2]];
 
             if (!page) finalUrl = 'public/scripts/global.js';
             else finalUrl = `public/scripts/pages/${category}/${page.id}.js`;

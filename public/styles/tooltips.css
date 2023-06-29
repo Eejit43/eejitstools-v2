@@ -47,6 +47,7 @@
     line-height: 1.2;
     padding: 8px;
     width: 160px;
+    word-break: break-word;
     z-index: 1000;
 }
 
