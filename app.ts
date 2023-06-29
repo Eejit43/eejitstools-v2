@@ -51,11 +51,11 @@ fs.readdirSync('scripts/pages').forEach((category) => {
 // Load layouts and static assets
 const fastify = Fastify();
 
+await fastify.register(fastifyRateLimit.default);
+
 fastify.register(pointOfView, { engine: { handlebars }, root: 'views', includeViewExtension: true, layout: '/layouts/layout' });
 
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
-
-fastify.register(fastifyRateLimit.default, { max: 100, timeWindow: '1 minute' });
 
 // Define latest commit info
 const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.substring(0, 7);
@@ -337,6 +337,7 @@ fastify.get('/apod/:year/:month/:day', async (request: FastifyRequest<{ Params: 
 
 // Setup error handlers
 fastify.setErrorHandler((error, request, reply) => {
+    if (error.statusCode === 429) return reply.status(429).send('Woah there! Stop sending so many requests!');
     consola.error(error);
     reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
 });
