@@ -1,12 +1,29 @@
+// @ts-ignore (URL import, types added below)
 import toastify from 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify-es.js';
+// @ts-ignore (URL import, types added below)
 import twemoji from 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.esm.js';
+
+interface Twemoji {
+    parse: (element: HTMLElement, options: { base: string; folder: string; ext: string }) => void;
+}
 
 /**
  * Update emojis on the loaded content
  */
 export function twemojiUpdate() {
-    twemoji.parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
+    (twemoji as Twemoji).parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
 }
+
+declare function toastify(options: {
+    text: string;
+    duration: number;
+    position: string;
+    style: {
+        [key: string]: string;
+    };
+}): {
+    showToast: () => void;
+};
 
 /**
  * Displays a popup alert
@@ -14,7 +31,7 @@ export function twemojiUpdate() {
  * @param {'success'|'error'|string} color 'success', 'error', or color
  * @param {number} [duration] The duration of the popup in milliseconds
  */
-export function showAlert(text, color, duration) {
+export function showAlert(text: string, color: 'success' | 'error' | string, duration?: number) {
     color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
     if (color === 'error') color = '#ff5555';
@@ -45,10 +62,10 @@ export function showAlert(text, color, duration) {
  * @param {string} [icon='check'] The icon of the icon to show
  * @param {boolean} [remove=true] Whether or not to the remove the icon after 2 seconds (default: true)
  */
-export function showResult(id, type, color = '#009c3f', icon = 'check', remove = true) {
-    const oldElement = document.getElementById(id + '-result');
-    const newElement = oldElement.cloneNode(true);
-    oldElement.parentNode.replaceChild(newElement, oldElement);
+export function showResult(id: string, type: 'success' | 'error', color = '#009c3f', icon = 'check', remove = true) {
+    const oldElement = document.getElementById(id + '-result') as HTMLElement;
+    const newElement = oldElement.cloneNode(true) as HTMLElement;
+    (oldElement.parentNode as ParentNode).replaceChild(newElement, oldElement);
     if (type === 'success') {
         color = '#009c3f';
         icon = 'check';
@@ -69,8 +86,8 @@ export function showResult(id, type, color = '#009c3f', icon = 'check', remove =
  * Removes the icon of the specified element
  * @param {string} id The prefix of the element ID to update
  */
-export function resetResult(id) {
-    const element = document.getElementById(id + '-result');
+export function resetResult(id: string) {
+    const element = document.getElementById(id + '-result') as HTMLElement;
     element.style.color = '';
     element.className = '';
 }
@@ -81,7 +98,7 @@ export function resetResult(id) {
  * @param {'success'|'error'|'reset'} [type] The type of icon to show ('success', 'error', or 'reset')
  * @param {string} [arrowType='right'] The direction of the arrow (defaults to 'right')
  */
-export function updateArrow(element, type, arrowType = 'right') {
+export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'reset', arrowType = 'right') {
     let color, icon;
     if (type === 'success') {
         color = '#009c3f';
@@ -93,16 +110,16 @@ export function updateArrow(element, type, arrowType = 'right') {
         color = 'dimgray';
         icon = `arrow-${arrowType}`;
     }
-    element.style.color = color;
-    element.className = 'fa-solid fa-' + icon;
+    element.style.color = color as string;
+    element.className = 'fa-solid fa-' + (icon as string);
 }
 
 /**
  * Copy an element's value
- * @param {HTMLElement} element The element to update
- * @param {HTMLElement} copyElement The element of the value to be copied
+ * @param {HTMLButtonElement} element The element to update
+ * @param {HTMLInputElement} copyElement The element of the value to be copied
  */
-export function copyValue(element, copyElement) {
+export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElement) {
     navigator.clipboard.writeText(copyElement.value);
 
     const content = element.textContent;
@@ -119,10 +136,10 @@ export function copyValue(element, copyElement) {
 
 /**
  * Copy a string
- * @param {HTMLElement} element The element to update
+ * @param {HTMLButtonElement} element The element to update
  * @param {string} text The text to copy
  */
-export function copyText(element, text) {
+export function copyText(element: HTMLButtonElement, text: string) {
     navigator.clipboard.writeText(text);
 
     const content = element.textContent;
@@ -142,7 +159,7 @@ export function copyText(element, text) {
  * @param {string} input String to be modified
  * @returns {string} Formatted string
  */
-export function escapeHTML(input) {
+export function escapeHTML(input: string) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
@@ -151,7 +168,7 @@ export function escapeHTML(input) {
  * @param {string} string String to convert
  * @returns {Document} HTML
  */
-export function stringToHTML(string) {
+export function stringToHTML(string: string) {
     return new DOMParser().parseFromString(string, 'text/html');
 }
 
@@ -160,7 +177,7 @@ export function stringToHTML(string) {
  * @param {HTMLElement} element the element to update
  * @param {string} string the content to update the element with
  */
-export function updateInnerHTML(element, string) {
+export function updateInnerHTML(element: HTMLElement, string: string) {
     if (element.innerHTML !== string) element.innerHTML = string;
 }
 
@@ -170,9 +187,9 @@ export function updateInnerHTML(element, string) {
  * @param {string} animation the animation to add
  * @returns {Promise<void>}
  */
-export const addAnimation = (element, animation) =>
+export const addAnimation = (element: string, animation: string) =>
     new Promise((resolve) => {
-        const node = document.querySelector(element);
+        const node = document.querySelector(element) as HTMLElement;
 
         node.classList.add(animation);
 
@@ -192,7 +209,7 @@ export const addAnimation = (element, animation) =>
  * @param {string} string the string to convert
  * @returns {string} the string in title case
  */
-export function titleCase(string) {
+export function titleCase(string: string) {
     return string
         .split(' ')
         .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
