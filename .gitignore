@@ -10,3 +10,4 @@ scripts/*.js
 scripts/pages/**/*.js
 public/scripts/*.js
 public/scripts/pages/**/*.js
+public/data

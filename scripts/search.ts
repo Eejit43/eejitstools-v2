@@ -1,18 +1,16 @@
-import { pagesParsed } from '/data/pages.js';
+import { allPages } from '../data/pages.js';
 
-const searchResult = document.querySelector('.large-search-results');
-const searchText = document.querySelector('.large-search-text');
+const searchResult = document.querySelector('.large-search-results') as HTMLDivElement;
+const searchText = document.querySelector('.large-search-text') as HTMLInputElement;
 
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
     const results = [];
-    Object.values(pagesParsed)
+    Object.values(allPages)
         .map((value) => Object.values(value))
         .flat()
         .forEach((page) => {
-            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) {
-                results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
-            }
+            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
         });
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
@@ -20,7 +18,7 @@ searchText.addEventListener('input', () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a');
+        const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | undefined;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';
@@ -29,7 +27,7 @@ searchText.addEventListener('keydown', (event) => {
     }
 });
 
-document.querySelector('.large-search-button').addEventListener('click', () => searchText.focus());
+(document.querySelector('.large-search-button') as HTMLElement).addEventListener('click', () => searchText.focus());
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -37,19 +35,15 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected');
 
-            const nextTrElement = event.key === 'ArrowUp' ? currentResult?.parentElement.parentElement.previousElementSibling : currentResult?.parentElement.parentElement.nextElementSibling;
+            const nextTrElement = event.key === 'ArrowUp' ? ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
-                nextTrElement.querySelector('td').querySelector('a').classList.add('selected');
-            } else if (!currentResult) {
-                firstResult.classList.add('selected');
-            }
+                (nextTrElement.querySelector('td a') as HTMLAnchorElement).classList.add('selected');
+            } else if (!currentResult) firstResult.classList.add('selected');
 
             const selectedResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected');
-            if (selectedResult) {
-                selectedResult.parentElement.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            if (selectedResult) ((selectedResult.parentElement as HTMLElement).parentElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 });

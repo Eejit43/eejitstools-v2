@@ -4,11 +4,11 @@ import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './funct
 twemojiUpdate();
 
 /* Funky logo hover effect */
-const logo = document.querySelector('.logo');
+const logo = document.querySelector('.logo') as HTMLSpanElement;
 logo.addEventListener('mouseover', () => {
     const letters = logo.querySelectorAll('span');
     letters.forEach((letter, index) => {
-        const beforeContent = letter.dataset.value;
+        const beforeContent = letter.dataset.value as string;
 
         let iterations = 0;
 
@@ -29,8 +29,8 @@ logo.addEventListener('mouseover', () => {
 });
 
 /* Navigation time display */
-const timeDisplay = document.getElementById('time-display');
-const timeIcon = document.getElementById('time-icon');
+const timeDisplay = document.getElementById('time-display') as HTMLSpanElement;
+const timeIcon = document.getElementById('time-icon') as HTMLElement;
 setInterval(() => {
     const currentTime = new Date();
 
@@ -40,11 +40,16 @@ setInterval(() => {
 
     const currentHours = currentTime.getHours();
 
-    if (currentHours >= 6 && currentHours < 19 && !timeIcon.classList.contains('fa-sun-bright')) timeIcon.classList = 'fa-solid fa-sun-bright';
-    else if ((currentHours >= 19 || currentHours < 6) && !timeIcon.classList.contains('fa-moon-stars')) timeIcon.classList = 'fa-solid fa-moon-stars';
+    if (currentHours >= 6 && currentHours < 19 && !timeIcon.classList.contains('fa-sun-bright')) {
+        timeIcon.classList.remove('fa-moon-stars');
+        timeIcon.classList.add('fa-sun-bright');
+    } else if ((currentHours >= 19 || currentHours < 6) && !timeIcon.classList.contains('fa-moon-stars')) {
+        timeIcon.classList.remove('fa-sun-bright');
+        timeIcon.classList.add('fa-moon-stars');
+    }
 }, 100);
 
-const navbar = document.getElementById('navbar');
+const navbar = document.getElementById('navbar') as HTMLElement;
 
 /**
  * Resizes the navigation bar on scroll
@@ -59,8 +64,8 @@ document.addEventListener('scroll', resizeNav);
 resizeNav();
 
 /* Search Bar */
-const searchResult = document.querySelector('.search-results');
-const searchText = document.querySelector('.search-text');
+const searchResult = document.querySelector('.search-results') as HTMLDivElement;
+const searchText = document.querySelector('.search-text') as HTMLInputElement;
 
 searchText.addEventListener('input', () => {
     const value = searchText.value.toLowerCase();
@@ -69,9 +74,7 @@ searchText.addEventListener('input', () => {
         .map((value) => Object.values(value))
         .flat()
         .forEach((page) => {
-            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) {
-                results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
-            }
+            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
         });
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
@@ -79,7 +82,7 @@ searchText.addEventListener('input', () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a');
+        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';
@@ -88,7 +91,7 @@ searchText.addEventListener('keydown', (event) => {
     }
 });
 
-document.querySelector('.search-button').addEventListener('click', () => searchText.focus());
+(document.querySelector('.search-button') as HTMLElement).addEventListener('click', () => searchText.focus());
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -96,19 +99,15 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
 
-            const nextTrElement = event.key === 'ArrowUp' ? currentResult?.parentElement.parentElement.previousElementSibling : currentResult?.parentElement.parentElement.nextElementSibling;
+            const nextTrElement = event.key === 'ArrowUp' ? ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
-                nextTrElement.querySelector('td').querySelector('a').classList.add('selected');
-            } else if (!currentResult) {
-                firstResult.classList.add('selected');
-            }
+                (nextTrElement.querySelector('td a') as HTMLAnchorElement).classList.add('selected');
+            } else if (!currentResult) firstResult.classList.add('selected');
 
             const selectedResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
-            if (selectedResult) {
-                selectedResult.parentElement.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            if (selectedResult) ((selectedResult.parentElement as HTMLElement).parentElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 });
@@ -118,9 +117,9 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.contentEditable === 'true') return;
+    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')) return;
 
-    if (event.code === 'KeyK') document.getElementById('shortcuts').style.display = 'block';
+    if (event.code === 'KeyK') shortcutsModal.style.display = 'block';
     else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
     else if (event.code === 'KeyC') {
         navigator.clipboard.writeText('');
@@ -157,34 +156,30 @@ document.addEventListener('keydown', (event) => {
         window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
     } else if (event.code === 'Slash') {
         event.preventDefault();
-        document.querySelector('.search-text').focus();
+        (document.querySelector('.search-text') as HTMLInputElement).focus();
     }
 });
 
 /* Scroll to top button */
-document.getElementById('scroll-to-top').addEventListener('click', () => {
+(document.getElementById('scroll-to-top') as HTMLButtonElement).addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 /* Keyboard shortcuts popup */
-const modal = document.getElementById('shortcuts');
+const shortcutsModal = document.getElementById('shortcuts') as HTMLDivElement;
 
-document.getElementById('show-shortcuts').addEventListener('click', () => {
-    modal.style.display = 'block';
+(document.getElementById('show-shortcuts') as HTMLButtonElement).addEventListener('click', () => {
+    shortcutsModal.style.display = 'block';
 });
 
-document.getElementById('close-shortcuts').addEventListener('click', () => {
-    addAnimation('#shortcuts', 'animate-out-top', '').then(() => (modal.style.display = 'none'));
+(document.getElementById('close-shortcuts') as HTMLSpanElement).addEventListener('click', () => {
+    addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('click', (event) => {
-    if (event.target === modal) addAnimation('#shortcuts', 'animate-out-top', '').then(() => (modal.style.display = 'none'));
+    if (event.target === shortcutsModal) addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape' && modal.style.display === 'block') {
-        addAnimation('#shortcuts', 'animate-out-top', '').then(() => {
-            modal.style.display = 'none';
-        });
-    }
+    if (event.code === 'Escape' && shortcutsModal.style.display === 'block') addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });

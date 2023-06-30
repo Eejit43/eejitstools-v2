@@ -321,8 +321,6 @@ interface Page {
     title: string;
     icon: string;
     description: string;
-    id?: string;
-    descriptionParsed?: string;
     toolbox?: boolean;
     iconStyle?: string | null;
     toolboxTitle?: string | null;
@@ -332,17 +330,15 @@ interface Page {
     additionalStyles?: (Style | undefined)[];
     additionalData?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     keywords?: string[];
-    category?: string;
-    link?: string;
 }
 
-interface AllPages {
+interface PreParsedPages {
     [category: string]: {
         [id: string]: Page;
     };
 }
 
-export const allPages: AllPages = {
+const preParsedPages: PreParsedPages = {
     tools: {
         'base64-converter': { title: 'Base64 Encode/Decode', icon: 'code', description: 'Encode and decode to and from Base64 format' },
         'base64-image-converter': { title: 'Base64 Image Encode/Decode', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
@@ -396,9 +392,32 @@ export const allPages: AllPages = {
     }
 };
 
-Object.entries(allPages).forEach(([category, pages]) => {
+interface ParsedPage extends Page {
+    id: string;
+    descriptionParsed: string;
+    toolbox: boolean;
+    iconStyle: string | null;
+    toolboxTitle: string | null;
+    script: boolean;
+    style: boolean;
+    additionalScripts: (Script | undefined)[];
+    additionalStyles: (Style | undefined)[];
+    keywords: string[];
+    category: string;
+    link: string;
+}
+
+interface AllPages {
+    [category: string]: {
+        [id: string]: ParsedPage;
+    };
+}
+
+export const allPages = structuredClone(preParsedPages) as AllPages;
+
+Object.entries(preParsedPages).forEach(([category, pages]) => {
     Object.entries(pages).forEach(([id, page]) => {
-        pages[id] = {
+        (allPages[category] as { [id: string]: ParsedPage })[id] = {
             ...blankProperties,
             ...page,
             descriptionParsed: page.description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
