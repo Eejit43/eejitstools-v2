@@ -1,4 +1,4 @@
-import { copyValue, escapeHTML, resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { copyValue, escapeHtml, resetResult, showAlert, showResult } from '/scripts/functions.js';
 
 const fileUploadButtonLabel = document.getElementById('file-upload-label');
 const fileUploadButton = document.getElementById('file-upload');
@@ -20,7 +20,7 @@ let uploadedFile = null;
 fileUploadButton.addEventListener('change', () => {
     if (fileUploadButton.files[0]) {
         uploadedFile = fileUploadButton.files[0];
-        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(uploadedFile.name)}</code>`;
     } else {
         uploadedFile = null;
         fileUploadMessage.textContent = '';
@@ -34,14 +34,14 @@ fileUploadButtonLabel.addEventListener('drop', (event) => {
 
         if (firstItem.kind === 'file') {
             uploadedFile = firstItem.getAsFile();
-            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(uploadedFile.name)}</code>`;
         }
     } else {
         const firstFile = event.dataTransfer.files[0];
 
         if (firstFile) {
             uploadedFile = firstFile;
-            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(uploadedFile.name)}</code>`;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(uploadedFile.name)}</code>`;
         }
     }
 });
@@ -131,7 +131,7 @@ function encode() {
  */
 function isBase64Image(base64) {
     const image = new Image();
-    image.src = escapeHTML(base64);
+    image.src = escapeHtml(base64);
     return new Promise((resolve) => {
         image.addEventListener('load', () => {
             if (image.height === 0 || image.width === 0) return resolve(false);
@@ -150,7 +150,7 @@ function isBase64Image(base64) {
 async function displayImage(string) {
     const valid = await isBase64Image(string);
     if (valid) {
-        imageOutput.src = escapeHTML(string);
+        imageOutput.src = escapeHtml(string);
     } else {
         imageOutput.src = '';
         showAlert('Malformed input!', 'error');

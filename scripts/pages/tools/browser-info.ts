@@ -26,7 +26,7 @@ if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
 } else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) < (versionOffset = userAgent.lastIndexOf('/'))) {
     browser = userAgent.substring(nameOffset, versionOffset);
     fullVersion = userAgent.substring(versionOffset + 1);
-    if (browser.toLowerCase() === browser.toUpperCase()) browser = navigator.appName; // eslint-disable-line prefer-destructuring
+    if (browser.toLowerCase() === browser.toUpperCase()) browser = navigator.appName;
 }
 
 if ((ix = fullVersion.indexOf(';')) !== -1) fullVersion = fullVersion.substring(0, ix);
@@ -34,7 +34,7 @@ if ((ix = fullVersion.indexOf(' ')) !== -1) fullVersion = fullVersion.substring(
 
 majorVersion = parseInt(fullVersion);
 if (isNaN(majorVersion)) {
-    fullVersion = parseFloat(appVersion);
+    fullVersion = parseFloat(appVersion).toString();
     majorVersion = parseInt(appVersion);
 }
 
@@ -56,4 +56,4 @@ const result = [
     `navigator.userAgent: ${navigator.userAgent}`
 ];
 
-document.getElementById('browser-info').innerHTML = result.join('<br />');
+(document.getElementById('browser-info') as HTMLElement).innerHTML = result.join('<br />');

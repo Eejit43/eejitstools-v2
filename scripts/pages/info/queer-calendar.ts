@@ -1,4 +1,4 @@
-import { escapeHTML, showAlert } from '/scripts/functions.js';
+import { escapeHtml, showAlert } from '/scripts/functions.js';
 
 const eventsTitle = document.getElementById('events-title');
 const eventsDisplay = document.getElementById('events');
@@ -49,8 +49,8 @@ yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
  * Fetches calendar information for the specified date
  */
 function getFromDate() {
-    const monthInput = escapeHTML(monthVal.value || month).padStart(2, '0');
-    const dateInput = escapeHTML(dateVal.value || date).padStart(2, '0');
+    const monthInput = escapeHtml(monthVal.value || month).padStart(2, '0');
+    const dateInput = escapeHtml(dateVal.value || date).padStart(2, '0');
 
     if (parseInt(monthInput) === 0 || parseInt(dateInput) === 0) {
         showAlert('Input cannot be zero!', 'error');

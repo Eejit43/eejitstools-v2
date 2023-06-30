@@ -1,4 +1,4 @@
-import { showAlert, stringToHTML } from '/scripts/functions.js';
+import { showAlert, stringToHtml } from '/scripts/functions.js';
 
 const svgInput = document.getElementById('svg-input');
 const svgPreview = document.getElementById('svg-preview');
@@ -8,7 +8,7 @@ const canvas = document.getElementById('png-canvas');
 
 let svg;
 document.getElementById('load-svg').addEventListener('click', () => {
-    const loadedSvg = stringToHTML(svgInput.value).querySelector('svg');
+    const loadedSvg = stringToHtml(svgInput.value).querySelector('svg');
     if (!loadedSvg) return showAlert('No SVG found in input!', 'error');
     svgPreview.innerHTML = loadedSvg.outerHTML;
     svg = svgPreview.querySelector('svg');

@@ -1,17 +1,17 @@
-import { updateInnerHTML } from '/scripts/functions.js';
+import { updateInnerHtml } from '/scripts/functions.js';
 
 setInterval(() => {
     const currentTime = new Date();
 
-    updateInnerHTML(document.getElementById('time'), currentTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' }));
-    updateInnerHTML(document.getElementById('dst'), isDstObserved(currentTime) ? 'In' : 'Not');
-    updateInnerHTML(document.getElementById('date'), `${currentTime.toLocaleDateString([], { year: 'numeric', month: 'long', weekday: 'long', day: 'numeric' })} (${currentTime.toLocaleDateString()})`);
-    updateInnerHTML(document.getElementById('unix'), currentTime.getTime());
-    updateInnerHTML(document.getElementById('timezone'), `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`);
-    updateInnerHTML(document.getElementById('jp-time'), currentTime.toLocaleString([], { timeZone: 'Japan' }));
-    updateInnerHTML(document.getElementById('cr-time'), currentTime.toLocaleString([], { timeZone: 'America/Costa_Rica' }));
-    updateInnerHTML(document.getElementById('gb-time'), currentTime.toLocaleString([], { timeZone: 'Europe/London' }));
-    updateInnerHTML(document.getElementById('utc-time'), currentTime.toLocaleString([], { timeZone: 'UTC' }));
+    updateInnerHtml(document.getElementById('time'), currentTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' }));
+    updateInnerHtml(document.getElementById('dst'), isDstObserved(currentTime) ? 'In' : 'Not');
+    updateInnerHtml(document.getElementById('date'), `${currentTime.toLocaleDateString([], { year: 'numeric', month: 'long', weekday: 'long', day: 'numeric' })} (${currentTime.toLocaleDateString()})`);
+    updateInnerHtml(document.getElementById('unix'), currentTime.getTime());
+    updateInnerHtml(document.getElementById('timezone'), `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`);
+    updateInnerHtml(document.getElementById('jp-time'), currentTime.toLocaleString([], { timeZone: 'Japan' }));
+    updateInnerHtml(document.getElementById('cr-time'), currentTime.toLocaleString([], { timeZone: 'America/Costa_Rica' }));
+    updateInnerHtml(document.getElementById('gb-time'), currentTime.toLocaleString([], { timeZone: 'Europe/London' }));
+    updateInnerHtml(document.getElementById('utc-time'), currentTime.toLocaleString([], { timeZone: 'UTC' }));
 }, 100);
 
 /**

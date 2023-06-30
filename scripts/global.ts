@@ -1,5 +1,5 @@
 import { allPages } from '../data/pages.js';
-import { addAnimation, showAlert, twemojiUpdate, updateInnerHTML } from './functions.js';
+import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './functions.js';
 
 twemojiUpdate();
 
@@ -36,7 +36,7 @@ setInterval(() => {
 
     const finalTime = new Date().toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
-    updateInnerHTML(timeDisplay, finalTime);
+    updateInnerHtml(timeDisplay, finalTime);
 
     const currentHours = currentTime.getHours();
 

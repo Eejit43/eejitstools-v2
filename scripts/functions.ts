@@ -159,7 +159,7 @@ export function copyText(element: HTMLButtonElement, text: string) {
  * @param {string} input String to be modified
  * @returns {string} Formatted string
  */
-export function escapeHTML(input: string) {
+export function escapeHtml(input: string) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
@@ -168,7 +168,7 @@ export function escapeHTML(input: string) {
  * @param {string} string String to convert
  * @returns {Document} HTML
  */
-export function stringToHTML(string: string) {
+export function stringToHtml(string: string) {
     return new DOMParser().parseFromString(string, 'text/html');
 }
 
@@ -177,7 +177,7 @@ export function stringToHTML(string: string) {
  * @param {HTMLElement} element the element to update
  * @param {string} string the content to update the element with
  */
-export function updateInnerHTML(element: HTMLElement, string: string) {
+export function updateInnerHtml(element: HTMLElement, string: string) {
     if (element.innerHTML !== string) element.innerHTML = string;
 }
 

@@ -1,4 +1,4 @@
-import { escapeHTML, showAlert } from '/scripts/functions.js';
+import { escapeHtml, showAlert } from '/scripts/functions.js';
 
 const fileUploadButtonLabel = document.getElementById('file-upload-label');
 const fileUploadButton = document.getElementById('file-upload');
@@ -24,7 +24,7 @@ fileUploadButton.addEventListener('change', () => {
         if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
         if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
         uploadedImage = file;
-        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
+        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(file.name)}</code>`;
 
         loadButton.disabled = false;
     } else {
@@ -43,7 +43,7 @@ fileUploadButtonLabel.addEventListener('drop', (event) => {
             if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
             if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
             uploadedImage = file;
-            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(file.name)}</code>`;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(file.name)}</code>`;
 
             loadButton.disabled = false;
         }
@@ -53,7 +53,7 @@ fileUploadButtonLabel.addEventListener('drop', (event) => {
         if (!firstFile.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
         if (firstFile.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
         uploadedImage = firstFile;
-        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHTML(firstFile.name)}</code>`;
+        fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(firstFile.name)}</code>`;
 
         loadButton.disabled = false;
     }

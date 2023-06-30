@@ -283,7 +283,6 @@ function loadCalendarEvents() {
     twemojiUpdate();
 }
 
-// eslint-disable-next-line jsdoc/require-returns
 /**
  * Loads the todo list
  */

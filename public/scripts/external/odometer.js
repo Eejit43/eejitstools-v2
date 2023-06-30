@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // https://github.com/HubSpot/odometer
 
 (function () {

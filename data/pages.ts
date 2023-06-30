@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const phoneticAlphabet = [
     { letter: 'A', codeWord: 'Alpha' },
     { letter: 'B', codeWord: 'Bravo' },
@@ -414,6 +412,8 @@ Object.entries(allPages).forEach(([category, pages]) => {
         if (!('style' in page)) delete pages[id].style;
     });
 });
+
+/* eslint-disable @typescript-eslint/naming-convention */
 
 export const holidayEmojis = {
     "New Year's Day": '🎉',
