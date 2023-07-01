@@ -8,7 +8,8 @@
         "dev": "pnpm run build && node dev.js",
         "build": "node compile.js",
         "force-deploy": "railway up",
-        "logs": "railway logs"
+        "logs": "railway logs",
+        "remove-compiled": "find . -type f -name '*.js' ! -name 'compile.js' ! -path './node_modules/*' ! -path './public/scripts/external/*' -delete"
     },
     "dependencies": {
         "@fastify/rate-limit": "^8.0.1",
