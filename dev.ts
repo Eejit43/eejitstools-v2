@@ -25,14 +25,14 @@ let running: ChildProcess | undefined;
 
 /**
  * Starts the process
- * @param {boolean} [compile] Whether to compile TypeScript before starting the process
  */
-async function spawnProcess(compile = true) {
-    if (compile) await compileTypescript();
+async function spawnProcess() {
+    await compileTypescript();
+    consola.success('Successfully compiled TypeScript!');
     running = spawn(config.command.name, config.command.args, { stdio: 'inherit', shell: true });
 }
 
-spawnProcess(false);
+spawnProcess();
 
 /**
  * Logs a message to the console
