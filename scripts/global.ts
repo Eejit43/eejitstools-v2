@@ -40,6 +40,8 @@ setInterval(() => {
 
     const currentHours = currentTime.getHours();
 
+    if (timeIcon.classList.contains('fa-triangle-exclamation')) timeIcon.classList.remove('fa-triangle-exclamation');
+
     if (currentHours >= 6 && currentHours < 19 && !timeIcon.classList.contains('fa-sun-bright')) {
         timeIcon.classList.remove('fa-moon-stars');
         timeIcon.classList.add('fa-sun-bright');
