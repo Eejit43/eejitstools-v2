@@ -18,7 +18,7 @@ searchText.addEventListener('input', () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | undefined;
+        const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';
@@ -35,7 +35,7 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected');
 
-            const nextTrElement = event.key === 'ArrowUp' ? ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult?.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling;
+            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling) : null;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
