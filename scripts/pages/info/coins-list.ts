@@ -1,4 +1,4 @@
-import { showAlert, showResult } from '../../functions.js';
+import { showAlert, showResult } from '/scripts/functions.js';
 
 const loginPassword = document.getElementById('login-password');
 const loginButton = document.getElementById('login-button');
