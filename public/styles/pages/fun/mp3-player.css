@@ -20,7 +20,7 @@
     margin-top: 0px;
 }
 
-@media only screen and (max-width: 700px) {
+@media (max-width: 700px) {
     #mp3-grid {
         --min-width: unset;
     }
@@ -50,7 +50,7 @@
 }
 
 #playlists-list li::marker {
-    content: '—   ';
+    content: "—   ";
 }
 
 @media screen and (max-width: 1010px) {

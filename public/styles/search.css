@@ -33,10 +33,7 @@
     width: 85% !important;
 }
 
-.large-search-box .large-search-text::placeholder,
-.large-search-box .large-search-text:-ms-input-placeholder,
-.large-search-box .large-search-text::-webkit-input-placeholder,
-.large-search-box .large-search-text::-moz-placeholder {
+.large-search-box .large-search-text::placeholder {
     color: #c5c5cc;
 }
 
@@ -67,11 +64,11 @@
 
 .large-search-results table tr:first-of-type > td {
     border-top: none;
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 .large-search-results table tr:last-of-type > td {
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .large-search-results table td .results-title {

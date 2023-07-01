@@ -125,27 +125,27 @@ button.coin-type-expand {
     text-decoration: none;
 }
 
-@media only screen and (max-width: 700px) {
+@media (max-width: 700px) {
     #modal-image {
         width: 90%;
     }
 }
 
-#coins-list.obtained-hidden tr[data-obtained='true'][data-upgrade='false'],
-#coins-list.upgrade-hidden tr[data-upgrade='true'],
-#coins-list.missing-hidden tr[data-upgrade='false'] {
+#coins-list.obtained-hidden tr[data-obtained="true"][data-upgrade="false"],
+#coins-list.upgrade-hidden tr[data-upgrade="true"],
+#coins-list.missing-hidden tr[data-upgrade="false"] {
     display: none;
 }
 
-tr[data-obtained='false'] {
+tr[data-obtained="false"] {
     background-color: #944646;
 }
 
-tr[data-obtained='true'] {
+tr[data-obtained="true"] {
     background-color: #378036;
 }
 
-tr[data-upgrade='true'] {
+tr[data-upgrade="true"] {
     background-color: #414187;
 }
 
@@ -189,7 +189,7 @@ button.coin-variant-expand {
 }
 
 #change-history li::marker {
-    content: '—   ';
+    content: "—   ";
 }
 
 .time-tooltip {

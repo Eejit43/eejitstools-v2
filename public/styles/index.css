@@ -13,10 +13,11 @@ header {
     font-weight: 700;
 }
 
-@media only screen and (max-width: 700px) {
+@media (width <= 700px) {
     .mainlogo {
         font-size: 60px;
     }
+
     .mainlogo-tools {
         font-size: 45px;
     }
@@ -30,7 +31,7 @@ header {
     margin: 20px 10px 0;
 }
 
-@media only screen and (max-width: 700px) {
+@media (width <= 700px) {
     .warning,
     .message {
         font-size: 18px;
@@ -63,10 +64,11 @@ header {
     width: 15vw;
 }
 
-@media only screen and (max-width: 700px) {
+@media (width <= 700px) {
     .tools-table {
         width: 85%;
     }
+
     .tools-table td {
         font-size: 14px;
         padding: 12px;
