@@ -3,7 +3,7 @@
 }
 
 div#toggle-buttons button {
-    margin: 0 5px 20px 5px;
+    margin: 0 5px 20px;
 }
 
 div#toggle-buttons button:first-of-type {
@@ -51,7 +51,6 @@ button.coin-type-expand {
 }
 
 /* Popup images */
-
 .popup-image {
     cursor: pointer;
     transition: 0.3s;
@@ -62,8 +61,8 @@ button.coin-type-expand {
 }
 
 #modal {
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: black;
+    background-color: rgb(0 0 0 / 90%);
     display: none;
     height: 100%;
     left: 0;
@@ -103,6 +102,7 @@ button.coin-type-expand {
     from {
         transform: scale(0);
     }
+
     to {
         transform: scale(1);
     }
@@ -125,7 +125,7 @@ button.coin-type-expand {
     text-decoration: none;
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
     #modal-image {
         width: 90%;
     }

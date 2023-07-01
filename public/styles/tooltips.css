@@ -38,10 +38,10 @@
 
 /* Base styles for the tooltip's content area */
 [data-tooltip]::after {
-    background-color: #000;
+    background-color: black;
     background-color: rgb(43 43 43 / 90%);
     border-radius: 5px;
-    color: #fff;
+    color: white;
     content: attr(data-tooltip);
     font-size: 14px;
     line-height: 1.2;
@@ -64,7 +64,7 @@
 
 [data-tooltip]::before,
 .tooltip-top::before {
-    border-top-color: #000;
+    border-top-color: black;
     border-top-color: rgb(43 43 43 / 90%);
     margin-bottom: -12px;
     margin-left: -6px;
@@ -96,7 +96,7 @@
 }
 
 .tooltip-left::before {
-    border-left-color: #000;
+    border-left-color: black;
     border-left-color: rgb(43 43 43 / 90%);
     border-top-color: transparent;
     margin-bottom: 0;
@@ -120,7 +120,7 @@
 }
 
 .tooltip-bottom::before {
-    border-bottom-color: #000;
+    border-bottom-color: black;
     border-bottom-color: rgb(43 43 43 / 90%);
     border-top-color: transparent;
     margin-bottom: 0;
@@ -142,7 +142,7 @@
 }
 
 .tooltip-right::before {
-    border-right-color: #000;
+    border-right-color: black;
     border-right-color: rgb(43 43 43 / 90%);
     border-top-color: transparent;
     margin-bottom: 0;

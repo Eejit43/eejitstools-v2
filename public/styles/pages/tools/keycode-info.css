@@ -1,5 +1,4 @@
 .keycodes {
-    background-color: #1b1e24;
     background-color: #31363d;
     border: 4px solid #1b1e24;
     border-collapse: collapse;
@@ -10,7 +9,7 @@
     width: 70%;
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
     .keycodes {
         display: inline-block;
         margin: 8px auto 30px;
@@ -26,7 +25,7 @@
     text-align: center;
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
     .keycodes th {
         font-size: 16px;
         padding: 20px;
@@ -46,7 +45,7 @@
     cursor: not-allowed;
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
     .keycodes td {
         border-bottom: none;
         font-size: 16px;

@@ -1,6 +1,8 @@
 {
     "extends": "stylelint-config-standard",
     "rules": {
-        "no-descending-specificity": [true, { "ignore": ["selectors-within-list"] }]
+        "no-descending-specificity": null,
+        "color-named": "always-where-possible",
+        "function-disallowed-list": ["hsl", "hwb", "lab", "lch"]
     }
 }

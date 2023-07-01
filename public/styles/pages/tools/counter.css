@@ -1,7 +1,3 @@
 #counter .odometer-ribbon-inner {
-    -webkit-transition: -webkit-transform 0.3s !important;
-    -moz-transition: -moz-transform 0.3s !important;
-    -ms-transition: -ms-transform 0.3s !important;
-    -o-transition: -o-transform 0.3s !important;
     transition: transform 0.3s !important;
 }
