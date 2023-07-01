@@ -305,8 +305,8 @@ fs.readdirSync('views/pages').forEach((category) => {
         page = page.replace(/.hbs$/, '');
         const pageInfo = allPages[category]?.[page];
         if (!pageInfo) return consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
-        fastify.get(pageInfo.link as string, (request, reply) => {
-            reply.view(`pages/${category}/${page}`, { commitInfo, script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`), ...pageInfo });
+        fastify.get(pageInfo.link, (request, reply) => {
+            reply.view(`pages/${category}/${page}`, { commitInfo, ...pageInfo, script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`) });
         });
     });
 });
