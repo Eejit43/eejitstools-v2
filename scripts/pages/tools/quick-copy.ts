@@ -113,7 +113,6 @@ let storedData;
 
 /**
  * Displays the current clipboard
- * @returns {Promise<void>}
  */
 async function clipboardDisplay() {
     try {

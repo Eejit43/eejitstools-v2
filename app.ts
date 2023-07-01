@@ -10,8 +10,8 @@ import handlebars from 'handlebars';
 import mongoose, { Schema, model } from 'mongoose';
 import path from 'path';
 import { fetchApod } from './apod-fetcher.js';
-import coinsData, { Coin, CoinType } from './data/coins-data.js';
-import { blankProperties, allPages, toneIndicators } from './data/pages.js';
+import { Coin, ParsedCoinType, coinsData } from './data/coins-data.js';
+import { allPages, blankProperties, toneIndicators } from './data/pages.js';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
@@ -78,7 +78,7 @@ fastify.get('/coins-list', async (request, reply) => {
 
     const mergedCoinsData = await Promise.all(
         coinsData.map(async (coinType) => {
-            let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as CoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+            let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as ParsedCoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
             if (!coinsDatabaseEntry)
                 coinsDatabaseEntry = coinsModel.create({
                     name: coinType.name,
@@ -87,7 +87,7 @@ fastify.get('/coins-list', async (request, reply) => {
                         ...variant,
                         coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9000000000 + 1000000000) }))
                     }))
-                }) as unknown as CoinType;
+                }) as unknown as ParsedCoinType;
 
             return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
         })
@@ -101,7 +101,7 @@ fastify.post('/coins-list-edit', async (request, reply) => {
 
     if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
     if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
 
     databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {

@@ -82,7 +82,6 @@ function findInput() {
  * Converts the given value and displays the converted value
  * @param {string} value the value to convert
  * @param {number} radix the base of the input value
- * @returns {void}
  */
 function convert(value, radix) {
     if (value.match(/\./g)?.length > 1) return notValid();

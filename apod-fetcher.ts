@@ -25,7 +25,6 @@ interface ApodEntryMedia {
  * @param {string} year the year to fetch
  * @param {string} month the month to fetch
  * @param {string} date the date to fetch
- * @returns {Promise<ApodEntry>} the APOD data for the provided date
  */
 export async function fetchApod(year: string, month: string, date: string): Promise<ApodEntry> {
     year = year.padStart(2, '0');

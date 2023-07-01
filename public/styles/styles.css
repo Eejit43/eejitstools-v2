@@ -884,8 +884,8 @@ button:hover:not(.fakeinput) {
     background-color: #2a2a2a;
 }
 
-.invisibleinput[type="text"]:not(input[type="file"], input[type="checkbox"]),
-.invisibleinput[type="number"]:not(input[type="file"], input[type="checkbox"]) {
+.invisible-input[type="text"]:not(input[type="file"], input[type="checkbox"]),
+.invisible-input[type="number"]:not(input[type="file"], input[type="checkbox"]) {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid dimgray;
@@ -900,26 +900,21 @@ button:hover:not(.fakeinput) {
     width: 1.35em;
 }
 
-.invisibleinput[type="text"]:focus:not(input[type="file"], input[type="checkbox"]),
-.invisibleinput[type="number"]:focus:not(input[type="file"], input[type="checkbox"]) {
+.invisible-input[type="text"]:focus:not(input[type="file"], input[type="checkbox"]),
+.invisible-input[type="number"]:focus:not(input[type="file"], input[type="checkbox"]) {
     box-shadow: none;
     outline: none;
 }
 
-.invisibleinput[type="number"]::-webkit-inner-spin-button,
-.invisibleinput[type="number"]::-webkit-outer-spin-button,
+.invisible-input[type="number"]::-webkit-inner-spin-button,
+.invisible-input[type="number"]::-webkit-outer-spin-button,
 .no-arrow[type="number"]::-webkit-inner-spin-button,
 .no-arrow[type="number"]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }
 
-input[type="search"]::-ms-clear {
-    display: none;
-    height: 0;
-    width: 0;
-}
-
+input[type="search"]::-ms-clear,
 input[type="search"]::-ms-reveal {
     display: none;
     height: 0;

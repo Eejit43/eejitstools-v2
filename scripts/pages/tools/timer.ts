@@ -79,7 +79,6 @@ let targetTime;
 
 /**
  * Starts the timer
- * @returns {void}
  */
 function startTimer() {
     if (!paused) return;
@@ -112,7 +111,6 @@ let timeout;
 
 /**
  * Displays the current timer time
- * @returns {void}
  */
 function displayTime() {
     if (paused) return;

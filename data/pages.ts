@@ -328,7 +328,7 @@ interface Page {
     style?: boolean;
     additionalScripts?: (Script | undefined)[];
     additionalStyles?: (Style | undefined)[];
-    additionalData?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    additionalData?: unknown;
     keywords?: string[];
 }
 

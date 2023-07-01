@@ -1,4 +1,16 @@
-export default [
+export interface AudioCategory {
+    name: string;
+    id: string;
+    tracks: AudioTrack[];
+}
+
+export interface AudioTrack {
+    name: string;
+    file: string;
+    duration: string;
+}
+
+export const audioTracks: AudioCategory[] = [
     {
         name: 'General',
         id: 'general',

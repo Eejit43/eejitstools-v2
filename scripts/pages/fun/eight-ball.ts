@@ -1,9 +1,9 @@
-import { showAlert } from '/scripts/functions.js';
+import { showAlert } from '../../functions.js';
 
-const questionInput = document.getElementById('question-input');
-const rollButton = document.getElementById('roll');
-const questionDisplay = document.getElementById('question-display');
-const answerOutput = document.getElementById('answer-output');
+const questionInput = document.getElementById('question-input') as HTMLInputElement;
+const rollButton = document.getElementById('roll') as HTMLButtonElement;
+const questionDisplay = document.getElementById('question-display') as HTMLSpanElement;
+const answerOutput = document.getElementById('answer-output') as HTMLSpanElement;
 
 /* Add event listeners */
 rollButton.addEventListener('click', () => {
@@ -23,13 +23,19 @@ rollButton.addEventListener('click', () => {
         setTimeout(() => {
             rollButton.disabled = false;
             rollButton.textContent = 'Roll ball!';
-            answerOutput.textContent = results[Math.floor(Math.random() * 20)];
+            answerOutput.textContent = resultNames[Math.floor(Math.random() * 20)];
             answerOutput.classList.remove('rolling');
         }, 1000);
     }
 });
 
-const results = {
+interface ResultNames {
+    [number: string]: string;
+}
+
+/* eslint-disable @typescript-eslint/naming-convention */
+
+const resultNames: ResultNames = {
     0: 'It is certain',
     1: 'It is decidedly so',
     2: 'Without a doubt',

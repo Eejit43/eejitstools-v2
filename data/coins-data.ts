@@ -6,12 +6,20 @@ export interface CoinType {
     coins: CoinVariant[];
 }
 
-export interface CoinVariant {
+export interface ParsedCoinType extends CoinType {
+    coins: ParsedCoinVariant[];
+}
+
+interface CoinVariant {
     name: string;
     id: string;
     note?: string;
-    years: string;
-    image: string;
+    years?: string;
+    active?: true;
+    coins?: Coin[];
+}
+
+export interface ParsedCoinVariant extends CoinVariant {
     coins: Coin[];
 }
 
@@ -26,7 +34,7 @@ export interface Coin {
     upgrade?: boolean;
 }
 
-export default [
+export const coinsData: CoinType[] = [
     {
         name: 'Pennies',
         id: 'pennies',
@@ -88,4 +96,4 @@ export default [
             { name: 'American Innovation Dollar', id: 'american-innovation', note: "I'm only collecting coins minted in Philadelphia, not Denver." }
         ]
     }
-] as CoinType[];
+];

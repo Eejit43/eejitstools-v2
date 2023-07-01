@@ -1,29 +1,29 @@
-import audioTracks from '/data/audio-tracks.js';
+import { audioTracks, AudioCategory, AudioTrack } from '../../../data/audio-tracks.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
-const audio = document.getElementById('audio');
-const sourceAudio = document.getElementById('source-audio');
+const audio = document.getElementById('audio') as HTMLAudioElement;
+const sourceAudio = document.getElementById('source-audio') as HTMLSourceElement;
 
-const timer = document.getElementById('timer');
-const title = document.getElementById('title');
-const duration = document.getElementById('duration');
+const timer = document.getElementById('timer') as HTMLDivElement;
+const title = document.getElementById('title') as HTMLDivElement;
+const duration = document.getElementById('duration') as HTMLDivElement;
 
-const progressBarContainer = document.querySelector('.progress');
-const progressBar = document.getElementById('progress-bar');
+const progressBarContainer = document.querySelector('.progress') as HTMLDivElement;
+const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
 
-const toggleShuffleButton = document.getElementById('toggle-shuffle');
-const shuffleStatusIcon = document.getElementById('shuffle-status');
-const previousButton = document.getElementById('previous');
-const rewindButton = document.getElementById('rewind');
-const playPauseButton = document.getElementById('play-pause');
-const forwardButton = document.getElementById('forward');
-const nextButton = document.getElementById('next');
-const toggleMuteButton = document.getElementById('toggle-mute');
+const toggleShuffleButton = document.getElementById('toggle-shuffle') as HTMLSpanElement;
+const shuffleStatusIcon = document.getElementById('shuffle-status') as HTMLElement;
+const previousButton = document.getElementById('previous') as HTMLElement;
+const rewindButton = document.getElementById('rewind') as HTMLElement;
+const playPauseButton = document.getElementById('play-pause') as HTMLElement;
+const forwardButton = document.getElementById('forward') as HTMLElement;
+const nextButton = document.getElementById('next') as HTMLElement;
+const toggleMuteButton = document.getElementById('toggle-mute') as HTMLElement;
 
-const playlistsList = document.getElementById('playlists-list');
+const playlistsList = document.getElementById('playlists-list') as HTMLUListElement;
 
-const playlist = document.getElementById('playlist');
+const playlist = document.getElementById('playlist') as HTMLDivElement;
 
 progressBarContainer.addEventListener('click', handleProgressBarClick);
 
@@ -43,16 +43,16 @@ toggleMuteButton.addEventListener('click', toggleMute);
 
 /**
  * Creates a new track item
- * @param {string} category the category of the track
+ * @param {AudioCategory} category the category of the track
  * @param {number} index the index of the track
- * @param {object} track the track item
+ * @param {AudioTrack} track the track item
  */
-function createTrackItem(category, index, track) {
+function createTrackItem(category: AudioCategory, index: number, track: AudioTrack) {
     const trackItem = document.createElement('div');
     trackItem.classList.add('playlist-track');
     trackItem.id = `playlist-track-${category.id}-${index}`;
     trackItem.dataset.category = category.id;
-    trackItem.dataset.index = index;
+    trackItem.dataset.index = index.toString();
 
     const playButtonItem = document.createElement('div');
     playButtonItem.classList.add('playlist-play');
@@ -60,8 +60,8 @@ function createTrackItem(category, index, track) {
 
     const buttonIcon = document.createElement('i');
     buttonIcon.classList.add('player-icon', 'fa-solid', 'fa-play');
-    buttonIcon.height = 40;
-    buttonIcon.width = 40;
+    buttonIcon.setAttribute('height', '40');
+    buttonIcon.setAttribute('width', '40');
     buttonIcon.id = `player-icon-${category.id}-${index}`;
 
     playButtonItem.appendChild(buttonIcon);
@@ -111,7 +111,7 @@ audioTracks.forEach((category) => {
 });
 
 document.querySelectorAll('.playlist-section-title > i.player-icon').forEach((playButton) => {
-    playButton.addEventListener('click', () => shuffleSection(playButton.parentElement.id));
+    playButton.addEventListener('click', () => shuffleSection((playButton.parentElement as HTMLElement).id));
 });
 
 let audioCategory = 'general';
@@ -123,7 +123,7 @@ let audioIndex = 0;
  * @param {number} index the index of the track
  * @param {boolean} [play=true] whether or not to play the track
  */
-function loadNewTrack(category, index, play = true) {
+function loadNewTrack(category: string, index: number, play = true) {
     const track = tracksByCategory[category].tracks[index];
     sourceAudio.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/mp3-player/${category}/${track.file}.mp3`;
     title.textContent = track.name;
@@ -134,21 +134,21 @@ function loadNewTrack(category, index, play = true) {
     audioIndex = index;
 }
 
-for (const track of document.querySelectorAll('.playlist-track')) track.addEventListener('click', loadClickedTrack);
+for (const track of document.querySelectorAll('.playlist-track')) track.addEventListener('click', loadClickedTrack as EventListener);
 
 /**
  * Loads the clicked track
  * @param {MouseEvent} event the click event
  */
-function loadClickedTrack(event) {
+function loadClickedTrack(event: MouseEvent) {
     shuffled = false;
     shuffledQueue = [];
     shuffleStatusIcon.classList.remove('fa-check');
     shuffleStatusIcon.classList.add('fa-xmark');
 
-    const { category, index } = event.target.dataset;
-    if (category === audioCategory && index === audioIndex) toggleAudio();
-    else loadNewTrack(category, index);
+    const { category, index } = (event.target as HTMLElement).dataset as { category: string; index: string };
+    if (category === audioCategory && parseInt(index) === audioIndex) toggleAudio();
+    else loadNewTrack(category, parseInt(index));
 }
 
 loadNewTrack(audioCategory, audioIndex, false);
@@ -160,7 +160,7 @@ function toggleAudio() {
     if (audio.paused) {
         playPauseButton.classList.remove('fa-play');
         playPauseButton.classList.add('fa-pause');
-        document.getElementById(`playlist-track-${audioCategory}-${audioIndex}`).classList.add('active-track');
+        document.getElementById(`playlist-track-${audioCategory}-${audioIndex}`)?.classList.add('active-track');
         pauseToPlay(audioCategory, audioIndex);
         audio.play();
     } else {
@@ -171,13 +171,17 @@ function toggleAudio() {
     }
 }
 
-let shuffledQueue = [];
+interface AudioTrackWithIndex extends AudioTrack {
+    index: number;
+}
+
+let shuffledQueue: AudioTrackWithIndex[] = [];
 
 /**
  * Shuffles an audio section
  * @param {string} category the section category to shuffle
  */
-function shuffleSection(category) {
+function shuffleSection(category: string) {
     const oldCategory = audioCategory,
         oldIndex = audioIndex;
 
@@ -192,8 +196,8 @@ function shuffleSection(category) {
     }
     audioCategory = category;
 
-    const tracks = tracksByCategory[category].tracks.map((track, index) => ({ ...track, index }));
-    shuffledQueue = shuffleArray(tracks);
+    const tracks = tracksByCategory[category].tracks.map((track, index) => ({ ...track, index })) as AudioTrackWithIndex[];
+    shuffledQueue = shuffleArray(tracks) as AudioTrackWithIndex[];
 
     audioIndex = tracks[0].index;
 
@@ -209,7 +213,7 @@ function shuffleSection(category) {
  * @param {Array} array The array to shuffle
  * @returns {Array} shuffled array
  */
-function shuffleArray(array) {
+function shuffleArray(array: Array<unknown>) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -229,9 +233,9 @@ function onTimeUpdate() {
         playToPause(audioCategory, audioIndex);
 
         if (shuffled && shuffledQueue.length > 0) {
-            const nextTrack = shuffledQueue.shift();
+            const nextTrack = shuffledQueue.shift() as AudioTrackWithIndex;
             loadNewTrack(audioCategory, nextTrack.index);
-        } else if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, parseInt(audioIndex) + 1);
+        } else if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, audioIndex + 1);
     }
 }
 
@@ -239,7 +243,7 @@ function onTimeUpdate() {
  * Sets the progress bar
  */
 function setBarProgress() {
-    progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+    progressBar.style.width = ((audio.currentTime / audio.duration) * 100).toString() + '%';
 }
 
 /**
@@ -247,11 +251,11 @@ function setBarProgress() {
  * @param {number} time the time
  * @returns {string} the minutes and seconds
  */
-function formatTime(time) {
-    const minutes = parseInt(time / 60)
+function formatTime(time: number) {
+    const minutes = Math.floor(time / 60)
         .toString()
         .padStart(1, '0');
-    const seconds = parseInt(time % 60)
+    const seconds = Math.floor(time % 60)
         .toString()
         .padStart(2, '0');
 
@@ -262,10 +266,10 @@ function formatTime(time) {
  * Updates the progress bar and audio time
  * @param {MouseEvent} event the click event
  */
-function handleProgressBarClick(event) {
+function handleProgressBarClick(event: MouseEvent) {
     const percent = event.offsetX / progressBarContainer.offsetWidth;
     audio.currentTime = percent * audio.duration;
-    progressBar.style.width = percent * 100 + '%';
+    progressBar.style.width = (percent * 100).toString() + '%';
 }
 
 /**
@@ -286,7 +290,6 @@ function rewind() {
 
 /**
  * Switches to the next song
- * @returns {void}
  */
 function next() {
     if (shuffled) return loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
@@ -318,10 +321,10 @@ function previous() {
  * @param {number} newIndex the index of the new track
  * @param {boolean} [play=true] whether or not to mark the new track as playing
  */
-function updateActiveTrackStyle(oldCategory, oldIndex, newCategory, newIndex, play = true) {
-    document.getElementById(`playlist-track-${oldCategory}-${oldIndex}`).classList.remove('active-track');
+function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCategory: string, newIndex: number, play = true) {
+    document.getElementById(`playlist-track-${oldCategory}-${oldIndex}`)?.classList.remove('active-track');
     if (play) playToPause(oldCategory, oldIndex);
-    document.getElementById(`playlist-track-${newCategory}-${newIndex}`).classList.add('active-track');
+    document.getElementById(`playlist-track-${newCategory}-${newIndex}`)?.classList.add('active-track');
     if (play) pauseToPlay(newCategory, newIndex);
 }
 
@@ -339,7 +342,7 @@ function toggleShuffle() {
     } else {
         shuffled = true;
         const tracks = tracksByCategory[audioCategory].tracks.map((track, index) => ({ ...track, index }));
-        shuffledQueue = shuffleArray(tracks);
+        shuffledQueue = shuffleArray(tracks) as AudioTrackWithIndex[];
         shuffleStatusIcon.classList.remove('fa-xmark');
         shuffleStatusIcon.classList.add('fa-check');
     }
@@ -350,8 +353,8 @@ function toggleShuffle() {
  * @param {string} category the category of the track
  * @param {number} index the index of the track
  */
-function pauseToPlay(category, index) {
-    const element = document.getElementById(`player-icon-${category}-${index}`);
+function pauseToPlay(category: string, index: number) {
+    const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
     element.classList.remove('fa-play');
     element.classList.add('fa-pause');
 }
@@ -361,8 +364,8 @@ function pauseToPlay(category, index) {
  * @param {string} category the category of the track
  * @param {number} index the index of the track
  */
-function playToPause(category, index) {
-    const element = document.getElementById(`player-icon-${category}-${index}`);
+function playToPause(category: string, index: number) {
+    const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
     element.classList.add('fa-play');
     element.classList.remove('fa-pause');
 }
@@ -383,7 +386,7 @@ function toggleMute() {
 }
 
 document.addEventListener('keydown', (event) => {
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
+    if ((document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) || event.ctrlKey || event.metaKey || event.altKey) return;
 
     if (event.code === 'Space') {
         event.preventDefault();

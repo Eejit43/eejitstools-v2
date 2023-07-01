@@ -101,7 +101,6 @@ async function fetchApod(yearInput, monthInput, dateInput) {
 /**
  * Gets a viewable element (`img` or `iframe` embed) for an APOD entry media
  * @param {apodEntryMedia} media the media to get the element for
- * @returns {string} the media element
  */
 function getMediaElement(media) {
     const { type, src, highResolution, alt } = media;

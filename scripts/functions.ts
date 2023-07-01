@@ -157,7 +157,6 @@ export function copyText(element: HTMLButtonElement, text: string) {
 /**
  * Escapes HTML syntax in a string
  * @param {string} input String to be modified
- * @returns {string} Formatted string
  */
 export function escapeHtml(input: string) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -166,7 +165,6 @@ export function escapeHtml(input: string) {
 /**
  * Converts a string to HTML
  * @param {string} string String to convert
- * @returns {Document} HTML
  */
 export function stringToHtml(string: string) {
     return new DOMParser().parseFromString(string, 'text/html');
@@ -185,7 +183,6 @@ export function updateInnerHtml(element: HTMLElement, string: string) {
  * Adds an animation class to an element, and removes it upon completion
  * @param {string} element selectors for element
  * @param {string} animation the animation to add
- * @returns {Promise<void>}
  */
 export const addAnimation = (element: string, animation: string) =>
     new Promise((resolve) => {
@@ -207,7 +204,6 @@ export const addAnimation = (element: string, animation: string) =>
 /**
  * Converts a string to title case
  * @param {string} string the string to convert
- * @returns {string} the string in title case
  */
 export function titleCase(string: string) {
     return string
