@@ -84,7 +84,7 @@ searchText.addEventListener('input', () => {
 
 searchText.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchText.value = '';

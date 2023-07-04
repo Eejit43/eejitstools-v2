@@ -12,6 +12,7 @@
         "@typescript-eslint/naming-convention": ["error", { "selector": ["default", "variableLike", "method"], "format": ["strictCamelCase", "UPPER_CASE"] }, { "selector": "typeLike", "format": ["StrictPascalCase"] }, { "selector": "memberLike", "format": null, "filter": { "regex": "[-]", "match": true } }],
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/no-unused-expressions": "error",
         "@typescript-eslint/restrict-template-expressions": ["error", { "allowNumber": true, "allowBoolean": true }],
         "curly": ["error", "multi"],

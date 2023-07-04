@@ -78,7 +78,7 @@ fastify.get('/coins-list', async (request, reply) => {
 
     const mergedCoinsData = await Promise.all(
         coinsData.map(async (coinType) => {
-            let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as ParsedCoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+            let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as ParsedCoinType | null;
             if (!coinsDatabaseEntry)
                 coinsDatabaseEntry = coinsModel.create({
                     name: coinType.name,
@@ -101,7 +101,7 @@ fastify.post('/coins-list-edit', async (request, reply) => {
 
     if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null;
     if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
 
     databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
@@ -180,7 +180,7 @@ let todoOptions: TodoOption[] | null = null;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
     if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
-    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
     if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
 
@@ -212,7 +212,7 @@ fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { pas
 
     await todoModel.replaceOne({ year }, yearEntry);
 
-    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
     if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
 
