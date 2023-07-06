@@ -1,4 +1,4 @@
-import { showAlert, stringToHtml } from '/scripts/functions.js';
+import { showAlert, stringToHtml } from '../../functions.js';
 
 const svgInput = document.getElementById('svg-input');
 const svgPreview = document.getElementById('svg-preview');

@@ -1,4 +1,4 @@
-import { showAlert } from '/scripts/functions.js';
+import { showAlert } from '../../functions.js';
 
 const resultElement = document.getElementById('result');
 const yearVal = document.getElementById('year');

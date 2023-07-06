@@ -1,6 +1,6 @@
 /* global GeolocationPosition */
 
-import { titleCase } from '/scripts/functions.js';
+import { titleCase } from '../../functions.js';
 
 const result = document.getElementById('result');
 

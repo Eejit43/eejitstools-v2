@@ -1,4 +1,4 @@
-import { twemojiUpdate } from '/scripts/functions.js';
+import { twemojiUpdate } from '../../functions.js';
 import { holidayEmojis } from '/data/pages.js';
 
 /**

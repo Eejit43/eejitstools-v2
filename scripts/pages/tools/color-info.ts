@@ -1,7 +1,7 @@
 /* global chroma, Color */
 
 import 'https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js';
-import { copyValue, showAlert } from '/scripts/functions.js';
+import { copyValue, showAlert } from '../../functions.js';
 
 const generateRandom = document.getElementById('generate-random');
 const colorDisplay = document.getElementById('color-display');

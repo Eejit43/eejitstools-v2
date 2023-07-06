@@ -1,6 +1,6 @@
 /* global PermissionState */
 
-import { copyText, showAlert } from '/scripts/functions.js';
+import { copyText, showAlert } from '../../functions.js';
 
 const clearClipboardButton = document.getElementById('clear-clipboard');
 const copyZws = document.getElementById('copy-zws');
@@ -83,7 +83,7 @@ async function requestPermission() {
         result.addEventListener('change', () => {
             handlePermission(result.state);
         });
-    } catch (error) {
+    } catch {
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Your browser does not support the <code>clipboard-read</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API#browser_compatibility" target="_blank">permission</a><br />');
     }
 }
@@ -148,7 +148,7 @@ async function clipboardDisplay() {
                 if (storedData !== blob.size) storedData = blob.size;
             }
         }
-    } catch (error) {
+    } catch {
         if (error.toString().match(/focused/g)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
 
         const text = await navigator.clipboard.readText();

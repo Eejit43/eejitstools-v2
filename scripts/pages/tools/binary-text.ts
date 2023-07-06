@@ -1,22 +1,22 @@
-import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input');
-const toBinaryBtn = document.getElementById('to-binary');
-const fromBinaryBtn = document.getElementById('from-binary');
-const clearBtn = document.getElementById('clear');
-const result = document.getElementById('result');
-const resultCopy = document.getElementById('copy-result');
+const input = document.getElementById('input') as HTMLTextAreaElement;
+const toBinaryButton = document.getElementById('to-binary') as HTMLButtonElement;
+const fromBinaryButton = document.getElementById('from-binary') as HTMLButtonElement;
+const clearButton = document.getElementById('clear') as HTMLButtonElement;
+const result = document.getElementById('result') as HTMLTextAreaElement;
+const resultCopy = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
-toBinaryBtn.addEventListener('click', toBinary);
-fromBinaryBtn.addEventListener('click', fromBinary);
-clearBtn.addEventListener('click', () => {
+toBinaryButton.addEventListener('click', toBinary);
+fromBinaryButton.addEventListener('click', fromBinary);
+clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
     resultCopy.disabled = true;
 
-    clearBtn.disabled = true;
-    clearBtn.textContent = 'Cleared!';
+    clearButton.disabled = true;
+    clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('encode');
     resetResult('decode');
@@ -24,8 +24,8 @@ clearBtn.addEventListener('click', () => {
     setTimeout(() => {
         resultCopy.disabled = true;
 
-        clearBtn.disabled = false;
-        clearBtn.textContent = 'Clear';
+        clearButton.disabled = false;
+        clearButton.textContent = 'Clear';
     }, 2000);
 });
 resultCopy.addEventListener('click', () => {
@@ -74,10 +74,10 @@ function fromBinary() {
  * @param {string} string String to encode
  * @returns {string} Encoded string
  */
-function stringToBinary(string) {
+function stringToBinary(string: string) {
     return string
         .split('')
-        .map((char) => char.charCodeAt(0).toString(2))
+        .map((character) => character.charCodeAt(0).toString(2))
         .join(' ');
 }
 
@@ -86,9 +86,9 @@ function stringToBinary(string) {
  * @param {string} binary Binary to decode
  * @returns {string} Decoded string
  */
-function binaryToString(binary) {
+function binaryToString(binary: string) {
     return binary
         .split(' ')
-        .map((elem) => String.fromCharCode(parseInt(elem, 2)))
+        .map((part) => String.fromCharCode(parseInt(part, 2)))
         .join('');
 }

@@ -117,9 +117,9 @@ export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'r
 /**
  * Copy an element's value
  * @param {HTMLButtonElement} element The element to update
- * @param {HTMLInputElement} copyElement The element of the value to be copied
+ * @param {HTMLInputElement|HTMLTextAreaElement} copyElement The element of the value to be copied
  */
-export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElement) {
+export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElement | HTMLTextAreaElement) {
     navigator.clipboard.writeText(copyElement.value);
 
     const content = element.textContent;

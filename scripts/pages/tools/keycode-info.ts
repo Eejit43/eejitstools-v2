@@ -1,4 +1,4 @@
-import { showAlert } from '/scripts/functions.js';
+import { showAlert } from '../../functions.js';
 
 const ready = document.getElementById('ready');
 const key = document.getElementById('key');

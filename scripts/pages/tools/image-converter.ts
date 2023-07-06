@@ -1,4 +1,4 @@
-import { escapeHtml, showAlert } from '/scripts/functions.js';
+import { escapeHtml, showAlert } from '../../functions.js';
 
 const fileUploadButtonLabel = document.getElementById('file-upload-label');
 const fileUploadButton = document.getElementById('file-upload');

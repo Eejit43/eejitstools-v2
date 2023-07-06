@@ -1,11 +1,11 @@
-import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input');
-const encodeButton = document.getElementById('encode');
-const decodeButton = document.getElementById('decode');
-const clearButton = document.getElementById('clear');
-const result = document.getElementById('result');
-const copyResult = document.getElementById('copy-result');
+const input = document.getElementById('input') as HTMLTextAreaElement;
+const encodeButton = document.getElementById('encode') as HTMLButtonElement;
+const decodeButton = document.getElementById('decode') as HTMLButtonElement;
+const clearButton = document.getElementById('clear') as HTMLButtonElement;
+const result = document.getElementById('result') as HTMLTextAreaElement;
+const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 encodeButton.addEventListener('click', encode);
@@ -39,16 +39,15 @@ function encode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('encode', 'error');
-    } else {
+    } else
         try {
             result.value = btoa(input.value);
             showResult('encode', 'success');
             copyResult.disabled = false;
-        } catch (err) {
+        } catch {
             showAlert('Malformed input!', 'error');
             showResult('encode', 'error');
         }
-    }
 }
 
 /**
@@ -58,14 +57,13 @@ function decode() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('decode', 'error');
-    } else {
+    } else
         try {
             result.value = atob(input.value);
             showResult('decode', 'success');
             copyResult.disabled = false;
-        } catch (err) {
+        } catch {
             showAlert('Malformed input!', 'error');
             showResult('decode', 'error');
         }
-    }
 }

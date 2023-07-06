@@ -1,4 +1,4 @@
-import { resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { resetResult, showAlert, showResult } from '../../functions.js';
 
 const startTimerButton = document.getElementById('start-timer');
 const pauseResumeTimer = document.getElementById('pause-resume-timer');

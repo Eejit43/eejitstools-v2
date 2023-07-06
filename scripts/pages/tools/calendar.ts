@@ -1,5 +1,5 @@
+import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 import { holidayEmojis, moonEmojis } from '/data/pages.js';
-import { showAlert, showResult, twemojiUpdate } from '/scripts/functions.js';
 
 const monthYearDisplay = document.getElementById('month-year');
 const calendarBody = document.getElementById('calendar-body');

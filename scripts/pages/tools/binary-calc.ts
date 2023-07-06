@@ -1,13 +1,13 @@
-import { copyValue, showAlert } from '/scripts/functions.js';
+import { copyValue, showAlert } from '../../functions.js';
 
-const inputType = document.getElementById('input-type');
-const input = document.getElementById('input');
-const resetButton = document.getElementById('reset');
-const message = document.getElementById('message');
-const outputType = document.getElementById('output-type');
-const output = document.getElementById('output');
-const copyOutput = document.getElementById('copy-output');
-const toggleSpacers = document.getElementById('toggle-spacers');
+const inputType = document.getElementById('input-type') as HTMLSelectElement;
+const input = document.getElementById('input') as HTMLInputElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const message = document.getElementById('message') as HTMLSpanElement;
+const outputType = document.getElementById('output-type') as HTMLSelectElement;
+const output = document.getElementById('output') as HTMLInputElement;
+const copyOutput = document.getElementById('copy-output') as HTMLButtonElement;
+const toggleSpacers = document.getElementById('toggle-spacers') as HTMLButtonElement;
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
@@ -16,8 +16,8 @@ resetButton.addEventListener('click', () => {
     input.value = '';
     output.value = '';
     message.textContent = '';
-    inputType.value = 3;
-    outputType.value = 1;
+    inputType.value = '3';
+    outputType.value = '1';
     copyOutput.disabled = true;
     toggleSpacers.disabled = true;
 
@@ -48,7 +48,7 @@ toggleSpacers.addEventListener('click', () => {
  * Checks the input value and gives an error message if the input is invalid
  */
 function findInput() {
-    if (input.value.length > 0) {
+    if (input.value.length > 0)
         switch (radices[inputType.value].number) {
             case 2:
                 if (/^-?[01.]+$/.test(input.value)) convert(input.value, 2);
@@ -70,7 +70,7 @@ function findInput() {
                 notValid();
                 break;
         }
-    } else {
+    else {
         message.textContent = '';
         output.value = '';
         copyOutput.disabled = true;
@@ -83,8 +83,9 @@ function findInput() {
  * @param {string} value the value to convert
  * @param {number} radix the base of the input value
  */
-function convert(value, radix) {
-    if (value.match(/\./g)?.length > 1) return notValid();
+function convert(value: string, radix: number) {
+    const periods = value.match(/\./g);
+    if (periods && periods.length > 1) return notValid();
 
     let result = parseNumberWithRadix(value, radix).toString(radices[outputType.value].number);
 
@@ -113,8 +114,8 @@ function convert(value, radix) {
  * @param {number} [radix=10] the base of the number
  * @returns {number} the converted number
  */
-function parseNumberWithRadix(number, radix) {
-    radix = (radix || 10) | 0;
+function parseNumberWithRadix(number: string, radix = 10) {
+    radix = radix | 0;
     const [a, b] = number.split('.');
     const l = parseInt('1' + (b || ''), radix).toString(radix).length;
     return parseInt(a, radix) + parseInt(b || '0', radix) / parseInt('1' + Array(l).join('0'), radix);
@@ -135,26 +136,21 @@ function notValid() {
  * @param {string} binary the binary number to add spaces to
  * @returns {string} the binary number with spaces
  */
-function addBinarySpacers(binary) {
+function addBinarySpacers(binary: string) {
     const sign = binary.startsWith('-') ? '-' : '';
 
-    binary = binary.replace(/^-/, '').split('.');
+    const binaryParts = binary.replace(/^-/, '').split('.');
 
-    let result = binary[0]
-        .padStart(Math.ceil(binary[0].length / 4) * 4, '0')
-        .match(/[01]{4}/g)
-        .join(' ');
+    let result = (binaryParts[0].padStart(Math.ceil(binaryParts[0].length / 4) * 4, '0').match(/[01]{4}/g) as string[]).join(' ');
 
-    if (binary.length > 1)
-        result += `.${binary[1]
-            .padEnd(Math.ceil(binary[1].length / 4) * 4, '0')
-            .match(/[01]{4}/g)
-            .join(' ')}`;
+    if (binary.length > 1) result += `.${(binaryParts[1].padEnd(Math.ceil(binaryParts[1].length / 4) * 4, '0').match(/[01]{4}/g) as string[]).join(' ')}`;
 
     return sign + result;
 }
 
-const radices = {
+/* eslint-disable @typescript-eslint/naming-convention */
+
+const radices: { [key: string]: { number: number; name: string } } = {
     1: { number: 2, name: 'binary' },
     2: { number: 8, name: 'octal' },
     3: { number: 10, name: 'decimal' },

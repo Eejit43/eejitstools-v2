@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
 const input = document.getElementById('input');
 const separator = document.getElementById('separator');

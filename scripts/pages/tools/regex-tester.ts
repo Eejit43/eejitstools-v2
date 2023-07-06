@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '/scripts/functions.js';
+import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
 const regexInput = document.getElementById('regex-input');
 const flagsInput = document.getElementById('flags-input');
@@ -86,7 +86,7 @@ function runRegexTester() {
     let isValid = true;
     try {
         new RegExp(regexInput.value, flagsInput.value);
-    } catch (error) {
+    } catch {
         isValid = false;
     }
     if (textInput.value.length === 0 || regexInput.value.length === 0) {

@@ -1,6 +1,6 @@
 /* global math */
 
-import { copyText, showAlert, updateArrow } from '/scripts/functions.js';
+import { copyText, showAlert, updateArrow } from '../../functions.js';
 
 const decimalInput = document.getElementById('decimal-input');
 const decimalConvert = document.getElementById('decimal-convert');

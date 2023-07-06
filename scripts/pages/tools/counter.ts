@@ -1,4 +1,4 @@
-import { showAlert } from '/scripts/functions.js';
+import { showAlert } from '../../functions.js';
 
 const numberDisplay = document.getElementById('counter');
 const activationButton = document.getElementById('activation-button');

@@ -1,4 +1,4 @@
-import { audioTracks, AudioCategory, AudioTrack } from '../../../data/audio-tracks.js';
+import { AudioCategory, AudioTrack, audioTracks } from '../../../data/audio-tracks.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 

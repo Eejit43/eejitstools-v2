@@ -1,4 +1,4 @@
-import { showAlert } from '/scripts/functions.js';
+import { showAlert } from '../../functions.js';
 
 const input = document.getElementById('input');
 const characterDisplay = document.getElementById('character-count');
