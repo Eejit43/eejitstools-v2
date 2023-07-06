@@ -1,59 +1,45 @@
-// Modified from https://stackoverflow.com/questions/11219582/how-to-detect-my-browser-version-and-operating-system-using-javascript
+import type { UAParserInstance } from 'ua-parser-js';
 
-const { appVersion, userAgent } = navigator;
-let { appName: browser } = navigator;
-let fullVersion = parseFloat(appVersion).toString();
-let majorVersion = parseInt(appVersion);
-let nameOffset, versionOffset, ix;
-
-if ((versionOffset = userAgent.indexOf('Opera')) !== -1) {
-    browser = 'Opera';
-    fullVersion = userAgent.substring(versionOffset + 6);
-    if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
-} else if ((versionOffset = userAgent.indexOf('MSIE')) !== -1) {
-    browser = 'Microsoft Internet Explorer';
-    fullVersion = userAgent.substring(versionOffset + 5);
-} else if ((versionOffset = userAgent.indexOf('Chrome')) !== -1) {
-    browser = 'Chrome';
-    fullVersion = userAgent.substring(versionOffset + 7);
-} else if ((versionOffset = userAgent.indexOf('Safari')) !== -1) {
-    browser = 'Safari';
-    fullVersion = userAgent.substring(versionOffset + 7);
-    if ((versionOffset = userAgent.indexOf('Version')) !== -1) fullVersion = userAgent.substring(versionOffset + 8);
-} else if ((versionOffset = userAgent.indexOf('Firefox')) !== -1) {
-    browser = 'Firefox';
-    fullVersion = userAgent.substring(versionOffset + 8);
-} else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) < (versionOffset = userAgent.lastIndexOf('/'))) {
-    browser = userAgent.substring(nameOffset, versionOffset);
-    fullVersion = userAgent.substring(versionOffset + 1);
-    if (browser.toLowerCase() === browser.toUpperCase()) browser = navigator.appName;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface Window {
+    UAParser: UAParserInstance; // eslint-disable-line @typescript-eslint/naming-convention
 }
 
-if ((ix = fullVersion.indexOf(';')) !== -1) fullVersion = fullVersion.substring(0, ix);
-if ((ix = fullVersion.indexOf(' ')) !== -1) fullVersion = fullVersion.substring(0, ix);
+const browserInfo = document.getElementById('browser-info') as HTMLDivElement;
 
-majorVersion = parseInt(fullVersion);
-if (isNaN(majorVersion)) {
-    fullVersion = parseFloat(appVersion).toString();
-    majorVersion = parseInt(appVersion);
-}
+const parser = new window.UAParser();
 
-let operatingSystem = 'Unknown OS';
-if (appVersion.indexOf('Win') !== -1) operatingSystem = 'Windows';
-if (appVersion.indexOf('Mac') !== -1) operatingSystem = 'MacOS';
-if (appVersion.indexOf('X11') !== -1) operatingSystem = 'UNIX';
-if (appVersion.indexOf('Linux') !== -1) operatingSystem = 'Linux';
+const result = parser.getResult();
 
-const result = [
-    `Operating System: ${operatingSystem}`, //
-    `Platform: ${navigator.platform}`,
-    `Language: ${navigator.language}`,
-    `Online: ${navigator.onLine}`,
-    `Cookies Enabled: ${navigator.cookieEnabled}`,
-    `Browser: ${browser}`,
-    `Browser Version: ${fullVersion}`,
-    `Main Browser Version: ${majorVersion}`,
-    `navigator.userAgent: ${navigator.userAgent}`
+const output = [
+    { icon: 'window', name: 'Browser', value: `${result.browser.name || 'Unknown'} ${result.browser.version || ''}` },
+    { icon: 'microchip', name: 'CPU', value: `${result.cpu.architecture || 'Unknown'}` },
+    { icon: 'desktop', name: 'Device', value: `${result.device.vendor || ''} ${result.device.model || 'Unknown'}` },
+    { icon: 'gears', name: 'Engine', value: `${result.engine.name || 'Unknown'} ${result.engine.version || ''}` },
+    { icon: 'computer', name: 'OS', value: `${result.os.name || 'Unknown'} ${result.os.version || ''}` },
+    { icon: 'display-code', name: 'User Agent', value: result.ua }
 ];
 
-(document.getElementById('browser-info') as HTMLElement).innerHTML = result.join('<br />');
+browserInfo.textContent = '';
+
+output.forEach((item) => {
+    const row = document.createElement('div');
+
+    const icon = document.createElement('i');
+    icon.className = `fa-regular fa-${item.icon}`;
+
+    const name = document.createElement('span');
+    name.textContent = item.name;
+
+    const value = document.createElement('span');
+    value.style.color = 'gray';
+    value.textContent = item.value.trim();
+
+    row.appendChild(icon);
+    row.appendChild(document.createTextNode(' '));
+    row.appendChild(name);
+    row.appendChild(document.createTextNode(': '));
+    row.appendChild(value);
+
+    browserInfo.appendChild(row);
+});

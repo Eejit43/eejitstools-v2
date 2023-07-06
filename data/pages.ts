@@ -286,6 +286,9 @@ interface Imports {
 }
 
 const imports: Imports = {
+    mathJax: {
+        script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' }
+    },
     mathJs: {
         script: { link: 'https://unpkg.com/mathjs/lib/browser/math.js' }
     },
@@ -296,8 +299,8 @@ const imports: Imports = {
         style: { link: 'external/odometer.css' },
         script: { link: '/scripts/external/odometer.js', module: true, external: false }
     },
-    mathJax: {
-        script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' }
+    uaParser: {
+        script: { link: 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js' }
     }
 };
 
@@ -344,7 +347,7 @@ const preParsedPages: PreParsedPages = {
         'base64-image-converter': { title: 'Base64 Image Encode/Decode', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
         'binary-calc': { title: 'Binary Calculator', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
         'binary-text': { title: 'Binary Text Converter', icon: 'file-binary', description: 'Convert to/from binary text' },
-        'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system' },
+        'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system', additionalScripts: [imports.uaParser.script] },
         calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with personal to-do list', toolbox: false },
         'case-changer': { title: 'Case Changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
         'color-info': { title: 'Color Information', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors' },
