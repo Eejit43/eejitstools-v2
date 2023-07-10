@@ -1,22 +1,22 @@
+import { holidayEmojis, moonEmojis } from '../../../data/pages.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
-import { holidayEmojis, moonEmojis } from '/data/pages.js';
 
-const monthYearDisplay = document.getElementById('month-year');
-const calendarBody = document.getElementById('calendar-body');
-const previousMonthButton = document.getElementById('previous-month');
-const nextMonthButton = document.getElementById('next-month');
-const currentDateButton = document.getElementById('current-date');
-const jumpMonthSelection = document.getElementById('jump-month');
-const jumpYearSelection = document.getElementById('jump-year');
+const monthYearDisplay = document.getElementById('month-year') as HTMLDivElement;
+const calendarBody = document.getElementById('calendar-body') as HTMLElement;
+const previousMonthButton = document.getElementById('previous-month') as HTMLInputElement;
+const nextMonthButton = document.getElementById('next-month') as HTMLInputElement;
+const currentDateButton = document.getElementById('current-date') as HTMLInputElement;
+const jumpMonthSelection = document.getElementById('jump-month') as HTMLSelectElement;
+const jumpYearSelection = document.getElementById('jump-year') as HTMLSelectElement;
 
-const displayDay = document.getElementById('display-day');
-const displayDate = document.getElementById('display-date');
-const displayMonthYear = document.getElementById('display-month-year');
-const eventsList = document.getElementById('events-list');
+const displayDay = document.getElementById('display-day') as HTMLDivElement;
+const displayDate = document.getElementById('display-date') as HTMLDivElement;
+const displayMonthYear = document.getElementById('display-month-year') as HTMLDivElement;
+const eventsList = document.getElementById('events-list') as HTMLUListElement;
 
-const loginPassword = document.getElementById('login-password');
-const loginButton = document.getElementById('login-button');
-const todoList = document.getElementById('todo-list');
+const loginPassword = document.getElementById('login-password') as HTMLInputElement;
+const loginButton = document.getElementById('login-button') as HTMLInputElement;
+const todoList = document.getElementById('todo-list') as HTMLDivElement;
 
 previousMonthButton.addEventListener('click', previousMonth);
 nextMonthButton.addEventListener('click', nextMonth);
@@ -27,10 +27,15 @@ loginPassword.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && loginPassword.value.length > 0) loginButton.click();
 });
 
-let todoData;
+interface TodoData {
+    todo: { title: string; id: string; frequency: string }[];
+    data: { [year: string]: { [month: string]: { [date: string]: { [id: string]: string } } } };
+}
+
+let todoData = null as TodoData | null;
 
 loginButton.addEventListener('click', async () => {
-    const result = await (await fetch(`/calendar-todo?password=${loginPassword.value}`)).json();
+    const result = (await (await fetch(`/calendar-todo?password=${loginPassword.value}`)).json()) as TodoData & { error?: boolean };
 
     if (!result.error) {
         todoData = result;
@@ -39,10 +44,10 @@ loginButton.addEventListener('click', async () => {
 
         todoList.dataset.password = loginPassword.value;
 
-        loadTodoList(displayedDate, displayedMonth, displayedYear);
+        loadTodoList();
     } else {
         showAlert('Incorrect password!', 'error');
-        showResult('login', 'error', null, null, false);
+        showResult('login', 'error', undefined, undefined, false);
         loginButton.disabled = true;
         setTimeout(() => (loginButton.disabled = false), 1000);
     }
@@ -57,7 +62,7 @@ if (password) {
 }
 
 document.addEventListener('keydown', (event) => {
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
 
     if (event.code === 'ArrowUp') previousMonth();
     else if (event.code === 'ArrowDown') nextMonth();
@@ -65,7 +70,7 @@ document.addEventListener('keydown', (event) => {
     else if (event.code === 'ArrowRight') nextDay();
     else if (event.code === 'KeyC') currentDate();
     else if (event.code === 'KeyS') {
-        const saveButton = document.getElementById('todo-save-button');
+        const saveButton = document.getElementById('todo-save-button') as HTMLButtonElement;
         if (saveButton && !saveButton.disabled) saveButton.click();
     }
 });
@@ -77,10 +82,12 @@ let displayedMonth = currentTime.getMonth();
 let currentYear = currentTime.getFullYear();
 let displayedYear = currentTime.getFullYear();
 
-/**
- * @type {{holidays: {name: string, date: string}[], moonPhases: {name: string, date: string}[]}}
- */
-const events = await (await fetch('/calendar-events')).json();
+interface CalendarEvents {
+    holidays: { name: string; date: string }[];
+    moonPhases: { phase: string; date: string; time: string }[];
+}
+
+const events = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 
 showCalendar(displayedDate, currentMonth, currentYear);
 
@@ -159,16 +166,16 @@ function jump() {
 
 /**
  * Shows the calendar for the given month and year
- * @param {?string} date The date to display
- * @param {string} month The month to display
- * @param {string} year The year to display
+ * @param {?number} date The date to display
+ * @param {number} month The month to display
+ * @param {number} year The year to display
  */
-function showCalendar(date, month, year) {
+function showCalendar(date: number | null, month: number, year: number) {
     jumpYearSelection.innerHTML = '';
     for (let relativeYear = year - 10; relativeYear <= year + 10; relativeYear++) {
         const option = document.createElement('option');
-        option.value = relativeYear;
-        option.text = relativeYear;
+        option.value = relativeYear.toString();
+        option.text = relativeYear.toString();
         jumpYearSelection.appendChild(option);
     }
 
@@ -178,14 +185,14 @@ function showCalendar(date, month, year) {
     calendarBody.innerHTML = '';
 
     monthYearDisplay.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
-    jumpYearSelection.value = year;
-    jumpMonthSelection.value = month;
+    jumpYearSelection.value = year.toString();
+    jumpMonthSelection.value = month.toString();
 
     let currentDate = 1;
     for (let i = 0; i < 6; i++) {
         const row = document.createElement('tr');
 
-        for (let j = 0; j < 7; j++) {
+        for (let j = 0; j < 7; j++)
             if (i === 0 && j < firstDay) {
                 const cell = document.createElement('td');
                 cell.classList.add('no-date');
@@ -198,15 +205,14 @@ function showCalendar(date, month, year) {
                 row.appendChild(cell);
             } else {
                 const cell = document.createElement('td');
-                cell.dataset.date = currentDate;
-                cell.textContent = currentDate;
+                cell.dataset.date = currentDate.toString();
+                cell.textContent = currentDate.toString();
                 if (currentDate === currentTime.getDate() && month === currentTime.getMonth() && year === currentTime.getFullYear()) cell.classList.add('current-date');
                 if (currentDate === displayedDate && month === displayedMonth && year === displayedYear) cell.classList.add('selected-date');
-                cell.addEventListener('click', () => updateDisplayedDate(parseInt(cell.dataset.date), month, year));
+                cell.addEventListener('click', () => updateDisplayedDate(parseInt(cell.dataset.date as string), month, year));
                 row.appendChild(cell);
                 currentDate++;
             }
-        }
 
         calendarBody.appendChild(row);
     }
@@ -218,27 +224,27 @@ function showCalendar(date, month, year) {
 
 /**
  * Updates the displayed date
- * @param {string} date The date to display
- * @param {string} month The month to display
- * @param {string} year The year to display
+ * @param {number} date The date to display
+ * @param {number} month The month to display
+ * @param {number} year The year to display
  */
-function updateDisplayedDate(date, month, year) {
+function updateDisplayedDate(date: number, month: number, year: number) {
     displayedDate = date;
     displayedMonth = month;
     displayedYear = year;
 
     document.querySelector('.selected-date')?.classList?.remove('selected-date');
     displayDay.textContent = new Date(year, month, date).toLocaleString(undefined, { weekday: 'long' });
-    displayDate.textContent = date;
+    displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
-    const dateCell = document.querySelector(`[data-date="${date}"]`);
+    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement;
     dateCell.classList.add('selected-date');
 
     if (dateCell.dataset.holiday || dateCell.dataset.phase) {
         eventsList.innerHTML = '';
 
-        const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time})` : null].flat().filter(Boolean);
+        const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time as string})` : null].flat().filter(Boolean) as string[];
 
         events.forEach((event) => {
             const eventElement = document.createElement('li');
@@ -259,7 +265,7 @@ function loadCalendarEvents() {
     events.holidays.forEach((holiday) => {
         const date = new Date(`${holiday.date}T00:00:00`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`);
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
             cell.classList.add('holiday');
             if (!cell.dataset.holiday) cell.dataset.holiday = holiday.name;
             else cell.dataset.holiday += `, ${holiday.name}`;
@@ -269,7 +275,7 @@ function loadCalendarEvents() {
     events.moonPhases.forEach((moonPhase) => {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`);
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
             cell.dataset.phase = moonPhase.phase;
             cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
@@ -293,7 +299,7 @@ function loadTodoList() {
 
     todoList.innerHTML = '';
 
-    todoData.todo.forEach((todo) => {
+    (todoData as TodoData).todo.forEach((todo) => {
         if (
             todo.frequency === 'daily' ||
             (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
@@ -312,12 +318,12 @@ function loadTodoList() {
             todoCheckbox.classList.add('todo-checkbox');
             todoCheckbox.id = `todo-${todo.id}`;
             todoCheckbox.dataset.id = todo.id;
-            todoCheckbox.checked = !!todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
+            todoCheckbox.checked = !!(todoData as TodoData).data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', () => {
-                const todoFinal = {};
-                todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.id] = checkbox.checked));
+                const todoFinal: { [id: string]: boolean } = {};
+                (todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>).forEach((checkbox) => (todoFinal[checkbox.dataset.id as string] = checkbox.checked));
 
-                if (Object.entries(todoFinal).some(([id, checked]) => !!todoData.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
+                if (Object.entries(todoFinal).some(([id, checked]) => !!(todoData as TodoData).data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
                 else todoSaveButton.disabled = true;
             });
 
@@ -358,13 +364,14 @@ function loadTodoList() {
     todoSaveButton.textContent = 'Save changes';
     todoSaveButton.disabled = true;
     todoSaveButton.addEventListener('click', async () => {
-        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = true));
+        const allCheckboxes = todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>;
+        allCheckboxes.forEach((checkbox) => (checkbox.disabled = true));
         todoSaveButton.disabled = true;
 
-        const todoFinal = {};
-        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (todoFinal[checkbox.dataset.id] = checkbox.checked));
+        const todoFinal = {} as { [id: string]: boolean };
+        allCheckboxes.forEach((checkbox) => (todoFinal[checkbox.dataset.id as string] = checkbox.checked));
 
-        const result = await (
+        const result = (await (
             await fetch('/calendar-todo-edit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -376,13 +383,13 @@ function loadTodoList() {
                     todo: todoFinal
                 })
             })
-        ).json();
+        ).json()) as TodoData & { error?: string };
 
         if (result.error) showAlert(result.error, 'error');
 
         todoData = result;
 
-        todoList.querySelectorAll('.todo-checkbox').forEach((checkbox) => (checkbox.disabled = false));
+        allCheckboxes.forEach((checkbox) => (checkbox.disabled = false));
     });
 
     todoList.appendChild(todoSaveButton);

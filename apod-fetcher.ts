@@ -12,7 +12,18 @@ interface ApodEntry {
     media?: ApodEntryMedia;
 }
 
-interface ApodEntryMedia {
+export interface FullApodEntry {
+    success: boolean;
+    error?: string;
+    source: string;
+    date: string;
+    title: string;
+    credit: string;
+    explanation: string;
+    media: ApodEntryMedia;
+}
+
+export interface ApodEntryMedia {
     type: 'image' | 'embed';
     src: string;
     highResolution?: string;

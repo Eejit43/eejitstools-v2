@@ -134,7 +134,10 @@ async function getData(position) {
 function showWeatherAlert(alert) {
     const alertDisplay = document.getElementById('alert-display');
 
-    const alertText = `${alert.title}\n\n${alert.description.replace(/\n/g, ' ').replace(/^\* (.*?)\.{3}/g, '– $1:\n ').replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions}`; // prettier-ignore
+    const alertText = `${alert.title}\n\n${alert.description
+        .replace(/\n/g, ' ')
+        .replace(/^\* (.*?)\.{3}/g, '– $1:\n ')
+        .replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions}`;
 
     if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
         alertDisplay.style.display = 'unset';

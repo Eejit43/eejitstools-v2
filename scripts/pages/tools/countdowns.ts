@@ -1,5 +1,5 @@
+import { holidayEmojis } from '../../../data/pages.js';
 import { twemojiUpdate } from '../../functions.js';
-import { holidayEmojis } from '/data/pages.js';
 
 /**
  * @type {{holidays: {name: string, date: string}[], moonPhases: {name: string, date: string}[]}}

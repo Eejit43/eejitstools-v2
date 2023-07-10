@@ -145,9 +145,9 @@ fastify.get('/calendar-events', async (request, reply) => {
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const moonPhases = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY as string}`)).json()) as Calendar).items
         .map((moonPhase) => ({
-            phase: moonPhase.summary.match(/([\w ]+) \d/)?.[1],
+            phase: moonPhase.summary.match(/([\w ]+) \d/)?.[1] as string,
             date: moonPhase.start.date,
-            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)?.[1].replace(/(\d)([ap]m)/, '$1 $2')
+            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)?.[1].replace(/(\d)([ap]m)/, '$1 $2') as string
         }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const result = { holidays, moonPhases };

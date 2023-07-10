@@ -41,7 +41,7 @@ loginButton.addEventListener('click', async () => {
     }
 });
 
-const mintMarks: { [key: string]: string } = {
+const mintMarks: { [abbreviation: string]: string } = {
     P: 'Philadelphia (Pennsylvania)',
     D: 'Denver (Colorado)',
     S: 'San Francisco (California)',
@@ -56,10 +56,10 @@ interface CoinVariantById {
     note?: string;
     years?: string;
     active?: true;
-    coins: { [key: string]: PartialNullable<Coin> };
+    coins: { [id: string]: PartialNullable<Coin> };
 }
 
-let coinsData: { [key: string]: { name: string; id: string; coins: { [key: string]: CoinVariantById } } };
+let coinsData: { [id: string]: { name: string; id: string; coins: { [id: string]: CoinVariantById } } };
 
 /**
  * Load the coins list

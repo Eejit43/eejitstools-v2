@@ -10,8 +10,18 @@ const paragraphDisplay = document.getElementById('paragraph-count');
 /* Add event listeners */
 document.getElementById('input').addEventListener('input', () => {
     characterDisplay.textContent = input.value.length;
-    wordDisplay.textContent = input.value.trim() ? input.value.trim().split(/\s+/) .filter((word) => /\w/.test(word)).length : 0; // prettier-ignore
-    sentenceDisplay.textContent = input.value.trim() ? input.value.trim().split(/[.?!]/).filter((sentence) => !/^\s*$/.test(sentence)).length : 0; // prettier-ignore
+    wordDisplay.textContent = input.value.trim()
+        ? input.value
+              .trim()
+              .split(/\s+/)
+              .filter((word) => /\w/.test(word)).length
+        : 0;
+    sentenceDisplay.textContent = input.value.trim()
+        ? input.value
+              .trim()
+              .split(/[.?!]/)
+              .filter((sentence) => !/^\s*$/.test(sentence)).length
+        : 0;
     lineDisplay.textContent = input.value.trim() ? input.value.trim().split('\n').length : 0;
     paragraphDisplay.textContent = input.value.trim() ? input.value.trim().split('\n\n').length : 0;
 });

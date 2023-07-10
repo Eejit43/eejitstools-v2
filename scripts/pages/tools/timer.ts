@@ -61,7 +61,7 @@ secondsInput.addEventListener('input', () => {
 
 /**
  * Checks and updates an elements value if needed
- * @param {HTMLElement} element the element to check and update
+ * @param {HTMLInputElement} element the element to check and update
  */
 function checkInput(element) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);

@@ -279,7 +279,7 @@ interface Style {
 }
 
 interface Imports {
-    [key: string]: {
+    [name: string]: {
         script?: Script;
         style?: Style;
     };
@@ -437,7 +437,7 @@ Object.entries(preParsedPages).forEach(([category, pages]) => {
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export const holidayEmojis = {
+export const holidayEmojis: { [holiday: string]: string } = {
     "New Year's Day": '🎉',
     'Martin Luther King Jr. Day': '👴🏾',
     'First Day of Black History Month': '✊🏿',
@@ -476,7 +476,7 @@ export const holidayEmojis = {
     "New Year's Eve": '🕛'
 };
 
-export const moonEmojis = {
+export const moonEmojis: { [moon: string]: string } = {
     'New moon': '🌑',
     'First quarter': '🌓',
     'Full moon': '🌕',
