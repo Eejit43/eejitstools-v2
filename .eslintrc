@@ -1,5 +1,11 @@
 {
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking"],
+    "extends": [
+        "eslint:recommended", //
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:jsdoc/recommended-typescript"
+    ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
     "env": { "browser": true },
@@ -20,6 +26,11 @@
         "default-param-last": "off",
         "dot-notation": "off",
         "eqeqeq": ["error", "always"],
+        "jsdoc/check-indentation": "warn",
+        "jsdoc/require-description-complete-sentence": "warn",
+        "jsdoc/require-description": "warn",
+        "jsdoc/require-hyphen-before-param-description": ["warn", "never"],
+        "jsdoc/require-returns": "off",
         "no-await-in-loop": "error",
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "no-lonely-if": "error",

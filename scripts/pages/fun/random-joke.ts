@@ -5,7 +5,7 @@ const joke = document.getElementById('joke') as HTMLSpanElement;
 getJokeButton.addEventListener('click', fetchJoke);
 
 /**
- * Fetched a random joke
+ * Fetched a random joke.
  */
 async function fetchJoke() {
     joke.textContent = 'Loading...';

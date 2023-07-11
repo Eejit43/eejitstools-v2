@@ -27,9 +27,8 @@ if (result.length > 0) {
 }
 
 /**
- * Calculates the time until a given date
- * @param {string} date The date to calculate time to
- * @returns {string|null} The time until the given date, or null if it has occurred or is over 60 days away
+ * Gets the milliseconds until a given date (or null if it has occurred or is over 60 days away).
+ * @param date The date to calculate time to.
  */
 function getTimeUntil(date: string) {
     const distance = new Date(`${date} 00:00:00`).getTime() - new Date().getTime();

@@ -26,8 +26,8 @@ resetDate.addEventListener('click', getCurrent);
 });
 
 /**
- * Checks and updates an elements value if needed
- * @param {HTMLInputElement} element the element to check and update
+ * Checks and updates an elements value if needed.
+ * @param element The element to check and update.
  */
 function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
@@ -53,7 +53,7 @@ interface CalendarData {
 }
 
 /**
- * Fetches calendar information for the specified date
+ * Fetches calendar information for the specified date.
  */
 function getFromDate() {
     const monthInput = escapeHtml(monthVal.value || month).padStart(2, '0');
@@ -82,7 +82,7 @@ function getFromDate() {
 }
 
 /**
- * Fetches calendar information for the current date
+ * Fetches calendar information for the current date.
  */
 function getCurrent() {
     eventsTitle.textContent = 'Current Events:';

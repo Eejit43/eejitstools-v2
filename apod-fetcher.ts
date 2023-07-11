@@ -32,10 +32,10 @@ export interface ApodEntryMedia {
 }
 
 /**
- * Fetches the Astronomy Picture of the Day (APOD) for the provided date
- * @param {string} year the year to fetch
- * @param {string} month the month to fetch
- * @param {string} date the date to fetch
+ * Fetches the Astronomy Picture of the Day (APOD) for the provided date.
+ * @param year The year to fetch.
+ * @param month The month to fetch.
+ * @param date The date to fetch.
  */
 export async function fetchApod(year: string, month: string, date: string): Promise<ApodEntry> {
     year = year.padStart(2, '0');
@@ -43,7 +43,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
     month = month.padStart(2, '0');
     date = date.padStart(2, '0');
 
-    const apodDate = new Date(`${month}/${date}/${year} 00:00:00`).toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const apodDate = new Date(`${month}/${date}/${year} 00:00:00`).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     const url = `https://apod.nasa.gov/apod/ap${year}${month}${date}.html`;
 

@@ -365,8 +365,8 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
 });
 
 /**
- * Logs information about an API request
- * @param {FastifyRequest} request the request object
+ * Logs information about an API request.
+ * @param request The request object.
  */
 function logApiRequest(request: FastifyRequest) {
     consola.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);

@@ -18,7 +18,7 @@ resetButton.addEventListener('click', () => {
 });
 
 /**
- * Generates and displays a random number
+ * Generates and displays a random number.
  */
 function generateNumber() {
     const min = Number(minNumber.value);

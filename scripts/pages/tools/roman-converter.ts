@@ -71,7 +71,7 @@ romanOutputCopy2.addEventListener('click', () => copyText(romanOutputCopy2, roma
 integerOutputCopy.addEventListener('click', () => copyText(integerOutputCopy, integerOutputVal));
 
 /**
- * Converts the provided integer to roman numerals and displays the result
+ * Converts the provided integer to roman numerals and displays the result.
  */
 function convertInteger() {
     if (parseInt(integerInput.value) > 0) {
@@ -89,7 +89,7 @@ function convertInteger() {
 }
 
 /**
- * Converts the provided roman numerals to a number and displays the result
+ * Converts the provided roman numerals to a number and displays the result.
  */
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
@@ -111,9 +111,8 @@ const roman = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV',
 const decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
 
 /**
- * Converts a number to roman numerals
- * @param {string|number} number Number to convert to roman numerals
- * @returns {string} Number in roman numerals
+ * Converts a number to roman numerals.
+ * @param number Number to convert to roman numerals.
  * @see https://iandevlin.com/files/blog/romanNumerals.html
  */
 function romanize(number: number) {
@@ -145,9 +144,8 @@ function romanize(number: number) {
 }
 
 /**
- * Converts a roman numerals to a number
- * @param {string} string Roman numeral to convert to number
- * @returns {string} Number
+ * Converts a roman numerals to a number.
+ * @param string Roman numeral to convert to number.
  * @author emnudge
  */
 function deromanize(string: string) {

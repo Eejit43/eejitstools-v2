@@ -33,7 +33,7 @@ resultCopy.addEventListener('click', () => {
 });
 
 /**
- * Converts the provided string to binary and displays the result
+ * Converts the provided string to binary and displays the result.
  */
 function toBinary() {
     if (input.value.trim().length <= 0) {
@@ -49,7 +49,7 @@ function toBinary() {
 }
 
 /**
- * Converts the provided string from binary and displays the result
+ * Converts the provided string from binary and displays the result.
  */
 function fromBinary() {
     if (input.value.trim().length <= 0) {
@@ -70,9 +70,8 @@ function fromBinary() {
 }
 
 /**
- * Encodes a string into binary
- * @param {string} string String to encode
- * @returns {string} Encoded string
+ * Encodes a string into binary.
+ * @param string String to encode.
  */
 function stringToBinary(string: string) {
     return string
@@ -82,9 +81,8 @@ function stringToBinary(string: string) {
 }
 
 /**
- * Decodes binary to string
- * @param {string} binary Binary to decode
- * @returns {string} Decoded string
+ * Decodes binary to string.
+ * @param binary Binary to decode.
  */
 function binaryToString(binary: string) {
     return binary

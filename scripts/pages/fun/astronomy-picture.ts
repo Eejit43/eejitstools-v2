@@ -33,8 +33,8 @@ resetDateButton.addEventListener('click', () => {
 });
 
 /**
- * Checks and updates an elements value if needed
- * @param {HTMLInputElement} element the element to check and update
+ * Checks and updates an elements value if needed.
+ * @param element The element to check and update.
  */
 function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
@@ -59,21 +59,21 @@ dateInput.placeholder = date.toString();
 checkApod(year, month, date);
 
 /**
- * Checks the provided date to ensure it is between June 16th, 1995, and the current date
- * @param {number} yearInput the year input
- * @param {number} monthInput the month input
- * @param {number} dateInput the date input
+ * Checks the provided date to ensure it is between June 16th, 1995, and the current date.
+ * @param yearInput The year input.
+ * @param monthInput The month input.
+ * @param dateInput The date input.
  */
 function checkApod(yearInput: number, monthInput: number, dateInput: number) {
     if (new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() && new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= new Date().getTime()) fetchApod(yearInput, monthInput, dateInput);
-    else showAlert(`Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
+    else showAlert(`Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
 }
 
 /**
- * Fetches the Astronomy Picture of the Day (APOD) for the provided date
- * @param {number} yearInput the year input
- * @param {number} monthInput the month input
- * @param {number} dateInput the date input
+ * Fetches the Astronomy Picture of the Day (APOD) for the provided date.
+ * @param yearInput The year input.
+ * @param monthInput The month input.
+ * @param dateInput The date input.
  */
 async function fetchApod(yearInput: number, monthInput: number, dateInput: number) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
@@ -100,8 +100,8 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
 }
 
 /**
- * Gets a viewable element (`img` or `iframe` embed) for an APOD entry media
- * @param {ApodEntryMedia} media the media to get the element for
+ * Gets a viewable element (`img` or `iframe` embed) for an APOD entry media.
+ * @param media The media to get the element for.
  */
 function getMediaElement(media: ApodEntryMedia) {
     const { type, src, highResolution, alt } = media;

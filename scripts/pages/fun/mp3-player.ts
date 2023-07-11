@@ -42,10 +42,10 @@ nextButton.addEventListener('click', next);
 toggleMuteButton.addEventListener('click', toggleMute);
 
 /**
- * Creates a new track item
- * @param {AudioCategory} category the category of the track
- * @param {number} index the index of the track
- * @param {AudioTrack} track the track item
+ * Creates a new track item.
+ * @param category The category of the track.
+ * @param index The index of the track.
+ * @param track The track item.
  */
 function createTrackItem(category: AudioCategory, index: number, track: AudioTrack) {
     const trackItem = document.createElement('div');
@@ -118,10 +118,10 @@ let audioCategory = 'general';
 let audioIndex = 0;
 
 /**
- * Loads a new track
- * @param {string} category the category of the track
- * @param {number} index the index of the track
- * @param {boolean} [play=true] whether or not to play the track
+ * Loads a new track.
+ * @param category The category of the track.
+ * @param index The index of the track.
+ * @param play Whether to play the track (defaults to `true`).
  */
 function loadNewTrack(category: string, index: number, play = true) {
     const track = tracksByCategory[category].tracks[index];
@@ -137,8 +137,8 @@ function loadNewTrack(category: string, index: number, play = true) {
 for (const track of document.querySelectorAll('.playlist-track')) track.addEventListener('click', loadClickedTrack as EventListener);
 
 /**
- * Loads the clicked track
- * @param {MouseEvent} event the click event
+ * Loads the clicked track.
+ * @param event The click event.
  */
 function loadClickedTrack(event: MouseEvent) {
     shuffled = false;
@@ -154,7 +154,7 @@ function loadClickedTrack(event: MouseEvent) {
 loadNewTrack(audioCategory, audioIndex, false);
 
 /**
- * Toggles the audio's play state
+ * Toggles the audio's play state.
  */
 function toggleAudio() {
     if (audio.paused) {
@@ -178,8 +178,8 @@ interface AudioTrackWithIndex extends AudioTrack {
 let shuffledQueue: AudioTrackWithIndex[] = [];
 
 /**
- * Shuffles an audio section
- * @param {string} category the section category to shuffle
+ * Shuffles an audio section.
+ * @param category The section category to shuffle.
  */
 function shuffleSection(category: string) {
     const oldCategory = audioCategory,
@@ -209,9 +209,8 @@ function shuffleSection(category: string) {
 }
 
 /**
- * Shuffles the order of items in an array
- * @param {Array} array The array to shuffle
- * @returns {Array} shuffled array
+ * Shuffles the order of items in an array.
+ * @param array The array to shuffle.
  */
 function shuffleArray(array: Array<unknown>) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -222,7 +221,7 @@ function shuffleArray(array: Array<unknown>) {
 }
 
 /**
- * Updates the progress bar
+ * Updates the progress bar.
  */
 function onTimeUpdate() {
     timer.textContent = formatTime(audio.currentTime);
@@ -240,16 +239,15 @@ function onTimeUpdate() {
 }
 
 /**
- * Sets the progress bar
+ * Sets the progress bar.
  */
 function setBarProgress() {
     progressBar.style.width = ((audio.currentTime / audio.duration) * 100).toString() + '%';
 }
 
 /**
- * Formats the time in seconds to minutes and seconds
- * @param {number} time the time
- * @returns {string} the minutes and seconds
+ * Formats the time in seconds to minutes and seconds.
+ * @param time The time.
  */
 function formatTime(time: number) {
     const minutes = Math.floor(time / 60)
@@ -263,8 +261,8 @@ function formatTime(time: number) {
 }
 
 /**
- * Updates the progress bar and audio time
- * @param {MouseEvent} event the click event
+ * Updates the progress bar and audio time.
+ * @param event The click event.
  */
 function handleProgressBarClick(event: MouseEvent) {
     const percent = event.offsetX / progressBarContainer.offsetWidth;
@@ -273,7 +271,7 @@ function handleProgressBarClick(event: MouseEvent) {
 }
 
 /**
- * Increases the audio's current time by 5 seconds
+ * Increases the audio's current time by 5 seconds.
  */
 function forward() {
     audio.currentTime = audio.currentTime + 5;
@@ -281,7 +279,7 @@ function forward() {
 }
 
 /**
- * Rewinds the audio's current time by 5 seconds
+ * Rewinds the audio's current time by 5 seconds.
  */
 function rewind() {
     audio.currentTime = audio.currentTime - 5;
@@ -289,7 +287,7 @@ function rewind() {
 }
 
 /**
- * Switches to the next song
+ * Switches to the next song.
  */
 function next() {
     if (shuffled) return loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
@@ -302,7 +300,7 @@ function next() {
 }
 
 /**
- * Switches to the previous song
+ * Switches to the previous song.
  */
 function previous() {
     if (audioIndex > 0 && tracksByCategory[audioCategory].tracks.length > 0) {
@@ -314,12 +312,12 @@ function previous() {
 }
 
 /**
- * Updates the current track style
- * @param {string} oldCategory the category of the old track
- * @param {number} oldIndex the index of the old track
- * @param {string} newCategory the category of the new track
- * @param {number} newIndex the index of the new track
- * @param {boolean} [play=true] whether or not to mark the new track as playing
+ * Updates the current track style.
+ * @param oldCategory The category of the old track.
+ * @param oldIndex The index of the old track.
+ * @param newCategory The category of the new track.
+ * @param newIndex The index of the new track.
+ * @param play Whether or not to mark the new track as playing (defaults to `true`).
  */
 function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCategory: string, newIndex: number, play = true) {
     document.getElementById(`playlist-track-${oldCategory}-${oldIndex}`)?.classList.remove('active-track');
@@ -331,7 +329,7 @@ function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCatego
 let shuffled = false;
 
 /**
- * Toggles shuffle mode
+ * Toggles shuffle mode.
  */
 function toggleShuffle() {
     if (shuffled) {
@@ -349,9 +347,9 @@ function toggleShuffle() {
 }
 
 /**
- * Marks the icon of a track as playing
- * @param {string} category the category of the track
- * @param {number} index the index of the track
+ * Marks the icon of a track as playing.
+ * @param category The category of the track.
+ * @param index The index of the track.
  */
 function pauseToPlay(category: string, index: number) {
     const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
@@ -360,9 +358,9 @@ function pauseToPlay(category: string, index: number) {
 }
 
 /**
- * Marks the icon of a track as paused
- * @param {string} category the category of the track
- * @param {number} index the index of the track
+ * Marks the icon of a track as paused.
+ * @param category The category of the track.
+ * @param index The index of the track.
  */
 function playToPause(category: string, index: number) {
     const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
@@ -371,7 +369,7 @@ function playToPause(category: string, index: number) {
 }
 
 /**
- * Toggles the audio's mute state
+ * Toggles the audio's mute state.
  */
 function toggleMute() {
     if (audio.muted === false) {

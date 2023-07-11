@@ -99,7 +99,7 @@ b64CopyResult.addEventListener('click', () => {
 });
 
 /**
- * Encodes the base64 image and displays the result
+ * Encodes the base64 image and displays the result.
  */
 function encode() {
     if (uploadedFile) {
@@ -125,9 +125,8 @@ function encode() {
 }
 
 /**
- * Determines if the specified string is a valid base64 encoded image
- * @param {string} base64 The base64 to check
- * @returns {Promise<boolean>} Whether or not the base64 is a valid image
+ * Checks if the specified string is a valid base64 encoded image.
+ * @param base64 The base64 to check.
  */
 function isBase64Image(base64: string) {
     const image = new Image();
@@ -144,8 +143,8 @@ function isBase64Image(base64: string) {
 }
 
 /**
- * Determines validity and displays a base64 encoded image
- * @param {string} string The base64 of the image to display
+ * Determines validity and displays a base64 encoded image.
+ * @param string The base64 of the image to display.
  */
 async function displayImage(string: string) {
     const valid = await isBase64Image(string);
@@ -158,10 +157,9 @@ async function displayImage(string: string) {
 }
 
 /**
- * Creates base 64 object URL
- * @param {string} data The base64 to create an object URL for
- * @param {string} mimeType The mimeType of the given base64
- * @returns {string} image object URL
+ * Creates a base64 object URL.
+ * @param data The base64 to create an object URL for.
+ * @param mimeType The mimeType of the given base64.
  * @see https://stackoverflow.com/questions/52092093
  */
 function createBase64ObjectUrl(data: string, mimeType: string) {

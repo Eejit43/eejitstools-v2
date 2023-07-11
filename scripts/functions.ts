@@ -8,7 +8,7 @@ interface Twemoji {
 }
 
 /**
- * Update emojis on the loaded content
+ * Update emojis on the loaded content.
  */
 export function twemojiUpdate() {
     (twemoji as Twemoji).parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
@@ -26,15 +26,15 @@ declare function toastify(options: {
 };
 
 /**
- * Displays a popup alert
- * @param {string} text The string to display
- * @param {'success'|'error'|string} color 'success', 'error', or color
- * @param {number} [duration] The duration of the popup in milliseconds
+ * Displays a popup alert.
+ * @param text The string to display.
+ * @param color The color value (or `'success'` or `'error'`).
+ * @param duration The duration of the popup in milliseconds.
  */
 export function showAlert(text: string, color: 'success' | 'error' | string, duration?: number) {
     color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
-    if (color === 'error') color = '#ff5555';
+    else if (color === 'error') color = '#ff5555';
     toastify({
         text: text || 'No text specified!',
         duration: duration || 2000,
@@ -55,12 +55,12 @@ export function showAlert(text: string, color: 'success' | 'error' | string, dur
 }
 
 /**
- * Updates the icon of the specified element
- * @param {string} id The prefix of the element ID to update
- * @param {'success'|'error'} [type] The type of icon to show ('success' or 'error')
- * @param {string} [color='#009c3f'] The color of the icon to show
- * @param {string} [icon='check'] The icon of the icon to show
- * @param {boolean} [remove=true] Whether or not to the remove the icon after 2 seconds (default: true)
+ * Updates the icon of the specified element.
+ * @param id The prefix of the element ID to update.
+ * @param type The type of icon to show.
+ * @param color The color of the icon to show.
+ * @param icon The icon of the icon to show.
+ * @param remove Whether to the remove the icon after 2 seconds (defaults to `true`).
  */
 export function showResult(id: string, type: 'success' | 'error' | null, color = '#009c3f', icon = 'check', remove = true) {
     const oldElement = document.getElementById(id + '-result') as HTMLElement;
@@ -83,8 +83,8 @@ export function showResult(id: string, type: 'success' | 'error' | null, color =
 }
 
 /**
- * Removes the icon of the specified element
- * @param {string} id The prefix of the element ID to update
+ * Removes the icon of the specified element.
+ * @param id The prefix of the element ID to update.
  */
 export function resetResult(id: string) {
     const element = document.getElementById(id + '-result') as HTMLElement;
@@ -93,10 +93,10 @@ export function resetResult(id: string) {
 }
 
 /**
- * Updates the arrow icon of the specified element
- * @param {HTMLElement} element The element to update
- * @param {'success'|'error'|'reset'} [type] The type of icon to show ('success', 'error', or 'reset')
- * @param {string} [arrowType='right'] The direction of the arrow (defaults to 'right')
+ * Updates the arrow icon of the specified element.
+ * @param element The element to update.
+ * @param type The type of icon to show.
+ * @param arrowType The direction of the arrow (defaults to `right`).
  */
 export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'reset', arrowType = 'right') {
     let color, icon;
@@ -115,9 +115,9 @@ export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'r
 }
 
 /**
- * Copy an element's value
- * @param {HTMLButtonElement} element The element to update
- * @param {HTMLInputElement|HTMLTextAreaElement} copyElement The element of the value to be copied
+ * Copy an element's value.
+ * @param element The element to update.
+ * @param copyElement The element of the value to be copied.
  */
 export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElement | HTMLTextAreaElement) {
     navigator.clipboard.writeText(copyElement.value);
@@ -135,9 +135,9 @@ export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElem
 }
 
 /**
- * Copy a string
- * @param {HTMLButtonElement} element The element to update
- * @param {string} text The text to copy
+ * Copy a string.
+ * @param element The element to update.
+ * @param text The text to copy.
  */
 export function copyText(element: HTMLButtonElement, text: string) {
     navigator.clipboard.writeText(text);
@@ -155,34 +155,34 @@ export function copyText(element: HTMLButtonElement, text: string) {
 }
 
 /**
- * Escapes HTML syntax in a string
- * @param {string} input String to be modified
+ * Escapes HTML syntax in a string.
+ * @param input String to be modified.
  */
 export function escapeHtml(input: string) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
 /**
- * Converts a string to HTML
- * @param {string} string String to convert
+ * Converts a string to HTML.
+ * @param string String to convert.
  */
 export function stringToHtml(string: string) {
     return new DOMParser().parseFromString(string, 'text/html');
 }
 
 /**
- * Updates an element's innerHTML to the provided string if it isn't the same as the provided string
- * @param {HTMLElement} element the element to update
- * @param {string} string the content to update the element with
+ * Updates an element's innerHTML to the provided string if it isn't the same as the provided string.
+ * @param element The element to update.
+ * @param string The content to update the element with.
  */
 export function updateInnerHtml(element: HTMLElement, string: string) {
     if (element.innerHTML !== string) element.innerHTML = string;
 }
 
 /**
- * Adds an animation class to an element, and removes it upon completion
- * @param {string} element selectors for element
- * @param {string} animation the animation to add
+ * Adds an animation class to an element, and removes it upon completion.
+ * @param element Selectors for element.
+ * @param animation The animation to add.
  */
 export const addAnimation = (element: string, animation: string) =>
     new Promise((resolve) => {
@@ -202,8 +202,8 @@ export const addAnimation = (element: string, animation: string) =>
     });
 
 /**
- * Converts a string to title case
- * @param {string} string the string to convert
+ * Converts a string to title case.
+ * @param string The string to convert.
  */
 export function titleCase(string: string) {
     return string

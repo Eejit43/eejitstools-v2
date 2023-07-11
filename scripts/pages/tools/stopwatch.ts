@@ -20,7 +20,7 @@ displayTime();
 stopButton.disabled = true;
 
 /**
- * Starts the stopwatch
+ * Starts the stopwatch.
  */
 function startStopwatch() {
     if (paused) {
@@ -34,7 +34,7 @@ function startStopwatch() {
 }
 
 /**
- * Stops (pauses) the stopwatch
+ * Stops (pauses) the stopwatch.
  */
 function stopStopwatch() {
     if (!paused) {
@@ -47,7 +47,7 @@ function stopStopwatch() {
 }
 
 /**
- * Stops and resets the stopwatch
+ * Stops and resets the stopwatch.
  */
 function resetStopwatch() {
     paused = true;
@@ -59,7 +59,7 @@ function resetStopwatch() {
 }
 
 /**
- * Displays the stopwatch's current time
+ * Displays the stopwatch's current time.
  */
 function displayTime() {
     const value = paused ? offset : Date.now() + offset;
@@ -73,12 +73,11 @@ function displayTime() {
 }
 
 /**
- * Formats a time (unix, milliseconds)
- * @param {number} value the value to format
- * @param {number} scale the scale (number to divide by)
- * @param {number|null} modulo the number to divide by and return the remainder (`null` = no division)
- * @param {number} padding the length of the number to pad the start of the ending value with
- * @returns {number} the formatted value
+ * Formats a time (unix, milliseconds).
+ * @param value The value to format.
+ * @param scale The scale (number to divide by).
+ * @param modulo The number to divide by and return the remainder (`null` = no division).
+ * @param padding The length of the number to pad the start of the ending value with.
  */
 function format(value: number, scale: number, modulo: number | null, padding: number) {
     return modulo

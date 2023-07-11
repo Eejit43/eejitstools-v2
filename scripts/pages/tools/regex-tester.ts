@@ -81,7 +81,7 @@ switchButton.addEventListener('click', () => {
 copyResultButton.addEventListener('click', () => copyValue(copyResultButton, outputText));
 
 /**
- * Runs the regex tester
+ * Runs the regex tester.
  */
 function runRegexTester() {
     let isValid = true;

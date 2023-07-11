@@ -45,7 +45,7 @@ toggleSpacers.addEventListener('click', () => {
 });
 
 /**
- * Checks the input value and gives an error message if the input is invalid
+ * Checks the input value and gives an error message if the input is invalid.
  */
 function findInput() {
     if (input.value.length > 0)
@@ -79,9 +79,9 @@ function findInput() {
 }
 
 /**
- * Converts the given value and displays the converted value
- * @param {string} value the value to convert
- * @param {number} radix the base of the input value
+ * Converts the given value and displays the converted value.
+ * @param value The value to convert.
+ * @param radix The base of the input value.
  */
 function convert(value: string, radix: number) {
     const periods = value.match(/\./g);
@@ -109,10 +109,9 @@ function convert(value: string, radix: number) {
 }
 
 /**
- * Converts a string to an integer/float
- * @param {string} number the number to convert
- * @param {number} [radix=10] the base of the number
- * @returns {number} the converted number
+ * Converts a string to an integer/float.
+ * @param number The number to convert.
+ * @param radix The base of the number (defaults to `10`).
  */
 function parseNumberWithRadix(number: string, radix = 10) {
     radix = radix | 0;
@@ -122,7 +121,7 @@ function parseNumberWithRadix(number: string, radix = 10) {
 }
 
 /**
- * Handles an invalid input
+ * Handles an invalid input.
  */
 function notValid() {
     message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${radices[inputType.value] ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
@@ -132,9 +131,8 @@ function notValid() {
 }
 
 /**
- * Adds spaces to a binary number
- * @param {string} binary the binary number to add spaces to
- * @returns {string} the binary number with spaces
+ * Adds spaces to a binary number.
+ * @param binary The binary number to add spaces to.
  */
 function addBinarySpacers(binary: string) {
     const sign = binary.startsWith('-') ? '-' : '';

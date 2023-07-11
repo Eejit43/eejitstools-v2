@@ -88,7 +88,7 @@ const events = (await (await fetch('/calendar-events')).json()) as CalendarEvent
 showCalendar(displayedDate, currentMonth, currentYear);
 
 /**
- * Goes to the previous month
+ * Goes to the previous month.
  */
 function previousMonth() {
     if (currentMonth === 0) currentYear--;
@@ -97,7 +97,7 @@ function previousMonth() {
 }
 
 /**
- * Goes to the next month
+ * Goes to the next month.
  */
 function nextMonth() {
     if (currentMonth === 11) currentYear++;
@@ -106,7 +106,7 @@ function nextMonth() {
 }
 
 /**
- * Goes to the previous day
+ * Goes to the previous day.
  */
 function previousDay() {
     if (displayedDate === 1) {
@@ -124,7 +124,7 @@ function previousDay() {
 }
 
 /**
- * Goes to the next day
+ * Goes to the next day.
  */
 function nextDay() {
     if (displayedDate === new Date(displayedYear, displayedMonth + 1, 0).getDate()) {
@@ -142,7 +142,7 @@ function nextDay() {
 }
 
 /**
- * Jumps to the current date
+ * Jumps to the current date.
  */
 function currentDate() {
     currentTime = new Date();
@@ -152,7 +152,7 @@ function currentDate() {
 }
 
 /**
- * Jumps to the selected month and year
+ * Jumps to the selected month and year.
  */
 function jump() {
     currentMonth = parseInt(jumpMonthSelection.value);
@@ -161,10 +161,10 @@ function jump() {
 }
 
 /**
- * Shows the calendar for the given month and year
- * @param {?number} date The date to display
- * @param {number} month The month to display
- * @param {number} year The year to display
+ * Shows the calendar for the given month and year.
+ * @param date The date to display.
+ * @param month The month to display.
+ * @param year The year to display.
  */
 function showCalendar(date: number | null, month: number, year: number) {
     jumpYearSelection.innerHTML = '';
@@ -219,10 +219,10 @@ function showCalendar(date: number | null, month: number, year: number) {
 }
 
 /**
- * Updates the displayed date
- * @param {number} date The date to display
- * @param {number} month The month to display
- * @param {number} year The year to display
+ * Updates the displayed date.
+ * @param date The date to display.
+ * @param month The month to display.
+ * @param year The year to display.
  */
 function updateDisplayedDate(date: number, month: number, year: number) {
     displayedDate = date;
@@ -255,7 +255,7 @@ function updateDisplayedDate(date: number, month: number, year: number) {
 }
 
 /**
- * Loads the calendar events
+ * Loads the calendar events.
  */
 function loadCalendarEvents() {
     events.holidays.forEach((holiday) => {
@@ -286,7 +286,7 @@ function loadCalendarEvents() {
 }
 
 /**
- * Loads the todo list
+ * Loads the todo list.
  */
 function loadTodoList() {
     if (!todoList) return showAlert('Please log in to use the todo list!', 'error');

@@ -45,15 +45,15 @@ window.addEventListener('blur', () => {
 let clipboardReadAllowed = false;
 
 /**
- * Displays the given message if that wasn't already displayed
- * @param {string} message the message to display
+ * Displays the given message if that wasn't already displayed.
+ * @param message The message to display.
  */
 function showWarning(message: string) {
     if (clipboardWarning.innerHTML.replace(/<br>/g, '<br />') !== message) clipboardWarning.innerHTML = message;
 }
 
 /**
- * Clears the clipboard
+ * Clears the clipboard.
  */
 function clearClipboard() {
     navigator.clipboard.writeText('');
@@ -70,7 +70,7 @@ function clearClipboard() {
 }
 
 /**
- * Requests permission to read the clipboard (`clipboard-read`)
+ * Requests permission to read the clipboard (`clipboard-read`).
  */
 async function requestPermission() {
     try {
@@ -91,8 +91,8 @@ requestPermission();
 let interval: number | null = null;
 
 /**
- * Handles the state of the `clipboard-read` permission request
- * @param {PermissionState} state the state to handle
+ * Handles the state of the `clipboard-read` permission request.
+ * @param state The state to handle.
  */
 function handlePermission(state: PermissionState) {
     if (state === 'granted' || state === 'prompt') {
@@ -110,7 +110,7 @@ function handlePermission(state: PermissionState) {
 let storedData: number | null = null;
 
 /**
- * Displays the current clipboard
+ * Displays the current clipboard.
  */
 async function clipboardDisplay() {
     try {

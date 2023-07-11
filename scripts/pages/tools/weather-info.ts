@@ -1,7 +1,7 @@
 const result = document.getElementById('result') as HTMLSpanElement;
 
 /**
- * Requests the browser's current location and handles any errors
+ * Requests the browser's current location and handles any errors.
  */
 function getLocation() {
     if (navigator.geolocation)
@@ -37,7 +37,7 @@ const airQualities = {
 interface Alert {
     description: string;
     title: string;
-    ends_local: Date;
+    ends_local: string;
     regions: string[];
     severity: string;
 }
@@ -86,8 +86,8 @@ interface LunarData {
 }
 
 /**
- * Fetches weather information for the specified permission and displays the information
- * @param {GeolocationPosition} position the position to fetch location for
+ * Fetches weather information for the specified permission and displays the information.
+ * @param position The position to fetch location for.
  */
 async function getData(position: GeolocationPosition) {
     const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${position.coords.latitude}&lon=${position.coords.longitude}&key=8cb466c81e01454d8044dd368b240a6a&include=alerts&units=I`);
@@ -115,11 +115,11 @@ async function getData(position: GeolocationPosition) {
 
     result.innerHTML = [
         `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`, //
-        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}<br />`,
+        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}<br />`,
         'Active Alerts: <span id="alerts"></span>',
         '<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>',
-        `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
-        `Sunset: ${new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}`,
+        `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`,
+        `Sunset: ${new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`,
         `Weather: ${data.weather.description} <img height="25" width="25" style="transform: translateY(6px)" src="https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png" alt="${data.weather.description}">`,
         `Precipitation: ${data.precip} inches/hour`,
         `Snowfall: ${data.snow} inches/hour`,
@@ -176,8 +176,8 @@ async function getData(position: GeolocationPosition) {
 }
 
 /**
- * Shows the specified weather alert
- * @param {number} alert the alert
+ * Shows the specified weather alert.
+ * @param alert The alert.
  */
 function showWeatherAlert(alert: Alert) {
     const alertDisplay = document.getElementById('alert-display') as HTMLTextAreaElement;

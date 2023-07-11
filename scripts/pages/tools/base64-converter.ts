@@ -33,7 +33,7 @@ copyResult.addEventListener('click', () => {
 });
 
 /**
- * Encodes the base64 and displays the result
+ * Encodes the base64 and displays the result.
  */
 function encode() {
     if (input.value.length === 0) {
@@ -51,7 +51,7 @@ function encode() {
 }
 
 /**
- * Decodes the base64 and displays the result
+ * Decodes the base64 and displays the result.
  */
 function decode() {
     if (input.value.length === 0) {

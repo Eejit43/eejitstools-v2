@@ -143,8 +143,8 @@ document.addEventListener('keydown', (event) => {
 });
 
 /**
- * Updates a color to all values
- * @param {Color} color the color to update results for
+ * Updates a color to all values.
+ * @param color The color to update results for.
  */
 function updateResults(color: Color) {
     [colorPicker, nameValue, hexValue, decimalValue, rgbValue, hslValue, cmykValue, alphaValue].forEach((element) => resetBorder(element));
@@ -173,7 +173,7 @@ function updateResults(color: Color) {
 }
 
 /**
- * Generates a random color and updates the results
+ * Generates a random color and updates the results.
  */
 function generateRandomColor() {
     const letters = '0123456789abcdef';
@@ -186,16 +186,16 @@ function generateRandomColor() {
 generateRandomColor();
 
 /**
- * Adds a red border to an element
- * @param {HTMLInputElement} element The element to update
+ * Adds a red border to an element.
+ * @param element The element to update.
  */
 function setRedBorder(element: HTMLInputElement) {
     if (element.value?.length > 0) element.style.border = '1px solid #ff5555';
 }
 
 /**
- * Resets an element's border
- * @param {HTMLInputElement} element The element to update
+ * Resets an element's border.
+ * @param element The element to update.
  */
 function resetBorder(element: HTMLInputElement) {
     element.style.border = '';

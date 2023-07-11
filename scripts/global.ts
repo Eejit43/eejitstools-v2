@@ -34,7 +34,7 @@ const timeIcon = document.getElementById('time-icon') as HTMLElement;
 setInterval(() => {
     const currentTime = new Date();
 
-    const finalTime = new Date().toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+    const finalTime = new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
     updateInnerHtml(timeDisplay, finalTime);
 
@@ -54,7 +54,7 @@ setInterval(() => {
 const navbar = document.getElementById('navbar') as HTMLElement;
 
 /**
- * Resizes the navigation bar on scroll
+ * Resizes the navigation bar on scroll.
  */
 function resizeNav() {
     if (document.documentElement.scrollTop > 80) navbar.classList.add('nav-shrunk');

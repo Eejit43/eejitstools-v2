@@ -92,7 +92,7 @@ clearButton.addEventListener('click', () => {
 convertButton.addEventListener('click', convert);
 
 /**
- * Encodes the base64 image and displays the result
+ * Encodes the base64 image and displays the result.
  */
 function loadImage() {
     const context = imagePreview.getContext('2d') as CanvasRenderingContext2D;
@@ -111,7 +111,7 @@ function loadImage() {
 }
 
 /**
- * Converts and displays the image
+ * Converts and displays the image.
  */
 function convert() {
     const url = imagePreview.toDataURL(`image/${outputTypePicker.value}`);
@@ -123,10 +123,9 @@ function convert() {
 }
 
 /**
- * Creates base 64 object URL
- * @param {string} data The base64 to create an object URL for
- * @param {string} mimeType The mimeType of the given base64
- * @returns {string} image object URL
+ * Creates a base64 object URL.
+ * @param data The base64 to create an object URL for.
+ * @param mimeType The mimeType of the given base64.
  * @see https://stackoverflow.com/questions/52092093
  */
 function createBase64ObjectUrl(data: string, mimeType: string) {

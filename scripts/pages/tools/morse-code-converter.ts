@@ -95,9 +95,8 @@ const morseConversion: { [key: string]: string } = {
 /* eslint-enable @typescript-eslint/naming-convention */
 
 /**
- * Coverts a string to Morse code
- * @param {string} string the string to convert
- * @returns {string} the string in Morse code
+ * Coverts a string to Morse code.
+ * @param string The string to convert.
  */
 function convertToMorse(string: string) {
     return string
@@ -109,7 +108,7 @@ function convertToMorse(string: string) {
 }
 
 /**
- * Converts the provided string to Morse code and displays the result
+ * Converts the provided string to Morse code and displays the result.
  */
 function toMorse() {
     if (input.value.trim().length <= 0) {
@@ -136,9 +135,8 @@ function toMorse() {
 }
 
 /**
- * Converts Morse code to a human-readable string
- * @param {string} morseCode the Morse code to convert
- * @returns {string} the converted string
+ * Converts Morse code to a human-readable string.
+ * @param morseCode The Morse code to convert.
  */
 function decodeMorse(morseCode: string) {
     return morseCode
@@ -158,7 +156,7 @@ function decodeMorse(morseCode: string) {
 }
 
 /**
- * Converts the provided string from Morse code and displays the result
+ * Converts the provided string from Morse code and displays the result.
  */
 function fromMorse() {
     const inputValue = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');

@@ -61,7 +61,7 @@ copyOutput.addEventListener('click', () => {
 window.math.createUnit('nauticalMile', { definition: '1852 meter' });
 
 /**
- * Converts the provided length value and displays the result
+ * Converts the provided length value and displays the result.
  */
 function convert() {
     input.value = input.value.replace(/,/g, '');

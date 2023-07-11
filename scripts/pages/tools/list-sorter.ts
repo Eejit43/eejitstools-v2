@@ -43,7 +43,7 @@ copyResult.addEventListener('click', () => {
 });
 
 /**
- * Alphabetizes the provided string and displays the result
+ * Alphabetizes the provided string and displays the result.
  */
 function alphabetizeNormal() {
     if (input.value.length === 0) {
@@ -60,7 +60,7 @@ function alphabetizeNormal() {
 }
 
 /**
- * Numerizes the provided string and displays the result
+ * Numerizes the provided string and displays the result.
  */
 function numerize() {
     if (input.value.length === 0) {
@@ -79,7 +79,7 @@ function numerize() {
 }
 
 /**
- * Randomizes the provided string and displays the result
+ * Randomizes the provided string and displays the result.
  */
 function randomize() {
     if (input.value.length === 0) {
@@ -93,7 +93,7 @@ function randomize() {
 }
 
 /**
- * Reverses the provided string and displays the result
+ * Reverses the provided string and displays the result.
  */
 function reverse() {
     if (input.value.length === 0) {
@@ -107,9 +107,8 @@ function reverse() {
 }
 
 /**
- * Shuffles the order of items in an array
- * @param {Array} array The array to shuffle
- * @returns {Array} shuffled array
+ * Shuffles the order of items in an array.
+ * @param array The array to shuffle.
  */
 function shuffleArray(array: Array<unknown>) {
     for (let i = array.length - 1; i > 0; i--) {

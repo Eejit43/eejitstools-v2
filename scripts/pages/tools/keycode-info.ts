@@ -35,8 +35,8 @@ window.addEventListener('blur', () => {
 });
 
 /**
- * If a key has been pressed, copies the provided string
- * @param {string} string the text to copy
+ * If a key has been pressed, copies the provided string.
+ * @param string The text to copy.
  */
 function copyKeycodeInfo(string: string) {
     if (valExist) {
@@ -46,8 +46,8 @@ function copyKeycodeInfo(string: string) {
 }
 
 /**
- * Updates information for the key that is pressed
- * @param {KeyboardEvent} event the event
+ * Updates information for the key that is pressed.
+ * @param event The event.
  */
 function keyInfo(event: KeyboardEvent) {
     valExist = true;

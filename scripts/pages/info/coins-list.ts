@@ -62,7 +62,7 @@ interface CoinVariantById {
 let coinsData: { [id: string]: { name: string; id: string; coins: { [id: string]: CoinVariantById } } };
 
 /**
- * Load the coins list
+ * Load the coins list.
  */
 async function loadCoinsList() {
     const unindexedCoinsData = (await (await fetch(`/coins-list?password=${loginPassword.dataset.input as string}`)).json()) as ParsedCoinType[];
@@ -459,9 +459,9 @@ async function loadCoinsList() {
 }
 
 /**
- * Loads the coin variant totals for a given variant
- * @param {string} type The type to load the totals for
- * @param {string} variant The variant to load the totals for
+ * Loads the coin variant totals for a given variant.
+ * @param type The type to load the totals for.
+ * @param variant The variant to load the totals for.
  */
 function loadVariantTotals(type: string, variant: string) {
     const variantData = coinsData[type].coins[variant];
@@ -484,8 +484,7 @@ function loadVariantTotals(type: string, variant: string) {
 
 /**
  * Gets the year range for a given coin variant.
- * @param {CoinVariantById} variant The coin variant to get the year range for
- * @returns {string} The year range for the coin variant
+ * @param variant The coin variant to get the year range for.
  */
 function getCoinYears(variant: CoinVariantById): string {
     if (variant.years) return variant.years;
@@ -502,11 +501,11 @@ function getCoinYears(variant: CoinVariantById): string {
 type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
 
 /**
- * Updates the coin data in the database
- * @param {string} coinTypeId The type of the coin data to update
- * @param {string} coinVariantId The variant of the coin data to update
- * @param {string} coinId The ID of the coin data to update
- * @param {PartialNullable<Coin>} data The data to update
+ * Updates the coin data in the database.
+ * @param coinTypeId The type of the coin data to update.
+ * @param coinVariantId The variant of the coin data to update.
+ * @param coinId The ID of the coin data to update.
+ * @param data The data to update.
  */
 async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: string, data: PartialNullable<Coin>) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
@@ -532,12 +531,12 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
 }
 
 /**
- * Adds a given entry to the changes log
- * @param {PartialNullable<Coin>} coinData The coin data before the change
- * @param {string} variant The variant of the coin that was changed
- * @param {string} type The type of change that was made
- * @param {PartialNullable<Coin>} [changes] The changes that were made
- * @param {string} [changeText] The text to display for the change (if `changes` is not provided)
+ * Adds a given entry to the changes log.
+ * @param coinData The coin data before the change.
+ * @param variant The variant of the coin that was changed.
+ * @param type The type of change that was made.
+ * @param changes The changes that were made.
+ * @param changeText The text to display for the change (if `changes` is not provided).
  */
 function addChangeEntry(coinData: PartialNullable<Coin>, variant: string, type: string, changes?: PartialNullable<Coin>, changeText?: string) {
     const { year, mintMark, specification } = coinData as Coin;
@@ -582,7 +581,7 @@ if (password) {
 }
 
 /**
- * Adds modal functionality to all images with the "popup-image" class
+ * Adds modal functionality to all images with the "popup-image" class.
  */
 function loadPopupImages() {
     const modal = document.getElementById('modal') as HTMLDivElement;

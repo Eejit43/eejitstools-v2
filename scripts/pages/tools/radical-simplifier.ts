@@ -89,9 +89,8 @@ resetButton.addEventListener('click', () => {
 });
 
 /**
- * Gets the prime factors of a number
- * @param {number} number the number to get the prime factors of
- * @returns {number[]} the prime factors of the number
+ * Gets the prime factors of a number.
+ * @param number The number to get the prime factors of.
  * @see https://github.com/nayuki/Nayuki-web-published-code/blob/master/calculate-prime-factorization-javascript/calculate-prime-factorization.js
  */
 function getPrimeFactors(number: number) {
@@ -109,8 +108,7 @@ function getPrimeFactors(number: number) {
 
 /**
  * Returns the smallest prime factor of the given integer.
- * @param {number} number the number to get the prime factors of
- * @returns {number} the smallest prime factor of the given integer
+ * @param number The number to get the prime factors of.
  * @see https://github.com/nayuki/Nayuki-web-published-code/blob/master/calculate-prime-factorization-javascript/calculate-prime-factorization.js
  */
 function smallestFactor(number: number) {
@@ -122,9 +120,8 @@ function smallestFactor(number: number) {
 }
 
 /**
- * Maps the prime factors of a number to an object
- * @param {number[]} numbers the numbers to map
- * @returns {Object<number, number>} the mapped prime factors
+ * Maps the prime factors of a number to an object.
+ * @param numbers The numbers to map.
  */
 function mapPrimeFactors(numbers: number[]) {
     const object: { [number: string]: number } = {};

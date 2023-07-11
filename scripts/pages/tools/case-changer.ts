@@ -39,7 +39,7 @@ copyResult.addEventListener('click', () => {
 });
 
 /**
- * Converts the provided string to uppercase and displays the result
+ * Converts the provided string to uppercase and displays the result.
  */
 function toUpper() {
     if (input.value.length === 0) {
@@ -53,7 +53,7 @@ function toUpper() {
 }
 
 /**
- * Converts the provided string to lowercase and displays the result
+ * Converts the provided string to lowercase and displays the result.
  */
 function toLower() {
     if (input.value.length === 0) {
@@ -67,9 +67,8 @@ function toLower() {
 }
 
 /**
- * Converts the provided string to title case
- * @param {string} string the string to convert
- * @returns {string} the string in title case
+ * Converts the provided string to title case.
+ * @param string The string to convert.
  */
 function titleCase(string: string) {
     string = string.replace(/([^\W_]+[^\s-]*) */g, (txt) => {
@@ -89,7 +88,7 @@ function titleCase(string: string) {
 }
 
 /**
- * Converts the provided string to title case and displays the result
+ * Converts the provided string to title case and displays the result.
  */
 function toTitle() {
     if (input.value.length === 0) {
@@ -103,7 +102,7 @@ function toTitle() {
 }
 
 /**
- * Converts the provided string to sentence case and displays the result
+ * Converts the provided string to sentence case and displays the result.
  */
 function toSentence() {
     if (input.value.length === 0) {

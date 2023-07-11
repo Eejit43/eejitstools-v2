@@ -5,7 +5,7 @@ const fact = document.getElementById('fact') as HTMLSpanElement;
 getFactButton.addEventListener('click', fetchFact);
 
 /**
- * Fetches a random fact
+ * Fetches a random fact.
  */
 async function fetchFact() {
     fact.textContent = 'Loading...';

@@ -6,6 +6,7 @@ declare global {
         math: typeof math;
     }
 }
+
 const inputType = document.getElementById('input-type') as HTMLSelectElement;
 const input = document.getElementById('input') as HTMLInputElement;
 const resetButton = document.getElementById('reset') as HTMLButtonElement;
@@ -58,7 +59,7 @@ copyOutput.addEventListener('click', () => {
 });
 
 /**
- * Converts a temperature to the specified output type and displays the result
+ * Converts a temperature to the specified output type and displays the result.
  */
 function convert() {
     input.value = input.value.replace(/,/g, '');

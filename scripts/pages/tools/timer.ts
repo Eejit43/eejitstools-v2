@@ -60,8 +60,8 @@ secondsInput.addEventListener('input', () => {
 });
 
 /**
- * Checks and updates an elements value if needed
- * @param {HTMLInputElement} element the element to check and update
+ * Checks and updates an elements value if needed.
+ * @param element The element to check and update.
  */
 function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
@@ -76,7 +76,7 @@ let paused = true;
 let targetTime: number;
 
 /**
- * Starts the timer
+ * Starts the timer.
  */
 function startTimer() {
     if (!paused) return;
@@ -108,7 +108,7 @@ let remaining: number, secondsUntil: number, minutesUntil: number, hoursUntil: n
 let timeout: number | null = null;
 
 /**
- * Displays the current timer time
+ * Displays the current timer time.
  */
 function displayTime() {
     if (paused) return;
@@ -129,12 +129,12 @@ function displayTime() {
 
     const targetDate = new Date(targetTime);
 
-    const output = `${targetDate.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${targetDate.toLocaleDateString([], { weekday: 'long' })}`;
+    const output = `${targetDate.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${targetDate.toLocaleDateString(undefined, { weekday: 'long' })}`;
     if (timerTime.textContent !== output) timerTime.textContent = output;
 }
 
 /**
- * The function called when the timer ends
+ * The function called when the timer ends.
  */
 function timerEnd() {
     timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
