@@ -1,38 +1,38 @@
 import { copyText, showAlert } from '../../functions.js';
 
 const clearClipboardButton = document.getElementById('clear-clipboard') as HTMLButtonElement;
-const copyZws = document.getElementById('copy-zws') as HTMLButtonElement;
-const copyNbsp = document.getElementById('copy-nbsp') as HTMLButtonElement;
-const copyEms = document.getElementById('copy-ems') as HTMLButtonElement;
-const copyEns = document.getElementById('copy-ens') as HTMLButtonElement;
-const copyTs = document.getElementById('copy-ts') as HTMLButtonElement;
+const copyZwsButton = document.getElementById('copy-zws') as HTMLButtonElement;
+const copyNbspButton = document.getElementById('copy-nbsp') as HTMLButtonElement;
+const copyEmsButton = document.getElementById('copy-ems') as HTMLButtonElement;
+const copyEnsButton = document.getElementById('copy-ens') as HTMLButtonElement;
+const copyTsButton = document.getElementById('copy-ts') as HTMLButtonElement;
 const clipboardWarning = document.getElementById('clipboard-warning') as HTMLSpanElement;
 const copiedText = document.getElementById('copied-text') as HTMLTextAreaElement;
-const selectClipboard = document.getElementById('select-clipboard') as HTMLButtonElement;
+const selectClipboardButton = document.getElementById('select-clipboard') as HTMLButtonElement;
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
-copyZws.addEventListener('click', () => {
-    copyText(copyZws, '\u200b');
+copyZwsButton.addEventListener('click', () => {
+    copyText(copyZwsButton, '\u200b');
     clipboardDisplay();
 });
-copyNbsp.addEventListener('click', () => {
-    copyText(copyNbsp, '\u00a0');
+copyNbspButton.addEventListener('click', () => {
+    copyText(copyNbspButton, '\u00a0');
     clipboardDisplay();
 });
-copyEms.addEventListener('click', () => {
-    copyText(copyEms, '\u2003');
+copyEmsButton.addEventListener('click', () => {
+    copyText(copyEmsButton, '\u2003');
     clipboardDisplay();
 });
-copyEns.addEventListener('click', () => {
-    copyText(copyEns, '\u2002');
+copyEnsButton.addEventListener('click', () => {
+    copyText(copyEnsButton, '\u2002');
     clipboardDisplay();
 });
-copyTs.addEventListener('click', () => {
-    copyText(copyTs, '\u2009');
+copyTsButton.addEventListener('click', () => {
+    copyText(copyTsButton, '\u2009');
     clipboardDisplay();
 });
-selectClipboard.addEventListener('click', () => {
+selectClipboardButton.addEventListener('click', () => {
     copiedText.select();
 });
 window.addEventListener('focus', () => {
@@ -127,11 +127,11 @@ async function clipboardDisplay() {
                     const text = reader.result?.toString() ?? '';
                     if (text.length === 0) {
                         copiedText.value = '';
-                        selectClipboard.disabled = true;
+                        selectClipboardButton.disabled = true;
                         showWarning('<span style="color:#009c3f"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
                     } else {
                         copiedText.value = text;
-                        selectClipboard.disabled = false;
+                        selectClipboardButton.disabled = false;
                         showWarning('');
                     }
                 });
@@ -140,7 +140,7 @@ async function clipboardDisplay() {
 
                 const url = URL.createObjectURL(blob);
                 copiedText.value = '';
-                selectClipboard.disabled = true;
+                selectClipboardButton.disabled = true;
 
                 if (storedData !== blob.size || (storedData === blob.size && !/Clipboard has image!/.test(clipboardWarning.innerHTML))) showWarning(`<span style="color:#4b5663"><i class="far fa-image"></i> Clipboard has image! (<a href='${url}' target="_blank">view</a>)<br /></span>`);
                 if (storedData !== blob.size) storedData = blob.size;
@@ -153,11 +153,11 @@ async function clipboardDisplay() {
 
         if (text.length === 0) {
             copiedText.value = '';
-            selectClipboard.disabled = true;
+            selectClipboardButton.disabled = true;
             showWarning('<span style="color:#009c3f"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
         } else {
             copiedText.value = text;
-            selectClipboard.disabled = false;
+            selectClipboardButton.disabled = false;
             showWarning('');
         }
     }

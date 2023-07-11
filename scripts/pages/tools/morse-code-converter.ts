@@ -5,9 +5,9 @@ const toMorseButton = document.getElementById('to-morse') as HTMLButtonElement;
 const fromMorseButton = document.getElementById('from-morse') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const result = document.getElementById('result') as HTMLTextAreaElement;
-const resultCopy = document.getElementById('copy-result') as HTMLButtonElement;
-const resultCopyVertical = document.getElementById('copy-result-2') as HTMLButtonElement;
-const resultCopySpaces = document.getElementById('copy-result-3') as HTMLButtonElement;
+const copyButton = document.getElementById('copy-result') as HTMLButtonElement;
+const copyVerticalButton = document.getElementById('copy-result-2') as HTMLButtonElement;
+const copySpacesButton = document.getElementById('copy-result-3') as HTMLButtonElement;
 
 /* Add event listeners */
 toMorseButton.addEventListener('click', toMorse);
@@ -17,22 +17,22 @@ clearButton.addEventListener('click', () => {
     result.value = '';
     resetResult('encode');
     resetResult('decode');
-    resultCopy.textContent = 'Copy';
-    resultCopyVertical.textContent = 'Copy with vertical slash spacer';
-    resultCopySpaces.textContent = 'Copy with three space spacer';
-    resultCopy.disabled = true;
-    resultCopyVertical.disabled = true;
-    resultCopySpaces.disabled = true;
+    copyButton.textContent = 'Copy';
+    copyVerticalButton.textContent = 'Copy with vertical slash spacer';
+    copySpacesButton.textContent = 'Copy with three space spacer';
+    copyButton.disabled = true;
+    copyVerticalButton.disabled = true;
+    copySpacesButton.disabled = true;
     showAlert('Cleared!', 'success');
 });
-resultCopy.addEventListener('click', () => {
-    copyText(resultCopy, result.value);
+copyButton.addEventListener('click', () => {
+    copyText(copyButton, result.value);
 });
-resultCopyVertical.addEventListener('click', () => {
-    copyText(resultCopyVertical, result.value.replace(/ \/ /g, ' | '));
+copyVerticalButton.addEventListener('click', () => {
+    copyText(copyVerticalButton, result.value.replace(/ \/ /g, ' | '));
 });
-resultCopySpaces.addEventListener('click', () => {
-    copyText(resultCopySpaces, result.value.replace(/ {3}/g, '   '));
+copySpacesButton.addEventListener('click', () => {
+    copyText(copySpacesButton, result.value.replace(/ {3}/g, '   '));
 });
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -113,22 +113,22 @@ function convertToMorse(string: string) {
 function toMorse() {
     if (input.value.trim().length <= 0) {
         result.value = '';
-        resultCopy.disabled = true;
-        resultCopyVertical.disabled = true;
-        resultCopySpaces.disabled = true;
+        copyButton.disabled = true;
+        copyVerticalButton.disabled = true;
+        copySpacesButton.disabled = true;
         showResult('encode', 'error');
         showAlert('Empty input!', 'error');
     } else if (/^[ |\\a-zA-Z0-9!"$&'()+,\-./:;=?@_]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
-        resultCopy.disabled = false;
-        resultCopyVertical.disabled = false;
-        resultCopySpaces.disabled = false;
+        copyButton.disabled = false;
+        copyVerticalButton.disabled = false;
+        copySpacesButton.disabled = false;
         showResult('encode', 'success');
     } else {
         result.value = '';
-        resultCopy.disabled = true;
-        resultCopyVertical.disabled = true;
-        resultCopySpaces.disabled = true;
+        copyButton.disabled = true;
+        copyVerticalButton.disabled = true;
+        copySpacesButton.disabled = true;
         showResult('encode', 'error');
         showAlert('Input cannot be converted into morse code!', 'error');
     }
@@ -162,22 +162,22 @@ function fromMorse() {
     const inputValue = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
     if (inputValue.length <= 0) {
         result.value = '';
-        resultCopy.disabled = true;
-        resultCopyVertical.disabled = true;
-        resultCopySpaces.disabled = true;
+        copyButton.disabled = true;
+        copyVerticalButton.disabled = true;
+        copySpacesButton.disabled = true;
         showResult('decode', 'error');
         showAlert('Empty input!', 'error');
     } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[|/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
         result.value = decodeMorse(inputValue);
-        resultCopy.disabled = false;
-        resultCopyVertical.disabled = true;
-        resultCopySpaces.disabled = true;
+        copyButton.disabled = false;
+        copyVerticalButton.disabled = true;
+        copySpacesButton.disabled = true;
         showResult('decode', 'success');
     } else {
         result.value = '';
-        resultCopy.disabled = true;
-        resultCopyVertical.disabled = true;
-        resultCopySpaces.disabled = true;
+        copyButton.disabled = true;
+        copyVerticalButton.disabled = true;
+        copySpacesButton.disabled = true;
         showResult('decode', 'error');
         showAlert('Invalid morse code!', 'error');
     }

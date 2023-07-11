@@ -1,14 +1,14 @@
 import { copyValue, createBase64ObjectUrl, escapeHtml, resetResult, showAlert, showResult } from '../../functions.js';
 
-const fileUploadButtonLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
-const fileUploadButton = document.getElementById('file-upload') as HTMLInputElement;
+const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
+const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
 const fileUploadMessage = document.getElementById('file-message') as HTMLSpanElement;
 const encodeButton = document.getElementById('encode') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const b64Result = document.getElementById('b64-result') as HTMLTextAreaElement;
-const b64CopyResult = document.getElementById('b64-copy-result') as HTMLButtonElement;
+const b64CopyResultButton = document.getElementById('b64-copy-result') as HTMLButtonElement;
 const b64OpenResultLink = document.getElementById('b64-open-result-link') as HTMLAnchorElement;
-const b64OpenResult = document.getElementById('b64-open-result') as HTMLButtonElement;
+const b64OpenResultButton = document.getElementById('b64-open-result') as HTMLButtonElement;
 const input = document.getElementById('string-input') as HTMLTextAreaElement;
 const decodeButton = document.getElementById('decode') as HTMLButtonElement;
 const clearButton2 = document.getElementById('clear2') as HTMLButtonElement;
@@ -17,16 +17,16 @@ const imageOutput = document.getElementById('image-output') as HTMLImageElement;
 let uploadedFile: File | null = null;
 
 /* Add event listeners */
-fileUploadButton.addEventListener('change', () => {
-    if (fileUploadButton.files?.[0]) {
-        uploadedFile = fileUploadButton.files[0];
+fileUpload.addEventListener('change', () => {
+    if (fileUpload.files?.[0]) {
+        uploadedFile = fileUpload.files[0];
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(uploadedFile.name)}</code>`;
     } else {
         uploadedFile = null;
         fileUploadMessage.textContent = '';
     }
 });
-fileUploadButtonLabel.addEventListener('drop', (event) => {
+fileUploadLabel.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer?.items) {
@@ -45,7 +45,7 @@ fileUploadButtonLabel.addEventListener('drop', (event) => {
         }
     }
 });
-fileUploadButtonLabel.addEventListener('dragover', (event) => {
+fileUploadLabel.addEventListener('dragover', (event) => {
     event.preventDefault();
 });
 encodeButton.addEventListener('click', encode);
@@ -59,11 +59,11 @@ decodeButton.addEventListener('click', () => {
     }
 });
 clearButton.addEventListener('click', () => {
-    fileUploadButton.value = '';
+    fileUpload.value = '';
     fileUploadMessage.textContent = '';
     b64Result.value = '';
-    b64CopyResult.disabled = true;
-    b64OpenResult.disabled = true;
+    b64CopyResultButton.disabled = true;
+    b64OpenResultButton.disabled = true;
     b64OpenResultLink.removeAttribute('href');
 
     uploadedFile = null;
@@ -94,8 +94,8 @@ clearButton2.addEventListener('click', () => {
         clearButton2.textContent = 'Clear';
     }, 2000);
 });
-b64CopyResult.addEventListener('click', () => {
-    copyValue(b64CopyResult, b64Result);
+b64CopyResultButton.addEventListener('click', () => {
+    copyValue(b64CopyResultButton, b64Result);
 });
 
 /**
@@ -109,8 +109,8 @@ function encode() {
             const imageType = (reader.result as string).replace(/^data:image\/(.*?);base64,.*$/g, '$1');
             if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {
                 b64Result.value = reader.result as string;
-                b64CopyResult.disabled = false;
-                b64OpenResult.disabled = false;
+                b64CopyResultButton.disabled = false;
+                b64OpenResultButton.disabled = false;
                 b64OpenResultLink.href = createBase64ObjectUrl((reader.result as string).replace(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
                 showResult('encode', 'success');
             } else {

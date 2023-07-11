@@ -3,7 +3,7 @@ import { showAlert } from '../../functions.js';
 const numberDisplay = document.getElementById('counter') as HTMLSpanElement;
 const activationSelect = document.getElementById('activation-button') as HTMLSelectElement;
 const resetButton = document.getElementById('reset') as HTMLButtonElement;
-const manualActivation = document.getElementById('manual-activation') as HTMLButtonElement;
+const manualActivationButton = document.getElementById('manual-activation') as HTMLButtonElement;
 
 let number = 0;
 let key = 'Space';
@@ -31,7 +31,7 @@ document.addEventListener('keyup', (event) => {
         numberDisplay.textContent = number.toString();
     }
 });
-manualActivation.addEventListener('click', () => {
+manualActivationButton.addEventListener('click', () => {
     blurAll();
     number++;
     numberDisplay.textContent = number.toString();
@@ -42,6 +42,6 @@ manualActivation.addEventListener('click', () => {
  */
 function blurAll() {
     activationSelect.blur();
-    manualActivation.blur();
+    manualActivationButton.blur();
     resetButton.blur();
 }

@@ -1,10 +1,10 @@
 import { allPages } from '../data/pages.js';
 
 const searchResult = document.querySelector('.large-search-results') as HTMLDivElement;
-const searchText = document.querySelector('.large-search-text') as HTMLInputElement;
+const searchInput = document.querySelector('.large-search-text') as HTMLInputElement;
 
-searchText.addEventListener('input', () => {
-    const value = searchText.value.toLowerCase();
+searchInput.addEventListener('input', () => {
+    const value = searchInput.value.toLowerCase();
     const results = [];
     Object.values(allPages)
         .map((value) => Object.values(value))
@@ -16,18 +16,18 @@ searchText.addEventListener('input', () => {
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
 });
 
-searchText.addEventListener('keydown', (event) => {
+searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
-        searchText.value = '';
+        searchInput.value = '';
         searchResult.innerHTML = '';
-        searchText.blur();
+        searchInput.blur();
     }
 });
 
-(document.querySelector('.large-search-button') as HTMLElement).addEventListener('click', () => searchText.focus());
+(document.querySelector('.large-search-button') as HTMLElement).addEventListener('click', () => searchInput.focus());
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {

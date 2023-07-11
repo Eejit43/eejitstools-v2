@@ -1,7 +1,7 @@
 import { createBase64ObjectUrl, escapeHtml, showAlert } from '../../functions.js';
 
-const fileUploadButtonLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
-const fileUploadButton = document.getElementById('file-upload') as HTMLInputElement;
+const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
+const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
 const fileUploadMessage = document.getElementById('file-message') as HTMLSpanElement;
 const loadButton = document.getElementById('load') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
@@ -10,15 +10,15 @@ const outputTypePicker = document.getElementById('output-type') as HTMLSelectEle
 const convertButton = document.getElementById('convert') as HTMLButtonElement;
 const imageOutput = document.getElementById('image-output') as HTMLImageElement;
 const openConvertedResultLink = document.getElementById('open-converted-link') as HTMLAnchorElement;
-const openConvertedResult = document.getElementById('open-converted-result') as HTMLButtonElement;
+const openConvertedResultButton = document.getElementById('open-converted-result') as HTMLButtonElement;
 const downloadConvertedResultLink = document.getElementById('download-converted-link') as HTMLAnchorElement;
-const downloadConvertedResult = document.getElementById('download-converted-result') as HTMLButtonElement;
+const downloadConvertedResultButton = document.getElementById('download-converted-result') as HTMLButtonElement;
 
 let uploadedImage: File | null = null;
 
 /* Add event listeners */
-fileUploadButton.addEventListener('change', () => {
-    const file = fileUploadButton.files?.[0];
+fileUpload.addEventListener('change', () => {
+    const file = fileUpload.files?.[0];
 
     if (file) {
         if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
@@ -32,7 +32,7 @@ fileUploadButton.addEventListener('change', () => {
         loadButton.disabled = true;
     }
 });
-fileUploadButtonLabel.addEventListener('drop', (event) => {
+fileUploadLabel.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer?.items) {
@@ -60,12 +60,12 @@ fileUploadButtonLabel.addEventListener('drop', (event) => {
         }
     }
 });
-fileUploadButtonLabel.addEventListener('dragover', (event) => {
+fileUploadLabel.addEventListener('dragover', (event) => {
     event.preventDefault();
 });
 loadButton.addEventListener('click', loadImage);
 clearButton.addEventListener('click', () => {
-    fileUploadButton.value = '';
+    fileUpload.value = '';
     fileUploadMessage.textContent = '';
     loadButton.disabled = true;
     (imagePreview.getContext('2d') as CanvasRenderingContext2D).clearRect(0, 0, imagePreview.width, imagePreview.height);
@@ -75,10 +75,10 @@ clearButton.addEventListener('click', () => {
     convertButton.disabled = true;
     imageOutput.src = '';
     openConvertedResultLink.removeAttribute('href');
-    openConvertedResult.disabled = true;
+    openConvertedResultButton.disabled = true;
     downloadConvertedResultLink.removeAttribute('href');
     downloadConvertedResultLink.removeAttribute('download');
-    downloadConvertedResult.disabled = true;
+    downloadConvertedResultButton.disabled = true;
 
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
@@ -118,6 +118,6 @@ function convert() {
     imageOutput.src = url;
     const blobUrl = createBase64ObjectUrl(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
-    openConvertedResult.disabled = downloadConvertedResult.disabled = false;
+    openConvertedResultButton.disabled = downloadConvertedResultButton.disabled = false;
     downloadConvertedResultLink.setAttribute('download', `${(uploadedImage as File).name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
 }

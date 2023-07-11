@@ -4,9 +4,9 @@ import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
 const monthYearDisplay = document.getElementById('month-year') as HTMLDivElement;
 const calendarBody = document.getElementById('calendar-body') as HTMLElement;
-const previousMonthButton = document.getElementById('previous-month') as HTMLInputElement;
-const nextMonthButton = document.getElementById('next-month') as HTMLInputElement;
-const currentDateButton = document.getElementById('current-date') as HTMLInputElement;
+const previousMonthButton = document.getElementById('previous-month') as HTMLButtonElement;
+const nextMonthButton = document.getElementById('next-month') as HTMLButtonElement;
+const currentDateButton = document.getElementById('current-date') as HTMLButtonElement;
 const jumpMonthSelection = document.getElementById('jump-month') as HTMLSelectElement;
 const jumpYearSelection = document.getElementById('jump-year') as HTMLSelectElement;
 
@@ -16,7 +16,7 @@ const displayMonthYear = document.getElementById('display-month-year') as HTMLDi
 const eventsList = document.getElementById('events-list') as HTMLUListElement;
 
 const loginPassword = document.getElementById('login-password') as HTMLInputElement;
-const loginButton = document.getElementById('login-button') as HTMLInputElement;
+const loginButton = document.getElementById('login-button') as HTMLButtonElement;
 const todoList = document.getElementById('todo-list') as HTMLDivElement;
 
 previousMonthButton.addEventListener('click', previousMonth);

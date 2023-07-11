@@ -8,35 +8,35 @@ declare global {
     }
 }
 
-const generateRandom = document.getElementById('generate-random') as HTMLButtonElement;
+const generateRandomButton = document.getElementById('generate-random') as HTMLButtonElement;
 const colorDisplay = document.getElementById('color-display') as HTMLDivElement;
 const colorPicker = document.getElementById('color-picker') as HTMLInputElement;
-const darken = document.getElementById('darken') as HTMLButtonElement;
-const brighten = document.getElementById('brighten') as HTMLButtonElement;
-const saturate = document.getElementById('saturate') as HTMLButtonElement;
-const desaturate = document.getElementById('desaturate') as HTMLButtonElement;
-const increaseLuminance = document.getElementById('increase-luminance') as HTMLButtonElement;
-const decreaseLuminance = document.getElementById('decrease-luminance') as HTMLButtonElement;
-const nameValue = document.getElementById('name') as HTMLInputElement;
-const hexValue = document.getElementById('hex') as HTMLInputElement;
-const decimalValue = document.getElementById('decimal') as HTMLInputElement;
-const rgbValue = document.getElementById('rgb') as HTMLInputElement;
-const hslValue = document.getElementById('hsl') as HTMLInputElement;
-const cmykValue = document.getElementById('cmyk') as HTMLInputElement;
-const alphaValue = document.getElementById('alpha') as HTMLInputElement;
-const copyName = document.getElementById('copy-name') as HTMLButtonElement;
-const copyHex = document.getElementById('copy-hex') as HTMLButtonElement;
-const copyDecimal = document.getElementById('copy-decimal') as HTMLButtonElement;
-const copyRgb = document.getElementById('copy-rgb') as HTMLButtonElement;
-const copyHsl = document.getElementById('copy-hsl') as HTMLButtonElement;
-const copyCmyk = document.getElementById('copy-cmyk') as HTMLButtonElement;
-const copyAlpha = document.getElementById('copy-alpha') as HTMLButtonElement;
-const luminance = document.getElementById('luminance') as HTMLInputElement;
-const temperature = document.getElementById('temperature') as HTMLInputElement;
+const darkenButton = document.getElementById('darken') as HTMLButtonElement;
+const brightenButton = document.getElementById('brighten') as HTMLButtonElement;
+const saturateButton = document.getElementById('saturate') as HTMLButtonElement;
+const desaturateButton = document.getElementById('desaturate') as HTMLButtonElement;
+const increaseLuminanceButton = document.getElementById('increase-luminance') as HTMLButtonElement;
+const decreaseLuminanceButton = document.getElementById('decrease-luminance') as HTMLButtonElement;
+const nameInput = document.getElementById('name') as HTMLInputElement;
+const hexInput = document.getElementById('hex') as HTMLInputElement;
+const decimalInput = document.getElementById('decimal') as HTMLInputElement;
+const rgbInput = document.getElementById('rgb') as HTMLInputElement;
+const hslInput = document.getElementById('hsl') as HTMLInputElement;
+const cmykInput = document.getElementById('cmyk') as HTMLInputElement;
+const alphaInput = document.getElementById('alpha') as HTMLInputElement;
+const copyNameButton = document.getElementById('copy-name') as HTMLButtonElement;
+const copyHexButton = document.getElementById('copy-hex') as HTMLButtonElement;
+const copyDecimalButton = document.getElementById('copy-decimal') as HTMLButtonElement;
+const copyRgbButton = document.getElementById('copy-rgb') as HTMLButtonElement;
+const copyHslButton = document.getElementById('copy-hsl') as HTMLButtonElement;
+const copyCmykButton = document.getElementById('copy-cmyk') as HTMLButtonElement;
+const copyAlphaButton = document.getElementById('copy-alpha') as HTMLButtonElement;
+const luminanceOutput = document.getElementById('luminance') as HTMLInputElement;
+const temperatureOutput = document.getElementById('temperature') as HTMLInputElement;
 const colorHistory = document.getElementById('color-history') as HTMLUListElement;
 const fullColor = document.getElementById('full-color') as HTMLDivElement;
 
-generateRandom.addEventListener('click', generateRandomColor);
+generateRandomButton.addEventListener('click', generateRandomColor);
 
 document.addEventListener('keydown', (event) => {
     if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
@@ -56,85 +56,85 @@ colorPicker.addEventListener('input', () => {
     } else setRedBorder(colorPicker);
 });
 
-darken.addEventListener('click', () => updateResults(window.chroma(hexValue.value).darken(0.5)));
+darkenButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).darken(0.5)));
 
-brighten.addEventListener('click', () => updateResults(window.chroma(hexValue.value).brighten(0.5)));
+brightenButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).brighten(0.5)));
 
-saturate.addEventListener('click', () => updateResults(window.chroma(hexValue.value).saturate(0.5)));
+saturateButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).saturate(0.5)));
 
-desaturate.addEventListener('click', () => updateResults(window.chroma(hexValue.value).desaturate(0.5)));
+desaturateButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).desaturate(0.5)));
 
-increaseLuminance.addEventListener('click', () => updateResults(window.chroma(hexValue.value).luminance(window.chroma(hexValue.value).luminance() * 1.5)));
+increaseLuminanceButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 1.5)));
 
-decreaseLuminance.addEventListener('click', () => updateResults(window.chroma(hexValue.value).luminance(window.chroma(hexValue.value).luminance() * 0.5)));
+decreaseLuminanceButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 0.5)));
 
-nameValue.addEventListener('blur', () => {
-    if (window.chroma.valid(nameValue.value)) {
-        resetBorder(nameValue);
-        updateResults(window.chroma(nameValue.value));
-    } else setRedBorder(nameValue);
+nameInput.addEventListener('blur', () => {
+    if (window.chroma.valid(nameInput.value)) {
+        resetBorder(nameInput);
+        updateResults(window.chroma(nameInput.value));
+    } else setRedBorder(nameInput);
 });
 
-hexValue.addEventListener('blur', () => {
-    if (window.chroma.valid(hexValue.value)) {
-        resetBorder(hexValue);
-        updateResults(window.chroma(hexValue.value));
-    } else setRedBorder(hexValue);
+hexInput.addEventListener('blur', () => {
+    if (window.chroma.valid(hexInput.value)) {
+        resetBorder(hexInput);
+        updateResults(window.chroma(hexInput.value));
+    } else setRedBorder(hexInput);
 });
 
-decimalValue.addEventListener('blur', () => {
-    if (window.chroma.valid('#' + parseInt(decimalValue.value).toString(16).padStart(6, '0'))) {
-        resetBorder(decimalValue);
-        updateResults(window.chroma('#' + parseInt(decimalValue.value).toString(16).padStart(6, '0')));
-    } else setRedBorder(decimalValue);
+decimalInput.addEventListener('blur', () => {
+    if (window.chroma.valid('#' + parseInt(decimalInput.value).toString(16).padStart(6, '0'))) {
+        resetBorder(decimalInput);
+        updateResults(window.chroma('#' + parseInt(decimalInput.value).toString(16).padStart(6, '0')));
+    } else setRedBorder(decimalInput);
 });
 
-rgbValue.addEventListener('blur', () => {
-    if (window.chroma.valid(rgbValue.value)) {
-        resetBorder(rgbValue);
-        updateResults(window.chroma(rgbValue.value));
-    } else setRedBorder(rgbValue);
+rgbInput.addEventListener('blur', () => {
+    if (window.chroma.valid(rgbInput.value)) {
+        resetBorder(rgbInput);
+        updateResults(window.chroma(rgbInput.value));
+    } else setRedBorder(rgbInput);
 });
 
-hslValue.addEventListener('blur', () => {
-    if (window.chroma.valid(hslValue.value)) {
-        resetBorder(hslValue);
-        updateResults(window.chroma(hslValue.value));
-    } else setRedBorder(hslValue);
+hslInput.addEventListener('blur', () => {
+    if (window.chroma.valid(hslInput.value)) {
+        resetBorder(hslInput);
+        updateResults(window.chroma(hslInput.value));
+    } else setRedBorder(hslInput);
 });
 
-cmykValue.addEventListener('blur', () => {
-    const cmyk = /^cmyk\(/.test(cmykValue.value) ? cmykValue.value.replace(/cmyk\(| |%|\)/gi, '').split(',') : '';
-    const cmyka = /^cmyka\(/.test(cmykValue.value) ? cmykValue.value.replace(/cmyka\(| |%|\)/gi, '').split(',') : '';
+cmykInput.addEventListener('blur', () => {
+    const cmyk = /^cmyk\(/.test(cmykInput.value) ? cmykInput.value.replace(/cmyk\(| |%|\)/gi, '').split(',') : '';
+    const cmyka = /^cmyka\(/.test(cmykInput.value) ? cmykInput.value.replace(/cmyka\(| |%|\)/gi, '').split(',') : '';
     if (cmyk.length === 4 && window.chroma.valid(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk')) {
-        resetBorder(cmykValue);
+        resetBorder(cmykInput);
         updateResults(window.chroma(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk'));
     } else if (cmyka.length === 5 && window.chroma.valid(cmyka[0], cmyka[1], cmyka[2], cmyka[3], cmyka[4], 'cmyk')) {
-        resetBorder(cmykValue);
+        resetBorder(cmykInput);
         updateResults(window.chroma(cmyka[0], cmyka[1], cmyka[2], cmyka[3], cmyka[4], 'cmyk'));
-    } else setRedBorder(cmykValue);
+    } else setRedBorder(cmykInput);
 });
 
-alphaValue.addEventListener('blur', () => {
-    if (alphaValue.value.length > 0 && Number(alphaValue.value) >= 0 && Number(alphaValue.value) <= 1) {
-        resetBorder(alphaValue);
-        updateResults(window.chroma(hexValue.value).alpha(Number(alphaValue.value)));
-    } else setRedBorder(alphaValue);
+alphaInput.addEventListener('blur', () => {
+    if (alphaInput.value.length > 0 && Number(alphaInput.value) >= 0 && Number(alphaInput.value) <= 1) {
+        resetBorder(alphaInput);
+        updateResults(window.chroma(hexInput.value).alpha(Number(alphaInput.value)));
+    } else setRedBorder(alphaInput);
 });
 
-copyName.addEventListener('click', () => copyValue(copyName, nameValue));
+copyNameButton.addEventListener('click', () => copyValue(copyNameButton, nameInput));
 
-copyHex.addEventListener('click', () => copyValue(copyHex, hexValue));
+copyHexButton.addEventListener('click', () => copyValue(copyHexButton, hexInput));
 
-copyDecimal.addEventListener('click', () => copyValue(copyDecimal, decimalValue));
+copyDecimalButton.addEventListener('click', () => copyValue(copyDecimalButton, decimalInput));
 
-copyRgb.addEventListener('click', () => copyValue(copyRgb, rgbValue));
+copyRgbButton.addEventListener('click', () => copyValue(copyRgbButton, rgbInput));
 
-copyHsl.addEventListener('click', () => copyValue(copyHsl, hslValue));
+copyHslButton.addEventListener('click', () => copyValue(copyHslButton, hslInput));
 
-copyCmyk.addEventListener('click', () => copyValue(copyCmyk, cmykValue));
+copyCmykButton.addEventListener('click', () => copyValue(copyCmykButton, cmykInput));
 
-copyAlpha.addEventListener('click', () => copyValue(copyAlpha, alphaValue));
+copyAlphaButton.addEventListener('click', () => copyValue(copyAlphaButton, alphaInput));
 
 fullColor.addEventListener('click', () => (fullColor.style.display = 'none'));
 
@@ -147,19 +147,19 @@ document.addEventListener('keydown', (event) => {
  * @param color The color to update results for.
  */
 function updateResults(color: Color) {
-    [colorPicker, nameValue, hexValue, decimalValue, rgbValue, hslValue, cmykValue, alphaValue].forEach((element) => resetBorder(element));
+    [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, cmykInput, alphaInput].forEach((element) => resetBorder(element));
 
     colorDisplay.style.color = color.hex();
     colorPicker.value = color.alpha(1).hex();
-    nameValue.value = !/^#/.test(color.name()) ? color.name() : '';
-    hexValue.value = color.hex();
-    decimalValue.value = parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
-    rgbValue.value = color.css();
-    hslValue.value = color.css('hsl');
-    cmykValue.value = `cmyk${color.alpha() < 1 ? 'a' : ''}(${Math.round(color.get('cmyk.c') * 100) / 100}%,${Math.round(color.get('cmyk.m') * 100) / 100}%,${Math.round(color.get('cmyk.y') * 100) / 100}%,${Math.round(color.get('cmyk.k') * 100) / 100}%${color.alpha() < 1 ? `,${color.alpha()}` : ''})`;
-    alphaValue.value = color.alpha().toString();
-    luminance.value = color.luminance().toLocaleString();
-    temperature.value = color.temperature().toString();
+    nameInput.value = !/^#/.test(color.name()) ? color.name() : '';
+    hexInput.value = color.hex();
+    decimalInput.value = parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
+    rgbInput.value = color.css();
+    hslInput.value = color.css('hsl');
+    cmykInput.value = `cmyk${color.alpha() < 1 ? 'a' : ''}(${Math.round(color.get('cmyk.c') * 100) / 100}%,${Math.round(color.get('cmyk.m') * 100) / 100}%,${Math.round(color.get('cmyk.y') * 100) / 100}%,${Math.round(color.get('cmyk.k') * 100) / 100}%${color.alpha() < 1 ? `,${color.alpha()}` : ''})`;
+    alphaInput.value = color.alpha().toString();
+    luminanceOutput.value = color.luminance().toLocaleString();
+    temperatureOutput.value = color.temperature().toString();
 
     const colorHistoryElement = document.createElement('li');
     colorHistoryElement.style.color = color.hex();

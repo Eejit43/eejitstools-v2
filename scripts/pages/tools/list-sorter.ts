@@ -1,30 +1,30 @@
 import { copyValue, resetResult, showAlert, showResult, shuffleArray } from '../../functions.js';
 
 const input = document.getElementById('input') as HTMLTextAreaElement;
-const separator = document.getElementById('separator') as HTMLInputElement;
+const separatorInput = document.getElementById('separator') as HTMLInputElement;
 const alphabetizeNormalButton = document.getElementById('alphabetize-normal') as HTMLButtonElement;
 const numerizeButton = document.getElementById('numerize') as HTMLButtonElement;
 const randomizeButton = document.getElementById('randomize') as HTMLButtonElement;
 const reverseButton = document.getElementById('reverse') as HTMLButtonElement;
-const clear = document.getElementById('clear') as HTMLButtonElement;
+const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
+const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
 
-const separatorValue = separator.value.replace('\\n', '\n');
+const separatorValue = separatorInput.value.replace('\\n', '\n');
 
 /* Add event listeners */
 alphabetizeNormalButton.addEventListener('click', alphabetizeNormal);
 numerizeButton.addEventListener('click', numerize);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
-clear.addEventListener('click', () => {
+clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    separator.value = '\\n';
-    copyResult.disabled = true;
+    separatorInput.value = '\\n';
+    copyResultButton.disabled = true;
 
-    clear.disabled = true;
-    clear.textContent = 'Cleared!';
+    clearButton.disabled = true;
+    clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('alphabetize');
     resetResult('numerize');
@@ -32,14 +32,14 @@ clear.addEventListener('click', () => {
     resetResult('reverse');
 
     setTimeout(() => {
-        copyResult.disabled = true;
+        copyResultButton.disabled = true;
 
-        clear.disabled = false;
-        clear.textContent = 'Clear';
+        clearButton.disabled = false;
+        clearButton.textContent = 'Clear';
     }, 2000);
 });
-copyResult.addEventListener('click', () => {
-    copyValue(copyResult, result);
+copyResultButton.addEventListener('click', () => {
+    copyValue(copyResultButton, result);
 });
 
 /**
@@ -55,7 +55,7 @@ function alphabetizeNormal() {
             .sort((a, b) => a.localeCompare(b))
             .join(separatorValue);
         showResult('alphabetize', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -74,7 +74,7 @@ function numerize() {
             .sort((a, b) => a - b)
             .join(separatorValue);
         showResult('numerize', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -88,7 +88,7 @@ function randomize() {
     } else {
         result.value = shuffleArray(input.value.split(separatorValue)).join(separatorValue);
         showResult('randomize', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -102,6 +102,6 @@ function reverse() {
     } else {
         result.value = input.value.split(separatorValue).reverse().join(separatorValue);
         showResult('reverse', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }

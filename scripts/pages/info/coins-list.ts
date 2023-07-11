@@ -1,31 +1,31 @@
 import { Coin, CoinType, ParsedCoinType } from '../../../data/coins-data.js';
 import { showAlert, showResult } from '../../functions.js';
 
-const loginPassword = document.getElementById('login-password') as HTMLInputElement;
+const passwordInput = document.getElementById('login-password') as HTMLInputElement;
 const loginButton = document.getElementById('login-button') as HTMLButtonElement;
 const coinsList = document.getElementById('coins-list') as HTMLDivElement;
 const changeHistory = document.getElementById('change-history') as HTMLUListElement;
 const exportDataButton = document.getElementById('export-data') as HTMLButtonElement;
 
 ['input', 'paste'].forEach((type) => {
-    loginPassword.addEventListener(type, () => {
-        loginPassword.value = loginPassword.value.replace(/[^0-9]/g, '');
+    passwordInput.addEventListener(type, () => {
+        passwordInput.value = passwordInput.value.replace(/[^0-9]/g, '');
 
-        if (loginPassword.value.length > 4) loginPassword.value = loginPassword.value.slice(0, 4);
+        if (passwordInput.value.length > 4) passwordInput.value = passwordInput.value.slice(0, 4);
     });
 });
 
-loginPassword.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && loginPassword.value.length > 0) loginButton.click();
+passwordInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && passwordInput.value.length > 0) loginButton.click();
 });
 
 loginButton.addEventListener('click', async () => {
-    const { success } = (await (await fetch(`/coins-login?password=${loginPassword.value}`)).json()) as { success: boolean };
+    const { success } = (await (await fetch(`/coins-login?password=${passwordInput.value}`)).json()) as { success: boolean };
 
     if (success) {
-        loginPassword.dataset.input = loginPassword.value;
-        loginPassword.value = '';
-        loginPassword.disabled = true;
+        passwordInput.dataset.input = passwordInput.value;
+        passwordInput.value = '';
+        passwordInput.disabled = true;
         loginButton.disabled = true;
         showAlert('Logged in!', 'success');
         showResult('login', 'success', undefined, undefined, false);
@@ -65,7 +65,7 @@ let coinsData: { [id: string]: { name: string; id: string; coins: { [id: string]
  * Load the coins list.
  */
 async function loadCoinsList() {
-    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${loginPassword.dataset.input as string}`)).json()) as ParsedCoinType[];
+    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input as string}`)).json()) as ParsedCoinType[];
 
     coinsData = Object.fromEntries(unindexedCoinsData.map((coinType) => [coinType.id, { ...coinType, coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])) }]));
 
@@ -518,7 +518,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
     const result = (await fetch('/coins-list-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coinTypeId, coinVariantId, coinId, data, password: loginPassword.dataset.input })
+        body: JSON.stringify({ coinTypeId, coinVariantId, coinId, data, password: passwordInput.dataset.input })
     })) as { error?: string };
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Coin data updated successfully!', 'success');
@@ -567,8 +567,8 @@ if (password) {
     const { success } = (await (await fetch(`/coins-login?password=${password}`)).json()) as { success: boolean };
 
     if (success) {
-        loginPassword.dataset.input = password;
-        loginPassword.disabled = true;
+        passwordInput.dataset.input = password;
+        passwordInput.disabled = true;
         loginButton.disabled = true;
         showAlert('Logged in!', 'success');
         showResult('login', 'success', undefined, undefined, false);
@@ -623,7 +623,7 @@ function loadPopupImages() {
 }
 
 exportDataButton.addEventListener('click', async () => {
-    const coinsData = (await (await fetch(`/coins-list?password=${loginPassword.dataset.input as string}`)).json()) as CoinType[] & { error?: string };
+    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input as string}`)).json()) as CoinType[] & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 

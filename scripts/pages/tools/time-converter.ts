@@ -14,7 +14,7 @@ const switchButton = document.getElementById('switch') as HTMLButtonElement;
 const message = document.getElementById('message') as HTMLSpanElement;
 const outputType = document.getElementById('output-type') as HTMLSelectElement;
 const output = document.getElementById('output') as HTMLInputElement;
-const copyOutput = document.getElementById('copy-output') as HTMLButtonElement;
+const copyOutputButton = document.getElementById('copy-output') as HTMLButtonElement;
 
 /* Add event listeners */
 inputType.addEventListener('change', convert);
@@ -25,14 +25,14 @@ resetButton.addEventListener('click', () => {
     message.textContent = '';
     inputType.value = '7';
     outputType.value = '5';
-    copyOutput.disabled = true;
+    copyOutputButton.disabled = true;
 
     resetButton.disabled = true;
     resetButton.textContent = 'Reset!';
     showAlert('Reset!', 'success');
 
     setTimeout(() => {
-        copyOutput.disabled = true;
+        copyOutputButton.disabled = true;
 
         resetButton.disabled = false;
         resetButton.textContent = 'Reset';
@@ -54,7 +54,7 @@ switchButton.addEventListener('click', () => {
     showAlert('Swapped input and output!', '#1c62d4');
 });
 outputType.addEventListener('change', convert);
-copyOutput.addEventListener('click', () => copyValue(copyOutput, output));
+copyOutputButton.addEventListener('click', () => copyValue(copyOutputButton, output));
 
 /**
  * Converts the provided time value and displays the result.
@@ -65,12 +65,12 @@ function convert() {
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
         output.value = window.math.number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replace(/[^0-9-.]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });
-        copyOutput.disabled = false;
+        copyOutputButton.disabled = false;
     } else {
         if (input.value !== '') message.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Input is not a number!<br />';
         else message.textContent = '';
         output.value = '';
-        copyOutput.disabled = true;
+        copyOutputButton.disabled = true;
     }
 }
 

@@ -6,8 +6,8 @@ const resetButton = document.getElementById('reset') as HTMLButtonElement;
 const message = document.getElementById('message') as HTMLSpanElement;
 const outputType = document.getElementById('output-type') as HTMLSelectElement;
 const output = document.getElementById('output') as HTMLInputElement;
-const copyOutput = document.getElementById('copy-output') as HTMLButtonElement;
-const toggleSpacers = document.getElementById('toggle-spacers') as HTMLButtonElement;
+const copyOutputButton = document.getElementById('copy-output') as HTMLButtonElement;
+const toggleSpacersButton = document.getElementById('toggle-spacers') as HTMLButtonElement;
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
@@ -18,28 +18,28 @@ resetButton.addEventListener('click', () => {
     message.textContent = '';
     inputType.value = '3';
     outputType.value = '1';
-    copyOutput.disabled = true;
-    toggleSpacers.disabled = true;
+    copyOutputButton.disabled = true;
+    toggleSpacersButton.disabled = true;
 
     resetButton.disabled = true;
     resetButton.textContent = 'Reset!';
     showAlert('Reset!', 'success');
 
     setTimeout(() => {
-        copyOutput.disabled = true;
-        toggleSpacers.disabled = true;
+        copyOutputButton.disabled = true;
+        toggleSpacersButton.disabled = true;
 
         resetButton.disabled = false;
         resetButton.textContent = 'Reset';
     }, 2000);
 });
 outputType.addEventListener('change', findInput);
-copyOutput.addEventListener('click', () => {
-    copyValue(copyOutput, output);
+copyOutputButton.addEventListener('click', () => {
+    copyValue(copyOutputButton, output);
 });
 
 let addSpacers = true;
-toggleSpacers.addEventListener('click', () => {
+toggleSpacersButton.addEventListener('click', () => {
     addSpacers = !addSpacers;
     findInput();
 });
@@ -73,8 +73,8 @@ function findInput() {
     else {
         message.textContent = '';
         output.value = '';
-        copyOutput.disabled = true;
-        toggleSpacers.disabled = true;
+        copyOutputButton.disabled = true;
+        toggleSpacersButton.disabled = true;
     }
 }
 
@@ -104,8 +104,8 @@ function convert(value: string, radix: number) {
 
     message.textContent = '';
     output.value = result;
-    copyOutput.disabled = false;
-    toggleSpacers.disabled = false;
+    copyOutputButton.disabled = false;
+    toggleSpacersButton.disabled = false;
 }
 
 /**
@@ -126,8 +126,8 @@ function parseNumberWithRadix(number: string, radix = 10) {
 function notValid() {
     message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${radices[inputType.value] ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
     output.value = '';
-    copyOutput.disabled = true;
-    toggleSpacers.disabled = true;
+    copyOutputButton.disabled = true;
+    toggleSpacersButton.disabled = true;
 }
 
 /**

@@ -5,7 +5,7 @@ const toBinaryButton = document.getElementById('to-binary') as HTMLButtonElement
 const fromBinaryButton = document.getElementById('from-binary') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const result = document.getElementById('result') as HTMLTextAreaElement;
-const resultCopy = document.getElementById('copy-result') as HTMLButtonElement;
+const resultCopyButton = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 toBinaryButton.addEventListener('click', toBinary);
@@ -13,7 +13,7 @@ fromBinaryButton.addEventListener('click', fromBinary);
 clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    resultCopy.disabled = true;
+    resultCopyButton.disabled = true;
 
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
@@ -22,14 +22,14 @@ clearButton.addEventListener('click', () => {
     resetResult('decode');
 
     setTimeout(() => {
-        resultCopy.disabled = true;
+        resultCopyButton.disabled = true;
 
         clearButton.disabled = false;
         clearButton.textContent = 'Clear';
     }, 2000);
 });
-resultCopy.addEventListener('click', () => {
-    copyValue(resultCopy, result);
+resultCopyButton.addEventListener('click', () => {
+    copyValue(resultCopyButton, result);
 });
 
 /**
@@ -38,12 +38,12 @@ resultCopy.addEventListener('click', () => {
 function toBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';
-        resultCopy.disabled = true;
+        resultCopyButton.disabled = true;
         showResult('encode', 'error');
         showAlert('Empty input!', 'error');
     } else {
         result.value = stringToBinary(input.value.trim());
-        resultCopy.disabled = false;
+        resultCopyButton.disabled = false;
         showResult('encode', 'success');
     }
 }
@@ -54,16 +54,16 @@ function toBinary() {
 function fromBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';
-        resultCopy.disabled = true;
+        resultCopyButton.disabled = true;
         showResult('decode', 'error');
         showAlert('Empty input!', 'error');
     } else if (/^[ 01]+$/gm.test(input.value.trim())) {
         result.value = binaryToString(input.value.trim());
-        resultCopy.disabled = false;
+        resultCopyButton.disabled = false;
         showResult('decode', 'success');
     } else {
         result.value = '';
-        resultCopy.disabled = true;
+        resultCopyButton.disabled = true;
         showResult('decode', 'error');
         showAlert('Invalid binary!', 'error');
     }

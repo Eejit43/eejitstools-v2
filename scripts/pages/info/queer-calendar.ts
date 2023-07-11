@@ -2,26 +2,26 @@ import { escapeHtml, showAlert } from '../../functions.js';
 
 const eventsTitle = document.getElementById('events-title') as HTMLSpanElement;
 const eventsDisplay = document.getElementById('events') as HTMLSpanElement;
-const monthVal = document.getElementById('month') as HTMLInputElement;
-const dateVal = document.getElementById('date') as HTMLInputElement;
-const getDate = document.getElementById('get-date') as HTMLButtonElement;
-const resetDate = document.getElementById('reset-date') as HTMLButtonElement;
+const monthInput = document.getElementById('month') as HTMLInputElement;
+const dateInput = document.getElementById('date') as HTMLInputElement;
+const getDateButton = document.getElementById('get-date') as HTMLButtonElement;
+const resetDateButton = document.getElementById('reset-date') as HTMLButtonElement;
 const yearOverview = document.getElementById('year-overview') as HTMLAnchorElement;
 const yearOverviewList = document.getElementById('year-overview-list') as HTMLAnchorElement;
 
 /* Add event listeners */
-getDate.addEventListener('click', getFromDate);
-resetDate.addEventListener('click', getCurrent);
+getDateButton.addEventListener('click', getFromDate);
+resetDateButton.addEventListener('click', getCurrent);
 ['input', 'paste'].forEach((event) => {
-    monthVal.addEventListener(event, () => {
-        monthVal.value = monthVal.value.replace(/((?![0-9]).)/g, '');
-        checkInput(monthVal);
+    monthInput.addEventListener(event, () => {
+        monthInput.value = monthInput.value.replace(/((?![0-9]).)/g, '');
+        checkInput(monthInput);
     });
 });
 ['input', 'paste'].forEach((event) => {
-    dateVal.addEventListener(event, () => {
-        dateVal.value = dateVal.value.replace(/((?![0-9]).)/g, '');
-        checkInput(dateVal);
+    dateInput.addEventListener(event, () => {
+        dateInput.value = dateInput.value.replace(/((?![0-9]).)/g, '');
+        checkInput(dateInput);
     });
 });
 
@@ -39,8 +39,8 @@ const year = currentTime.getFullYear();
 const month = (currentTime.getMonth() + 1).toString().padStart(2, '0');
 const date = currentTime.getDate().toString().padStart(2, '0');
 
-monthVal.placeholder = month;
-dateVal.placeholder = date;
+monthInput.placeholder = month;
+dateInput.placeholder = date;
 
 yearOverview.href = `https://en.pronouns.page/calendar/${year}-overview.png`;
 yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
@@ -56,16 +56,16 @@ interface CalendarData {
  * Fetches calendar information for the specified date.
  */
 function getFromDate() {
-    const monthInput = escapeHtml(monthVal.value || month).padStart(2, '0');
-    const dateInput = escapeHtml(dateVal.value || date).padStart(2, '0');
+    const monthValue = escapeHtml(monthInput.value || month).padStart(2, '0');
+    const dateValue = escapeHtml(dateInput.value || date).padStart(2, '0');
 
-    if (parseInt(monthInput) === 0 || parseInt(dateInput) === 0) showAlert('Input cannot be zero!', 'error');
+    if (parseInt(monthValue) === 0 || parseInt(dateValue) === 0) showAlert('Input cannot be zero!', 'error');
     else {
         eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
-        eventsTitle.textContent = `Events on ${year}/${monthInput}/${dateInput}:`;
+        eventsTitle.textContent = `Events on ${year}/${monthValue}/${dateValue}:`;
 
-        fetch(`https://en.pronouns.page/api/calendar/${year}-${monthInput}-${dateInput}`).then(async (response) => {
+        fetch(`https://en.pronouns.page/api/calendar/${year}-${monthValue}-${dateValue}`).then(async (response) => {
             const data = (await response.json()) as CalendarData;
 
             const { events, eventsRaw } = data;
@@ -88,8 +88,8 @@ function getCurrent() {
     eventsTitle.textContent = 'Current Events:';
     eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
-    monthVal.value = '';
-    dateVal.value = '';
+    monthInput.value = '';
+    dateInput.value = '';
 
     fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`).then(async (response) => {
         const data = (await response.json()) as CalendarData;

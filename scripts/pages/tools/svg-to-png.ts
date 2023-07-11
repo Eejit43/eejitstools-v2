@@ -4,8 +4,8 @@ const svgInput = document.getElementById('svg-input') as HTMLTextAreaElement;
 const loadSvgButton = document.getElementById('load-svg') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const svgPreview = document.getElementById('svg-preview') as HTMLDivElement;
-const width = document.getElementById('width-input') as HTMLInputElement;
-const height = document.getElementById('height-input') as HTMLInputElement;
+const widthInput = document.getElementById('width-input') as HTMLInputElement;
+const heightOutput = document.getElementById('height-input') as HTMLInputElement;
 const savePngButton = document.getElementById('save-png') as HTMLButtonElement;
 const canvas = document.getElementById('png-canvas') as HTMLCanvasElement;
 
@@ -17,8 +17,8 @@ loadSvgButton.addEventListener('click', () => {
     if (!loadedSvg) return showAlert('No SVG found in input!', 'error');
     svgPreview.innerHTML = loadedSvg.outerHTML;
     svg = svgPreview.querySelector('svg') as SVGSVGElement;
-    width.value = svg.getBoundingClientRect().width.toString();
-    height.value = svg.getBoundingClientRect().height.toString();
+    widthInput.value = svg.getBoundingClientRect().width.toString();
+    heightOutput.value = svg.getBoundingClientRect().height.toString();
     if (svg.width.baseVal.value >= 200) svg.removeAttribute('width');
     if (svg.height.baseVal.value >= 200) svg.removeAttribute('height');
 });
@@ -26,8 +26,8 @@ loadSvgButton.addEventListener('click', () => {
 savePngButton.addEventListener('click', () => {
     const preWidth = svg.getAttribute('width');
     const preHeight = svg.getAttribute('height');
-    const parsedWidth = width.value ? parseInt(width.value) : 100;
-    const parsedHeight = height.value ? parseInt(height.value) : 100;
+    const parsedWidth = widthInput.value ? parseInt(widthInput.value) : 100;
+    const parsedHeight = heightOutput.value ? parseInt(heightOutput.value) : 100;
     if (parsedWidth >= 10000 || parsedWidth <= 0 || parsedHeight >= 10000 || parsedHeight <= 0) return showAlert('Height and width must be between 0 and 10,000 (exclusive)', 'error');
     canvas.width = parsedWidth;
     canvas.height = parsedHeight;
@@ -61,8 +61,8 @@ savePngButton.addEventListener('click', () => {
 clearButton.addEventListener('click', () => {
     svgInput.value = '';
     svgPreview.textContent = '';
-    width.value = '';
-    height.value = '';
+    widthInput.value = '';
+    heightOutput.value = '';
     context.clearRect(0, 0, canvas.width, canvas.height);
     showAlert('Cleared!', 'success');
 });

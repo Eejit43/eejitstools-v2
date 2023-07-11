@@ -1,7 +1,7 @@
 import { resetResult, showAlert, showResult } from '../../functions.js';
 
 const startTimerButton = document.getElementById('start-timer') as HTMLButtonElement;
-const pauseResumeTimer = document.getElementById('pause-resume-timer') as HTMLButtonElement;
+const pauseResumeTimerButton = document.getElementById('pause-resume-timer') as HTMLButtonElement;
 const resetButton = document.getElementById('reset') as HTMLButtonElement;
 const hoursInput = document.getElementById('hours') as HTMLInputElement;
 const minutesInput = document.getElementById('minutes') as HTMLInputElement;
@@ -11,15 +11,15 @@ const timerTime = document.getElementById('timer-time') as HTMLSpanElement;
 
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);
-pauseResumeTimer.addEventListener('click', () => {
+pauseResumeTimerButton.addEventListener('click', () => {
     if (!paused) {
         if (timeout) clearTimeout(timeout);
         timeout = null;
         paused = true;
-        pauseResumeTimer.textContent = 'Resume';
+        pauseResumeTimerButton.textContent = 'Resume';
     } else {
         paused = false;
-        pauseResumeTimer.textContent = 'Pause';
+        pauseResumeTimerButton.textContent = 'Pause';
 
         targetTime = Date.now() + remaining * 1000;
         displayTime();
@@ -34,10 +34,10 @@ resetButton.addEventListener('click', () => {
 
     audio.pause();
     audio.currentTime = 0;
-    pauseResumeTimer.textContent = 'Pause';
+    pauseResumeTimerButton.textContent = 'Pause';
     timerTime.textContent = '';
     startTimerButton.disabled = false;
-    pauseResumeTimer.disabled = true;
+    pauseResumeTimerButton.disabled = true;
     hoursInput.value = '0';
     minutesInput.value = '1';
     secondsInput.value = '0';
@@ -96,7 +96,7 @@ function startTimer() {
         showResult('timer', 'error');
     } else {
         startTimerButton.disabled = true;
-        pauseResumeTimer.disabled = false;
+        pauseResumeTimerButton.disabled = false;
 
         targetTime = Date.now() + (hours * 360 + minutes * 60 + seconds) * 1000;
         requestAnimationFrame(displayTime);
@@ -139,5 +139,5 @@ function displayTime() {
 function timerEnd() {
     timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
     audio.play();
-    pauseResumeTimer.disabled = true;
+    pauseResumeTimerButton.disabled = true;
 }

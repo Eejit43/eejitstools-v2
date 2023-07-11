@@ -5,7 +5,7 @@ const encodeButton = document.getElementById('encode') as HTMLButtonElement;
 const decodeButton = document.getElementById('decode') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
+const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 encodeButton.addEventListener('click', encode);
@@ -13,7 +13,7 @@ decodeButton.addEventListener('click', decode);
 clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    copyResult.disabled = true;
+    copyResultButton.disabled = true;
 
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
@@ -22,14 +22,14 @@ clearButton.addEventListener('click', () => {
     resetResult('decode');
 
     setTimeout(() => {
-        copyResult.disabled = true;
+        copyResultButton.disabled = true;
 
         clearButton.disabled = false;
         clearButton.textContent = 'Clear';
     }, 2000);
 });
-copyResult.addEventListener('click', () => {
-    copyValue(copyResult, result);
+copyResultButton.addEventListener('click', () => {
+    copyValue(copyResultButton, result);
 });
 
 /**
@@ -43,7 +43,7 @@ function encode() {
         try {
             result.value = btoa(input.value);
             showResult('encode', 'success');
-            copyResult.disabled = false;
+            copyResultButton.disabled = false;
         } catch {
             showAlert('Malformed input!', 'error');
             showResult('encode', 'error');
@@ -61,7 +61,7 @@ function decode() {
         try {
             result.value = atob(input.value);
             showResult('decode', 'success');
-            copyResult.disabled = false;
+            copyResultButton.disabled = false;
         } catch {
             showAlert('Malformed input!', 'error');
             showResult('decode', 'error');

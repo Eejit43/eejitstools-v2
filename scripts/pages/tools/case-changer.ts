@@ -5,22 +5,22 @@ const toUpperButton = document.getElementById('to-upper') as HTMLButtonElement;
 const toLowerButton = document.getElementById('to-lower') as HTMLButtonElement;
 const toTitleButton = document.getElementById('to-title') as HTMLButtonElement;
 const toSentenceButton = document.getElementById('to-sentence') as HTMLButtonElement;
-const clear = document.getElementById('clear') as HTMLButtonElement;
+const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
+const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 toUpperButton.addEventListener('click', toUpper);
 toLowerButton.addEventListener('click', toLower);
 toTitleButton.addEventListener('click', toTitle);
 toSentenceButton.addEventListener('click', toSentence);
-clear.addEventListener('click', () => {
+clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    copyResult.disabled = true;
+    copyResultButton.disabled = true;
 
-    clear.disabled = true;
-    clear.textContent = 'Cleared!';
+    clearButton.disabled = true;
+    clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
     resetResult('uppercase');
     resetResult('lowercase');
@@ -28,14 +28,14 @@ clear.addEventListener('click', () => {
     resetResult('sentence');
 
     setTimeout(() => {
-        copyResult.disabled = true;
+        copyResultButton.disabled = true;
 
-        clear.disabled = false;
-        clear.textContent = 'Clear';
+        clearButton.disabled = false;
+        clearButton.textContent = 'Clear';
     }, 2000);
 });
-copyResult.addEventListener('click', () => {
-    copyValue(copyResult, result);
+copyResultButton.addEventListener('click', () => {
+    copyValue(copyResultButton, result);
 });
 
 /**
@@ -48,7 +48,7 @@ function toUpper() {
     } else {
         result.value = input.value.toUpperCase();
         showResult('uppercase', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -62,7 +62,7 @@ function toLower() {
     } else {
         result.value = input.value.toLowerCase();
         showResult('lowercase', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -97,7 +97,7 @@ function toTitle() {
     } else {
         result.value = titleCase(input.value);
         showResult('title', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }
 
@@ -120,6 +120,6 @@ function toSentence() {
             .replace(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
             .replace(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
         showResult('sentence', 'success');
-        copyResult.disabled = false;
+        copyResultButton.disabled = false;
     }
 }

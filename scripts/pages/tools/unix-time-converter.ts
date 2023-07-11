@@ -1,15 +1,15 @@
 import { copyValue, updateArrow } from '../../functions.js';
 
 const standardInput = document.getElementById('standard-input') as HTMLInputElement;
-const standardInputReset = document.getElementById('standard-input-reset') as HTMLButtonElement;
+const standardInputResetButton = document.getElementById('standard-input-reset') as HTMLButtonElement;
 const standardArrow = document.getElementById('standard-arrow') as HTMLElement;
 const unixInput = document.getElementById('unix-input') as HTMLInputElement;
-const unixInputReset = document.getElementById('unix-input-reset') as HTMLButtonElement;
-const unixInputSwitch = document.getElementById('unix-input-switch') as HTMLButtonElement;
+const unixInputResetButton = document.getElementById('unix-input-reset') as HTMLButtonElement;
+const unixInputSwitchButton = document.getElementById('unix-input-switch') as HTMLButtonElement;
 const unixArrow = document.getElementById('unix-arrow') as HTMLElement;
-const unixOutputCopy = document.getElementById('unix-output-copy') as HTMLButtonElement;
-const unixOutputSwitch = document.getElementById('unix-output-switch') as HTMLButtonElement;
-const standardOutputCopy = document.getElementById('standard-output-copy') as HTMLButtonElement;
+const unixOutputCopyButton = document.getElementById('unix-output-copy') as HTMLButtonElement;
+const unixOutputSwitchButton = document.getElementById('unix-output-switch') as HTMLButtonElement;
+const standardOutputCopyButton = document.getElementById('standard-output-copy') as HTMLButtonElement;
 const standardOutput = document.getElementById('standard-output') as HTMLInputElement;
 const unixOutput = document.getElementById('unix-output') as HTMLInputElement;
 
@@ -18,13 +18,13 @@ const unixInputTitle = document.getElementById('unix-input-title') as HTMLSpanEl
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
-standardInputReset.addEventListener('click', updateStandardTime);
+standardInputResetButton.addEventListener('click', updateStandardTime);
 unixInput.addEventListener('input', updateStandardOutput);
-unixInputReset.addEventListener('click', updateUnixTime);
-unixInputSwitch.addEventListener('click', switchUnixInput);
-unixOutputCopy.addEventListener('click', () => copyValue(unixOutputCopy, unixOutput));
-unixOutputSwitch.addEventListener('click', switchUnixOutput);
-standardOutputCopy.addEventListener('click', () => copyValue(standardOutputCopy, standardOutput));
+unixInputResetButton.addEventListener('click', updateUnixTime);
+unixInputSwitchButton.addEventListener('click', switchUnixInput);
+unixOutputCopyButton.addEventListener('click', () => copyValue(unixOutputCopyButton, unixOutput));
+unixOutputSwitchButton.addEventListener('click', switchUnixOutput);
+standardOutputCopyButton.addEventListener('click', () => copyValue(standardOutputCopyButton, standardOutput));
 
 let unixInputState = 's';
 let unixOutputState = 's';
@@ -48,19 +48,19 @@ function updateUnixOutput() {
     if (standardInput.value.length === 0) {
         updateArrow(standardArrow, 'reset', 'down');
         unixOutput.value = '';
-        unixOutputCopy.disabled = true;
-        unixOutputSwitch.disabled = true;
+        unixOutputCopyButton.disabled = true;
+        unixOutputSwitchButton.disabled = true;
     } else if (isNaN(standardTime.getTime())) {
         updateArrow(standardArrow, 'error');
         unixOutput.value = '';
-        unixOutputCopy.disabled = true;
-        unixOutputSwitch.disabled = true;
+        unixOutputCopyButton.disabled = true;
+        unixOutputSwitchButton.disabled = true;
     } else {
         updateArrow(standardArrow, 'success', 'down');
 
         unixOutput.value = unixOutputState === 'ms' ? standardTime.getTime().toString() : standardTime.getTime().toString().slice(0, -3);
-        unixOutputCopy.disabled = false;
-        unixOutputSwitch.disabled = false;
+        unixOutputCopyButton.disabled = false;
+        unixOutputSwitchButton.disabled = false;
     }
 }
 
@@ -80,17 +80,17 @@ function updateStandardOutput() {
     if (unixInput.value.length === 0) {
         updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
-        standardOutputCopy.disabled = true;
+        standardOutputCopyButton.disabled = true;
     } else if (isNaN(unixTime.getTime())) {
         updateArrow(unixArrow, 'error');
         standardOutput.value = '';
-        standardOutputCopy.disabled = true;
+        standardOutputCopyButton.disabled = true;
     } else {
         updateArrow(unixArrow, 'success', 'down');
 
         const timeString = unixTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' });
         standardOutput.value = `${unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, '0')} $1`) : timeString}, ${unixTime.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
-        standardOutputCopy.disabled = false;
+        standardOutputCopyButton.disabled = false;
     }
 }
 
@@ -101,11 +101,11 @@ function switchUnixOutput() {
     if (unixOutputState === 's') {
         unixOutputState = 'ms';
         unixOutputTitle.textContent = 'UNIX Time (milliseconds):';
-        unixOutputSwitch.textContent = 'Switch to seconds';
+        unixOutputSwitchButton.textContent = 'Switch to seconds';
     } else if (unixOutputState === 'ms') {
         unixOutputState = 's';
         unixOutputTitle.textContent = 'UNIX Time (seconds):';
-        unixOutputSwitch.textContent = 'Switch to milliseconds';
+        unixOutputSwitchButton.textContent = 'Switch to milliseconds';
     }
     updateUnixOutput();
 }
@@ -117,11 +117,11 @@ function switchUnixInput() {
     if (unixInputState === 's') {
         unixInputState = 'ms';
         unixInputTitle.textContent = 'UNIX Time (milliseconds):';
-        unixInputSwitch.textContent = 'Switch to seconds';
+        unixInputSwitchButton.textContent = 'Switch to seconds';
     } else if (unixInputState === 'ms') {
         unixInputState = 's';
         unixInputTitle.textContent = 'UNIX Time (seconds):';
-        unixInputSwitch.textContent = 'Switch to milliseconds';
+        unixInputSwitchButton.textContent = 'Switch to milliseconds';
     }
     updateStandardOutput();
 }
