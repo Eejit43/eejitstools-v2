@@ -1,10 +1,10 @@
 import { resetResult, showAlert, showResult } from '../../functions.js';
 
-const minNumber = document.getElementById('min-number');
-const maxNumber = document.getElementById('max-number');
-const generate = document.getElementById('generate-number');
-const resetButton = document.getElementById('reset');
-const outputNumber = document.getElementById('random-number');
+const minNumber = document.getElementById('min-number') as HTMLInputElement;
+const maxNumber = document.getElementById('max-number') as HTMLInputElement;
+const generate = document.getElementById('generate-number') as HTMLButtonElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const outputNumber = document.getElementById('random-number') as HTMLSpanElement;
 
 /* Add event listeners */
 generate.addEventListener('click', generateNumber);
@@ -23,7 +23,7 @@ resetButton.addEventListener('click', () => {
 function generateNumber() {
     const min = Number(minNumber.value);
     const max = Number(maxNumber.value);
-    if (min.length === 0 || max.length === 0) {
+    if (minNumber.value.length === 0 || maxNumber.value.length === 0) {
         showAlert('Empty input!', 'error');
         showResult('generate', 'error');
     } else if (min >= max) {

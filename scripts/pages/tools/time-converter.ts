@@ -1,5 +1,3 @@
-/* global math */
-
 import { copyValue, showAlert } from '../../functions.js';
 
 const inputType = document.getElementById('input-type');
@@ -46,7 +44,7 @@ switchButton.addEventListener('click', () => {
 
     convert();
 
-    showAlert('Moved to input!', '#1c62d4');
+    showAlert('Swapped input and output!', '#1c62d4');
 });
 outputType.addEventListener('change', convert);
 copyOutput.addEventListener('click', () => copyValue(copyOutput, output));
@@ -55,6 +53,8 @@ copyOutput.addEventListener('click', () => copyValue(copyOutput, output));
  * Converts the provided time value and displays the result
  */
 function convert() {
+    input.value = input.value.replace(/,/g, '');
+
     if (/^-?([0-9]\d*)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
         output.value = math.number(math.format(math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replace(/[^0-9-.]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });

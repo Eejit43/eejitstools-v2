@@ -1,13 +1,13 @@
 import { copyText, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input');
-const toMorseButton = document.getElementById('to-morse');
-const fromMorseButton = document.getElementById('from-morse');
-const clearButton = document.getElementById('clear');
-const result = document.getElementById('result');
-const resultCopy = document.getElementById('copy-result');
-const resultCopyVertical = document.getElementById('copy-result-2');
-const resultCopySpaces = document.getElementById('copy-result-3');
+const input = document.getElementById('input') as HTMLTextAreaElement;
+const toMorseButton = document.getElementById('to-morse') as HTMLButtonElement;
+const fromMorseButton = document.getElementById('from-morse') as HTMLButtonElement;
+const clearButton = document.getElementById('clear') as HTMLButtonElement;
+const result = document.getElementById('result') as HTMLTextAreaElement;
+const resultCopy = document.getElementById('copy-result') as HTMLButtonElement;
+const resultCopyVertical = document.getElementById('copy-result-2') as HTMLButtonElement;
+const resultCopySpaces = document.getElementById('copy-result-3') as HTMLButtonElement;
 
 /* Add event listeners */
 toMorseButton.addEventListener('click', toMorse);
@@ -35,7 +35,8 @@ resultCopySpaces.addEventListener('click', () => {
     copyText(resultCopySpaces, result.value.replace(/ {3}/g, '   '));
 });
 
-const morseConversion = {
+/* eslint-disable @typescript-eslint/naming-convention */
+const morseConversion: { [key: string]: string } = {
     a: '.-',
     b: '-...',
     c: '-.-.',
@@ -91,13 +92,14 @@ const morseConversion = {
     $: '...-..-',
     '.': '.-.-.-'
 };
+/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * Coverts a string to Morse code
  * @param {string} string the string to convert
  * @returns {string} the string in Morse code
  */
-function convertToMorse(string) {
+function convertToMorse(string: string) {
     return string
         .toLowerCase()
         .split('')
@@ -138,7 +140,7 @@ function toMorse() {
  * @param {string} morseCode the Morse code to convert
  * @returns {string} the converted string
  */
-function decodeMorse(morseCode) {
+function decodeMorse(morseCode: string) {
     return morseCode
         .split(/ {2,}| *[|/] */)
         .map((word) =>

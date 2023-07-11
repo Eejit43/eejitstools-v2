@@ -1,11 +1,11 @@
-const startButton = document.getElementById('start');
-const stopButton = document.getElementById('stop');
-const resetButton = document.getElementById('reset');
+const startButton = document.getElementById('start') as HTMLButtonElement;
+const stopButton = document.getElementById('stop') as HTMLButtonElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
 
-const hoursDisplay = document.getElementById('hours-display');
-const minutesDisplay = document.getElementById('minutes-display');
-const secondsDisplay = document.getElementById('seconds-display');
-const millisecondsDisplay = document.getElementById('milliseconds-display');
+const hoursDisplay = document.getElementById('hours-display') as HTMLSpanElement;
+const minutesDisplay = document.getElementById('minutes-display') as HTMLSpanElement;
+const secondsDisplay = document.getElementById('seconds-display') as HTMLSpanElement;
+const millisecondsDisplay = document.getElementById('milliseconds-display') as HTMLSpanElement;
 
 /* Add event listeners */
 startButton.addEventListener('click', startStopwatch);
@@ -80,7 +80,7 @@ function displayTime() {
  * @param {number} padding the length of the number to pad the start of the ending value with
  * @returns {number} the formatted value
  */
-function format(value, scale, modulo, padding) {
+function format(value: number, scale: number, modulo: number | null, padding: number) {
     return modulo
         ? (Math.floor(value / scale) % modulo).toString().padStart(padding, '0')
         : Math.floor(value / scale)

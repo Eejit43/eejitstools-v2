@@ -1,13 +1,21 @@
-/* global MathJax */
 import { showAlert } from '../../functions.js';
 
-const indexInput = document.getElementById('index');
-const radicandInput = document.getElementById('radicand');
-const operandInput = document.getElementById('operand');
-const simplifyButton = document.getElementById('simplify');
-const resetButton = document.getElementById('reset');
-const output = document.getElementById('output');
-const message = document.getElementById('message');
+declare global {
+    interface Window {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        MathJax: {
+            typeset(): void;
+        };
+    }
+}
+
+const indexInput = document.getElementById('index') as HTMLInputElement;
+const radicandInput = document.getElementById('radicand') as HTMLInputElement;
+const operandInput = document.getElementById('operand') as HTMLInputElement;
+const simplifyButton = document.getElementById('simplify') as HTMLButtonElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const output = document.getElementById('output') as HTMLSpanElement;
+const message = document.getElementById('message') as HTMLSpanElement;
 
 ['input', 'paste'].forEach((event) => {
     indexInput.addEventListener(event, () => (indexInput.value = indexInput.value.replace(/[^0-9]/g, '')));
@@ -24,8 +32,8 @@ simplifyButton.addEventListener('click', () => {
     if (!radicandInput.value) return showAlert('Provide a radicand first!', 'error');
     output.classList.remove('hidden');
 
-    const index = parseInt(indexInput.value || 2);
-    const operand = parseInt(operandInput.value || 1);
+    const index = indexInput.value ? parseInt(indexInput.value) : 2;
+    const operand = operandInput.value ? parseInt(operandInput.value) : 1;
     const originalRadicand = parseInt(radicandInput.value);
     const negativeRadicand = originalRadicand < 0;
 
@@ -38,7 +46,7 @@ simplifyButton.addEventListener('click', () => {
 
     if (negativeRadicand) primeFactors.unshift(-1);
 
-    let outputOperand = 1,
+    let outputOperand: number | string = 1,
         outputRadicand = 1;
 
     Object.entries(primeFactorsObject).forEach(([number, amount]) => {
@@ -48,10 +56,10 @@ simplifyButton.addEventListener('click', () => {
         }
 
         if (amount / index >= 1) {
-            outputOperand *= Math.pow(number, (amount - (amount % index)) / index);
-            outputRadicand *= Math.pow(number, amount % index);
+            (outputOperand as number) *= Math.pow(Number(number), (amount - (amount % index)) / index);
+            outputRadicand *= Math.pow(Number(number), amount % index);
         }
-        if (amount / index < 1) outputRadicand *= Math.pow(number, amount);
+        if (amount / index < 1) outputRadicand *= Math.pow(Number(number), amount);
     });
 
     if (negativeRadicand) {
@@ -68,7 +76,7 @@ simplifyButton.addEventListener('click', () => {
 
     if (original === finalOutput) message.textContent = `The radicand is already in its simplest form.${primeFactors.length === 1 ? ` ${radicand} is a prime number.` : ''}`;
     output.textContent = `\\(${[original, factored, mappedFactors, finalOutput].filter((output, index, array) => output !== array[index - 1]).join(' = ')}\\)`;
-    MathJax.typeset(); // Parse LaTeX math to visual representation
+    window.MathJax.typeset(); // Parse LaTeX math to visual representation
 });
 
 resetButton.addEventListener('click', () => {
@@ -86,7 +94,7 @@ resetButton.addEventListener('click', () => {
  * @returns {number[]} the prime factors of the number
  * @see https://github.com/nayuki/Nayuki-web-published-code/blob/master/calculate-prime-factorization-javascript/calculate-prime-factorization.js
  */
-function getPrimeFactors(number) {
+function getPrimeFactors(number: number) {
     if (number === 0) return [0];
     if (number === 1) return [1];
 
@@ -105,12 +113,11 @@ function getPrimeFactors(number) {
  * @returns {number} the smallest prime factor of the given integer
  * @see https://github.com/nayuki/Nayuki-web-published-code/blob/master/calculate-prime-factorization-javascript/calculate-prime-factorization.js
  */
-function smallestFactor(number) {
+function smallestFactor(number: number) {
     if (number % 2 === 0) return 2;
     const end = Math.floor(Math.sqrt(number));
-    for (let i = 3; i <= end; i += 2) {
-        if (number % i === 0) return i;
-    }
+    for (let i = 3; i <= end; i += 2) if (number % i === 0) return i;
+
     return number;
 }
 
@@ -119,11 +126,11 @@ function smallestFactor(number) {
  * @param {number[]} numbers the numbers to map
  * @returns {Object<number, number>} the mapped prime factors
  */
-function mapPrimeFactors(numbers) {
-    const object = {};
+function mapPrimeFactors(numbers: number[]) {
+    const object: { [number: string]: number } = {};
 
     numbers.forEach((number) => {
-        if (!Object.hasOwn(object, number)) object[number] = 0;
+        if (!(number in object)) object[number] = 0;
         object[number]++;
     });
 

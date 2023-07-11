@@ -148,8 +148,6 @@ function addBinarySpacers(binary: string) {
     return sign + result;
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const radices: { [key: string]: { number: number; name: string } } = {
     1: { number: 2, name: 'binary' },
     2: { number: 8, name: 'octal' },

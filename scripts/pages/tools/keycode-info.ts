@@ -1,20 +1,21 @@
 import { showAlert } from '../../functions.js';
 
-const ready = document.getElementById('ready');
-const key = document.getElementById('key');
-const keyCell = document.getElementById('key-cell');
-const keyRepeating = document.getElementById('key-repeating');
-const keyRepeatingCell = document.getElementById('key-repeating-cell');
-const keyLocation = document.getElementById('key-location');
-const keyLocationCell = document.getElementById('key-location-cell');
-const keyCode = document.getElementById('key-code');
-const keyCodeCell = document.getElementById('key-code-cell');
-const keyAscii = document.getElementById('key-ascii');
-const keyAsciiCell = document.getElementById('key-ascii-cell');
-const keyUnicode = document.getElementById('key-unicode');
-const keyUnicodeCell = document.getElementById('key-unicode-cell');
+const ready = document.getElementById('ready') as HTMLSpanElement;
+const keyResults = document.getElementById('key-results') as HTMLTableRowElement;
+const key = document.getElementById('key') as HTMLSpanElement;
+const keyCell = document.getElementById('key-cell') as HTMLTableCellElement;
+const keyRepeating = document.getElementById('key-repeating') as HTMLSpanElement;
+const keyRepeatingCell = document.getElementById('key-repeating-cell') as HTMLTableCellElement;
+const keyLocation = document.getElementById('key-location') as HTMLSpanElement;
+const keyLocationCell = document.getElementById('key-location-cell') as HTMLTableCellElement;
+const keyCode = document.getElementById('key-code') as HTMLSpanElement;
+const keyCodeCell = document.getElementById('key-code-cell') as HTMLTableCellElement;
+const keyAscii = document.getElementById('key-ascii') as HTMLSpanElement;
+const keyAsciiCell = document.getElementById('key-ascii-cell') as HTMLTableCellElement;
+const keyUnicode = document.getElementById('key-unicode') as HTMLSpanElement;
+const keyUnicodeCell = document.getElementById('key-unicode-cell') as HTMLTableCellElement;
 
-let keyVal, keyRepeatingVal, keyLocationVal, keyCodeVal, keyAsciiVal, keyUnicodeVal;
+let keyVal: string, keyRepeatingVal: string, keyLocationVal: string, keyCodeVal: string, keyAsciiVal: string, keyUnicodeVal: string;
 
 let valExist = false;
 
@@ -37,7 +38,7 @@ window.addEventListener('blur', () => {
  * If a key has been pressed, copies the provided string
  * @param {string} string the text to copy
  */
-function copyKeycodeInfo(string) {
+function copyKeycodeInfo(string: string) {
     if (valExist) {
         navigator.clipboard.writeText(string);
         showAlert('Copied!', 'success');
@@ -48,25 +49,25 @@ function copyKeycodeInfo(string) {
  * Updates information for the key that is pressed
  * @param {KeyboardEvent} event the event
  */
-function keyInfo(event) {
+function keyInfo(event: KeyboardEvent) {
     valExist = true;
-    document.getElementById('key-results').className = 'keycodes-td-ready';
+    keyResults.className = 'keycodes-td-ready';
     key.textContent = event.key;
     keyVal = event.key;
     if (event.key === ' ') key.textContent = 'Space ( )';
     else if (event.key === '\u00a0') key.innerHTML = '<span class="tooltip-bottom" data-tooltip="Non breaking space">NBSP</span> (\u00a0)';
-    keyRepeating.textContent = event.repeat;
-    keyRepeatingVal = event.repeat;
-    keyLocation.textContent = event.location;
-    keyLocationVal = event.location;
+    keyRepeating.textContent = event.repeat.toString();
+    keyRepeatingVal = event.repeat.toString();
+    keyLocation.textContent = event.location.toString();
+    keyLocationVal = event.location.toString();
     if (event.location === 0) keyLocation.innerHTML = '0<br />(general)';
     else if (event.location === 1) keyLocation.innerHTML = '1<br />(left)';
     else if (event.location === 2) keyLocation.innerHTML = '2<br />(right)';
     else if (event.location === 3) keyLocation.innerHTML = '3<br />(numpad)';
     keyCode.textContent = event.code;
     keyCodeVal = event.code;
-    keyAscii.textContent = event.which;
-    keyAsciiVal = event.which;
-    keyUnicode.textContent = String(event.key).charCodeAt(0);
-    keyUnicodeVal = String(event.key).charCodeAt(0);
+    keyAscii.textContent = event.which.toString();
+    keyAsciiVal = event.which.toString();
+    keyUnicode.textContent = String(event.key).charCodeAt(0).toString();
+    keyUnicodeVal = String(event.key).charCodeAt(0).toString();
 }

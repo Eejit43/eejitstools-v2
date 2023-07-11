@@ -1,13 +1,13 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input');
-const toUpperButton = document.getElementById('to-upper');
-const toLowerButton = document.getElementById('to-lower');
-const toTitleButton = document.getElementById('to-title');
-const toSentenceButton = document.getElementById('to-sentence');
-const clear = document.getElementById('clear');
-const result = document.getElementById('result');
-const copyResult = document.getElementById('copy-result');
+const input = document.getElementById('input') as HTMLTextAreaElement;
+const toUpperButton = document.getElementById('to-upper') as HTMLButtonElement;
+const toLowerButton = document.getElementById('to-lower') as HTMLButtonElement;
+const toTitleButton = document.getElementById('to-title') as HTMLButtonElement;
+const toSentenceButton = document.getElementById('to-sentence') as HTMLButtonElement;
+const clear = document.getElementById('clear') as HTMLButtonElement;
+const result = document.getElementById('result') as HTMLTextAreaElement;
+const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 toUpperButton.addEventListener('click', toUpper);
@@ -71,7 +71,7 @@ function toLower() {
  * @param {string} string the string to convert
  * @returns {string} the string in title case
  */
-function titleCase(string) {
+function titleCase(string: string) {
     string = string.replace(/([^\W_]+[^\s-]*) */g, (txt) => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });

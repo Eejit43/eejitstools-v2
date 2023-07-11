@@ -1,14 +1,14 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input');
-const separator = document.getElementById('separator');
-const alphabetizeNormalButton = document.getElementById('alphabetize-normal');
-const numerizeButton = document.getElementById('numerize');
-const randomizeButton = document.getElementById('randomize');
-const reverseButton = document.getElementById('reverse');
-const clear = document.getElementById('clear');
-const result = document.getElementById('result');
-const copyResult = document.getElementById('copy-result');
+const input = document.getElementById('input') as HTMLTextAreaElement;
+const separator = document.getElementById('separator') as HTMLInputElement;
+const alphabetizeNormalButton = document.getElementById('alphabetize-normal') as HTMLButtonElement;
+const numerizeButton = document.getElementById('numerize') as HTMLButtonElement;
+const randomizeButton = document.getElementById('randomize') as HTMLButtonElement;
+const reverseButton = document.getElementById('reverse') as HTMLButtonElement;
+const clear = document.getElementById('clear') as HTMLButtonElement;
+const result = document.getElementById('result') as HTMLTextAreaElement;
+const copyResult = document.getElementById('copy-result') as HTMLButtonElement;
 
 const separatorValue = separator.value.replace('\\n', '\n');
 
@@ -111,7 +111,7 @@ function reverse() {
  * @param {Array} array The array to shuffle
  * @returns {Array} shuffled array
  */
-function shuffleArray(array) {
+function shuffleArray(array: Array<unknown>) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];

@@ -162,7 +162,7 @@ async function displayImage(string: string) {
  * @param {string} data The base64 to create an object URL for
  * @param {string} mimeType The mimeType of the given base64
  * @returns {string} image object URL
- * @see https://stackoverflow.com/a/52092093
+ * @see https://stackoverflow.com/questions/52092093
  */
 function createBase64ObjectUrl(data: string, mimeType: string) {
     const byteCharacters = atob(data);
@@ -170,8 +170,6 @@ function createBase64ObjectUrl(data: string, mimeType: string) {
     for (let i = 0; i < byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
 
     const byteArray = new Uint8Array(byteNumbers);
-    const file = new Blob([byteArray], {
-        type: mimeType + ';base64'
-    });
+    const file = new Blob([byteArray], { type: mimeType + ';base64' });
     return URL.createObjectURL(file);
 }

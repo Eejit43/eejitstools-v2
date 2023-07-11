@@ -1,5 +1,3 @@
-/* global GeolocationPosition */
-
 import { titleCase } from '../../functions.js';
 
 const result = document.getElementById('result');

@@ -301,6 +301,9 @@ const imports: Imports = {
     },
     uaParser: {
         script: { link: 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js' }
+    },
+    chroma: {
+        script: { link: 'https://cdn.jsdelivr.net/npm/chroma-js/chroma.min.js' }
     }
 };
 
@@ -350,7 +353,7 @@ const preParsedPages: PreParsedPages = {
         'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system', additionalScripts: [imports.uaParser.script] },
         calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with personal to-do list', toolbox: false },
         'case-changer': { title: 'Case Changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
-        'color-info': { title: 'Color Information', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors' },
+        'color-info': { title: 'Color Information', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors', additionalScripts: [imports.chroma.script] },
         timer: { title: 'Countdown Timer', icon: 'bell', description: 'Simple countdown timer with end time display' },
         countdowns: { title: 'Countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
         counter: { title: 'Counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },

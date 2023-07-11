@@ -1,22 +1,26 @@
-/* global math */
-
+import type math from 'mathjs';
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
-const decimalInput = document.getElementById('decimal-input');
-const decimalConvert = document.getElementById('decimal-convert');
-const decimalReset = document.getElementById('decimal-reset');
-const decimalArrow = document.getElementById('decimal-arrow');
-const scientificOutput = document.getElementById('scientific-output');
-const scientificOutputCopy = document.getElementById('scientific-output-copy');
-const scientificOutputCopy2 = document.getElementById('scientific-output-copy-2');
-const scientificInput = document.getElementById('scientific-input');
-const scientificConvert = document.getElementById('scientific-convert');
-const scientificReset = document.getElementById('scientific-reset');
-const scientificArrow = document.getElementById('scientific-arrow');
-const decimalOutput = document.getElementById('decimal-output');
-const decimalOutputCopy = document.getElementById('decimal-output-copy');
+declare global {
+    interface Window {
+        math: typeof math;
+    }
+}
+const decimalInput = document.getElementById('decimal-input') as HTMLInputElement;
+const decimalConvert = document.getElementById('decimal-convert') as HTMLButtonElement;
+const decimalReset = document.getElementById('decimal-reset') as HTMLButtonElement;
+const decimalArrow = document.getElementById('decimal-arrow') as HTMLElement;
+const scientificOutput = document.getElementById('scientific-output') as HTMLInputElement;
+const scientificOutputCopy = document.getElementById('scientific-output-copy') as HTMLButtonElement;
+const scientificOutputCopy2 = document.getElementById('scientific-output-copy-2') as HTMLButtonElement;
+const scientificInput = document.getElementById('scientific-input') as HTMLInputElement;
+const scientificConvert = document.getElementById('scientific-convert') as HTMLButtonElement;
+const scientificReset = document.getElementById('scientific-reset') as HTMLButtonElement;
+const scientificArrow = document.getElementById('scientific-arrow') as HTMLElement;
+const decimalOutput = document.getElementById('decimal-output') as HTMLInputElement;
+const decimalOutputCopy = document.getElementById('decimal-output-copy') as HTMLButtonElement;
 
-let decimalOutputVal, scientificOutputVal, scientificOutputVal2;
+let decimalOutputVal: string, scientificOutputVal: string, scientificOutputVal2: string;
 
 /* Add event listeners */
 decimalInput.addEventListener('input', () => {
@@ -27,16 +31,11 @@ decimalInput.addEventListener('input', () => {
         .replace(/(\+.*?)\+/g, '$1');
 });
 decimalInput.addEventListener('input', () => {
-    if (decimalInput.value.length > 0) {
-        decimalConvert.disabled = false;
-    } else {
-        decimalConvert.disabled = true;
-    }
-    if (decimalInput.value.length > 0 || scientificOutput.value.length > 0 || decimalArrow.style.color !== 'dimgray') {
-        decimalReset.disabled = false;
-    } else {
-        decimalReset.disabled = true;
-    }
+    if (decimalInput.value.length > 0) decimalConvert.disabled = false;
+    else decimalConvert.disabled = true;
+
+    if (decimalInput.value.length > 0 || scientificOutput.value.length > 0 || decimalArrow.style.color !== 'dimgray') decimalReset.disabled = false;
+    else decimalReset.disabled = true;
 });
 decimalConvert.addEventListener('click', convertDecimal);
 decimalReset.addEventListener('click', () => {
@@ -79,9 +78,9 @@ decimalOutputCopy.addEventListener('click', () => copyText(decimalOutputCopy, de
  */
 function convertDecimal() {
     if (/^[+-]?([0-9]\d*)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
-        scientificOutput.value = math.bignumber(decimalInput.value).toExponential();
-        scientificOutputVal = math.bignumber(decimalInput.value).toExponential();
-        scientificOutputVal2 = math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
+        scientificOutput.value = window.math.bignumber(decimalInput.value).toExponential();
+        scientificOutputVal = window.math.bignumber(decimalInput.value).toExponential();
+        scientificOutputVal2 = window.math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
         scientificOutputCopy.disabled = false;
         scientificOutputCopy2.disabled = false;
         updateArrow(decimalArrow, 'success');
@@ -99,13 +98,13 @@ function convertDecimal() {
  */
 function convertScientific() {
     if (/^[+-]?\d(\.\d+)?[Ee][+-]?\d+$/g.test(scientificInput.value.trim())) {
-        decimalOutput.value = math.format(math.bignumber(scientificInput.value), { notation: 'fixed' });
+        decimalOutput.value = window.math.format(window.math.bignumber(scientificInput.value), { notation: 'fixed' });
         decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopy.disabled = false;
         updateArrow(scientificArrow, 'success', 'right');
     } else if (/^[+-]?\d(\.\d+)? ?[xX*] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
-        decimalOutput.value = math.format(
-            math.bignumber(
+        decimalOutput.value = window.math.format(
+            window.math.bignumber(
                 scientificInput.value
                     .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
                     .replace(/ ?[xX*] ?10\^-/g, 'e-')
@@ -113,8 +112,8 @@ function convertScientific() {
             ),
             { notation: 'fixed' }
         );
-        decimalOutputVal = math.format(
-            math.bignumber(
+        decimalOutputVal = window.math.format(
+            window.math.bignumber(
                 scientificInput.value
                     .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
                     .replace(/ ?[xX*] ?10\^-/g, 'e-')

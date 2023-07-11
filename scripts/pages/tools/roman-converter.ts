@@ -1,20 +1,20 @@
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
-const integerInput = document.getElementById('integer-input');
-const integerConvert = document.getElementById('integer-convert');
-const integerReset = document.getElementById('integer-reset');
-const integerArrow = document.getElementById('integer-arrow');
-const romanOutput = document.getElementById('roman-output');
-const romanOutputCopy = document.getElementById('roman-output-copy');
-const romanOutputCopy2 = document.getElementById('roman-output-copy-2');
-const romanInput = document.getElementById('roman-input');
-const romanConvert = document.getElementById('roman-convert');
-const romanReset = document.getElementById('roman-reset');
-const romanArrow = document.getElementById('roman-arrow');
-const integerOutput = document.getElementById('integer-output');
-const integerOutputCopy = document.getElementById('integer-output-copy');
+const integerInput = document.getElementById('integer-input') as HTMLInputElement;
+const integerConvert = document.getElementById('integer-convert') as HTMLButtonElement;
+const integerReset = document.getElementById('integer-reset') as HTMLButtonElement;
+const integerArrow = document.getElementById('integer-arrow') as HTMLElement;
+const romanOutput = document.getElementById('roman-output') as HTMLButtonElement; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
+const romanOutputCopy = document.getElementById('roman-output-copy') as HTMLButtonElement;
+const romanOutputCopy2 = document.getElementById('roman-output-copy-2') as HTMLButtonElement;
+const romanInput = document.getElementById('roman-input') as HTMLInputElement;
+const romanConvert = document.getElementById('roman-convert') as HTMLButtonElement;
+const romanReset = document.getElementById('roman-reset') as HTMLButtonElement;
+const romanArrow = document.getElementById('roman-arrow') as HTMLElement;
+const integerOutput = document.getElementById('integer-output') as HTMLInputElement;
+const integerOutputCopy = document.getElementById('integer-output-copy') as HTMLButtonElement;
 
-let romanOutputVal, romanOutputVal2, integerOutputVal;
+let romanOutputVal: string, romanOutputVal2: string, integerOutputVal: string;
 
 /* Add event listeners */
 integerInput.addEventListener('input', () => {
@@ -75,7 +75,7 @@ integerOutputCopy.addEventListener('click', () => copyText(integerOutputCopy, in
  */
 function convertInteger() {
     if (parseInt(integerInput.value) > 0) {
-        romanOutput.textContent = romanize(integerInput.value);
+        romanOutput.innerHTML = romanize(parseInt(integerInput.value));
         romanOutputCopy.disabled = false;
         romanOutputCopy2.disabled = false;
         updateArrow(integerArrow, 'success');
@@ -93,14 +93,10 @@ function convertInteger() {
  */
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
-    const input = romanInput.value
-        .replace(/_(\w)/g, (match) => {
-            return match.toLowerCase();
-        })
-        .replace(/_/g, '');
+    const input = romanInput.value.replace(/_(\w)/g, (match) => match.toLowerCase()).replace(/_/g, '');
     if (/^(?:m*)(?:d?c{0,3}|c[md])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[xv])(?:M{0,3})(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/.test(input) === true) {
-        integerOutputVal = deromanize(input);
-        integerOutput.value = deromanize(input);
+        integerOutputVal = deromanize(input).toString();
+        integerOutput.value = deromanize(input).toString();
         integerOutputCopy.disabled = false;
         updateArrow(romanArrow, 'success');
     } else {
@@ -120,9 +116,9 @@ const decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
  * @returns {string} Number in roman numerals
  * @see https://iandevlin.com/files/blog/romanNumerals.html
  */
-function romanize(number) {
+function romanize(number: number) {
     let barredNumerals = '';
-    while (number > 3999) {
+    while (number > 3999)
         for (let i = 0; i < decimal.length - 1; i++) {
             const currentNumber = decimal[i] * 1000;
             if (number < currentNumber) continue;
@@ -131,10 +127,9 @@ function romanize(number) {
             barredNumerals += roman[i];
             break;
         }
-    }
 
     let regularNumerals = '';
-    while (number > 0) {
+    while (number > 0)
         for (let i = 0; i < decimal.length; i++) {
             const currentNumber = decimal[i];
             if (number < currentNumber) continue;
@@ -143,21 +138,21 @@ function romanize(number) {
             regularNumerals += roman[i];
             break;
         }
-    }
+
     romanOutputVal = barredNumerals.replace(/I/g, 'Ī').replace(/V/g, 'V̄').replace(/X/g, 'X̄').replace(/L/g, 'L̄').replace(/C/g, 'C̄').replace(/D/g, 'D̄').replace(/M/g, 'M̄') + regularNumerals;
     romanOutputVal2 = barredNumerals.replace(/([A-Z])/g, '_$1') + regularNumerals;
-    return `<span style="border-top:1px solid">${barredNumerals}</span>` + regularNumerals;
+    return barredNumerals.length > 0 ? `<span style="border-top: 1px solid">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
 }
 
 /**
  * Converts a roman numerals to a number
  * @param {string} string Roman numeral to convert to number
  * @returns {string} Number
- * @author EmNudge#5549 from The Coding Den
+ * @author emnudge
  */
-function deromanize(string) {
+function deromanize(string: string) {
     const token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
-    const key = {
+    const key: { [key: string]: number } = {
         m: 1000000,
         cm: 900000,
         d: 500000,
@@ -184,6 +179,7 @@ function deromanize(string) {
         IV: 4,
         I: 1
     };
+
     let output = 0;
     let i;
     while ((i = token.exec(string))) output += key[i[0]];

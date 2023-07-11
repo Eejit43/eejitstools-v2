@@ -62,7 +62,7 @@ export function showAlert(text: string, color: 'success' | 'error' | string, dur
  * @param {string} [icon='check'] The icon of the icon to show
  * @param {boolean} [remove=true] Whether or not to the remove the icon after 2 seconds (default: true)
  */
-export function showResult(id: string, type: 'success' | 'error', color = '#009c3f', icon = 'check', remove = true) {
+export function showResult(id: string, type: 'success' | 'error' | null, color = '#009c3f', icon = 'check', remove = true) {
     const oldElement = document.getElementById(id + '-result') as HTMLElement;
     const newElement = oldElement.cloneNode(true) as HTMLElement;
     (oldElement.parentNode as ParentNode).replaceChild(newElement, oldElement);

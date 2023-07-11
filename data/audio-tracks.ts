@@ -283,9 +283,9 @@ export const audioTracks: AudioCategory[] = [
         name: 'Various Legend of Zelda OSTs',
         id: 'zelda',
         tracks: [
-            { name: 'Intro/Main Theme - The Legend Of Zelda (NES)', file: 'Intro_Main Theme (Legend Of Zelda, NES)', duration: '1:20' },
-            { name: 'Underworld - The Legend Of Zelda (NES)', file: 'Underworld (Legend Of Zelda, NES)', duration: '0:43' },
-            { name: 'Gerudo Valley - Ocarina Of Time', file: 'Gerudo Valley (Ocarina Of Time)', duration: '2:55' },
+            { name: 'Intro/Main Theme - The Legend of Zelda (NES)', file: 'Intro_Main Theme (Legend of Zelda, NES)', duration: '1:20' },
+            { name: 'Underworld - The Legend of Zelda (NES)', file: 'Underworld (Legend of Zelda, NES)', duration: '0:43' },
+            { name: 'Gerudo Valley - Ocarina of Time', file: 'Gerudo Valley (Ocarina of Time)', duration: '2:55' },
             { name: "Overworld - The Legend of Zelda Link's Awakening (Switch)", file: "Overworld (Link's Awakening)", duration: '1:49' },
             { name: "Sword Search on Koholint Island - The Legend of Zelda Link's Awakening (Switch)", file: "Sword Search on Koholint Island (Link's Awakening)", duration: '2:41' },
             { name: 'Title Theme - The Wind Waker', file: 'Title Theme (Wind Waker)', duration: '2:01' },

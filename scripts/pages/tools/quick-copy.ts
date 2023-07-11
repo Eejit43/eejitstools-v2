@@ -1,16 +1,14 @@
-/* global PermissionState */
-
 import { copyText, showAlert } from '../../functions.js';
 
-const clearClipboardButton = document.getElementById('clear-clipboard');
-const copyZws = document.getElementById('copy-zws');
-const copyNbsp = document.getElementById('copy-nbsp');
-const copyEms = document.getElementById('copy-ems');
-const copyEns = document.getElementById('copy-ens');
-const copyTs = document.getElementById('copy-ts');
-const clipboardWarning = document.getElementById('clipboard-warning');
-const copiedText = document.getElementById('copied-text');
-const selectClipboard = document.getElementById('select-clipboard');
+const clearClipboardButton = document.getElementById('clear-clipboard') as HTMLButtonElement;
+const copyZws = document.getElementById('copy-zws') as HTMLButtonElement;
+const copyNbsp = document.getElementById('copy-nbsp') as HTMLButtonElement;
+const copyEms = document.getElementById('copy-ems') as HTMLButtonElement;
+const copyEns = document.getElementById('copy-ens') as HTMLButtonElement;
+const copyTs = document.getElementById('copy-ts') as HTMLButtonElement;
+const clipboardWarning = document.getElementById('clipboard-warning') as HTMLSpanElement;
+const copiedText = document.getElementById('copied-text') as HTMLTextAreaElement;
+const selectClipboard = document.getElementById('select-clipboard') as HTMLButtonElement;
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
@@ -50,7 +48,7 @@ let clipboardReadAllowed = false;
  * Displays the given message if that wasn't already displayed
  * @param {string} message the message to display
  */
-function showWarning(message) {
+function showWarning(message: string) {
     if (clipboardWarning.innerHTML.replace(/<br>/g, '<br />') !== message) clipboardWarning.innerHTML = message;
 }
 
@@ -76,7 +74,7 @@ function clearClipboard() {
  */
 async function requestPermission() {
     try {
-        const result = await navigator.permissions.query({ name: 'clipboard-read' });
+        const result = await navigator.permissions.query({ name: 'clipboard-read' as PermissionName });
 
         handlePermission(result.state);
 
@@ -90,26 +88,26 @@ async function requestPermission() {
 
 requestPermission();
 
-let interval;
+let interval: number | null = null;
 
 /**
  * Handles the state of the `clipboard-read` permission request
  * @param {PermissionState} state the state to handle
  */
-function handlePermission(state) {
+function handlePermission(state: PermissionState) {
     if (state === 'granted' || state === 'prompt') {
-        clearInterval(interval);
+        if (interval) clearInterval(interval);
         clipboardDisplay();
-        if (clipboardReadAllowed === false) interval = setInterval(clipboardDisplay, 500);
+        if (clipboardReadAllowed === false) interval = setInterval(clipboardDisplay, 500) as unknown as number;
         clipboardReadAllowed = true;
     } else {
-        clearInterval(interval);
+        if (interval) clearInterval(interval);
         clipboardReadAllowed = false;
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Permission to read clipboard denied!<br />');
     }
 }
 
-let storedData;
+let storedData: number | null = null;
 
 /**
  * Displays the current clipboard
@@ -118,7 +116,7 @@ async function clipboardDisplay() {
     try {
         const data = await navigator.clipboard.read();
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++)
             if (data[i].types.includes('text/plain')) {
                 const blob = await data[i].getType('text/plain'); // eslint-disable-line no-await-in-loop
 
@@ -126,7 +124,7 @@ async function clipboardDisplay() {
                 reader.readAsText(blob);
 
                 reader.addEventListener('load', () => {
-                    const text = reader.result.toString();
+                    const text = reader.result?.toString() ?? '';
                     if (text.length === 0) {
                         copiedText.value = '';
                         selectClipboard.disabled = true;
@@ -147,9 +145,9 @@ async function clipboardDisplay() {
                 if (storedData !== blob.size || (storedData === blob.size && !/Clipboard has image!/.test(clipboardWarning.innerHTML))) showWarning(`<span style="color:#4b5663"><i class="far fa-image"></i> Clipboard has image! (<a href='${url}' target="_blank">view</a>)<br /></span>`);
                 if (storedData !== blob.size) storedData = blob.size;
             }
-        }
-    } catch {
-        if (error.toString().match(/focused/g)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+    } catch (error) {
+        if ((error as Error).message.match(/focused/)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+        else if ((error as Error).message.match(/user gesture/)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
 
         const text = await navigator.clipboard.readText();
 
@@ -164,5 +162,3 @@ async function clipboardDisplay() {
         }
     }
 }
-
-clipboardDisplay();

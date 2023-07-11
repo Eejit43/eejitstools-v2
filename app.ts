@@ -129,6 +129,11 @@ fastify.post('/coins-list-edit', async (request, reply) => {
 
 let calendarEventsCache: string | null = null;
 
+export interface CalendarEvents {
+    holidays: { name: string; date: string }[];
+    moonPhases: { phase: string; date: string; time: string }[];
+}
+
 interface Calendar {
     items: {
         summary: string;
@@ -150,7 +155,7 @@ fastify.get('/calendar-events', async (request, reply) => {
             time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)?.[1].replace(/(\d)([ap]m)/, '$1 $2') as string
         }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const result = { holidays, moonPhases };
+    const result: CalendarEvents = { holidays, moonPhases };
 
     calendarEventsCache = JSON.stringify(result, null, 2);
     reply.send(calendarEventsCache);

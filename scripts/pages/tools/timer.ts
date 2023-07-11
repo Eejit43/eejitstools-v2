@@ -1,19 +1,19 @@
 import { resetResult, showAlert, showResult } from '../../functions.js';
 
-const startTimerButton = document.getElementById('start-timer');
-const pauseResumeTimer = document.getElementById('pause-resume-timer');
-const resetButton = document.getElementById('reset');
-const hoursInput = document.getElementById('hours');
-const minutesInput = document.getElementById('minutes');
-const secondsInput = document.getElementById('seconds');
-const timerDisplay = document.getElementById('timer');
-const timerTime = document.getElementById('timer-time');
+const startTimerButton = document.getElementById('start-timer') as HTMLButtonElement;
+const pauseResumeTimer = document.getElementById('pause-resume-timer') as HTMLButtonElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const hoursInput = document.getElementById('hours') as HTMLInputElement;
+const minutesInput = document.getElementById('minutes') as HTMLInputElement;
+const secondsInput = document.getElementById('seconds') as HTMLInputElement;
+const timerDisplay = document.getElementById('timer') as HTMLSpanElement;
+const timerTime = document.getElementById('timer-time') as HTMLSpanElement;
 
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);
 pauseResumeTimer.addEventListener('click', () => {
     if (!paused) {
-        clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         timeout = null;
         paused = true;
         pauseResumeTimer.textContent = 'Resume';
@@ -26,7 +26,7 @@ pauseResumeTimer.addEventListener('click', () => {
     }
 });
 resetButton.addEventListener('click', () => {
-    clearTimeout(timeout);
+    if (timeout) clearTimeout(timeout);
     timeout = null;
 
     paused = true;
@@ -63,19 +63,17 @@ secondsInput.addEventListener('input', () => {
  * Checks and updates an elements value if needed
  * @param {HTMLInputElement} element the element to check and update
  */
-function checkInput(element) {
+function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if ((element.max && element.value > element.max) || element.value < 1) element.value = element.value.slice(0, 1);
+    if ((element.max && element.value > element.max) || parseInt(element.value) < 1) element.value = element.value.slice(0, 1);
 }
 
 const audio = new Audio('/files/timer-alarm.mp3');
 audio.loop = true;
 
-window.audio = audio;
-
 let paused = true;
 
-let targetTime;
+let targetTime: number;
 
 /**
  * Starts the timer
@@ -105,9 +103,9 @@ function startTimer() {
     }
 }
 
-let remaining, secondsUntil, minutesUntil, hoursUntil;
+let remaining: number, secondsUntil: number, minutesUntil: number, hoursUntil: number;
 
-let timeout;
+let timeout: number | null = null;
 
 /**
  * Displays the current timer time
@@ -117,7 +115,7 @@ function displayTime() {
 
     remaining = (targetTime - Date.now()) / 1000;
 
-    if (!timeout) timeout = setTimeout(timerEnd, remaining * 1000);
+    if (!timeout) timeout = setTimeout(timerEnd, remaining * 1000) as unknown as number;
 
     if (remaining <= 0) return;
 

@@ -1,3 +1,4 @@
+import { CalendarEvents } from '../../../app.js';
 import { holidayEmojis, moonEmojis } from '../../../data/pages.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
@@ -81,11 +82,6 @@ let currentMonth = currentTime.getMonth();
 let displayedMonth = currentTime.getMonth();
 let currentYear = currentTime.getFullYear();
 let displayedYear = currentTime.getFullYear();
-
-interface CalendarEvents {
-    holidays: { name: string; date: string }[];
-    moonPhases: { phase: string; date: string; time: string }[];
-}
 
 const events = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 

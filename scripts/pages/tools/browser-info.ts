@@ -1,8 +1,9 @@
 import type { UAParserInstance } from 'ua-parser-js';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface Window {
-    UAParser: UAParserInstance; // eslint-disable-line @typescript-eslint/naming-convention
+declare global {
+    interface Window {
+        UAParser: UAParserInstance; // eslint-disable-line @typescript-eslint/naming-convention
+    }
 }
 
 const browserInfo = document.getElementById('browser-info') as HTMLDivElement;

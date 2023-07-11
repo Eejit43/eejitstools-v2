@@ -1,19 +1,17 @@
-/* global GeolocationPosition */
-
-const result = document.getElementById('result');
+const result = document.getElementById('result') as HTMLSpanElement;
 
 /**
  * Requests the browser's current location and handles any errors
  */
 function getLocation() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(getData, (error) => {
             if (error.code === error.PERMISSION_DENIED) result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
             else if (error.code === error.POSITION_UNAVAILABLE) result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
             else if (error.code === error.TIMEOUT) result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
             else result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
         });
-    } else result.innerHTML = '<span class="error">Geolocation is not supported by this browser.</span>';
+    else result.innerHTML = '<span class="error">Geolocation is not supported by this browser.</span>';
 }
 
 getLocation();
@@ -35,13 +33,65 @@ const airQualities = {
     5: { color: '#891a1c', text: 'Hazardous' }
 };
 
+/* eslint-disable @typescript-eslint/naming-convention */
+interface Alert {
+    description: string;
+    title: string;
+    ends_local: Date;
+    regions: string[];
+    severity: string;
+}
+
+interface WeatherInformation {
+    alerts: Alert[];
+    data: [
+        {
+            app_temp: number;
+            aqi: number;
+            city_name: string;
+            clouds: number;
+            country_code: string;
+            dewpt: number;
+            lat: number;
+            lon: number;
+            precip: number;
+            pres: number;
+            rh: number;
+            snow: number;
+            state_code: string;
+            station: string;
+            sunrise: string;
+            sunset: string;
+            temp: number;
+            ts: number;
+            uv: number;
+            vis: number;
+            weather: { description: string; icon: string };
+            wind_cdir_full: string;
+            wind_spd: number;
+        }
+    ];
+}
+/* eslint-enable @typescript-eslint/naming-convention */
+
+interface LunarData {
+    phase: {
+        [date: string]: {
+            phaseName: string;
+            lighting: number;
+            isPhaseLimit: boolean | number;
+            svg: string;
+        };
+    };
+}
+
 /**
  * Fetches weather information for the specified permission and displays the information
  * @param {GeolocationPosition} position the position to fetch location for
  */
-async function getData(position) {
+async function getData(position: GeolocationPosition) {
     const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${position.coords.latitude}&lon=${position.coords.longitude}&key=8cb466c81e01454d8044dd368b240a6a&include=alerts&units=I`);
-    const fullData = await response.json();
+    const fullData = (await response.json()) as WeatherInformation;
     const data = fullData.data[0];
 
     let uvIndexDescription;
@@ -75,7 +125,7 @@ async function getData(position) {
         `Snowfall: ${data.snow} inches/hour`,
         `Cloud Cover: ${data.clouds}%`,
         `Wind: ${data.wind_spd} miles/hour (${data.wind_cdir_full})`,
-        `Temperature: ${data.temp}°F (Feels like ${data.app_temp}°F)`,
+        `Temperature: ${data.temp}°F${data.app_temp !== data.temp ? ` (Feels like ${data.app_temp}°F)` : ''}`,
         `Relative Humidity: ${data.rh}%`,
         `Dew Point: ${data.dewpt}°F`,
         `Visibility: ${data.vis} miles`,
@@ -88,13 +138,11 @@ async function getData(position) {
     const { alerts } = fullData;
 
     const newAlerts = [];
-    for (const alert of alerts) {
-        if (!/has been replaced/g.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(new Date().getTime() / 1000)) newAlerts.push(alert);
-    }
+    for (const alert of alerts) if (!/has been replaced/g.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(new Date().getTime() / 1000)) newAlerts.push(alert);
 
-    const alertsList = document.getElementById('alerts');
+    const alertsList = document.getElementById('alerts') as HTMLSpanElement;
 
-    if (newAlerts.length > 0) {
+    if (newAlerts.length > 0)
         newAlerts.forEach((alert, index) => {
             const alertElement = document.createElement('span');
             alertElement.classList.add('alert');
@@ -105,10 +153,10 @@ async function getData(position) {
 
             if (index !== newAlerts.length - 1) alertsList.appendChild(document.createTextNode(', '));
         });
-    } else alertsList.textContent = 'None';
+    else alertsList.textContent = 'None';
 
-    const lunarResponse = await fetch(`https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=rgb(255%2C255%2C210)&shadeColor=black&texturize=false&LDZ=${new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000}`);
-    const lunarData = await lunarResponse.json();
+    const lunarResponse = await fetch(`https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000}`);
+    const lunarData = (await lunarResponse.json()) as LunarData;
 
     const day = new Date().getDate();
     let { phaseName } = lunarData.phase[day];
@@ -124,20 +172,20 @@ async function getData(position) {
         .replace(/style="pointer-events:all;cursor:pointer"/g, '')
         .replace(/<svg(.*?)>/g, `<svg style="transform: translateY(3px)"$1><title>${phaseName} moon</title>`)}`;
 
-    document.getElementById('moon-phase').innerHTML = html;
+    (document.getElementById('moon-phase') as HTMLSpanElement).innerHTML = html;
 }
 
 /**
  * Shows the specified weather alert
- * @param {number} alert the alert number
+ * @param {number} alert the alert
  */
-function showWeatherAlert(alert) {
-    const alertDisplay = document.getElementById('alert-display');
+function showWeatherAlert(alert: Alert) {
+    const alertDisplay = document.getElementById('alert-display') as HTMLTextAreaElement;
 
     const alertText = `${alert.title}\n\n${alert.description
         .replace(/\n/g, ' ')
         .replace(/^\* (.*?)\.{3}/g, '– $1:\n ')
-        .replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions}`;
+        .replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions.join(', ')}`;
 
     if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
         alertDisplay.style.display = 'unset';

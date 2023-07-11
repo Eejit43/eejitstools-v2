@@ -33,8 +33,6 @@ interface ResultNames {
     [number: string]: string;
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const resultNames: ResultNames = {
     0: 'It is certain',
     1: 'It is decidedly so',

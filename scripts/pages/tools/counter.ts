@@ -1,25 +1,25 @@
 import { showAlert } from '../../functions.js';
 
-const numberDisplay = document.getElementById('counter');
-const activationButton = document.getElementById('activation-button');
-const reset = document.getElementById('reset');
-const manualActivation = document.getElementById('manual-activation');
+const numberDisplay = document.getElementById('counter') as HTMLSpanElement;
+const activationSelect = document.getElementById('activation-button') as HTMLSelectElement;
+const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const manualActivation = document.getElementById('manual-activation') as HTMLButtonElement;
 
 let number = 0;
 let key = 'Space';
 
 /* Add event listeners */
-activationButton.addEventListener('change', () => {
+activationSelect.addEventListener('change', () => {
     blurAll();
-    if (activationButton.value === '1') key = 'Space';
-    else if (activationButton.value === '2') key = 'Enter';
-    else if (activationButton.value === '3') key = 'KeyC';
+    if (activationSelect.value === '1') key = 'Space';
+    else if (activationSelect.value === '2') key = 'Enter';
+    else if (activationSelect.value === '3') key = 'KeyC';
 });
-reset.addEventListener('click', () => {
+resetButton.addEventListener('click', () => {
     blurAll();
     number = 0;
     numberDisplay.textContent = '0';
-    activationButton.value = '1';
+    activationSelect.value = '1';
     key = 'Space';
 
     showAlert('Reset!', 'success');
@@ -28,20 +28,20 @@ document.addEventListener('keyup', (event) => {
     blurAll();
     if (event.code === key) {
         number++;
-        numberDisplay.textContent = number;
+        numberDisplay.textContent = number.toString();
     }
 });
 manualActivation.addEventListener('click', () => {
     blurAll();
     number++;
-    numberDisplay.textContent = number;
+    numberDisplay.textContent = number.toString();
 });
 
 /**
  * Removes the focus from important buttons to prevent multiple activations
  */
 function blurAll() {
-    activationButton.blur();
+    activationSelect.blur();
     manualActivation.blur();
-    reset.blur();
+    resetButton.blur();
 }
