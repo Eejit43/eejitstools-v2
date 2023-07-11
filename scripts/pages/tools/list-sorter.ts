@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, resetResult, showAlert, showResult, shuffleArray } from '../../functions.js';
 
 const input = document.getElementById('input') as HTMLTextAreaElement;
 const separator = document.getElementById('separator') as HTMLInputElement;
@@ -104,16 +104,4 @@ function reverse() {
         showResult('reverse', 'success');
         copyResult.disabled = false;
     }
-}
-
-/**
- * Shuffles the order of items in an array.
- * @param array The array to shuffle.
- */
-function shuffleArray(array: Array<unknown>) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
 }

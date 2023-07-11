@@ -211,3 +211,31 @@ export function titleCase(string: string) {
         .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
         .join(' ');
 }
+
+/**
+ * Shuffles the order of items in an array.
+ * @param array The array to shuffle.
+ */
+export function shuffleArray(array: Array<unknown>) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+/**
+ * Creates a base64 object URL.
+ * @param data The base64 to create an object URL for.
+ * @param mimeType The mimeType of the given base64.
+ * @see https://stackoverflow.com/questions/52092093
+ */
+export function createBase64ObjectUrl(data: string, mimeType: string) {
+    const byteCharacters = atob(data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const file = new Blob([byteArray], { type: mimeType + ';base64' });
+    return URL.createObjectURL(file);
+}

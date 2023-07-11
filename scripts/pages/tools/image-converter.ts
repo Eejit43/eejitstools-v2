@@ -1,4 +1,4 @@
-import { escapeHtml, showAlert } from '../../functions.js';
+import { createBase64ObjectUrl, escapeHtml, showAlert } from '../../functions.js';
 
 const fileUploadButtonLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
 const fileUploadButton = document.getElementById('file-upload') as HTMLInputElement;
@@ -120,20 +120,4 @@ function convert() {
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
     openConvertedResult.disabled = downloadConvertedResult.disabled = false;
     downloadConvertedResultLink.setAttribute('download', `${(uploadedImage as File).name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
-}
-
-/**
- * Creates a base64 object URL.
- * @param data The base64 to create an object URL for.
- * @param mimeType The mimeType of the given base64.
- * @see https://stackoverflow.com/questions/52092093
- */
-function createBase64ObjectUrl(data: string, mimeType: string) {
-    const byteCharacters = atob(data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
-
-    const byteArray = new Uint8Array(byteNumbers);
-    const file = new Blob([byteArray], { type: mimeType + ';base64' });
-    return URL.createObjectURL(file);
 }

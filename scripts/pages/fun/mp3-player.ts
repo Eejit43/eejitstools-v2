@@ -1,4 +1,5 @@
 import { AudioCategory, AudioTrack, audioTracks } from '../../../data/audio-tracks.js';
+import { shuffleArray } from '../../functions.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
@@ -206,18 +207,6 @@ function shuffleSection(category: string) {
     loadNewTrack(audioCategory, audioIndex, true);
 
     shuffledQueue.shift();
-}
-
-/**
- * Shuffles the order of items in an array.
- * @param array The array to shuffle.
- */
-function shuffleArray(array: Array<unknown>) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
 }
 
 /**
