@@ -6,7 +6,7 @@ const copyNbspButton = document.getElementById('copy-nbsp') as HTMLButtonElement
 const copyEmsButton = document.getElementById('copy-ems') as HTMLButtonElement;
 const copyEnsButton = document.getElementById('copy-ens') as HTMLButtonElement;
 const copyTsButton = document.getElementById('copy-ts') as HTMLButtonElement;
-const clipboardWarning = document.getElementById('clipboard-warning') as HTMLSpanElement;
+const clipboardWarning = document.getElementById('clipboard-warning') as HTMLDivElement;
 const copiedText = document.getElementById('copied-text') as HTMLTextAreaElement;
 const selectClipboardButton = document.getElementById('select-clipboard') as HTMLButtonElement;
 

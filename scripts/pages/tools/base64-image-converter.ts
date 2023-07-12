@@ -2,7 +2,7 @@ import { copyValue, createBase64ObjectUrl, escapeHtml, resetResult, showAlert, s
 
 const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
 const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
-const fileUploadMessage = document.getElementById('file-message') as HTMLSpanElement;
+const fileUploadMessage = document.getElementById('file-message') as HTMLDivElement;
 const encodeButton = document.getElementById('encode') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const b64Result = document.getElementById('b64-result') as HTMLTextAreaElement;

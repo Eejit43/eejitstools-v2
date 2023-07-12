@@ -74,13 +74,13 @@ simplifyButton.addEventListener('click', () => {
             .join(' \\cdot ')}}`,
         finalOutput = outputRadicand !== 1 ? `${outputOperand && outputOperand !== 1 ? `${outputOperand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${outputRadicand}}` : outputOperand;
 
-    if (original === finalOutput) message.textContent = `The radicand is already in its simplest form.${primeFactors.length === 1 ? ` ${radicand} is a prime number.` : ''}`;
+    if (original === finalOutput) message.textContent = `The radical is already in its simplest form.${primeFactors.length === 1 ? ` ${radicand} is a prime number.` : ''}`;
     output.textContent = `\\(${[original, factored, mappedFactors, finalOutput].filter((output, index, array) => output !== array[index - 1]).join(' = ')}\\)`;
     window.MathJax.typeset(); // Parse LaTeX math to visual representation
 });
 
 resetButton.addEventListener('click', () => {
-    message.textContent = '';
+    message.textContent = 'Nothing yet!';
     output.classList.add('hidden');
     indexInput.value = '';
     radicandInput.value = '';

@@ -3,7 +3,7 @@ import { copyValue, showAlert } from '../../functions.js';
 const inputType = document.getElementById('input-type') as HTMLSelectElement;
 const input = document.getElementById('input') as HTMLInputElement;
 const resetButton = document.getElementById('reset') as HTMLButtonElement;
-const message = document.getElementById('message') as HTMLSpanElement;
+const message = document.getElementById('message') as HTMLDivElement;
 const outputType = document.getElementById('output-type') as HTMLSelectElement;
 const output = document.getElementById('output') as HTMLInputElement;
 const copyOutputButton = document.getElementById('copy-output') as HTMLButtonElement;

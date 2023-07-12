@@ -2,7 +2,7 @@ import { createBase64ObjectUrl, escapeHtml, showAlert } from '../../functions.js
 
 const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
 const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
-const fileUploadMessage = document.getElementById('file-message') as HTMLSpanElement;
+const fileUploadMessage = document.getElementById('file-message') as HTMLDivElement;
 const loadButton = document.getElementById('load') as HTMLButtonElement;
 const clearButton = document.getElementById('clear') as HTMLButtonElement;
 const imagePreview = document.getElementById('image-preview') as HTMLCanvasElement;

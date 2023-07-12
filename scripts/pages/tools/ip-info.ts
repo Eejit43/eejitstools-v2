@@ -23,5 +23,5 @@ fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=6b7d5eb7b17e420fbd0f873
     (document.getElementById('latitude') as HTMLSpanElement).textContent = data.latitude.toString();
     (document.getElementById('longitude') as HTMLSpanElement).textContent = data.longitude.toString();
 
-    (document.getElementById('reload-prompt') as HTMLSpanElement).textContent = '';
+    (document.getElementById('reload-prompt') as HTMLDivElement).textContent = '';
 });

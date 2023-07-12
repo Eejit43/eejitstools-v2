@@ -2,10 +2,13 @@ import { showAlert } from '../../functions.js';
 
 const questionInput = document.getElementById('question-input') as HTMLInputElement;
 const rollButton = document.getElementById('roll') as HTMLButtonElement;
-const questionDisplay = document.getElementById('question-display') as HTMLSpanElement;
-const answerOutput = document.getElementById('answer-output') as HTMLSpanElement;
+const questionDisplay = document.getElementById('question-display') as HTMLDivElement;
+const answerOutput = document.getElementById('answer-output') as HTMLDivElement;
 
 /* Add event listeners */
+questionInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') rollButton.click();
+});
 rollButton.addEventListener('click', () => {
     if (questionInput.value.length === 0) showAlert("You didn't ask a question!", 'error');
     else {

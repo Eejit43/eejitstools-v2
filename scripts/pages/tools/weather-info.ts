@@ -1,4 +1,4 @@
-const result = document.getElementById('result') as HTMLSpanElement;
+const result = document.getElementById('result') as HTMLDivElement;
 
 /**
  * Requests the browser's current location and handles any errors.

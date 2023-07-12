@@ -1,18 +1,18 @@
 import { showAlert } from '../../functions.js';
 
-const ready = document.getElementById('ready') as HTMLSpanElement;
+const ready = document.getElementById('ready') as HTMLDivElement;
 const keyResults = document.getElementById('key-results') as HTMLTableRowElement;
-const key = document.getElementById('key') as HTMLSpanElement;
+const key = document.getElementById('key') as HTMLDivElement;
 const keyCell = document.getElementById('key-cell') as HTMLTableCellElement;
-const keyRepeating = document.getElementById('key-repeating') as HTMLSpanElement;
+const keyRepeating = document.getElementById('key-repeating') as HTMLDivElement;
 const keyRepeatingCell = document.getElementById('key-repeating-cell') as HTMLTableCellElement;
-const keyLocation = document.getElementById('key-location') as HTMLSpanElement;
+const keyLocation = document.getElementById('key-location') as HTMLDivElement;
 const keyLocationCell = document.getElementById('key-location-cell') as HTMLTableCellElement;
-const keyCode = document.getElementById('key-code') as HTMLSpanElement;
+const keyCode = document.getElementById('key-code') as HTMLDivElement;
 const keyCodeCell = document.getElementById('key-code-cell') as HTMLTableCellElement;
-const keyAscii = document.getElementById('key-ascii') as HTMLSpanElement;
+const keyAscii = document.getElementById('key-ascii') as HTMLDivElement;
 const keyAsciiCell = document.getElementById('key-ascii-cell') as HTMLTableCellElement;
-const keyUnicode = document.getElementById('key-unicode') as HTMLSpanElement;
+const keyUnicode = document.getElementById('key-unicode') as HTMLDivElement;
 const keyUnicodeCell = document.getElementById('key-unicode-cell') as HTMLTableCellElement;
 
 let keyVal: string, keyRepeatingVal: string, keyLocationVal: string, keyCodeVal: string, keyAsciiVal: string, keyUnicodeVal: string;

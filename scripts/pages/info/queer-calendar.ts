@@ -1,7 +1,7 @@
 import { escapeHtml, showAlert } from '../../functions.js';
 
-const eventsTitle = document.getElementById('events-title') as HTMLSpanElement;
-const eventsDisplay = document.getElementById('events') as HTMLSpanElement;
+const eventsTitle = document.getElementById('events-title') as HTMLDivElement;
+const eventsDisplay = document.getElementById('events') as HTMLDivElement;
 const monthInput = document.getElementById('month') as HTMLInputElement;
 const dateInput = document.getElementById('date') as HTMLInputElement;
 const getDateButton = document.getElementById('get-date') as HTMLButtonElement;

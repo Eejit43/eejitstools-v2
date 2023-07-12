@@ -13,8 +13,8 @@ const standardOutputCopyButton = document.getElementById('standard-output-copy')
 const standardOutput = document.getElementById('standard-output') as HTMLInputElement;
 const unixOutput = document.getElementById('unix-output') as HTMLInputElement;
 
-const unixOutputTitle = document.getElementById('unix-output-title') as HTMLSpanElement;
-const unixInputTitle = document.getElementById('unix-input-title') as HTMLSpanElement;
+const unixOutputTitle = document.getElementById('unix-output-title') as HTMLDivElement;
+const unixInputTitle = document.getElementById('unix-input-title') as HTMLDivElement;
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
