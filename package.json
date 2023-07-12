@@ -12,7 +12,6 @@
         "remove-compiled": "find . -type f -name '*.js' ! -name 'compile.js' ! -path './node_modules/*' ! -path './public/scripts/external/*' -delete"
     },
     "dependencies": {
-        "@eejit/eslint-config-typescript": "^1.0.0",
         "@fastify/rate-limit": "^8.0.2",
         "@fastify/static": "^6.10.2",
         "@fastify/view": "^8.0.0",
@@ -28,6 +27,7 @@
         "node-html-parser": "^6.1.5"
     },
     "devDependencies": {
+        "@eejit/eslint-config-typescript": "^1.0.4",
         "@tsconfig/recommended": "^1.0.2",
         "@types/chroma-js": "^2.4.0",
         "@types/node": "^20.4.1",

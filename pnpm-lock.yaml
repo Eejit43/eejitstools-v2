@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@eejit/eslint-config-typescript':
-    specifier: ^1.0.0
-    version: 1.0.0
   '@fastify/rate-limit':
     specifier: ^8.0.2
     version: 8.0.2
@@ -49,6 +46,9 @@ dependencies:
     version: 6.1.5
 
 devDependencies:
+  '@eejit/eslint-config-typescript':
+    specifier: ^1.0.4
+    version: 1.0.4(@typescript-eslint/eslint-plugin@6.0.0)(@typescript-eslint/parser@6.0.0)(eslint-plugin-jsdoc@46.4.3)(eslint@8.44.0)
   '@tsconfig/recommended':
     specifier: ^1.0.2
     version: 1.0.2
@@ -164,9 +164,19 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /@eejit/eslint-config-typescript@1.0.0:
-    resolution: {integrity: sha512-ndfcUcRh3V+1lBmGYU7ppIZCFREL13aLgSV/NL7Z3e7y+L71A6Wpl9EHZG5M+emWfoxvSN1fBQeT1OFRBSDBew==}
-    dev: false
+  /@eejit/eslint-config-typescript@1.0.4(@typescript-eslint/eslint-plugin@6.0.0)(@typescript-eslint/parser@6.0.0)(eslint-plugin-jsdoc@46.4.3)(eslint@8.44.0):
+    resolution: {integrity: sha512-3Mq0zOZK4u8+rAsCryOBIC+jvzJBKnIjHDE8up7b2sJ0E6c7qZbd1DIzf6uVvZXWFgcFVr554hyvFvMuJ7cGcA==}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': '*'
+      '@typescript-eslint/parser': '*'
+      eslint: '*'
+      eslint-plugin-jsdoc: '*'
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.44.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 6.0.0(eslint@8.44.0)(typescript@5.1.6)
+      eslint: 8.44.0
+      eslint-plugin-jsdoc: 46.4.3(eslint@8.44.0)
+    dev: true
 
   /@es-joy/jsdoccomment@0.39.4:
     resolution: {integrity: sha512-Jvw915fjqQct445+yron7Dufix9A+m9j1fCJYlCo1FWlRvTxa3pjJelxdSTdaLWcTwRU6vbL+NYjO4YuNIS5Qg==}

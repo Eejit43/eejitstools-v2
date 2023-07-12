@@ -1,4 +1,4 @@
 {
-    "extends": ["@eejit"],
+    "extends": ["@eejit/eslint-config-typescript"],
     "parserOptions": { "project": ["./tsconfig.json", "./scripts/tsconfig.json", "./data/tsconfig.json"] }
 }
