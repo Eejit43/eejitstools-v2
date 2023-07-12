@@ -22,14 +22,12 @@ const hexInput = document.getElementById('hex') as HTMLInputElement;
 const decimalInput = document.getElementById('decimal') as HTMLInputElement;
 const rgbInput = document.getElementById('rgb') as HTMLInputElement;
 const hslInput = document.getElementById('hsl') as HTMLInputElement;
-const cmykInput = document.getElementById('cmyk') as HTMLInputElement;
 const alphaInput = document.getElementById('alpha') as HTMLInputElement;
 const copyNameButton = document.getElementById('copy-name') as HTMLButtonElement;
 const copyHexButton = document.getElementById('copy-hex') as HTMLButtonElement;
 const copyDecimalButton = document.getElementById('copy-decimal') as HTMLButtonElement;
 const copyRgbButton = document.getElementById('copy-rgb') as HTMLButtonElement;
 const copyHslButton = document.getElementById('copy-hsl') as HTMLButtonElement;
-const copyCmykButton = document.getElementById('copy-cmyk') as HTMLButtonElement;
 const copyAlphaButton = document.getElementById('copy-alpha') as HTMLButtonElement;
 const luminanceOutput = document.getElementById('luminance') as HTMLInputElement;
 const temperatureOutput = document.getElementById('temperature') as HTMLInputElement;
@@ -103,18 +101,6 @@ hslInput.addEventListener('blur', () => {
     } else setRedBorder(hslInput);
 });
 
-cmykInput.addEventListener('blur', () => {
-    const cmyk = cmykInput.value.startsWith('cmyk(') ? cmykInput.value.replace(/cmyk\(| |%|\)/gi, '').split(',') : '';
-    const cmyka = cmykInput.value.startsWith('cmyka(') ? cmykInput.value.replace(/cmyka\(| |%|\)/gi, '').split(',') : '';
-    if (cmyk.length === 4 && window.chroma.valid(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk')) {
-        resetBorder(cmykInput);
-        updateResults(window.chroma(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk'));
-    } else if (cmyka.length === 5 && window.chroma.valid(cmyka[0], cmyka[1], cmyka[2], cmyka[3], cmyka[4], 'cmyk')) {
-        resetBorder(cmykInput);
-        updateResults(window.chroma(cmyka[0], cmyka[1], cmyka[2], cmyka[3], cmyka[4], 'cmyk'));
-    } else setRedBorder(cmykInput);
-});
-
 alphaInput.addEventListener('blur', () => {
     if (alphaInput.value.length > 0 && Number(alphaInput.value) >= 0 && Number(alphaInput.value) <= 1) {
         resetBorder(alphaInput);
@@ -132,8 +118,6 @@ copyRgbButton.addEventListener('click', () => copyValue(copyRgbButton, rgbInput)
 
 copyHslButton.addEventListener('click', () => copyValue(copyHslButton, hslInput));
 
-copyCmykButton.addEventListener('click', () => copyValue(copyCmykButton, cmykInput));
-
 copyAlphaButton.addEventListener('click', () => copyValue(copyAlphaButton, alphaInput));
 
 fullColor.addEventListener('click', () => (fullColor.style.display = 'none'));
@@ -147,7 +131,7 @@ document.addEventListener('keydown', (event) => {
  * @param color The color to update results for.
  */
 function updateResults(color: Color) {
-    [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, cmykInput, alphaInput].forEach((element) => resetBorder(element));
+    [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, alphaInput].forEach((element) => resetBorder(element));
 
     colorDisplay.style.color = color.hex();
     colorPicker.value = color.alpha(1).hex();
@@ -156,7 +140,6 @@ function updateResults(color: Color) {
     decimalInput.value = parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
     rgbInput.value = color.css();
     hslInput.value = color.css('hsl');
-    cmykInput.value = `cmyk${color.alpha() < 1 ? 'a' : ''}(${Math.round(color.get('cmyk.c') * 100) / 100}%,${Math.round(color.get('cmyk.m') * 100) / 100}%,${Math.round(color.get('cmyk.y') * 100) / 100}%,${Math.round(color.get('cmyk.k') * 100) / 100}%${color.alpha() < 1 ? `,${color.alpha()}` : ''})`;
     alphaInput.value = color.alpha().toString();
     luminanceOutput.value = color.luminance().toLocaleString();
     temperatureOutput.value = color.temperature().toString();
