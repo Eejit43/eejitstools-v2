@@ -9,9 +9,7 @@
     "overrides": [
         {
             "files": ["*.hbs", "*.css"],
-            "options": {
-                "singleQuote": false
-            }
+            "options": { "singleQuote": false }
         }
     ],
     "plugins": ["prettier-plugin-organize-imports"]
