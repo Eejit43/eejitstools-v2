@@ -15,7 +15,7 @@ const copyResultButton = document.getElementById('copy-result-button') as HTMLBu
 [regexInput, replaceInput].forEach((element) =>
     element.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
-            const oldPosition = (event.target as HTMLInputElement).selectionStart as number;
+            const oldPosition = (event.target as HTMLInputElement).selectionStart!;
             const newPosition = oldPosition + 2;
             element.value = [element.value.slice(0, oldPosition), '\\n', element.value.slice(oldPosition)].join('');
             element.setSelectionRange(newPosition, newPosition);

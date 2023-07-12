@@ -2,11 +2,11 @@ import { copyValue, updateArrow } from '../../functions.js';
 
 const standardInput = document.getElementById('standard-input') as HTMLInputElement;
 const standardInputResetButton = document.getElementById('standard-input-reset') as HTMLButtonElement;
-const standardArrow = document.getElementById('standard-arrow') as HTMLElement;
+const standardArrow = document.getElementById('standard-arrow')!;
 const unixInput = document.getElementById('unix-input') as HTMLInputElement;
 const unixInputResetButton = document.getElementById('unix-input-reset') as HTMLButtonElement;
 const unixInputSwitchButton = document.getElementById('unix-input-switch') as HTMLButtonElement;
-const unixArrow = document.getElementById('unix-arrow') as HTMLElement;
+const unixArrow = document.getElementById('unix-arrow')!;
 const unixOutputCopyButton = document.getElementById('unix-output-copy') as HTMLButtonElement;
 const unixOutputSwitchButton = document.getElementById('unix-output-switch') as HTMLButtonElement;
 const standardOutputCopyButton = document.getElementById('standard-output-copy') as HTMLButtonElement;

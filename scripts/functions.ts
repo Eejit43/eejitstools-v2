@@ -14,14 +14,7 @@ export function twemojiUpdate() {
     (twemoji as Twemoji).parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
 }
 
-declare function toastify(options: {
-    text: string;
-    duration: number;
-    position: string;
-    style: {
-        [key: string]: string;
-    };
-}): {
+declare function toastify(options: { text: string; duration: number; position: string; style: Record<string, string> }): {
     showToast: () => void;
 };
 
@@ -31,13 +24,13 @@ declare function toastify(options: {
  * @param color The color value (or `'success'` or `'error'`).
  * @param duration The duration of the popup in milliseconds.
  */
-export function showAlert(text: string, color: 'success' | 'error' | string, duration?: number) {
+export function showAlert(text: string, color: string, duration?: number) {
     color = color.toLowerCase();
     if (color === 'success') color = '#009c3f';
     else if (color === 'error') color = '#ff5555';
     toastify({
         text: text || 'No text specified!',
-        duration: duration || 2000,
+        duration: duration ?? 2000,
         position: 'center',
         style: {
             background: '#333',
@@ -63,9 +56,9 @@ export function showAlert(text: string, color: 'success' | 'error' | string, dur
  * @param remove Whether to the remove the icon after 2 seconds (defaults to `true`).
  */
 export function showResult(id: string, type: 'success' | 'error' | null, color = '#009c3f', icon = 'check', remove = true) {
-    const oldElement = document.getElementById(id + '-result') as HTMLElement;
+    const oldElement = document.getElementById(id + '-result')!;
     const newElement = oldElement.cloneNode(true) as HTMLElement;
-    (oldElement.parentNode as ParentNode).replaceChild(newElement, oldElement);
+    oldElement.parentNode!.replaceChild(newElement, oldElement);
     if (type === 'success') {
         color = '#009c3f';
         icon = 'check';
@@ -87,7 +80,7 @@ export function showResult(id: string, type: 'success' | 'error' | null, color =
  * @param id The prefix of the element ID to update.
  */
 export function resetResult(id: string) {
-    const element = document.getElementById(id + '-result') as HTMLElement;
+    const element = document.getElementById(id + '-result')!;
     element.style.color = '';
     element.className = '';
 }
@@ -110,8 +103,8 @@ export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'r
         color = 'dimgray';
         icon = `arrow-${arrowType}`;
     }
-    element.style.color = color as string;
-    element.className = 'fa-solid fa-' + (icon as string);
+    element.style.color = color!;
+    element.className = 'fa-solid fa-' + icon!;
 }
 
 /**
@@ -186,7 +179,7 @@ export function updateInnerHtml(element: HTMLElement, string: string) {
  */
 export const addAnimation = (element: string, animation: string) =>
     new Promise((resolve) => {
-        const node = document.querySelector(element) as HTMLElement;
+        const node = document.querySelector(element)!;
 
         node.classList.add(animation);
 
@@ -216,7 +209,7 @@ export function titleCase(string: string) {
  * Shuffles the order of items in an array.
  * @param array The array to shuffle.
  */
-export function shuffleArray(array: Array<unknown>) {
+export function shuffleArray(array: unknown[]) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];

@@ -124,7 +124,7 @@ function smallestFactor(number: number) {
  * @param numbers The numbers to map.
  */
 function mapPrimeFactors(numbers: number[]) {
-    const object: { [number: string]: number } = {};
+    const object: Record<string, number> = {};
 
     numbers.forEach((number) => {
         if (!(number in object)) object[number] = 0;

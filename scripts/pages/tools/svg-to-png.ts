@@ -9,14 +9,14 @@ const heightOutput = document.getElementById('height-input') as HTMLInputElement
 const savePngButton = document.getElementById('save-png') as HTMLButtonElement;
 const canvas = document.getElementById('png-canvas') as HTMLCanvasElement;
 
-const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+const context = canvas.getContext('2d')!;
 
 let svg: SVGSVGElement;
 loadSvgButton.addEventListener('click', () => {
     const loadedSvg = stringToHtml(svgInput.value).querySelector('svg');
     if (!loadedSvg) return showAlert('No SVG found in input!', 'error');
     svgPreview.innerHTML = loadedSvg.outerHTML;
-    svg = svgPreview.querySelector('svg') as SVGSVGElement;
+    svg = svgPreview.querySelector('svg')!;
     widthInput.value = svg.getBoundingClientRect().width.toString();
     heightOutput.value = svg.getBoundingClientRect().height.toString();
     if (svg.width.baseVal.value >= 200) svg.removeAttribute('width');
@@ -47,7 +47,7 @@ savePngButton.addEventListener('click', () => {
         document.body.appendChild(anchor);
         anchor.style.display = 'none';
         anchor.href = uri;
-        anchor.download = (svg.id || svg.getAttribute('name') || svg.getAttribute('aria-label') || 'untitled') + '.png';
+        anchor.download = (svg.id || svg.getAttribute('name') || svg.getAttribute('aria-label') || 'untitled') + '.png'; // eslint-disable-line @typescript-eslint/prefer-nullish-coalescing
         anchor.click();
         URL.revokeObjectURL(uri);
         document.body.removeChild(anchor);

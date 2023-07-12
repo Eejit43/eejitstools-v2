@@ -36,7 +36,7 @@ copySpacesButton.addEventListener('click', () => {
 });
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const morseConversion: { [key: string]: string } = {
+const morseConversion: Record<string, string> = {
     a: '.-',
     b: '-...',
     c: '-.-.',
@@ -148,7 +148,7 @@ function decodeMorse(morseCode: string) {
                     (letter) =>
                         Object.keys(morseConversion)
                             .find((key) => morseConversion[key] === letter)
-                            ?.toUpperCase() || letter
+                            ?.toUpperCase() ?? letter
                 )
                 .join('')
         )

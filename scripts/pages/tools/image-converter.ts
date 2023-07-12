@@ -39,7 +39,7 @@ fileUploadLabel.addEventListener('drop', (event) => {
         const firstItem = event.dataTransfer.items[0];
 
         if (firstItem.kind === 'file') {
-            const file = firstItem.getAsFile() as File;
+            const file = firstItem.getAsFile()!;
             if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
             if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
             uploadedImage = file;
@@ -68,7 +68,7 @@ clearButton.addEventListener('click', () => {
     fileUpload.value = '';
     fileUploadMessage.textContent = '';
     loadButton.disabled = true;
-    (imagePreview.getContext('2d') as CanvasRenderingContext2D).clearRect(0, 0, imagePreview.width, imagePreview.height);
+    imagePreview.getContext('2d')!.clearRect(0, 0, imagePreview.width, imagePreview.height);
     imagePreview.width = imagePreview.height = 0;
     outputTypePicker.disabled = true;
     outputTypePicker.value = 'png';
@@ -95,10 +95,10 @@ convertButton.addEventListener('click', convert);
  * Encodes the base64 image and displays the result.
  */
 function loadImage() {
-    const context = imagePreview.getContext('2d') as CanvasRenderingContext2D;
+    const context = imagePreview.getContext('2d')!;
     context.clearRect(0, 0, imagePreview.width, imagePreview.height);
     const image = new Image();
-    image.src = URL.createObjectURL(uploadedImage as File);
+    image.src = URL.createObjectURL(uploadedImage!);
 
     image.addEventListener('load', () => {
         imagePreview.width = image.width;
@@ -119,5 +119,5 @@ function convert() {
     const blobUrl = createBase64ObjectUrl(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
     openConvertedResultButton.disabled = downloadConvertedResultButton.disabled = false;
-    downloadConvertedResultLink.setAttribute('download', `${(uploadedImage as File).name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
+    downloadConvertedResultLink.setAttribute('download', `${uploadedImage!.name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
 }

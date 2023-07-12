@@ -3,14 +3,14 @@ import { copyText, showAlert, updateArrow } from '../../functions.js';
 const integerInput = document.getElementById('integer-input') as HTMLInputElement;
 const integerConvertButton = document.getElementById('integer-convert') as HTMLButtonElement;
 const integerResetButton = document.getElementById('integer-reset') as HTMLButtonElement;
-const integerArrow = document.getElementById('integer-arrow') as HTMLElement;
+const integerArrow = document.getElementById('integer-arrow')!;
 const romanOutput = document.getElementById('roman-output') as HTMLButtonElement; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
 const romanOutputCopyButton = document.getElementById('roman-output-copy') as HTMLButtonElement;
 const romanOutputCopy2Button = document.getElementById('roman-output-copy-2') as HTMLButtonElement;
 const romanInput = document.getElementById('roman-input') as HTMLInputElement;
 const romanConvertButton = document.getElementById('roman-convert') as HTMLButtonElement;
 const romanResetButton = document.getElementById('roman-reset') as HTMLButtonElement;
-const romanArrow = document.getElementById('roman-arrow') as HTMLElement;
+const romanArrow = document.getElementById('roman-arrow')!;
 const integerOutput = document.getElementById('integer-output') as HTMLInputElement;
 const integerOutputCopyButton = document.getElementById('integer-output-copy') as HTMLButtonElement;
 
@@ -150,7 +150,7 @@ function romanize(number: number) {
  */
 function deromanize(string: string) {
     const token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
-    const key: { [key: string]: number } = {
+    const key: Record<string, number> = {
         m: 1000000,
         cm: 900000,
         d: 500000,

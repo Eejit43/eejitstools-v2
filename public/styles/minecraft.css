@@ -12,7 +12,10 @@
 
 .format-0 > .format-l,
 .format-l > .format-0 {
-    text-shadow: 1.6px 0, 1.6px 0.125em black, 3.2px 0.125em black;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em black,
+        3.2px 0.125em black;
 }
 
 .format-1 {
@@ -22,7 +25,10 @@
 
 .format-1 > .format-l,
 .format-l > .format-1 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #00002a, 3.2px 0.125em #00002a;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #00002a,
+        3.2px 0.125em #00002a;
 }
 
 .format-2 {
@@ -32,7 +38,10 @@
 
 .format-2 > .format-l,
 .format-l > .format-2 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #002a00, 3.2px 0.125em #002a00;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #002a00,
+        3.2px 0.125em #002a00;
 }
 
 .format-3 {
@@ -42,7 +51,10 @@
 
 .format-3 > .format-l,
 .format-l > .format-3 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #002a2a, 3.2px 0.125em #002a2a;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #002a2a,
+        3.2px 0.125em #002a2a;
 }
 
 .format-4 {
@@ -52,7 +64,10 @@
 
 .format-4 > .format-l,
 .format-l > .format-4 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #2a0000, 3.2px 0.125em #2a0000;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #2a0000,
+        3.2px 0.125em #2a0000;
 }
 
 .format-5 {
@@ -62,7 +77,10 @@
 
 .format-5 > .format-l,
 .format-l > .format-5 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #2a002a, 3.2px 0.125em #2a002a;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #2a002a,
+        3.2px 0.125em #2a002a;
 }
 
 .format-6 {
@@ -72,7 +90,10 @@
 
 .format-6 > .format-l,
 .format-l > .format-6 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #2a2a00, 3.2px 0.125em #2a2a00;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #2a2a00,
+        3.2px 0.125em #2a2a00;
 }
 
 .format-7 {
@@ -82,7 +103,10 @@
 
 .format-7 > .format-l,
 .format-l > .format-7 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #2a2a2a, 3.2px 0.125em #2a2a2a;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #2a2a2a,
+        3.2px 0.125em #2a2a2a;
 }
 
 .format-8 {
@@ -92,7 +116,10 @@
 
 .format-8 > .format-l,
 .format-l > .format-8 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #151515, 3.2px 0.125em #151515;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #151515,
+        3.2px 0.125em #151515;
 }
 
 .format-9 {
@@ -102,7 +129,10 @@
 
 .format-9 > .format-l,
 .format-l > .format-9 {
-    text-shadow: 1.6px 0, 1.6px 0.125em #15153f, 3.2px 0.125em #15153f;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #15153f,
+        3.2px 0.125em #15153f;
 }
 
 .format-a {
@@ -112,7 +142,10 @@
 
 .format-a > .format-l,
 .format-l > .format-a {
-    text-shadow: 1.6px 0, 1.6px 0.125em #153f15, 3.2px 0.125em #153f15;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #153f15,
+        3.2px 0.125em #153f15;
 }
 
 .format-b {
@@ -122,7 +155,10 @@
 
 .format-b > .format-l,
 .format-l > .format-b {
-    text-shadow: 1.6px 0, 1.6px 0.125em #153f3f, 3.2px 0.125em #153f3f;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #153f3f,
+        3.2px 0.125em #153f3f;
 }
 
 .format-c {
@@ -132,7 +168,10 @@
 
 .format-c > .format-l,
 .format-l > .format-c {
-    text-shadow: 1.6px 0, 1.6px 0.125em #3f1515, 3.2px 0.125em #3f1515;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #3f1515,
+        3.2px 0.125em #3f1515;
 }
 
 .format-d {
@@ -142,7 +181,10 @@
 
 .format-d > .format-l,
 .format-l > .format-d {
-    text-shadow: 1.6px 0, 1.6px 0.125em #3f153f, 3.2px 0.125em #3f153f;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #3f153f,
+        3.2px 0.125em #3f153f;
 }
 
 .format-e {
@@ -152,7 +194,10 @@
 
 .format-e > .format-l,
 .format-l > .format-e {
-    text-shadow: 1.6px 0, 1.6px 0.125em #3f3f15, 3.2px 0.125em #3f3f15;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #3f3f15,
+        3.2px 0.125em #3f3f15;
 }
 
 .format-f {
@@ -162,7 +207,10 @@
 
 .format-f > .format-l,
 .format-l > .format-f {
-    text-shadow: 1.6px 0, 1.6px 0.125em #3f3f3f, 3.2px 0.125em #3f3f3f;
+    text-shadow:
+        1.6px 0,
+        1.6px 0.125em #3f3f3f,
+        3.2px 0.125em #3f3f3f;
 }
 
 .format-l {

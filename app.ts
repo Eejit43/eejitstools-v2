@@ -144,15 +144,15 @@ interface Calendar {
 fastify.get('/calendar-events', async (request, reply) => {
     if (calendarEventsCache) return reply.send(calendarEventsCache);
 
-    const holidays = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY as string}`)).json()) as Calendar).items
+    const holidays = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)).json()) as Calendar).items
         .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
         .filter((holiday) => !holiday.name.includes(' (substitute)'))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const moonPhases = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY as string}`)).json()) as Calendar).items
+    const moonPhases = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)).json()) as Calendar).items
         .map((moonPhase) => ({
-            phase: moonPhase.summary.match(/([\w ]+) \d/)?.[1] as string,
+            phase: moonPhase.summary.match(/([\w ]+) \d/)![1],
             date: moonPhase.start.date,
-            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)?.[1].replace(/(\d)([ap]m)/, '$1 $2') as string
+            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2')
         }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const result: CalendarEvents = { holidays, moonPhases };
@@ -163,13 +163,7 @@ fastify.get('/calendar-events', async (request, reply) => {
 
 interface TodoData {
     year: string;
-    dates: {
-        [month: string]: {
-            [day: string]: {
-                [id: string]: boolean;
-            };
-        };
-    };
+    dates: Record<string, Record<string, Record<string, boolean>>>;
 }
 
 interface TodoOption {
@@ -187,13 +181,13 @@ fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { pa
     if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
     const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
-    if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
+    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: { [id: string]: boolean }; year: string; month: string; date: string } }>, reply) => {
+fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: Record<string, boolean>; year: string; month: string; date: string } }>, reply) => {
     const { password, todo } = request.body;
     const year = parseInt(request.body.year);
     const month = parseInt(request.body.month);
@@ -208,7 +202,7 @@ fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { pas
     let yearEntry: TodoData | null = await todoModel.findOne({ year });
     if (!yearEntry) {
         await todoModel.create({ year, dates: {} });
-        yearEntry = (await todoModel.findOne({ year })) as TodoData;
+        yearEntry = (await todoModel.findOne({ year }))!;
     }
 
     if (!yearEntry.dates) yearEntry.dates = {};
@@ -219,7 +213,7 @@ fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { pas
 
     const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
-    if (!todoOptions) todoOptions = ((await todoOptionsModel.findOne({})) as { data: TodoOption[] }).data;
+    if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
 
     reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
 });
@@ -257,7 +251,7 @@ fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { ur
     if (!url) return;
 
     Object.entries(request.query).forEach(([key, value]) => {
-        if (key !== 'url') (url as URL).searchParams.append(key, value);
+        if (key !== 'url') url!.searchParams.append(key, value);
     });
 
     let response;
@@ -269,7 +263,7 @@ fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { ur
 
     if (!response) return;
 
-    if ((response.headers.get('content-type') as string).startsWith('image/'))
+    if (response.headers.get('content-type')!.startsWith('image/'))
         reply
             .header('Access-Control-Allow-Origin', '*')
             .type('image/png')
@@ -344,7 +338,7 @@ fastify.get('/apod/:year/:month/:day', async (request: FastifyRequest<{ Params: 
 fastify.setErrorHandler((error, request, reply) => {
     if (error.statusCode === 429) return reply.status(429).send('Woah there! Stop sending so many requests!');
     consola.error(error);
-    reply.status(error.statusCode || 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode || 500 });
+    reply.status(error.statusCode ?? 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) => {
@@ -374,5 +368,5 @@ function logApiRequest(request: FastifyRequest) {
 
 mongoose.set('strictQuery', true);
 
-await mongoose.connect(process.env.DATABASE_URL as string);
+await mongoose.connect(process.env.DATABASE_URL!);
 consola.success(`${chalk.green('[Database]:')} Successfully connected to the database!`);

@@ -32,11 +32,7 @@ rollButton.addEventListener('click', () => {
     }
 });
 
-interface ResultNames {
-    [number: string]: string;
-}
-
-const resultNames: ResultNames = {
+const resultNames: Record<string, string> = {
     0: 'It is certain',
     1: 'It is decidedly so',
     2: 'Without a doubt',

@@ -6,7 +6,7 @@ const { holidays } = (await (await fetch('/calendar-events')).json()) as Calenda
 
 const parsedHolidays = holidays.map((holiday, index) => ({ ...holiday, id: `holiday-${index}` })).filter((holiday) => getTimeUntil(holiday.date) && !/^First day of/i.test(holiday.name));
 
-const result = parsedHolidays.map((holiday) => `Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}">${holiday.name}</span>: <span id="${holiday.id}">${getTimeUntil(holiday.date) as string}</span>${holidayEmojis[holiday.name] ? ` ${holidayEmojis[holiday.name]}` : ''}`);
+const result = parsedHolidays.map((holiday) => `Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}">${holiday.name}</span>: <span id="${holiday.id}">${getTimeUntil(holiday.date)!}</span>${holidayEmojis[holiday.name] ? ` ${holidayEmojis[holiday.name]}` : ''}`);
 
 (document.getElementById('countdowns') as HTMLDivElement).innerHTML = result.length > 0 ? result.join('<br />') : 'No upcoming events!';
 

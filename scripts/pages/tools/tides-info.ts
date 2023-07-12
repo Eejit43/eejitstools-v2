@@ -63,7 +63,7 @@ async function getData(position: GeolocationPosition) {
         '</thead>',
         '<tbody>'
     ];
-    for (let i = 0; i < data.extremes.length; i++) table.push('<tr>', `<td>${new Date(data.extremes[i].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.extremes[i].timestamp * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${titleCase(data.extremes[i].state)}</td>`, '</tr>');
+    for (const extreme of data.extremes) table.push('<tr>', `<td>${new Date(extreme.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(extreme.timestamp * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${titleCase(extreme.state)}</td>`, '</tr>');
     table.push('</tbody', '</table>');
 
     const output = [

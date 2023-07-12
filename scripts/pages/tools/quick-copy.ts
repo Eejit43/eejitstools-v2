@@ -116,9 +116,9 @@ async function clipboardDisplay() {
     try {
         const data = await navigator.clipboard.read();
 
-        for (let i = 0; i < data.length; i++)
-            if (data[i].types.includes('text/plain')) {
-                const blob = await data[i].getType('text/plain'); // eslint-disable-line no-await-in-loop
+        for (const datum of data)
+            if (datum.types.includes('text/plain')) {
+                const blob = await datum.getType('text/plain'); // eslint-disable-line no-await-in-loop
 
                 const reader = new FileReader();
                 reader.readAsText(blob);
@@ -135,8 +135,8 @@ async function clipboardDisplay() {
                         showWarning('');
                     }
                 });
-            } else if (data[i].types.includes('image/png')) {
-                const blob = await data[i].getType('image/png'); // eslint-disable-line no-await-in-loop
+            } else if (datum.types.includes('image/png')) {
+                const blob = await datum.getType('image/png'); // eslint-disable-line no-await-in-loop
 
                 const url = URL.createObjectURL(blob);
                 copiedText.value = '';

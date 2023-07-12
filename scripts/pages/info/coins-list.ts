@@ -41,7 +41,7 @@ loginButton.addEventListener('click', async () => {
     }
 });
 
-const mintMarks: { [abbreviation: string]: string } = {
+const mintMarks: Record<string, string> = {
     P: 'Philadelphia (Pennsylvania)',
     D: 'Denver (Colorado)',
     S: 'San Francisco (California)',
@@ -56,16 +56,16 @@ interface CoinVariantById {
     note?: string;
     years?: string;
     active?: true;
-    coins: { [id: string]: PartialNullable<Coin> };
+    coins: Record<string, PartialNullable<Coin>>;
 }
 
-let coinsData: { [id: string]: { name: string; id: string; coins: { [id: string]: CoinVariantById } } };
+let coinsData: Record<string, { name: string; id: string; coins: Record<string, CoinVariantById> }>;
 
 /**
  * Load the coins list.
  */
 async function loadCoinsList() {
-    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input as string}`)).json()) as ParsedCoinType[];
+    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as ParsedCoinType[];
 
     coinsData = Object.fromEntries(unindexedCoinsData.map((coinType) => [coinType.id, { ...coinType, coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])) }]));
 
@@ -290,7 +290,7 @@ async function loadCoinsList() {
                 yearEditor.textContent = coin.year;
                 yearEditor.contentEditable = 'true';
                 yearEditor.addEventListener('blur', async () => {
-                    const newValue = yearEditor.textContent || 'UNKNOWN';
+                    const newValue = yearEditor.textContent! || 'UNKNOWN';
                     if (newValue === coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].year) return;
 
                     addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'year', { year: newValue });
@@ -315,7 +315,7 @@ async function loadCoinsList() {
                 const tooltip = document.createElement('span');
                 tooltip.classList.add('tooltip-bottom');
                 tooltip.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
-                tooltip.textContent = coin.mintMark || 'None';
+                tooltip.textContent = coin.mintMark ?? 'None';
                 tooltip.contentEditable = 'true';
                 tooltip.addEventListener('focus', () => {
                     tooltip.removeAttribute('data-tooltip');
@@ -329,7 +329,7 @@ async function loadCoinsList() {
 
                     const newValue = tooltip.textContent && tooltip.textContent !== 'None' ? tooltip.textContent : null;
 
-                    if (tooltip.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark || 'None')) return;
+                    if (tooltip.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark ?? 'None')) return;
 
                     addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'mint mark', { mintMark: tooltip.textContent });
 
@@ -345,13 +345,13 @@ async function loadCoinsList() {
                     specification.contentEditable = 'true';
                     specification.textContent = coin.specification ?? '';
                     specification.addEventListener('blur', async () => {
-                        if (specification.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification || '')) return;
+                        if (specification.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification ?? '')) return;
 
                         addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specification.textContent });
 
-                        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specification.textContent || null;
+                        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specification.textContent! || null;
 
-                        await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specification.textContent || null });
+                        await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specification.textContent! || null });
                     });
                 }
                 if (coin.comparison) {
@@ -366,13 +366,13 @@ async function loadCoinsList() {
                         specificationEditor.textContent = coin.specification;
                         specificationEditor.contentEditable = 'true';
                         specificationEditor.addEventListener('blur', async () => {
-                            if (specificationEditor.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification || '')) return;
+                            if (specificationEditor.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification ?? '')) return;
 
-                            addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specificationEditor.textContent as string });
+                            addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specificationEditor.textContent! });
 
-                            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specificationEditor.textContent || null;
+                            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specificationEditor.textContent! || null;
 
-                            await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent || null });
+                            await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent! || null });
                         });
                         specification.appendChild(specificationEditor);
                         specification.appendChild(document.createTextNode(' '));
@@ -491,9 +491,9 @@ function getCoinYears(variant: CoinVariantById): string {
 
     const coinValues = Object.values(variant.coins);
 
-    const startYear = coinValues[0].year as string;
+    const startYear = coinValues[0].year!;
 
-    const endYear = variant.active ? 'date' : (coinValues[coinValues.length - 1].year as string);
+    const endYear = variant.active ? 'date' : coinValues[coinValues.length - 1].year!;
 
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
@@ -544,7 +544,7 @@ function addChangeEntry(coinData: PartialNullable<Coin>, variant: string, type: 
     if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
 
     const entry = document.createElement('li');
-    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes as Coin)[0] as keyof Coin] ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin] as string | boolean}" to "${Object.values(changes as Coin)[0] as string | boolean}"` : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`}`;
+    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes as Coin)[0] as keyof Coin] ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"` : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`}`;
 
     const timeTooltip = document.createElement('span');
     timeTooltip.classList.add('time-tooltip');
@@ -602,15 +602,15 @@ function loadPopupImages() {
     for (const imageTextButton of imageTextButtons)
         imageTextButton.addEventListener('click', () => {
             modal.style.display = 'block';
-            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image as string;
-            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name as string;
+            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
+            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
         });
 
     for (const coinTypeComparisonButton of coinTypeComparisonButtons)
         coinTypeComparisonButton.addEventListener('click', () => {
             modal.style.display = 'block';
-            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image as string;
-            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name as string;
+            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
+            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
         });
 
     [closeButton, modal].forEach((element) => {
@@ -623,7 +623,7 @@ function loadPopupImages() {
 }
 
 exportDataButton.addEventListener('click', async () => {
-    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input as string}`)).json()) as CoinType[] & { error?: string };
+    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType[] & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 

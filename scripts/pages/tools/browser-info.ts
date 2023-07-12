@@ -13,11 +13,11 @@ const parser = new window.UAParser();
 const result = parser.getResult();
 
 const output = [
-    { icon: 'window', name: 'Browser', value: `${result.browser.name || 'Unknown'} ${result.browser.version || ''}` },
-    { icon: 'microchip', name: 'CPU', value: `${result.cpu.architecture || 'Unknown'}` },
-    { icon: 'desktop', name: 'Device', value: `${result.device.vendor || ''} ${result.device.model || 'Unknown'}` },
-    { icon: 'gears', name: 'Engine', value: `${result.engine.name || 'Unknown'} ${result.engine.version || ''}` },
-    { icon: 'computer', name: 'OS', value: `${result.os.name || 'Unknown'} ${result.os.version || ''}` },
+    { icon: 'window', name: 'Browser', value: `${result.browser.name ?? 'Unknown'} ${result.browser.version ?? ''}` },
+    { icon: 'microchip', name: 'CPU', value: `${result.cpu.architecture ?? 'Unknown'}` },
+    { icon: 'desktop', name: 'Device', value: `${result.device.vendor ?? ''} ${result.device.model ?? 'Unknown'}` },
+    { icon: 'gears', name: 'Engine', value: `${result.engine.name ?? 'Unknown'} ${result.engine.version ?? ''}` },
+    { icon: 'computer', name: 'OS', value: `${result.os.name ?? 'Unknown'} ${result.os.version ?? ''}` },
     { icon: 'display-code', name: 'User Agent', value: result.ua }
 ];
 

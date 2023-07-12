@@ -93,9 +93,9 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
     resultElement.innerHTML = result.join('');
 
     if (media.annotated) {
-        const imageElement = document.querySelector('a#apod-link > img') as HTMLImageElement;
-        (imageElement.parentElement as HTMLElement).addEventListener('mouseover', () => (imageElement.src = media.annotated as string));
-        (imageElement.parentElement as HTMLElement).addEventListener('mouseout', () => (imageElement.src = media.src));
+        const imageElement = document.querySelector('a#apod-link > img') as HTMLImageElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+        imageElement.parentElement!.addEventListener('mouseover', () => (imageElement.src = media.annotated!));
+        imageElement.parentElement!.addEventListener('mouseout', () => (imageElement.src = media.src));
     }
 }
 
@@ -105,6 +105,6 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
  */
 function getMediaElement(media: ApodEntryMedia) {
     const { type, src, highResolution, alt } = media;
-    if (type === 'image') return `<a id="apod-link" href="${highResolution || src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`;
+    if (type === 'image') return `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`;
     else return `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }

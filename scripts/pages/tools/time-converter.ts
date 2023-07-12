@@ -74,7 +74,7 @@ function convert() {
     }
 }
 
-const types: { [key: string]: string } = {
+const types: Record<string, string> = {
     1: 'nanoseconds',
     2: 'microseconds',
     3: 'milliseconds',

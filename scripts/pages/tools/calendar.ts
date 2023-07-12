@@ -3,7 +3,7 @@ import { holidayEmojis, moonEmojis } from '../../../data/pages.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
 const monthYearDisplay = document.getElementById('month-year') as HTMLDivElement;
-const calendarBody = document.getElementById('calendar-body') as HTMLElement;
+const calendarBody = document.getElementById('calendar-body')!;
 const previousMonthButton = document.getElementById('previous-month') as HTMLButtonElement;
 const nextMonthButton = document.getElementById('next-month') as HTMLButtonElement;
 const currentDateButton = document.getElementById('current-date') as HTMLButtonElement;
@@ -30,7 +30,7 @@ loginPassword.addEventListener('keydown', (event) => {
 
 interface TodoData {
     todo: { title: string; id: string; frequency: string }[];
-    data: { [year: string]: { [month: string]: { [date: string]: { [id: string]: string } } } };
+    data: Record<string, Record<string, Record<string, Record<string, string>>>>;
 }
 
 let todoData = null as TodoData | null;
@@ -205,7 +205,7 @@ function showCalendar(date: number | null, month: number, year: number) {
                 cell.textContent = currentDate.toString();
                 if (currentDate === currentTime.getDate() && month === currentTime.getMonth() && year === currentTime.getFullYear()) cell.classList.add('current-date');
                 if (currentDate === displayedDate && month === displayedMonth && year === displayedYear) cell.classList.add('selected-date');
-                cell.addEventListener('click', () => updateDisplayedDate(parseInt(cell.dataset.date as string), month, year));
+                cell.addEventListener('click', () => updateDisplayedDate(parseInt(cell.dataset.date!), month, year));
                 row.appendChild(cell);
                 currentDate++;
             }
@@ -234,13 +234,13 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
-    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement;
+    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
     dateCell.classList.add('selected-date');
 
-    if (dateCell.dataset.holiday || dateCell.dataset.phase) {
+    if (dateCell.dataset.holiday ?? dateCell.dataset.phase) {
         eventsList.innerHTML = '';
 
-        const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time as string})` : null].flat().filter(Boolean) as string[];
+        const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null].flat().filter(Boolean) as string[];
 
         events.forEach((event) => {
             const eventElement = document.createElement('li');
@@ -261,7 +261,7 @@ function loadCalendarEvents() {
     events.holidays.forEach((holiday) => {
         const date = new Date(`${holiday.date}T00:00:00`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
             cell.classList.add('holiday');
             if (!cell.dataset.holiday) cell.dataset.holiday = holiday.name;
             else cell.dataset.holiday += `, ${holiday.name}`;
@@ -271,7 +271,7 @@ function loadCalendarEvents() {
     events.moonPhases.forEach((moonPhase) => {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
             cell.dataset.phase = moonPhase.phase;
             cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
@@ -295,7 +295,7 @@ function loadTodoList() {
 
     todoList.innerHTML = '';
 
-    (todoData as TodoData).todo.forEach((todo) => {
+    todoData!.todo.forEach((todo) => {
         if (
             todo.frequency === 'daily' ||
             (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
@@ -314,12 +314,12 @@ function loadTodoList() {
             todoCheckbox.classList.add('todo-checkbox');
             todoCheckbox.id = `todo-${todo.id}`;
             todoCheckbox.dataset.id = todo.id;
-            todoCheckbox.checked = !!(todoData as TodoData).data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
+            todoCheckbox.checked = !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', () => {
-                const todoFinal: { [id: string]: boolean } = {};
-                (todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>).forEach((checkbox) => (todoFinal[checkbox.dataset.id as string] = checkbox.checked));
+                const todoFinal: Record<string, boolean> = {};
+                (todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>).forEach((checkbox) => (todoFinal[checkbox.dataset.id!] = checkbox.checked));
 
-                if (Object.entries(todoFinal).some(([id, checked]) => !!(todoData as TodoData).data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
+                if (Object.entries(todoFinal).some(([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
                 else todoSaveButton.disabled = true;
             });
 
@@ -364,8 +364,8 @@ function loadTodoList() {
         allCheckboxes.forEach((checkbox) => (checkbox.disabled = true));
         todoSaveButton.disabled = true;
 
-        const todoFinal = {} as { [id: string]: boolean };
-        allCheckboxes.forEach((checkbox) => (todoFinal[checkbox.dataset.id as string] = checkbox.checked));
+        const todoFinal = {} as Record<string, boolean>;
+        allCheckboxes.forEach((checkbox) => (todoFinal[checkbox.dataset.id!] = checkbox.checked));
 
         const result = (await (
             await fetch('/calendar-todo-edit', {

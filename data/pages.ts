@@ -278,12 +278,13 @@ interface Style {
     link: string;
 }
 
-interface Imports {
-    [name: string]: {
+type Imports = Record<
+    string,
+    {
         script?: Script;
         style?: Style;
-    };
-}
+    }
+>;
 
 const imports: Imports = {
     mathJax: {
@@ -338,11 +339,7 @@ interface Page {
     keywords?: string[];
 }
 
-interface PreParsedPages {
-    [category: string]: {
-        [id: string]: Page;
-    };
-}
+type PreParsedPages = Record<string, Record<string, Page>>;
 
 const preParsedPages: PreParsedPages = {
     tools: {
@@ -413,17 +410,13 @@ interface ParsedPage extends Page {
     link: string;
 }
 
-interface AllPages {
-    [category: string]: {
-        [id: string]: ParsedPage;
-    };
-}
+type AllPages = Record<string, Record<string, ParsedPage>>;
 
 export const allPages = structuredClone(preParsedPages) as AllPages;
 
 Object.entries(preParsedPages).forEach(([category, pages]) => {
     Object.entries(pages).forEach(([id, page]) => {
-        (allPages[category] as { [id: string]: ParsedPage })[id] = {
+        (allPages[category] as Record<string, ParsedPage>)[id] = {
             ...blankProperties,
             ...page,
             descriptionParsed: page.description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
@@ -440,7 +433,7 @@ Object.entries(preParsedPages).forEach(([category, pages]) => {
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export const holidayEmojis: { [holiday: string]: string } = {
+export const holidayEmojis: Record<string, string> = {
     "New Year's Day": '🎉',
     'Martin Luther King Jr. Day': '👴🏾',
     'First Day of Black History Month': '✊🏿',
@@ -479,7 +472,7 @@ export const holidayEmojis: { [holiday: string]: string } = {
     "New Year's Eve": '🕛'
 };
 
-export const moonEmojis: { [moon: string]: string } = {
+export const moonEmojis: Record<string, string> = {
     'New moon': '🌑',
     'First quarter': '🌓',
     'Full moon': '🌕',

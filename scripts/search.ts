@@ -1,7 +1,7 @@
 import { allPages } from '../data/pages.js';
 
-const searchResult = document.querySelector('.large-search-results') as HTMLDivElement;
-const searchInput = document.querySelector('.large-search-text') as HTMLInputElement;
+const searchResult = document.querySelector('.large-search-results') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const searchInput = document.querySelector('.large-search-text') as HTMLInputElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
 
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
@@ -18,7 +18,7 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') || document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | null;
+        const result = (document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected') ?? document.querySelector('.large-search-box .large-search-results table tbody tr td a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -27,7 +27,7 @@ searchInput.addEventListener('keydown', (event) => {
     }
 });
 
-(document.querySelector('.large-search-button') as HTMLElement).addEventListener('click', () => searchInput.focus());
+document.querySelector('.large-search-button')!.addEventListener('click', () => searchInput.focus());
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -35,15 +35,15 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected');
 
-            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling) : null;
+            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? currentResult.parentElement!.parentElement!.previousElementSibling : currentResult.parentElement!.parentElement!.nextElementSibling) : null;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
-                (nextTrElement.querySelector('td a') as HTMLAnchorElement).classList.add('selected');
+                nextTrElement.querySelector('td a')!.classList.add('selected');
             } else if (!currentResult) firstResult.classList.add('selected');
 
             const selectedResult = document.querySelector('.large-search-box .large-search-results table tbody tr td a.selected');
-            if (selectedResult) ((selectedResult.parentElement as HTMLElement).parentElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (selectedResult) selectedResult.parentElement!.parentElement!.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 });

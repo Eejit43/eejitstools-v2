@@ -1,5 +1,5 @@
 fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').then(async (response) => {
-    const data = (await response.json()) as { time_last_update_unix: number; time_next_update_unix: number; conversion_rates: { [key: string]: number } }; // eslint-disable-line @typescript-eslint/naming-convention
+    const data = (await response.json()) as { time_last_update_unix: number; time_next_update_unix: number; conversion_rates: Record<string, number> }; // eslint-disable-line @typescript-eslint/naming-convention
     const rates = data.conversion_rates;
 
     (document.getElementById('last-updated') as HTMLSpanElement).textContent = `${new Date(data.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(data.time_last_update_unix * 1000).toLocaleTimeString('en-US')}`;

@@ -34,7 +34,7 @@ fileUploadLabel.addEventListener('drop', (event) => {
 
         if (firstItem.kind === 'file') {
             uploadedFile = firstItem.getAsFile();
-            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml((uploadedFile as File).name)}</code>`;
+            fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(uploadedFile!.name)}</code>`;
         }
     } else {
         const firstFile = event.dataTransfer?.files[0];

@@ -4,33 +4,36 @@ import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './funct
 twemojiUpdate();
 
 /* Funky logo hover effect */
-const logo = document.querySelector('.logo') as HTMLSpanElement;
+const logo = document.querySelector('.logo') as HTMLSpanElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
 logo.addEventListener('mouseover', () => {
     const letters = logo.querySelectorAll('span');
     letters.forEach((letter, index) => {
-        const beforeContent = letter.dataset.value as string;
+        const beforeContent = letter.dataset.value!;
 
         let iterations = 0;
 
-        const interval = setInterval(() => {
-            letter.textContent = beforeContent
-                .split('')
-                .map(() => String.fromCharCode(Math.floor(Math.random() * 94) + 33))
-                .join('');
+        const interval = setInterval(
+            () => {
+                letter.textContent = beforeContent
+                    .split('')
+                    .map(() => String.fromCharCode(Math.floor(Math.random() * 94) + 33))
+                    .join('');
 
-            if (iterations >= 10) {
-                clearInterval(interval);
-                letter.textContent = beforeContent;
-            }
+                if (iterations >= 10) {
+                    clearInterval(interval);
+                    letter.textContent = beforeContent;
+                }
 
-            iterations++;
-        }, 30 + index * 10);
+                iterations++;
+            },
+            30 + index * 10
+        );
     });
 });
 
 /* Navigation time display */
 const timeDisplay = document.getElementById('time-display') as HTMLSpanElement;
-const timeIcon = document.getElementById('time-icon') as HTMLElement;
+const timeIcon = document.getElementById('time-icon')!;
 setInterval(() => {
     const currentTime = new Date();
 
@@ -51,7 +54,7 @@ setInterval(() => {
     }
 }, 100);
 
-const navbar = document.getElementById('navbar') as HTMLElement;
+const navbar = document.getElementById('navbar')!;
 
 /**
  * Resizes the navigation bar on scroll.
@@ -66,8 +69,8 @@ document.addEventListener('scroll', resizeNav);
 resizeNav();
 
 /* Search Bar */
-const searchResult = document.querySelector('.search-results') as HTMLDivElement;
-const searchInput = document.querySelector('.search-text') as HTMLInputElement;
+const searchResult = document.querySelector('.search-results') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const searchInput = document.querySelector('.search-text') as HTMLInputElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
 
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
@@ -84,7 +87,7 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') || document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
+        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') ?? document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -93,7 +96,7 @@ searchInput.addEventListener('keydown', (event) => {
     }
 });
 
-(document.querySelector('.search-button') as HTMLElement).addEventListener('click', () => searchInput.focus());
+document.querySelector('.search-button')!.addEventListener('click', () => searchInput.focus());
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -101,15 +104,15 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
 
-            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).previousElementSibling : ((currentResult.parentElement as HTMLElement).parentElement as HTMLElement).nextElementSibling) : null;
+            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? currentResult.parentElement!.parentElement!.previousElementSibling : currentResult.parentElement!.parentElement!.nextElementSibling) : null;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
-                (nextTrElement.querySelector('td a') as HTMLAnchorElement).classList.add('selected');
+                nextTrElement.querySelector('td a')!.classList.add('selected');
             } else if (!currentResult) firstResult.classList.add('selected');
 
             const selectedResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
-            if (selectedResult) ((selectedResult.parentElement as HTMLElement).parentElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (selectedResult) selectedResult.parentElement!.parentElement!.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 });
@@ -163,18 +166,18 @@ document.addEventListener('keydown', (event) => {
 });
 
 /* Scroll to top button */
-(document.getElementById('scroll-to-top') as HTMLButtonElement).addEventListener('click', () => {
+document.getElementById('scroll-to-top')!.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 /* Keyboard shortcuts popup */
-const shortcutsModal = document.getElementById('shortcuts') as HTMLDivElement;
+const shortcutsModal = document.getElementById('shortcuts')!;
 
-(document.getElementById('show-shortcuts') as HTMLButtonElement).addEventListener('click', () => {
+document.getElementById('show-shortcuts')!.addEventListener('click', () => {
     shortcutsModal.style.display = 'block';
 });
 
-(document.getElementById('close-shortcuts') as HTMLSpanElement).addEventListener('click', () => {
+document.getElementById('close-shortcuts')!.addEventListener('click', () => {
     addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 

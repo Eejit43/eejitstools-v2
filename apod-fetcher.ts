@@ -1,5 +1,5 @@
 import { consola } from 'consola';
-import { HTMLElement, parse } from 'node-html-parser';
+import { parse } from 'node-html-parser';
 
 interface ApodEntry {
     success: boolean;
@@ -68,7 +68,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
         const title = html
             .querySelector('title')
             ?.innerHTML.split(/\s[–-]\s/)[1]
-            .trim() as string;
+            .trim();
 
         const credit = html.innerHTML
             .match(/Credit.*?<\/center>/is)?.[0]
@@ -78,15 +78,19 @@ export async function fetchApod(year: string, month: string, date: string): Prom
 
         const media = { type: mediaType } as ApodEntryMedia;
 
-        if (mediaType === 'embed') media.src = ((html.querySelector('iframe') as HTMLElement).getAttribute('src') as string).replace(/\?rel=0$/, '');
+        if (mediaType === 'embed')
+            media.src = html
+                .querySelector('iframe')!
+                .getAttribute('src')!
+                .replace(/\?rel=0$/, '');
         else {
-            const imageElement = html.querySelector('a img, button img') as HTMLElement;
-            media.src = imageElement.getAttribute('src') as string;
+            const imageElement = html.querySelector('a img, button img')!;
+            media.src = imageElement.getAttribute('src')!;
             media.highResolution = imageElement.parentNode.getAttribute('href');
             media.annotated = imageElement.parentNode.getAttribute('onmouseover')?.match(/src=['"](.*?)['"]/)?.[1];
             media.alt = imageElement.getAttribute('alt')?.replace(/ Please see the explanation for more detailed information./i, '');
 
-            if (/will download the/i.test(media.alt as string)) delete media.alt;
+            if (/will download the/i.test(media.alt!)) delete media.alt;
             if (media.highResolution === media.src) delete media.highResolution;
         }
 
@@ -98,7 +102,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
             .replace(/ \.{3}/g, '...')
             .replace(/(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +Your Sky Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi, '')
             .replace(/<br( \/)?> *$/, '')
-            .trim() as string;
+            .trim();
 
         return {
             success: true,

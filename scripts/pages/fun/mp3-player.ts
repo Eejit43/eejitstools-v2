@@ -10,17 +10,17 @@ const timer = document.getElementById('timer') as HTMLDivElement;
 const title = document.getElementById('title') as HTMLDivElement;
 const duration = document.getElementById('duration') as HTMLDivElement;
 
-const progressBarContainer = document.querySelector('.progress') as HTMLDivElement;
+const progressBarContainer = document.querySelector('.progress') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
 const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
 
 const toggleShuffleButton = document.getElementById('toggle-shuffle') as HTMLSpanElement;
-const shuffleStatusIcon = document.getElementById('shuffle-status') as HTMLElement;
-const previousButton = document.getElementById('previous') as HTMLElement;
-const rewindButton = document.getElementById('rewind') as HTMLElement;
-const playPauseButton = document.getElementById('play-pause') as HTMLElement;
-const forwardButton = document.getElementById('forward') as HTMLElement;
-const nextButton = document.getElementById('next') as HTMLElement;
-const toggleMuteButton = document.getElementById('toggle-mute') as HTMLElement;
+const shuffleStatusIcon = document.getElementById('shuffle-status')!;
+const previousButton = document.getElementById('previous')!;
+const rewindButton = document.getElementById('rewind')!;
+const playPauseButton = document.getElementById('play-pause')!;
+const forwardButton = document.getElementById('forward')!;
+const nextButton = document.getElementById('next')!;
+const toggleMuteButton = document.getElementById('toggle-mute')!;
 
 const playlistsList = document.getElementById('playlists-list') as HTMLUListElement;
 
@@ -112,7 +112,7 @@ audioTracks.forEach((category) => {
 });
 
 document.querySelectorAll('.playlist-section-title > i.player-icon').forEach((playButton) => {
-    playButton.addEventListener('click', () => shuffleSection((playButton.parentElement as HTMLElement).id));
+    playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
 });
 
 let audioCategory = 'general';
@@ -221,7 +221,7 @@ function onTimeUpdate() {
         playToPause(audioCategory, audioIndex);
 
         if (shuffled && shuffledQueue.length > 0) {
-            const nextTrack = shuffledQueue.shift() as AudioTrackWithIndex;
+            const nextTrack = shuffledQueue.shift()!;
             loadNewTrack(audioCategory, nextTrack.index);
         } else if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, audioIndex + 1);
     }
@@ -341,7 +341,7 @@ function toggleShuffle() {
  * @param index The index of the track.
  */
 function pauseToPlay(category: string, index: number) {
-    const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
+    const element = document.getElementById(`player-icon-${category}-${index}`)!;
     element.classList.remove('fa-play');
     element.classList.add('fa-pause');
 }
@@ -352,7 +352,7 @@ function pauseToPlay(category: string, index: number) {
  * @param index The index of the track.
  */
 function playToPause(category: string, index: number) {
-    const element = document.getElementById(`player-icon-${category}-${index}`) as HTMLElement;
+    const element = document.getElementById(`player-icon-${category}-${index}`)!;
     element.classList.add('fa-play');
     element.classList.remove('fa-pause');
 }
@@ -373,7 +373,7 @@ function toggleMute() {
 }
 
 document.addEventListener('keydown', (event) => {
-    if ((document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) || event.ctrlKey || event.metaKey || event.altKey) return;
+    if ((document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) || event.ctrlKey || event.metaKey || event.altKey) return; // eslint-disable-line @typescript-eslint/prefer-nullish-coalescing
 
     if (event.code === 'Space') {
         event.preventDefault();

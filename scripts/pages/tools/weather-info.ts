@@ -75,14 +75,15 @@ interface WeatherInformation {
 /* eslint-enable @typescript-eslint/naming-convention */
 
 interface LunarData {
-    phase: {
-        [date: string]: {
+    phase: Record<
+        string,
+        {
             phaseName: string;
             lighting: number;
             isPhaseLimit: boolean | number;
             svg: string;
-        };
-    };
+        }
+    >;
 }
 
 /**

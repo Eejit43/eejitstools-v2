@@ -47,7 +47,7 @@ function logMessage(...message: string[]) {
  */
 async function restartProcess() {
     logMessage('Restarting...');
-    await kill((running as ChildProcess).pid as number);
+    await kill(running!.pid!);
     spawnProcess();
     await new Promise((resolve) => setTimeout(resolve, 500));
 }
@@ -57,7 +57,7 @@ async function restartProcess() {
  */
 async function stopProcess() {
     logMessage('Killing process...');
-    await kill((running as ChildProcess).pid as number);
+    await kill(running!.pid!);
     process.exit(0);
 }
 
@@ -66,7 +66,7 @@ async function stopProcess() {
  */
 function openWebsite() {
     logMessage('Opening website...');
-    exec(`open http://localhost:${process.env.PORT || 3000}`);
+    exec(`open http://localhost:${process.env.PORT ?? 3000}`);
 }
 
 process.stdin.resume();

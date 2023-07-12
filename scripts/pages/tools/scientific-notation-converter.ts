@@ -9,14 +9,14 @@ declare global {
 const decimalInput = document.getElementById('decimal-input') as HTMLInputElement;
 const decimalConvertButton = document.getElementById('decimal-convert') as HTMLButtonElement;
 const decimalResetButton = document.getElementById('decimal-reset') as HTMLButtonElement;
-const decimalArrow = document.getElementById('decimal-arrow') as HTMLElement;
+const decimalArrow = document.getElementById('decimal-arrow')!;
 const scientificOutput = document.getElementById('scientific-output') as HTMLInputElement;
 const scientificOutputCopyButton = document.getElementById('scientific-output-copy') as HTMLButtonElement;
 const scientificOutputCopy2Button = document.getElementById('scientific-output-copy-2') as HTMLButtonElement;
 const scientificInput = document.getElementById('scientific-input') as HTMLInputElement;
 const scientificConvertButton = document.getElementById('scientific-convert') as HTMLButtonElement;
 const scientificResetButton = document.getElementById('scientific-reset') as HTMLButtonElement;
-const scientificArrow = document.getElementById('scientific-arrow') as HTMLElement;
+const scientificArrow = document.getElementById('scientific-arrow')!;
 const decimalOutput = document.getElementById('decimal-output') as HTMLInputElement;
 const decimalOutputCopyButton = document.getElementById('decimal-output-copy') as HTMLButtonElement;
 

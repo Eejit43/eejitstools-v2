@@ -72,7 +72,9 @@ kbd {
     background-color: #eee;
     border: 1px solid #b4b4b4;
     border-radius: 3px;
-    box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 2px 0 0 rgb(255 255 255 / 70.2%) inset;
+    box-shadow:
+        0 1px 1px rgb(0 0 0 / 20%),
+        0 2px 0 0 rgb(255 255 255 / 70.2%) inset;
     color: #333;
     display: inline-block;
     font-size: 0.85em;
@@ -114,7 +116,9 @@ nav {
 nav,
 .logo,
 .logo-tools {
-    transition: padding 0.4s ease, font-size 0.4s ease;
+    transition:
+        padding 0.4s ease,
+        font-size 0.4s ease;
 }
 
 @media (width <= 600px) {
@@ -405,7 +409,9 @@ nav,
     background-color: #1e2529;
     border: 3px solid #31353d;
     border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 18.8%);
+    box-shadow:
+        0 4px 8px 0 rgb(0 0 0 / 20%),
+        0 6px 20px 0 rgb(0 0 0 / 18.8%);
     margin: auto;
     min-width: 300px;
     padding: 0;

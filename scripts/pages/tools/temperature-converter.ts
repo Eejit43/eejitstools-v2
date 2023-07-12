@@ -77,7 +77,7 @@ function convert() {
     }
 }
 
-const types: { [key: string]: string } = {
+const types: Record<string, string> = {
     1: 'degF',
     2: 'degC',
     3: 'K'

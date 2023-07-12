@@ -104,8 +104,8 @@ hslInput.addEventListener('blur', () => {
 });
 
 cmykInput.addEventListener('blur', () => {
-    const cmyk = /^cmyk\(/.test(cmykInput.value) ? cmykInput.value.replace(/cmyk\(| |%|\)/gi, '').split(',') : '';
-    const cmyka = /^cmyka\(/.test(cmykInput.value) ? cmykInput.value.replace(/cmyka\(| |%|\)/gi, '').split(',') : '';
+    const cmyk = cmykInput.value.startsWith('cmyk(') ? cmykInput.value.replace(/cmyk\(| |%|\)/gi, '').split(',') : '';
+    const cmyka = cmykInput.value.startsWith('cmyka(') ? cmykInput.value.replace(/cmyka\(| |%|\)/gi, '').split(',') : '';
     if (cmyk.length === 4 && window.chroma.valid(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk')) {
         resetBorder(cmykInput);
         updateResults(window.chroma(cmyk[0], cmyk[1], cmyk[2], cmyk[3], 'cmyk'));
@@ -151,7 +151,7 @@ function updateResults(color: Color) {
 
     colorDisplay.style.color = color.hex();
     colorPicker.value = color.alpha(1).hex();
-    nameInput.value = !/^#/.test(color.name()) ? color.name() : '';
+    nameInput.value = !color.name().startsWith('#') ? color.name() : '';
     hexInput.value = color.hex();
     decimalInput.value = parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
     rgbInput.value = color.css();
