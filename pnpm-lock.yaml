@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@eejit/eslint-config-typescript':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@fastify/rate-limit':
     specifier: ^8.0.2
     version: 8.0.2
@@ -160,6 +163,10 @@ packages:
     dependencies:
       postcss-selector-parser: 6.0.13
     dev: true
+
+  /@eejit/eslint-config-typescript@1.0.0:
+    resolution: {integrity: sha512-ndfcUcRh3V+1lBmGYU7ppIZCFREL13aLgSV/NL7Z3e7y+L71A6Wpl9EHZG5M+emWfoxvSN1fBQeT1OFRBSDBew==}
+    dev: false
 
   /@es-joy/jsdoccomment@0.39.4:
     resolution: {integrity: sha512-Jvw915fjqQct445+yron7Dufix9A+m9j1fCJYlCo1FWlRvTxa3pjJelxdSTdaLWcTwRU6vbL+NYjO4YuNIS5Qg==}

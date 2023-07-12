@@ -12,6 +12,7 @@
         "remove-compiled": "find . -type f -name '*.js' ! -name 'compile.js' ! -path './node_modules/*' ! -path './public/scripts/external/*' -delete"
     },
     "dependencies": {
+        "@eejit/eslint-config-typescript": "^1.0.0",
         "@fastify/rate-limit": "^8.0.2",
         "@fastify/static": "^6.10.2",
         "@fastify/view": "^8.0.0",
