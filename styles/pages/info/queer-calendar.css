@@ -2,17 +2,17 @@
 
 .color-box {
     display: flex;
-    height: 10px;
     margin: 15px 0;
     width: 100%;
+    height: 10px;
 }
 
 .color-box div {
-    cursor: pointer;
     flex-grow: 1;
-    height: 10px;
-    margin: 0;
     transition: all 0.8s ease-in-out;
+    cursor: pointer;
+    margin: 0;
+    height: 10px;
 }
 
 .color-box div:hover {

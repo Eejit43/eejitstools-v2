@@ -1,12 +1,12 @@
 .keycodes {
-    background-color: #31363d;
+    position: static;
+    margin: 50px auto 30px;
     border: 4px solid #1b1e24;
     border-collapse: collapse;
-    color: #a8a8a8;
-    margin: 50px auto 30px;
-    overflow-y: scroll;
-    position: static;
+    background-color: #31363d;
     width: 70%;
+    overflow-y: scroll;
+    color: #a8a8a8;
 }
 
 @media (width <= 700px) {
@@ -18,38 +18,38 @@
 }
 
 .keycodes th {
-    background-color: #31363d;
     border-bottom: 1px solid #1b1e24;
-    font-size: 18px;
+    background-color: #31363d;
     padding: 10px;
+    font-size: 18px;
     text-align: center;
 }
 
 @media (width <= 700px) {
     .keycodes th {
-        font-size: 16px;
         padding: 20px;
+        font-size: 16px;
     }
 }
 
 .keycodes td {
     border: 3px solid #1b1e24;
-    font-size: 18px;
-    font-weight: 500;
     padding: 20px;
+    font-weight: 500;
+    font-size: 18px;
     text-align: center;
 }
 
 .keycodes td:hover {
-    background-color: #3a3f47;
     cursor: not-allowed;
+    background-color: #3a3f47;
 }
 
 @media (width <= 700px) {
     .keycodes td {
         border-bottom: none;
-        font-size: 16px;
         padding: 14px;
+        font-size: 16px;
     }
 }
 

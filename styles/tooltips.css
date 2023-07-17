@@ -2,8 +2,8 @@
 
 /* Base styles for the element that has a tooltip */
 [data-tooltip] {
-    cursor: pointer;
     position: relative;
+    cursor: pointer;
     text-align: center;
     text-decoration: underline dotted;
 }
@@ -11,15 +11,15 @@
 /* Base styles for the entire tooltip */
 [data-tooltip]::before,
 [data-tooltip]::after {
-    opacity: 0;
-    pointer-events: none;
     position: absolute;
     transform: translate3d(0, 0, 0);
+    visibility: hidden;
+    opacity: 0;
     transition:
         opacity 0.2s ease-in-out,
         visibility 0.2s ease-in-out,
         transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
-    visibility: hidden;
+    pointer-events: none;
 }
 
 /* Show the entire tooltip on hover and focus */
@@ -27,31 +27,31 @@
 [data-tooltip]:hover::after,
 [data-tooltip]:focus::before,
 [data-tooltip]:focus::after {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
 }
 
 /* Base styles for the tooltip's directional arrow */
 [data-tooltip]::before {
-    background: transparent;
-    border: 6px solid transparent;
-    content: "";
     z-index: 1001;
+    border: 6px solid transparent;
+    background: transparent;
+    content: "";
 }
 
 /* Base styles for the tooltip's content area */
 [data-tooltip]::after {
+    z-index: 1000;
+    border-radius: 5px;
     background-color: black;
     background-color: rgb(43 43 43 / 90%);
-    border-radius: 5px;
-    color: white;
-    content: attr(data-tooltip);
-    font-size: 14px;
-    line-height: 1.2;
     padding: 8px;
     width: 160px;
+    content: attr(data-tooltip);
+    color: white;
+    font-size: 14px;
+    line-height: 1.2;
     word-break: break-word;
-    z-index: 1000;
 }
 
 /* Directions */
@@ -67,10 +67,10 @@
 
 [data-tooltip]::before,
 .tooltip-top::before {
-    border-top-color: black;
-    border-top-color: rgb(43 43 43 / 90%);
     margin-bottom: -12px;
     margin-left: -6px;
+    border-top-color: black;
+    border-top-color: rgb(43 43 43 / 90%);
 }
 
 /* Horizontally align top/bottom tooltips */
@@ -93,18 +93,18 @@
 /* Left */
 .tooltip-left::before,
 .tooltip-left::after {
+    right: 100%;
     bottom: 50%;
     left: auto;
-    right: 100%;
 }
 
 .tooltip-left::before {
-    border-left-color: black;
-    border-left-color: rgb(43 43 43 / 90%);
-    border-top-color: transparent;
+    margin-right: -12px;
     margin-bottom: 0;
     margin-left: 0;
-    margin-right: -12px;
+    border-top-color: transparent;
+    border-left-color: black;
+    border-left-color: rgb(43 43 43 / 90%);
 }
 
 .tooltip-left:hover::before,
@@ -117,17 +117,17 @@
 /* Bottom */
 .tooltip-bottom::before,
 .tooltip-bottom::after {
+    top: 100%;
     bottom: auto;
     left: 50%;
-    top: 100%;
 }
 
 .tooltip-bottom::before {
+    margin-top: -12px;
+    margin-bottom: 0;
+    border-top-color: transparent;
     border-bottom-color: black;
     border-bottom-color: rgb(43 43 43 / 90%);
-    border-top-color: transparent;
-    margin-bottom: 0;
-    margin-top: -12px;
 }
 
 .tooltip-bottom:hover::before,
@@ -145,11 +145,11 @@
 }
 
 .tooltip-right::before {
-    border-right-color: black;
-    border-right-color: rgb(43 43 43 / 90%);
-    border-top-color: transparent;
     margin-bottom: 0;
     margin-left: -12px;
+    border-top-color: transparent;
+    border-right-color: black;
+    border-right-color: rgb(43 43 43 / 90%);
 }
 
 .tooltip-right:hover::before,

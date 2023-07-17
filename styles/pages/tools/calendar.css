@@ -1,7 +1,6 @@
 #calendar-grid {
-    margin-top: 150px;
-
     --min-width: 575px;
+    margin-top: 150px;
 }
 
 #calendar-grid > div {
@@ -16,26 +15,26 @@
 
 #main-calendar,
 #date-display {
-    background-color: #1e2529;
+    margin: auto;
     border: 3px solid #31353d;
     border-radius: 15px;
-    color: #ffecd1;
-    margin: auto;
+    background-color: #1e2529;
     padding: 15px;
     width: 85%;
+    color: #ffecd1;
 }
 
 #month-year {
-    font-size: 25px;
     margin-bottom: 10px;
+    font-size: 25px;
 }
 
 #calendar {
-    border-collapse: collapse;
-    font-size: 20px;
     margin: auto;
-    table-layout: fixed;
+    border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
+    font-size: 20px;
 }
 
 #calendar th {
@@ -50,17 +49,17 @@
 }
 
 #calendar td {
-    border: 1px solid #31353d;
-    height: 100%;
-    padding: 5px;
     position: relative;
-    text-align: center;
+    border: 1px solid #31353d;
+    padding: 5px;
     width: 100%;
+    height: 100%;
+    text-align: center;
 }
 
 #calendar td:hover:not(.no-date) {
-    background-color: #31353d;
     cursor: pointer;
+    background-color: #31353d;
 }
 
 .selected-date {
@@ -84,11 +83,11 @@
 }
 
 .moon-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
     float: right;
     font-size: 16px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
 }
 
 @media (width <= 600px) {
@@ -125,14 +124,14 @@
 }
 
 #display-date {
-    font-size: 70px;
     margin-block: 5px;
+    font-size: 70px;
 }
 
 .events,
 .todo-list {
-    font-size: 20px;
     margin-top: 20px;
+    font-size: 20px;
     text-align: left;
 }
 
@@ -145,8 +144,8 @@
 }
 
 #login-password {
-    width: 50px;
     margin-top: 15px;
+    width: 50px;
 }
 
 #todo-list {
@@ -159,9 +158,9 @@
 
 /* Inspired by https://codepen.io/avstorm/pen/yjLGGN */
 .todo-label {
+    cursor: pointer;
     margin: auto;
     user-select: none;
-    cursor: pointer;
 }
 
 .todo-label span {
@@ -172,19 +171,16 @@
 
 .todo-label .checkbox-container {
     position: relative;
+    vertical-align: middle;
+    transform: scale(1);
+    transition: all 200ms ease;
+    border: 1px solid #9098a9;
+    border-radius: 3px;
     width: 18px;
     height: 18px;
-    border-radius: 3px;
-    transform: scale(1);
-    vertical-align: middle;
-    border: 1px solid #9098a9;
-    transition: all 200ms ease;
 }
 
 .todo-label .checkbox-container svg {
-    position: absolute;
-    top: 3px;
-    left: 2px;
     fill: none;
     stroke: white;
     stroke-width: 2;
@@ -192,38 +188,41 @@
     stroke-linejoin: round;
     stroke-dasharray: 16px;
     stroke-dashoffset: 16px;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    transform: translate3d(0, 0, 0);
     transition: all 300ms ease;
     transition-delay: 100ms;
-    transform: translate3d(0, 0, 0);
 }
 
 .todo-label .checkbox-container::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    background: #506eec;
     display: block;
     transform: scale(0);
     opacity: 1;
     border-radius: 50%;
+    background: #506eec;
+    width: 100%;
+    height: 100%;
+    content: "";
 }
 
 .todo-label .todo-label-text {
-    padding-inline: 18px;
     margin-left: -5px;
+    padding-inline: 18px;
 }
 
 .todo-label .todo-label-text::after {
-    content: "";
     display: block;
-    width: 0%;
-    height: 2px;
-    background-color: currentcolor;
     position: absolute;
     top: 50%;
     left: 13px;
     transform: translateY(-50%);
     transition: width 200ms ease-in-out;
+    background-color: currentcolor;
+    width: 0%;
+    height: 2px;
+    content: "";
 }
 
 .todo-label:hover .checkbox-container {
@@ -231,9 +230,9 @@
 }
 
 .todo-checkbox:checked + .todo-label .checkbox-container {
-    background: #506eec;
-    border-color: #506eec;
     animation: wave 400ms ease;
+    border-color: #506eec;
+    background: #506eec;
 }
 
 .todo-checkbox:checked + .todo-label .checkbox-container svg {
@@ -251,13 +250,13 @@
 }
 
 .todo-checkbox:disabled + .todo-label .checkbox-container {
-    background: rgb(144 152 169 / 29.8%);
     border-color: #9098a9;
+    background: rgb(144 152 169 / 29.8%);
 }
 
 .todo-checkbox:checked:disabled + .todo-label .checkbox-container {
-    background: #9098a9;
     border-color: #9098a9;
+    background: #9098a9;
 }
 
 @keyframes wave {

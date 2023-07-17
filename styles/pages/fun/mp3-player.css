@@ -1,20 +1,19 @@
 .player,
 .playlists {
-    background-color: #1e2529;
+    margin: auto;
     border: 3px solid #31353d;
     border-radius: 15px;
-    color: #ffc266;
-    height: min-content;
-    margin: auto;
-    max-width: 90%;
+    background-color: #1e2529;
     padding: 10px;
     width: 450px;
+    max-width: 90%;
+    height: min-content;
+    color: #ffc266;
 }
 
 #mp3-grid {
-    margin-top: 150px;
-
     --min-width: 500px;
+    margin-top: 150px;
 }
 
 #mp3-grid > div {
@@ -34,12 +33,12 @@
 }
 
 #playlists-list {
-    column-count: 2;
     column-gap: 30px;
-    font-size: 15px;
+    column-count: 2;
     margin-block: 1em;
     margin-bottom: 5px;
     padding-inline-start: 40px;
+    font-size: 15px;
 }
 
 #playlists-list li {
@@ -64,14 +63,14 @@
 
 .buttons,
 .information {
-    align-items: center;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .information div {
-    color: #ffc266;
     margin-bottom: 8px;
+    color: #ffc266;
 }
 
 #playlists-list a {
@@ -84,8 +83,8 @@
 
 .playlist-section-title {
     display: inline-block;
-    margin-bottom: 5px;
     margin-top: 20px;
+    margin-bottom: 5px;
 }
 
 .playlist-section-title > a {
@@ -98,16 +97,16 @@
 }
 
 .playlist-section-title > i.player-icon {
-    font-size: 18px;
     padding-left: 8px;
+    font-size: 18px;
 }
 
 .playlist-track {
-    background-color: #3b3d43;
-    border-radius: 5px;
-    cursor: pointer;
     display: flex;
+    cursor: pointer;
     margin-top: 15px !important;
+    border-radius: 5px;
+    background-color: #3b3d43;
 }
 
 .playlist-track:hover {
@@ -129,11 +128,11 @@
 
 .playlist-info-track,
 .playlist-duration {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    pointer-events: none;
     color: #e9cc95;
     font-size: 14px;
-    padding-bottom: 7px;
-    padding-top: 7px;
-    pointer-events: none;
 }
 
 .active-track > .playlist-info-track,
@@ -143,8 +142,8 @@
 }
 
 .playlist-play {
-    padding-bottom: 5px;
     padding-top: 5px;
+    padding-bottom: 5px;
     pointer-events: none;
 }
 
@@ -152,14 +151,14 @@
     margin-bottom: 15px;
     margin-inline: 2px;
     margin-top: 25px;
-    text-align: center;
     width: 30px;
+    text-align: center;
 }
 
 .player-icon,
 #shuffle-icon {
-    color: #ffc266;
     cursor: pointer;
+    color: #ffc266;
     font-size: 20px;
 }
 
@@ -170,27 +169,27 @@
 }
 
 #shuffle-status {
-    background-color: #1e2529;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 10px;
-    padding: 1.5px;
     transform: translate(-8px, 2px);
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #1e2529;
+    padding: 1.5px;
     width: 10px;
+    font-size: 10px;
 }
 
 .progress {
-    background-color: #d9d9f2;
-    border-radius: 10px;
     cursor: pointer;
     margin-top: 15px;
+    border-radius: 10px;
+    background-color: #d9d9f2;
     width: 100%;
 }
 
 #progress-bar {
-    background-color: #ffc266;
     border-radius: 10px;
-    height: 5px;
-    max-width: 100%;
+    background-color: #ffc266;
     width: 0%;
+    max-width: 100%;
+    height: 5px;
 }

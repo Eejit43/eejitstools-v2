@@ -1,7 +1,7 @@
 .color-grid {
     display: grid;
-    gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
 }
 
 .color-grid div {
@@ -9,45 +9,45 @@
 }
 
 #color-display {
+    position: absolute;
+    cursor: pointer;
+    margin-top: 15px;
+    border: 4px solid #16181c;
     background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, white 25%, white 75%, #aaa 75%, #aaa);
     background-position:
         0 0,
         5px 5px;
     background-size: 10px 10px;
-    border: 4px solid #16181c;
-    cursor: pointer;
-    height: 100px;
-    margin-top: 15px;
-    position: absolute;
     width: 100px;
+    height: 100px;
 }
 
 #color-display::after {
-    background-color: currentcolor;
-    content: "";
     display: block;
-    height: 100%;
-    left: 0;
     position: absolute;
     top: 0;
+    left: 0;
+    background-color: currentcolor;
     width: 100%;
+    height: 100%;
+    content: "";
 }
 
 #color-history {
     border: 4px solid #16181c;
-    height: 105px;
-    max-width: 90%;
-    overflow-y: scroll;
     padding: 15px;
     padding-left: 10px;
     width: 90%;
+    max-width: 90%;
+    height: 105px;
+    overflow-y: scroll;
 }
 
 #color-history li {
-    cursor: pointer;
     display: inline-block;
-    list-style-type: none;
+    cursor: pointer;
     margin-inline: 5px;
+    list-style-type: none;
 }
 
 #color-history li:hover {
@@ -55,23 +55,23 @@
 }
 
 #full-color {
-    background-color: #16181c;
-    cursor: pointer;
     display: none;
-    height: 100%;
-    left: 0;
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
     z-index: 10000;
+    cursor: pointer;
+    background-color: #16181c;
+    width: 100%;
+    height: 100%;
 }
 
 #full-color-message {
-    background-color: #d8d8d8;
-    border-top-left-radius: 10px;
-    bottom: 0;
-    color: black;
-    padding: 20px;
     position: absolute;
     right: 0;
+    bottom: 0;
+    border-top-left-radius: 10px;
+    background-color: #d8d8d8;
+    padding: 20px;
+    color: black;
 }

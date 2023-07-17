@@ -4,13 +4,13 @@ header {
 }
 
 .mainlogo {
-    font-size: 80px;
     font-weight: 700;
+    font-size: 80px;
 }
 
 .mainlogo-tools {
-    font-size: 65px;
     font-weight: 700;
+    font-size: 65px;
 }
 
 @media (width <= 700px) {
@@ -25,10 +25,10 @@ header {
 
 .warning,
 .message {
-    color: lightgray;
-    font-size: 22px;
-    font-weight: 500;
     margin: 20px 10px 0;
+    color: lightgray;
+    font-weight: 500;
+    font-size: 22px;
 }
 
 @media (width <= 700px) {
@@ -39,13 +39,13 @@ header {
 }
 
 .tools-table {
-    background-color: #1b1e24;
-    border-collapse: collapse;
-    color: #a8a8a8;
-    height: 40%;
     left: 10%;
     margin: 45px auto 30px;
+    border-collapse: collapse;
+    background-color: #1b1e24;
     width: 70%;
+    height: 40%;
+    color: #a8a8a8;
 }
 
 .tools-table tr {
@@ -54,9 +54,9 @@ header {
 
 .tools-table td {
     border: 4px solid #1b1e24;
-    font-size: 19px;
-    font-weight: 500;
     padding: 20px;
+    font-weight: 500;
+    font-size: 19px;
     text-align: left;
 }
 
@@ -70,8 +70,8 @@ header {
     }
 
     .tools-table td {
-        font-size: 14px;
         padding: 12px;
+        font-size: 14px;
     }
 }
 
