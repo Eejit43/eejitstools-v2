@@ -2,15 +2,13 @@
     --min-width: 575px;
 
     margin-top: 150px;
-}
 
-#calendar-grid > div {
-    margin-top: 0;
-}
-
-@media (width <= 700px) {
-    #calendar-grid {
+    @media (width <= 700px) {
         --min-width: unset;
+    }
+
+    & > div {
+        margin-top: 0;
     }
 }
 
@@ -36,47 +34,45 @@
     width: 100%;
     table-layout: fixed;
     font-size: 20px;
-}
 
-#calendar th {
-    padding: 5px;
-    text-align: center;
-}
+    & th {
+        padding: 5px;
+        text-align: center;
 
-@media (width <= 700px) {
-    #calendar th {
-        font-size: 15px;
+        @media (width <= 700px) {
+            font-size: 15px;
+        }
     }
-}
 
-#calendar td {
-    position: relative;
-    border: 1px solid #31353d;
-    padding: 5px;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}
+    & td {
+        position: relative;
+        border: 1px solid #31353d;
+        padding: 5px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
 
-#calendar td:hover:not(.no-date) {
-    cursor: pointer;
-    background-color: #31353d;
+        &:not(.no-date):hover {
+            cursor: pointer;
+            background-color: #31353d;
+        }
+    }
 }
 
 .selected-date {
     background-color: #2b3d47;
-}
 
-.selected-date:hover {
-    background-color: #344a56 !important;
+    &:hover {
+        background-color: #344a56 !important;
+    }
 }
 
 .current-date {
     background-color: #348037;
-}
 
-.current-date:hover {
-    background-color: #4c9a4f !important;
+    &:hover {
+        background-color: #4c9a4f !important;
+    }
 }
 
 .holiday {
@@ -113,10 +109,10 @@
 
 #buttons {
     margin-top: 20px;
-}
 
-#buttons button:last-of-type {
-    margin-left: 10px;
+    & button:last-of-type {
+        margin-left: 10px;
+    }
 }
 
 #date-display {
@@ -138,10 +134,10 @@
 
 #events-list {
     margin-left: 40px;
-}
 
-#events-list li::marker {
-    content: "—   ";
+    & li::marker {
+        content: "—   ";
+    }
 }
 
 #login-password {
@@ -155,6 +151,38 @@
 
 .todo-checkbox {
     display: none;
+
+    &:checked + .todo-label {
+        & .todo-label-text::after {
+            width: calc(100% - 25px);
+        }
+
+        & .checkbox-container {
+            animation: wave 400ms ease;
+            border-color: #506eec;
+            background: #506eec;
+
+            &::before {
+                transform: scale(2.5);
+                opacity: 0;
+                transition: all 400ms ease;
+            }
+
+            & svg {
+                stroke-dashoffset: 0;
+            }
+        }
+    }
+
+    &:disabled + .todo-label .checkbox-container {
+        border-color: #9098a9;
+        background: rgb(144 152 169 / 30%);
+    }
+
+    &:checked:disabled + .todo-label .checkbox-container {
+        border-color: #9098a9;
+        background: #9098a9;
+    }
 }
 
 /* Inspired by https://codepen.io/avstorm/pen/yjLGGN */
@@ -162,102 +190,72 @@
     cursor: pointer;
     margin: auto;
     user-select: none;
-}
 
-.todo-label span {
-    display: inline-block;
-    vertical-align: middle;
-    transform: translate3d(0, 0, 0);
-}
+    & span {
+        display: inline-block;
+        vertical-align: middle;
+        transform: translate3d(0, 0, 0);
+    }
 
-.todo-label .checkbox-container {
-    position: relative;
-    vertical-align: middle;
-    transform: scale(1);
-    transition: all 200ms ease;
-    border: 1px solid #9098a9;
-    border-radius: 3px;
-    width: 18px;
-    height: 18px;
-}
+    & .checkbox-container {
+        position: relative;
+        vertical-align: middle;
+        transform: scale(1);
+        transition: all 200ms ease;
+        border: 1px solid #9098a9;
+        border-radius: 3px;
+        width: 18px;
+        height: 18px;
 
-.todo-label .checkbox-container svg {
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 16px;
-    stroke-dashoffset: 16px;
-    position: absolute;
-    top: 3px;
-    left: 2px;
-    transform: translate3d(0, 0, 0);
-    transition: all 300ms ease;
-    transition-delay: 100ms;
-}
+        &::before {
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+            background: #506eec;
+            width: 100%;
+            height: 100%;
+            content: "";
+        }
 
-.todo-label .checkbox-container::before {
-    display: block;
-    transform: scale(0);
-    opacity: 1;
-    border-radius: 50%;
-    background: #506eec;
-    width: 100%;
-    height: 100%;
-    content: "";
-}
+        & svg {
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            transform: translate3d(0, 0, 0);
+            transition: all 300ms ease;
+            transition-delay: 100ms;
+        }
+    }
 
-.todo-label .todo-label-text {
-    margin-left: -5px;
-    padding-inline: 18px;
-}
+    & .todo-label-text {
+        margin-left: -5px;
+        padding-inline: 18px;
 
-.todo-label .todo-label-text::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 13px;
-    transform: translateY(-50%);
-    transition: width 200ms ease-in-out;
-    background-color: currentcolor;
-    width: 0%;
-    height: 2px;
-    content: "";
-}
+        &::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 13px;
+            transform: translateY(-50%);
+            transition: width 200ms ease-in-out;
+            background-color: currentcolor;
+            width: 0%;
+            height: 2px;
+            content: "";
+        }
+    }
 
-.todo-label:hover .checkbox-container {
-    border-color: #506eec;
-}
-
-.todo-checkbox:checked + .todo-label .checkbox-container {
-    animation: wave 400ms ease;
-    border-color: #506eec;
-    background: #506eec;
-}
-
-.todo-checkbox:checked + .todo-label .checkbox-container svg {
-    stroke-dashoffset: 0;
-}
-
-.todo-checkbox:checked + .todo-label .checkbox-container::before {
-    transform: scale(2.5);
-    opacity: 0;
-    transition: all 400ms ease;
-}
-
-.todo-checkbox:checked + .todo-label .todo-label-text::after {
-    width: calc(100% - 25px);
-}
-
-.todo-checkbox:disabled + .todo-label .checkbox-container {
-    border-color: #9098a9;
-    background: rgb(144 152 169 / 29.8%);
-}
-
-.todo-checkbox:checked:disabled + .todo-label .checkbox-container {
-    border-color: #9098a9;
-    background: #9098a9;
+    &:hover .checkbox-container {
+        border-color: #506eec;
+    }
 }
 
 @keyframes wave {

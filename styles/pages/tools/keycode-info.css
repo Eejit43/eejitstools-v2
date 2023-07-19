@@ -7,49 +7,43 @@
     width: 70%;
     overflow-y: scroll;
     color: #a8a8a8;
-}
 
-@media (width <= 700px) {
-    .keycodes {
+    @media (width <= 700px) {
         display: inline-block;
         margin: 8px auto 30px;
         min-width: 97%;
     }
-}
 
-.keycodes th {
-    border-bottom: 1px solid #1b1e24;
-    background-color: #31363d;
-    padding: 10px;
-    font-size: 18px;
-    text-align: center;
-}
+    & th {
+        border-bottom: 1px solid #1b1e24;
+        background-color: #31363d;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
 
-@media (width <= 700px) {
-    .keycodes th {
-        padding: 20px;
-        font-size: 16px;
+        @media (width <= 700px) {
+            padding: 20px;
+            font-size: 16px;
+        }
     }
-}
 
-.keycodes td {
-    border: 3px solid #1b1e24;
-    padding: 20px;
-    font-weight: 500;
-    font-size: 18px;
-    text-align: center;
-}
+    & td {
+        border: 3px solid #1b1e24;
+        padding: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        text-align: center;
 
-.keycodes td:hover {
-    cursor: not-allowed;
-    background-color: #3a3f47;
-}
+        &:hover {
+            cursor: not-allowed;
+            background-color: #3a3f47;
+        }
 
-@media (width <= 700px) {
-    .keycodes td {
-        border-bottom: none;
-        padding: 14px;
-        font-size: 16px;
+        @media (width <= 700px) {
+            border-bottom: none;
+            padding: 14px;
+            font-size: 16px;
+        }
     }
 }
 

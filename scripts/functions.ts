@@ -7,16 +7,16 @@ interface Twemoji {
     parse: (element: HTMLElement, options: { base: string; folder: string; ext: string }) => void;
 }
 
+declare function toastify(options: { text: string; duration: number; position: string; style: Record<string, string> }): {
+    showToast: () => void;
+};
+
 /**
  * Update emojis on the loaded content.
  */
 export function twemojiUpdate() {
     (twemoji as Twemoji).parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
 }
-
-declare function toastify(options: { text: string; duration: number; position: string; style: Record<string, string> }): {
-    showToast: () => void;
-};
 
 /**
  * Displays a popup alert.

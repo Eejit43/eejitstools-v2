@@ -4,10 +4,10 @@
 
 div#toggle-buttons button {
     margin: 0 5px 20px;
-}
 
-div#toggle-buttons button:first-of-type {
-    margin-left: 0;
+    &:first-of-type {
+        margin-left: 0;
+    }
 }
 
 .coin-type {
@@ -54,10 +54,10 @@ button.coin-type-expand {
 .popup-image {
     transition: 0.3s;
     cursor: pointer;
-}
 
-.popup-image:hover {
-    opacity: 0.8;
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 #modal {
@@ -116,13 +116,13 @@ button.coin-type-expand {
     color: #f1f1f1;
     font-weight: bold;
     font-size: 40px;
-}
 
-#close-modal:hover,
-#close-modal:focus {
-    cursor: pointer;
-    color: #bbb;
-    text-decoration: none;
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        color: #bbb;
+        text-decoration: none;
+    }
 }
 
 @media (width <= 700px) {
@@ -162,10 +162,10 @@ tr[data-upgrade="true"] {
     transition: 0.3s;
     cursor: pointer;
     padding-left: 2px;
-}
 
-.coin-image-icon:hover {
-    color: #929292;
+    &:hover {
+        color: #929292;
+    }
 }
 
 .coin-type-comparison {
@@ -182,14 +182,14 @@ button.coin-variant-expand {
     border: 4px solid #16181c;
     padding: 15px;
     padding-left: 10px;
-}
 
-#change-history li {
-    margin-inline: 30px;
-}
+    & li {
+        margin-inline: 30px;
 
-#change-history li::marker {
-    content: "—   ";
+        &::marker {
+            content: "—   ";
+        }
+    }
 }
 
 .time-tooltip {

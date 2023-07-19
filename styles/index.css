@@ -6,19 +6,17 @@ header {
 .mainlogo {
     font-weight: 700;
     font-size: 80px;
+
+    @media (width <= 700px) {
+        font-size: 60px;
+    }
 }
 
 .mainlogo-tools {
     font-weight: 700;
     font-size: 65px;
-}
 
-@media (width <= 700px) {
-    .mainlogo {
-        font-size: 60px;
-    }
-
-    .mainlogo-tools {
+    @media (width <= 700px) {
         font-size: 45px;
     }
 }
@@ -29,11 +27,8 @@ header {
     color: lightgray;
     font-weight: 500;
     font-size: 22px;
-}
 
-@media (width <= 700px) {
-    .warning,
-    .message {
+    @media (width <= 700px) {
         font-size: 18px;
     }
 }
@@ -46,32 +41,30 @@ header {
     width: 70%;
     height: 40%;
     color: #a8a8a8;
-}
 
-.tools-table tr {
-    background-color: #2f343a;
-}
-
-.tools-table td {
-    border: 4px solid #1b1e24;
-    padding: 20px;
-    font-weight: 500;
-    font-size: 19px;
-    text-align: left;
-}
-
-.tools-table > tbody > tr > td:first-of-type {
-    width: 15vw;
-}
-
-@media (width <= 700px) {
-    .tools-table {
+    @media (width <= 700px) {
         width: 85%;
     }
 
-    .tools-table td {
-        padding: 12px;
-        font-size: 14px;
+    & tr {
+        background-color: #2f343a;
+    }
+
+    & td {
+        border: 4px solid #1b1e24;
+        padding: 20px;
+        font-weight: 500;
+        font-size: 19px;
+        text-align: left;
+
+        @media (width <= 700px) {
+            padding: 12px;
+            font-size: 14px;
+        }
+    }
+
+    & > tbody > tr > td:first-of-type {
+        width: 15vw;
     }
 }
 

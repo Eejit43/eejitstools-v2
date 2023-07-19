@@ -3,10 +3,10 @@ a#apod-link {
     margin: 20px auto;
     width: 900px;
     max-width: 90%;
-}
 
-a#apod-link > img {
-    width: 100%;
+    & > img {
+        width: 100%;
+    }
 }
 
 div#apod-embed-container {
@@ -16,11 +16,11 @@ div#apod-embed-container {
     width: 900px;
     max-width: 90%;
     overflow: hidden;
-}
 
-div#apod-embed-container > iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    & > iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
 }

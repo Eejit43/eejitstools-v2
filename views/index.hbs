@@ -17,14 +17,14 @@
 </header>
 
 {{#each pages}}
-<table class="tools-table">
-    <tbody>
-        {{#each this}}
-        <tr>
-            <td><a href="{{this.link}}"><i class="page-icon fa-regular fa-{{this.icon}}"></i>{{this.title}}</a></td>
-            <td>{{{this.description}}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+    <table class="tools-table">
+        <tbody>
+            {{#each this}}
+                <tr>
+                    <td><a href="{{this.link}}"><i class="page-icon fa-regular fa-{{this.icon}}"></i>{{this.title}}</a></td>
+                    <td>{{{this.description}}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 {{/each}}

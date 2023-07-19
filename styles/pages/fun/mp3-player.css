@@ -15,15 +15,13 @@
     --min-width: 500px;
 
     margin-top: 150px;
-}
 
-#mp3-grid > div {
-    margin-top: 0;
-}
-
-@media (width <= 700px) {
-    #mp3-grid {
+    @media (width <= 700px) {
         --min-width: unset;
+    }
+
+    & > div {
+        margin-top: 0;
     }
 }
 
@@ -40,18 +38,18 @@
     margin-bottom: 5px;
     padding-inline-start: 40px;
     font-size: 15px;
-}
 
-#playlists-list li {
-    margin-top: 8px;
-}
+    & li {
+        margin-top: 8px;
 
-#playlists-list li:first-of-type {
-    margin-top: 0;
-}
+        &:first-of-type {
+            margin-top: 0;
+        }
 
-#playlists-list li::marker {
-    content: "—   ";
+        &::marker {
+            content: "—   ";
+        }
+    }
 }
 
 @media screen and (width <= 1010px) {
@@ -76,30 +74,30 @@
 
 #playlists-list a {
     color: #ffc266;
-}
 
-#playlists-list a:hover {
-    color: #f1a93c;
+    &:hover {
+        color: #f1a93c;
+    }
 }
 
 .playlist-section-title {
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 5px;
-}
 
-.playlist-section-title > a {
-    color: #ffc266;
-    font-size: 20px;
-}
+    & > a {
+        color: #ffc266;
+        font-size: 20px;
 
-.playlist-section-title > a:hover {
-    color: #f1a93c;
-}
+        &:hover {
+            color: #f1a93c;
+        }
+    }
 
-.playlist-section-title > i.player-icon {
-    padding-left: 8px;
-    font-size: 18px;
+    & > i.player-icon {
+        padding-left: 8px;
+        font-size: 18px;
+    }
 }
 
 .playlist-track {
@@ -108,10 +106,10 @@
     margin-top: 15px !important;
     border-radius: 5px;
     background-color: #3b3d43;
-}
 
-.playlist-track:hover {
-    background: #31353d;
+    &:hover {
+        background: #31353d;
+    }
 }
 
 .active-track {
