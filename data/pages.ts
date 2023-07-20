@@ -309,11 +309,11 @@ const imports: Imports = {
 };
 
 export const blankProperties = {
-    title: '',
+    title: "Eejit's Tools",
     id: '',
     icon: '',
-    description: '',
-    descriptionParsed: '',
+    description: 'Some useful tools for general purposes!',
+    descriptionParsed: 'Some useful tools for general purposes!',
     toolbox: false,
     iconStyle: null,
     toolboxTitle: null,

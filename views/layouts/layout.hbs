@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Common Tags -->
@@ -6,19 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="robots" content="index, follow" />
-        <title>{{#if title}}{{title}} | {{/if}}Eejit's Tools</title>
+        <title>{{#if title}}{{title}} | Eejit's Tools{{else}}Eejit's Tools{{/if}}</title>
         <!-- Search Engine -->
-        <meta name="title" content="{{#if title}}{{title}}{{else}}Eejit's Tools{{/if}}" />
-        <meta name="description" content="{{#if descriptionParsed}}{{descriptionParsed}}{{else}}Some useful tools for general purposes!{{/if}}" />
-        <meta name="keywords" content="eejitstools,eejits tools,eejit's tools,eejit43{{#unless (isEmpty keywords)}},{{keywords}}{{/unless}}" />
+        <meta name="title" content="{{title}}" />
+        <meta name="description" content="{{descriptionParsed}}" />
+        {{#unless (isEmpty keywords)}}
+            <meta name="keywords" content="eejitstools,eejits tools,eejit's tools,eejit43,{{keywords}}" />
+        {{else}}
+            <meta name="keywords" content="eejitstools,eejits tools,eejit's tools,eejit43" />
+        {{/unless}}
         <meta property="image" content="https://eejitstools.com/favicons/icon.png" />
         <!-- Schema.org for Google -->
-        <meta itemprop="name" content="{{#if title}}{{title}}{{else}}Eejit's Tools{{/if}}" />
-        <meta itemprop="description" content="{{#if descriptionParsed}}{{descriptionParsed}}{{else}}Some useful tools for general purposes!{{/if}}" />
+        <meta itemprop="name" content="{{title}}" />
+        <meta itemprop="description" content="{{descriptionParsed}}" />
         <meta itemprop="image" content="https://eejitstools.com/favicons/icon.png" />
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta property="og:title" content="{{#if title}}{{title}}{{else}}Eejit's Tools{{/if}}" />
-        <meta property="og:description" content="{{#if descriptionParsed}}{{descriptionParsed}}{{else}}Some useful tools for general purposes!{{/if}}" />
+        <meta property="og:title" content="{{title}}" />
+        <meta property="og:description" content="{{descriptionParsed}}" />
         <meta property="og:image" content="https://eejitstools.com/favicons/icon.png" />
         <meta property="og:image:alt" content="Eejit's Tools Wrench" />
         <meta property="og:url" content="https://eejitstools.com" />
@@ -27,8 +30,12 @@
         <meta property="og:type" content="website" />
         <!-- Twitter -->
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="{{#if title}}{{title}} | {{/if}}Eejit's Tools" />
-        <meta name="twitter:description" content="{{#if descriptionParsed}}{{descriptionParsed}}{{else}}Some useful tools for general purposes!{{/if}}" />
+        {{#if title}}
+            <meta name="twitter:title" content="{{title}} | Eejit's Tools" />
+        {{else}}
+            <meta name="twitter:title" content="Eejit's Tools" />
+        {{/if}}
+        <meta name="twitter:description" content="{{descriptionParsed}}" />
         <meta name="twitter:url" content="https://eejitstools.com" />
         <meta name="twitter:image" content="https://eejitstools.com/favicons/icon.png" />
         <meta name="twitter:image:alt" content="Eejit's Tools Wrench" />
@@ -47,19 +54,23 @@
         <!-- Styles -->
         <link rel="stylesheet" href="/styles/styles.css" />
         {{#if style}}
-        <link rel="stylesheet" href="/styles/pages{{link}}.css" />
+            <link rel="stylesheet" href="/styles/pages{{link}}.css" />
         {{/if}}
         {{#each additionalStyles}}
-        <link rel="stylesheet" href="/styles/{{this.link}}" />
+            <link rel="stylesheet" href="/styles/{{this.link}}" />
         {{/each}}
 
         <!-- Scripts -->
         <script src="/scripts/global.js" type="module"></script>
         {{#if script}}
-        <script src="/scripts/pages{{link}}.js" type="module"></script>
+            <script src="/scripts/pages{{link}}.js" type="module"></script>
         {{/if}}
         {{#each additionalScripts}}
-        <script src="{{this.link}}"{{#if this.module}} type="module"{{/if}}></script>
+            {{#if this.module}}
+                <script src="{{this.link}}" type="module"></script>
+            {{else}}
+                <script src="{{this.link}}"></script>
+            {{/if}}
         {{/each}}
     </head>
     <body>
@@ -86,12 +97,20 @@
             </span>
         </nav>
         {{#if toolbox}}
-        <div class="toolbox">
-            <h1><i class="fa-regular fa-{{icon}}" {{#if iconStyle}} style="{{iconStyle}}" {{/if}}></i> {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{#if title}}{{title}}{{else}}Eejit's Tools{{/if}}{{/if}}:</h1>
-            {{{body}}}
-        </div>
+            <div class="toolbox">
+                <h1>
+                    {{#if iconStyle}}
+                        <i class="fa-regular fa-{{icon}}" style="{{iconStyle}}"></i>
+                        {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{pageTitle}}{{/if}}:
+                    {{else}}
+                        <i class="fa-regular fa-{{icon}}"></i>
+                        {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{pageTitle}}{{/if}}:
+                    {{/if}}
+                </h1>
+                {{{body}}}
+            </div>
         {{else}}
-        {{{body}}}
+            {{{body}}}
         {{/if}}
         <div class="footer-utils">
             <button id="scroll-to-top"><i class="fa-solid fa-arrow-up"></i></button>
@@ -105,14 +124,33 @@
                 </div>
                 <hr style="width: 100%" />
                 <div id="shortcuts-list">
-                    <kbd>Option</kbd> + <kbd>K</kbd>: Opens keyboard shortcut menu (this menu)<br />
-                    <kbd>Option</kbd> + <kbd>C</kbd>: Clears clipboard<br />
-                    <kbd>Option</kbd> + <kbd>H</kbd>: Opens homepage (current tab, new tab with <kbd>Meta</kbd>/<kbd>⌘ Cmd</kbd>)<br />
-                    <kbd>Option</kbd> + <kbd>S</kbd>: Opens GitHub repository (new tab)<br />
-                    <kbd>Option</kbd> + <kbd>P</kbd>: Opens page source (GitHub, new tab)<br />
-                    <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>: Opens page script (or global script if no script) (GitHub, new tab)<br />
-                    <kbd>Option</kbd> + <kbd>/</kbd>: Selects search bar<br />
-                    <kbd>Option</kbd> + <kbd>T</kbd>: Scroll to the top of the page
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>K</kbd>: Opens keyboard shortcut menu (this menu)<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>C</kbd>: Clears clipboard<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>H</kbd>: Opens homepage (current tab, new tab with
+                    <kbd>Meta</kbd>/<kbd>⌘ Cmd</kbd>)<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>S</kbd>: Opens GitHub repository (new tab)<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>P</kbd>: Opens page source (GitHub, new tab)<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>Shift</kbd>
+                    +
+                    <kbd>P</kbd>: Opens page script (or global script if no script) (GitHub, new tab)<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>/</kbd>: Selects search bar<br />
+                    <kbd>Option</kbd>
+                    +
+                    <kbd>T</kbd>: Scroll to the top of the page
                 </div>
             </div>
         </div>
