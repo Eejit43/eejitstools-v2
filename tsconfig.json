@@ -3,11 +3,7 @@
     "compilerOptions": {
         "target": "ES2022",
         "module": "NodeNext",
-        "resolveJsonModule": true,
-        "removeComments": true,
-        "paths": {
-            "@data/*": ["./data/*"]
-        }
+        "removeComments": true
     },
     "include": ["dev.ts", "app.ts", "apod-fetcher.ts"]
 }
