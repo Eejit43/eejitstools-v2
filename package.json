@@ -6,7 +6,6 @@
         "build": "node compile.js",
         "dev": "pnpm run build && node dev.js",
         "force-deploy": "railway up",
-        "logs": "railway logs",
         "remove-compiled": "find . -type f -name '*.js' ! -name 'compile.js' ! -path './node_modules/*' ! -path './public/scripts/external/*' -delete && find ./public/styles -type f -name '*.css' ! -path './public/styles/external/*' -delete",
         "start": "node --max-old-space-size=100 app.js"
     },
