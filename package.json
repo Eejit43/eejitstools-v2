@@ -1,6 +1,5 @@
 {
     "name": "eejitstools",
-    "private": true,
     "type": "module",
     "scripts": {
         "build": "node compile.js",
