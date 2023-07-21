@@ -93,7 +93,7 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
     resultElement.innerHTML = result.join('');
 
     if (media.annotated) {
-        const imageElement = document.querySelector('a#apod-link > img') as HTMLImageElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+        const imageElement = document.querySelector('a#apod-link > img') as HTMLImageElement;
         imageElement.parentElement!.addEventListener('mouseover', () => (imageElement.src = media.annotated!));
         imageElement.parentElement!.addEventListener('mouseout', () => (imageElement.src = media.src));
     }

@@ -4,20 +4,17 @@ import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './funct
 twemojiUpdate();
 
 /* Funky logo hover effect */
-const logo = document.querySelector('.logo') as HTMLSpanElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const logo = document.querySelector('.logo') as HTMLSpanElement;
 logo.addEventListener('mouseover', () => {
     const letters = logo.querySelectorAll('span');
-    letters.forEach((letter, index) => {
+    for (const [index, letter] of letters.entries()) {
         const beforeContent = letter.dataset.value!;
 
         let iterations = 0;
 
         const interval = setInterval(
             () => {
-                letter.textContent = beforeContent
-                    .split('')
-                    .map(() => String.fromCharCode(Math.floor(Math.random() * 94) + 33))
-                    .join('');
+                letter.textContent = [...beforeContent].map(() => String.fromCodePoint(Math.floor(Math.random() * 94) + 33)).join('');
 
                 if (iterations >= 10) {
                     clearInterval(interval);
@@ -28,12 +25,12 @@ logo.addEventListener('mouseover', () => {
             },
             30 + index * 10
         );
-    });
+    }
 });
 
 /* Navigation time display */
-const timeDisplay = document.getElementById('time-display') as HTMLSpanElement;
-const timeIcon = document.getElementById('time-icon')!;
+const timeDisplay = document.querySelector('#time-display') as HTMLSpanElement;
+const timeIcon = document.querySelector('#time-icon')!;
 setInterval(() => {
     const currentTime = new Date();
 
@@ -54,7 +51,7 @@ setInterval(() => {
     }
 }, 100);
 
-const navbar = document.getElementById('navbar')!;
+const navbar = document.querySelector('#navbar')!;
 
 /**
  * Resizes the navigation bar on scroll.
@@ -69,18 +66,14 @@ document.addEventListener('scroll', resizeNav);
 resizeNav();
 
 /* Search Bar */
-const searchResult = document.querySelector('.search-results') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
-const searchInput = document.querySelector('.search-text') as HTMLInputElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const searchResult = document.querySelector('.search-results') as HTMLDivElement;
+const searchInput = document.querySelector('.search-text') as HTMLInputElement;
 
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
     const results = [];
-    Object.values(allPages)
-        .map((value) => Object.values(value))
-        .flat()
-        .forEach((page) => {
-            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
-        });
+    for (const page of Object.values(allPages).flatMap((value) => Object.values(value))) if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
+
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
 });
@@ -124,60 +117,77 @@ document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
     if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')) return;
 
-    if (event.code === 'KeyK') shortcutsModal.style.display = 'block';
-    else if (event.code === 'KeyT') window.scrollTo({ top: 0, behavior: 'smooth' });
-    else if (event.code === 'KeyC') {
-        navigator.clipboard.writeText('');
-        showAlert('Cleared clipboard!', 'success', 500);
-    } else if (event.code === 'KeyH') window.open('/', event.metaKey ? '_blank' : '_self');
-    else if (event.code === 'KeyS') window.open(githubUrl, '_blank');
-    else if (!event.shiftKey && event.code === 'KeyP') {
-        const { pathname } = window.location;
-        let finalUrl;
-        if (pathname === '/') finalUrl = 'views/index.hbs';
-        else if (pathname === '/search') finalUrl = 'views/search.hbs';
-        else {
-            const category = pathname.split('/')[1];
-            const page = allPages[category]?.[pathname.split('/')[2]];
-
-            if (!page) finalUrl = 'views/error.hbs';
-            else finalUrl = `views/pages/${category}/${page.id}.hbs`;
+    switch (event.code) {
+        case 'KeyK': {
+            shortcutsModal.style.display = 'block';
+            break;
         }
-
-        window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
-    } else if (event.shiftKey && event.code === 'KeyP') {
-        const { pathname } = window.location;
-        let finalUrl;
-        if (pathname === '/') finalUrl = 'public/scripts/global.js';
-        else if (pathname === '/search') finalUrl = 'public/scripts/search.js';
-        else {
-            const category = pathname.split('/')[1];
-            const page = allPages[category]?.[pathname.split('/')[2]];
-
-            if (!page) finalUrl = 'public/scripts/global.js';
-            else finalUrl = `public/scripts/pages/${category}/${page.id}.js`;
+        case 'KeyT': {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            break;
         }
+        case 'KeyC': {
+            navigator.clipboard.writeText('');
+            showAlert('Cleared clipboard!', 'success', 500);
 
-        window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
-    } else if (event.code === 'Slash') {
-        event.preventDefault();
-        searchInput.focus();
+            break;
+        }
+        case 'KeyH': {
+            window.open('/', event.metaKey ? '_blank' : '_self');
+            break;
+        }
+        case 'KeyS': {
+            window.open(githubUrl, '_blank');
+            break;
+        }
+        default: {
+            if (!event.shiftKey && event.code === 'KeyP') {
+                const { pathname } = window.location;
+                let finalUrl;
+                if (pathname === '/') finalUrl = 'views/index.hbs';
+                else if (pathname === '/search') finalUrl = 'views/search.hbs';
+                else {
+                    const category = pathname.split('/')[1];
+                    const page = allPages[category]?.[pathname.split('/')[2]];
+
+                    finalUrl = page ? `views/pages/${category}/${page.id}.hbs` : 'views/error.hbs';
+                }
+
+                window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
+            } else if (event.shiftKey && event.code === 'KeyP') {
+                const { pathname } = window.location;
+                let finalUrl;
+                if (pathname === '/') finalUrl = 'public/scripts/global.js';
+                else if (pathname === '/search') finalUrl = 'public/scripts/search.js';
+                else {
+                    const category = pathname.split('/')[1];
+                    const page = allPages[category]?.[pathname.split('/')[2]];
+
+                    finalUrl = page ? `public/scripts/pages/${category}/${page.id}.js` : 'public/scripts/global.js';
+                }
+
+                window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
+            } else if (event.code === 'Slash') {
+                event.preventDefault();
+                searchInput.focus();
+            }
+        }
     }
 });
 
 /* Scroll to top button */
-document.getElementById('scroll-to-top')!.addEventListener('click', () => {
+document.querySelector('#scroll-to-top')!.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 /* Keyboard shortcuts popup */
-const shortcutsModal = document.getElementById('shortcuts')!;
+const shortcutsModal = document.querySelector('#shortcuts') as HTMLDivElement;
 
-document.getElementById('show-shortcuts')!.addEventListener('click', () => {
+document.querySelector('#show-shortcuts')!.addEventListener('click', () => {
     shortcutsModal.style.display = 'block';
 });
 
-document.getElementById('close-shortcuts')!.addEventListener('click', () => {
+document.querySelector('#close-shortcuts')!.addEventListener('click', () => {
     addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 

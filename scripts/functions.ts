@@ -56,7 +56,7 @@ export function showAlert(text: string, color: string, duration?: number) {
  * @param remove Whether to the remove the icon after 2 seconds (defaults to `true`).
  */
 export function showResult(id: string, type: 'success' | 'error' | null, color = '#009c3f', icon = 'check', remove = true) {
-    const oldElement = document.getElementById(id + '-result')!;
+    const oldElement = document.querySelector(`#${id}-result`) as HTMLElement;
     const newElement = oldElement.cloneNode(true) as HTMLElement;
     oldElement.parentNode!.replaceChild(newElement, oldElement);
     if (type === 'success') {
@@ -80,7 +80,7 @@ export function showResult(id: string, type: 'success' | 'error' | null, color =
  * @param id The prefix of the element ID to update.
  */
 export function resetResult(id: string) {
-    const element = document.getElementById(id + '-result')!;
+    const element = document.querySelector(`#${id}-result`) as HTMLElement;
     element.style.color = '';
     element.className = '';
 }
@@ -93,15 +93,22 @@ export function resetResult(id: string) {
  */
 export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'reset', arrowType = 'right') {
     let color, icon;
-    if (type === 'success') {
-        color = '#009c3f';
-        icon = `arrow-${arrowType}`;
-    } else if (type === 'error') {
-        color = '#ff5555';
-        icon = 'xmark';
-    } else if (type === 'reset') {
-        color = 'dimgray';
-        icon = `arrow-${arrowType}`;
+    switch (type) {
+        case 'success': {
+            color = '#009c3f';
+            icon = `arrow-${arrowType}`;
+            break;
+        }
+        case 'error': {
+            color = '#ff5555';
+            icon = 'xmark';
+            break;
+        }
+        case 'reset': {
+            color = 'dimgray';
+            icon = `arrow-${arrowType}`;
+            break;
+        }
     }
     element.style.color = color!;
     element.className = 'fa-solid fa-' + icon!;
@@ -152,7 +159,7 @@ export function copyText(element: HTMLButtonElement, text: string) {
  * @param input String to be modified.
  */
 export function escapeHtml(input: string) {
-    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    return input.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 }
 
 /**
@@ -201,7 +208,7 @@ export const addAnimation = (element: string, animation: string) =>
 export function titleCase(string: string) {
     return string
         .split(' ')
-        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
         .join(' ');
 }
 
@@ -210,9 +217,9 @@ export function titleCase(string: string) {
  * @param array The array to shuffle.
  */
 export function shuffleArray(array: unknown[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    for (let index = array.length - 1; index > 0; index--) {
+        const randomNumber = Math.floor(Math.random() * (index + 1));
+        [array[index], array[randomNumber]] = [array[randomNumber], array[index]];
     }
     return array;
 }
@@ -225,8 +232,8 @@ export function shuffleArray(array: unknown[]) {
  */
 export function createBase64ObjectUrl(data: string, mimeType: string) {
     const byteCharacters = atob(data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
+    const byteNumbers = Array.from({ length: byteCharacters.length }) as number[];
+    for (let index = 0; index < byteCharacters.length; index++) byteNumbers[index] = byteCharacters.codePointAt(index)!;
 
     const byteArray = new Uint8Array(byteNumbers);
     const file = new Blob([byteArray], { type: mimeType + ';base64' });

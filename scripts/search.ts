@@ -1,17 +1,13 @@
 import { allPages } from '../data/pages.js';
 
-const searchResult = document.querySelector('.large-search-results') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
-const searchInput = document.querySelector('.large-search-text') as HTMLInputElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const searchResult = document.querySelector('.large-search-results') as HTMLDivElement;
+const searchInput = document.querySelector('.large-search-text') as HTMLInputElement;
 
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
     const results = [];
-    Object.values(allPages)
-        .map((value) => Object.values(value))
-        .flat()
-        .forEach((page) => {
-            if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
-        });
+    for (const page of Object.values(allPages).flatMap((value) => Object.values(value))) if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
+
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
 });

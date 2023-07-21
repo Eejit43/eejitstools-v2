@@ -234,7 +234,7 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
-    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement;
     dateCell.classList.add('selected-date');
 
     if (dateCell.dataset.holiday ?? dateCell.dataset.phase) {
@@ -261,7 +261,7 @@ function loadCalendarEvents() {
     events.holidays.forEach((holiday) => {
         const date = new Date(`${holiday.date}T00:00:00`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
             cell.classList.add('holiday');
             if (!cell.dataset.holiday) cell.dataset.holiday = holiday.name;
             else cell.dataset.holiday += `, ${holiday.name}`;
@@ -271,7 +271,7 @@ function loadCalendarEvents() {
     events.moonPhases.forEach((moonPhase) => {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
             cell.dataset.phase = moonPhase.phase;
             cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 

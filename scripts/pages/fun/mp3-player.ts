@@ -10,7 +10,7 @@ const timer = document.getElementById('timer') as HTMLDivElement;
 const title = document.getElementById('title') as HTMLDivElement;
 const duration = document.getElementById('duration') as HTMLDivElement;
 
-const progressBarContainer = document.querySelector('.progress') as HTMLDivElement; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
+const progressBarContainer = document.querySelector('.progress') as HTMLDivElement;
 const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
 
 const toggleShuffleButton = document.getElementById('toggle-shuffle') as HTMLSpanElement;

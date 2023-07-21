@@ -5,10 +5,10 @@ import Canvas from 'canvas';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import Fastify, { FastifyError, FastifyRequest } from 'fastify';
-import fs from 'fs';
 import handlebars from 'handlebars';
 import mongoose, { Schema, model } from 'mongoose';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { fetchApod } from './apod-fetcher.js';
 import { Coin, ParsedCoinType, coinsData } from './data/coins-data.js';
 import { allPages, blankProperties, toneIndicators } from './data/pages.js';
@@ -23,30 +23,24 @@ if (fs.existsSync(path.join(dirname, 'public', 'data'))) fs.rmSync(path.join(dir
 
 fs.mkdirSync(path.join(dirname, 'public', 'data'));
 
-fs.readdirSync('data')
-    .filter((file) => file.endsWith('.js'))
-    .forEach((file) => fs.copyFileSync(path.join(dirname, 'data', file), path.join(dirname, 'public', 'data', file)));
+for (const file of fs.readdirSync('data').filter((file) => file.endsWith('.js'))) fs.copyFileSync(path.join(dirname, 'data', file), path.join(dirname, 'public', 'data', file));
 
-fs.readdirSync('public/scripts').forEach((fileOrFolder) => {
-    if (fileOrFolder.endsWith('external')) return;
+for (const fileOrFolder of fs.readdirSync('public/scripts')) {
+    if (fileOrFolder.endsWith('external')) continue;
 
     if (fileOrFolder.endsWith('.js')) fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder));
     else fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder), { recursive: true });
-});
+}
 
 fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages'));
 
-fs.readdirSync('scripts').forEach((fileOrFolder) => {
-    if (fileOrFolder.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
-});
+for (const fileOrFolder of fs.readdirSync('scripts')) if (fileOrFolder.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
 
-fs.readdirSync('scripts/pages').forEach((category) => {
+for (const category of fs.readdirSync('scripts/pages')) {
     fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages', category));
 
-    fs.readdirSync(path.join(dirname, 'scripts', 'pages', category)).forEach((file) => {
-        if (file.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
-    });
-});
+    for (const file of fs.readdirSync(path.join(dirname, 'scripts', 'pages', category))) if (file.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
+}
 
 // Load layouts and static assets
 const fastify = Fastify();
@@ -58,7 +52,7 @@ fastify.register(pointOfView, { engine: { handlebars }, root: 'views', includeVi
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
 
 // Define latest commit info
-const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.substring(0, 7);
+const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7);
 const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE;
 const commitAuthor = process.env.RAILWAY_GIT_AUTHOR;
 
@@ -85,7 +79,7 @@ fastify.get('/coins-list', async (request, reply) => {
                     id: coinType.id,
                     coins: coinType.coins?.map((variant) => ({
                         ...variant,
-                        coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9000000000 + 1000000000) }))
+                        coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000) }))
                     }))
                 }) as unknown as ParsedCoinType;
 
@@ -110,10 +104,9 @@ fastify.post('/coins-list-edit', async (request, reply) => {
                 ...coinVariant,
                 coins: coinVariant.coins.map((coin) => {
                     if (coin.id === coinId)
-                        Object.entries(data).forEach(([key, value]) => {
+                        for (const [key, value] of Object.entries(data))
                             if (value === null) delete coin[key as keyof Coin];
                             else coin[key as keyof Coin] = value as never;
-                        });
 
                     return coin;
                 })
@@ -152,7 +145,7 @@ fastify.get('/calendar-events', async (request, reply) => {
         .map((moonPhase) => ({
             phase: moonPhase.summary.match(/([\w ]+) \d/)![1],
             date: moonPhase.start.date,
-            time: moonPhase.summary.match(/[\w ]+ ([\d:\w]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2')
+            time: moonPhase.summary.match(/[\w ]+ ([\w:]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2')
         }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const result: CalendarEvents = { holidays, moonPhases };
@@ -189,13 +182,13 @@ fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { pa
 // eslint-disable-next-line @typescript-eslint/naming-convention
 fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: Record<string, boolean>; year: string; month: string; date: string } }>, reply) => {
     const { password, todo } = request.body;
-    const year = parseInt(request.body.year);
-    const month = parseInt(request.body.month);
-    const date = parseInt(request.body.date);
+    const year = Number.parseInt(request.body.year);
+    const month = Number.parseInt(request.body.month);
+    const date = Number.parseInt(request.body.date);
 
     if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-    if (isNaN(year) || isNaN(month) || isNaN(date)) return reply.send(JSON.stringify({ error: 'A date parameter is NaN!' }, null, 2));
+    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(date)) return reply.send(JSON.stringify({ error: 'A date parameter is NaN!' }, null, 2));
     if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
     if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
@@ -226,8 +219,7 @@ fastify.get('/pages', (request, reply) =>
     reply.send(
         JSON.stringify(
             Object.values(allPages)
-                .map((category) => Object.values(category))
-                .flat()
+                .flatMap((category) => Object.values(category))
                 .map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
             null,
             2
@@ -250,9 +242,7 @@ fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { ur
 
     if (!url) return;
 
-    Object.entries(request.query).forEach(([key, value]) => {
-        if (key !== 'url') url!.searchParams.append(key, value);
-    });
+    for (const [key, value] of Object.entries(request.query)) if (key !== 'url') url!.searchParams.append(key, value);
 
     let response;
     try {
@@ -277,38 +267,37 @@ fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { ur
 });
 
 // Render each tool/info/fun page
-const pagesWithScripts = fs
-    .readdirSync('scripts/pages')
-    .map((category) =>
+const pagesWithScripts = new Set(
+    fs.readdirSync('scripts/pages').flatMap((category) =>
         fs
             .readdirSync(`scripts/pages/${category}`)
             .filter((script) => script.endsWith('.js'))
             .map((script) => `${category}/${script.replace(/\.js$/, '')}`)
     )
-    .flat();
+);
 
-const pagesWithStyles = fs
-    .readdirSync('public/styles/pages')
-    .map((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`))
-    .flat();
+const pagesWithStyles = new Set(fs.readdirSync('public/styles/pages').flatMap((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)));
 
 let totalCategories = 0,
     totalPages = 0;
 
-fs.readdirSync('views/pages').forEach((category) => {
+for (const category of fs.readdirSync('views/pages')) {
     totalCategories++;
     const pages = fs.readdirSync(`views/pages/${category}`).filter((file) => file.endsWith('.hbs'));
     totalPages += pages.length;
 
-    pages.forEach((page) => {
+    for (let page of pages) {
         page = page.replace(/.hbs$/, '');
         const pageInfo = allPages[category]?.[page];
-        if (!pageInfo) return consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
+        if (!pageInfo) {
+            consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
+            continue;
+        }
         fastify.get(pageInfo.link, (request, reply) => {
-            reply.view(`pages/${category}/${page}`, { commitInfo, ...pageInfo, script: pagesWithScripts.includes(`${category}/${page}`), style: pagesWithStyles.includes(`${category}/${page}`) });
+            reply.view(`pages/${category}/${page}`, { commitInfo, ...pageInfo, script: pagesWithScripts.has(`${category}/${page}`), style: pagesWithStyles.has(`${category}/${page}`) });
         });
-    });
-});
+    }
+}
 
 consola.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
 
@@ -345,17 +334,17 @@ fastify.setNotFoundHandler((request, reply) => {
     reply.status(404).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 });
 });
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const port = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 
 // Start server
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
         if ((error as FastifyError).code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
         else consola.error(error);
-        process.exit(1);
+        process.exit(1); // eslint-disable-line unicorn/no-process-exit
     }
 
-    consola.success(`${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV !== 'production' ? ` (${chalk.blueBright(`http://localhost:${port}`)})` : ''}`);
+    consola.success(`${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV === 'production' ? '' : ` (${chalk.blueBright(`http://localhost:${port}`)})`}`);
 });
 
 /**
