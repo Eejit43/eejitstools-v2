@@ -4,11 +4,11 @@ import { twemojiUpdate } from '../../functions.js';
 
 const { holidays } = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 
-const parsedHolidays = holidays.map((holiday, index) => ({ ...holiday, id: `holiday-${index}` })).filter((holiday) => getTimeUntil(holiday.date) && !/^First day of/i.test(holiday.name));
+const parsedHolidays = holidays.map((holiday, index) => ({ ...holiday, id: `holiday-${index}` })).filter((holiday) => getTimeUntil(holiday.date) && !/^first day of/i.test(holiday.name));
 
 const result = parsedHolidays.map((holiday) => `Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}">${holiday.name}</span>: <span id="${holiday.id}">${getTimeUntil(holiday.date)!}</span>${holidayEmojis[holiday.name] ? ` ${holidayEmojis[holiday.name]}` : ''}`);
 
-(document.getElementById('countdowns') as HTMLDivElement).innerHTML = result.length > 0 ? result.join('<br />') : 'No upcoming events!';
+(document.querySelector('#countdowns') as HTMLDivElement).innerHTML = result.length > 0 ? result.join('<br />') : 'No upcoming events!';
 
 if (result.length > 0) {
     twemojiUpdate();
@@ -16,14 +16,24 @@ if (result.length > 0) {
     setInterval(() => {
         for (const holiday of parsedHolidays) {
             const result = getTimeUntil(holiday.date);
-            const timeDisplay = document.getElementById(holiday.id);
+            const timeDisplay = document.querySelector(`#${holiday.id}`);
 
             if (!timeDisplay || timeDisplay.innerHTML === result) continue;
 
-            if (result) timeDisplay.innerHTML = result;
-            else timeDisplay.innerHTML = '<span class="error">This event has already occurred!</span>';
+            timeDisplay.innerHTML = result ?? '<span class="error">This event has already occurred!</span>';
         }
     }, 500);
+}
+
+/**
+ * Formats a time value with a given unit, adding plurals if applicable.
+ * @param value The value to format.
+ * @param unit The unit to format.
+ */
+function formatTimeUnit(value: number, unit: string) {
+    if (value === 1) return `${value} ${unit}`;
+    else if (value > 1) return `${value} ${unit}s`;
+    else return null;
 }
 
 /**
@@ -31,18 +41,12 @@ if (result.length > 0) {
  * @param date The date to calculate time to.
  */
 function getTimeUntil(date: string) {
-    const distance = new Date(`${date} 00:00:00`).getTime() - new Date().getTime();
+    const distance = new Date(`${date} 00:00:00`).getTime() - Date.now();
 
-    const days = Math.floor(distance / 86400000);
-    const hours = Math.floor((distance % 86400000) / 3600000);
-    const minutes = Math.floor((distance % 3600000) / 60000);
-    const seconds = Math.floor((distance % 60000) / 1000);
-
-    const formatTimeUnit = (value: number, unit: string) => {
-        if (value === 1) return `${value} ${unit}`;
-        else if (value > 1) return `${value} ${unit}s`;
-        else return null;
-    };
+    const days = Math.floor(distance / 86_400_000);
+    const hours = Math.floor((distance % 86_400_000) / 3_600_000);
+    const minutes = Math.floor((distance % 3_600_000) / 60_000);
+    const seconds = Math.floor((distance % 60_000) / 1000);
 
     const daysFinal = formatTimeUnit(days, 'day');
     const hoursFinal = formatTimeUnit(hours, 'hour');
@@ -51,6 +55,5 @@ function getTimeUntil(date: string) {
 
     const result = [daysFinal, hoursFinal, minutesFinal, secondsFinal].filter(Boolean);
 
-    if (distance <= 0 || distance >= 60 * 86400000) return null; // Don't show already occurred or if over 60 days away
-    else return result.join(', ');
+    return distance <= 0 || distance >= 60 * 86_400_000 ? null : result.join(', ');
 }

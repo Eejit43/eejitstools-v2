@@ -1,11 +1,11 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const toBinaryButton = document.getElementById('to-binary') as HTMLButtonElement;
-const fromBinaryButton = document.getElementById('from-binary') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const result = document.getElementById('result') as HTMLTextAreaElement;
-const resultCopyButton = document.getElementById('copy-result') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const toBinaryButton = document.querySelector('#to-binary') as HTMLButtonElement;
+const fromBinaryButton = document.querySelector('#from-binary') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const result = document.querySelector('#result') as HTMLTextAreaElement;
+const resultCopyButton = document.querySelector('#copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 toBinaryButton.addEventListener('click', toBinary);
@@ -74,10 +74,7 @@ function fromBinary() {
  * @param string String to encode.
  */
 function stringToBinary(string: string) {
-    return string
-        .split('')
-        .map((character) => character.charCodeAt(0).toString(2))
-        .join(' ');
+    return [...string].map((character) => character.codePointAt(0)!.toString(2)).join(' ');
 }
 
 /**
@@ -87,6 +84,6 @@ function stringToBinary(string: string) {
 function binaryToString(binary: string) {
     return binary
         .split(' ')
-        .map((part) => String.fromCharCode(parseInt(part, 2)))
+        .map((part) => String.fromCodePoint(Number.parseInt(part, 2)))
         .join('');
 }

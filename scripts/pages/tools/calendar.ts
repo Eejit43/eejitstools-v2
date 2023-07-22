@@ -2,27 +2,27 @@ import { CalendarEvents } from '../../../app.js';
 import { holidayEmojis, moonEmojis } from '../../../data/pages.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
-const monthYearDisplay = document.getElementById('month-year') as HTMLDivElement;
-const calendarBody = document.getElementById('calendar-body')!;
-const previousMonthButton = document.getElementById('previous-month') as HTMLButtonElement;
-const nextMonthButton = document.getElementById('next-month') as HTMLButtonElement;
-const currentDateButton = document.getElementById('current-date') as HTMLButtonElement;
-const jumpMonthSelection = document.getElementById('jump-month') as HTMLSelectElement;
-const jumpYearSelection = document.getElementById('jump-year') as HTMLSelectElement;
+const monthYearDisplay = document.querySelector('#month-year') as HTMLDivElement;
+const calendarBody = document.querySelector('#calendar-body')!;
+const previousMonthButton = document.querySelector('#previous-month') as HTMLButtonElement;
+const nextMonthButton = document.querySelector('#next-month') as HTMLButtonElement;
+const currentDateButton = document.querySelector('#current-date') as HTMLButtonElement;
+const jumpMonthSelection = document.querySelector('#jump-month') as HTMLSelectElement;
+const jumpYearSelection = document.querySelector('#jump-year') as HTMLSelectElement;
 
-const displayDay = document.getElementById('display-day') as HTMLDivElement;
-const displayDate = document.getElementById('display-date') as HTMLDivElement;
-const displayMonthYear = document.getElementById('display-month-year') as HTMLDivElement;
-const eventsList = document.getElementById('events-list') as HTMLUListElement;
+const displayDay = document.querySelector('#display-day') as HTMLDivElement;
+const displayDate = document.querySelector('#display-date') as HTMLDivElement;
+const displayMonthYear = document.querySelector('#display-month-year') as HTMLDivElement;
+const eventsList = document.querySelector('#events-list') as HTMLUListElement;
 
-const loginPassword = document.getElementById('login-password') as HTMLInputElement;
-const loginButton = document.getElementById('login-button') as HTMLButtonElement;
-const todoList = document.getElementById('todo-list') as HTMLDivElement;
+const loginPassword = document.querySelector('#login-password') as HTMLInputElement;
+const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
+const todoList = document.querySelector('#todo-list') as HTMLDivElement;
 
 previousMonthButton.addEventListener('click', previousMonth);
 nextMonthButton.addEventListener('click', nextMonth);
 currentDateButton.addEventListener('click', currentDate);
-[jumpMonthSelection, jumpYearSelection].forEach((element) => element.addEventListener('change', jump));
+for (const element of [jumpMonthSelection, jumpYearSelection]) element.addEventListener('change', jump);
 
 loginPassword.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && loginPassword.value.length > 0) loginButton.click();
@@ -38,7 +38,12 @@ let todoData = null as TodoData | null;
 loginButton.addEventListener('click', async () => {
     const result = (await (await fetch(`/calendar-todo?password=${loginPassword.value}`)).json()) as TodoData & { error?: boolean };
 
-    if (!result.error) {
+    if (result.error) {
+        showAlert('Incorrect password!', 'error');
+        showResult('login', 'error', undefined, undefined, false);
+        loginButton.disabled = true;
+        setTimeout(() => (loginButton.disabled = false), 1000);
+    } else {
         todoData = result;
 
         showAlert('Logged in!', 'success');
@@ -46,16 +51,11 @@ loginButton.addEventListener('click', async () => {
         todoList.dataset.password = loginPassword.value;
 
         loadTodoList();
-    } else {
-        showAlert('Incorrect password!', 'error');
-        showResult('login', 'error', undefined, undefined, false);
-        loginButton.disabled = true;
-        setTimeout(() => (loginButton.disabled = false), 1000);
     }
 });
 
-const params = new URLSearchParams(window.location.search);
-const password = params.get('password');
+const parameters = new URLSearchParams(window.location.search);
+const password = parameters.get('password');
 
 if (password) {
     loginPassword.value = password;
@@ -65,14 +65,31 @@ if (password) {
 document.addEventListener('keydown', (event) => {
     if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
 
-    if (event.code === 'ArrowUp') previousMonth();
-    else if (event.code === 'ArrowDown') nextMonth();
-    else if (event.code === 'ArrowLeft') previousDay();
-    else if (event.code === 'ArrowRight') nextDay();
-    else if (event.code === 'KeyC') currentDate();
-    else if (event.code === 'KeyS') {
-        const saveButton = document.getElementById('todo-save-button') as HTMLButtonElement;
-        if (saveButton && !saveButton.disabled) saveButton.click();
+    switch (event.code) {
+        case 'ArrowUp': {
+            previousMonth();
+            break;
+        }
+        case 'ArrowDown': {
+            nextMonth();
+            break;
+        }
+        case 'ArrowLeft': {
+            previousDay();
+            break;
+        }
+        case 'ArrowRight': {
+            nextDay();
+            break;
+        }
+        case 'KeyC': {
+            currentDate();
+            break;
+        }
+        case 'KeyS': {
+            const saveButton = document.querySelector('#todo-save-button') as HTMLButtonElement;
+            if (saveButton && !saveButton.disabled) saveButton.click();
+        }
     }
 });
 
@@ -155,8 +172,8 @@ function currentDate() {
  * Jumps to the selected month and year.
  */
 function jump() {
-    currentMonth = parseInt(jumpMonthSelection.value);
-    currentYear = parseInt(jumpYearSelection.value);
+    currentMonth = Number.parseInt(jumpMonthSelection.value);
+    currentYear = Number.parseInt(jumpYearSelection.value);
     showCalendar(null, currentMonth, currentYear);
 }
 
@@ -172,7 +189,7 @@ function showCalendar(date: number | null, month: number, year: number) {
         const option = document.createElement('option');
         option.value = relativeYear.toString();
         option.text = relativeYear.toString();
-        jumpYearSelection.appendChild(option);
+        jumpYearSelection.append(option);
     }
 
     const firstDay = new Date(year, month).getDay();
@@ -185,32 +202,32 @@ function showCalendar(date: number | null, month: number, year: number) {
     jumpMonthSelection.value = month.toString();
 
     let currentDate = 1;
-    for (let i = 0; i < 6; i++) {
+    for (let index = 0; index < 6; index++) {
         const row = document.createElement('tr');
 
-        for (let j = 0; j < 7; j++)
-            if (i === 0 && j < firstDay) {
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++)
+            if (index === 0 && dayIndex < firstDay) {
                 const cell = document.createElement('td');
                 cell.classList.add('no-date');
-                row.appendChild(cell);
+                row.append(cell);
             } else if (currentDate > daysInMonth) {
-                if (j === 0) break;
+                if (dayIndex === 0) break;
 
                 const cell = document.createElement('td');
                 cell.classList.add('no-date');
-                row.appendChild(cell);
+                row.append(cell);
             } else {
                 const cell = document.createElement('td');
                 cell.dataset.date = currentDate.toString();
                 cell.textContent = currentDate.toString();
                 if (currentDate === currentTime.getDate() && month === currentTime.getMonth() && year === currentTime.getFullYear()) cell.classList.add('current-date');
                 if (currentDate === displayedDate && month === displayedMonth && year === displayedYear) cell.classList.add('selected-date');
-                cell.addEventListener('click', () => updateDisplayedDate(parseInt(cell.dataset.date!), month, year));
-                row.appendChild(cell);
+                cell.addEventListener('click', () => updateDisplayedDate(Number.parseInt(cell.dataset.date!), month, year));
+                row.append(cell);
                 currentDate++;
             }
 
-        calendarBody.appendChild(row);
+        calendarBody.append(row);
     }
 
     loadCalendarEvents();
@@ -242,11 +259,11 @@ function updateDisplayedDate(date: number, month: number, year: number) {
 
         const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null].flat().filter(Boolean) as string[];
 
-        events.forEach((event) => {
+        for (const event of events) {
             const eventElement = document.createElement('li');
             eventElement.textContent = event;
-            eventsList.appendChild(eventElement);
-        });
+            eventsList.append(eventElement);
+        }
 
         twemojiUpdate();
     } else eventsList.innerHTML = 'None';
@@ -258,17 +275,17 @@ function updateDisplayedDate(date: number, month: number, year: number) {
  * Loads the calendar events.
  */
 function loadCalendarEvents() {
-    events.holidays.forEach((holiday) => {
+    for (const holiday of events.holidays) {
         const date = new Date(`${holiday.date}T00:00:00`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
             const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
             cell.classList.add('holiday');
-            if (!cell.dataset.holiday) cell.dataset.holiday = holiday.name;
-            else cell.dataset.holiday += `, ${holiday.name}`;
+            if (cell.dataset.holiday) cell.dataset.holiday += `, ${holiday.name}`;
+            else cell.dataset.holiday = holiday.name;
         }
-    });
+    }
 
-    events.moonPhases.forEach((moonPhase) => {
+    for (const moonPhase of events.moonPhases) {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
             const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
@@ -278,9 +295,9 @@ function loadCalendarEvents() {
             const moonIcon = document.createElement('span');
             moonIcon.classList.add('moon-icon');
             moonIcon.textContent = moonEmojis[moonPhase.phase];
-            cell.appendChild(moonIcon);
+            cell.append(moonIcon);
         }
-    });
+    }
 
     twemojiUpdate();
 }
@@ -295,7 +312,7 @@ function loadTodoList() {
 
     todoList.innerHTML = '';
 
-    todoData!.todo.forEach((todo) => {
+    for (const todo of todoData!.todo)
         if (
             todo.frequency === 'daily' ||
             (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
@@ -303,7 +320,7 @@ function loadTodoList() {
                 todo.frequency
                     .replace('days:', '')
                     .split(',')
-                    .some((day) => parseInt(day) === todoListDate.getDay()))
+                    .some((day) => Number.parseInt(day) === todoListDate.getDay()))
         ) {
             const todoElement = document.createElement('div');
             todoElement.classList.add('todo');
@@ -317,10 +334,9 @@ function loadTodoList() {
             todoCheckbox.checked = !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', () => {
                 const todoFinal: Record<string, boolean> = {};
-                (todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>).forEach((checkbox) => (todoFinal[checkbox.dataset.id!] = checkbox.checked));
+                for (const checkbox of todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>) todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
-                if (Object.entries(todoFinal).some(([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked)) todoSaveButton.disabled = false;
-                else todoSaveButton.disabled = true;
+                todoSaveButton.disabled = !Object.entries(todoFinal).some(([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked);
             });
 
             const todoLabel = document.createElement('label');
@@ -338,22 +354,21 @@ function loadTodoList() {
             const checkboxPolyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
             checkboxPolyline.setAttribute('points', '1.5 6 4.5 9 10.5 1');
 
-            checkboxSvg.appendChild(checkboxPolyline);
-            checkboxSpan.appendChild(checkboxSvg);
+            checkboxSvg.append(checkboxPolyline);
+            checkboxSpan.append(checkboxSvg);
 
             const todoLabelText = document.createElement('span');
             todoLabelText.classList.add('todo-label-text');
             todoLabelText.textContent = todo.title;
 
-            todoLabel.appendChild(checkboxSpan);
-            todoLabel.appendChild(todoLabelText);
+            todoLabel.append(checkboxSpan);
+            todoLabel.append(todoLabelText);
 
-            todoElement.appendChild(todoCheckbox);
-            todoElement.appendChild(todoLabel);
+            todoElement.append(todoCheckbox);
+            todoElement.append(todoLabel);
 
-            todoList.appendChild(todoElement);
+            todoList.append(todoElement);
         }
-    });
 
     const todoSaveButton = document.createElement('button');
     todoSaveButton.id = 'todo-save-button';
@@ -361,11 +376,11 @@ function loadTodoList() {
     todoSaveButton.disabled = true;
     todoSaveButton.addEventListener('click', async () => {
         const allCheckboxes = todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>;
-        allCheckboxes.forEach((checkbox) => (checkbox.disabled = true));
+        for (const checkbox of allCheckboxes) checkbox.disabled = true;
         todoSaveButton.disabled = true;
 
         const todoFinal = {} as Record<string, boolean>;
-        allCheckboxes.forEach((checkbox) => (todoFinal[checkbox.dataset.id!] = checkbox.checked));
+        for (const checkbox of allCheckboxes) todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
         const result = (await (
             await fetch('/calendar-todo-edit', {
@@ -385,8 +400,8 @@ function loadTodoList() {
 
         todoData = result;
 
-        allCheckboxes.forEach((checkbox) => (checkbox.disabled = false));
+        for (const checkbox of allCheckboxes) checkbox.disabled = false;
     });
 
-    todoList.appendChild(todoSaveButton);
+    todoList.append(todoSaveButton);
 }

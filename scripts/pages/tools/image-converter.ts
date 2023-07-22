@@ -1,18 +1,18 @@
 import { createBase64ObjectUrl, escapeHtml, showAlert } from '../../functions.js';
 
-const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
-const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
-const fileUploadMessage = document.getElementById('file-message') as HTMLDivElement;
-const loadButton = document.getElementById('load') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const imagePreview = document.getElementById('image-preview') as HTMLCanvasElement;
-const outputTypePicker = document.getElementById('output-type') as HTMLSelectElement;
-const convertButton = document.getElementById('convert') as HTMLButtonElement;
-const imageOutput = document.getElementById('image-output') as HTMLImageElement;
-const openConvertedResultLink = document.getElementById('open-converted-link') as HTMLAnchorElement;
-const openConvertedResultButton = document.getElementById('open-converted-result') as HTMLButtonElement;
-const downloadConvertedResultLink = document.getElementById('download-converted-link') as HTMLAnchorElement;
-const downloadConvertedResultButton = document.getElementById('download-converted-result') as HTMLButtonElement;
+const fileUploadLabel = document.querySelector('#file-upload-label') as HTMLLabelElement;
+const fileUpload = document.querySelector('#file-upload') as HTMLInputElement;
+const fileUploadMessage = document.querySelector('#file-message') as HTMLDivElement;
+const loadButton = document.querySelector('#load') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const imagePreview = document.querySelector('#image-preview') as HTMLCanvasElement;
+const outputTypePicker = document.querySelector('#output-type') as HTMLSelectElement;
+const convertButton = document.querySelector('#convert') as HTMLButtonElement;
+const imageOutput = document.querySelector('#image-output') as HTMLImageElement;
+const openConvertedResultLink = document.querySelector('#open-converted-link') as HTMLAnchorElement;
+const openConvertedResultButton = document.querySelector('#open-converted-result') as HTMLButtonElement;
+const downloadConvertedResultLink = document.querySelector('#download-converted-link') as HTMLAnchorElement;
+const downloadConvertedResultButton = document.querySelector('#download-converted-result') as HTMLButtonElement;
 
 let uploadedImage: File | null = null;
 
@@ -116,8 +116,8 @@ function loadImage() {
 function convert() {
     const url = imagePreview.toDataURL(`image/${outputTypePicker.value}`);
     imageOutput.src = url;
-    const blobUrl = createBase64ObjectUrl(url.replace(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
+    const blobUrl = createBase64ObjectUrl(url.replaceAll(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
     openConvertedResultButton.disabled = downloadConvertedResultButton.disabled = false;
-    downloadConvertedResultLink.setAttribute('download', `${uploadedImage!.name.replace(/\.[^/.]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
+    downloadConvertedResultLink.setAttribute('download', `${uploadedImage!.name.replace(/\.[^./]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
 }

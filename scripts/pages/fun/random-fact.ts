@@ -1,5 +1,5 @@
-const getFactButton = document.getElementById('get-fact') as HTMLButtonElement;
-const factOutput = document.getElementById('fact-output') as HTMLDivElement;
+const getFactButton = document.querySelector('#get-fact') as HTMLButtonElement;
+const factOutput = document.querySelector('#fact-output') as HTMLDivElement;
 
 /* Add event listeners */
 getFactButton.addEventListener('click', fetchFact);
@@ -13,7 +13,7 @@ async function fetchFact() {
     const response = await fetch('https://uselessfacts.jsph.pl/random.json?language=en');
     const data = (await response.json()) as { text: string };
 
-    factOutput.textContent = data.text.replace(/`/g, "'").trim();
+    factOutput.textContent = data.text.replaceAll('`', "'").trim();
 }
 
-fetchFact();
+fetchFact(); // eslint-disable-line unicorn/prefer-top-level-await

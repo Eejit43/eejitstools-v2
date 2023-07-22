@@ -1,19 +1,18 @@
 import { Coin, CoinType, ParsedCoinType } from '../../../data/coins-data.js';
 import { showAlert, showResult } from '../../functions.js';
 
-const passwordInput = document.getElementById('login-password') as HTMLInputElement;
-const loginButton = document.getElementById('login-button') as HTMLButtonElement;
-const coinsList = document.getElementById('coins-list') as HTMLDivElement;
-const changeHistory = document.getElementById('change-history') as HTMLUListElement;
-const exportDataButton = document.getElementById('export-data') as HTMLButtonElement;
+const passwordInput = document.querySelector('#login-password') as HTMLInputElement;
+const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
+const coinsList = document.querySelector('#coins-list') as HTMLDivElement;
+const changeHistory = document.querySelector('#change-history') as HTMLUListElement;
+const exportDataButton = document.querySelector('#export-data') as HTMLButtonElement;
 
-['input', 'paste'].forEach((type) => {
+for (const type of ['input', 'paste'])
     passwordInput.addEventListener(type, () => {
-        passwordInput.value = passwordInput.value.replace(/[^0-9]/g, '');
+        passwordInput.value = passwordInput.value.replaceAll(/\D/g, '');
 
         if (passwordInput.value.length > 4) passwordInput.value = passwordInput.value.slice(0, 4);
     });
-});
 
 passwordInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && passwordInput.value.length > 0) loginButton.click();
@@ -93,11 +92,11 @@ async function loadCoinsList() {
         const timeIcon = document.createElement('i');
         timeIcon.classList.add('fa-solid', 'fa-clock');
 
-        timeTooltip.appendChild(timeIcon);
+        timeTooltip.append(timeIcon);
 
-        historyEntry.appendChild(timeTooltip);
+        historyEntry.append(timeTooltip);
 
-        changeHistory.appendChild(historyEntry);
+        changeHistory.append(historyEntry);
     });
 
     const showAllVariantsButton = document.createElement('button');
@@ -107,15 +106,11 @@ async function loadCoinsList() {
         if (showAllVariantsButton.dataset.expanded === 'true') {
             showAllVariantsButton.dataset.expanded = 'false';
             showAllVariantsButton.textContent = 'Show all variants';
-            (document.querySelectorAll('.coin-type-expand') as NodeListOf<HTMLButtonElement>).forEach((button) => {
-                if (button.dataset.expanded === 'true') button.click();
-            });
+            for (const button of document.querySelectorAll('.coin-type-expand') as NodeListOf<HTMLButtonElement>) if (button.dataset.expanded === 'true') button.click();
         } else {
             showAllVariantsButton.dataset.expanded = 'true';
             showAllVariantsButton.textContent = 'Hide all variants';
-            (document.querySelectorAll('.coin-type-expand') as NodeListOf<HTMLButtonElement>).forEach((button) => {
-                if (button.dataset.expanded === 'false') button.click();
-            });
+            for (const button of document.querySelectorAll('.coin-type-expand') as NodeListOf<HTMLButtonElement>) if (button.dataset.expanded === 'false') button.click();
         }
     });
 
@@ -167,33 +162,50 @@ async function loadCoinsList() {
         }
     });
 
-    buttonsDiv.appendChild(reloadButton);
-    buttonsDiv.appendChild(showAllVariantsButton);
-    buttonsDiv.appendChild(document.createTextNode(' | '));
-    buttonsDiv.appendChild(toggleMissingCoinsButton);
-    buttonsDiv.appendChild(toggleObtainedCoinsButton);
-    buttonsDiv.appendChild(toggleNeedsUpgradeCoinsButton);
+    buttonsDiv.append(reloadButton);
+    buttonsDiv.append(showAllVariantsButton);
+    buttonsDiv.append(document.createTextNode(' | '));
+    buttonsDiv.append(toggleMissingCoinsButton);
+    buttonsDiv.append(toggleObtainedCoinsButton);
+    buttonsDiv.append(toggleNeedsUpgradeCoinsButton);
 
-    coinsList.appendChild(buttonsDiv);
+    coinsList.append(buttonsDiv);
 
     document.addEventListener('keydown', (event) => {
         if (!event.altKey) return;
         if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')) return;
 
-        if (event.code === 'KeyR') reloadButton.click();
-        else if (event.code === 'KeyA') showAllVariantsButton.click();
-        else if (event.code === 'KeyM') toggleMissingCoinsButton.click();
-        else if (event.code === 'KeyO') toggleObtainedCoinsButton.click();
-        else if (event.code === 'KeyU') toggleNeedsUpgradeCoinsButton.click();
+        switch (event.code) {
+            case 'KeyR': {
+                reloadButton.click();
+                break;
+            }
+            case 'KeyA': {
+                showAllVariantsButton.click();
+                break;
+            }
+            case 'KeyM': {
+                toggleMissingCoinsButton.click();
+                break;
+            }
+            case 'KeyO': {
+                toggleObtainedCoinsButton.click();
+                break;
+            }
+            case 'KeyU': {
+                toggleNeedsUpgradeCoinsButton.click();
+                break;
+            }
+        }
     });
 
-    unindexedCoinsData.forEach((coinType) => {
+    for (const coinType of unindexedCoinsData) {
         const coinTypeDiv = document.createElement('div');
         coinTypeDiv.classList.add('coin-type');
         coinTypeDiv.textContent = coinType.name;
 
         const coinTypeImg = document.createElement('img');
-        coinTypeImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.coins[coinType.coins.length - 1]?.id ? `${coinType.id}/${coinType.coins[coinType.coins.length - 1]?.id}` : 'default'}.png`;
+        coinTypeImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.coins.at(-1)?.id ? `${coinType.id}/${coinType.coins.at(-1)?.id}` : 'default'}.png`;
         coinTypeImg.classList.add('coin-type-image', 'popup-image');
         coinTypeImg.alt = coinType.name;
 
@@ -205,18 +217,18 @@ async function loadCoinsList() {
             if (coinTypeButton.dataset.expanded === 'true') {
                 coinTypeButton.dataset.expanded = 'false';
                 coinTypeButton.textContent = 'Show variants';
-                coinTypeDiv.querySelectorAll('.coin-variant').forEach((variant) => variant.classList.add('hidden'));
+                for (const variant of coinTypeDiv.querySelectorAll('.coin-variant')) variant.classList.add('hidden');
             } else {
                 coinTypeButton.dataset.expanded = 'true';
                 coinTypeButton.textContent = 'Hide variants';
-                coinTypeDiv.querySelectorAll('.coin-variant').forEach((variant) => variant.classList.remove('hidden'));
+                for (const variant of coinTypeDiv.querySelectorAll('.coin-variant')) variant.classList.remove('hidden');
             }
         });
 
         coinTypeDiv.prepend(coinTypeImg);
-        coinTypeDiv.appendChild(coinTypeButton);
+        coinTypeDiv.append(coinTypeButton);
 
-        coinType.coins.forEach((coinVariant) => {
+        for (const coinVariant of coinType.coins) {
             const amountTooltip = document.createElement('span');
             amountTooltip.id = `${coinVariant.id}-amount-tooltip`;
 
@@ -237,7 +249,7 @@ async function loadCoinsList() {
                 coinVariantNote.textContent = '*';
                 coinVariantNote.dataset.tooltip = coinVariant.note;
 
-                coinVariantDiv.appendChild(coinVariantNote);
+                coinVariantDiv.append(coinVariantNote);
             }
 
             const coinVariantImg = document.createElement('img');
@@ -267,18 +279,18 @@ async function loadCoinsList() {
             const coinVariantTableHead = document.createElement('thead');
             const coinVariantTableHeadRow = document.createElement('tr');
 
-            ['Year', 'Mint Mark', 'Specification/Notes', 'Obtained', 'Needs Upgrade'].forEach((header) => {
+            for (const header of ['Year', 'Mint Mark', 'Specification/Notes', 'Obtained', 'Needs Upgrade']) {
                 const infoHeader = document.createElement('th');
                 infoHeader.textContent = header;
-                coinVariantTableHeadRow.appendChild(infoHeader);
-            });
+                coinVariantTableHeadRow.append(infoHeader);
+            }
 
-            coinVariantTableHead.appendChild(coinVariantTableHeadRow);
-            coinVariantTable.appendChild(coinVariantTableHead);
+            coinVariantTableHead.append(coinVariantTableHeadRow);
+            coinVariantTable.append(coinVariantTableHead);
 
             const coinVariantTableBody = document.createElement('tbody');
 
-            coinVariant.coins.forEach((coin) => {
+            for (const coin of coinVariant.coins) {
                 const row = document.createElement('tr');
                 row.dataset.id = coin.id;
                 row.dataset.obtained = (coin.obtained ?? false).toString();
@@ -299,17 +311,17 @@ async function loadCoinsList() {
 
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: newValue });
                 });
-                year.appendChild(yearEditor);
+                year.append(yearEditor);
 
                 if (coin.image) {
                     const image = document.createElement('sup');
                     image.classList.add('coin-image-icon', 'fa-solid', 'fa-image');
                     image.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coin.image}.png`;
                     image.dataset.name = `${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
-                    year.appendChild(image);
+                    year.append(image);
                 }
 
-                row.appendChild(year);
+                row.append(year);
 
                 const mintMark = document.createElement('td');
                 const tooltip = document.createElement('span');
@@ -318,12 +330,12 @@ async function loadCoinsList() {
                 tooltip.textContent = coin.mintMark ?? 'None';
                 tooltip.contentEditable = 'true';
                 tooltip.addEventListener('focus', () => {
-                    tooltip.removeAttribute('data-tooltip');
+                    delete tooltip.dataset.tooltip;
                     tooltip.classList.remove('tooltip-bottom');
                 });
                 tooltip.addEventListener('blur', async () => {
                     if (!tooltip.textContent) tooltip.textContent = 'None';
-                    tooltip.dataset.tooltip = tooltip.textContent.toLowerCase() !== 'none' ? (tooltip.textContent.toUpperCase() in mintMarks ? `Minted in ${mintMarks[tooltip.textContent]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
+                    tooltip.dataset.tooltip = tooltip.textContent.toLowerCase() === 'none' ? `Likely minted in ${mintMarks.P}` : tooltip.textContent.toUpperCase() in mintMarks ? `Minted in ${mintMarks[tooltip.textContent]}` : 'Unknown'; // eslint-disable-line unicorn/no-nested-ternary
                     tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
                     tooltip.classList.add('tooltip-bottom');
 
@@ -337,8 +349,8 @@ async function loadCoinsList() {
 
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintMark: newValue });
                 });
-                mintMark.appendChild(tooltip);
-                row.appendChild(mintMark);
+                mintMark.append(tooltip);
+                row.append(mintMark);
 
                 const specification = document.createElement('td');
                 if (!coin.comparison) {
@@ -374,13 +386,13 @@ async function loadCoinsList() {
 
                             await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent! || null });
                         });
-                        specification.appendChild(specificationEditor);
-                        specification.appendChild(document.createTextNode(' '));
+                        specification.append(specificationEditor);
+                        specification.append(document.createTextNode(' '));
                         comparison.textContent = `(${comparison.textContent})`;
-                        specification.appendChild(comparison);
-                    } else specification.appendChild(comparison);
+                        specification.append(comparison);
+                    } else specification.append(comparison);
                 }
-                row.appendChild(specification);
+                row.append(specification);
 
                 const obtained = document.createElement('td');
                 const obtainedCheck = document.createElement('input');
@@ -401,8 +413,8 @@ async function loadCoinsList() {
 
                     needsUpgradeCheck.disabled = !obtainedCheck.checked;
                 });
-                obtained.appendChild(obtainedCheck);
-                row.appendChild(obtained);
+                obtained.append(obtainedCheck);
+                row.append(obtained);
 
                 const needsUpgrade = document.createElement('td');
                 const needsUpgradeCheck = document.createElement('input');
@@ -420,11 +432,11 @@ async function loadCoinsList() {
 
                     await updateCoinData(coinType.id, coinVariant.id, coin.id, { upgrade: needsUpgradeCheck.checked || null });
                 });
-                needsUpgrade.appendChild(needsUpgradeCheck);
-                row.appendChild(needsUpgrade);
+                needsUpgrade.append(needsUpgradeCheck);
+                row.append(needsUpgrade);
 
-                coinVariantTableBody.appendChild(row);
-            });
+                coinVariantTableBody.append(row);
+            }
 
             const newRowMessage = document.createElement('tr');
             newRowMessage.classList.add('new-row-message');
@@ -438,22 +450,22 @@ async function loadCoinsList() {
 
             newRowMessageCell.prepend(plusIcon);
 
-            newRowMessage.appendChild(newRowMessageCell);
-            coinVariantTableBody.appendChild(newRowMessage);
+            newRowMessage.append(newRowMessageCell);
+            coinVariantTableBody.append(newRowMessage);
 
-            coinVariantTable.appendChild(coinVariantTableBody);
+            coinVariantTable.append(coinVariantTableBody);
 
             coinVariantDiv.prepend(coinVariantImg);
-            coinVariantDiv.appendChild(coinVariantButton);
-            coinVariantDiv.appendChild(coinVariantTable);
+            coinVariantDiv.append(coinVariantButton);
+            coinVariantDiv.append(coinVariantTable);
 
-            coinTypeDiv.appendChild(coinVariantDiv);
-        });
+            coinTypeDiv.append(coinVariantDiv);
+        }
 
-        coinsList.appendChild(coinTypeDiv);
-    });
+        coinsList.append(coinTypeDiv);
+    }
 
-    unindexedCoinsData.forEach((coinType) => coinType.coins.forEach((coinVariant) => loadVariantTotals(coinType.id, coinVariant.id)));
+    for (const coinType of unindexedCoinsData) for (const coinVariant of coinType.coins) loadVariantTotals(coinType.id, coinVariant.id);
 
     loadPopupImages();
 }
@@ -470,11 +482,11 @@ function loadVariantTotals(type: string, variant: string) {
     const needsUpgradeCoins = Object.values(variantData.coins).filter((coin) => coin.upgrade).length;
     const totalCoins = Object.values(variantData.coins).length;
 
-    const amountTooltip = document.getElementById(`${variant}-amount-tooltip`) as HTMLSpanElement;
-    const yearSpan = document.getElementById(`${variant}-years`) as HTMLSpanElement;
-    const upgradeSpan = document.getElementById(`${variant}-needs-upgrade`) as HTMLSpanElement;
+    const amountTooltip = document.querySelector(`#${variant}-amount-tooltip`) as HTMLSpanElement;
+    const yearSpan = document.querySelector(`#${variant}-years`) as HTMLSpanElement;
+    const upgradeSpan = document.querySelector(`#${variant}-needs-upgrade`) as HTMLSpanElement;
 
-    amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
+    amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10_000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
     amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
 
     yearSpan.textContent = getCoinYears(variantData);
@@ -493,7 +505,7 @@ function getCoinYears(variant: CoinVariantById): string {
 
     const startYear = coinValues[0].year!;
 
-    const endYear = variant.active ? 'date' : coinValues[coinValues.length - 1].year!;
+    const endYear = variant.active ? 'date' : coinValues.at(-1)!.year!;
 
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
@@ -510,11 +522,11 @@ type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
 async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: string, data: PartialNullable<Coin>) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
     const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
-    editableElements.forEach((element) => (element.contentEditable = 'false'));
-    checkboxes.forEach((checkbox) => {
+    for (const element of editableElements) element.contentEditable = 'false';
+    for (const checkbox of checkboxes) {
         if (checkbox.disabled) checkbox.dataset.disabled = 'true';
         checkbox.disabled = true;
-    });
+    }
     const result = (await fetch('/coins-list-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -523,11 +535,11 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Coin data updated successfully!', 'success');
 
-    editableElements.forEach((element) => (element.contentEditable = 'true'));
-    checkboxes.forEach((checkbox) => {
+    for (const element of editableElements) element.contentEditable = 'true';
+    for (const checkbox of checkboxes) {
         if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
-        checkbox.removeAttribute('data-disabled');
-    });
+        delete checkbox.dataset.disabled;
+    }
 }
 
 /**
@@ -544,7 +556,7 @@ function addChangeEntry(coinData: PartialNullable<Coin>, variant: string, type: 
     if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
 
     const entry = document.createElement('li');
-    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes as Coin)[0] as keyof Coin] ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"` : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`}`;
+    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes as Coin)[0] as keyof Coin] ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"` : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`}`; // eslint-disable-line unicorn/no-nested-ternary
 
     const timeTooltip = document.createElement('span');
     timeTooltip.classList.add('time-tooltip');
@@ -553,15 +565,15 @@ function addChangeEntry(coinData: PartialNullable<Coin>, variant: string, type: 
     const timeIcon = document.createElement('i');
     timeIcon.classList.add('fa-solid', 'fa-clock');
 
-    timeTooltip.appendChild(timeIcon);
+    timeTooltip.append(timeIcon);
 
-    entry.appendChild(timeTooltip);
+    entry.append(timeTooltip);
 
-    changeHistory.appendChild(entry);
+    changeHistory.append(entry);
 }
 
-const params = new URLSearchParams(window.location.search);
-const password = params.get('password');
+const parameters = new URLSearchParams(window.location.search);
+const password = parameters.get('password');
 
 if (password) {
     const { success } = (await (await fetch(`/coins-login?password=${password}`)).json()) as { success: boolean };
@@ -573,7 +585,7 @@ if (password) {
         showAlert('Logged in!', 'success');
         showResult('login', 'success', undefined, undefined, false);
 
-        loadCoinsList();
+        await loadCoinsList();
     } else {
         showAlert('Incorrect password!', 'error');
         showResult('login', 'error', undefined, undefined, false);
@@ -584,13 +596,13 @@ if (password) {
  * Adds modal functionality to all images with the "popup-image" class.
  */
 function loadPopupImages() {
-    const modal = document.getElementById('modal') as HTMLDivElement;
+    const modal = document.querySelector('#modal') as HTMLDivElement;
     const images = document.querySelectorAll('img.popup-image') as NodeListOf<HTMLImageElement>;
     const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
     const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
-    const modalImage = document.getElementById('modal-image') as HTMLImageElement;
-    const modalCaption = document.getElementById('modal-caption') as HTMLDivElement;
-    const closeButton = document.getElementById('close-modal') as HTMLSpanElement;
+    const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
+    const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
+    const closeButton = document.querySelector('#close-modal') as HTMLSpanElement;
 
     for (const image of images)
         image.addEventListener('click', () => {
@@ -613,9 +625,7 @@ function loadPopupImages() {
             if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
         });
 
-    [closeButton, modal].forEach((element) => {
-        element.addEventListener('click', () => (modal.style.display = 'none'));
-    });
+    for (const element of [closeButton, modal]) element.addEventListener('click', () => (modal.style.display = 'none'));
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.style.display === 'block') modal.style.display = 'none';

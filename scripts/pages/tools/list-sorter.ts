@@ -1,14 +1,14 @@
 import { copyValue, resetResult, showAlert, showResult, shuffleArray } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const separatorInput = document.getElementById('separator') as HTMLInputElement;
-const alphabetizeNormalButton = document.getElementById('alphabetize-normal') as HTMLButtonElement;
-const numerizeButton = document.getElementById('numerize') as HTMLButtonElement;
-const randomizeButton = document.getElementById('randomize') as HTMLButtonElement;
-const reverseButton = document.getElementById('reverse') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const separatorInput = document.querySelector('#separator') as HTMLInputElement;
+const alphabetizeNormalButton = document.querySelector('#alphabetize-normal') as HTMLButtonElement;
+const numerizeButton = document.querySelector('#numerize') as HTMLButtonElement;
+const randomizeButton = document.querySelector('#randomize') as HTMLButtonElement;
+const reverseButton = document.querySelector('#reverse') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const result = document.querySelector('#result') as HTMLTextAreaElement;
+const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
 
 const separatorValue = separatorInput.value.replace('\\n', '\n');
 
@@ -69,7 +69,7 @@ function numerize() {
     } else {
         result.value = input.value
             .split(separatorValue)
-            .map((x) => parseInt(x))
+            .map((value) => Number.parseInt(value))
             .filter((x) => x === 0 || Boolean(x))
             .sort((a, b) => a - b)
             .join(separatorValue);

@@ -3,28 +3,28 @@ import { shuffleArray } from '../../functions.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
-const audio = document.getElementById('audio') as HTMLAudioElement;
-const sourceAudio = document.getElementById('source-audio') as HTMLSourceElement;
+const audio = document.querySelector('#audio') as HTMLAudioElement;
+const sourceAudio = document.querySelector('#source-audio') as HTMLSourceElement;
 
-const timer = document.getElementById('timer') as HTMLDivElement;
-const title = document.getElementById('title') as HTMLDivElement;
-const duration = document.getElementById('duration') as HTMLDivElement;
+const timer = document.querySelector('#timer') as HTMLDivElement;
+const title = document.querySelector('#title') as HTMLDivElement;
+const duration = document.querySelector('#duration') as HTMLDivElement;
 
 const progressBarContainer = document.querySelector('.progress') as HTMLDivElement;
-const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
+const progressBar = document.querySelector('#progress-bar') as HTMLDivElement;
 
-const toggleShuffleButton = document.getElementById('toggle-shuffle') as HTMLSpanElement;
-const shuffleStatusIcon = document.getElementById('shuffle-status')!;
-const previousButton = document.getElementById('previous')!;
-const rewindButton = document.getElementById('rewind')!;
-const playPauseButton = document.getElementById('play-pause')!;
-const forwardButton = document.getElementById('forward')!;
-const nextButton = document.getElementById('next')!;
-const toggleMuteButton = document.getElementById('toggle-mute')!;
+const toggleShuffleButton = document.querySelector('#toggle-shuffle') as HTMLSpanElement;
+const shuffleStatusIcon = document.querySelector('#shuffle-status')!;
+const previousButton = document.querySelector('#previous')!;
+const rewindButton = document.querySelector('#rewind')!;
+const playPauseButton = document.querySelector('#play-pause')!;
+const forwardButton = document.querySelector('#forward')!;
+const nextButton = document.querySelector('#next')!;
+const toggleMuteButton = document.querySelector('#toggle-mute')!;
 
-const playlistsList = document.getElementById('playlists-list') as HTMLUListElement;
+const playlistsList = document.querySelector('#playlists-list') as HTMLUListElement;
 
-const playlist = document.getElementById('playlist') as HTMLDivElement;
+const playlist = document.querySelector('#playlist') as HTMLDivElement;
 
 progressBarContainer.addEventListener('click', handleProgressBarClick);
 
@@ -65,24 +65,24 @@ function createTrackItem(category: AudioCategory, index: number, track: AudioTra
     buttonIcon.setAttribute('width', '40');
     buttonIcon.id = `player-icon-${category.id}-${index}`;
 
-    playButtonItem.appendChild(buttonIcon);
-    trackItem.appendChild(playButtonItem);
+    playButtonItem.append(buttonIcon);
+    trackItem.append(playButtonItem);
 
     const trackInfoItem = document.createElement('div');
     trackInfoItem.classList.add('playlist-info-track');
     trackInfoItem.textContent = track.name;
 
-    trackItem.appendChild(trackInfoItem);
+    trackItem.append(trackInfoItem);
 
     const trackDurationItem = document.createElement('div');
     trackDurationItem.classList.add('playlist-duration');
     trackDurationItem.textContent = track.duration;
 
-    trackItem.appendChild(trackDurationItem);
-    playlist.appendChild(trackItem);
+    trackItem.append(trackDurationItem);
+    playlist.append(trackItem);
 }
 
-audioTracks.forEach((category) => {
+for (const category of audioTracks) {
     const sectionTitle = document.createElement('div');
     sectionTitle.classList.add('playlist-section-title');
     sectionTitle.id = category.id;
@@ -94,9 +94,9 @@ audioTracks.forEach((category) => {
     const playSectionButton = document.createElement('i');
     playSectionButton.classList.add('player-icon', 'fa-solid', 'fa-shuffle');
 
-    sectionTitle.appendChild(sectionTitleLink);
-    sectionTitle.appendChild(playSectionButton);
-    playlist.appendChild(sectionTitle);
+    sectionTitle.append(sectionTitleLink);
+    sectionTitle.append(playSectionButton);
+    playlist.append(sectionTitle);
 
     const playlistsListItem = document.createElement('li');
 
@@ -104,16 +104,14 @@ audioTracks.forEach((category) => {
     playlistsListItemLink.href = `#${category.id}`;
     playlistsListItemLink.textContent = category.name;
 
-    playlistsListItem.appendChild(playlistsListItemLink);
+    playlistsListItem.append(playlistsListItemLink);
 
-    playlistsList.appendChild(playlistsListItem);
+    playlistsList.append(playlistsListItem);
 
-    category.tracks.forEach((track, index) => createTrackItem(category, index, track));
-});
+    for (const [index, track] of category.tracks.entries()) createTrackItem(category, index, track);
+}
 
-document.querySelectorAll('.playlist-section-title > i.player-icon').forEach((playButton) => {
-    playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
-});
+for (const playButton of document.querySelectorAll('.playlist-section-title > i.player-icon')) playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
 
 let audioCategory = 'general';
 let audioIndex = 0;
@@ -148,8 +146,8 @@ function loadClickedTrack(event: MouseEvent) {
     shuffleStatusIcon.classList.add('fa-xmark');
 
     const { category, index } = (event.target as HTMLElement).dataset as { category: string; index: string };
-    if (category === audioCategory && parseInt(index) === audioIndex) toggleAudio();
-    else loadNewTrack(category, parseInt(index));
+    if (category === audioCategory && Number.parseInt(index) === audioIndex) toggleAudio();
+    else loadNewTrack(category, Number.parseInt(index));
 }
 
 loadNewTrack(audioCategory, audioIndex, false);
@@ -161,7 +159,7 @@ function toggleAudio() {
     if (audio.paused) {
         playPauseButton.classList.remove('fa-play');
         playPauseButton.classList.add('fa-pause');
-        document.getElementById(`playlist-track-${audioCategory}-${audioIndex}`)?.classList.add('active-track');
+        document.querySelector(`#playlist-track-${audioCategory}-${audioIndex}`)?.classList.add('active-track');
         pauseToPlay(audioCategory, audioIndex);
         audio.play();
     } else {
@@ -309,9 +307,9 @@ function previous() {
  * @param play Whether or not to mark the new track as playing (defaults to `true`).
  */
 function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCategory: string, newIndex: number, play = true) {
-    document.getElementById(`playlist-track-${oldCategory}-${oldIndex}`)?.classList.remove('active-track');
+    document.querySelector(`#playlist-track-${oldCategory}-${oldIndex}`)?.classList.remove('active-track');
     if (play) playToPause(oldCategory, oldIndex);
-    document.getElementById(`playlist-track-${newCategory}-${newIndex}`)?.classList.add('active-track');
+    document.querySelector(`#playlist-track-${newCategory}-${newIndex}`)?.classList.add('active-track');
     if (play) pauseToPlay(newCategory, newIndex);
 }
 
@@ -341,7 +339,7 @@ function toggleShuffle() {
  * @param index The index of the track.
  */
 function pauseToPlay(category: string, index: number) {
-    const element = document.getElementById(`player-icon-${category}-${index}`)!;
+    const element = document.querySelector(`#player-icon-${category}-${index}`)!;
     element.classList.remove('fa-play');
     element.classList.add('fa-pause');
 }
@@ -352,7 +350,7 @@ function pauseToPlay(category: string, index: number) {
  * @param index The index of the track.
  */
 function playToPause(category: string, index: number) {
-    const element = document.getElementById(`player-icon-${category}-${index}`)!;
+    const element = document.querySelector(`#player-icon-${category}-${index}`)!;
     element.classList.add('fa-play');
     element.classList.remove('fa-pause');
 }

@@ -1,6 +1,6 @@
 import { titleCase } from '../../functions.js';
 
-const result = document.getElementById('result') as HTMLDivElement;
+const result = document.querySelector('#result') as HTMLDivElement;
 
 /**
  * Requests the browser's current location and handles any errors.
@@ -8,10 +8,23 @@ const result = document.getElementById('result') as HTMLDivElement;
 function getLocation() {
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(getData, (error) => {
-            if (error.code === error.PERMISSION_DENIED) result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
-            else if (error.code === error.POSITION_UNAVAILABLE) result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
-            else if (error.code === error.TIMEOUT) result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
-            else result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
+            switch (error.code) {
+                case error.PERMISSION_DENIED: {
+                    result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
+                    break;
+                }
+                case error.POSITION_UNAVAILABLE: {
+                    result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
+                    break;
+                }
+                case error.TIMEOUT: {
+                    result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
+                    break;
+                }
+                default: {
+                    result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
+                }
+            }
         });
     else result.innerHTML = '<span class="error">Geolocation is not supported by this browser.</span>';
 }
@@ -38,18 +51,14 @@ async function getData(position: GeolocationPosition) {
     const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } });
     const data = (await response.json()) as TideData;
 
-    const { latitude, longitude } = data.origin;
-    const distance = `${data.origin.distance} ${data.origin.unit}`;
+    const { distance: originDistance, latitude, longitude, unit } = data.origin;
+    const distance = `${originDistance} ${unit}`;
     const updated = `${new Date(data.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.timestamp * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
     const state = data.heights[0].state.toLowerCase();
 
-    let closestExtreme, nextExtreme;
+    const closestExtreme = data.extremes[0].timestamp >= Math.floor(Date.now() / 1000) ? `next ${data.extremes[0].state.toLowerCase()} is at ${new Date(data.extremes[0].timestamp).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}` : `most recent ${data.extremes[0].state.toLowerCase()} was at ${new Date(data.extremes[0].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
 
-    if (data.extremes[0].timestamp >= Math.floor(new Date().getTime() / 1000)) closestExtreme = `next ${data.extremes[0].state.toLowerCase()} is at ${new Date(data.extremes[0].timestamp).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
-    else closestExtreme = `most recent ${data.extremes[0].state.toLowerCase()} was at ${new Date(data.extremes[0].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
-
-    if (data.extremes[1].timestamp >= Math.floor(new Date().getTime() / 1000)) nextExtreme = `next ${data.extremes[1].state.toLowerCase()} is at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
-    else nextExtreme = `most recent ${data.extremes[1].state.toLowerCase()} was at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
+    const nextExtreme = data.extremes[1].timestamp >= Math.floor(Date.now() / 1000) ? `next ${data.extremes[1].state.toLowerCase()} is at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}` : `most recent ${data.extremes[1].state.toLowerCase()} was at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
 
     const nextExtremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 

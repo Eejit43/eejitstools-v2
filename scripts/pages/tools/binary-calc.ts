@@ -1,13 +1,13 @@
 import { copyValue, showAlert } from '../../functions.js';
 
-const inputType = document.getElementById('input-type') as HTMLSelectElement;
-const input = document.getElementById('input') as HTMLInputElement;
-const resetButton = document.getElementById('reset') as HTMLButtonElement;
-const message = document.getElementById('message') as HTMLDivElement;
-const outputType = document.getElementById('output-type') as HTMLSelectElement;
-const output = document.getElementById('output') as HTMLInputElement;
-const copyOutputButton = document.getElementById('copy-output') as HTMLButtonElement;
-const toggleSpacersButton = document.getElementById('toggle-spacers') as HTMLButtonElement;
+const inputType = document.querySelector('#input-type') as HTMLSelectElement;
+const input = document.querySelector('#input') as HTMLInputElement;
+const resetButton = document.querySelector('#reset') as HTMLButtonElement;
+const message = document.querySelector('#message') as HTMLDivElement;
+const outputType = document.querySelector('#output-type') as HTMLSelectElement;
+const output = document.querySelector('#output') as HTMLInputElement;
+const copyOutputButton = document.querySelector('#copy-output') as HTMLButtonElement;
+const toggleSpacersButton = document.querySelector('#toggle-spacers') as HTMLButtonElement;
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);
@@ -50,25 +50,30 @@ toggleSpacersButton.addEventListener('click', () => {
 function findInput() {
     if (input.value.length > 0)
         switch (radices[inputType.value].number) {
-            case 2:
-                if (/^-?[01.]+$/.test(input.value)) convert(input.value, 2);
+            case 2: {
+                if (/^-?[.01]+$/.test(input.value)) convert(input.value, 2);
                 else notValid();
                 break;
-            case 8:
-                if (/^-?[0-7.]+$/.test(input.value)) convert(input.value, 8);
+            }
+            case 8: {
+                if (/^-?[.0-7]+$/.test(input.value)) convert(input.value, 8);
                 else notValid();
                 break;
-            case 10:
-                if (/^-?[0-9.]+$/.test(input.value)) convert(input.value, 10);
+            }
+            case 10: {
+                if (/^-?[\d.]+$/.test(input.value)) convert(input.value, 10);
                 else notValid();
                 break;
-            case 16:
-                if (/^-?[0-9a-fA-F.]+$/.test(input.value)) convert(input.value, 16);
+            }
+            case 16: {
+                if (/^-?[\d.A-Fa-f]+$/.test(input.value)) convert(input.value, 16);
                 else notValid();
                 break;
-            default:
+            }
+            default: {
                 notValid();
                 break;
+            }
         }
     else {
         message.textContent = '';
@@ -92,14 +97,17 @@ function convert(value: string, radix: number) {
     if (!result || result.toString() === 'NaN') return notValid(); // Not using isNaN() as it won't account for hex values
 
     switch (radices[outputType.value].name) {
-        case 'binary':
+        case 'binary': {
             result = addSpacers ? addBinarySpacers(result) : result;
             break;
-        case 'decimal':
-            result = addSpacers ? parseInt(result).toLocaleString() : result;
+        }
+        case 'decimal': {
+            result = addSpacers ? Number.parseInt(result).toLocaleString() : result;
             break;
-        default:
+        }
+        default: {
             break;
+        }
     }
 
     message.textContent = '';
@@ -114,10 +122,10 @@ function convert(value: string, radix: number) {
  * @param radix The base of the number (defaults to `10`).
  */
 function parseNumberWithRadix(number: string, radix = 10) {
-    radix = radix | 0;
+    radix = Math.trunc(radix);
     const [a, b] = number.split('.');
-    const l = parseInt('1' + (b || ''), radix).toString(radix).length;
-    return parseInt(a, radix) + parseInt(b || '0', radix) / parseInt('1' + Array(l).join('0'), radix);
+    const l = Number.parseInt('1' + (b || ''), radix).toString(radix).length;
+    return Number.parseInt(a, radix) + Number.parseInt(b || '0', radix) / Number.parseInt('1' + Array.from({ length: l }).join('0'), radix);
 }
 
 /**

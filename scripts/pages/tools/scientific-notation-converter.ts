@@ -6,41 +6,39 @@ declare global {
         math: typeof math;
     }
 }
-const decimalInput = document.getElementById('decimal-input') as HTMLInputElement;
-const decimalConvertButton = document.getElementById('decimal-convert') as HTMLButtonElement;
-const decimalResetButton = document.getElementById('decimal-reset') as HTMLButtonElement;
-const decimalArrow = document.getElementById('decimal-arrow')!;
-const scientificOutput = document.getElementById('scientific-output') as HTMLInputElement;
-const scientificOutputCopyButton = document.getElementById('scientific-output-copy') as HTMLButtonElement;
-const scientificOutputCopy2Button = document.getElementById('scientific-output-copy-2') as HTMLButtonElement;
-const scientificInput = document.getElementById('scientific-input') as HTMLInputElement;
-const scientificConvertButton = document.getElementById('scientific-convert') as HTMLButtonElement;
-const scientificResetButton = document.getElementById('scientific-reset') as HTMLButtonElement;
-const scientificArrow = document.getElementById('scientific-arrow')!;
-const decimalOutput = document.getElementById('decimal-output') as HTMLInputElement;
-const decimalOutputCopyButton = document.getElementById('decimal-output-copy') as HTMLButtonElement;
+const decimalInput = document.querySelector('#decimal-input') as HTMLInputElement;
+const decimalConvertButton = document.querySelector('#decimal-convert') as HTMLButtonElement;
+const decimalResetButton = document.querySelector('#decimal-reset') as HTMLButtonElement;
+const decimalArrow = document.querySelector('#decimal-arrow') as HTMLElement;
+const scientificOutput = document.querySelector('#scientific-output') as HTMLInputElement;
+const scientificOutputCopyButton = document.querySelector('#scientific-output-copy') as HTMLButtonElement;
+const scientificOutputCopy2Button = document.querySelector('#scientific-output-copy-2') as HTMLButtonElement;
+const scientificInput = document.querySelector('#scientific-input') as HTMLInputElement;
+const scientificConvertButton = document.querySelector('#scientific-convert') as HTMLButtonElement;
+const scientificResetButton = document.querySelector('#scientific-reset') as HTMLButtonElement;
+const scientificArrow = document.querySelector('#scientific-arrow') as HTMLElement;
+const decimalOutput = document.querySelector('#decimal-output') as HTMLInputElement;
+const decimalOutputCopyButton = document.querySelector('#decimal-output-copy') as HTMLButtonElement;
 
-let decimalOutputVal: string, scientificOutputVal: string, scientificOutputVal2: string;
+let decimalOutputValue: string, scientificOutputValue: string, scientificOutputValue2: string;
 
 /* Add event listeners */
 decimalInput.addEventListener('input', () => {
     decimalInput.value = decimalInput.value
-        .replace(/[^0-9.\-+]/g, '')
-        .replace(/(\..*?)\./g, '$1')
-        .replace(/(-.*?)-/g, '$1')
-        .replace(/(\+.*?)\+/g, '$1');
+        .replaceAll(/[^\d+.-]/g, '')
+        .replaceAll(/(\..*?)\./g, '$1')
+        .replaceAll(/(-.*?)-/g, '$1')
+        .replaceAll(/(\+.*?)\+/g, '$1');
 });
 decimalInput.addEventListener('input', () => {
-    if (decimalInput.value.length > 0) decimalConvertButton.disabled = false;
-    else decimalConvertButton.disabled = true;
+    decimalConvertButton.disabled = decimalInput.value.length === 0;
 
-    if (decimalInput.value.length > 0 || scientificOutput.value.length > 0 || decimalArrow.style.color !== 'dimgray') decimalResetButton.disabled = false;
-    else decimalResetButton.disabled = true;
+    decimalResetButton.disabled = !(decimalInput.value.length > 0 || scientificOutput.value.length > 0 || decimalArrow.style.color !== 'dimgray');
 });
 decimalConvertButton.addEventListener('click', convertDecimal);
 decimalResetButton.addEventListener('click', () => {
-    scientificOutputVal = '';
-    scientificOutputVal2 = '';
+    scientificOutputValue = '';
+    scientificOutputValue2 = '';
     decimalInput.value = '';
     decimalConvertButton.disabled = true;
     decimalResetButton.disabled = true;
@@ -51,14 +49,12 @@ decimalResetButton.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(decimalArrow, 'reset');
 });
-scientificOutputCopyButton.addEventListener('click', () => copyText(scientificOutputCopyButton, scientificOutputVal));
-scientificOutputCopy2Button.addEventListener('click', () => copyText(scientificOutputCopy2Button, scientificOutputVal2));
+scientificOutputCopyButton.addEventListener('click', () => copyText(scientificOutputCopyButton, scientificOutputValue));
+scientificOutputCopy2Button.addEventListener('click', () => copyText(scientificOutputCopy2Button, scientificOutputValue2));
 scientificInput.addEventListener('input', () => {
-    if (scientificInput.value.length > 0) scientificConvertButton.disabled = false;
-    else scientificConvertButton.disabled = true;
+    scientificConvertButton.disabled = scientificInput.value.length === 0;
 
-    if (scientificInput.value.length > 0 || decimalOutput.value !== '' || scientificArrow.style.color !== 'dimgray') scientificResetButton.disabled = false;
-    else scientificResetButton.disabled = true;
+    scientificResetButton.disabled = !(scientificInput.value.length > 0 || decimalOutput.value !== '' || scientificArrow.style.color !== 'dimgray');
 });
 scientificConvertButton.addEventListener('click', convertScientific);
 scientificResetButton.addEventListener('click', () => {
@@ -71,16 +67,16 @@ scientificResetButton.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(scientificArrow, 'reset');
 });
-decimalOutputCopyButton.addEventListener('click', () => copyText(decimalOutputCopyButton, decimalOutputVal));
+decimalOutputCopyButton.addEventListener('click', () => copyText(decimalOutputCopyButton, decimalOutputValue));
 
 /**
  * Converts a decimal to scientific notation and displays the result.
  */
 function convertDecimal() {
-    if (/^[+-]?([0-9]\d*)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
+    if (/^[+-]?(\d+)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
         scientificOutput.value = window.math.bignumber(decimalInput.value).toExponential();
-        scientificOutputVal = window.math.bignumber(decimalInput.value).toExponential();
-        scientificOutputVal2 = window.math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
+        scientificOutputValue = window.math.bignumber(decimalInput.value).toExponential();
+        scientificOutputValue2 = window.math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
         scientificOutputCopyButton.disabled = false;
         scientificOutputCopy2Button.disabled = false;
         updateArrow(decimalArrow, 'success');
@@ -99,25 +95,25 @@ function convertDecimal() {
 function convertScientific() {
     if (/^[+-]?\d(\.\d+)?[Ee][+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = window.math.format(window.math.bignumber(scientificInput.value), { notation: 'fixed' });
-        decimalOutputVal = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
+        decimalOutputValue = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopyButton.disabled = false;
         updateArrow(scientificArrow, 'success', 'right');
-    } else if (/^[+-]?\d(\.\d+)? ?[xX*] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
+    } else if (/^[+-]?\d(\.\d+)? ?[*Xx] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
         decimalOutput.value = window.math.format(
             window.math.bignumber(
                 scientificInput.value
-                    .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
-                    .replace(/ ?[xX*] ?10\^-/g, 'e-')
-                    .replace(/ ?[xX*] ?10\^\+/g, 'e')
+                    .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
+                    .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
+                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e')
             ),
             { notation: 'fixed' }
         );
-        decimalOutputVal = window.math.format(
+        decimalOutputValue = window.math.format(
             window.math.bignumber(
                 scientificInput.value
-                    .replace(/ ?[xX*] ?10\^(\d)/g, 'e+$1')
-                    .replace(/ ?[xX*] ?10\^-/g, 'e-')
-                    .replace(/ ?[xX*] ?10\^\+/g, 'e')
+                    .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
+                    .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
+                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e')
             ),
             { notation: 'fixed' }
         );

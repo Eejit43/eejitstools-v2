@@ -1,13 +1,13 @@
 import { copyText, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const toMorseButton = document.getElementById('to-morse') as HTMLButtonElement;
-const fromMorseButton = document.getElementById('from-morse') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyButton = document.getElementById('copy-result') as HTMLButtonElement;
-const copyVerticalButton = document.getElementById('copy-result-2') as HTMLButtonElement;
-const copySpacesButton = document.getElementById('copy-result-3') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const toMorseButton = document.querySelector('#to-morse') as HTMLButtonElement;
+const fromMorseButton = document.querySelector('#from-morse') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const result = document.querySelector('#result') as HTMLTextAreaElement;
+const copyButton = document.querySelector('#copy-result') as HTMLButtonElement;
+const copyVerticalButton = document.querySelector('#copy-result-2') as HTMLButtonElement;
+const copySpacesButton = document.querySelector('#copy-result-3') as HTMLButtonElement;
 
 /* Add event listeners */
 toMorseButton.addEventListener('click', toMorse);
@@ -29,10 +29,10 @@ copyButton.addEventListener('click', () => {
     copyText(copyButton, result.value);
 });
 copyVerticalButton.addEventListener('click', () => {
-    copyText(copyVerticalButton, result.value.replace(/ \/ /g, ' | '));
+    copyText(copyVerticalButton, result.value.replaceAll(' / ', ' | '));
 });
 copySpacesButton.addEventListener('click', () => {
-    copyText(copySpacesButton, result.value.replace(/ {3}/g, '   '));
+    copyText(copySpacesButton, result.value.replaceAll(/ {3}/g, '   '));
 });
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -99,12 +99,10 @@ const morseConversion: Record<string, string> = {
  * @param string The string to convert.
  */
 function convertToMorse(string: string) {
-    return string
-        .toLowerCase()
-        .split('')
-        .map((character) => (morseConversion[character] ? morseConversion[character] : character))
+    return [...string.toLowerCase()]
+        .map((character) => morseConversion[character] ?? character)
         .join(' ')
-        .replace(/ {3}/g, ' / ');
+        .replaceAll(/ {3}/g, ' / ');
 }
 
 /**
@@ -118,7 +116,7 @@ function toMorse() {
         copySpacesButton.disabled = true;
         showResult('encode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[ |\\a-zA-Z0-9!"$&'()+,\-./:;=?@_]*$/.test(input.value.trim())) {
+    } else if (/^[\w !"$&'()+,./:;=?@\\|-]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
         copyButton.disabled = false;
         copyVerticalButton.disabled = false;
@@ -140,7 +138,7 @@ function toMorse() {
  */
 function decodeMorse(morseCode: string) {
     return morseCode
-        .split(/ {2,}| *[|/] */)
+        .split(/ {2,}| *[/|] */)
         .map((word) =>
             word
                 .split(' ')
@@ -159,7 +157,7 @@ function decodeMorse(morseCode: string) {
  * Converts the provided string from Morse code and displays the result.
  */
 function fromMorse() {
-    const inputValue = input.value.trim().replace(/_/g, '-').replace(/•/g, '.');
+    const inputValue = input.value.trim().replaceAll('_', '-').replaceAll('•', '.');
     if (inputValue.length <= 0) {
         result.value = '';
         copyButton.disabled = true;
@@ -167,7 +165,7 @@ function fromMorse() {
         copySpacesButton.disabled = true;
         showResult('decode', 'error');
         showAlert('Empty input!', 'error');
-    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[|/] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
+    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[/|] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
         result.value = decodeMorse(inputValue);
         copyButton.disabled = false;
         copyVerticalButton.disabled = true;

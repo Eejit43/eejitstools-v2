@@ -129,7 +129,6 @@ document.addEventListener('keydown', (event) => {
         case 'KeyC': {
             navigator.clipboard.writeText('');
             showAlert('Cleared clipboard!', 'success', 500);
-
             break;
         }
         case 'KeyH': {

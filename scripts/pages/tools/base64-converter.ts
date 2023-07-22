@@ -1,11 +1,11 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const encodeButton = document.getElementById('encode') as HTMLButtonElement;
-const decodeButton = document.getElementById('decode') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const encodeButton = document.querySelector('#encode') as HTMLButtonElement;
+const decodeButton = document.querySelector('#decode') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const result = document.querySelector('#result') as HTMLTextAreaElement;
+const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 encodeButton.addEventListener('click', encode);

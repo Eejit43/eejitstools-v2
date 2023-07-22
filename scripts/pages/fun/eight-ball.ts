@@ -1,9 +1,9 @@
 import { showAlert } from '../../functions.js';
 
-const questionInput = document.getElementById('question-input') as HTMLInputElement;
-const rollButton = document.getElementById('roll') as HTMLButtonElement;
-const questionDisplay = document.getElementById('question-display') as HTMLDivElement;
-const answerOutput = document.getElementById('answer-output') as HTMLDivElement;
+const questionInput = document.querySelector('#question-input') as HTMLInputElement;
+const rollButton = document.querySelector('#roll') as HTMLButtonElement;
+const questionDisplay = document.querySelector('#question-display') as HTMLDivElement;
+const answerOutput = document.querySelector('#answer-output') as HTMLDivElement;
 
 /* Add event listeners */
 questionInput.addEventListener('keydown', (event) => {
@@ -21,7 +21,7 @@ rollButton.addEventListener('click', () => {
 
         const spinner = document.createElement('i');
         spinner.classList.add('fa-solid', 'fa-spinner', 'fa-spin-pulse');
-        answerOutput.appendChild(spinner);
+        answerOutput.append(spinner);
 
         setTimeout(() => {
             rollButton.disabled = false;

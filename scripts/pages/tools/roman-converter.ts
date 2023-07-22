@@ -1,34 +1,32 @@
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
-const integerInput = document.getElementById('integer-input') as HTMLInputElement;
-const integerConvertButton = document.getElementById('integer-convert') as HTMLButtonElement;
-const integerResetButton = document.getElementById('integer-reset') as HTMLButtonElement;
-const integerArrow = document.getElementById('integer-arrow')!;
-const romanOutput = document.getElementById('roman-output') as HTMLButtonElement; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
-const romanOutputCopyButton = document.getElementById('roman-output-copy') as HTMLButtonElement;
-const romanOutputCopy2Button = document.getElementById('roman-output-copy-2') as HTMLButtonElement;
-const romanInput = document.getElementById('roman-input') as HTMLInputElement;
-const romanConvertButton = document.getElementById('roman-convert') as HTMLButtonElement;
-const romanResetButton = document.getElementById('roman-reset') as HTMLButtonElement;
-const romanArrow = document.getElementById('roman-arrow')!;
-const integerOutput = document.getElementById('integer-output') as HTMLInputElement;
-const integerOutputCopyButton = document.getElementById('integer-output-copy') as HTMLButtonElement;
+const integerInput = document.querySelector('#integer-input') as HTMLInputElement;
+const integerConvertButton = document.querySelector('#integer-convert') as HTMLButtonElement;
+const integerResetButton = document.querySelector('#integer-reset') as HTMLButtonElement;
+const integerArrow = document.querySelector('#integer-arrow') as HTMLElement;
+const romanOutput = document.querySelector('#roman-output') as HTMLButtonElement; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
+const romanOutputCopyButton = document.querySelector('#roman-output-copy') as HTMLButtonElement;
+const romanOutputCopy2Button = document.querySelector('#roman-output-copy-2') as HTMLButtonElement;
+const romanInput = document.querySelector('#roman-input') as HTMLInputElement;
+const romanConvertButton = document.querySelector('#roman-convert') as HTMLButtonElement;
+const romanResetButton = document.querySelector('#roman-reset') as HTMLButtonElement;
+const romanArrow = document.querySelector('#roman-arrow') as HTMLElement;
+const integerOutput = document.querySelector('#integer-output') as HTMLInputElement;
+const integerOutputCopyButton = document.querySelector('#integer-output-copy') as HTMLButtonElement;
 
-let romanOutputVal: string, romanOutputVal2: string, integerOutputVal: string;
+let romanOutputValue: string, romanOutputValue2: string, integerOutputValue: string;
 
 /* Add event listeners */
 integerInput.addEventListener('input', () => {
-    if (parseInt(integerInput.value) === 0) integerInput.value = '';
+    if (Number.parseInt(integerInput.value) === 0) integerInput.value = '';
 });
 integerInput.addEventListener('input', () => {
-    integerInput.value = integerInput.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+    integerInput.value = integerInput.value.replaceAll(/\D/g, '').replaceAll(/(\..*)\./g, '$1');
 });
 integerInput.addEventListener('input', () => {
-    if (integerInput.value.length > 0) integerConvertButton.disabled = false;
-    else integerConvertButton.disabled = true;
+    integerConvertButton.disabled = integerInput.value.length === 0;
 
-    if (integerInput.value.length > 0 || romanOutput.innerHTML !== '​' || integerArrow.style.color !== 'dimgray') integerResetButton.disabled = false;
-    else integerResetButton.disabled = true;
+    integerResetButton.disabled = !(integerInput.value.length > 0 || romanOutput.innerHTML !== '​' || integerArrow.style.color !== 'dimgray');
 });
 integerConvertButton.addEventListener('click', convertInteger);
 integerResetButton.addEventListener('click', () => {
@@ -46,14 +44,12 @@ romanInput.addEventListener('input', () => {
     romanInput.value = romanInput.value.toUpperCase();
 });
 romanInput.addEventListener('input', () => {
-    romanInput.value = romanInput.value.replace(/((?![IVXLCDM_]).)/gi, '');
+    romanInput.value = romanInput.value.replaceAll(/((?![_cdilmvx]).)/gi, '');
 });
 romanInput.addEventListener('input', () => {
-    if (romanInput.value.length > 0) romanConvertButton.disabled = false;
-    else romanConvertButton.disabled = true;
+    romanConvertButton.disabled = romanInput.value.length === 0;
 
-    if (romanInput.value.length > 0 || integerOutput.value !== '' || romanArrow.style.color !== 'dimgray') romanResetButton.disabled = false;
-    else romanResetButton.disabled = true;
+    romanResetButton.disabled = !(romanInput.value.length > 0 || integerOutput.value !== '' || romanArrow.style.color !== 'dimgray');
 });
 romanConvertButton.addEventListener('click', convertRoman);
 romanResetButton.addEventListener('click', () => {
@@ -66,16 +62,16 @@ romanResetButton.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(romanArrow, 'reset');
 });
-romanOutputCopyButton.addEventListener('click', () => copyText(romanOutputCopyButton, romanOutputVal));
-romanOutputCopy2Button.addEventListener('click', () => copyText(romanOutputCopy2Button, romanOutputVal2));
-integerOutputCopyButton.addEventListener('click', () => copyText(integerOutputCopyButton, integerOutputVal));
+romanOutputCopyButton.addEventListener('click', () => copyText(romanOutputCopyButton, romanOutputValue));
+romanOutputCopy2Button.addEventListener('click', () => copyText(romanOutputCopy2Button, romanOutputValue2));
+integerOutputCopyButton.addEventListener('click', () => copyText(integerOutputCopyButton, integerOutputValue));
 
 /**
  * Converts the provided integer to roman numerals and displays the result.
  */
 function convertInteger() {
-    if (parseInt(integerInput.value) > 0) {
-        romanOutput.innerHTML = romanize(parseInt(integerInput.value));
+    if (Number.parseInt(integerInput.value) > 0) {
+        romanOutput.innerHTML = romanize(Number.parseInt(integerInput.value));
         romanOutputCopyButton.disabled = false;
         romanOutputCopy2Button.disabled = false;
         updateArrow(integerArrow, 'success');
@@ -93,9 +89,9 @@ function convertInteger() {
  */
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
-    const input = romanInput.value.replace(/_(\w)/g, (match) => match.toLowerCase()).replace(/_/g, '');
-    if (/^(?:m*)(?:d?c{0,3}|c[md])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[xv])(?:M{0,3})(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/.test(input) === true) {
-        integerOutputVal = deromanize(input).toString();
+    const input = romanInput.value.replaceAll(/_(\w)/g, (match) => match.toLowerCase()).replaceAll('_', '');
+    if (/^m*(?:d?c{0,3}|c[dm])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[vx])M{0,3}(?:D?C{0,3}|C[DM])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[VX])$/.test(input) === true) {
+        integerOutputValue = deromanize(input).toString();
         integerOutput.value = deromanize(input).toString();
         integerOutputCopyButton.disabled = false;
         updateArrow(romanArrow, 'success');
@@ -118,28 +114,27 @@ const decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
 function romanize(number: number) {
     let barredNumerals = '';
     while (number > 3999)
-        for (let i = 0; i < decimal.length - 1; i++) {
-            const currentNumber = decimal[i] * 1000;
+        for (let index = 0; index < decimal.length - 1; index++) {
+            const currentNumber = decimal[index] * 1000;
             if (number < currentNumber) continue;
 
             number -= currentNumber;
-            barredNumerals += roman[i];
+            barredNumerals += roman[index];
             break;
         }
 
     let regularNumerals = '';
     while (number > 0)
-        for (let i = 0; i < decimal.length; i++) {
-            const currentNumber = decimal[i];
+        for (const [index, currentNumber] of decimal.entries()) {
             if (number < currentNumber) continue;
 
             number -= currentNumber;
-            regularNumerals += roman[i];
+            regularNumerals += roman[index];
             break;
         }
 
-    romanOutputVal = barredNumerals.replace(/I/g, 'Ī').replace(/V/g, 'V̄').replace(/X/g, 'X̄').replace(/L/g, 'L̄').replace(/C/g, 'C̄').replace(/D/g, 'D̄').replace(/M/g, 'M̄') + regularNumerals;
-    romanOutputVal2 = barredNumerals.replace(/([A-Z])/g, '_$1') + regularNumerals;
+    romanOutputValue = barredNumerals.replaceAll('I', 'Ī').replaceAll('V', 'V̄').replaceAll('X', 'X̄').replaceAll('L', 'L̄').replaceAll('C', 'C̄').replaceAll('D', 'D̄').replaceAll('M', 'M̄') + regularNumerals;
+    romanOutputValue2 = barredNumerals.replaceAll(/([A-Z])/g, '_$1') + regularNumerals;
     return barredNumerals.length > 0 ? `<span style="border-top: 1px solid">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
 }
 
@@ -149,17 +144,17 @@ function romanize(number: number) {
  * @author emnudge
  */
 function deromanize(string: string) {
-    const token = /[mdlv]|c[md]?|x[cl]?|i[xv]|[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
+    const token = /[dlmv]|c[dm]?|x[cl]?|i[vx]|[DLMV]|C[DM]?|X[CL]?|I[VX]?/g;
     const key: Record<string, number> = {
-        m: 1000000,
-        cm: 900000,
-        d: 500000,
-        cd: 400000,
-        c: 100000,
-        xc: 90000,
-        l: 50000,
-        xl: 40000,
-        x: 10000,
+        m: 1_000_000,
+        cm: 900_000,
+        d: 500_000,
+        cd: 400_000,
+        c: 100_000,
+        xc: 90_000,
+        l: 50_000,
+        xl: 40_000,
+        x: 10_000,
         ix: 9000,
         v: 5000,
         iv: 4000,
@@ -179,7 +174,7 @@ function deromanize(string: string) {
     };
 
     let output = 0;
-    let i;
-    while ((i = token.exec(string))) output += key[i[0]];
+    let index;
+    while ((index = token.exec(string))) output += key[index[0]];
     return output;
 }

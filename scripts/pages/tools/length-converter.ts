@@ -7,14 +7,14 @@ declare global {
     }
 }
 
-const inputType = document.getElementById('input-type') as HTMLSelectElement;
-const input = document.getElementById('input') as HTMLInputElement;
-const resetButton = document.getElementById('reset') as HTMLButtonElement;
-const switchButton = document.getElementById('switch') as HTMLButtonElement;
-const message = document.getElementById('message') as HTMLDivElement;
-const outputType = document.getElementById('output-type') as HTMLSelectElement;
-const output = document.getElementById('output') as HTMLInputElement;
-const copyOutputButton = document.getElementById('copy-output') as HTMLButtonElement;
+const inputType = document.querySelector('#input-type') as HTMLSelectElement;
+const input = document.querySelector('#input') as HTMLInputElement;
+const resetButton = document.querySelector('#reset') as HTMLButtonElement;
+const switchButton = document.querySelector('#switch') as HTMLButtonElement;
+const message = document.querySelector('#message') as HTMLDivElement;
+const outputType = document.querySelector('#output-type') as HTMLSelectElement;
+const output = document.querySelector('#output') as HTMLInputElement;
+const copyOutputButton = document.querySelector('#copy-output') as HTMLButtonElement;
 
 /* Add event listeners */
 inputType.addEventListener('change', convert);
@@ -64,11 +64,11 @@ window.math.createUnit('nauticalMile', { definition: '1852 meter' });
  * Converts the provided length value and displays the result.
  */
 function convert() {
-    input.value = input.value.replace(/,/g, '');
+    input.value = input.value.replaceAll(',', '');
 
-    if (/^-?([0-9]\d*)(\.\d*|,\d*)*$|^-?\d*\.\d+$/g.test(input.value)) {
+    if (/^-?(\d+)(\.\d*|,\d*)*$|^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
-        output.value = window.math.number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replace(/[^0-9-.]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });
+        output.value = window.math.number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replaceAll(/[^\d.-]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });
         copyOutputButton.disabled = false;
     } else {
         message.innerHTML = input.value.length > 0 ? '<i class="fa-solid fa-exclamation-triangle"></i> Input is not a number!<br />' : '';

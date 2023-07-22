@@ -1,12 +1,12 @@
 import { ApodEntryMedia, FullApodEntry } from '../../../apod-fetcher.js';
 import { showAlert } from '../../functions.js';
 
-const resultElement = document.getElementById('result') as HTMLDivElement;
-const yearInput = document.getElementById('year') as HTMLInputElement;
-const monthInput = document.getElementById('month') as HTMLInputElement;
-const dateInput = document.getElementById('date') as HTMLInputElement;
-const getDateButton = document.getElementById('get-date') as HTMLButtonElement;
-const resetDateButton = document.getElementById('reset-date') as HTMLButtonElement;
+const resultElement = document.querySelector('#result') as HTMLDivElement;
+const yearInput = document.querySelector('#year') as HTMLInputElement;
+const monthInput = document.querySelector('#month') as HTMLInputElement;
+const dateInput = document.querySelector('#date') as HTMLInputElement;
+const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
+const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
 
 /* Add event listeners */
 getDateButton.addEventListener('click', () => {
@@ -20,17 +20,17 @@ resetDateButton.addEventListener('click', () => {
     checkApod(year, month, date);
 });
 
-[dateInput, monthInput, yearInput].forEach((element) => {
-    ['input', 'paste'].forEach((event) => {
+for (const element of [dateInput, monthInput, yearInput]) {
+    for (const event of ['input', 'paste'])
         element.addEventListener(event, () => {
-            element.value = element.value.replace(/((?![0-9]).)/g, '');
+            element.value = element.value.replaceAll(/((?!\d).)/g, '');
             checkInput(element);
         });
-    });
+
     element.addEventListener('keydown', (event) => {
         if (event.code === 'Enter') checkApod(valuesAsNumbers.year, valuesAsNumbers.month, valuesAsNumbers.date);
     });
-});
+}
 
 /**
  * Checks and updates an elements value if needed.
@@ -38,7 +38,7 @@ resetDateButton.addEventListener('click', () => {
  */
 function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if ((element.max && element.value > element.max) || parseInt(element.value) < 1) element.value = element.value.slice(0, 1);
+    if ((element.max && element.value > element.max) || Number.parseInt(element.value) < 1) element.value = element.value.slice(0, 1);
 }
 
 const currentTime = new Date();
@@ -47,9 +47,9 @@ const month = currentTime.getMonth() + 1;
 const date = currentTime.getDate();
 
 const valuesAsNumbers = {
-    year: !isNaN(parseInt(yearInput.value)) ? parseInt(yearInput.value) : year,
-    month: !isNaN(parseInt(monthInput.value)) ? parseInt(monthInput.value) : month,
-    date: !isNaN(parseInt(dateInput.value)) ? parseInt(dateInput.value) : date
+    year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
+    month: Number.isNaN(Number.parseInt(monthInput.value)) ? month : Number.parseInt(monthInput.value),
+    date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value)
 };
 
 yearInput.placeholder = year.toString();
@@ -65,7 +65,7 @@ checkApod(year, month, date);
  * @param dateInput The date input.
  */
 function checkApod(yearInput: number, monthInput: number, dateInput: number) {
-    if (new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() && new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= new Date().getTime()) fetchApod(yearInput, monthInput, dateInput);
+    if (new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() && new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= Date.now()) fetchApod(yearInput, monthInput, dateInput);
     else showAlert(`Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
 }
 
@@ -105,6 +105,5 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
  */
 function getMediaElement(media: ApodEntryMedia) {
     const { type, src, highResolution, alt } = media;
-    if (type === 'image') return `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`;
-    else return `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+    return type === 'image' ? `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>` : `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }

@@ -1,4 +1,4 @@
-const result = document.getElementById('result') as HTMLDivElement;
+const result = document.querySelector('#result') as HTMLDivElement;
 
 /**
  * Requests the browser's current location and handles any errors.
@@ -6,10 +6,23 @@ const result = document.getElementById('result') as HTMLDivElement;
 function getLocation() {
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(getData, (error) => {
-            if (error.code === error.PERMISSION_DENIED) result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
-            else if (error.code === error.POSITION_UNAVAILABLE) result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
-            else if (error.code === error.TIMEOUT) result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
-            else result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
+            switch (error.code) {
+                case error.PERMISSION_DENIED: {
+                    result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
+                    break;
+                }
+                case error.POSITION_UNAVAILABLE: {
+                    result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
+                    break;
+                }
+                case error.TIMEOUT: {
+                    result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
+                    break;
+                }
+                default: {
+                    result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
+                }
+            }
         });
     else result.innerHTML = '<span class="error">Geolocation is not supported by this browser.</span>';
 }
@@ -126,7 +139,7 @@ async function getData(position: GeolocationPosition) {
         `Snowfall: ${data.snow} inches/hour`,
         `Cloud Cover: ${data.clouds}%`,
         `Wind: ${data.wind_spd} miles/hour (${data.wind_cdir_full})`,
-        `Temperature: ${data.temp}°F${data.app_temp !== data.temp ? ` (Feels like ${data.app_temp}°F)` : ''}`,
+        `Temperature: ${data.temp}°F${data.app_temp === data.temp ? '' : ` (Feels like ${data.app_temp}°F)`}`,
         `Relative Humidity: ${data.rh}%`,
         `Dew Point: ${data.dewpt}°F`,
         `Visibility: ${data.vis} miles`,
@@ -139,21 +152,21 @@ async function getData(position: GeolocationPosition) {
     const { alerts } = fullData;
 
     const newAlerts = [];
-    for (const alert of alerts) if (!/has been replaced/g.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(new Date().getTime() / 1000)) newAlerts.push(alert);
+    for (const alert of alerts) if (!/has been replaced/.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(Date.now() / 1000)) newAlerts.push(alert);
 
-    const alertsList = document.getElementById('alerts') as HTMLSpanElement;
+    const alertsList = document.querySelector('#alerts') as HTMLSpanElement;
 
     if (newAlerts.length > 0)
-        newAlerts.forEach((alert, index) => {
+        for (const [index, alert] of newAlerts.entries()) {
             const alertElement = document.createElement('span');
             alertElement.classList.add('alert');
-            alertElement.textContent = `${alert.title.replace(/ issued.*/g, '')} (${alert.severity})`;
+            alertElement.textContent = `${alert.title.replaceAll(/ issued.*/g, '')} (${alert.severity})`;
             alertElement.addEventListener('click', () => showWeatherAlert(alert));
 
-            alertsList.appendChild(alertElement);
+            alertsList.append(alertElement);
 
-            if (index !== newAlerts.length - 1) alertsList.appendChild(document.createTextNode(', '));
-        });
+            if (index !== newAlerts.length - 1) alertsList.append(document.createTextNode(', '));
+        }
     else alertsList.textContent = 'None';
 
     const lunarResponse = await fetch(`https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000}`);
@@ -169,11 +182,11 @@ async function getData(position: GeolocationPosition) {
     else if (phaseName === 'Waning' && lighting > 50) phaseName = 'Waning gibbous';
 
     const html = `${phaseName} ${lunarData.phase[day].isPhaseLimit ? '' : `(${lighting}% illuminated)`} ${lunarData.phase[day].svg
-        .replace(/<a.*?>(.*?)<\/a>/g, '$1')
-        .replace(/style="pointer-events:all;cursor:pointer"/g, '')
-        .replace(/<svg(.*?)>/g, `<svg style="transform: translateY(3px)"$1><title>${phaseName} moon</title>`)}`;
+        .replaceAll(/<a.*?>(.*?)<\/a>/g, '$1')
+        .replaceAll('style="pointer-events:all;cursor:pointer"', '')
+        .replaceAll(/<svg(.*?)>/g, `<svg style="transform: translateY(3px)"$1><title>${phaseName} moon</title>`)}`;
 
-    (document.getElementById('moon-phase') as HTMLSpanElement).innerHTML = html;
+    (document.querySelector('#moon-phase') as HTMLSpanElement).innerHTML = html;
 }
 
 /**
@@ -181,12 +194,12 @@ async function getData(position: GeolocationPosition) {
  * @param alert The alert.
  */
 function showWeatherAlert(alert: Alert) {
-    const alertDisplay = document.getElementById('alert-display') as HTMLTextAreaElement;
+    const alertDisplay = document.querySelector('#alert-display') as HTMLTextAreaElement;
 
     const alertText = `${alert.title}\n\n${alert.description
-        .replace(/\n/g, ' ')
-        .replace(/^\* (.*?)\.{3}/g, '– $1:\n ')
-        .replace(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions.join(', ')}`;
+        .replaceAll('\n', ' ')
+        .replaceAll(/^\* (.*?)\.{3}/g, '– $1:\n ')
+        .replaceAll(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions.join(', ')}`;
 
     if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
         alertDisplay.style.display = 'unset';

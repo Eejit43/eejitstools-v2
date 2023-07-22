@@ -8,31 +8,31 @@ declare global {
     }
 }
 
-const generateRandomButton = document.getElementById('generate-random') as HTMLButtonElement;
-const colorDisplay = document.getElementById('color-display') as HTMLDivElement;
-const colorPicker = document.getElementById('color-picker') as HTMLInputElement;
-const darkenButton = document.getElementById('darken') as HTMLButtonElement;
-const brightenButton = document.getElementById('brighten') as HTMLButtonElement;
-const saturateButton = document.getElementById('saturate') as HTMLButtonElement;
-const desaturateButton = document.getElementById('desaturate') as HTMLButtonElement;
-const increaseLuminanceButton = document.getElementById('increase-luminance') as HTMLButtonElement;
-const decreaseLuminanceButton = document.getElementById('decrease-luminance') as HTMLButtonElement;
-const nameInput = document.getElementById('name') as HTMLInputElement;
-const hexInput = document.getElementById('hex') as HTMLInputElement;
-const decimalInput = document.getElementById('decimal') as HTMLInputElement;
-const rgbInput = document.getElementById('rgb') as HTMLInputElement;
-const hslInput = document.getElementById('hsl') as HTMLInputElement;
-const alphaInput = document.getElementById('alpha') as HTMLInputElement;
-const copyNameButton = document.getElementById('copy-name') as HTMLButtonElement;
-const copyHexButton = document.getElementById('copy-hex') as HTMLButtonElement;
-const copyDecimalButton = document.getElementById('copy-decimal') as HTMLButtonElement;
-const copyRgbButton = document.getElementById('copy-rgb') as HTMLButtonElement;
-const copyHslButton = document.getElementById('copy-hsl') as HTMLButtonElement;
-const copyAlphaButton = document.getElementById('copy-alpha') as HTMLButtonElement;
-const luminanceOutput = document.getElementById('luminance') as HTMLInputElement;
-const temperatureOutput = document.getElementById('temperature') as HTMLInputElement;
-const colorHistory = document.getElementById('color-history') as HTMLUListElement;
-const fullColor = document.getElementById('full-color') as HTMLDivElement;
+const generateRandomButton = document.querySelector('#generate-random') as HTMLButtonElement;
+const colorDisplay = document.querySelector('#color-display') as HTMLDivElement;
+const colorPicker = document.querySelector('#color-picker') as HTMLInputElement;
+const darkenButton = document.querySelector('#darken') as HTMLButtonElement;
+const brightenButton = document.querySelector('#brighten') as HTMLButtonElement;
+const saturateButton = document.querySelector('#saturate') as HTMLButtonElement;
+const desaturateButton = document.querySelector('#desaturate') as HTMLButtonElement;
+const increaseLuminanceButton = document.querySelector('#increase-luminance') as HTMLButtonElement;
+const decreaseLuminanceButton = document.querySelector('#decrease-luminance') as HTMLButtonElement;
+const nameInput = document.querySelector('#name') as HTMLInputElement;
+const hexInput = document.querySelector('#hex') as HTMLInputElement;
+const decimalInput = document.querySelector('#decimal') as HTMLInputElement;
+const rgbInput = document.querySelector('#rgb') as HTMLInputElement;
+const hslInput = document.querySelector('#hsl') as HTMLInputElement;
+const alphaInput = document.querySelector('#alpha') as HTMLInputElement;
+const copyNameButton = document.querySelector('#copy-name') as HTMLButtonElement;
+const copyHexButton = document.querySelector('#copy-hex') as HTMLButtonElement;
+const copyDecimalButton = document.querySelector('#copy-decimal') as HTMLButtonElement;
+const copyRgbButton = document.querySelector('#copy-rgb') as HTMLButtonElement;
+const copyHslButton = document.querySelector('#copy-hsl') as HTMLButtonElement;
+const copyAlphaButton = document.querySelector('#copy-alpha') as HTMLButtonElement;
+const luminanceOutput = document.querySelector('#luminance') as HTMLInputElement;
+const temperatureOutput = document.querySelector('#temperature') as HTMLInputElement;
+const colorHistory = document.querySelector('#color-history') as HTMLUListElement;
+const fullColor = document.querySelector('#full-color') as HTMLDivElement;
 
 generateRandomButton.addEventListener('click', generateRandomColor);
 
@@ -81,9 +81,9 @@ hexInput.addEventListener('blur', () => {
 });
 
 decimalInput.addEventListener('blur', () => {
-    if (window.chroma.valid('#' + parseInt(decimalInput.value).toString(16).padStart(6, '0'))) {
+    if (window.chroma.valid('#' + Number.parseInt(decimalInput.value).toString(16).padStart(6, '0'))) {
         resetBorder(decimalInput);
-        updateResults(window.chroma('#' + parseInt(decimalInput.value).toString(16).padStart(6, '0')));
+        updateResults(window.chroma('#' + Number.parseInt(decimalInput.value).toString(16).padStart(6, '0')));
     } else setRedBorder(decimalInput);
 });
 
@@ -131,13 +131,13 @@ document.addEventListener('keydown', (event) => {
  * @param color The color to update results for.
  */
 function updateResults(color: Color) {
-    [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, alphaInput].forEach((element) => resetBorder(element));
+    for (const element of [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, alphaInput]) resetBorder(element);
 
     colorDisplay.style.color = color.hex();
     colorPicker.value = color.alpha(1).hex();
-    nameInput.value = !color.name().startsWith('#') ? color.name() : '';
+    nameInput.value = color.name().startsWith('#') ? '' : color.name();
     hexInput.value = color.hex();
-    decimalInput.value = parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
+    decimalInput.value = Number.parseInt(color.hex().replace(/^#/, ''), 16).toString(10);
     rgbInput.value = color.css();
     hslInput.value = color.css('hsl');
     alphaInput.value = color.alpha().toString();
@@ -148,7 +148,7 @@ function updateResults(color: Color) {
     colorHistoryElement.style.color = color.hex();
     colorHistoryElement.textContent = color.hex();
 
-    const appendedElement = colorHistory.appendChild(colorHistoryElement);
+    const appendedElement = colorHistory.appendChild(colorHistoryElement); // eslint-disable-line unicorn/prefer-dom-node-append
 
     appendedElement.addEventListener('click', () => updateResults(color));
 
@@ -161,7 +161,7 @@ function updateResults(color: Color) {
 function generateRandomColor() {
     const letters = '0123456789abcdef';
     let randomColor = '#';
-    for (let i = 0; i < 6; i++) randomColor += letters[Math.floor(Math.random() * 16)];
+    for (let index = 0; index < 6; index++) randomColor += letters[Math.floor(Math.random() * 16)];
 
     updateResults(window.chroma(randomColor));
 }

@@ -1,11 +1,11 @@
-const startButton = document.getElementById('start') as HTMLButtonElement;
-const stopButton = document.getElementById('stop') as HTMLButtonElement;
-const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const startButton = document.querySelector('#start') as HTMLButtonElement;
+const stopButton = document.querySelector('#stop') as HTMLButtonElement;
+const resetButton = document.querySelector('#reset') as HTMLButtonElement;
 
-const hoursDisplay = document.getElementById('hours-display') as HTMLSpanElement;
-const minutesDisplay = document.getElementById('minutes-display') as HTMLSpanElement;
-const secondsDisplay = document.getElementById('seconds-display') as HTMLSpanElement;
-const millisecondsDisplay = document.getElementById('milliseconds-display') as HTMLSpanElement;
+const hoursDisplay = document.querySelector('#hours-display') as HTMLSpanElement;
+const minutesDisplay = document.querySelector('#minutes-display') as HTMLSpanElement;
+const secondsDisplay = document.querySelector('#seconds-display') as HTMLSpanElement;
+const millisecondsDisplay = document.querySelector('#milliseconds-display') as HTMLSpanElement;
 
 /* Add event listeners */
 startButton.addEventListener('click', startStopwatch);
@@ -66,8 +66,8 @@ function displayTime() {
 
     millisecondsDisplay.textContent = format(value, 1, 1000, 3);
     secondsDisplay.textContent = format(value, 1000, 60, 2);
-    minutesDisplay.textContent = format(value, 60000, 60, 2);
-    hoursDisplay.textContent = format(value, 3600000, null, 2);
+    minutesDisplay.textContent = format(value, 60_000, 60, 2);
+    hoursDisplay.textContent = format(value, 3_600_000, null, 2);
 
     if (!paused) requestAnimationFrame(displayTime);
 }

@@ -1,9 +1,9 @@
 import { showAlert } from '../../functions.js';
 
-const numberDisplay = document.getElementById('counter') as HTMLSpanElement;
-const activationSelect = document.getElementById('activation-button') as HTMLSelectElement;
-const resetButton = document.getElementById('reset') as HTMLButtonElement;
-const manualActivationButton = document.getElementById('manual-activation') as HTMLButtonElement;
+const numberDisplay = document.querySelector('#counter') as HTMLSpanElement;
+const activationSelect = document.querySelector('#activation-button') as HTMLSelectElement;
+const resetButton = document.querySelector('#reset') as HTMLButtonElement;
+const manualActivationButton = document.querySelector('#manual-activation') as HTMLButtonElement;
 
 let number = 0;
 let key = 'Space';
@@ -11,9 +11,19 @@ let key = 'Space';
 /* Add event listeners */
 activationSelect.addEventListener('change', () => {
     blurAll();
-    if (activationSelect.value === '1') key = 'Space';
-    else if (activationSelect.value === '2') key = 'Enter';
-    else if (activationSelect.value === '3') key = 'KeyC';
+    switch (activationSelect.value) {
+        case '1': {
+            key = 'Space';
+            break;
+        }
+        case '2': {
+            key = 'Enter';
+            break;
+        }
+        case '3': {
+            key = 'KeyC';
+        }
+    }
 });
 resetButton.addEventListener('click', () => {
     blurAll();

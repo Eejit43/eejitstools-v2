@@ -1,12 +1,12 @@
 import { showAlert } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const characterDisplay = document.getElementById('character-count') as HTMLSpanElement;
-const wordDisplay = document.getElementById('word-count') as HTMLSpanElement;
-const sentenceDisplay = document.getElementById('sentence-count') as HTMLSpanElement;
-const lineDisplay = document.getElementById('line-count') as HTMLSpanElement;
-const paragraphDisplay = document.getElementById('paragraph-count') as HTMLSpanElement;
-const resetButton = document.getElementById('reset') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const characterDisplay = document.querySelector('#character-count') as HTMLSpanElement;
+const wordDisplay = document.querySelector('#word-count') as HTMLSpanElement;
+const sentenceDisplay = document.querySelector('#sentence-count') as HTMLSpanElement;
+const lineDisplay = document.querySelector('#line-count') as HTMLSpanElement;
+const paragraphDisplay = document.querySelector('#paragraph-count') as HTMLSpanElement;
+const resetButton = document.querySelector('#reset') as HTMLButtonElement;
 
 /* Add event listeners */
 input.addEventListener('input', () => {
@@ -21,7 +21,7 @@ input.addEventListener('input', () => {
     sentenceDisplay.textContent = input.value.trim()
         ? input.value
               .trim()
-              .split(/[.?!]/)
+              .split(/[!.?]/)
               .filter((sentence) => !/^\s*$/.test(sentence))
               .length.toString()
         : '0';

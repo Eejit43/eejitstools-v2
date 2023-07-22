@@ -1,29 +1,28 @@
 import { escapeHtml, showAlert } from '../../functions.js';
 
-const eventsTitle = document.getElementById('events-title') as HTMLDivElement;
-const eventsDisplay = document.getElementById('events') as HTMLDivElement;
-const monthInput = document.getElementById('month') as HTMLInputElement;
-const dateInput = document.getElementById('date') as HTMLInputElement;
-const getDateButton = document.getElementById('get-date') as HTMLButtonElement;
-const resetDateButton = document.getElementById('reset-date') as HTMLButtonElement;
-const yearOverview = document.getElementById('year-overview') as HTMLAnchorElement;
-const yearOverviewList = document.getElementById('year-overview-list') as HTMLAnchorElement;
+const eventsTitle = document.querySelector('#events-title') as HTMLDivElement;
+const eventsDisplay = document.querySelector('#events') as HTMLDivElement;
+const monthInput = document.querySelector('#month') as HTMLInputElement;
+const dateInput = document.querySelector('#date') as HTMLInputElement;
+const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
+const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
+const yearOverview = document.querySelector('#year-overview') as HTMLAnchorElement;
+const yearOverviewList = document.querySelector('#year-overview-list') as HTMLAnchorElement;
 
 /* Add event listeners */
 getDateButton.addEventListener('click', getFromDate);
 resetDateButton.addEventListener('click', getCurrent);
-['input', 'paste'].forEach((event) => {
+for (const event of ['input', 'paste'])
     monthInput.addEventListener(event, () => {
-        monthInput.value = monthInput.value.replace(/((?![0-9]).)/g, '');
+        monthInput.value = monthInput.value.replaceAll(/((?!\d).)/g, '');
         checkInput(monthInput);
     });
-});
-['input', 'paste'].forEach((event) => {
+
+for (const event of ['input', 'paste'])
     dateInput.addEventListener(event, () => {
-        dateInput.value = dateInput.value.replace(/((?![0-9]).)/g, '');
+        dateInput.value = dateInput.value.replaceAll(/((?!\d).)/g, '');
         checkInput(dateInput);
     });
-});
 
 /**
  * Checks and updates an elements value if needed.
@@ -31,7 +30,7 @@ resetDateButton.addEventListener('click', getCurrent);
  */
 function checkInput(element: HTMLInputElement) {
     if (element.value.length > element.maxLength) element.value = element.value.slice(0, element.maxLength);
-    if ((element.max && element.value > element.max) || parseInt(element.value) < 1) element.value = element.value.slice(0, 1);
+    if ((element.max && element.value > element.max) || Number.parseInt(element.value) < 1) element.value = element.value.slice(0, 1);
 }
 
 const currentTime = new Date();
@@ -59,7 +58,7 @@ function getFromDate() {
     const monthValue = escapeHtml(monthInput.value || month).padStart(2, '0');
     const dateValue = escapeHtml(dateInput.value || date).padStart(2, '0');
 
-    if (parseInt(monthValue) === 0 || parseInt(dateValue) === 0) showAlert('Input cannot be zero!', 'error');
+    if (Number.parseInt(monthValue) === 0 || Number.parseInt(dateValue) === 0) showAlert('Input cannot be zero!', 'error');
     else {
         eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
@@ -71,9 +70,9 @@ function getFromDate() {
             const { events, eventsRaw } = data;
 
             const newEvents = [];
-            for (let i = 0; i < events.length; i++)
-                if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
-                else newEvents.push(`– ${events[i]}`);
+            for (let index = 0; index < events.length; index++)
+                if (eventsRaw[index].flag === null) newEvents.push(`– ${events[index]}`);
+                else newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[index].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[index]}`);
 
             if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
             else eventsDisplay.innerHTML = newEvents.join('<br />');
@@ -97,9 +96,9 @@ function getCurrent() {
         const { events, eventsRaw } = data;
 
         const newEvents = [];
-        for (let i = 0; i < events.length; i++)
-            if (eventsRaw[i].flag !== null) newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[i].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[i]}`);
-            else newEvents.push(`– ${events[i]}`);
+        for (let index = 0; index < events.length; index++)
+            if (eventsRaw[index].flag === null) newEvents.push(`– ${events[index]}`);
+            else newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[index].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[index]}`);
 
         if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
         else eventsDisplay.innerHTML = newEvents.join('<br />');

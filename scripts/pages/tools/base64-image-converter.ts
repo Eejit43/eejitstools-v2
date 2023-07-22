@@ -1,18 +1,18 @@
 import { copyValue, createBase64ObjectUrl, escapeHtml, resetResult, showAlert, showResult } from '../../functions.js';
 
-const fileUploadLabel = document.getElementById('file-upload-label') as HTMLLabelElement;
-const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
-const fileUploadMessage = document.getElementById('file-message') as HTMLDivElement;
-const encodeButton = document.getElementById('encode') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const b64Result = document.getElementById('b64-result') as HTMLTextAreaElement;
-const b64CopyResultButton = document.getElementById('b64-copy-result') as HTMLButtonElement;
-const b64OpenResultLink = document.getElementById('b64-open-result-link') as HTMLAnchorElement;
-const b64OpenResultButton = document.getElementById('b64-open-result') as HTMLButtonElement;
-const input = document.getElementById('string-input') as HTMLTextAreaElement;
-const decodeButton = document.getElementById('decode') as HTMLButtonElement;
-const clearButton2 = document.getElementById('clear2') as HTMLButtonElement;
-const imageOutput = document.getElementById('image-output') as HTMLImageElement;
+const fileUploadLabel = document.querySelector('#file-upload-label') as HTMLLabelElement;
+const fileUpload = document.querySelector('#file-upload') as HTMLInputElement;
+const fileUploadMessage = document.querySelector('#file-message') as HTMLDivElement;
+const encodeButton = document.querySelector('#encode') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const b64Result = document.querySelector('#b64-result') as HTMLTextAreaElement;
+const b64CopyResultButton = document.querySelector('#b64-copy-result') as HTMLButtonElement;
+const b64OpenResultLink = document.querySelector('#b64-open-result-link') as HTMLAnchorElement;
+const b64OpenResultButton = document.querySelector('#b64-open-result') as HTMLButtonElement;
+const input = document.querySelector('#string-input') as HTMLTextAreaElement;
+const decodeButton = document.querySelector('#decode') as HTMLButtonElement;
+const clearButton2 = document.querySelector('#clear2') as HTMLButtonElement;
+const imageOutput = document.querySelector('#image-output') as HTMLImageElement;
 
 let uploadedFile: File | null = null;
 
@@ -54,7 +54,7 @@ decodeButton.addEventListener('click', () => {
         showAlert('Empty input!', 'error');
         showResult('decode', 'error');
     } else {
-        const string = !/data:image\/.*?;base64,/.test(input.value) ? 'data:image/png;base64,' + input.value : input.value;
+        const string = /data:image\/.*?;base64,/.test(input.value) ? input.value : 'data:image/png;base64,' + input.value;
         displayImage(string);
     }
 });
@@ -106,12 +106,12 @@ function encode() {
         const reader = new FileReader();
         reader.readAsDataURL(uploadedFile);
         reader.addEventListener('loadend', () => {
-            const imageType = (reader.result as string).replace(/^data:image\/(.*?);base64,.*$/g, '$1');
+            const imageType = (reader.result as string).replaceAll(/^data:image\/(.*?);base64,.*$/g, '$1');
             if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {
                 b64Result.value = reader.result as string;
                 b64CopyResultButton.disabled = false;
                 b64OpenResultButton.disabled = false;
-                b64OpenResultLink.href = createBase64ObjectUrl((reader.result as string).replace(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
+                b64OpenResultLink.href = createBase64ObjectUrl((reader.result as string).replaceAll(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
                 showResult('encode', 'success');
             } else {
                 showAlert('Invalid file type! (must be .png, .jpg, .jpeg, .webp, .bmp, or .gif)', 'error');

@@ -6,7 +6,7 @@ declare global {
     }
 }
 
-const browserInfo = document.getElementById('browser-info') as HTMLDivElement;
+const browserInfo = document.querySelector('#browser-info') as HTMLDivElement;
 
 const parser = new window.UAParser();
 
@@ -23,7 +23,7 @@ const output = [
 
 browserInfo.textContent = '';
 
-output.forEach((item) => {
+for (const item of output) {
     const row = document.createElement('div');
 
     const icon = document.createElement('i');
@@ -36,11 +36,11 @@ output.forEach((item) => {
     value.style.color = 'gray';
     value.textContent = item.value.trim();
 
-    row.appendChild(icon);
-    row.appendChild(document.createTextNode(' '));
-    row.appendChild(name);
-    row.appendChild(document.createTextNode(': '));
-    row.appendChild(value);
+    row.append(icon);
+    row.append(document.createTextNode(' '));
+    row.append(name);
+    row.append(document.createTextNode(': '));
+    row.append(value);
 
-    browserInfo.appendChild(row);
-});
+    browserInfo.append(row);
+}

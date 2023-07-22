@@ -1,20 +1,20 @@
 import { copyValue, updateArrow } from '../../functions.js';
 
-const standardInput = document.getElementById('standard-input') as HTMLInputElement;
-const standardInputResetButton = document.getElementById('standard-input-reset') as HTMLButtonElement;
-const standardArrow = document.getElementById('standard-arrow')!;
-const unixInput = document.getElementById('unix-input') as HTMLInputElement;
-const unixInputResetButton = document.getElementById('unix-input-reset') as HTMLButtonElement;
-const unixInputSwitchButton = document.getElementById('unix-input-switch') as HTMLButtonElement;
-const unixArrow = document.getElementById('unix-arrow')!;
-const unixOutputCopyButton = document.getElementById('unix-output-copy') as HTMLButtonElement;
-const unixOutputSwitchButton = document.getElementById('unix-output-switch') as HTMLButtonElement;
-const standardOutputCopyButton = document.getElementById('standard-output-copy') as HTMLButtonElement;
-const standardOutput = document.getElementById('standard-output') as HTMLInputElement;
-const unixOutput = document.getElementById('unix-output') as HTMLInputElement;
+const standardInput = document.querySelector('#standard-input') as HTMLInputElement;
+const standardInputResetButton = document.querySelector('#standard-input-reset') as HTMLButtonElement;
+const standardArrow = document.querySelector('#standard-arrow') as HTMLElement;
+const unixInput = document.querySelector('#unix-input') as HTMLInputElement;
+const unixInputResetButton = document.querySelector('#unix-input-reset') as HTMLButtonElement;
+const unixInputSwitchButton = document.querySelector('#unix-input-switch') as HTMLButtonElement;
+const unixArrow = document.querySelector('#unix-arrow') as HTMLElement;
+const unixOutputCopyButton = document.querySelector('#unix-output-copy') as HTMLButtonElement;
+const unixOutputSwitchButton = document.querySelector('#unix-output-switch') as HTMLButtonElement;
+const standardOutputCopyButton = document.querySelector('#standard-output-copy') as HTMLButtonElement;
+const standardOutput = document.querySelector('#standard-output') as HTMLInputElement;
+const unixOutput = document.querySelector('#unix-output') as HTMLInputElement;
 
-const unixOutputTitle = document.getElementById('unix-output-title') as HTMLDivElement;
-const unixInputTitle = document.getElementById('unix-input-title') as HTMLDivElement;
+const unixOutputTitle = document.querySelector('#unix-output-title') as HTMLDivElement;
+const unixInputTitle = document.querySelector('#unix-input-title') as HTMLDivElement;
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
@@ -50,7 +50,7 @@ function updateUnixOutput() {
         unixOutput.value = '';
         unixOutputCopyButton.disabled = true;
         unixOutputSwitchButton.disabled = true;
-    } else if (isNaN(standardTime.getTime())) {
+    } else if (Number.isNaN(standardTime.getTime())) {
         updateArrow(standardArrow, 'error');
         unixOutput.value = '';
         unixOutputCopyButton.disabled = true;
@@ -68,7 +68,7 @@ function updateUnixOutput() {
  * Updates the unix time input and triggers the update of the standard time output.
  */
 function updateUnixTime() {
-    unixInput.value = unixInputState === 's' ? new Date().getTime().toString().slice(0, -3) : new Date().getTime().toString();
+    unixInput.value = unixInputState === 's' ? Date.now().toString().slice(0, -3) : Date.now().toString();
     updateStandardOutput();
 }
 
@@ -76,12 +76,12 @@ function updateUnixTime() {
  * Updates the standard time output.
  */
 function updateStandardOutput() {
-    const unixTime = unixInputState === 'ms' ? new Date(parseInt(unixInput.value)) : new Date(parseInt(unixInput.value) * 1000);
+    const unixTime = unixInputState === 'ms' ? new Date(Number.parseInt(unixInput.value)) : new Date(Number.parseInt(unixInput.value) * 1000);
     if (unixInput.value.length === 0) {
         updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
         standardOutputCopyButton.disabled = true;
-    } else if (isNaN(unixTime.getTime())) {
+    } else if (Number.isNaN(unixTime.getTime())) {
         updateArrow(unixArrow, 'error');
         standardOutput.value = '';
         standardOutputCopyButton.disabled = true;

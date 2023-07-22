@@ -1,18 +1,18 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const regexInput = document.getElementById('regex-input') as HTMLInputElement;
-const flagsInput = document.getElementById('flags-input') as HTMLInputElement;
-const replaceInput = document.getElementById('replace-input') as HTMLInputElement;
-const textInput = document.getElementById('text-input') as HTMLTextAreaElement;
-const runButton = document.getElementById('run-button') as HTMLButtonElement;
-const clearButton = document.getElementById('clear-button') as HTMLButtonElement;
-const clearAllButton = document.getElementById('clear-all-button') as HTMLButtonElement;
-const switchButton = document.getElementById('switch-button') as HTMLButtonElement;
-const outputText = document.getElementById('output-text') as HTMLTextAreaElement;
-const copyResultButton = document.getElementById('copy-result-button') as HTMLButtonElement;
+const regexInput = document.querySelector('#regex-input') as HTMLInputElement;
+const flagsInput = document.querySelector('#flags-input') as HTMLInputElement;
+const replaceInput = document.querySelector('#replace-input') as HTMLInputElement;
+const textInput = document.querySelector('#text-input') as HTMLTextAreaElement;
+const runButton = document.querySelector('#run-button') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear-button') as HTMLButtonElement;
+const clearAllButton = document.querySelector('#clear-all-button') as HTMLButtonElement;
+const switchButton = document.querySelector('#switch-button') as HTMLButtonElement;
+const outputText = document.querySelector('#output-text') as HTMLTextAreaElement;
+const copyResultButton = document.querySelector('#copy-result-button') as HTMLButtonElement;
 
 /* Add event listeners */
-[regexInput, replaceInput].forEach((element) =>
+for (const element of [regexInput, replaceInput])
     element.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
             const oldPosition = (event.target as HTMLInputElement).selectionStart!;
@@ -20,14 +20,12 @@ const copyResultButton = document.getElementById('copy-result-button') as HTMLBu
             element.value = [element.value.slice(0, oldPosition), '\\n', element.value.slice(oldPosition)].join('');
             element.setSelectionRange(newPosition, newPosition);
         }
-    })
-);
-[regexInput, replaceInput].forEach((element) =>
+    });
+for (const element of [regexInput, replaceInput])
     element.addEventListener('paste', (event) => {
         event.preventDefault();
-        element.value += event.clipboardData?.getData('text').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
-    })
-);
+        element.value += event.clipboardData?.getData('text').replaceAll('\n', '\\n').replaceAll('\r', '\\r');
+    });
 runButton.addEventListener('click', runRegexTester);
 clearButton.addEventListener('click', () => {
     textInput.value = '';
@@ -93,14 +91,14 @@ function runRegexTester() {
     if (textInput.value.length === 0 || regexInput.value.length === 0) {
         showAlert('Empty values(s)!', 'error');
         showResult('regex', 'error');
-    } else if (!isValid) {
-        showAlert('Invalid regex!', 'error');
-        showResult('regex', 'error');
-    } else {
+    } else if (isValid) {
         const finalRegex = new RegExp(regexInput.value, flagsInput.value);
-        const replace = JSON.parse(`"${replaceInput.value.replace(/"/g, '\\"')}"`) as string;
+        const replace = JSON.parse(`"${replaceInput.value.replaceAll('"', '\\"')}"`) as string;
         showResult('regex', 'success');
         outputText.value = textInput.value.replace(finalRegex, replace);
         copyResultButton.disabled = false;
+    } else {
+        showAlert('Invalid regex!', 'error');
+        showResult('regex', 'error');
     }
 }

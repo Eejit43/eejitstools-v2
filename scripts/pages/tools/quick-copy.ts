@@ -1,23 +1,23 @@
 import { copyText, showAlert } from '../../functions.js';
 
-const clearClipboardButton = document.getElementById('clear-clipboard') as HTMLButtonElement;
-const copyZwsButton = document.getElementById('copy-zws') as HTMLButtonElement;
-const copyNbspButton = document.getElementById('copy-nbsp') as HTMLButtonElement;
-const copyEmsButton = document.getElementById('copy-ems') as HTMLButtonElement;
-const copyEnsButton = document.getElementById('copy-ens') as HTMLButtonElement;
-const copyTsButton = document.getElementById('copy-ts') as HTMLButtonElement;
-const clipboardWarning = document.getElementById('clipboard-warning') as HTMLDivElement;
-const copiedText = document.getElementById('copied-text') as HTMLTextAreaElement;
-const selectClipboardButton = document.getElementById('select-clipboard') as HTMLButtonElement;
+const clearClipboardButton = document.querySelector('#clear-clipboard') as HTMLButtonElement;
+const copyZwsButton = document.querySelector('#copy-zws') as HTMLButtonElement;
+const copyNbspButton = document.querySelector('#copy-nbsp') as HTMLButtonElement;
+const copyEmsButton = document.querySelector('#copy-ems') as HTMLButtonElement;
+const copyEnsButton = document.querySelector('#copy-ens') as HTMLButtonElement;
+const copyTsButton = document.querySelector('#copy-ts') as HTMLButtonElement;
+const clipboardWarning = document.querySelector('#clipboard-warning') as HTMLDivElement;
+const copiedText = document.querySelector('#copied-text') as HTMLTextAreaElement;
+const selectClipboardButton = document.querySelector('#select-clipboard') as HTMLButtonElement;
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
 copyZwsButton.addEventListener('click', () => {
-    copyText(copyZwsButton, '\u200b');
+    copyText(copyZwsButton, '\u200B');
     clipboardDisplay();
 });
 copyNbspButton.addEventListener('click', () => {
-    copyText(copyNbspButton, '\u00a0');
+    copyText(copyNbspButton, '\u00A0');
     clipboardDisplay();
 });
 copyEmsButton.addEventListener('click', () => {
@@ -49,7 +49,7 @@ let clipboardReadAllowed = false;
  * @param message The message to display.
  */
 function showWarning(message: string) {
-    if (clipboardWarning.innerHTML.replace(/<br>/g, '<br />') !== message) clipboardWarning.innerHTML = message;
+    if (clipboardWarning.innerHTML.replaceAll('<br>', '<br />') !== message) clipboardWarning.innerHTML = message;
 }
 
 /**
@@ -86,7 +86,7 @@ async function requestPermission() {
     }
 }
 
-requestPermission();
+requestPermission(); // eslint-disable-line unicorn/prefer-top-level-await
 
 let interval: number | null = null;
 
@@ -119,22 +119,17 @@ async function clipboardDisplay() {
         for (const datum of data)
             if (datum.types.includes('text/plain')) {
                 const blob = await datum.getType('text/plain'); // eslint-disable-line no-await-in-loop
+                const text = await blob.text(); // eslint-disable-line no-await-in-loop
 
-                const reader = new FileReader();
-                reader.readAsText(blob);
-
-                reader.addEventListener('load', () => {
-                    const text = reader.result?.toString() ?? '';
-                    if (text.length === 0) {
-                        copiedText.value = '';
-                        selectClipboardButton.disabled = true;
-                        showWarning('<span style="color:#009c3f"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
-                    } else {
-                        copiedText.value = text;
-                        selectClipboardButton.disabled = false;
-                        showWarning('');
-                    }
-                });
+                if (text.length === 0) {
+                    copiedText.value = '';
+                    selectClipboardButton.disabled = true;
+                    showWarning('<span style="color:#009c3f"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
+                } else {
+                    copiedText.value = text;
+                    selectClipboardButton.disabled = false;
+                    showWarning('');
+                }
             } else if (datum.types.includes('image/png')) {
                 const blob = await datum.getType('image/png'); // eslint-disable-line no-await-in-loop
 
@@ -146,8 +141,8 @@ async function clipboardDisplay() {
                 if (storedData !== blob.size) storedData = blob.size;
             }
     } catch (error) {
-        if ((error as Error).message.match(/focused/)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
-        else if ((error as Error).message.match(/user gesture/)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
+        if (/focused/.test((error as Error).message)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+        else if (/user gesture/.test((error as Error).message)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
 
         const text = await navigator.clipboard.readText();
 

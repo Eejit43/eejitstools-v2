@@ -1,13 +1,13 @@
 import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
 
-const input = document.getElementById('input') as HTMLTextAreaElement;
-const toUpperButton = document.getElementById('to-upper') as HTMLButtonElement;
-const toLowerButton = document.getElementById('to-lower') as HTMLButtonElement;
-const toTitleButton = document.getElementById('to-title') as HTMLButtonElement;
-const toSentenceButton = document.getElementById('to-sentence') as HTMLButtonElement;
-const clearButton = document.getElementById('clear') as HTMLButtonElement;
-const result = document.getElementById('result') as HTMLTextAreaElement;
-const copyResultButton = document.getElementById('copy-result') as HTMLButtonElement;
+const input = document.querySelector('#input') as HTMLTextAreaElement;
+const toUpperButton = document.querySelector('#to-upper') as HTMLButtonElement;
+const toLowerButton = document.querySelector('#to-lower') as HTMLButtonElement;
+const toTitleButton = document.querySelector('#to-title') as HTMLButtonElement;
+const toSentenceButton = document.querySelector('#to-sentence') as HTMLButtonElement;
+const clearButton = document.querySelector('#clear') as HTMLButtonElement;
+const result = document.querySelector('#result') as HTMLTextAreaElement;
+const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
 
 /* Add event listeners */
 toUpperButton.addEventListener('click', toUpper);
@@ -66,23 +66,21 @@ function toLower() {
     }
 }
 
+const lowercaseWords = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'From', 'If', 'In', 'Into', 'Like', 'Near', 'Nor', 'Of', 'Off', 'On', 'Once', 'Onto', 'Or', 'Over', 'Past', 'So', 'Than', 'That', 'The', 'Till', 'To', 'Up', 'Upon', 'When', 'With', 'Yet'];
+const uppercaseWords = ['Id', 'Tv'];
+
 /**
  * Converts the provided string to title case.
  * @param string The string to convert.
  */
 function titleCase(string: string) {
-    string = string.replace(/([^\W_]+[^\s-]*) */g, (txt) => {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    string = string.replaceAll(/([^\W_]+[^\s-]*) */g, (txt) => {
+        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
     });
 
-    const lowers = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'From', 'If', 'In', 'Into', 'Like', 'Near', 'Nor', 'Of', 'Off', 'On', 'Once', 'Onto', 'Or', 'Over', 'Past', 'So', 'Than', 'That', 'The', 'Till', 'To', 'Up', 'Upon', 'When', 'With', 'Yet'];
-    for (let i = 0, j = lowers.length; i < j; i++)
-        string = string.replace(new RegExp(`\\s${lowers[i]}\\s`, 'g'), (text) => {
-            return text.toLowerCase();
-        });
+    for (const word of lowercaseWords) string = string.replaceAll(new RegExp(`\\s${word}\\s`, 'g'), (text) => text.toLowerCase());
 
-    const uppers = ['Id', 'Tv'];
-    for (let i = 0, j = uppers.length; i < j; i++) string = string.replace(new RegExp(`\\b${uppers[i]}\\b`, 'g'), uppers[i].toUpperCase());
+    for (const word of uppercaseWords) string = string.replaceAll(new RegExp(`\\b${word}\\b`, 'g'), word.toUpperCase());
 
     return string;
 }
@@ -111,14 +109,14 @@ function toSentence() {
     } else {
         result.value = input.value
             .toLowerCase()
-            .replace(/(^\s*\w|[.!?]\s*\w)/gm, (char) => {
+            .replaceAll(/(^\s*\w|[!.?]\s*\w)/gm, (char) => {
                 return char.toUpperCase();
             })
-            .replace(/(\s)i(\.|!|\?|\s|\n|$)/gim, '$1I$2')
-            .replace(/(\s)i'm(\.|!|\?|\s|\n|$)/gim, "$1I'm$2")
-            .replace(/(\s)i'd(\.|!|\?|\s|\n|$)/gim, "$1I'd$2")
-            .replace(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
-            .replace(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
+            .replaceAll(/(\s)i(\.|!|\?|\s|\n|$)/gim, '$1I$2')
+            .replaceAll(/(\s)i'm(\.|!|\?|\s|\n|$)/gim, "$1I'm$2")
+            .replaceAll(/(\s)i'd(\.|!|\?|\s|\n|$)/gim, "$1I'd$2")
+            .replaceAll(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
+            .replaceAll(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
         showResult('sentence', 'success');
         copyResultButton.disabled = false;
     }
