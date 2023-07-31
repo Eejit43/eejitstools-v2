@@ -116,10 +116,10 @@ export const toneIndicators = [
     { indicator: 'cb', meaning: 'clickbait' },
     { indicator: 'cj', meaning: 'coping joke' },
     { indicator: 'con', meaning: 'concerned' },
-    { indicator: 'cr', meaning: 'cringey' },
+    { indicator: 'cr', meaning: 'cringy' },
     { indicator: 'crit', meaning: 'being critical / giving criticism' },
     { indicator: 'cur', meaning: 'curious' },
-    { indicator: 'cwh', meaning: 'coping with humour' },
+    { indicator: 'cwh', meaning: 'coping with humor' },
     { indicator: 'dkm', meaning: "don't kill me (used with opinions or some jokes)" },
     { indicator: 'dr', meaning: "don't reply" },
     { indicator: 'e', meaning: 'embarrassed <i>OR</i> excited' },
@@ -183,7 +183,7 @@ export const toneIndicators = [
     { indicator: 'tfj', meaning: '3/4 joking' },
     { indicator: 'th', meaning: 'threat' },
     { indicator: 'tic', meaning: 'tics' },
-    { indicator: 'ui', meaning: 'unironic' },
+    { indicator: 'ui', meaning: 'not ironic' },
     { indicator: 'vu', meaning: 'very upset' }
 ];
 
@@ -414,12 +414,12 @@ type AllPages = Record<string, Record<string, ParsedPage>>;
 
 export const allPages = structuredClone(preParsedPages) as AllPages;
 
-Object.entries(preParsedPages).forEach(([category, pages]) => {
-    Object.entries(pages).forEach(([id, page]) => {
+for (const [category, pages] of Object.entries(preParsedPages)) 
+    for (const [id, page] of Object.entries(pages)) {
         (allPages[category] as Record<string, ParsedPage>)[id] = {
             ...blankProperties,
             ...page,
-            descriptionParsed: page.description.replace(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
+            descriptionParsed: page.description.replaceAll(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),
             id,
             category,
             link: `/${category}/${id}`,
@@ -428,12 +428,10 @@ Object.entries(preParsedPages).forEach(([category, pages]) => {
 
         if (!('script' in page)) delete pages[id].script;
         if (!('style' in page)) delete pages[id].style;
-    });
-});
-
-/* eslint-disable @typescript-eslint/naming-convention */
+    }
 
 export const holidayEmojis: Record<string, string> = {
+    /* eslint-disable @typescript-eslint/naming-convention */
     "New Year's Day": '🎉',
     'Martin Luther King Jr. Day': '👴🏾',
     'First Day of Black History Month': '✊🏿',
@@ -470,11 +468,14 @@ export const holidayEmojis: Record<string, string> = {
     'Christmas Eve': '🎅🏻',
     'Christmas Day': '🎄',
     "New Year's Eve": '🕛'
+    /* eslint-enable @typescript-eslint/naming-convention */
 };
 
 export const moonEmojis: Record<string, string> = {
+    /* eslint-disable @typescript-eslint/naming-convention */
     'New moon': '🌑',
     'First quarter': '🌓',
     'Full moon': '🌕',
     'Last quarter': '🌗'
+    /* eslint-enable @typescript-eslint/naming-convention */
 };
