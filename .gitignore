@@ -3,7 +3,6 @@
 node_modules/
 
 *.js
-!compile.js
 !public/scripts/external
 
 public/styles
