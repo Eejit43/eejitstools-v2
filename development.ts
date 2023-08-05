@@ -12,7 +12,7 @@ readline.emitKeypressEvents(process.stdin);
 const config = {
     command: {
         name: 'railway',
-        args: ['run', 'node', '--max-old-space-size=100', 'app.js']
+        args: ['run', 'node', '--enable-source-maps', '--max-old-space-size=100', 'app.js']
     },
     watch: ['ts', 'hbs', 'css'].map((extension) => `**/*.${extension}`),
     ignore: ['**/node_modules/**', 'development.ts']
