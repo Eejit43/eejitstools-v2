@@ -257,7 +257,12 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     if (dateCell.dataset.holiday ?? dateCell.dataset.phase) {
         eventsList.innerHTML = '';
 
-        const events = [dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`), dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null].flat().filter(Boolean) as string[];
+        const events = [
+            dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`),
+            dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null,
+        ]
+            .flat()
+            .filter(Boolean) as string[];
 
         for (const event of events) {
             const eventElement = document.createElement('li');
@@ -336,7 +341,9 @@ function loadTodoList() {
                 const todoFinal: Record<string, boolean> = {};
                 for (const checkbox of todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>) todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
-                todoSaveButton.disabled = !Object.entries(todoFinal).some(([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked);
+                todoSaveButton.disabled = !Object.entries(todoFinal).some(
+                    ([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked,
+                );
             });
 
             const todoLabel = document.createElement('label');
@@ -391,8 +398,8 @@ function loadTodoList() {
                     date: displayedDate,
                     month: displayedMonth + 1,
                     year: displayedYear,
-                    todo: todoFinal
-                })
+                    todo: todoFinal,
+                }),
             })
         ).json()) as TodoData & { error?: string };
 

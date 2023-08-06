@@ -59,7 +59,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
                 .replace(/-{2,}/g, '–')
                 .replace(/(href|src)=(["']) {1,}/, '$1=$2')
                 .replace(/(href|src)=(["'])(?!http|mailto)(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/apod/$3$4')
-                .replace(/(href|src)=(["'])\/(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/$3$4')
+                .replace(/(href|src)=(["'])\/(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/$3$4'),
         );
         html.querySelectorAll('a').forEach((element) => element.setAttribute('target', '_blank'));
 
@@ -100,7 +100,10 @@ export async function fetchApod(year: string, month: string, date: string): Prom
             .replace(/<b> (.*?) <\/b>/g, '$1')
             .replace(/(\w|>)\/ /g, '$1/')
             .replace(/ \.{3}/g, '...')
-            .replace(/(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +Your Sky Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi, '')
+            .replace(
+                /(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +Your Sky Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi,
+                '',
+            )
             .replace(/<br( \/)?> *$/, '')
             .trim();
 
@@ -111,7 +114,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
             title,
             credit,
             explanation,
-            media
+            media,
         };
     } catch (error) {
         consola.error(error);

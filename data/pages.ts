@@ -24,7 +24,7 @@ const phoneticAlphabet = [
     { letter: 'W', codeWord: 'Whiskey' },
     { letter: 'X', codeWord: 'X-Ray' },
     { letter: 'Y', codeWord: 'Yankee' },
-    { letter: 'Z', codeWord: 'Zulu' }
+    { letter: 'Z', codeWord: 'Zulu' },
 ];
 
 const textAbbreviations = [
@@ -106,7 +106,7 @@ const textAbbreviations = [
     { abbreviation: 'WTH', meaning: 'what the heck/hell' },
     { abbreviation: 'YK', meaning: 'you know' },
     { abbreviation: 'YOLO', meaning: 'you only live once' },
-    { abbreviation: 'YW', meaning: "you're welcome" }
+    { abbreviation: 'YW', meaning: "you're welcome" },
 ];
 
 export const toneIndicators = [
@@ -184,7 +184,7 @@ export const toneIndicators = [
     { indicator: 'th', meaning: 'threat' },
     { indicator: 'tic', meaning: 'tics' },
     { indicator: 'ui', meaning: 'not ironic' },
-    { indicator: 'vu', meaning: 'very upset' }
+    { indicator: 'vu', meaning: 'very upset' },
 ];
 
 const minecraftColorCodes = [
@@ -203,7 +203,7 @@ const minecraftColorCodes = [
     { color: 'White', colorName: 'white', colorCode: 'f', motdCode: '00A7f', hexCode: 'ffffff', backgroundColor: 'ffffff', textColor: '000000' },
     { color: 'Gray', colorName: 'gray', colorCode: '7', motdCode: '00A77', hexCode: 'aaaaaa', backgroundColor: 'aaaaaa', textColor: '000000' },
     { color: 'Dark Gray', colorName: 'dark_gray', colorCode: '8', motdCode: '00A78', hexCode: '555555', backgroundColor: '555555', textColor: 'fafafa' },
-    { color: 'Black', colorName: 'black', colorCode: '0', motdCode: '00A70', hexCode: '000000', backgroundColor: '000000', textColor: 'fafafa' }
+    { color: 'Black', colorName: 'black', colorCode: '0', motdCode: '00A70', hexCode: '000000', backgroundColor: '000000', textColor: 'fafafa' },
 ];
 
 const minecraftFormattingCodes = [
@@ -212,7 +212,7 @@ const minecraftFormattingCodes = [
     { type: 'Strikethrough', formattingCode: 'm', motdCode: '00A7m', style: 'text-decoration: line-through' },
     { type: 'Underline', formattingCode: 'n', motdCode: '00A7n', style: 'text-decoration: underline' },
     { type: 'Italic', formattingCode: 'o', motdCode: '00A7o', style: 'font-style: italic' },
-    { type: 'Reset color and formatting', formattingCode: 'r', motdCode: '00A7r', style: '' }
+    { type: 'Reset color and formatting', formattingCode: 'r', motdCode: '00A7r', style: '' },
 ];
 
 const stateAbbreviations = [
@@ -265,7 +265,7 @@ const stateAbbreviations = [
     { name: 'Washington', postal: 'WA', standard: 'Wash.' },
     { name: 'West Virginia', postal: 'WV', standard: 'W.Va.' },
     { name: 'Wisconsin', postal: 'WI', standard: 'Wis.' },
-    { name: 'Wyoming', postal: 'WY', standard: 'Wyo.' }
+    { name: 'Wyoming', postal: 'WY', standard: 'Wyo.' },
 ];
 
 interface Script {
@@ -288,24 +288,24 @@ type Imports = Record<
 
 const imports: Imports = {
     mathJax: {
-        script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' }
+        script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' },
     },
     mathJs: {
-        script: { link: 'https://unpkg.com/mathjs/lib/browser/math.js' }
+        script: { link: 'https://unpkg.com/mathjs/lib/browser/math.js' },
     },
     minecraft: {
-        style: { link: 'minecraft.css' }
+        style: { link: 'minecraft.css' },
     },
     odometer: {
         style: { link: 'external/odometer.css' },
-        script: { link: '/scripts/external/odometer.js', module: true, external: false }
+        script: { link: '/scripts/external/odometer.js', module: true, external: false },
     },
     uaParser: {
-        script: { link: 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js' }
+        script: { link: 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js' },
     },
     chroma: {
-        script: { link: 'https://cdn.jsdelivr.net/npm/chroma-js/chroma.min.js' }
-    }
+        script: { link: 'https://cdn.jsdelivr.net/npm/chroma-js/chroma.min.js' },
+    },
 };
 
 export const blankProperties = {
@@ -321,7 +321,7 @@ export const blankProperties = {
     style: false,
     additionalScripts: [],
     additionalStyles: [],
-    keywords: []
+    keywords: [],
 };
 
 interface Page {
@@ -350,49 +350,117 @@ const preParsedPages: PreParsedPages = {
         'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system', additionalScripts: [imports.uaParser.script] },
         calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with personal to-do list', toolbox: false },
         'case-changer': { title: 'Case Changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
-        'color-info': { title: 'Color Information', icon: 'palette', description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors', additionalScripts: [imports.chroma.script] },
+        'color-info': {
+            title: 'Color Information',
+            icon: 'palette',
+            description: 'Use a color picker or manually input Hexadecimal (Hex), Decimal, RGB(A), HSL(A), CMYK(A), or valid CSS color names, and view conversions and manipulate those colors',
+            additionalScripts: [imports.chroma.script],
+        },
         timer: { title: 'Countdown Timer', icon: 'bell', description: 'Simple countdown timer with end time display' },
         countdowns: { title: 'Countdowns', icon: 'hourglass-half', description: 'Shows various countdowns until major upcoming holidays' },
-        counter: { title: 'Counter', icon: 'calculator', description: 'Press a key/button to add one to a counter', keywords: ['spacebar'], additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },
+        counter: {
+            title: 'Counter',
+            icon: 'calculator',
+            description: 'Press a key/button to add one to a counter',
+            keywords: ['spacebar'],
+            additionalScripts: [imports.odometer.script],
+            additionalStyles: [imports.odometer.style],
+        },
         'currency-exchange': { title: 'Currency Exchange Rates', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
         'image-converter': { title: 'Image Converter', icon: 'file-image', description: 'Convert images to and from various formats' },
-        'ip-info': { title: 'IP Info', icon: 'router', description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information', keywords: ['internet', 'isp'] },
+        'ip-info': {
+            title: 'IP Info',
+            icon: 'router',
+            description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information',
+            keywords: ['internet', 'isp'],
+        },
         'keycode-info': { title: 'KeyCode Information', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
-        'length-converter': { title: 'Length Converter', icon: 'ruler-horizontal', description: 'Convert between United States standard length measurements and imperial length units', additionalScripts: [imports.mathJs.script] },
+        'length-converter': {
+            title: 'Length Converter',
+            icon: 'ruler-horizontal',
+            description: 'Convert between United States standard length measurements and imperial length units',
+            additionalScripts: [imports.mathJs.script],
+        },
         'list-sorter': { title: 'List Sorter', icon: 'arrow-down-wide-short', description: 'Alphabetize, numerize, randomize, and reverse lists that can be defined with custom separators' },
         'morse-code-converter': { title: 'Morse Code Converter', icon: 'message-dots', description: 'Convert to/from Morse code' },
         'quick-copy': { title: 'Quick Copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
-        'radical-simplifier': { title: 'Radical Simplifier', icon: 'square-root-variable', description: 'Simplify radical expressions', keywords: ['root', 'square root'], additionalScripts: [imports.mathJax.script] },
-        'random-number': { title: 'Random Number Generator', icon: 'hashtag', description: 'Generate a random number between two numbers', additionalScripts: [imports.odometer.script], additionalStyles: [imports.odometer.style] },
+        'radical-simplifier': {
+            title: 'Radical Simplifier',
+            icon: 'square-root-variable',
+            description: 'Simplify radical expressions',
+            keywords: ['root', 'square root'],
+            additionalScripts: [imports.mathJax.script],
+        },
+        'random-number': {
+            title: 'Random Number Generator',
+            icon: 'hashtag',
+            description: 'Generate a random number between two numbers',
+            additionalScripts: [imports.odometer.script],
+            additionalStyles: [imports.odometer.style],
+        },
         'regex-tester': { title: 'Regex Tester', icon: 'highlighter', description: 'Test and run regex', keywords: ['regular expression'] },
         'roman-converter': { title: 'Roman Numeral Converter', icon: 'i', description: 'Convert to and from roman numerals, with high level thousand supports (bars above numbers)' },
-        'scientific-notation-converter': { title: 'Scientific Notation Converter', icon: 'e', description: 'Convert between scientific (<i>e</i>) notation and decimal form', additionalScripts: [imports.mathJs.script] },
+        'scientific-notation-converter': {
+            title: 'Scientific Notation Converter',
+            icon: 'e',
+            description: 'Convert between scientific (<i>e</i>) notation and decimal form',
+            additionalScripts: [imports.mathJs.script],
+        },
         stopwatch: { title: 'Stopwatch', icon: 'stopwatch', description: 'Simple stopwatch (displays down to milliseconds)' },
-        'svg-to-png': { title: 'SVG to PNG', icon: 'file-image', description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images', toolboxTitle: '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter' },
-        'temperature-converter': { title: 'Temperature Converter', icon: 'temperature-list', description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin', additionalScripts: [imports.mathJs.script] },
+        'svg-to-png': {
+            title: 'SVG to PNG',
+            icon: 'file-image',
+            description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images',
+            toolboxTitle: '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter',
+        },
+        'temperature-converter': {
+            title: 'Temperature Converter',
+            icon: 'temperature-list',
+            description: 'Convert between Fahrenheit, Celsius/Centigrade, and Kelvin',
+            additionalScripts: [imports.mathJs.script],
+        },
         'tides-info': { title: 'Tides Info', icon: 'water', description: 'Shows current tidal information and for the next 7 days' },
         'time-converter': { title: 'Time Converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs.script] },
         time: { title: 'Time', icon: 'clock', description: 'Displays the current time and date (in your time zone), as well as detailed time information' },
         'unix-time-converter': { title: 'UNIX Time Converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
         'weather-info': { title: 'Weather Info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts' },
-        'word-counter': { title: 'Word Counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' }
+        'word-counter': { title: 'Word Counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' },
     },
     info: {
         'coins-list': { title: 'Coins List', icon: 'coins', description: 'A list of coins I have/need' },
-        'minecraft-codes': { title: 'Minecraft Formatting Codes', icon: 'gamepad-modern', description: 'List of all Minecraft color and formatting codes', additionalStyles: [imports.minecraft.style], additionalData: { minecraftColorCodes, minecraftFormattingCodes }, iconStyle: 'padding-right: 5px', toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes' },
+        'minecraft-codes': {
+            title: 'Minecraft Formatting Codes',
+            icon: 'gamepad-modern',
+            description: 'List of all Minecraft color and formatting codes',
+            additionalStyles: [imports.minecraft.style],
+            additionalData: { minecraftColorCodes, minecraftFormattingCodes },
+            iconStyle: 'padding-right: 5px',
+            toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes',
+        },
         'phonetic-alphabet': { title: 'NATO Phonetic Alphabet', icon: 'arrow-down-a-z', description: 'Code words used by the military/police for letters', additionalData: { phoneticAlphabet } },
-        'queer-calendar': { title: 'Queer Calendar', icon: 'calendar-days', description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year', iconStyle: 'color: #e73636', toolboxTitle: '<span style="color: #e78236">Q</span><span style="color: #e7ce36">u</span><span style="color: #b5e736">e</span><span style="color: #69e736">e</span><span style="color: #36e74f">r</span> <span style="color: #36e79b">C</span><span style="color: #36e7e7">a</span><span style="color: #369be7">l</span><span style="color: #364fe7">e</span><span style="color: #6936e7">n</span><span style="color: #b536e7">d</span><span style="color: #e736ce">a</span><span style="color: #e73682">r</span> 🏳️‍🌈' },
+        'queer-calendar': {
+            title: 'Queer Calendar',
+            icon: 'calendar-days',
+            description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year',
+            iconStyle: 'color: #e73636',
+            toolboxTitle:
+                '<span style="color: #e78236">Q</span><span style="color: #e7ce36">u</span><span style="color: #b5e736">e</span><span style="color: #69e736">e</span><span style="color: #36e74f">r</span> <span style="color: #36e79b">C</span><span style="color: #36e7e7">a</span><span style="color: #369be7">l</span><span style="color: #364fe7">e</span><span style="color: #6936e7">n</span><span style="color: #b536e7">d</span><span style="color: #e736ce">a</span><span style="color: #e73682">r</span> 🏳️‍🌈',
+        },
         'state-abbreviations': { title: 'State Abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },
         'text-abbreviations': { title: 'Text Abbreviations', icon: 'text', description: 'List of common abbreviations used in text', additionalData: { textAbbreviations } },
-        'tone-indicators': { title: 'Tone Indicators', icon: 'slash-back', description: 'List of common tone indicators', additionalData: { toneIndicators } }
+        'tone-indicators': { title: 'Tone Indicators', icon: 'slash-back', description: 'List of common tone indicators', additionalData: { toneIndicators } },
     },
     fun: {
-        'astronomy-picture': { title: 'Astronomy Picture of the Day', icon: 'planet-ringed', description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)' },
+        'astronomy-picture': {
+            title: 'Astronomy Picture of the Day',
+            icon: 'planet-ringed',
+            description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)',
+        },
         'eight-ball': { title: 'Magic Eight Ball', icon: 'pool-8-ball', description: 'Ask a question, and it will give you an answer!' },
         'mp3-player': { title: 'MP3 Player', icon: 'music', description: 'Play some music!', toolbox: false },
         'random-fact': { title: 'Random Fact', icon: 'circle-info', description: 'Generate a random fact' },
-        'random-joke': { title: 'Random Joke', icon: 'face-grin-tears', description: 'Generate a random joke' }
-    }
+        'random-joke': { title: 'Random Joke', icon: 'face-grin-tears', description: 'Generate a random joke' },
+    },
 };
 
 interface ParsedPage extends Page {
@@ -414,7 +482,7 @@ type AllPages = Record<string, Record<string, ParsedPage>>;
 
 export const allPages = structuredClone(preParsedPages) as AllPages;
 
-for (const [category, pages] of Object.entries(preParsedPages)) 
+for (const [category, pages] of Object.entries(preParsedPages))
     for (const [id, page] of Object.entries(pages)) {
         (allPages[category] as Record<string, ParsedPage>)[id] = {
             ...blankProperties,
@@ -423,7 +491,7 @@ for (const [category, pages] of Object.entries(preParsedPages))
             id,
             category,
             link: `/${category}/${id}`,
-            toolbox: page.toolbox ?? true
+            toolbox: page.toolbox ?? true,
         };
 
         if (!('script' in page)) delete pages[id].script;
@@ -467,7 +535,7 @@ export const holidayEmojis: Record<string, string> = {
     'Winter Solstice': '❄️',
     'Christmas Eve': '🎅🏻',
     'Christmas Day': '🎄',
-    "New Year's Eve": '🕛'
+    "New Year's Eve": '🕛',
     /* eslint-enable @typescript-eslint/naming-convention */
 };
 
@@ -476,6 +544,6 @@ export const moonEmojis: Record<string, string> = {
     'New moon': '🌑',
     'First quarter': '🌓',
     'Full moon': '🌕',
-    'Last quarter': '🌗'
+    'Last quarter': '🌗',
     /* eslint-enable @typescript-eslint/naming-convention */
 };

@@ -33,8 +33,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'make a move - nelward', file: 'make a move', duration: '2:23' },
             { name: 'Treaty (Radio Mix) - Yothu Yindi', file: 'Treaty (Radio Mix)', duration: '4:03' },
             { name: 'Mahna Mahna - The Muppets (on The Ed Sullivan Show)', file: 'Mahna Mahna', duration: '2:51' },
-            { name: 'Deja Vu - Dave Rodgers', file: 'Deja Vu', duration: '3:00' }
-        ]
+            { name: 'Deja Vu - Dave Rodgers', file: 'Deja Vu', duration: '3:00' },
+        ],
     },
     {
         name: 'Hypixel (SkyBlock) OST/BGM',
@@ -74,8 +74,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Magetown (Scarleton) - Shinkonet', file: 'Magetown', duration: '6:19' },
             { name: 'Fires of Fishermen (Volcano, Crimson Isle) - Shinkonet', file: 'Fires of Fishermen', duration: '5:51' },
             { name: 'Forsaken Village (Dragontail, Crimson Isle) - Shinkonet', file: 'Forsaken Village', duration: '3:08' },
-            { name: 'Always Nether (Crimson Isle) - Shinkonet', file: 'Always Nether', duration: '3:53' }
-        ]
+            { name: 'Always Nether (Crimson Isle) - Shinkonet', file: 'Always Nether', duration: '3:53' },
+        ],
     },
     {
         name: 'Zelda and Chill 2 - Mikel and Gamechops',
@@ -94,8 +94,8 @@ export const audioTracks: AudioCategory[] = [
             { name: "Midna's Lament", file: "Midna's Lament", duration: '3:13' },
             { name: 'Tal Tal Heights', file: 'Tal Tal Heights', duration: '2:28' },
             { name: 'The Legendary Hero', file: 'The Legendary Hero', duration: '3:02' },
-            { name: "Fi's Farewell", file: "Fi's Farewell", duration: '2:15' }
-        ]
+            { name: "Fi's Farewell", file: "Fi's Farewell", duration: '2:15' },
+        ],
     },
     {
         name: 'Folk Rewind Volume Three (My Music - Original Masters)',
@@ -118,8 +118,8 @@ export const audioTracks: AudioCategory[] = [
             { name: "Mama Don't Allow - The Rooftop Singers", file: "Mama Don't Allow", duration: '2:43' },
             { name: 'In My Life - Judy Collins', file: 'In My Life', duration: '2:57' },
             { name: 'The Last Thing On My Mind - Tom Paxton', file: 'The Last Thing On My Mind', duration: '3:00' },
-            { name: 'A Summer Song - Chad & Jeremy', file: 'A Summer Song', duration: '3:00' }
-        ]
+            { name: 'A Summer Song - Chad & Jeremy', file: 'A Summer Song', duration: '3:00' },
+        ],
     },
     {
         name: 'Inkas Wasi - Peru (Waqra Fiesta - Traditional Vol. V)',
@@ -137,8 +137,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'At The Party', file: 'At The Party', duration: '2:18' },
             { name: 'Socoroma', file: 'Socoroma', duration: '3:08' },
             { name: 'Chogui, Campana & Bikina', file: 'Chogui, Campana & Bikina', duration: '5:45' },
-            { name: 'Celia', file: 'Celia', duration: '4:57' }
-        ]
+            { name: 'Celia', file: 'Celia', duration: '4:57' },
+        ],
     },
     {
         name: 'Records/Jazz',
@@ -156,7 +156,7 @@ export const audioTracks: AudioCategory[] = [
             {
                 name: 'Black Jazz/Smoke Rings (Side 1) - Casa Loma (Glen Gray)', // Yeah...
                 file: 'Black Jazz_Smoke Rings',
-                duration: '6:03'
+                duration: '6:03',
             },
             { name: 'No Name Jive (Side 2) - Casa Loma (Glen Gray)', file: 'No Name Jive', duration: '6:21' },
             { name: 'The RCA Victor Encyclopedia of Recorded Jazz, Album 1 (Side 1) - Assorted', file: 'RCA Victor Encyclopedia (Side 1)', duration: '15:06' },
@@ -164,8 +164,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Tommy Gwaltney Plays Great Jazz (Side A)', file: 'Tommy Gwaltney Plays Great Jazz (Side A)', duration: '18:10' },
             { name: 'Tommy Gwaltney Plays Great Jazz (Side B)', file: 'Tommy Gwaltney Plays Great Jazz (Side B)', duration: '17:32' },
             { name: "Louis Armstrong's Greatest Hits (Side 1)", file: "Louis Armstrong's Greatest Hits (Side 1)", duration: '27:01' },
-            { name: "Louis Armstrong's Greatest Hits (Side 2)", file: "Louis Armstrong's Greatest Hits (Side 2)", duration: '25:12' }
-        ]
+            { name: "Louis Armstrong's Greatest Hits (Side 2)", file: "Louis Armstrong's Greatest Hits (Side 2)", duration: '25:12' },
+        ],
     },
     {
         name: 'Classical',
@@ -194,8 +194,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Flower Duet (from Lakmé) - Léo Delibes', file: 'Flower Duet', duration: '4:54' },
             { name: 'Also Sprach Zarathustra - Strauss', file: 'Also Sprach Zarathustra', duration: '1:48' },
             { name: 'Cello Suite No. 1 (G Major) - Bach', file: 'Cello Suite', duration: '2:19' },
-            { name: 'Clair de lune - Claude Debussy', file: 'Clair de lune', duration: '4:55' }
-        ]
+            { name: 'Clair de lune - Claude Debussy', file: 'Clair de lune', duration: '4:55' },
+        ],
     },
     {
         name: 'Video Games',
@@ -214,8 +214,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Gourmet Race (Kirby) - Super Smash Bros. Brawl', file: 'Gourmet Race (Kirby)', duration: '2:20' },
             { name: 'Mii Channel Theme (Wii)', file: 'Mii Channel Theme (Wii)', duration: '1:53' },
             { name: 'Honeyhive Galaxy - Super Mario Galaxy', file: 'Honeyhive Galaxy', duration: '1:56' },
-            { name: 'Spamton Battle - Deltarune', file: 'Spamton Battle', duration: '1:05' }
-        ]
+            { name: 'Spamton Battle - Deltarune', file: 'Spamton Battle', duration: '1:05' },
+        ],
     },
     {
         name: 'Various Mario OSTs',
@@ -254,8 +254,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Mollusque-Lanceur Battle - Super Mario Odyssey', file: 'Mollusque-Lanceur Battle (SMO)', duration: '3:29' },
             { name: 'Crazy Cap (Shop) - Super Mario Odyssey', file: 'Crazy Cap (Shop) (SMO)', duration: '3:10' },
             { name: 'Run, Jump, Throw! 2 - Super Mario Odyssey', file: 'Run, Jump, Throw! 2 (SMO)', duration: '2:06' },
-            { name: 'Jump Up, Super Star! - Super Mario Odyssey', file: 'Jump Up, Super Star! (SMO)', duration: '4:08' }
-        ]
+            { name: 'Jump Up, Super Star! - Super Mario Odyssey', file: 'Jump Up, Super Star! (SMO)', duration: '4:08' },
+        ],
     },
     {
         name: "Yoshi's Woolly World OST",
@@ -276,8 +276,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Clawdaddy Beach', file: 'Clawdaddy Beach', duration: '3:01' },
             { name: 'Vs Big Montogomery', file: 'Vs Big Montogomery', duration: '3:01' },
             { name: 'Vs Burt the Bashful', file: 'Vs Burt the Bashful', duration: '3:01' },
-            { name: 'Vs Knot Wing the Koopa', file: 'Vs Knot Wing the Koopa', duration: '3:01' }
-        ]
+            { name: 'Vs Knot Wing the Koopa', file: 'Vs Knot Wing the Koopa', duration: '3:01' },
+        ],
     },
     {
         name: 'Various Legend of Zelda OSTs',
@@ -293,8 +293,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Outset Island - The Wind Waker', file: 'Outset Island (Wind Waker)', duration: '2:05' },
             { name: 'Windfall Island - The Wind Waker', file: 'Windfall Island (Wind Waker)', duration: '2:16' },
             { name: 'Battle - The Wind Waker', file: 'Battle (Wind Waker)', duration: '2:33' },
-            { name: 'Forsaken Fortress - The Wind Waker', file: 'Forsaken Fortress (Wind Waker)', duration: '1:41' }
-        ]
+            { name: 'Forsaken Fortress - The Wind Waker', file: 'Forsaken Fortress (Wind Waker)', duration: '1:41' },
+        ],
     },
     {
         name: 'Breath of the Wild OST',
@@ -326,8 +326,8 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Hinox Battle', file: 'Hinox Battle', duration: '3:37' },
             { name: 'Molduga Battle', file: 'Molduga Battle', duration: '2:42' },
             { name: 'Tarrey Town', file: 'Tarrey Town', duration: '9:50' },
-            { name: 'Yiga Clan Hideout', file: 'Yiga Clan Hideout', duration: '2:02' }
-        ]
+            { name: 'Yiga Clan Hideout', file: 'Yiga Clan Hideout', duration: '2:02' },
+        ],
     },
     {
         name: 'Minecraft OST',
@@ -364,7 +364,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Ward (Music Disc) - C418', file: 'Ward', duration: '4:11' },
             { name: 'Wait (Music Disc) - C418', file: 'Wait', duration: '3:57' },
             { name: 'Pigstep (Music Disc) - Lena Raine', file: 'Pigstep', duration: '2:28' },
-            { name: 'Otherside (Music Disc) - Lena Raine', file: 'Otherside', duration: '3:15' }
-        ]
-    }
+            { name: 'Otherside (Music Disc) - Lena Raine', file: 'Otherside', duration: '3:15' },
+        ],
+    },
 ];

@@ -66,7 +66,42 @@ function toLower() {
     }
 }
 
-const lowercaseWords = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'From', 'If', 'In', 'Into', 'Like', 'Near', 'Nor', 'Of', 'Off', 'On', 'Once', 'Onto', 'Or', 'Over', 'Past', 'So', 'Than', 'That', 'The', 'Till', 'To', 'Up', 'Upon', 'When', 'With', 'Yet'];
+const lowercaseWords = [
+    'A',
+    'An',
+    'And',
+    'As',
+    'At',
+    'But',
+    'By',
+    'For',
+    'From',
+    'If',
+    'In',
+    'Into',
+    'Like',
+    'Near',
+    'Nor',
+    'Of',
+    'Off',
+    'On',
+    'Once',
+    'Onto',
+    'Or',
+    'Over',
+    'Past',
+    'So',
+    'Than',
+    'That',
+    'The',
+    'Till',
+    'To',
+    'Up',
+    'Upon',
+    'When',
+    'With',
+    'Yet',
+];
 const uppercaseWords = ['Id', 'Tv'];
 
 /**

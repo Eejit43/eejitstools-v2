@@ -158,5 +158,5 @@ const radices: Record<string, { number: number; name: string }> = {
     1: { number: 2, name: 'binary' },
     2: { number: 8, name: 'octal' },
     3: { number: 10, name: 'decimal' },
-    4: { number: 16, name: 'hexadecimal' }
+    4: { number: 16, name: 'hexadecimal' },
 };

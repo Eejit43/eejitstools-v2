@@ -34,12 +34,14 @@ for (const fileOrFolder of fs.readdirSync('public/scripts')) {
 
 fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages'));
 
-for (const fileOrFolder of fs.readdirSync('scripts')) if (fileOrFolder.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
+for (const fileOrFolder of fs.readdirSync('scripts'))
+    if (fileOrFolder.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
 
 for (const category of fs.readdirSync('scripts/pages')) {
     fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages', category));
 
-    for (const file of fs.readdirSync(path.join(dirname, 'scripts', 'pages', category))) if (file.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
+    for (const file of fs.readdirSync(path.join(dirname, 'scripts', 'pages', category)))
+        if (file.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
 }
 
 // Load layouts and static assets
@@ -61,7 +63,16 @@ const commitInfo = commitSha ? { sha: commitSha, message: commitMessage, author:
 // Register pages
 fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));
 
-fastify.get('/search', (request, reply) => reply.view('/search', { ...blankProperties, commitInfo, title: 'Search', descriptionParsed: 'Search the site!', additionalScripts: [{ link: '/scripts/search.js', module: true }], additionalStyles: [{ link: 'search.css' }] }));
+fastify.get('/search', (request, reply) =>
+    reply.view('/search', {
+        ...blankProperties,
+        commitInfo,
+        title: 'Search',
+        descriptionParsed: 'Search the site!',
+        additionalScripts: [{ link: '/scripts/search.js', module: true }],
+        additionalStyles: [{ link: 'search.css' }],
+    }),
+);
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: (request.query as { password: string }).password === process.env.COINS_PASSWORD }, null, 2)));
 
@@ -79,12 +90,12 @@ fastify.get('/coins-list', async (request, reply) => {
                     id: coinType.id,
                     coins: coinType.coins?.map((variant) => ({
                         ...variant,
-                        coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000) }))
-                    }))
+                        coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000) })),
+                    })),
                 }) as unknown as ParsedCoinType;
 
             return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
-        })
+        }),
     );
 
     reply.send(JSON.stringify(mergedCoinsData, null, 2));
@@ -109,7 +120,7 @@ fastify.post('/coins-list-edit', async (request, reply) => {
                             else coin[key as keyof Coin] = value as never;
 
                     return coin;
-                })
+                }),
             };
 
         return coinVariant;
@@ -137,15 +148,21 @@ interface Calendar {
 fastify.get('/calendar-events', async (request, reply) => {
     if (calendarEventsCache) return reply.send(calendarEventsCache);
 
-    const holidays = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)).json()) as Calendar).items
+    const holidays = (
+        (await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)).json()) as Calendar
+    ).items
         .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
         .filter((holiday) => !holiday.name.includes(' (substitute)'))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const moonPhases = ((await (await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)).json()) as Calendar).items
+    const moonPhases = (
+        (await (
+            await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)
+        ).json()) as Calendar
+    ).items
         .map((moonPhase) => ({
             phase: moonPhase.summary.match(/([\w ]+) \d/)![1],
             date: moonPhase.start.date,
-            time: moonPhase.summary.match(/[\w ]+ ([\w:]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2')
+            time: moonPhase.summary.match(/[\w ]+ ([\w:]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2'),
         }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const result: CalendarEvents = { holidays, moonPhases };
@@ -222,9 +239,9 @@ fastify.get('/pages', (request, reply) =>
                 .flatMap((category) => Object.values(category))
                 .map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
             null,
-            2
-        )
-    )
+            2,
+        ),
+    ),
 );
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -272,11 +289,13 @@ const pagesWithScripts = new Set(
         fs
             .readdirSync(`scripts/pages/${category}`)
             .filter((script) => script.endsWith('.js'))
-            .map((script) => `${category}/${script.replace(/\.js$/, '')}`)
-    )
+            .map((script) => `${category}/${script.replace(/\.js$/, '')}`),
+    ),
 );
 
-const pagesWithStyles = new Set(fs.readdirSync('public/styles/pages').flatMap((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)));
+const pagesWithStyles = new Set(
+    fs.readdirSync('public/styles/pages').flatMap((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)),
+);
 
 let totalCategories = 0,
     totalPages = 0;
@@ -327,7 +346,9 @@ fastify.get('/apod/:year/:month/:day', async (request: FastifyRequest<{ Params: 
 fastify.setErrorHandler((error, request, reply) => {
     if (error.statusCode === 429) return reply.status(429).send('Woah there! Stop sending so many requests!');
     consola.error(error);
-    reply.status(error.statusCode ?? 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
+    reply
+        .status(error.statusCode ?? 500)
+        .view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) => {

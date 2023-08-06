@@ -23,7 +23,7 @@ logo.addEventListener('mouseover', () => {
 
                 iterations++;
             },
-            30 + index * 10
+            30 + index * 10,
         );
     }
 });
@@ -72,7 +72,16 @@ const searchInput = document.querySelector('.search-text') as HTMLInputElement;
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
     const results = [];
-    for (const page of Object.values(allPages).flatMap((value) => Object.values(value))) if (page.title.toLowerCase().includes(value) || page.id.toLowerCase().includes(value) || page.descriptionParsed.toLowerCase().includes(value) || page.keywords.some((keyword) => keyword.includes(value))) results.push(`<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`);
+    for (const page of Object.values(allPages).flatMap((value) => Object.values(value)))
+        if (
+            page.title.toLowerCase().includes(value) ||
+            page.id.toLowerCase().includes(value) ||
+            page.descriptionParsed.toLowerCase().includes(value) ||
+            page.keywords.some((keyword) => keyword.includes(value))
+        )
+            results.push(
+                `<tr><td><a href="${page.link}"><div class="results-title"><i class="fa-regular fa-${page.icon}"></i> ${page.title}</div><div class="results-description">${page.descriptionParsed}</div></a></td></tr>`,
+            );
 
     if (value !== '' && results.length === 0) results.push('<tr><td>No results found!</td></tr>');
     searchResult.innerHTML = value !== '' && results.length > 0 ? `<table><tbody>${results.join('')}</tbody></table>` : '';
@@ -80,7 +89,8 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') ?? document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
+        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') ??
+            document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -97,7 +107,11 @@ document.addEventListener('keydown', (event) => {
         if (firstResult) {
             const currentResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
 
-            const nextTrElement = currentResult ? (event.key === 'ArrowUp' ? currentResult.parentElement!.parentElement!.previousElementSibling : currentResult.parentElement!.parentElement!.nextElementSibling) : null;
+            const nextTrElement = currentResult
+                ? event.key === 'ArrowUp'
+                    ? currentResult.parentElement!.parentElement!.previousElementSibling
+                    : currentResult.parentElement!.parentElement!.nextElementSibling
+                : null;
 
             if (nextTrElement) {
                 if (currentResult) currentResult.classList.remove('selected');
@@ -115,7 +129,8 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
-    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')) return;
+    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true'))
+        return;
 
     switch (event.code) {
         case 'KeyK': {

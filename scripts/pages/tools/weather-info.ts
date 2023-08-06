@@ -34,7 +34,7 @@ const uvIndexes = {
     1: { color: '#fedc00', text: 'Moderate' },
     2: { color: '#f89c1b', text: 'High' },
     3: { color: '#ee1d23', text: 'Very High' },
-    4: { color: '#d83484', text: 'Extreme' }
+    4: { color: '#d83484', text: 'Extreme' },
 };
 
 const airQualities = {
@@ -43,7 +43,7 @@ const airQualities = {
     2: { color: '#f6901e', text: 'Unhealthy for Sensitive Groups' },
     3: { color: '#ed1d24', text: 'Unhealthy' },
     4: { color: '#a2064a', text: 'Very Unhealthy' },
-    5: { color: '#891a1c', text: 'Hazardous' }
+    5: { color: '#891a1c', text: 'Hazardous' },
 };
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -82,7 +82,7 @@ interface WeatherInformation {
             weather: { description: string; icon: string };
             wind_cdir_full: string;
             wind_spd: number;
-        }
+        },
     ];
 }
 /* eslint-enable @typescript-eslint/naming-convention */
@@ -129,7 +129,11 @@ async function getData(position: GeolocationPosition) {
 
     result.innerHTML = [
         `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`, //
-        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}<br />`,
+        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        })}<br />`,
         'Active Alerts: <span id="alerts"></span>',
         '<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>',
         `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`,
@@ -146,7 +150,7 @@ async function getData(position: GeolocationPosition) {
         `Pressure: ${data.pres} millibars`,
         `UV Index: ${uvIndex}${uvIndexDescription ? ` (<span style="color: ${uvIndexDescription.color}">${uvIndexDescription.text}</span>)` : ''}`,
         `Air Quality: ${airQuality}${airQualityDescription ? ` (<span style="color: ${airQualityDescription.color}">${airQualityDescription.text}</span>)` : ''}`,
-        'Moon Phase: <span id="moon-phase">Loading...</span>'
+        'Moon Phase: <span id="moon-phase">Loading...</span>',
     ].join('<br />');
 
     const { alerts } = fullData;
@@ -169,7 +173,11 @@ async function getData(position: GeolocationPosition) {
         }
     else alertsList.textContent = 'None';
 
-    const lunarResponse = await fetch(`https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000}`);
+    const lunarResponse = await fetch(
+        `https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${
+            new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000
+        }`,
+    );
     const lunarData = (await lunarResponse.json()) as LunarData;
 
     const day = new Date().getDate();

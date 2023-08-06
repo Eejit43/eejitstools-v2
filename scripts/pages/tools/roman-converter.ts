@@ -133,7 +133,8 @@ function romanize(number: number) {
             break;
         }
 
-    romanOutputValue = barredNumerals.replaceAll('I', 'Ī').replaceAll('V', 'V̄').replaceAll('X', 'X̄').replaceAll('L', 'L̄').replaceAll('C', 'C̄').replaceAll('D', 'D̄').replaceAll('M', 'M̄') + regularNumerals;
+    romanOutputValue =
+        barredNumerals.replaceAll('I', 'Ī').replaceAll('V', 'V̄').replaceAll('X', 'X̄').replaceAll('L', 'L̄').replaceAll('C', 'C̄').replaceAll('D', 'D̄').replaceAll('M', 'M̄') + regularNumerals;
     romanOutputValue2 = barredNumerals.replaceAll(/([A-Z])/g, '_$1') + regularNumerals;
     return barredNumerals.length > 0 ? `<span style="border-top: 1px solid">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
 }
@@ -170,7 +171,7 @@ function deromanize(string: string) {
         IX: 9,
         V: 5,
         IV: 4,
-        I: 1
+        I: 1,
     };
 
     let output = 0;

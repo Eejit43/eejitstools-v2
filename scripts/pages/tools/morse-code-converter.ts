@@ -90,7 +90,7 @@ const morseConversion: Record<string, string> = {
     '=': '-...-',
     "'": '.----.',
     $: '...-..-',
-    '.': '.-.-.-'
+    '.': '.-.-.-',
 };
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -146,9 +146,9 @@ function decodeMorse(morseCode: string) {
                     (letter) =>
                         Object.keys(morseConversion)
                             .find((key) => morseConversion[key] === letter)
-                            ?.toUpperCase() ?? letter
+                            ?.toUpperCase() ?? letter,
                 )
-                .join('')
+                .join(''),
         )
         .join(' ');
 }

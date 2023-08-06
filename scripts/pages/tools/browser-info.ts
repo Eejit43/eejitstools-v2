@@ -18,7 +18,7 @@ const output = [
     { icon: 'desktop', name: 'Device', value: `${result.device.vendor ?? ''} ${result.device.model ?? 'Unknown'}` },
     { icon: 'gears', name: 'Engine', value: `${result.engine.name ?? 'Unknown'} ${result.engine.version ?? ''}` },
     { icon: 'computer', name: 'OS', value: `${result.os.name ?? 'Unknown'} ${result.os.version ?? ''}` },
-    { icon: 'display-code', name: 'User Agent', value: result.ua }
+    { icon: 'display-code', name: 'User Agent', value: result.ua },
 ];
 
 browserInfo.textContent = '';

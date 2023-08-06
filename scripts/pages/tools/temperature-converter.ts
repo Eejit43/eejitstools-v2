@@ -66,7 +66,9 @@ function convert() {
 
     if (/^-?(\d+)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
-        output.value = Number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 4 }).replaceAll(/[^\d.-]/g, '')).toLocaleString();
+        output.value = Number(
+            window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 4 }).replaceAll(/[^\d.-]/g, ''),
+        ).toLocaleString();
         copyOutputButton.disabled = false;
     } else {
         if (input.value === '') message.textContent = '';
@@ -80,5 +82,5 @@ function convert() {
 const types: Record<string, string> = {
     1: 'degF',
     2: 'degC',
-    3: 'K'
+    3: 'K',
 };

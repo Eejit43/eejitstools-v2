@@ -49,7 +49,7 @@ const date = currentTime.getDate();
 const valuesAsNumbers = {
     year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
     month: Number.isNaN(Number.parseInt(monthInput.value)) ? month : Number.parseInt(monthInput.value),
-    date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value)
+    date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value),
 };
 
 yearInput.placeholder = year.toString();
@@ -65,8 +65,19 @@ checkApod(year, month, date);
  * @param dateInput The date input.
  */
 function checkApod(yearInput: number, monthInput: number, dateInput: number) {
-    if (new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() && new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= Date.now()) fetchApod(yearInput, monthInput, dateInput);
-    else showAlert(`Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} (inclusive)`, 'error');
+    if (
+        new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() &&
+        new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= Date.now()
+    )
+        fetchApod(yearInput, monthInput, dateInput);
+    else
+        showAlert(
+            `Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString(
+                undefined,
+                { year: 'numeric', month: 'long', day: 'numeric' },
+            )} (inclusive)`,
+            'error',
+        );
 }
 
 /**
@@ -78,7 +89,9 @@ function checkApod(yearInput: number, monthInput: number, dateInput: number) {
 async function fetchApod(yearInput: number, monthInput: number, dateInput: number) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
-    const { success, error, source, date, title, credit, explanation, media } = (await (await fetch(`/apod/${yearInput}/${monthInput.toString().padStart(2, '0')}/${dateInput.toString().padStart(2, '0')}`)).json()) as FullApodEntry;
+    const { success, error, source, date, title, credit, explanation, media } = (await (
+        await fetch(`/apod/${yearInput}/${monthInput.toString().padStart(2, '0')}/${dateInput.toString().padStart(2, '0')}`)
+    ).json()) as FullApodEntry;
 
     if (!success && error) return showAlert(error, 'error');
 
@@ -87,7 +100,7 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
         `<center style="font-size: 30px">${title}</center>`,
         getMediaElement(media),
         credit ? `<center>${credit}</center><br />` : '',
-        explanation
+        explanation,
     ].filter(Boolean);
 
     resultElement.innerHTML = result.join('');
@@ -105,5 +118,7 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
  */
 function getMediaElement(media: ApodEntryMedia) {
     const { type, src, highResolution, alt } = media;
-    return type === 'image' ? `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>` : `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+    return type === 'image'
+        ? `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`
+        : `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }

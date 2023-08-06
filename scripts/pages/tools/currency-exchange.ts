@@ -12,7 +12,9 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
 
     const rates = exchangeRateData.conversion_rates;
 
-    (document.querySelector('#last-updated') as HTMLSpanElement).textContent = `${new Date(exchangeRateData.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(exchangeRateData.time_last_update_unix * 1000).toLocaleTimeString('en-US')}`;
+    (document.querySelector('#last-updated') as HTMLSpanElement).textContent = `${new Date(exchangeRateData.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(
+        exchangeRateData.time_last_update_unix * 1000,
+    ).toLocaleTimeString('en-US')}`;
     (document.querySelector('#usd-cad') as HTMLSpanElement).textContent = `$${rates.CAD.toLocaleString()}`;
     (document.querySelector('#usd-eur') as HTMLSpanElement).textContent = `€${rates.EUR.toLocaleString()}`;
     (document.querySelector('#usd-gbp') as HTMLSpanElement).textContent = `£${rates.GBP.toLocaleString()}`;

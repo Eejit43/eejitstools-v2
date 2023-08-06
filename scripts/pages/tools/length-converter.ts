@@ -68,7 +68,9 @@ function convert() {
 
     if (/^-?(\d+)(\.\d*|,\d*)*$|^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
-        output.value = window.math.number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replaceAll(/[^\d.-]/g, '')).toLocaleString(undefined, { maximumFractionDigits: 12 });
+        output.value = window.math
+            .number(window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 15 }).replaceAll(/[^\d.-]/g, ''))
+            .toLocaleString(undefined, { maximumFractionDigits: 12 });
         copyOutputButton.disabled = false;
     } else {
         message.innerHTML = input.value.length > 0 ? '<i class="fa-solid fa-exclamation-triangle"></i> Input is not a number!<br />' : '';
@@ -88,5 +90,5 @@ const types: Record<string, string> = {
     8: 'yard',
     9: 'foot',
     10: 'inch',
-    11: 'nauticalMile'
+    11: 'nauticalMile',
 };

@@ -104,18 +104,18 @@ function convertScientific() {
                 scientificInput.value
                     .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
                     .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
-                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e')
+                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e'),
             ),
-            { notation: 'fixed' }
+            { notation: 'fixed' },
         );
         decimalOutputValue = window.math.format(
             window.math.bignumber(
                 scientificInput.value
                     .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
                     .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
-                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e')
+                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e'),
             ),
-            { notation: 'fixed' }
+            { notation: 'fixed' },
         );
         decimalOutputCopyButton.disabled = false;
         updateArrow(scientificArrow, 'success');

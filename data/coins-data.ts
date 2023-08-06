@@ -44,8 +44,8 @@ export const coinsData: CoinType[] = [
             { name: 'Wheat Penny', id: 'wheat' },
             { name: 'Memorial Penny', id: 'memorial' },
             { name: 'Lincoln Bicentennial Penny', id: 'lincoln-formative' },
-            { name: 'Union Shield Penny', id: 'shield', active: true }
-        ]
+            { name: 'Union Shield Penny', id: 'shield', active: true },
+        ],
     },
     {
         name: 'Nickels',
@@ -55,8 +55,8 @@ export const coinsData: CoinType[] = [
             { name: 'Early Jefferson Nickel', id: 'early-jefferson' },
             { name: 'Modern Jefferson Nickel', id: 'modern-jefferson' },
             { name: 'Westward Journey (Lewis & Clark, 1805-2005) Nickel', id: 'westward-bison' },
-            { name: 'Return to Monticello Nickel', id: 'return-to-monticello', active: true }
-        ]
+            { name: 'Return to Monticello Nickel', id: 'return-to-monticello', active: true },
+        ],
     },
     {
         name: 'Dimes',
@@ -64,8 +64,8 @@ export const coinsData: CoinType[] = [
         coins: [
             { name: 'Mercury / Liberty Head Dime', id: 'mercury' },
             { name: 'Silver Roosevelt Dime', id: 'silver-roosevelt' },
-            { name: 'Clad Roosevelt Dime', id: 'clad-roosevelt', active: true }
-        ]
+            { name: 'Clad Roosevelt Dime', id: 'clad-roosevelt', active: true },
+        ],
     },
     {
         name: 'Quarters',
@@ -76,13 +76,13 @@ export const coinsData: CoinType[] = [
             { name: 'Statehood & Territory Quarters', id: 'statehood-territories' },
             { name: 'America The Beautiful Quarters', id: 'america-the-beautiful' },
             { name: 'General George Washington Crossing the Delaware', id: 'crossing-the-delaware' },
-            { name: 'U.S. Women Quarters', id: 'us-women' }
-        ]
+            { name: 'U.S. Women Quarters', id: 'us-women' },
+        ],
     },
     {
         name: 'Half Dollars',
         id: 'half-dollars',
-        coins: [{ name: 'Kennedy Half Dollar', id: 'kennedy', active: true }]
+        coins: [{ name: 'Kennedy Half Dollar', id: 'kennedy', active: true }],
     },
     {
         name: 'Dollars',
@@ -93,7 +93,7 @@ export const coinsData: CoinType[] = [
             { name: 'Sacagawea Dollar', id: 'sacagawea' },
             { name: 'Native American Dollar', id: 'native-american', active: true },
             { name: 'Presidential Dollar', id: 'presidential', years: '2007-2016, 2020' },
-            { name: 'American Innovation Dollar', id: 'american-innovation', note: "I'm only collecting coins minted in Philadelphia, not Denver." }
-        ]
-    }
+            { name: 'American Innovation Dollar', id: 'american-innovation', note: "I'm only collecting coins minted in Philadelphia, not Denver." },
+        ],
+    },
 ];

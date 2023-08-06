@@ -52,5 +52,5 @@ const resultNames: Record<string, string> = {
     16: 'Ask again later',
     17: 'Better not tell you now',
     18: 'Cannot predict now',
-    19: 'Concentrate and ask again'
+    19: 'Concentrate and ask again',
 };

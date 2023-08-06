@@ -48,17 +48,30 @@ interface TideData {
  * @param position The position to fetch location for.
  */
 async function getData(position: GeolocationPosition) {
-    const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, { method: 'GET', headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' } });
+    const response = await fetch(`https://tides.p.rapidapi.com/tides?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}&interval=60&duration=10080`, {
+        method: 'GET',
+        headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': 'cad0c4a24emshf2d49b2583652a3p143d3bjsn021aa48df62e' },
+    });
     const data = (await response.json()) as TideData;
 
     const { distance: originDistance, latitude, longitude, unit } = data.origin;
     const distance = `${originDistance} ${unit}`;
-    const updated = `${new Date(data.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.timestamp * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
+    const updated = `${new Date(data.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.timestamp * 1000).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })}`;
     const state = data.heights[0].state.toLowerCase();
 
-    const closestExtreme = data.extremes[0].timestamp >= Math.floor(Date.now() / 1000) ? `next ${data.extremes[0].state.toLowerCase()} is at ${new Date(data.extremes[0].timestamp).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}` : `most recent ${data.extremes[0].state.toLowerCase()} was at ${new Date(data.extremes[0].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
+    const closestExtreme =
+        data.extremes[0].timestamp >= Math.floor(Date.now() / 1000)
+            ? `next ${data.extremes[0].state.toLowerCase()} is at ${new Date(data.extremes[0].timestamp).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`
+            : `most recent ${data.extremes[0].state.toLowerCase()} was at ${new Date(data.extremes[0].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
 
-    const nextExtreme = data.extremes[1].timestamp >= Math.floor(Date.now() / 1000) ? `next ${data.extremes[1].state.toLowerCase()} is at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}` : `most recent ${data.extremes[1].state.toLowerCase()} was at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
+    const nextExtreme =
+        data.extremes[1].timestamp >= Math.floor(Date.now() / 1000)
+            ? `next ${data.extremes[1].state.toLowerCase()} is at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`
+            : `most recent ${data.extremes[1].state.toLowerCase()} was at ${new Date(data.extremes[1].timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`;
 
     const nextExtremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 
@@ -70,9 +83,19 @@ async function getData(position: GeolocationPosition) {
         '<th style="width: 100px">Type</th>',
         '</tr>',
         '</thead>',
-        '<tbody>'
+        '<tbody>',
     ];
-    for (const extreme of data.extremes) table.push('<tr>', `<td>${new Date(extreme.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(extreme.timestamp * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</td>`, `<td>${titleCase(extreme.state)}</td>`, '</tr>');
+    for (const extreme of data.extremes)
+        table.push(
+            '<tr>',
+            `<td>${new Date(extreme.timestamp * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(extreme.timestamp * 1000).toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            })}</td>`,
+            `<td>${titleCase(extreme.state)}</td>`,
+            '</tr>',
+        );
     table.push('</tbody', '</table>');
 
     const output = [
@@ -80,7 +103,7 @@ async function getData(position: GeolocationPosition) {
         `Updated at ${updated}.<br />`,
         `The tide is currently ${state}.`,
         `${nextExtremes}<br />`,
-        `${table.join('')}`
+        `${table.join('')}`,
     ];
 
     result.innerHTML = output.join('<br />');

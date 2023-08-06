@@ -46,7 +46,7 @@ const mintMarks: Record<string, string> = {
     S: 'San Francisco (California)',
     W: 'West Point (New York)',
     CC: 'Carson City (Nevada)',
-    C: 'Charlotte (North Carolina)'
+    C: 'Charlotte (North Carolina)',
 };
 
 interface CoinVariantById {
@@ -66,7 +66,15 @@ let coinsData: Record<string, { name: string; id: string; coins: Record<string, 
 async function loadCoinsList() {
     const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as ParsedCoinType[];
 
-    coinsData = Object.fromEntries(unindexedCoinsData.map((coinType) => [coinType.id, { ...coinType, coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])) }]));
+    coinsData = Object.fromEntries(
+        unindexedCoinsData.map((coinType) => [
+            coinType.id,
+            {
+                ...coinType,
+                coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])),
+            },
+        ]),
+    );
 
     coinsList.innerHTML = '';
     coinsList.classList.add('obtained-hidden');
@@ -173,7 +181,11 @@ async function loadCoinsList() {
 
     document.addEventListener('keydown', (event) => {
         if (!event.altKey) return;
-        if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')) return;
+        if (
+            document.activeElement &&
+            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')
+        )
+            return;
 
         switch (event.code) {
             case 'KeyR': {
@@ -205,7 +217,9 @@ async function loadCoinsList() {
         coinTypeDiv.textContent = coinType.name;
 
         const coinTypeImg = document.createElement('img');
-        coinTypeImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.coins.at(-1)?.id ? `${coinType.id}/${coinType.coins.at(-1)?.id}` : 'default'}.png`;
+        coinTypeImg.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${
+            coinType.coins.at(-1)?.id ? `${coinType.id}/${coinType.coins.at(-1)?.id}` : 'default'
+        }.png`;
         coinTypeImg.classList.add('coin-type-image', 'popup-image');
         coinTypeImg.alt = coinType.name;
 
@@ -335,7 +349,12 @@ async function loadCoinsList() {
                 });
                 tooltip.addEventListener('blur', async () => {
                     if (!tooltip.textContent) tooltip.textContent = 'None';
-                    tooltip.dataset.tooltip = tooltip.textContent.toLowerCase() === 'none' ? `Likely minted in ${mintMarks.P}` : tooltip.textContent.toUpperCase() in mintMarks ? `Minted in ${mintMarks[tooltip.textContent]}` : 'Unknown'; // eslint-disable-line unicorn/no-nested-ternary
+                    tooltip.dataset.tooltip =
+                        tooltip.textContent.toLowerCase() === 'none'
+                            ? `Likely minted in ${mintMarks.P}`
+                            : tooltip.textContent.toUpperCase() in mintMarks
+                            ? `Minted in ${mintMarks[tooltip.textContent]}`
+                            : 'Unknown'; // eslint-disable-line unicorn/no-nested-ternary
                     tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
                     tooltip.classList.add('tooltip-bottom');
 
@@ -371,7 +390,9 @@ async function loadCoinsList() {
                     comparison.classList.add('coin-type-comparison');
                     comparison.textContent = 'View type comparison';
                     comparison.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coin.comparison}.png`;
-                    comparison.dataset.name = `Type Comparison: ${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+                    comparison.dataset.name = `Type Comparison: ${coinVariant.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${
+                        coin.specification ? ` (${coin.specification})` : ''
+                    }`;
 
                     if (coin.specification) {
                         const specificationEditor = document.createElement('span');
@@ -401,7 +422,13 @@ async function loadCoinsList() {
                 obtainedCheck.addEventListener('change', async () => {
                     row.dataset.obtained = obtainedCheck.checked.toString();
 
-                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'obtained', { obtained: obtainedCheck.checked }, `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}`);
+                    addChangeEntry(
+                        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id],
+                        coinVariant.name,
+                        'obtained',
+                        { obtained: obtainedCheck.checked },
+                        `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}`,
+                    );
 
                     coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].obtained = obtainedCheck.checked || null;
 
@@ -424,7 +451,13 @@ async function loadCoinsList() {
                 needsUpgradeCheck.addEventListener('change', async () => {
                     row.dataset.upgrade = needsUpgradeCheck.checked.toString();
 
-                    addChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'upgrade', { upgrade: needsUpgradeCheck.checked }, `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}`);
+                    addChangeEntry(
+                        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id],
+                        coinVariant.name,
+                        'upgrade',
+                        { upgrade: needsUpgradeCheck.checked },
+                        `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}`,
+                    );
 
                     coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].upgrade = needsUpgradeCheck.checked || null;
 
@@ -530,7 +563,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
     const result = (await fetch('/coins-list-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coinTypeId, coinVariantId, coinId, data, password: passwordInput.dataset.input })
+        body: JSON.stringify({ coinTypeId, coinVariantId, coinId, data, password: passwordInput.dataset.input }),
     })) as { error?: string };
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Coin data updated successfully!', 'success');
@@ -556,7 +589,13 @@ function addChangeEntry(coinData: PartialNullable<Coin>, variant: string, type: 
     if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
 
     const entry = document.createElement('li');
-    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${changeText ? ` ${changeText}` : coinData[Object.keys(changes as Coin)[0] as keyof Coin] ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"` : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`}`; // eslint-disable-line unicorn/no-nested-ternary
+    entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${
+        changeText
+            ? ` ${changeText}`
+            : coinData[Object.keys(changes as Coin)[0] as keyof Coin]
+            ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"`
+            : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`
+    }`; // eslint-disable-line unicorn/no-nested-ternary
 
     const timeTooltip = document.createElement('span');
     timeTooltip.classList.add('time-tooltip');
