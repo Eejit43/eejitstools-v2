@@ -23,25 +23,26 @@ if (fs.existsSync(path.join(dirname, 'public', 'data'))) fs.rmSync(path.join(dir
 
 fs.mkdirSync(path.join(dirname, 'public', 'data'));
 
-for (const file of fs.readdirSync('data').filter((file) => file.endsWith('.js'))) fs.copyFileSync(path.join(dirname, 'data', file), path.join(dirname, 'public', 'data', file));
+for (const file of fs.readdirSync('data').filter((file) => file.endsWith('.js') || file.endsWith('.js.map')))
+    fs.copyFileSync(path.join(dirname, 'data', file), path.join(dirname, 'public', 'data', file));
 
 for (const fileOrFolder of fs.readdirSync('public/scripts')) {
     if (fileOrFolder.endsWith('external')) continue;
 
-    if (fileOrFolder.endsWith('.js')) fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder));
+    if (fileOrFolder.endsWith('.js') || fileOrFolder.endsWith('.js.map')) fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder));
     else fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder), { recursive: true });
 }
 
 fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages'));
 
 for (const fileOrFolder of fs.readdirSync('scripts'))
-    if (fileOrFolder.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
+    if (fileOrFolder.endsWith('.js') || fileOrFolder.endsWith('.js.map')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
 
 for (const category of fs.readdirSync('scripts/pages')) {
     fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages', category));
 
     for (const file of fs.readdirSync(path.join(dirname, 'scripts', 'pages', category)))
-        if (file.endsWith('.js')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
+        if (file.endsWith('.js') || file.endsWith('.js.map')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
 }
 
 // Load layouts and static assets
@@ -114,7 +115,7 @@ fastify.post('/coins-list-edit', async (request, reply) => {
             return {
                 ...coinVariant,
                 coins: coinVariant.coins.map((coin) => {
-                    if (coin.id === coinId)
+                    if (coin.id === Number.parseInt(coinId))
                         for (const [key, value] of Object.entries(data))
                             if (value === null) delete coin[key as keyof Coin];
                             else coin[key as keyof Coin] = value as never;
@@ -125,6 +126,24 @@ fastify.post('/coins-list-edit', async (request, reply) => {
 
         return coinVariant;
     });
+
+    await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
+
+    reply.send(JSON.stringify({ success: true }, null, 2));
+});
+
+fastify.post('/coins-list-add-coin', async (request, reply) => {
+    const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body as { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: number; password: string };
+
+    if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+
+    const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null;
+    if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
+
+    const databaseCoinVariant = databaseCoinType.coins.find((variant) => variant.id === coinVariantId);
+    if (!databaseCoinVariant) return reply.send(JSON.stringify({ error: 'Invalid coin variant!' }, null, 2));
+
+    databaseCoinVariant.coins.push({ year: coinYear, obtained: false, id: coinId });
 
     await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
 

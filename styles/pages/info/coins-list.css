@@ -149,8 +149,17 @@ tr[data-upgrade="true"] {
     background-color: #414187;
 }
 
-.new-row-message i.fa-plus {
-    padding-right: 6px;
+.new-row-message {
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #3e434b;
+    }
+
+    & i.fa-plus {
+        padding-right: 6px;
+    }
 }
 
 .coin-variant-note {

@@ -24,7 +24,7 @@ export interface ParsedCoinVariant extends CoinVariant {
 }
 
 export interface Coin {
-    id: string;
+    id: number;
     year: string;
     mintMark?: string;
     specification?: string;
