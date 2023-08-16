@@ -13,7 +13,7 @@ readline.emitKeypressEvents(process.stdin);
 const config = {
     command: {
         name: 'railway',
-        args: 'run node --enable-source-maps dist/app.js'.split(' '),
+        args: 'run node --no-warnings --enable-source-maps dist/app.js'.split(' '),
     },
     watch: ['ts', 'hbs', 'css'].map((extension) => `**/*.${extension}`),
     ignore: ['**/node_modules/**', 'development.ts'],

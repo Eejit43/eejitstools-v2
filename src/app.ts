@@ -368,6 +368,13 @@ function logApiRequest(request: FastifyRequest) {
     consola.log(`${chalk.green('[API request]:')} ${chalk.gray(request.method)} ${chalk.yellow(request.url)}`);
 }
 
+// Custom error/warning handlers
+process.on('uncaughtException', (error) => consola.error(error));
+process.on('uncaughtExceptionMonitor', (error) => consola.error(error));
+process.on('unhandledRejection', (error) => consola.error(error));
+process.on('warning', (warning) => consola.warn(warning));
+
+// Setup database connection
 mongoose.set('strictQuery', true);
 
 await mongoose.connect(process.env.DATABASE_URL!);
