@@ -1,31 +1,49 @@
-import { build } from 'esbuild';
+import { BuildOptions, build } from 'esbuild';
 import postcss from 'esbuild-postcss';
-import { glob } from 'glob';
+import { cpSync } from 'node:fs';
 
 const banner = {
     js: '// This file was automatically compiled from TypeScript. View the original file for a more human-readable version.\n',
     css: '/* This file was automatically compiled from modern CSS. View the original file for a more human-readable version. */\n',
 };
 
+const buildParameters: Record<string, BuildOptions> = {
+    node: { platform: 'node', format: 'esm', target: 'node20', sourcemap: true, banner },
+    browser: { platform: 'browser', format: 'esm', target: 'es2017', supported: { 'top-level-await': true }, sourcemap: true, banner },
+    css: { plugins: [postcss()], sourcemap: true, banner },
+};
+
 /**
  * Compiles all TypeScript files into JavaScript.
  */
 export async function compileTypescript() {
-    return Promise.all([
-        build({ entryPoints: await glob('data/*.ts'), outdir: 'data', platform: 'node', format: 'esm', target: 'node20', sourcemap: true, banner }), //
-        build({ entryPoints: await glob('scripts/*.ts'), outdir: 'scripts', platform: 'browser', format: 'esm', target: 'es2017', sourcemap: true, banner }),
-        ...(await glob('scripts/pages/**/*.ts')).map((path) =>
-            build({ entryPoints: [path], outfile: path.replace('.ts', '.js'), platform: 'browser', format: 'esm', target: 'es2017', supported: { 'top-level-await': true }, sourcemap: true, banner }),
-        ),
-        ...['app', 'development', 'apod-fetcher'].map((name) =>
-            build({ entryPoints: [`${name}.ts`], outfile: `${name}.js`, platform: 'node', format: 'esm', target: 'node20', sourcemap: true, banner }),
-        ),
+    // Compile TypeScript
+    await Promise.all([
+        // Main files
+        build({ entryPoints: ['src/*.ts'], outdir: 'dist', ...buildParameters.node }),
+        build({ entryPoints: ['development.ts'], outfile: 'development.js', ...buildParameters.node }),
 
-        build({ entryPoints: await glob('styles/*.css'), outdir: 'public/styles', plugins: [postcss()], sourcemap: true, banner }),
-        ...(await glob('styles/pages/**/*.css')).map((path) =>
-            build({ entryPoints: [path], outfile: path.replace('styles/pages', 'public/styles/pages'), plugins: [postcss()], sourcemap: true, banner }),
-        ),
+        // Data and scripts
+        build({ entryPoints: ['src/public/data/*.ts'], outdir: 'dist/public/data', ...buildParameters.node }),
+        build({ entryPoints: ['src/public/scripts/*.ts'], outdir: 'dist/public/scripts', ...buildParameters.browser }),
+        build({ entryPoints: ['src/public/scripts/pages/**/*.ts'], outdir: 'dist/public/scripts/pages', ...buildParameters.browser }),
+
+        // CSS
+        build({ entryPoints: ['src/public/styles/*.css'], outdir: 'dist/public/styles', ...buildParameters.css }),
+        build({ entryPoints: ['src/public/styles/pages/**/*.css'], outdir: 'dist/public/styles/pages', ...buildParameters.css }),
     ]);
+
+    // Copy views folder
+    cpSync('src/views', 'dist/views', { recursive: true });
+
+    // Copy external scripts/styles
+    cpSync('src/public/scripts/external', 'dist/public/scripts/external', { recursive: true });
+    cpSync('src/public/styles/external', 'dist/public/styles/external', { recursive: true });
+
+    // Copy favicons folder
+    cpSync('src/public/favicons', 'dist/public/favicons', { recursive: true });
+    cpSync('src/public/apple-touch-icon.png', 'dist/public/apple-touch-icon.png', { recursive: true });
+    cpSync('src/public/favicon.ico', 'dist/public/favicon.ico', { recursive: true });
 }
 
 await compileTypescript();

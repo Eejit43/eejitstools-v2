@@ -2,9 +2,7 @@
 
 node_modules/
 
-*.js
-*.js.map
-!public/scripts/external
+/*.js
+/*.js.map
 
-public/styles
-!public/styles/external
+dist

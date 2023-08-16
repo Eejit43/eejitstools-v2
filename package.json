@@ -2,11 +2,11 @@
     "name": "eejitstools",
     "type": "module",
     "scripts": {
-        "build": "cp compile.ts compile.js && node compile.js",
+        "build": "pnpm run remove-compiled && npx esbuild compile.ts --outfile=compile.js --target=node20 --platform=node && node compile.js",
         "dev": "pnpm run build && node development.js --enable-source-maps",
         "force-deploy": "railway up",
-        "remove-compiled": "find . -type f \\( -name '*.js' -o -name '*.js.map' \\) ! -path './node_modules/*' ! -path './public/scripts/external/*' -delete && find ./public/styles -type f -name '*.css' ! -path './public/styles/external/*' -delete",
-        "start": "node --max-old-space-size=100 app.js"
+        "remove-compiled": "rm -rf dist && find . -maxdepth 1 -type f \\( -name '*.js' -o -name '*.js.map' \\) -delete",
+        "start": "node --enable-source-maps --max-old-space-size=100 dist/app.js"
     },
     "prettier": "@eejit/prettier-config",
     "dependencies": {
@@ -28,7 +28,7 @@
         "postcss-preset-env": "^9.1.1"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^2.8.0",
+        "@eejit/eslint-config-typescript": "^2.10.0",
         "@eejit/prettier-config": "^2.0.0",
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.2",

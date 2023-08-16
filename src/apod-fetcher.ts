@@ -55,13 +55,13 @@ export async function fetchApod(year: string, month: string, date: string): Prom
         const html = parse(
             apodPage
                 .replaceAll('\n', ' ')
-                .replace(/ {2,}/g, ' ')
-                .replace(/-{2,}/g, '–')
-                .replace(/(href|src)=(["']) {1,}/, '$1=$2')
-                .replace(/(href|src)=(["'])(?!http|mailto)(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/apod/$3$4')
-                .replace(/(href|src)=(["'])\/(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/$3$4'),
+                .replaceAll(/ {2,}/g, ' ')
+                .replaceAll(/-{2,}/g, '–')
+                .replace(/(href|src)=(["']) +/, '$1=$2')
+                .replaceAll(/(href|src)=(["'])(?!http|mailto)(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/apod/$3$4')
+                .replaceAll(/(href|src)=(["'])\/(.*?)(["'])/gi, '$1=$2https://apod.nasa.gov/$3$4'),
         );
-        html.querySelectorAll('a').forEach((element) => element.setAttribute('target', '_blank'));
+        for (const element of html.querySelectorAll('a')) element.setAttribute('target', '_blank');
 
         const mediaType = html.querySelector('iframe') ? 'embed' : 'image';
 
@@ -71,7 +71,7 @@ export async function fetchApod(year: string, month: string, date: string): Prom
             .trim();
 
         const credit = html.innerHTML
-            .match(/Credit.*?<\/center>/is)?.[0]
+            .match(/credit.*?<\/center>/is)?.[0]
             ?.replace(/ <\/b>/gi, '')
             ?.replace(/ ?<\/center>/gi, '')
             ?.trim();
@@ -87,21 +87,21 @@ export async function fetchApod(year: string, month: string, date: string): Prom
             const imageElement = html.querySelector('a img, button img')!;
             media.src = imageElement.getAttribute('src')!;
             media.highResolution = imageElement.parentNode.getAttribute('href');
-            media.annotated = imageElement.parentNode.getAttribute('onmouseover')?.match(/src=['"](.*?)['"]/)?.[1];
-            media.alt = imageElement.getAttribute('alt')?.replace(/ Please see the explanation for more detailed information./i, '');
+            media.annotated = imageElement.parentNode.getAttribute('onmouseover')?.match(/src=["'](.*?)["']/)?.[1];
+            media.alt = imageElement.getAttribute('alt')?.replace(/ please see the explanation for more detailed information./i, '');
 
             if (/will download the/i.test(media.alt!)) delete media.alt;
             if (media.highResolution === media.src) delete media.highResolution;
         }
 
         const explanation = html.innerHTML
-            .match(/Explanation:.*?Tomorrow|Explanation<\/b>:.*?Tomorrow|Explanation:.*?<hr>/gi)?.[0]
-            .replace(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
-            .replace(/<b> (.*?) <\/b>/g, '$1')
-            .replace(/(\w|>)\/ /g, '$1/')
-            .replace(/ \.{3}/g, '...')
-            .replace(
-                /(Explanation: ?<\/b> |Explanation<\/b>: | Explanation: | ?<br> ?<b> ?Tomorrow|<b> Tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> Tomorrow|<br \/><br \/>Birthday Surprise.*?$|<br \/> +Your Sky Surprise.*?$|<br \/> +APOD in world languages:.*?$)/gi,
+            .match(/explanation:.*?tomorrow|explanation<\/b>:.*?tomorrow|explanation:.*?<hr>/gi)?.[0]
+            .replaceAll(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
+            .replaceAll(/<b> (.*?) <\/b>/g, '$1')
+            .replaceAll(/(\w|>)\/ /g, '$1/')
+            .replaceAll(/ \.{3}/g, '...')
+            .replaceAll(
+                /(explanation: ?<\/b> |explanation<\/b>: | explanation: | ?<br> ?<b> ?tomorrow|<b> tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> tomorrow|<br \/><br \/>birthday surprise.*?$|<br \/> +your sky surprise.*?$|<br \/> +apod in world languages:.*?$)/gi,
                 '',
             )
             .replace(/<br( \/)?> *$/, '')

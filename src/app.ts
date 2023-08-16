@@ -10,47 +10,20 @@ import mongoose, { Schema, model } from 'mongoose';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fetchApod } from './apod-fetcher.js';
-import { Coin, ParsedCoinType, coinsData } from './data/coins-data.js';
-import { allPages, blankProperties, toneIndicators } from './data/pages.js';
+import { Coin, ParsedCoinType, coinsData } from './public/data/coins-data.js';
+import { allPages, blankProperties, toneIndicators } from './public/data/pages.js';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
-
-// Copy data and scripts to public folder
-const dirname = path.dirname(new URL(import.meta.url).pathname);
-
-if (fs.existsSync(path.join(dirname, 'public', 'data'))) fs.rmSync(path.join(dirname, 'public', 'data'), { recursive: true });
-
-fs.mkdirSync(path.join(dirname, 'public', 'data'));
-
-for (const file of fs.readdirSync('data').filter((file) => file.endsWith('.js') || file.endsWith('.js.map')))
-    fs.copyFileSync(path.join(dirname, 'data', file), path.join(dirname, 'public', 'data', file));
-
-for (const fileOrFolder of fs.readdirSync('public/scripts')) {
-    if (fileOrFolder.endsWith('external')) continue;
-
-    if (fileOrFolder.endsWith('.js') || fileOrFolder.endsWith('.js.map')) fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder));
-    else fs.rmSync(path.join(dirname, 'public', 'scripts', fileOrFolder), { recursive: true });
-}
-
-fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages'));
-
-for (const fileOrFolder of fs.readdirSync('scripts'))
-    if (fileOrFolder.endsWith('.js') || fileOrFolder.endsWith('.js.map')) fs.copyFileSync(path.join(dirname, 'scripts', fileOrFolder), path.join(dirname, 'public', 'scripts', fileOrFolder));
-
-for (const category of fs.readdirSync('scripts/pages')) {
-    fs.mkdirSync(path.join(dirname, 'public', 'scripts', 'pages', category));
-
-    for (const file of fs.readdirSync(path.join(dirname, 'scripts', 'pages', category)))
-        if (file.endsWith('.js') || file.endsWith('.js.map')) fs.copyFileSync(path.join(dirname, 'scripts', 'pages', category, file), path.join(dirname, 'public', 'scripts', 'pages', category, file));
-}
 
 // Load layouts and static assets
 const fastify = Fastify();
 
 await fastify.register(fastifyRateLimit.default);
 
-fastify.register(pointOfView, { engine: { handlebars }, root: 'views', includeViewExtension: true, layout: '/layouts/layout' });
+fastify.register(pointOfView, { engine: { handlebars }, root: 'src/views/', layout: 'layouts/layout.hbs' });
+
+const dirname = path.dirname(new URL(import.meta.url).pathname);
 
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
 
@@ -304,24 +277,24 @@ fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { ur
 
 // Render each tool/info/fun page
 const pagesWithScripts = new Set(
-    fs.readdirSync('scripts/pages').flatMap((category) =>
+    fs.readdirSync('src/public/scripts/pages').flatMap((category) =>
         fs
-            .readdirSync(`scripts/pages/${category}`)
-            .filter((script) => script.endsWith('.js'))
-            .map((script) => `${category}/${script.replace(/\.js$/, '')}`),
+            .readdirSync(`src/public/scripts/pages/${category}`)
+            .filter((script) => script.endsWith('.ts'))
+            .map((script) => `${category}/${script.replace(/\.ts$/, '')}`),
     ),
 );
 
 const pagesWithStyles = new Set(
-    fs.readdirSync('public/styles/pages').flatMap((category) => fs.readdirSync(`public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)),
+    fs.readdirSync('src/public/styles/pages').flatMap((category) => fs.readdirSync(`src/public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)),
 );
 
 let totalCategories = 0,
     totalPages = 0;
 
-for (const category of fs.readdirSync('views/pages')) {
+for (const category of fs.readdirSync('src/views/pages')) {
     totalCategories++;
-    const pages = fs.readdirSync(`views/pages/${category}`).filter((file) => file.endsWith('.hbs'));
+    const pages = fs.readdirSync(`src/views/pages/${category}`).filter((file) => file.endsWith('.hbs'));
     totalPages += pages.length;
 
     for (let page of pages) {

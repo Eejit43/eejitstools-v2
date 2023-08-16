@@ -409,7 +409,7 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         tooltip.dataset.tooltip =
             tooltip.textContent.toLowerCase() === 'none'
                 ? `Likely minted in ${mintMarks.P}`
-                : tooltip.textContent.toUpperCase() in mintMarks // eslint-disable-line unicorn/no-nested-ternary
+                : tooltip.textContent.toUpperCase() in mintMarks
                 ? `Minted in ${mintMarks[tooltip.textContent]}`
                 : 'Unknown';
         tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
@@ -653,7 +653,7 @@ function addCoinChangeEntry(coinData: PartialNullable<Coin>, variant: string, ty
     entry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${variant}${specification ? ` (${specification})` : ''}${
         changeText
             ? ` ${changeText}`
-            : coinData[Object.keys(changes as Coin)[0] as keyof Coin] // eslint-disable-line unicorn/no-nested-ternary
+            : coinData[Object.keys(changes as Coin)[0] as keyof Coin]
             ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"`
             : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`
     }`;

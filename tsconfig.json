@@ -5,5 +5,5 @@
         "module": "NodeNext",
         "removeComments": true
     },
-    "include": ["development.ts", "app.ts", "apod-fetcher.ts"]
+    "include": ["development.ts", "src/app.ts", "src/apod-fetcher.ts"]
 }
