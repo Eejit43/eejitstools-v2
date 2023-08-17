@@ -23,12 +23,12 @@
         "handlebars": "^4.7.8",
         "mongoose": "^7.4.3",
         "node-html-parser": "^6.1.5",
-        "postcss": "^8.4.27",
+        "postcss": "^8.4.28",
         "postcss-preset-env": "^9.1.1"
     },
     "devDependencies": {
         "@eejit/eslint-config-typescript": "^2.10.0",
-        "@eejit/prettier-config": "^2.0.0",
+        "@eejit/prettier-config": "^2.0.1",
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.2",
         "@types/chroma-js": "^2.4.0",
