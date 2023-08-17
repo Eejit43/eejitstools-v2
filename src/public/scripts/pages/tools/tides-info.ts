@@ -76,7 +76,7 @@ async function getData(position: GeolocationPosition) {
     const nextExtremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 
     const table = [
-        '<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">', //
+        '<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">',
         '<thead>',
         '<tr>',
         '<th style="width: 300px">Time</th>',
@@ -99,7 +99,7 @@ async function getData(position: GeolocationPosition) {
     table.push('</tbody', '</table>');
 
     const output = [
-        `Based on information at latitude ${latitude}, longitude ${longitude}, ${distance} away.`, //
+        `Based on information at latitude ${latitude}, longitude ${longitude}, ${distance} away.`,
         `Updated at ${updated}.<br />`,
         `The tide is currently ${state}.`,
         `${nextExtremes}<br />`,

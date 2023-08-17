@@ -128,7 +128,7 @@ async function getData(position: GeolocationPosition) {
     else if (airQuality >= 301) airQualityDescription = airQualities[5];
 
     result.innerHTML = [
-        `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`, //
+        `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`,
         `Updated at ${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'long',
