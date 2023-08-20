@@ -32,7 +32,6 @@
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.2",
         "@types/chroma-js": "^2.4.0",
-        "@types/node": "^20.5.0",
         "@types/ua-parser-js": "^0.7.36",
         "mathjs": "^11.9.1",
         "stylelint": "^15.10.2",

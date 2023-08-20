@@ -67,9 +67,6 @@ devDependencies:
   '@types/chroma-js':
     specifier: ^2.4.0
     version: 2.4.0
-  '@types/node':
-    specifier: ^20.5.0
-    version: 20.5.0
   '@types/ua-parser-js':
     specifier: ^0.7.36
     version: 0.7.36
@@ -910,6 +907,7 @@ packages:
 
   /@types/node@20.5.0:
     resolution: {integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==}
+    dev: false
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
