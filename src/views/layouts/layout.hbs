@@ -76,28 +76,28 @@
                 <span class="noscript-message">This page requires JavaScript to function properly! Please enable it and reload!</span>
             </div>
         </noscript>
-        <nav id="navbar">
+        <nav>
             <a href="/">
                 <span class="logo">
-                    <span style="color: #ff5555" data-value="E">E</span><span style="color: #ffaa00" data-value="e">e</span><span style="color: #ffff55" data-value="j">j</span><span
-                        style="color: #55ff55"
-                        data-value="i"
-                    >i</span><span style="color: #00aa00" data-value="t">t</span><span style="color: #00aaaa" data-value="'">'</span><span style="color: #5555ff" data-value="s">s</span>
-                    <span style="color: #aa00aa" class="logo-tools" data-value="Tools">Tools</span>
+                    <span style="color: var(--brand-color-1)" data-value="E">E</span><span style="color: var(--brand-color-2)" data-value="e">e</span><span
+                        style="color: var(--brand-color-3)"
+                        data-value="j"
+                    >j</span><span style="color: var(--brand-color-4)" data-value="i">i</span><span style="color: var(--brand-color-5)" data-value="t">t</span><span
+                        style="color: var(--brand-color-6)"
+                        data-value="'"
+                    >'</span><span style="color: var(--brand-color-7)" data-value="s">s</span>
+                    <span style="color: var(--brand-color-8)" class="logo-tools" data-value="Tools">Tools</span>
                 </span>
             </a>
-            <span style="float: right">
-                <div class="search-box mobile-hidden">
-                    <input class="search-text" type="text" placeholder="Search here..." /><i class="search-button fa-solid fa-magnifying-glass"></i><br />
-                    <div class="search-results"></div>
-                </div>
-                <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span> <i id="time-icon" class="fa-solid fa-triangle-exclamation"></i></a>
-                <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
-                {{#if commitInfo}}<code id="last-commit-info" class="tooltip-bottom" data-tooltip="&quot;{{commitInfo.message}}&quot; by {{commitInfo.author}}"><i
-                            class="fa-solid fa-code-commit"
-                            style="padding-right: 5px"
-                        ></i>{{commitInfo.sha}}</code>{{/if}}
-            </span>
+            <div class="search-box mobile-hidden">
+                <input class="search-text" type="text" placeholder="Search here..." /><i class="search-button fa-solid fa-magnifying-glass"></i><br />
+                <div class="search-results"></div>
+            </div>
+            <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span> <i id="time-icon" class="fa-solid fa-triangle-exclamation"></i></a>
+            <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
+            <div id="last-commit-info">
+                <code class="tooltip-bottom" data-tooltip="&quot;{{commitInfo.message}}&quot; by {{commitInfo.author}}"><i class="fa-solid fa-code-commit"></i>{{commitInfo.sha}}</code>
+            </div>
         </nav>
         {{#if toolbox}}
             <div class="toolbox">

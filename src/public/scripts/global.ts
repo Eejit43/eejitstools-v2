@@ -51,7 +51,7 @@ setInterval(() => {
     }
 }, 100);
 
-const navbar = document.querySelector('#navbar')!;
+const navbar = document.querySelector('nav')!;
 
 /**
  * Resizes the navigation bar on scroll.
@@ -158,26 +158,26 @@ document.addEventListener('keydown', (event) => {
             if (!event.shiftKey && event.code === 'KeyP') {
                 const { pathname } = window.location;
                 let finalUrl;
-                if (pathname === '/') finalUrl = 'views/index.hbs';
-                else if (pathname === '/search') finalUrl = 'views/search.hbs';
+                if (pathname === '/') finalUrl = 'src/views/index.hbs';
+                else if (pathname === '/search') finalUrl = 'src/views/search.hbs';
                 else {
                     const category = pathname.split('/')[1];
                     const page = allPages[category]?.[pathname.split('/')[2]];
 
-                    finalUrl = page ? `views/pages/${category}/${page.id}.hbs` : 'views/error.hbs';
+                    finalUrl = page ? `src/views/pages/${category}/${page.id}.hbs` : 'src/views/error.hbs';
                 }
 
                 window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');
             } else if (event.shiftKey && event.code === 'KeyP') {
                 const { pathname } = window.location;
                 let finalUrl;
-                if (pathname === '/') finalUrl = 'public/scripts/global.js';
-                else if (pathname === '/search') finalUrl = 'public/scripts/search.js';
+                if (pathname === '/') finalUrl = 'src/public/scripts/global.ts';
+                else if (pathname === '/search') finalUrl = 'src/public/scripts/search.ts';
                 else {
                     const category = pathname.split('/')[1];
                     const page = allPages[category]?.[pathname.split('/')[2]];
 
-                    finalUrl = page ? `public/scripts/pages/${category}/${page.id}.js` : 'public/scripts/global.js';
+                    finalUrl = page ? `src/public/scripts/pages/${category}/${page.id}.ts` : 'src/public/scripts/global.ts';
                 }
 
                 window.open(`${githubUrl}/blob/main/${finalUrl}`, '_blank');

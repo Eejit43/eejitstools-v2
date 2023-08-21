@@ -28,11 +28,11 @@ const dirname = path.dirname(new URL(import.meta.url).pathname);
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
 
 // Define latest commit info
-const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7);
-const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE;
-const commitAuthor = process.env.RAILWAY_GIT_AUTHOR;
+const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7) ?? 'abcdefg';
+const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE ?? 'Some commit message!';
+const commitAuthor = process.env.RAILWAY_GIT_AUTHOR ?? 'Someone';
 
-const commitInfo = commitSha ? { sha: commitSha, message: commitMessage, author: commitAuthor } : null;
+const commitInfo = { sha: commitSha, message: commitMessage, author: commitAuthor };
 
 // Register pages
 fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));

@@ -37,7 +37,7 @@ export function showAlert(text: string, color: string, duration?: number) {
             borderRadius: '5px',
             boxShadow: 'none',
             color: color || '#009c3f',
-            fontFamily: '"Source Sans Pro", sans-serif',
+            fontFamily: 'var(--font-family)',
             fontSize: '17px',
             fontWeight: '600',
             minWidth: '150px',
@@ -186,15 +186,15 @@ export function updateInnerHtml(element: HTMLElement, string: string) {
  */
 export const addAnimation = (element: string, animation: string) =>
     new Promise((resolve) => {
-        const node = document.querySelector(element)!;
+        const foundElement = document.querySelector(element)!;
 
-        node.classList.add(animation);
+        foundElement.classList.add(animation);
 
-        node.addEventListener(
+        foundElement.addEventListener(
             'animationend',
             (event) => {
                 event.stopPropagation();
-                node.classList.remove(animation);
+                foundElement.classList.remove(animation);
                 resolve('Animation ended');
             },
             { once: true },

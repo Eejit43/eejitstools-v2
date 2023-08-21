@@ -4,7 +4,7 @@ header {
 }
 
 .mainlogo {
-    font-weight: 700;
+    font-weight: bold;
     font-size: 80px;
 
     @media (width <= 700px) {
@@ -13,7 +13,7 @@ header {
 }
 
 .mainlogo-tools {
-    font-weight: 700;
+    font-weight: bold;
     font-size: 65px;
 
     @media (width <= 700px) {

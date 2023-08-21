@@ -244,5 +244,5 @@
 .mcui-text {
     color: #2b2d2f;
     font-size: 14px;
-    font-family: Minecraft, "Source Sans Pro", sans-serif;
+    font-family: Minecraft, var(--font-family);
 }
