@@ -21,7 +21,8 @@ export async function compileTypescript() {
     await Promise.all([
         // Main files
         build({ entryPoints: ['development.ts'], outfile: 'development.js', ...buildParameters.node }),
-        build({ entryPoints: ['src/*.ts'], outdir: 'dist', ...buildParameters.node }),
+        build({ entryPoints: ['src/app.ts'], outfile: 'dist/app.js', ...buildParameters.node }),
+        build({ entryPoints: ['src/route-handlers/*.ts'], outdir: 'dist/route-handlers', ...buildParameters.node }),
 
         // Data and scripts
         build({ entryPoints: ['src/public/data/*.ts'], outdir: 'dist/public/data', ...buildParameters.node }),

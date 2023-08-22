@@ -1,4 +1,4 @@
-import { ApodEntryMedia, FullApodEntry } from '../../../../apod-fetcher.js';
+import { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/apod.js';
 import { showAlert } from '../../functions.js';
 
 const resultElement = document.querySelector('#result') as HTMLDivElement;
