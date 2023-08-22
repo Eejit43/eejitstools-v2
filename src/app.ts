@@ -28,25 +28,15 @@ const dirname = path.dirname(new URL(import.meta.url).pathname);
 fastify.register(fastifyStatic, { root: path.join(dirname, 'public') });
 
 // Define latest commit info
-const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7) ?? 'abcdefg';
+const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA;
+const processedCommitSha = commitSha?.slice(0, 7) ?? 'abcdefg';
 const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE ?? 'Some commit message!';
 const commitAuthor = process.env.RAILWAY_GIT_AUTHOR ?? 'Someone';
 
-const commitInfo = { sha: commitSha, message: commitMessage, author: commitAuthor };
+const commitInfo = { sha: processedCommitSha, message: commitMessage, author: commitAuthor, url: commitSha ? `/commit/${commitSha}` : '' };
 
 // Register pages
 fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));
-
-fastify.get('/search', (request, reply) =>
-    reply.view('/search', {
-        ...blankProperties,
-        commitInfo,
-        title: 'Search',
-        descriptionParsed: 'Search the site!',
-        additionalScripts: [{ link: '/scripts/search.js', module: true }],
-        additionalStyles: [{ link: 'search.css' }],
-    }),
-);
 
 fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: (request.query as { password: string }).password === process.env.COINS_PASSWORD }, null, 2)));
 

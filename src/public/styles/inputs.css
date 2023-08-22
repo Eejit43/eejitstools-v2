@@ -1,0 +1,159 @@
+textarea {
+    transition: box-shadow 0.1s ease;
+    margin: 0.5rem 0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+    padding: 0.2rem;
+    width: 40%;
+    height: 6rem;
+    min-height: 4rem;
+    max-height: 16rem;
+    resize: vertical;
+    color: #aaa;
+    font-family: var(--font-family-monospace);
+}
+
+.fakeinput {
+    overflow: scroll;
+    user-select: text;
+    text-align: left;
+}
+
+input:not(input[type="file"], input[type="checkbox"], input[type="color"]),
+.fakeinput {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+    padding: 0.2rem 0.3rem;
+    width: 15rem;
+    scrollbar-width: none;
+    color: #aaa;
+    font-size: 0.75rem;
+    font-family: var(--font-family-monospace);
+}
+
+input::-webkit-scrollbar,
+.fakeinput::-webkit-scrollbar {
+    display: none;
+}
+
+input:focus:not(input[type="file"], input[type="checkbox"], input[type="color"]),
+textarea:focus:not(input[type="file"]),
+.fakeinput:focus {
+    outline: none;
+    box-shadow: 0 0 3px 2px lightslategray;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input[type="color"] {
+    cursor: pointer;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+
+    &:hover {
+        background-color: #2a2a2a;
+    }
+}
+
+select {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+    padding: 0.2rem;
+    width: 8rem;
+    color: #aaa;
+    font-size: 0.75rem;
+    font-family: var(--font-family-monospace);
+}
+
+.file-upload {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 3px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+    padding: 0.4rem;
+    width: max-content;
+    height: max-content;
+    color: white;
+    font-weight: normal;
+    font-size: 16px;
+
+    &:hover {
+        transition: all 0.2s ease;
+        background-color: #2b2b2b;
+    }
+}
+
+button:not(.fakeinput) {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 3px 0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #252525;
+    padding: 0.2rem 0.3rem;
+    width: max-content;
+    height: max-content;
+    color: #ddd;
+    font-family: var(--font-family);
+}
+
+button:disabled:not(.fakeinput) {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:hover:not(.fakeinput) {
+    background-color: #2a2a2a;
+}
+
+.invisible-input[type="text"]:not(input[type="file"], input[type="checkbox"]),
+.invisible-input[type="number"]:not(input[type="file"], input[type="checkbox"]) {
+    border: none;
+    border-bottom: 1px solid dimgray;
+    border-radius: 0;
+    background-color: transparent;
+    padding-bottom: 0;
+    width: 1.35em;
+    overflow: hidden;
+    color: dimgray;
+    font-weight: 500;
+    font-size: 50px;
+    font-family: var(--font-family);
+    text-align: right;
+}
+
+.invisible-input[type="text"]:focus:not(input[type="file"], input[type="checkbox"]),
+.invisible-input[type="number"]:focus:not(input[type="file"], input[type="checkbox"]) {
+    outline: none;
+    box-shadow: none;
+}
+
+.invisible-input[type="number"]:is(::-webkit-inner-spin-button, ::-webkit-outer-spin-button),
+.no-arrow[type="number"]:is(::-webkit-inner-spin-button, ::-webkit-outer-spin-button) {
+    appearance: none;
+    margin: 0;
+}
+
+input[type="search"]:is(::-ms-clear, ::-ms-reveal) {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+input[type="search"]:is(::-webkit-search-decoration, ::-webkit-search-cancel-button, ::-webkit-search-results-button, ::-webkit-search-results-decoration) {
+    display: none;
+}

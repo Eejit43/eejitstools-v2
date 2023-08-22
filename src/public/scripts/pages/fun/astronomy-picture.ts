@@ -96,7 +96,7 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
     if (!success && error) return showAlert(error, 'error');
 
     const result = [
-        `Astronomy ${media.type === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for <a href="${source}" target="_blank">${date}</a>:<br /><br />`,
+        `Astronomy ${media.type === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for <a href="${source}" target="_blank" class="external-link">${date}</a>:<br /><br />`,
         `<center style="font-size: 30px">${title}</center>`,
         getMediaElement(media),
         credit ? `<center>${credit}</center><br />` : '',

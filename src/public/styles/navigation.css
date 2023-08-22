@@ -1,0 +1,229 @@
+nav {
+    display: grid;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    grid-template-columns: 4fr repeat(4, max-content);
+    column-gap: 25px;
+    align-items: center;
+    z-index: 5000;
+    background-color: #1b1e24 !important;
+    padding: 30px 25px;
+    font-size: 20px;
+
+    @media (width <= 600px) {
+        font-size: 16px;
+    }
+}
+
+.nav-shrunk {
+    padding: 15px 25px;
+    font-size: 18px;
+
+    @media (width <= 600px) {
+        font-size: 13px;
+    }
+
+    & .logo {
+        font-size: 23px;
+
+        @media (width <= 600px) {
+            font-size: 16px;
+        }
+    }
+
+    & .logo-tools {
+        font-size: 18px;
+
+        @media (width <= 600px) {
+            font-size: 13px;
+        }
+    }
+
+    & .search-box {
+        padding: 3px;
+        height: 40px;
+
+        @media (width <= 600px) {
+            padding: 2px;
+            height: 38px;
+        }
+    }
+}
+
+nav,
+nav * {
+    transition:
+        padding 0.4s ease,
+        font-size 0.4s ease;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 28px;
+    text-align: left;
+
+    @media (width <= 600px) {
+        font-size: 18px;
+    }
+}
+
+.logo-tools {
+    font-weight: bold;
+    font-size: 22px;
+
+    @media (width <= 600px) {
+        font-size: 13px;
+    }
+}
+
+.search-box {
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
+    background-color: #242424;
+    padding: 5px;
+    width: max-content;
+    height: 44px;
+    color: #c5c5cc;
+
+    @media (width <= 600px) {
+        padding: 3px;
+        height: 40px;
+    }
+
+    & .search-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        float: right;
+        cursor: pointer;
+        margin: auto;
+        width: 30px;
+        height: 30px;
+        color: #c5c5cc;
+    }
+
+    & .search-text {
+        border: none !important;
+        background-color: #242424 !important;
+        padding: 6px 0 !important;
+        width: 0 !important;
+        color: #c5c5cc !important;
+
+        &::placeholder {
+            color: #c5c5cc;
+        }
+    }
+}
+
+.search-results {
+    display: none;
+    z-index: -100;
+
+    & table {
+        display: block;
+        margin-top: 1px;
+        border: 2px solid #3b3b3f;
+        border-radius: 10px;
+        background-color: #242424;
+        padding: 8px;
+        width: 300px;
+        max-height: 500px;
+        overflow-y: scroll;
+        color: #c5c5cc;
+        font-size: 18px;
+
+        & tr:first-of-type > td {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        & tr:last-of-type > td {
+            padding-bottom: 0;
+        }
+
+        & td {
+            border-top: 2px solid #4c6072;
+            padding-top: 15px;
+            padding-bottom: 15px;
+
+            & .results-title {
+                padding-bottom: 5px;
+                font-size: 20px;
+            }
+
+            & a {
+                color: #4c6072;
+
+                &:hover,
+                &.selected {
+                    color: #364c5f;
+                }
+            }
+        }
+    }
+}
+
+.search-box:hover > .search-text,
+.search-text:focus {
+    box-shadow: none !important;
+    padding: 7px 0 6px 8px !important;
+    width: 249px !important;
+}
+
+.search-box:hover > .search-results,
+.search-text:focus ~ .search-results {
+    display: unset;
+}
+
+.nav-time {
+    font-weight: bold;
+
+    @media (width <= 600px) {
+        margin-right: 20px;
+    }
+
+    & > #time-icon {
+        margin-left: 2px;
+
+        &.fa-triangle-exclamation {
+            color: #f55;
+        }
+
+        &.fa-sun-bright {
+            color: #ffac33;
+        }
+
+        &.fa-moon-stars {
+            color: wheat;
+        }
+    }
+}
+
+.source {
+    color: dimgray;
+
+    &:hover {
+        color: #505050;
+    }
+}
+
+#last-commit-info {
+    & code {
+        color: #b4b4b4;
+        font-size: 14px;
+
+        & i {
+            padding-right: 5px;
+        }
+
+        &::after {
+            margin-left: -120px;
+        }
+
+        @media (width <= 600px) {
+            font-size: 12px;
+        }
+    }
+}

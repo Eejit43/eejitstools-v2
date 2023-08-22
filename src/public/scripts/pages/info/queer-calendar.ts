@@ -7,7 +7,6 @@ const dateInput = document.querySelector('#date') as HTMLInputElement;
 const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
 const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
 const yearOverview = document.querySelector('#year-overview') as HTMLAnchorElement;
-const yearOverviewList = document.querySelector('#year-overview-list') as HTMLAnchorElement;
 
 /* Add event listeners */
 getDateButton.addEventListener('click', getFromDate);
@@ -41,8 +40,7 @@ const date = currentTime.getDate().toString().padStart(2, '0');
 monthInput.placeholder = month;
 dateInput.placeholder = date;
 
-yearOverview.href = `https://en.pronouns.page/calendar/${year}-overview.png`;
-yearOverviewList.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
+yearOverview.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
 
 interface CalendarData {
     events: string[];

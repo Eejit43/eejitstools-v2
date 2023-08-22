@@ -293,9 +293,6 @@ const imports: Imports = {
     mathJs: {
         script: { link: 'https://unpkg.com/mathjs/lib/browser/math.js' },
     },
-    minecraft: {
-        style: { link: 'minecraft.css' },
-    },
     odometer: {
         style: { link: 'external/odometer.css' },
         script: { link: '/scripts/external/odometer.js', module: true, external: false },
@@ -315,7 +312,6 @@ export const blankProperties = {
     description: 'Some useful tools for general purposes!',
     descriptionParsed: 'Some useful tools for general purposes!',
     toolbox: false,
-    iconStyle: null,
     toolboxTitle: null,
     script: false,
     style: false,
@@ -329,7 +325,6 @@ interface Page {
     icon: string;
     description: string;
     toolbox?: boolean;
-    iconStyle?: string | null;
     toolboxTitle?: string | null;
     script?: boolean;
     style?: boolean;
@@ -432,19 +427,15 @@ const preParsedPages: PreParsedPages = {
             title: 'Minecraft Formatting Codes',
             icon: 'gamepad-modern',
             description: 'List of all Minecraft color and formatting codes',
-            additionalStyles: [imports.minecraft.style],
             additionalData: { minecraftColorCodes, minecraftFormattingCodes },
-            iconStyle: 'padding-right: 5px',
-            toolboxTitle: '<span style="font-size: 27px" class="mcui-text format-2"><span class="format-l">Minecraft</span></span> Formatting Codes',
         },
         'phonetic-alphabet': { title: 'NATO Phonetic Alphabet', icon: 'arrow-down-a-z', description: 'Code words used by the military/police for letters', additionalData: { phoneticAlphabet } },
         'queer-calendar': {
             title: 'Queer Calendar',
             icon: 'calendar-days',
             description: 'Show LGBTQ+ related events for the current date or an inputted date of the current year',
-            iconStyle: 'color: #e73636',
             toolboxTitle:
-                '<span style="color: #e78236">Q</span><span style="color: #e7ce36">u</span><span style="color: #b5e736">e</span><span style="color: #69e736">e</span><span style="color: #36e74f">r</span> <span style="color: #36e79b">C</span><span style="color: #36e7e7">a</span><span style="color: #369be7">l</span><span style="color: #364fe7">e</span><span style="color: #6936e7">n</span><span style="color: #b536e7">d</span><span style="color: #e736ce">a</span><span style="color: #e73682">r</span> 🏳️‍🌈',
+                '<span style="color: var(--brand-color-1)">Q</span><span style="color: var(--brand-color-2)">u</span><span style="color: var(--brand-color-4)">e</span><span style="color: var(--brand-color-6)">e</span><span style="color: var(--brand-color-8)">r</span> Calendar',
         },
         'state-abbreviations': { title: 'State Abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },
         'text-abbreviations': { title: 'Text Abbreviations', icon: 'text', description: 'List of common abbreviations used in text', additionalData: { textAbbreviations } },
@@ -467,7 +458,6 @@ interface ParsedPage extends Page {
     id: string;
     descriptionParsed: string;
     toolbox: boolean;
-    iconStyle: string | null;
     toolboxTitle: string | null;
     script: boolean;
     style: boolean;

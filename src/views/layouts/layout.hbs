@@ -1,10 +1,8 @@
-<!doctype html>
 <html lang="en">
     <head>
         <!-- Common Tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="robots" content="index, follow" />
         <title>{{title}} | Eejit's Tools</title>
         <!-- Search Engine -->
@@ -89,26 +87,23 @@
                     <span style="color: var(--brand-color-8)" class="logo-tools" data-value="Tools">Tools</span>
                 </span>
             </a>
-            <div class="search-box mobile-hidden">
+            <div class="search-box">
                 <input class="search-text" type="text" placeholder="Search here..." /><i class="search-button fa-solid fa-magnifying-glass"></i><br />
                 <div class="search-results"></div>
             </div>
             <a href="/tools/time" class="nav-time"><span id="time-display">Loading...</span> <i id="time-icon" class="fa-solid fa-triangle-exclamation"></i></a>
             <a href="https://github.com/Eejit43/eejitstools-v2" target="_blank" class="source">Source <i class="fa-brands fa-github" style="margin-left: 3px; transform: translateY(1.5px)"></i></a>
             <div id="last-commit-info">
-                <code class="tooltip-bottom" data-tooltip="&quot;{{commitInfo.message}}&quot; by {{commitInfo.author}}"><i class="fa-solid fa-code-commit"></i>{{commitInfo.sha}}</code>
+                <a href="https://github.com/Eejit43/eejitstools-v2{{commitInfo.url}}" target="_blank">
+                    <code class="tooltip-bottom" data-tooltip="&quot;{{commitInfo.message}}&quot; by {{commitInfo.author}}"><i class="fa-solid fa-code-commit"></i>{{commitInfo.sha}}</code>
+                </a>
             </div>
         </nav>
         {{#if toolbox}}
             <div class="toolbox">
                 <h1>
-                    {{#if iconStyle}}
-                        <i class="fa-regular fa-{{icon}}" style="{{iconStyle}}"></i>
-                        {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{title}}{{/if}}:
-                    {{else}}
-                        <i class="fa-regular fa-{{icon}}"></i>
-                        {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{title}}{{/if}}:
-                    {{/if}}
+                    <i class="fa-regular fa-{{icon}}"></i>
+                    {{#if toolboxTitle}}{{{toolboxTitle}}}{{else}}{{title}}{{/if}}:
                 </h1>
                 {{{body}}}
             </div>
