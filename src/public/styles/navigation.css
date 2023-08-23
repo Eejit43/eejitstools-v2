@@ -4,7 +4,7 @@ nav {
     top: 0;
     right: 0;
     left: 0;
-    grid-template-columns: 4fr repeat(4, max-content);
+    grid-template-columns: 1fr repeat(4, fit-content(100%));
     column-gap: 25px;
     align-items: center;
     z-index: 5000;
@@ -13,6 +13,7 @@ nav {
     font-size: 20px;
 
     @media (width <= 600px) {
+        column-gap: 15px;
         font-size: 16px;
     }
 }
@@ -179,10 +180,6 @@ nav * {
 
 .nav-time {
     font-weight: bold;
-
-    @media (width <= 600px) {
-        margin-right: 20px;
-    }
 
     & > #time-icon {
         margin-left: 2px;
