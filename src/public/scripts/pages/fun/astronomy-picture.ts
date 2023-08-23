@@ -10,7 +10,8 @@ const resetDateButton = document.querySelector('#reset-date') as HTMLButtonEleme
 
 /* Add event listeners */
 getDateButton.addEventListener('click', () => {
-    checkApod(valuesAsNumbers.year, valuesAsNumbers.month, valuesAsNumbers.date);
+    const values = getValuesAsNumbers();
+    checkApod(values.year, values.month, values.date);
 });
 
 resetDateButton.addEventListener('click', () => {
@@ -28,7 +29,8 @@ for (const element of [dateInput, monthInput, yearInput]) {
         });
 
     element.addEventListener('keydown', (event) => {
-        if (event.code === 'Enter') checkApod(valuesAsNumbers.year, valuesAsNumbers.month, valuesAsNumbers.date);
+        const values = getValuesAsNumbers();
+        if (event.code === 'Enter') checkApod(values.year, values.month, values.date);
     });
 }
 
@@ -46,11 +48,16 @@ const year = currentTime.getFullYear();
 const month = currentTime.getMonth() + 1;
 const date = currentTime.getDate();
 
-const valuesAsNumbers = {
-    year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
-    month: Number.isNaN(Number.parseInt(monthInput.value)) ? month : Number.parseInt(monthInput.value),
-    date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value),
-};
+/**
+ * Gets the value of all inputs and returns them as numbers if possible.
+ */
+function getValuesAsNumbers() {
+    return {
+        year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
+        month: Number.isNaN(Number.parseInt(monthInput.value)) ? month : Number.parseInt(monthInput.value),
+        date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value),
+    };
+}
 
 yearInput.placeholder = year.toString();
 monthInput.placeholder = month.toString();

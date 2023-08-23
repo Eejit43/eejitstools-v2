@@ -47,7 +47,7 @@ export default function (fastify: FastifyInstance) {
                 return {
                     ...coinVariant,
                     coins: coinVariant.coins.map((coin) => {
-                        if (coin.id === Number.parseInt(coinId))
+                        if (coin.id === coinId)
                             for (const [key, value] of Object.entries(data))
                                 if (value === null) delete coin[key as keyof Coin];
                                 else coin[key as keyof Coin] = value as never;
@@ -65,7 +65,7 @@ export default function (fastify: FastifyInstance) {
     });
 
     fastify.post('/coins-list-add-coin', async (request, reply) => {
-        const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body as { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: number; password: string };
+        const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body as { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: string; password: string };
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 

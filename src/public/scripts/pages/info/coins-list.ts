@@ -55,7 +55,7 @@ interface CoinVariantById {
     note?: string;
     years?: string;
     active?: true;
-    coins: Record<string, PartialNullable<Coin>>;
+    coins: Map<string, PartialNullable<Coin>>;
 }
 
 let coinsData: Record<string, { name: string; id: string; coins: Record<string, CoinVariantById> }>;
@@ -71,7 +71,7 @@ async function loadCoinsList() {
             coinType.id,
             {
                 ...coinType,
-                coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: Object.fromEntries(coinVariant.coins.map((coin) => [coin.id, coin])) }])),
+                coins: Object.fromEntries(coinType.coins.map((coinVariant) => [coinVariant.id, { ...coinVariant, coins: new Map(coinVariant.coins.map((coin) => [coin.id.toString(), coin])) }])),
             },
         ]),
     );
@@ -318,14 +318,14 @@ async function loadCoinsList() {
             newRowMessageCell.textContent = 'Add new row';
             newRowMessageCell.addEventListener('click', () => {
                 const year = new Date().getFullYear().toString();
-                const id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000);
+                const id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
 
                 const row = generateCoinRow(coinType, coinVariant, { year, id, obtained: false });
                 newRowMessage.before(row);
 
                 addCoin(coinType.id, coinVariant.id, year, id);
 
-                coinsData[coinType.id].coins[coinVariant.id].coins[id] = { year, id, obtained: false };
+                coinsData[coinType.id].coins[coinVariant.id].coins.set(id.toString(), { year, id, obtained: false });
 
                 addCoinChangeEntry({ year }, coinVariant.name, undefined, undefined, 'was created!');
             });
@@ -374,11 +374,11 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
     yearEditor.contentEditable = 'true';
     yearEditor.addEventListener('blur', async () => {
         const newValue = yearEditor.textContent! || 'UNKNOWN';
-        if (newValue === coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].year) return;
+        if (newValue === coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.year) return;
 
-        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'year', { year: newValue });
+        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'year', { year: newValue });
 
-        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].year = newValue;
+        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.year = newValue;
 
         await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: newValue });
     });
@@ -417,11 +417,11 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
 
         const newValue = tooltip.textContent && tooltip.textContent !== 'None' ? tooltip.textContent : null;
 
-        if (tooltip.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark ?? 'None')) return;
+        if (tooltip.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
 
-        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'mint mark', { mintMark: tooltip.textContent });
+        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mint mark', { mintMark: tooltip.textContent });
 
-        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].mintMark = newValue;
+        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintMark = newValue;
 
         await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintMark: newValue });
     });
@@ -433,11 +433,11 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         specification.contentEditable = 'true';
         specification.textContent = coin.specification ?? '';
         specification.addEventListener('blur', async () => {
-            if (specification.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification ?? '')) return;
+            if (specification.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.specification ?? '')) return;
 
-            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specification.textContent });
+            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'specification', { specification: specification.textContent });
 
-            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specification.textContent! || null;
+            coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.specification = specification.textContent! || null;
 
             await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specification.textContent! || null });
         });
@@ -454,11 +454,11 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
             specificationEditor.textContent = coin.specification;
             specificationEditor.contentEditable = 'true';
             specificationEditor.addEventListener('blur', async () => {
-                if (specificationEditor.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification ?? '')) return;
+                if (specificationEditor.textContent === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.specification ?? '')) return;
 
-                addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins[coin.id], coinVariant.name, 'specification', { specification: specificationEditor.textContent! });
+                addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'specification', { specification: specificationEditor.textContent! });
 
-                coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].specification = specificationEditor.textContent! || null;
+                coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.specification = specificationEditor.textContent! || null;
 
                 await updateCoinData(coinType.id, coinVariant.id, coin.id, { specification: specificationEditor.textContent! || null });
             });
@@ -478,14 +478,14 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         row.dataset.obtained = obtainedCheck.checked.toString();
 
         addCoinChangeEntry(
-            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id],
+            coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!,
             coinVariant.name,
             'obtained',
             { obtained: obtainedCheck.checked },
             `was marked as ${obtainedCheck.checked ? 'obtained' : 'not obtained'}`,
         );
 
-        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].obtained = obtainedCheck.checked || null;
+        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.obtained = obtainedCheck.checked || null;
 
         loadVariantTotals(coinType.id, coinVariant.id);
 
@@ -507,14 +507,14 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         row.dataset.upgrade = needsUpgradeCheck.checked.toString();
 
         addCoinChangeEntry(
-            coinsData[coinType.id].coins[coinVariant.id].coins[coin.id],
+            coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!,
             coinVariant.name,
             'upgrade',
             { upgrade: needsUpgradeCheck.checked },
             `was marked as ${needsUpgradeCheck.checked ? 'needing an upgrade' : 'not needing an upgrade'}`,
         );
 
-        coinsData[coinType.id].coins[coinVariant.id].coins[coin.id].upgrade = needsUpgradeCheck.checked || null;
+        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.upgrade = needsUpgradeCheck.checked || null;
 
         loadVariantTotals(coinType.id, coinVariant.id);
 
@@ -534,9 +534,9 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
 function loadVariantTotals(type: string, variant: string) {
     const variantData = coinsData[type].coins[variant];
 
-    const obtainedCoins = Object.values(variantData.coins).filter((coin) => coin.obtained).length;
-    const needsUpgradeCoins = Object.values(variantData.coins).filter((coin) => coin.upgrade).length;
-    const totalCoins = Object.values(variantData.coins).length;
+    const obtainedCoins = [...variantData.coins.values()].filter((coin) => coin.obtained).length;
+    const needsUpgradeCoins = [...variantData.coins.values()].filter((coin) => coin.upgrade).length;
+    const totalCoins = [...variantData.coins.values()].length;
 
     const amountTooltip = document.querySelector(`#${variant}-amount-tooltip`) as HTMLSpanElement;
     const yearSpan = document.querySelector(`#${variant}-years`) as HTMLSpanElement;
@@ -557,11 +557,11 @@ function loadVariantTotals(type: string, variant: string) {
 function getCoinYears(variant: CoinVariantById): string {
     if (variant.years) return variant.years;
 
-    const coinValues = Object.values(variant.coins);
+    const coinValues = [...variant.coins];
 
-    const startYear = coinValues[0].year!;
+    const startYear = coinValues.at(0)![1].year!;
 
-    const endYear = variant.active ? 'date' : coinValues.at(-1)!.year!;
+    const endYear = variant.active ? 'date' : coinValues.at(-1)![1].year!;
 
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
@@ -575,7 +575,7 @@ type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
  * @param coinId The ID of the coin data to update.
  * @param data The data to update.
  */
-async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: number, data: PartialNullable<Coin>) {
+async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: string, data: PartialNullable<Coin>) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
     const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
 
@@ -609,7 +609,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
  * @param coinYear The year of the coin to add.
  * @param coinId The id of the coin to add.
  */
-async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: string, coinId: number) {
+async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: string, coinId: string) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
     const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
 

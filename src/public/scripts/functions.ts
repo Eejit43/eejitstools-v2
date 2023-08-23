@@ -21,13 +21,10 @@ export function twemojiUpdate() {
 /**
  * Displays a popup alert.
  * @param text The string to display.
- * @param color The color value (or `'success'` or `'error'`).
- * @param duration The duration of the popup in milliseconds.
+ * @param type The alert type.
+ * @param duration The duration for the popup to show (in milliseconds).
  */
-export function showAlert(text: string, color: string, duration?: number) {
-    color = color.toLowerCase();
-    if (color === 'success') color = '#009c3f';
-    else if (color === 'error') color = '#ff5555';
+export function showAlert(text: string, type: 'success' | 'error' | 'warning' | 'info', duration?: number) {
     toastify({
         text: text || 'No text specified!',
         duration: duration ?? 2000,
@@ -36,7 +33,7 @@ export function showAlert(text: string, color: string, duration?: number) {
             background: '#333',
             borderRadius: '5px',
             boxShadow: 'none',
-            color: color || '#009c3f',
+            color: `var(--${type}-color-300)`,
             fontFamily: 'var(--font-family)',
             fontSize: '17px',
             fontWeight: '600',
