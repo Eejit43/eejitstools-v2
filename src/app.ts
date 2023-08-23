@@ -23,7 +23,7 @@ fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.me
 // Define latest commit info
 const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA;
 const processedCommitSha = commitSha?.slice(0, 7) ?? 'abcdefg';
-const commitMessage = process.env.RAILWAY_GIT_COMMIT_MESSAGE ?? 'Some commit message!';
+const commitMessage = (process.env.RAILWAY_GIT_COMMIT_MESSAGE ?? 'Some commit message!').split('\n\n')[0];
 const commitAuthor = process.env.RAILWAY_GIT_AUTHOR ?? 'Someone';
 
 export const commitInfo = { sha: processedCommitSha, message: commitMessage, author: commitAuthor, url: commitSha ? `/commit/${commitSha}` : '' };
