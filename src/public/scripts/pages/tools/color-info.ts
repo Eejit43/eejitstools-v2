@@ -173,7 +173,7 @@ generateRandomColor();
  * @param element The element to update.
  */
 function setRedBorder(element: HTMLInputElement) {
-    if (element.value?.length > 0) element.style.border = '1px solid #ff5555';
+    if (element.value?.length > 0) element.style.border = '1px solid var(--error-color-300)';
 }
 
 /**

@@ -46,40 +46,16 @@ export function showAlert(text: string, type: 'success' | 'error' | 'warning' | 
 
 /**
  * Updates the icon of the specified element.
- * @param id The prefix of the element ID to update.
+ * @param element The element to update.
  * @param type The type of icon to show.
- * @param color The color of the icon to show.
- * @param icon The icon of the icon to show.
  * @param remove Whether to the remove the icon after 2 seconds (defaults to `true`).
  */
-export function showResult(id: string, type: 'success' | 'error' | null, color = '#009c3f', icon = 'check', remove = true) {
-    const oldElement = document.querySelector(`#${id}-result`) as HTMLElement;
-    const newElement = oldElement.cloneNode(true) as HTMLElement;
-    oldElement.parentNode!.replaceChild(newElement, oldElement);
-    if (type === 'success') {
-        color = '#009c3f';
-        icon = 'check';
-    } else if (type === 'error') {
-        color = '#ff5555';
-        icon = 'xmark';
-    }
-    newElement.style.color = color;
-    newElement.className = 'fa-solid fa-' + icon;
-    if (remove)
-        setTimeout(() => {
-            newElement.style.color = '';
-            newElement.className = '';
-        }, 2000);
-}
+export function showResult(element: HTMLElement, type: 'success' | 'error' | 'warning', remove = true) {
+    const className = `button-result-${type}`;
 
-/**
- * Removes the icon of the specified element.
- * @param id The prefix of the element ID to update.
- */
-export function resetResult(id: string) {
-    const element = document.querySelector(`#${id}-result`) as HTMLElement;
-    element.style.color = '';
-    element.className = '';
+    element.classList.add(className);
+
+    if (remove) setTimeout(() => element.classList.remove(className), 2000);
 }
 
 /**
@@ -88,27 +64,9 @@ export function resetResult(id: string) {
  * @param type The type of icon to show.
  * @param arrowType The direction of the arrow (defaults to `right`).
  */
-export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'reset', arrowType = 'right') {
-    let color, icon;
-    switch (type) {
-        case 'success': {
-            color = '#009c3f';
-            icon = `arrow-${arrowType}`;
-            break;
-        }
-        case 'error': {
-            color = '#ff5555';
-            icon = 'xmark';
-            break;
-        }
-        case 'reset': {
-            color = 'dimgray';
-            icon = `arrow-${arrowType}`;
-            break;
-        }
-    }
-    element.style.color = color!;
-    element.className = 'fa-solid fa-' + icon!;
+export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'warning' | 'info' | 'reset', arrowType: 'up' | 'down' | 'right' | 'left' = 'right') {
+    element.style.color = `var(--${type === 'reset' ? 'neutral' : type}-color-300)`;
+    element.className = `fa-solid fa-arrow-${arrowType}`;
 }
 
 /**

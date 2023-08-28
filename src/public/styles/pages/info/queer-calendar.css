@@ -1,0 +1,40 @@
+#events {
+    padding-block: 0.5em 1em;
+    color: var(--success-color-100);
+    list-style: inside;
+
+    & li {
+        &::marker {
+            content: "– ";
+        }
+
+        & img {
+            margin-right: 0.25em;
+            border-radius: 3px;
+            height: 0.8em;
+        }
+    }
+}
+
+#month-input,
+#date-input {
+    width: 2.5em;
+}
+
+#month-input {
+    margin-right: 1em;
+}
+
+#get-date {
+    margin-left: 1em;
+}
+
+#reset-date {
+    display: block;
+    margin: 10px 0 25px;
+}
+
+#year-overview {
+    display: block;
+    margin-bottom: 1em;
+}

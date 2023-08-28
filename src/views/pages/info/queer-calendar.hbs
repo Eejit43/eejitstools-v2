@@ -1,20 +1,18 @@
-<div class="tooltext">
-    <div id="events-title" style="font-size: 25px">Current Events:</div>
+<h2 id="events-title">Current Events:</h2>
 
-    <div id="events" style="color: mediumspringgreen; display: block; padding-bottom: 25px"><span class="error">Loading data...</span></div>
+<ul id="events"><span class="error">Loading data...</span></ul>
 
-    Month:
-    <input id="month" type="text" pattern="[0-9]*" max="12" maxlength="2" style="width: 30px" />
-    <div class="tab"></div>
+Month:
+<input id="month-input" type="text" max="12" maxlength="2" />
 
-    Date:
-    <input id="date" type="text" pattern="[0-9]*" max="31" maxlength="2" style="width: 30px" />
+Date:
+<input id="date-input" type="text" max="31" maxlength="2" />
 
-    <button id="get-date" style="margin-left: 8px">Get info</button>
+<button id="get-date">Get info</button>
 
-    <button id="reset-date" style="display: block; margin: 10px 0 25px">Set to current date</button>
+<button id="reset-date">Set to current date</button>
 
-    <a target="_blank" id="year-overview" class="external-link">View year overview (list)</a>
+<a target="_blank" id="year-overview" class="external-link">View year overview (list)</a>
 
-    <span style="font-size: 16px; color: dimgray"><br />Uses the <a href="https://en.pronouns.page/api" target="_blank" class="external-link">pronouns.page API</a></span>
-</div>
+Uses the
+<a href="https://en.pronouns.page/api" target="_blank" class="external-link">pronouns.page API</a>

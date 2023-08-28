@@ -1,18 +1,15 @@
-<div class="tooltext">
-    <div id="result">Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i></div>
+<div id="result">Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i></div>
 
-    <br />Fetch from specified date:<br />
+<h2>Fetch from specified date:</h2>
 
-    Year:
-    <input id="year" type="text" pattern="[0-9]*" maxlength="4" style="width: 45px" />
-    <div class="tab"></div>
+Month:
+<input id="month-input" type="text" max="12" maxlength="2" />
 
-    Month:
-    <input id="month" type="text" pattern="[0-9]*" max="12" maxlength="2" style="width: 30px" />
-    <div class="tab"></div>
+Date:
+<input id="date-input" type="text" max="31" maxlength="2" />
 
-    Date:
-    <input id="date" type="text" pattern="[0-9]*" max="31" maxlength="2" style="width: 30px" />
+Year:
+<input id="year-input" type="text" maxlength="4" />
 
-    <button id="get-date">Get info</button><br /><button id="reset-date">Set to current date</button>
-</div>
+<button id="get-date">Get info</button>
+<button id="reset-date">Set to current date</button>

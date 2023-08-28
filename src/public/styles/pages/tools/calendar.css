@@ -30,6 +30,7 @@
 
 #calendar {
     margin: auto;
+    margin-bottom: 10px;
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
@@ -108,7 +109,7 @@
 }
 
 #buttons {
-    margin-top: 20px;
+    margin-block: 1em;
 
     & button:last-of-type {
         margin-left: 10px;
@@ -160,7 +161,7 @@
         & .checkbox-container {
             animation: wave 400ms ease;
             border-color: #506eec;
-            background: #506eec;
+            background-color: #506eec;
 
             &::before {
                 transform: scale(2.5);
@@ -176,12 +177,12 @@
 
     &:disabled + .todo-label .checkbox-container {
         border-color: #9098a9;
-        background: rgb(144 152 169 / 30%);
+        background-color: rgb(144 152 169 / 30%);
     }
 
     &:checked:disabled + .todo-label .checkbox-container {
         border-color: #9098a9;
-        background: #9098a9;
+        background-color: #9098a9;
     }
 }
 
@@ -212,7 +213,7 @@
             transform: scale(0);
             opacity: 1;
             border-radius: 50%;
-            background: #506eec;
+            background-color: #506eec;
             width: 100%;
             height: 100%;
             content: "";

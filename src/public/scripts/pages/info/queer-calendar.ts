@@ -1,9 +1,9 @@
 import { escapeHtml, showAlert } from '../../functions.js';
 
 const eventsTitle = document.querySelector('#events-title') as HTMLDivElement;
-const eventsDisplay = document.querySelector('#events') as HTMLDivElement;
-const monthInput = document.querySelector('#month') as HTMLInputElement;
-const dateInput = document.querySelector('#date') as HTMLInputElement;
+const eventsDisplay = document.querySelector('#events') as HTMLUListElement;
+const monthInput = document.querySelector('#month-input') as HTMLInputElement;
+const dateInput = document.querySelector('#date-input') as HTMLInputElement;
 const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
 const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
 const yearOverview = document.querySelector('#year-overview') as HTMLAnchorElement;
@@ -11,17 +11,13 @@ const yearOverview = document.querySelector('#year-overview') as HTMLAnchorEleme
 /* Add event listeners */
 getDateButton.addEventListener('click', getFromDate);
 resetDateButton.addEventListener('click', getCurrent);
-for (const event of ['input', 'paste'])
-    monthInput.addEventListener(event, () => {
-        monthInput.value = monthInput.value.replaceAll(/((?!\d).)/g, '');
-        checkInput(monthInput);
-    });
 
-for (const event of ['input', 'paste'])
-    dateInput.addEventListener(event, () => {
-        dateInput.value = dateInput.value.replaceAll(/((?!\d).)/g, '');
-        checkInput(dateInput);
-    });
+for (const element of [dateInput, monthInput])
+    for (const event of ['input', 'paste'])
+        element.addEventListener(event, () => {
+            element.value = element.value.replaceAll(/((?!\d).)/g, '');
+            checkInput(element);
+        });
 
 /**
  * Checks and updates an elements value if needed.
@@ -33,7 +29,7 @@ function checkInput(element: HTMLInputElement) {
 }
 
 const currentTime = new Date();
-const year = currentTime.getFullYear();
+const year = currentTime.getFullYear().toString();
 const month = (currentTime.getMonth() + 1).toString().padStart(2, '0');
 const date = currentTime.getDate().toString().padStart(2, '0');
 
@@ -45,7 +41,7 @@ yearOverview.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
 interface CalendarData {
     events: string[];
     eventsRaw: {
-        flag: string;
+        flag: string | null;
     }[];
 }
 
@@ -60,21 +56,9 @@ function getFromDate() {
     else {
         eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
-        eventsTitle.textContent = `Events on ${year}/${monthValue}/${dateValue}:`;
+        eventsTitle.textContent = `Events on ${monthValue}/${dateValue}/${year}:`;
 
-        fetch(`https://en.pronouns.page/api/calendar/${year}-${monthValue}-${dateValue}`).then(async (response) => {
-            const data = (await response.json()) as CalendarData;
-
-            const { events, eventsRaw } = data;
-
-            const newEvents = [];
-            for (let index = 0; index < events.length; index++)
-                if (eventsRaw[index].flag === null) newEvents.push(`– ${events[index]}`);
-                else newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[index].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[index]}`);
-
-            if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
-            else eventsDisplay.innerHTML = newEvents.join('<br />');
-        });
+        addEvents(year, monthValue, dateValue);
     }
 }
 
@@ -83,24 +67,52 @@ function getFromDate() {
  */
 function getCurrent() {
     eventsTitle.textContent = 'Current Events:';
-    eventsDisplay.innerHTML = '<span class="error">Loading data...</span>';
 
     monthInput.value = '';
     dateInput.value = '';
 
-    fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`).then(async (response) => {
-        const data = (await response.json()) as CalendarData;
+    addEvents(year, month, date);
+}
 
-        const { events, eventsRaw } = data;
+/**
+ * Fetches events for the provided date and adds the data to the list.
+ * @param year The year to fetch information for.
+ * @param month The month to fetch information for.
+ * @param date The date to fetch information for.
+ */
+async function addEvents(year: string, month: string, date: string) {
+    // Reset list
+    const loadingSpan = document.createElement('span');
+    loadingSpan.textContent = 'Loading data...';
 
-        const newEvents = [];
-        for (let index = 0; index < events.length; index++)
-            if (eventsRaw[index].flag === null) newEvents.push(`– ${events[index]}`);
-            else newEvents.push(`– <img src="https://en.pronouns.page/flags/${eventsRaw[index].flag}.png" style="height: 1rem; border-radius: 0.18rem !important"> ${events[index]}`);
+    eventsDisplay.innerHTML = '';
+    eventsDisplay.append(loadingSpan);
 
-        if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
-        else eventsDisplay.innerHTML = newEvents.join('<br />');
-    });
+    // Fetch data
+    const response = await fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`);
+
+    const data = (await response.json()) as CalendarData;
+
+    const { events, eventsRaw } = data;
+
+    const newEvents = [];
+    for (const [index, eventText] of events.entries()) {
+        const listElement = document.createElement('li');
+
+        if (eventsRaw[index].flag) {
+            const imageElement = document.createElement('img');
+            imageElement.src = `https://en.pronouns.page/flags/${eventsRaw[index].flag}.png`;
+
+            listElement.append(imageElement, eventText);
+        } else listElement.textContent = eventText;
+
+        newEvents.push(listElement);
+    }
+
+    eventsDisplay.innerHTML = '';
+
+    if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
+    else eventsDisplay.append(...newEvents);
 }
 
 getCurrent();

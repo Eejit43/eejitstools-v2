@@ -82,11 +82,11 @@ nav * {
 .search-box {
     border: 2px solid #3b3b3f;
     border-radius: 10px;
-    background-color: #242424;
+    background-color: var(--input-background);
     padding: 5px;
     width: max-content;
     height: 44px;
-    color: #c5c5cc;
+    color: var(--neutral-color-100);
 
     @media (width <= 600px) {
         padding: 3px;
@@ -102,18 +102,18 @@ nav * {
         margin: auto;
         width: 30px;
         height: 30px;
-        color: #c5c5cc;
+        color: var(--neutral-color-100);
     }
 
     & .search-text {
         border: none !important;
-        background-color: #242424 !important;
+        background-color: var(--input-background) !important;
         padding: 6px 0 !important;
         width: 0 !important;
-        color: #c5c5cc !important;
+        color: var(--neutral-color-100) !important;
 
         &::placeholder {
-            color: #c5c5cc;
+            color: var(--neutral-color-100);
         }
     }
 }
@@ -127,12 +127,12 @@ nav * {
         margin-top: 1px;
         border: 2px solid #3b3b3f;
         border-radius: 10px;
-        background-color: #242424;
+        background-color: var(--input-background);
         padding: 8px;
         width: 300px;
         max-height: 500px;
         overflow-y: scroll;
-        color: #c5c5cc;
+        color: var(--neutral-color-100);
         font-size: 18px;
 
         & tr:first-of-type > td {
@@ -145,7 +145,7 @@ nav * {
         }
 
         & td {
-            border-top: 2px solid #4c6072;
+            border-top: 2px solid var(--neutral-color-200);
             padding-top: 15px;
             padding-bottom: 15px;
 
@@ -155,11 +155,11 @@ nav * {
             }
 
             & a {
-                color: #4c6072;
+                color: var(--neutral-color-200);
 
                 &:hover,
                 &.selected {
-                    color: #364c5f;
+                    color: var(--neutral-color-300);
                 }
             }
         }
@@ -185,7 +185,7 @@ nav * {
         margin-left: 2px;
 
         &.fa-triangle-exclamation {
-            color: #f55;
+            color: var(--error-color-300);
         }
 
         &.fa-sun-bright {
@@ -199,16 +199,16 @@ nav * {
 }
 
 .source {
-    color: dimgray;
+    color: var(--neutral-color-200);
 
     &:hover {
-        color: #505050;
+        color: var(--neutral-color-300);
     }
 }
 
 #last-commit-info {
     & code {
-        color: #b4b4b4;
+        color: var(--neutral-color-100);
         font-size: 14px;
 
         & i {

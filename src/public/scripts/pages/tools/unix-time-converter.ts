@@ -19,7 +19,11 @@ const unixInputTitle = document.querySelector('#unix-input-title') as HTMLDivEle
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
 standardInputResetButton.addEventListener('click', updateStandardTime);
-unixInput.addEventListener('input', updateStandardOutput);
+unixInput.addEventListener('input', () => {
+    unixInput.value = unixInput.value.replaceAll(/\D/g, '');
+
+    updateStandardOutput();
+});
 unixInputResetButton.addEventListener('click', updateUnixTime);
 unixInputSwitchButton.addEventListener('click', switchUnixInput);
 unixOutputCopyButton.addEventListener('click', () => copyValue(unixOutputCopyButton, unixOutput));
@@ -55,7 +59,7 @@ function updateUnixOutput() {
         unixOutputCopyButton.disabled = true;
         unixOutputSwitchButton.disabled = true;
     } else if (Number.isNaN(standardTime.getTime())) {
-        updateArrow(standardArrow, 'error');
+        updateArrow(standardArrow, 'error', 'down');
         unixOutput.value = '';
         unixOutputCopyButton.disabled = true;
         unixOutputSwitchButton.disabled = true;
@@ -86,7 +90,7 @@ function updateStandardOutput() {
         standardOutput.value = '';
         standardOutputCopyButton.disabled = true;
     } else if (Number.isNaN(unixTime.getTime())) {
-        updateArrow(unixArrow, 'error');
+        updateArrow(unixArrow, 'error', 'down');
         standardOutput.value = '';
         standardOutputCopyButton.disabled = true;
     } else {

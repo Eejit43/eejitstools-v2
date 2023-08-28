@@ -340,7 +340,7 @@ const preParsedPages: PreParsedPages = {
     tools: {
         'base64-converter': { title: 'Base64 Encode/Decode', icon: 'code', description: 'Encode and decode to and from Base64 format' },
         'base64-image-converter': { title: 'Base64 Image Encode/Decode', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
-        'binary-calc': { title: 'Binary Calculator', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
+        'binary-converter': { title: 'Binary Converter', icon: 'binary', description: 'Convert to/from binary/octal/decimal/hex' },
         'binary-text': { title: 'Binary Text Converter', icon: 'file-binary', description: 'Convert to/from binary text' },
         'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system', additionalScripts: [imports.uaParser.script] },
         calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with personal to-do list', toolbox: false },
@@ -369,7 +369,7 @@ const preParsedPages: PreParsedPages = {
             description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information',
             keywords: ['internet', 'isp'],
         },
-        'keycode-info': { title: 'KeyCode Information', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
+        'keycode-info': { title: 'Keycode Information', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },
         'length-converter': {
             title: 'Length Converter',
             icon: 'ruler-horizontal',

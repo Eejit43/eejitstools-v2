@@ -27,14 +27,14 @@ loginButton.addEventListener('click', async () => {
         passwordInput.disabled = true;
         loginButton.disabled = true;
         showAlert('Logged in!', 'success');
-        showResult('login', 'success', undefined, undefined, false);
+        showResult(loginButton, 'success', false);
 
         loadCoinsList();
 
         exportDataButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
-        showResult('login', 'error', undefined, undefined, false);
+        showResult(loginButton, 'error', false);
         loginButton.disabled = true;
         setTimeout(() => (loginButton.disabled = false), 1000);
     }
@@ -84,6 +84,7 @@ async function loadCoinsList() {
 
     const reloadButton = document.createElement('button');
     reloadButton.textContent = 'Reload';
+    reloadButton.dataset.iconAfter = '\uF2F9';
     reloadButton.addEventListener('click', async () => {
         await loadCoinsList();
         showAlert('Reloaded!', 'success');
@@ -683,12 +684,12 @@ if (password) {
         passwordInput.disabled = true;
         loginButton.disabled = true;
         showAlert('Logged in!', 'success');
-        showResult('login', 'success', undefined, undefined, false);
+        showResult(loginButton, 'success', false);
 
         await loadCoinsList();
     } else {
         showAlert('Incorrect password!', 'error');
-        showResult('login', 'error', undefined, undefined, false);
+        showResult(loginButton, 'error', false);
     }
 }
 
@@ -741,7 +742,7 @@ exportDataButton.addEventListener('click', async () => {
     const a = document.createElement('a');
     const url = URL.createObjectURL(file);
     a.href = url;
-    a.download = 'coins-data.json';
+    a.download = `coins-list data (${new Date().toLocaleString()}).json`;
     a.click();
 
     setTimeout(() => URL.revokeObjectURL(url), 0);

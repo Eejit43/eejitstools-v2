@@ -1,17 +1,22 @@
 textarea {
+    display: block;
     transition: box-shadow 0.1s ease;
     margin: 0.5rem 0;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
-    padding: 0.2rem;
+    background-color: var(--input-background);
+    padding: 3px;
     width: 40%;
-    height: 6rem;
-    min-height: 4rem;
-    max-height: 16rem;
+    height: 120px;
+    min-height: 80px;
+    max-height: 240px;
     resize: vertical;
-    color: #aaa;
+    color: var(--neutral-color-200);
     font-family: var(--font-family-monospace);
+
+    @media (width <= 700px) {
+        width: 85%;
+    }
 }
 
 .fakeinput {
@@ -26,12 +31,12 @@ input:not(input[type="file"], input[type="checkbox"], input[type="color"]),
     cursor: pointer;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
-    padding: 0.2rem 0.3rem;
-    width: 15rem;
+    background-color: var(--input-background);
+    padding: 3px 5px;
+    width: 200px;
     scrollbar-width: none;
-    color: #aaa;
-    font-size: 0.75rem;
+    color: var(--neutral-color-200);
+    font-size: 12px;
     font-family: var(--font-family-monospace);
 }
 
@@ -55,10 +60,10 @@ input[type="color"] {
     cursor: pointer;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
+    background-color: var(--input-background);
 
     &:hover {
-        background-color: #2a2a2a;
+        background-color: var(--input-background-hover);
     }
 }
 
@@ -69,31 +74,46 @@ select {
     box-shadow: none;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
-    padding: 0.2rem;
-    width: 8rem;
-    color: #aaa;
-    font-size: 0.75rem;
+    background-color: var(--input-background);
+    padding: 3px 5px;
+    width: min-content;
+    color: var(--neutral-color-100);
+    font-size: 12px;
     font-family: var(--font-family-monospace);
 }
 
 .file-upload {
+    display: block;
     transition: all 0.2s ease;
     cursor: pointer;
-    margin: 3px;
+    margin-block: 3px;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
-    padding: 0.4rem;
+    background-color: var(--input-background);
+    padding: 6px;
     width: max-content;
     height: max-content;
-    color: white;
+    color: var(--neutral-color-100);
     font-weight: normal;
     font-size: 16px;
 
+    &::before {
+        padding-right: 3px;
+        content: "\f574";
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
+
     &:hover {
         transition: all 0.2s ease;
-        background-color: #2b2b2b;
+        background-color: var(--input-background-hover);
+    }
+
+    & ~ #file-message {
+        margin-block: 5px;
+        font-size: 15px;
     }
 }
 
@@ -103,33 +123,85 @@ button:not(.fakeinput) {
     margin: 3px 0;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: #252525;
-    padding: 0.2rem 0.3rem;
+    background-color: var(--input-background);
+    padding: 3px 5px;
     width: max-content;
     height: max-content;
-    color: #ddd;
+    color: var(--neutral-color-100);
     font-family: var(--font-family);
-}
 
-button:disabled:not(.fakeinput) {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 
-button:hover:not(.fakeinput) {
-    background-color: #2a2a2a;
+    &:hover {
+        background-color: var(--input-background-hover);
+    }
+
+    &.button-danger {
+        color: var(--error-color-200);
+    }
+
+    &.button-result-success::after {
+        padding-left: 3px;
+        content: "\f00c";
+        color: var(--success-color-300);
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
+
+    &.button-result-error::after {
+        padding-left: 3px;
+        content: "\f00d";
+        color: var(--error-color-300);
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
+
+    &.button-result-warning::after {
+        padding-left: 3px;
+        content: "\f071";
+        color: var(--warning-color-300);
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
+
+    &.button-copy::after {
+        padding-left: 3px;
+        content: "\f0c5";
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
+
+    &[data-icon-after]::after {
+        padding-left: 3px;
+        content: attr(data-icon-after);
+        font-weight: bold;
+        font-size: calc(1em - 2px);
+        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+        font-family: "Font Awesome 6 Pro";
+    }
 }
 
 .invisible-input[type="text"]:not(input[type="file"], input[type="checkbox"]),
 .invisible-input[type="number"]:not(input[type="file"], input[type="checkbox"]) {
     border: none;
-    border-bottom: 1px solid dimgray;
+    border-bottom: 1px solid var(--neutral-color-100);
     border-radius: 0;
     background-color: transparent;
     padding-bottom: 0;
     width: 1.35em;
     overflow: hidden;
-    color: dimgray;
+    color: var(--neutral-color-100);
     font-weight: 500;
     font-size: 50px;
     font-family: var(--font-family);
@@ -142,18 +214,10 @@ button:hover:not(.fakeinput) {
     box-shadow: none;
 }
 
-.invisible-input[type="number"]:is(::-webkit-inner-spin-button, ::-webkit-outer-spin-button),
-.no-arrow[type="number"]:is(::-webkit-inner-spin-button, ::-webkit-outer-spin-button) {
+.invisible-input[type="number"]::-webkit-inner-spin-button,
+.invisible-input[type="number"]::-webkit-outer-spin-button,
+.no-arrow[type="number"]::-webkit-inner-spin-button,
+.no-arrow[type="number"]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
-}
-
-input[type="search"]:is(::-ms-clear, ::-ms-reveal) {
-    display: none;
-    width: 0;
-    height: 0;
-}
-
-input[type="search"]:is(::-webkit-search-decoration, ::-webkit-search-cancel-button, ::-webkit-search-results-button, ::-webkit-search-results-decoration) {
-    display: none;
 }

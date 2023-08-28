@@ -28,10 +28,10 @@ keyCodeCell.addEventListener('click', () => copyKeycodeInfo(keyCodeValue));
 keyAsciiCell.addEventListener('click', () => copyKeycodeInfo(keyAsciiValue));
 keyUnicodeCell.addEventListener('click', () => copyKeycodeInfo(keyUnicodeValue));
 window.addEventListener('focus', () => {
-    ready.innerHTML = '<span style="color:#009c3f"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
+    ready.innerHTML = '<span style="color: var(--success-color-300)"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
 });
 window.addEventListener('blur', () => {
-    ready.innerHTML = '<span style="color:#FF5555"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
+    ready.innerHTML = '<span style="color: var(--error-color-300)"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
 });
 
 /**
@@ -55,7 +55,7 @@ function keyInfo(event: KeyboardEvent) {
     key.textContent = event.key;
     keyValue = event.key;
     if (event.key === ' ') key.textContent = 'Space ( )';
-    else if (event.key === '\u00A0') key.innerHTML = '<span class="tooltip-bottom" data-tooltip="Non breaking space">NBSP</span> (\u00A0)';
+    else if (event.key === '\u00A0') key.innerHTML = '<span data-tooltip="Non breaking space">NBSP</span> (\u00A0)';
     keyRepeating.textContent = event.repeat.toString();
     keyRepeatingValue = event.repeat.toString();
     keyLocation.textContent = event.location.toString();

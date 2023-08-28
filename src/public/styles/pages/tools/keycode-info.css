@@ -1,48 +1,45 @@
 .keycodes {
-    position: static;
-    margin: 50px auto 30px;
+    word-wrap: break-word;
+    margin: 30px auto;
     border: 4px solid #1b1e24;
     border-collapse: collapse;
     background-color: #31363d;
     width: 70%;
+    table-layout: fixed;
     overflow-y: scroll;
-    color: #a8a8a8;
+    color: var(--neutral-color-100);
+    line-height: 150%;
 
     @media (width <= 700px) {
-        display: inline-block;
-        margin: 8px auto 30px;
-        min-width: 97%;
+        width: 95%;
+        font-size: 14px;
     }
 
     & th {
-        border-bottom: 1px solid #1b1e24;
-        background-color: #31363d;
-        padding: 10px;
+        padding: 8px;
+        color: var(--neutral-color-200);
         font-size: 18px;
         text-align: center;
 
         @media (width <= 700px) {
-            padding: 20px;
-            font-size: 16px;
+            font-size: 14px;
         }
     }
 
     & td {
         border: 3px solid #1b1e24;
-        padding: 20px;
+        padding: 8px;
         font-weight: 500;
         font-size: 18px;
         text-align: center;
 
+        @media (width <= 700px) {
+            font-size: 16px;
+        }
+
         &:hover {
             cursor: not-allowed;
             background-color: #3a3f47;
-        }
-
-        @media (width <= 700px) {
-            border-bottom: none;
-            padding: 14px;
-            font-size: 16px;
         }
     }
 }

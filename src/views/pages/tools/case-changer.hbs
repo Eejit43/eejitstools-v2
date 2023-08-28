@@ -1,13 +1,15 @@
-<div class="tooltext">
-    Input:<br />
-    <textarea id="input" style="width: 50%"></textarea>
-    <br /><button id="to-upper">To uppercase <i id="uppercase-result"></i></button><button id="to-lower">To lowercase <i id="lowercase-result"></i></button><button id="to-title">To title case
-        <i id="title-result"></i></button><button id="to-sentence">To sentence case <i id="sentence-result"></i></button>
-    <button id="clear">Clear</button>
-</div>
-<hr style="margin-top: 30px" />
-<div class="tooltext">
-    Output:<br />
-    <textarea id="result" style="width: 50%" readonly></textarea>
-    <br /><button id="copy-result" disabled>Copy</button>
-</div>
+<section>
+    <h2>Input:</h2>
+    <textarea id="input"></textarea>
+    <button id="to-upper">To uppercase</button>
+    <button id="to-lower">To lowercase</button>
+    <button id="to-title">To title case</button>
+    <button id="to-sentence">To sentence case</button>
+    <button id="clear" class="button-danger">Clear</button>
+</section>
+<hr />
+<section>
+    <h2>Output:</h2>
+    <textarea id="result" readonly></textarea>
+    <button id="copy-result" class="button-copy" disabled>Copy</button>
+</section>

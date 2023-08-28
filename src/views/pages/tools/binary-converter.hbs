@@ -1,24 +1,25 @@
-<div class="tooltext">
-    Input:<br />
-    <select style="margin-top: 20px" id="input-type">
+<section>
+    <h2>Input:</h2>
+    <select id="input-type">
         <option value="1">Binary (2)</option>
         <option value="2">Octal (8)</option>
         <option value="3" selected>Decimal (10)</option>
         <option value="4">Hex (16)</option>
     </select>
-    <br /><input id="input" />
-    <br /><button id="reset">Reset</button>
-</div>
-<hr style="margin-top: 30px" />
-<div class="tooltext">
-    Output:
-    <div id="message" class="error" style="font-size: 15px"></div>
-    <select style="margin-top: 20px" id="output-type">
+    <input id="input" />
+    <button id="reset" class="button-danger">Reset</button>
+</section>
+<hr />
+<section>
+    <h2>Output:</h2>
+    <div id="message" class="error"></div>
+    <select id="output-type">
         <option value="1" selected>Binary (2)</option>
         <option value="2">Octal (8)</option>
         <option value="3">Decimal (10)</option>
         <option value="4">Hex (16)</option>
     </select>
-    <br /><input id="output" readonly /><br /><button id="copy-output" disabled>Copy</button>
+    <input id="output" readonly />
+    <button id="copy-output" class="button-copy" disabled>Copy</button>
     <button id="toggle-spacers" disabled>Toggle spacers (spaces, commas)</button>
-</div>
+</section>

@@ -1,14 +1,15 @@
-#question-display,
-#answer-output {
-    color: dimgray;
-    font-weight: 500;
-    font-size: 18px;
+hr {
+    margin-block: 15px;
+}
+
+#question-display {
+    margin-bottom: 1em;
 }
 
 #answer-output.rolling {
-    color: #ffba24;
-}
+    color: var(--warning-color-200);
 
-i.fa-spinner {
-    margin-left: 5px;
+    & i {
+        margin-left: 5px;
+    }
 }

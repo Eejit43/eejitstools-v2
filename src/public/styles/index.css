@@ -24,7 +24,7 @@ header {
 .warning,
 .message {
     margin: 20px 10px 0;
-    color: lightgray;
+    color: var(--neutral-color-100);
     font-weight: 500;
     font-size: 22px;
 
@@ -34,13 +34,10 @@ header {
 }
 
 .tools-table {
-    left: 10%;
     margin: 45px auto 30px;
     border-collapse: collapse;
-    background-color: #1b1e24;
     width: 70%;
-    height: 40%;
-    color: #a8a8a8;
+    color: var(--neutral-color-100);
 
     @media (width <= 700px) {
         width: 85%;

@@ -1,4 +1,4 @@
-import { CalendarEvents } from '../../../app.js';
+import { CalendarEvents } from '../../../../route-handlers/calendar.js';
 import { holidayEmojis, moonEmojis } from '../../../data/pages.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
@@ -40,9 +40,7 @@ loginButton.addEventListener('click', async () => {
 
     if (result.error) {
         showAlert('Incorrect password!', 'error');
-        showResult('login', 'error', undefined, undefined, false);
-        loginButton.disabled = true;
-        setTimeout(() => (loginButton.disabled = false), 1000);
+        showResult(loginButton, 'error');
     } else {
         todoData = result;
 

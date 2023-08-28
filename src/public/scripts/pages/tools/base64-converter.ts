@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '../../functions.js';
 
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const encodeButton = document.querySelector('#encode') as HTMLButtonElement;
@@ -18,8 +18,6 @@ clearButton.addEventListener('click', () => {
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('encode');
-    resetResult('decode');
 
     setTimeout(() => {
         copyResultButton.disabled = true;
@@ -37,16 +35,16 @@ copyResultButton.addEventListener('click', () => {
  */
 function encode() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('encode', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(encodeButton, 'warning');
     } else
         try {
             result.value = btoa(input.value);
-            showResult('encode', 'success');
+            showResult(encodeButton, 'success');
             copyResultButton.disabled = false;
         } catch {
             showAlert('Malformed input!', 'error');
-            showResult('encode', 'error');
+            showResult(encodeButton, 'error');
         }
 }
 
@@ -55,15 +53,15 @@ function encode() {
  */
 function decode() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('decode', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(decodeButton, 'warning');
     } else
         try {
             result.value = atob(input.value);
-            showResult('decode', 'success');
+            showResult(decodeButton, 'success');
             copyResultButton.disabled = false;
         } catch {
             showAlert('Malformed input!', 'error');
-            showResult('decode', 'error');
+            showResult(decodeButton, 'error');
         }
 }

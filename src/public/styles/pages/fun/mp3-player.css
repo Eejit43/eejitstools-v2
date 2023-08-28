@@ -11,6 +11,12 @@
     color: #ffc266;
 }
 
+.playlists {
+    margin-top: 15px;
+    padding: 15px;
+    font-size: 18px;
+}
+
 #mp3-grid {
     --min-width: 500px;
 
@@ -60,16 +66,30 @@
     }
 }
 
-.buttons,
-.information {
+.information,
+.buttons {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.information div {
-    margin-bottom: 8px;
-    color: #ffc266;
+.information {
+    padding-top: 20px;
+
+    & div {
+        margin-bottom: 8px;
+        color: #ffc266;
+    }
+}
+
+#title {
+    margin-left: 10px;
+    width: 210px;
+    text-align: center;
+}
+
+#duration {
+    margin-left: 10px;
 }
 
 #playlists-list a {
@@ -108,12 +128,12 @@
     background-color: #3b3d43;
 
     &:hover {
-        background: #31353d;
+        background-color: #31353d;
     }
 }
 
 .active-track {
-    background: #31353d;
+    background-color: #31353d;
     font-weight: bold;
 }
 
@@ -152,6 +172,14 @@
     margin-top: 25px;
     width: 30px;
     text-align: center;
+
+    &:first-of-type {
+        margin-right: 20px;
+    }
+
+    &:last-of-type {
+        margin-left: 20px;
+    }
 }
 
 .player-icon,

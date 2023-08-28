@@ -72,8 +72,8 @@ switchButton.addEventListener('click', () => {
         textInput.value = outputText.value;
         outputText.value = '';
         copyResultButton.disabled = true;
-        showAlert('Moved to input!', '#1c62d4');
-        showResult('switch', null, '#1c62d4', 'arrows-alt-v');
+        showAlert('Moved to input!', 'success');
+        showResult('switch', 'success');
     }
 });
 copyResultButton.addEventListener('click', () => copyValue(copyResultButton, outputText));

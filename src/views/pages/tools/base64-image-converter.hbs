@@ -1,31 +1,29 @@
-<div class="tooltext">
-    <div class="basic-grid" style="--min-width: 450px">
-        <div class="tooltext">
-            Image:<br />
-            <label id="file-upload-label" for="file-upload" class="file-upload"><i class="fa-solid fa-file-upload"></i> Upload</label>
-            <input id="file-upload" type="file" />
-            <div style="font-size: 14px; color: dimgray; min-height: 1em" id="file-message"></div>
-            <button id="encode">Encode <i id="encode-result"></i></button>
-            <button id="clear">Clear</button>
-        </div>
-        <div class="tooltext">
-            Base64 Encoded Image:<br />
-            <textarea id="string-input" style="width: 350px; max-width: 80%"></textarea>
-            <br /><button id="decode">Decode <i id="decode-result"></i></button>
-            <button id="clear2">Clear</button>
-        </div>
-    </div>
-    <hr style="margin-top: 30px" />
-    <div class="basic-grid" style="--min-width: 450px">
-        <div class="tooltext">
-            Base64 Encoded Image:<br />
-            <textarea id="b64-result" style="width: 350px; max-width: 80%" readonly></textarea>
-            <br /><button id="b64-copy-result" disabled>Copy</button>
-            <a id="b64-open-result-link" target="_blank"><button id="b64-open-result" disabled>Open in new tab</button></a>
-        </div>
-        <div class="tooltext">
-            Image:<br />
-            <img id="image-output" style="max-width: 80%" src="" />
-        </div>
-    </div>
+<div class="basic-grid" style="--min-width: 450px">
+    <section>
+        <h2>Image:</h2>
+        <label id="file-upload-label" for="file-upload" class="file-upload">Upload</label>
+        <input id="file-upload" type="file" />
+        <div id="file-message"></div>
+        <button id="encode">Encode</button>
+        <button id="clear-upload" class="button-danger">Clear</button>
+    </section>
+    <section>
+        <h2>Base64 Encoded Image:</h2>
+        <textarea id="string-input"></textarea>
+        <button id="decode">Decode</button>
+        <button id="clear-string" class="button-danger">Clear</button>
+    </section>
+</div>
+<hr />
+<div class="basic-grid" style="--min-width: 450px">
+    <section>
+        <h2>Base64 Encoded Image:</h2>
+        <textarea id="encoded-result" readonly></textarea>
+        <button id="encoded-copy-result" class="button-copy" disabled>Copy</button>
+        <a id="encoded-open-result-link" target="_blank"><button id="encoded-open-result" disabled>Open in new tab</button></a>
+    </section>
+    <section>
+        <h2>Image:</h2>
+        <img id="image-result" style="max-width: 80%" />
+    </section>
 </div>

@@ -35,7 +35,7 @@
 [data-tooltip]::before {
     z-index: 1001;
     border: 6px solid transparent;
-    background: transparent;
+    background-color: transparent;
     content: "";
 }
 
@@ -48,7 +48,7 @@
     padding: 8px;
     width: 160px;
     content: attr(data-tooltip);
-    color: white;
+    color: var(--neutral-color-100);
     font-size: 14px;
     line-height: 1.2;
     word-break: break-word;

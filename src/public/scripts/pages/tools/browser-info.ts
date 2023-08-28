@@ -29,18 +29,10 @@ for (const item of output) {
     const icon = document.createElement('i');
     icon.className = `fa-regular fa-${item.icon}`;
 
-    const name = document.createElement('span');
-    name.textContent = item.name;
-
     const value = document.createElement('span');
-    value.style.color = 'gray';
     value.textContent = item.value.trim();
 
-    row.append(icon);
-    row.append(document.createTextNode(' '));
-    row.append(name);
-    row.append(document.createTextNode(': '));
-    row.append(value);
+    row.append(icon, ' ', item.name, ': ', value);
 
     browserInfo.append(row);
 }

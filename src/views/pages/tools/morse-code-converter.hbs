@@ -1,17 +1,26 @@
-<div class="tooltext">
-    {{!-- prettier-ignore --}}
-    <span style="font-weight: 500; color: dimgray; font-size: 16px">Morse Code can be represented in writing using dashes and dots (hyphens/underscores and periods, <code>-</code>/<code>_</code> and <code>.</code>). Characters are separated by spaces, and actual spaces are represented by a backslash (<code>/</code>), a vertical slash (<code>|</code>), or three spaces (<code>   </code>). For example, <code>TEST ABC</code> converts to <code>- . ... - / .- -... -.-.</code>. Morse code does <em>not</em> keep character case. This has been expanded to include common conversions not officially recognized by the <span class="tooltip-bottom" data-tooltip="International Telecommunication Union Radiocommunication Sector">ITU-R</span> M.1172 or M.1677-1 (<code>;</code>, <code>!</code>, <code>_</code>, <code>$</code>, and <code>&</code>).</span><br
-    /><br />
-    Input:<br />
-    <textarea id="input" style="width: 50%; text-transform: uppercase"></textarea>
-    <br /><button id="to-morse">Encode to Morse Code <i id="encode-result"></i></button><button id="from-morse">Decode from Morse Code <i id="decode-result"></i></button>
-    <button id="clear">Clear</button>
-</div>
-<hr style="margin-top: 30px" />
-<div class="tooltext">
-    Output:<br />
-    <textarea id="result" style="width: 50%" readonly></textarea>
-    <br /><button id="copy-result" disabled>Copy</button>
-    <button id="copy-result-2" disabled>Copy with vertical slash space</button>
-    <button id="copy-result-3" disabled>Copy with three space space</button>
-</div>
+Morse Code can be represented in writing using dashes and dots (hyphens/underscores and periods,
+<code>-</code>/<code>_</code>
+and
+<code>.</code>). Characters are separated by spaces, and actual spaces are represented by a backslash (<code>/</code>), a vertical slash (<code>|</code>), or three spaces (<code>   </code>). For
+example,
+<code>TEST ABC</code>
+converts to
+<code>- . ... - / .- -... -.-.</code>. Morse code does
+<em>not</em>
+keep character case. This has been expanded to include common conversions not officially recognized by the
+<span class="tooltip-bottom" data-tooltip="International Telecommunication Union Radiocommunication Sector">ITU-R</span>
+M.1172 or M.1677-1 (<code>;</code>,
+<code>!</code>,
+<code>_</code>,
+<code>$</code>, and
+<code>&</code>).<br /><br />
+Input:<br />
+<textarea id="input" style="width: 50%; text-transform: uppercase"></textarea>
+<br /><button id="to-morse">Encode to Morse Code <i id="encode-result"></i></button><button id="from-morse">Decode from Morse Code <i id="decode-result"></i></button>
+<button id="clear">Clear</button>
+<hr />
+Output:<br />
+<textarea id="result" style="width: 50%" readonly></textarea>
+<br /><button id="copy-result" disabled>Copy</button>
+<button id="copy-result-2" disabled>Copy with vertical slash space</button>
+<button id="copy-result-3" disabled>Copy with three space space</button>

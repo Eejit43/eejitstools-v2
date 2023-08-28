@@ -41,6 +41,9 @@ export async function compileTypescript() {
     cpSync('src/public/scripts/external', 'dist/public/scripts/external', { recursive: true });
     cpSync('src/public/styles/external', 'dist/public/styles/external', { recursive: true });
 
+    // Copy files folder
+    cpSync('src/public/files', 'dist/public/files', { recursive: true });
+
     // Copy favicons folder
     cpSync('src/public/favicons', 'dist/public/favicons', { recursive: true });
     cpSync('src/public/apple-touch-icon.png', 'dist/public/apple-touch-icon.png', { recursive: true });

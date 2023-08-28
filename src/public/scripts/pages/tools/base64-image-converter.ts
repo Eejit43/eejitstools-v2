@@ -1,18 +1,18 @@
-import { copyValue, createBase64ObjectUrl, escapeHtml, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, createBase64ObjectUrl, escapeHtml, showAlert, showResult } from '../../functions.js';
 
 const fileUploadLabel = document.querySelector('#file-upload-label') as HTMLLabelElement;
 const fileUpload = document.querySelector('#file-upload') as HTMLInputElement;
 const fileUploadMessage = document.querySelector('#file-message') as HTMLDivElement;
 const encodeButton = document.querySelector('#encode') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const b64Result = document.querySelector('#b64-result') as HTMLTextAreaElement;
-const b64CopyResultButton = document.querySelector('#b64-copy-result') as HTMLButtonElement;
-const b64OpenResultLink = document.querySelector('#b64-open-result-link') as HTMLAnchorElement;
-const b64OpenResultButton = document.querySelector('#b64-open-result') as HTMLButtonElement;
+const clearUploadButton = document.querySelector('#clear-upload') as HTMLButtonElement;
+const encodedResult = document.querySelector('#encoded-result') as HTMLTextAreaElement;
+const encodedCopyResultButton = document.querySelector('#encoded-copy-result') as HTMLButtonElement;
+const encodedOpenResultLink = document.querySelector('#encoded-open-result-link') as HTMLAnchorElement;
+const encodedOpenResultButton = document.querySelector('#encoded-open-result') as HTMLButtonElement;
 const input = document.querySelector('#string-input') as HTMLTextAreaElement;
 const decodeButton = document.querySelector('#decode') as HTMLButtonElement;
-const clearButton2 = document.querySelector('#clear2') as HTMLButtonElement;
-const imageOutput = document.querySelector('#image-output') as HTMLImageElement;
+const clearStringButton = document.querySelector('#clear-string') as HTMLButtonElement;
+const imageResult = document.querySelector('#image-result') as HTMLImageElement;
 
 let uploadedFile: File | null = null;
 
@@ -51,52 +51,52 @@ fileUploadLabel.addEventListener('dragover', (event) => {
 encodeButton.addEventListener('click', encode);
 decodeButton.addEventListener('click', () => {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('decode', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(decodeButton, 'warning');
     } else {
         const string = /data:image\/.*?;base64,/.test(input.value) ? input.value : 'data:image/png;base64,' + input.value;
         displayImage(string);
     }
 });
-clearButton.addEventListener('click', () => {
+clearUploadButton.addEventListener('click', () => {
     fileUpload.value = '';
     fileUploadMessage.textContent = '';
-    b64Result.value = '';
-    b64CopyResultButton.disabled = true;
-    b64OpenResultButton.disabled = true;
-    b64OpenResultLink.removeAttribute('href');
+    encodedResult.value = '';
+    encodedCopyResultButton.disabled = true;
+    encodedOpenResultButton.disabled = true;
+    encodedOpenResultLink.removeAttribute('href');
 
     uploadedFile = null;
 
-    clearButton.disabled = true;
-    clearButton.textContent = 'Cleared!';
+    clearUploadButton.disabled = true;
+    clearUploadButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('encode');
 
     setTimeout(() => {
-        clearButton.disabled = false;
-        clearButton.textContent = 'Clear';
+        clearUploadButton.disabled = false;
+        clearUploadButton.textContent = 'Clear';
     }, 2000);
 });
-clearButton2.addEventListener('click', () => {
+clearStringButton.addEventListener('click', () => {
     input.value = '';
-    imageOutput.src = '';
+    imageResult.src = '';
 
     uploadedFile = null;
 
-    clearButton2.disabled = true;
-    clearButton2.textContent = 'Cleared!';
+    clearStringButton.disabled = true;
+    clearStringButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('decode');
 
     setTimeout(() => {
-        clearButton2.disabled = false;
-        clearButton2.textContent = 'Clear';
+        clearStringButton.disabled = false;
+        clearStringButton.textContent = 'Clear';
     }, 2000);
 });
-b64CopyResultButton.addEventListener('click', () => {
-    copyValue(b64CopyResultButton, b64Result);
+encodedCopyResultButton.addEventListener('click', () => {
+    copyValue(encodedCopyResultButton, encodedResult);
 });
+
+const validImageTypes = new Set(['png', 'jpg', 'jpeg', 'webp', 'bmp', 'gif']);
 
 /**
  * Encodes the base64 image and displays the result.
@@ -107,20 +107,20 @@ function encode() {
         reader.readAsDataURL(uploadedFile);
         reader.addEventListener('loadend', () => {
             const imageType = (reader.result as string).replaceAll(/^data:image\/(.*?);base64,.*$/g, '$1');
-            if (imageType === 'png' || imageType === 'jpg' || imageType === 'jpeg' || imageType === 'webp' || imageType === 'bmp' || imageType === 'gif') {
-                b64Result.value = reader.result as string;
-                b64CopyResultButton.disabled = false;
-                b64OpenResultButton.disabled = false;
-                b64OpenResultLink.href = createBase64ObjectUrl((reader.result as string).replaceAll(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
-                showResult('encode', 'success');
+            if (validImageTypes.has(imageType)) {
+                encodedResult.value = reader.result as string;
+                encodedCopyResultButton.disabled = false;
+                encodedOpenResultButton.disabled = false;
+                encodedOpenResultLink.href = createBase64ObjectUrl((reader.result as string).replaceAll(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
+                showResult(encodeButton, 'success');
             } else {
-                showAlert('Invalid file type! (must be .png, .jpg, .jpeg, .webp, .bmp, or .gif)', 'error');
-                showResult('encode', 'error');
+                showAlert('Unsupported file type!', 'error');
+                showResult(encodeButton, 'error');
             }
         });
     } else {
-        showAlert('No input!', 'error');
-        showResult('encode', 'error');
+        showAlert('No input!', 'warning');
+        showResult(encodeButton, 'warning');
     }
 }
 
@@ -128,17 +128,12 @@ function encode() {
  * Checks if the specified string is a valid base64 encoded image.
  * @param base64 The base64 to check.
  */
-function isBase64Image(base64: string) {
+function isBase64Image(base64: string): Promise<boolean> {
     const image = new Image();
     image.src = escapeHtml(base64);
     return new Promise((resolve) => {
-        image.addEventListener('load', () => {
-            if (image.height === 0 || image.width === 0) return resolve(false);
-            resolve(true);
-        });
-        image.addEventListener('error', () => {
-            resolve(false);
-        });
+        image.addEventListener('load', () => resolve(!(image.height === 0 || image.width === 0)));
+        image.addEventListener('error', () => resolve(false));
     });
 }
 
@@ -148,10 +143,10 @@ function isBase64Image(base64: string) {
  */
 async function displayImage(string: string) {
     const valid = await isBase64Image(string);
-    if (valid) imageOutput.src = escapeHtml(string);
+    if (valid) imageResult.src = escapeHtml(string);
     else {
-        imageOutput.src = '';
+        imageResult.src = '';
         showAlert('Malformed input!', 'error');
-        showResult('decode', 'error');
+        showResult(decodeButton, 'error');
     }
 }

@@ -1,7 +1,17 @@
+#generate-random {
+    padding: 8px;
+    font-size: 15px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
 .color-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 200px), 1fr));
     gap: 10px;
+    margin-bottom: 1em;
 
     & div {
         margin-top: 20px;
@@ -11,7 +21,7 @@
 #color-display {
     position: absolute;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 0;
     border: 4px solid #16181c;
     background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, white 25%, white 75%, #aaa 75%, #aaa);
     background-position:
@@ -31,6 +41,19 @@
         height: 100%;
         content: "";
     }
+}
+
+#alter-values button {
+    display: block;
+
+    &:not(:first-of-type) {
+        margin-top: 5px;
+    }
+}
+
+#manual-inputs div,
+#color-info div {
+    margin-top: 0;
 }
 
 #color-history {
@@ -61,7 +84,6 @@
     left: 0;
     z-index: 10000;
     cursor: pointer;
-    background-color: #16181c;
     width: 100%;
     height: 100%;
 }
@@ -70,8 +92,10 @@
     position: absolute;
     right: 0;
     bottom: 0;
+    border-top: 1px solid var(--neutral-color-500);
+    border-left: 1px solid var(--neutral-color-500);
     border-top-left-radius: 10px;
-    background-color: #d8d8d8;
+    background-color: var(--neutral-color-100);
     padding: 20px;
-    color: black;
+    color: var(--neutral-color-500);
 }

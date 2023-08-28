@@ -1,5 +1,6 @@
-#coins-list {
-    padding-top: 20px;
+/* Login section */
+#login-container {
+    margin-top: 1em;
 }
 
 div#toggle-buttons button {
@@ -37,10 +38,6 @@ button.coin-type-expand {
     max-height: 18px;
 }
 
-.hidden {
-    display: none;
-}
-
 .coin-variant-table {
     margin: 20px auto;
     width: 50%;
@@ -48,87 +45,6 @@ button.coin-type-expand {
 
 .coin-table-message td {
     text-align: center;
-}
-
-/* Popup images */
-.popup-image {
-    transition: 0.3s;
-    cursor: pointer;
-
-    &:hover {
-        opacity: 0.8;
-    }
-}
-
-#modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    background-color: black;
-    background-color: rgb(0 0 0 / 90%);
-    padding-top: 100px;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
-
-#modal-image {
-    display: block;
-    margin: auto;
-    width: 80%;
-    max-width: 700px;
-}
-
-#modal-caption {
-    display: block;
-    margin: auto;
-    padding: 10px 0;
-    width: 80%;
-    max-width: 700px;
-    height: 150px;
-    color: #ccc;
-    text-align: center;
-}
-
-#modal-image,
-#modal-caption {
-    animation-duration: 0.6s;
-    animation-name: zoom;
-}
-
-@keyframes zoom {
-    from {
-        transform: scale(0);
-    }
-
-    to {
-        transform: scale(1);
-    }
-}
-
-#close-modal {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    transition: 0.3s;
-    color: #f1f1f1;
-    font-weight: bold;
-    font-size: 40px;
-
-    &:hover,
-    &:focus {
-        cursor: pointer;
-        color: #bbb;
-        text-decoration: none;
-    }
-}
-
-@media (width <= 700px) {
-    #modal-image {
-        width: 90%;
-    }
 }
 
 #coins-list.obtained-hidden tr[data-obtained="true"][data-upgrade="false"],
@@ -173,7 +89,7 @@ tr[data-upgrade="true"] {
     padding-left: 2px;
 
     &:hover {
-        color: #929292;
+        color: var(--neutral-color-150);
     }
 }
 
@@ -186,6 +102,87 @@ button.coin-variant-expand {
     margin-left: 5px;
 }
 
+/* Popup images */
+.popup-image {
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+#modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgb(0 0 0 / 90%);
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+#modal-image {
+    display: block;
+    margin: auto;
+    width: 80%;
+    max-width: 700px;
+}
+
+#modal-caption {
+    display: block;
+    margin: auto;
+    padding: 10px 0;
+    width: 80%;
+    max-width: 700px;
+    height: 150px;
+    color: var(--neutral-color-100);
+    text-align: center;
+}
+
+#modal-image,
+#modal-caption {
+    animation-duration: 0.6s;
+    animation-name: zoom;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+#close-modal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    transition: 0.3s;
+    color: var(--neutral-color-100);
+    font-weight: bold;
+    font-size: 40px;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        color: var(--neutral-color-200);
+        text-decoration: none;
+    }
+}
+
+@media (width <= 700px) {
+    #modal-image {
+        width: 90%;
+    }
+}
+
+/* History */
 #change-history {
     margin-top: 20px;
     border: 4px solid #16181c;
@@ -206,7 +203,8 @@ button.coin-variant-expand {
     text-decoration: none;
 }
 
+/* Data exporter */
 button#export-data {
-    margin-top: 10px;
+    margin-top: 1em;
     padding: 5px;
 }

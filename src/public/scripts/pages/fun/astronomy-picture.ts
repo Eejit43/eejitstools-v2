@@ -2,9 +2,9 @@ import { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/apod.j
 import { showAlert } from '../../functions.js';
 
 const resultElement = document.querySelector('#result') as HTMLDivElement;
-const yearInput = document.querySelector('#year') as HTMLInputElement;
-const monthInput = document.querySelector('#month') as HTMLInputElement;
-const dateInput = document.querySelector('#date') as HTMLInputElement;
+const monthInput = document.querySelector('#month-input') as HTMLInputElement;
+const dateInput = document.querySelector('#date-input') as HTMLInputElement;
+const yearInput = document.querySelector('#year-input') as HTMLInputElement;
 const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
 const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
 
@@ -15,9 +15,9 @@ getDateButton.addEventListener('click', () => {
 });
 
 resetDateButton.addEventListener('click', () => {
-    yearInput.value = '';
     monthInput.value = '';
     dateInput.value = '';
+    yearInput.value = '';
     checkApod(year, month, date);
 });
 
@@ -44,24 +44,24 @@ function checkInput(element: HTMLInputElement) {
 }
 
 const currentTime = new Date();
-const year = currentTime.getFullYear();
 const month = currentTime.getMonth() + 1;
 const date = currentTime.getDate();
+const year = currentTime.getFullYear();
 
 /**
  * Gets the value of all inputs and returns them as numbers if possible.
  */
 function getValuesAsNumbers() {
     return {
-        year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
         month: Number.isNaN(Number.parseInt(monthInput.value)) ? month : Number.parseInt(monthInput.value),
         date: Number.isNaN(Number.parseInt(dateInput.value)) ? date : Number.parseInt(dateInput.value),
+        year: Number.isNaN(Number.parseInt(yearInput.value)) ? year : Number.parseInt(yearInput.value),
     };
 }
 
-yearInput.placeholder = year.toString();
 monthInput.placeholder = month.toString();
 dateInput.placeholder = date.toString();
+yearInput.placeholder = year.toString();
 
 checkApod(year, month, date);
 

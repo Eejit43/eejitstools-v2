@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '../../functions.js';
 
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const toBinaryButton = document.querySelector('#to-binary') as HTMLButtonElement;
@@ -18,8 +18,6 @@ clearButton.addEventListener('click', () => {
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('encode');
-    resetResult('decode');
 
     setTimeout(() => {
         resultCopyButton.disabled = true;
@@ -39,12 +37,12 @@ function toBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';
         resultCopyButton.disabled = true;
-        showResult('encode', 'error');
-        showAlert('Empty input!', 'error');
+        showResult(toBinaryButton, 'warning');
+        showAlert('Empty input!', 'warning');
     } else {
         result.value = stringToBinary(input.value.trim());
         resultCopyButton.disabled = false;
-        showResult('encode', 'success');
+        showResult(toBinaryButton, 'success');
     }
 }
 
@@ -55,16 +53,16 @@ function fromBinary() {
     if (input.value.trim().length <= 0) {
         result.value = '';
         resultCopyButton.disabled = true;
-        showResult('decode', 'error');
-        showAlert('Empty input!', 'error');
+        showResult(fromBinaryButton, 'warning');
+        showAlert('Empty input!', 'warning');
     } else if (/^[ 01]+$/gm.test(input.value.trim())) {
         result.value = binaryToString(input.value.trim());
         resultCopyButton.disabled = false;
-        showResult('decode', 'success');
+        showResult(fromBinaryButton, 'success');
     } else {
         result.value = '';
         resultCopyButton.disabled = true;
-        showResult('decode', 'error');
+        showResult(fromBinaryButton, 'error');
         showAlert('Invalid binary!', 'error');
     }
 }

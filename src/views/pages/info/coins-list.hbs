@@ -1,16 +1,19 @@
-Welcome! Here is a list of coins I have and need!<br /><br /><br />
+Welcome! Here is a list of coins I have and need!
 
-Password
-<input type="text" id="login-password" style="width: 50px" />
-<button id="login-button">Login</button>
-<span id="login-result" style="padding-left: 5px"></span>
+<div id="login-container">
+    Password:
+    <input type="text" id="login-password" style="width: 50px" />
+    <button id="login-button">Login</button>
+</div>
 
-<hr style="margin-top: 20px" />
+<hr />
 <div id="coins-list">Please login to view this!</div>
 
-<hr style="margin-top: 20px" />
+<hr />
 <ul id="change-history">No changes made!</ul>
-<button id="export-data" disabled>Export coin data</button>
+
+<button id="export-data" data-icon-after="&#xf019" disabled>Export coin data</button>
+
 <div id="modal">
     <span id="close-modal">&times;</span>
     <img id="modal-image" />

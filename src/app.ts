@@ -41,9 +41,7 @@ fastify.setErrorHandler((error, request, reply) => {
 
     consola.error(error);
 
-    reply
-        .status(error.statusCode ?? 500)
-        .view('/error.hbs', { ...blankProperties, commitInfo, title: 'Internal Server Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
+    reply.status(error.statusCode ?? 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
 });
 
 fastify.setNotFoundHandler((request, reply) =>

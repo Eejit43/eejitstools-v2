@@ -1,4 +1,4 @@
-import { CalendarEvents } from '../../../app.js';
+import { CalendarEvents } from '../../../../route-handlers/calendar.js';
 import { holidayEmojis } from '../../../data/pages.js';
 import { twemojiUpdate } from '../../functions.js';
 
