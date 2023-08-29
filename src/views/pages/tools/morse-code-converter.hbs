@@ -13,14 +13,20 @@ M.1172 or M.1677-1 (<code>;</code>,
 <code>!</code>,
 <code>_</code>,
 <code>$</code>, and
-<code>&</code>).<br /><br />
-Input:<br />
-<textarea id="input" style="width: 50%; text-transform: uppercase"></textarea>
-<br /><button id="to-morse">Encode to Morse Code <i id="encode-result"></i></button><button id="from-morse">Decode from Morse Code <i id="decode-result"></i></button>
-<button id="clear">Clear</button>
+<code>&</code>).
+
+<section>
+    <h2>Input:</h2>
+    <textarea id="input"></textarea>
+    <button id="to-morse">Encode</button>
+    <button id="from-morse">Decode</button>
+    <button id="clear" class="button-danger">Clear</button>
+</section>
 <hr />
-Output:<br />
-<textarea id="result" style="width: 50%" readonly></textarea>
-<br /><button id="copy-result" disabled>Copy</button>
-<button id="copy-result-2" disabled>Copy with vertical slash space</button>
-<button id="copy-result-3" disabled>Copy with three space space</button>
+<section>
+    <h2>Output:</h2>
+    <textarea id="result" readonly></textarea>
+    <button id="copy-result" class="button-copy" disabled>Copy</button>
+    <button id="copy-result-vertical" class="button-copy" disabled>Copy with vertical slash space</button>
+    <button id="copy-result-spaces" class="button-copy" disabled>Copy with three space space</button>
+</section>

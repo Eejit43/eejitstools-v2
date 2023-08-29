@@ -1,0 +1,12 @@
+#clear-clipboard {
+    margin-bottom: 1em;
+    padding: 8px;
+}
+
+#clipboard-warning {
+    font-size: 14px;
+}
+
+#copied-text {
+    width: 60%;
+}

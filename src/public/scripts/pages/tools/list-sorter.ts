@@ -1,8 +1,8 @@
-import { copyValue, resetResult, showAlert, showResult, shuffleArray } from '../../functions.js';
+import { copyValue, showAlert, showResult, shuffleArray } from '../../functions.js';
 
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const separatorInput = document.querySelector('#separator') as HTMLInputElement;
-const alphabetizeNormalButton = document.querySelector('#alphabetize-normal') as HTMLButtonElement;
+const alphabetizeButton = document.querySelector('#alphabetize') as HTMLButtonElement;
 const numerizeButton = document.querySelector('#numerize') as HTMLButtonElement;
 const randomizeButton = document.querySelector('#randomize') as HTMLButtonElement;
 const reverseButton = document.querySelector('#reverse') as HTMLButtonElement;
@@ -10,10 +10,8 @@ const clearButton = document.querySelector('#clear') as HTMLButtonElement;
 const result = document.querySelector('#result') as HTMLTextAreaElement;
 const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
 
-const separatorValue = separatorInput.value.replace('\\n', '\n');
-
 /* Add event listeners */
-alphabetizeNormalButton.addEventListener('click', alphabetizeNormal);
+alphabetizeButton.addEventListener('click', alphabetize);
 numerizeButton.addEventListener('click', numerize);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
@@ -26,10 +24,6 @@ clearButton.addEventListener('click', () => {
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('alphabetize');
-    resetResult('numerize');
-    resetResult('randomize');
-    resetResult('reverse');
 
     setTimeout(() => {
         copyResultButton.disabled = true;
@@ -45,16 +39,16 @@ copyResultButton.addEventListener('click', () => {
 /**
  * Alphabetizes the provided string and displays the result.
  */
-function alphabetizeNormal() {
+function alphabetize() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('alphabetize', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(alphabetizeButton, 'warning');
     } else {
         result.value = input.value
-            .split(separatorValue)
+            .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .sort((a, b) => a.localeCompare(b))
-            .join(separatorValue);
-        showResult('alphabetize', 'success');
+            .join(JSON.parse(`"${separatorInput.value}"`) as string);
+        showResult(alphabetizeButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -64,16 +58,16 @@ function alphabetizeNormal() {
  */
 function numerize() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('numerize', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(numerizeButton, 'warning');
     } else {
         result.value = input.value
-            .split(separatorValue)
+            .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .map((value) => Number.parseInt(value))
             .filter((x) => x === 0 || Boolean(x))
             .sort((a, b) => a - b)
-            .join(separatorValue);
-        showResult('numerize', 'success');
+            .join(JSON.parse(`"${separatorInput.value}"`) as string);
+        showResult(numerizeButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -83,11 +77,11 @@ function numerize() {
  */
 function randomize() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('randomize', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(randomizeButton, 'warning');
     } else {
-        result.value = shuffleArray(input.value.split(separatorValue)).join(separatorValue);
-        showResult('randomize', 'success');
+        result.value = shuffleArray(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string)).join(JSON.parse(`"${separatorInput.value}"`) as string);
+        showResult(randomizeButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -97,11 +91,14 @@ function randomize() {
  */
 function reverse() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('reverse', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(reverseButton, 'warning');
     } else {
-        result.value = input.value.split(separatorValue).reverse().join(separatorValue);
-        showResult('reverse', 'success');
+        result.value = input.value
+            .split(JSON.parse(`"${separatorInput.value}"`) as string)
+            .reverse()
+            .join(JSON.parse(`"${separatorInput.value}"`) as string);
+        showResult(reverseButton, 'success');
         copyResultButton.disabled = false;
     }
 }

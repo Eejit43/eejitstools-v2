@@ -1,4 +1,4 @@
-import { copyText, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyText, showAlert, showResult } from '../../functions.js';
 
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const toMorseButton = document.querySelector('#to-morse') as HTMLButtonElement;
@@ -6,8 +6,8 @@ const fromMorseButton = document.querySelector('#from-morse') as HTMLButtonEleme
 const clearButton = document.querySelector('#clear') as HTMLButtonElement;
 const result = document.querySelector('#result') as HTMLTextAreaElement;
 const copyButton = document.querySelector('#copy-result') as HTMLButtonElement;
-const copyVerticalButton = document.querySelector('#copy-result-2') as HTMLButtonElement;
-const copySpacesButton = document.querySelector('#copy-result-3') as HTMLButtonElement;
+const copyVerticalButton = document.querySelector('#copy-result-vertical') as HTMLButtonElement;
+const copySpacesButton = document.querySelector('#copy-result-spaces') as HTMLButtonElement;
 
 /* Add event listeners */
 toMorseButton.addEventListener('click', toMorse);
@@ -15,8 +15,6 @@ fromMorseButton.addEventListener('click', fromMorse);
 clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
-    resetResult('encode');
-    resetResult('decode');
     copyButton.textContent = 'Copy';
     copyVerticalButton.textContent = 'Copy with vertical slash spacer';
     copySpacesButton.textContent = 'Copy with three space spacer';
@@ -32,7 +30,7 @@ copyVerticalButton.addEventListener('click', () => {
     copyText(copyVerticalButton, result.value.replaceAll(' / ', ' | '));
 });
 copySpacesButton.addEventListener('click', () => {
-    copyText(copySpacesButton, result.value.replaceAll(/ {3}/g, '   '));
+    copyText(copySpacesButton, result.value.replaceAll(' / ', '   '));
 });
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -114,20 +112,20 @@ function toMorse() {
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
-        showResult('encode', 'error');
-        showAlert('Empty input!', 'error');
+        showResult(toMorseButton, 'warning');
+        showAlert('Empty input!', 'warning');
     } else if (/^[\w !"$&'()+,./:;=?@\\|-]*$/.test(input.value.trim())) {
         result.value = convertToMorse(input.value);
         copyButton.disabled = false;
         copyVerticalButton.disabled = false;
         copySpacesButton.disabled = false;
-        showResult('encode', 'success');
+        showResult(toMorseButton, 'success');
     } else {
         result.value = '';
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
-        showResult('encode', 'error');
+        showResult(toMorseButton, 'error');
         showAlert('Input cannot be converted into morse code!', 'error');
     }
 }
@@ -163,20 +161,20 @@ function fromMorse() {
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
-        showResult('decode', 'error');
-        showAlert('Empty input!', 'error');
+        showResult(fromMorseButton, 'warning');
+        showAlert('Empty input!', 'warning');
     } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[/|] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
         result.value = decodeMorse(inputValue);
         copyButton.disabled = false;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
-        showResult('decode', 'success');
+        showResult(fromMorseButton, 'success');
     } else {
         result.value = '';
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
-        showResult('decode', 'error');
+        showResult(fromMorseButton, 'error');
         showAlert('Invalid morse code!', 'error');
     }
 }

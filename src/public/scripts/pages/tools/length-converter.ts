@@ -1,5 +1,5 @@
 import type math from 'mathjs';
-import { copyValue, showAlert } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '../../functions.js';
 
 declare global {
     interface Window {
@@ -51,7 +51,8 @@ switchButton.addEventListener('click', () => {
 
     convert();
 
-    showAlert('Swapped input and output!', '#1c62d4');
+    showAlert('Swapped input and output!', 'success');
+    showResult(switchButton, 'success');
 });
 outputType.addEventListener('change', convert);
 copyOutputButton.addEventListener('click', () => {

@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '../../functions.js';
 
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const toUpperButton = document.querySelector('#to-upper') as HTMLButtonElement;
@@ -22,10 +22,6 @@ clearButton.addEventListener('click', () => {
     clearButton.disabled = true;
     clearButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('uppercase');
-    resetResult('lowercase');
-    resetResult('title');
-    resetResult('sentence');
 
     setTimeout(() => {
         copyResultButton.disabled = true;
@@ -43,11 +39,11 @@ copyResultButton.addEventListener('click', () => {
  */
 function toUpper() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('uppercase', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(toUpperButton, 'warning');
     } else {
         result.value = input.value.toUpperCase();
-        showResult('uppercase', 'success');
+        showResult(toUpperButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -57,11 +53,11 @@ function toUpper() {
  */
 function toLower() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('lowercase', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(toLowerButton, 'warning');
     } else {
         result.value = input.value.toLowerCase();
-        showResult('lowercase', 'success');
+        showResult(toLowerButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -125,11 +121,11 @@ function titleCase(string: string) {
  */
 function toTitle() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('title', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(toTitleButton, 'warning');
     } else {
         result.value = titleCase(input.value);
-        showResult('title', 'success');
+        showResult(toTitleButton, 'success');
         copyResultButton.disabled = false;
     }
 }
@@ -139,8 +135,8 @@ function toTitle() {
  */
 function toSentence() {
     if (input.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('sentence', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(toSentenceButton, 'warning');
     } else {
         result.value = input.value
             .toLowerCase()
@@ -152,7 +148,7 @@ function toSentence() {
             .replaceAll(/(\s)i'd(\.|!|\?|\s|\n|$)/gim, "$1I'd$2")
             .replaceAll(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
             .replaceAll(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
-        showResult('sentence', 'success');
+        showResult(toSentenceButton, 'success');
         copyResultButton.disabled = false;
     }
 }

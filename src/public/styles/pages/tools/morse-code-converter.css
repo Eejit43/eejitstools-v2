@@ -1,0 +1,13 @@
+.toolbox section {
+    &:first-of-type {
+        margin-top: 1em;
+    }
+
+    & textarea {
+        width: 50%;
+
+        &:first-of-type {
+            text-transform: uppercase;
+        }
+    }
+}
