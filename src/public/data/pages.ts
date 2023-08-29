@@ -367,6 +367,7 @@ const preParsedPages: PreParsedPages = {
             title: 'IP Info',
             icon: 'router',
             description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address, and IP provided information',
+            toolboxTitle: '<span data-tooltip="Internet Protocol">IP</span> Info',
             keywords: ['internet', 'isp'],
         },
         'keycode-info': { title: 'Keycode Information', icon: 'keyboard', description: 'Click any keyboard key to get the key, key location, key code, char code (ASCII), and char code (Unicode)' },

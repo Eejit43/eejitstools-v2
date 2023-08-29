@@ -118,6 +118,7 @@ h1 {
 }
 
 h2 {
+    margin-bottom: 0.5em;
     color: var(--neutral-color-200);
     font-weight: 500;
     font-size: 20px;
@@ -177,7 +178,7 @@ kbd {
     margin: 140px auto 0;
     border: 2px solid var(--neutral-color-100);
     background-color: #1f2229;
-    padding: 10px 30px 20px;
+    padding: 10px 30px 30px;
     width: 95%;
     max-width: 95%;
     color: var(--neutral-color-100);
@@ -239,10 +240,6 @@ kbd {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--min-width, 300px), 1fr));
     gap: 10px;
-
-    & > div {
-        margin-top: 15px;
-    }
 }
 
 .error-title {

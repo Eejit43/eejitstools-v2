@@ -1,34 +1,33 @@
 <div class="basic-grid" style="--min-width: 450px">
-    <div>
-        Image:<br />
-        <label id="file-upload-label" for="file-upload" class="file-upload"><i class="fa-solid fa-file-upload"></i> Upload</label>
+    <section>
+        <h2>Image:</h2>
+        <label id="file-upload-label" for="file-upload" class="file-upload">Upload</label>
         <input id="file-upload" type="file" accept="image/*" />
         <div id="file-message"></div>
         <button id="load" disabled>Load</button>
-        <button id="clear">Clear</button>
-    </div>
-    <div>
-        Image Preview:<br />
-        <canvas id="image-preview" style="max-width: 80%" width="0" height="0"></canvas>
-    </div>
+        <button id="clear" class="button-danger">Clear</button>
+    </section>
+    <section>
+        <h2>Image Preview:</h2>
+        <canvas id="image-preview" width="0" height="0"></canvas>
+    </section>
 </div>
 <hr />
 <div class="basic-grid" style="--min-width: 450px">
-    <div>
-        Output Type:<br />
+    <section id="output-type-section">
+        <h2>Output Type:</h2>
         <select id="output-type" disabled>
             <option value="png" selected>PNG (Portable Network Graphics)</option>
             <option value="jpeg">JPEG (Joint Photographic Experts Group)</option>
             <option value="webp">WebP (WebP Image)</option>
         </select>
-        <br />
         <button id="convert" disabled>Convert</button>
-    </div>
-    <div>
-        Converted Image:<br />
-        <img id="image-output" style="max-width: 80%" src="" />
-        <br />
-        <a id="open-converted-link" target="_blank"><button id="open-converted-result" disabled>Open in new tab</button></a>
-        <a id="download-converted-link" target="_blank" download><button id="download-converted-result" disabled>Download</button></a>
-    </div>
+    </section>
+    <section>
+        <h2>Converted Image:</h2>
+        <img id="image-output" />
+
+        <a id="open-converted-link" target="_blank"><button id="open-converted-result" data-icon-after="&#xf08e" disabled>Open in new tab</button></a>
+        <a id="download-converted-link" target="_blank" download><button id="download-converted-result" data-icon-after="&#xf019" disabled>Download</button></a>
+    </section>
 </div>

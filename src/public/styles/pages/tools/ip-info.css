@@ -1,0 +1,13 @@
+#ip-info {
+    margin-top: 25px;
+
+    & div {
+        margin-block: 8px;
+        color: var(--neutral-color-200);
+        font-size: 20px;
+
+        & span:not([data-tooltip]) {
+            color: var(--neutral-color-150);
+        }
+    }
+}

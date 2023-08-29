@@ -1,0 +1,18 @@
+#output-type-section select,
+#output-type-section button {
+    display: block;
+}
+
+#output-type {
+    margin-bottom: 6px;
+}
+
+.toolbox canvas,
+.toolbox img {
+    max-width: 80%;
+}
+
+#image-output {
+    display: block;
+    margin-bottom: 0.5em;
+}

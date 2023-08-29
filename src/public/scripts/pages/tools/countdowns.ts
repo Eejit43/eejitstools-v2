@@ -2,21 +2,38 @@ import { CalendarEvents } from '../../../../route-handlers/calendar.js';
 import { holidayEmojis } from '../../../data/pages.js';
 import { twemojiUpdate } from '../../functions.js';
 
+const countdownContainer = document.querySelector('#countdowns') as HTMLDivElement;
+
 const { holidays } = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 
 const parsedHolidays = holidays.map((holiday, index) => ({ ...holiday, id: `holiday-${index}` })).filter((holiday) => getTimeUntil(holiday.date) && !/^first day of/i.test(holiday.name));
 
-const result = parsedHolidays.map(
-    (holiday) =>
-        `Time until <span class="tooltip-bottom" data-tooltip="${new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        })}">${holiday.name}</span>: <span id="${holiday.id}">${getTimeUntil(holiday.date)!}</span>${holidayEmojis[holiday.name] ? ` ${holidayEmojis[holiday.name]}` : ''}`,
-);
+const result = parsedHolidays.map((holiday) => {
+    const container = document.createElement('div');
 
-(document.querySelector('#countdowns') as HTMLDivElement).innerHTML = result.length > 0 ? result.join('<br />') : 'No upcoming events!';
+    const timeUntilSpan = document.createElement('span');
+    timeUntilSpan.classList.add('time-until');
+
+    const eventTooltip = document.createElement('span');
+    eventTooltip.textContent = holiday.name;
+    eventTooltip.dataset.tooltip = new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    timeUntilSpan.append('Time until ', eventTooltip, ':');
+
+    const timeResult = document.createElement('span');
+    timeResult.id = holiday.id;
+    timeResult.textContent = getTimeUntil(holiday.date);
+
+    const emoji = holidayEmojis[holiday.name] ? ` ${holidayEmojis[holiday.name]}` : '';
+
+    container.append(timeUntilSpan, ' ', timeResult, emoji);
+
+    return container;
+});
+
+countdownContainer.textContent = '';
+
+countdownContainer.append(...result);
 
 if (result.length > 0) {
     twemojiUpdate();
@@ -28,7 +45,12 @@ if (result.length > 0) {
 
             if (!timeDisplay || timeDisplay.innerHTML === result) continue;
 
-            timeDisplay.innerHTML = result ?? '<span class="error">This event has already occurred!</span>';
+            if (result) timeDisplay.textContent = result;
+            else {
+                const errorElement = document.createElement('span');
+                errorElement.classList.add('error');
+                errorElement.textContent = 'This event has already occurred!';
+            }
         }
     }, 500);
 }

@@ -1,0 +1,11 @@
+#last-updated {
+    color: var(--neutral-color-200);
+}
+
+#rates-grid {
+    margin-top: 1em;
+}
+
+.start-currency {
+    color: var(--neutral-color-200);
+}

@@ -44,7 +44,7 @@
     z-index: 1000;
     border-radius: 5px;
     background-color: black;
-    background-color: rgb(43 43 43 / 90%);
+    background-color: rgb(43 43 43 / 95%);
     padding: 8px;
     width: 160px;
     content: attr(data-tooltip);
@@ -70,7 +70,7 @@
     margin-bottom: -12px;
     margin-left: -6px;
     border-top-color: black;
-    border-top-color: rgb(43 43 43 / 90%);
+    border-top-color: rgb(43 43 43 / 95%);
 }
 
 /* Horizontally align top/bottom tooltips */
@@ -104,7 +104,7 @@
     margin-left: 0;
     border-top-color: transparent;
     border-left-color: black;
-    border-left-color: rgb(43 43 43 / 90%);
+    border-left-color: rgb(43 43 43 / 95%);
 }
 
 .tooltip-left:hover::before,
@@ -127,7 +127,7 @@
     margin-bottom: 0;
     border-top-color: transparent;
     border-bottom-color: black;
-    border-bottom-color: rgb(43 43 43 / 90%);
+    border-bottom-color: rgb(43 43 43 / 95%);
 }
 
 .tooltip-bottom:hover::before,
@@ -149,7 +149,7 @@
     margin-left: -12px;
     border-top-color: transparent;
     border-right-color: black;
-    border-right-color: rgb(43 43 43 / 90%);
+    border-right-color: rgb(43 43 43 / 95%);
 }
 
 .tooltip-right:hover::before,

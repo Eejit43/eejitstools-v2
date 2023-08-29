@@ -48,7 +48,7 @@ manualActivationButton.addEventListener('click', () => {
 });
 
 /**
- * Removes the focus from important buttons to prevent multiple activations.
+ * Removes the focus from important inputs to prevent multiple activations.
  */
 function blurAll() {
     activationSelect.blur();
