@@ -6,6 +6,7 @@ declare global {
         math: typeof math;
     }
 }
+
 const decimalInput = document.querySelector('#decimal-input') as HTMLInputElement;
 const decimalConvertButton = document.querySelector('#decimal-convert') as HTMLButtonElement;
 const decimalResetButton = document.querySelector('#decimal-reset') as HTMLButtonElement;

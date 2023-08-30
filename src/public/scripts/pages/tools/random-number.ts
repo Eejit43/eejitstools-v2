@@ -1,4 +1,4 @@
-import { resetResult, showAlert, showResult } from '../../functions.js';
+import { showAlert, showResult } from '../../functions.js';
 
 const minNumberInput = document.querySelector('#min-number') as HTMLInputElement;
 const maxNumberInput = document.querySelector('#max-number') as HTMLInputElement;
@@ -14,7 +14,6 @@ resetButton.addEventListener('click', () => {
     outputNumber.textContent = '0';
 
     showAlert('Reset!', 'success');
-    resetResult('generate');
 });
 
 /**
@@ -24,13 +23,13 @@ function generateNumber() {
     const min = Number(minNumberInput.value);
     const max = Number(maxNumberInput.value);
     if (minNumberInput.value.length === 0 || maxNumberInput.value.length === 0) {
-        showAlert('Empty input!', 'error');
-        showResult('generate', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(generateButton, 'warning');
     } else if (min >= max) {
         showAlert('The minimum must be less than the maximum!', 'error');
-        showResult('generate', 'error');
+        showResult(generateButton, 'error');
     } else {
         outputNumber.textContent = Math.floor(Math.random() * (max - min + 1) + min).toLocaleString();
-        showResult('generate', 'success');
+        showResult(generateButton, 'success');
     }
 }

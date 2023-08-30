@@ -1,0 +1,18 @@
+.toolbox {
+    & div {
+        &:first-of-type {
+            margin-top: 0.5em;
+        }
+    }
+
+    & input,
+    & .fake-input {
+        width: 150px !important;
+    }
+}
+
+#decimal-arrow,
+#scientific-arrow {
+    margin-inline: 40px;
+    color: var(--neutral-color-300);
+}

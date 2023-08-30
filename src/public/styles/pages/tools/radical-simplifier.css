@@ -1,0 +1,9 @@
+.toolbox {
+    & div {
+        margin-block: 0.25em;
+    }
+
+    & input {
+        width: calc(4ch + 12px) !important;
+    }
+}

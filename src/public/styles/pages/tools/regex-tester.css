@@ -1,0 +1,17 @@
+#regex-inputs {
+    margin-bottom: 0.25em;
+}
+
+#regex-input {
+    margin-right: 1em;
+}
+
+#regex-input,
+#replace-input {
+    width: 320px;
+    max-width: 70%;
+}
+
+#flags-input {
+    width: calc(4ch + 12px);
+}

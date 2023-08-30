@@ -19,14 +19,14 @@ textarea {
     }
 }
 
-.fakeinput {
+.fake-input {
     overflow: scroll;
     user-select: text;
     text-align: left;
 }
 
 input:not(input[type="file"], input[type="checkbox"], input[type="color"]),
-.fakeinput {
+.fake-input {
     transition: all 0.2s ease;
     cursor: pointer;
     border: 1px solid #444;
@@ -41,13 +41,13 @@ input:not(input[type="file"], input[type="checkbox"], input[type="color"]),
 }
 
 input::-webkit-scrollbar,
-.fakeinput::-webkit-scrollbar {
+.fake-input::-webkit-scrollbar {
     display: none;
 }
 
 input:focus:not(input[type="file"], input[type="checkbox"], input[type="color"]),
 textarea:focus:not(input[type="file"]),
-.fakeinput:focus {
+.fake-input:focus {
     outline: none;
     box-shadow: 0 0 3px 2px lightslategray;
 }
@@ -117,7 +117,7 @@ select {
     }
 }
 
-button:not(.fakeinput) {
+button:not(.fake-input) {
     transition: all 0.2s ease;
     cursor: pointer;
     margin: 3px 0;

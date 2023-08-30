@@ -1,4 +1,4 @@
-import { showAlert } from '../../functions.js';
+import { showAlert, showResult } from '../../functions.js';
 
 declare global {
     interface Window {
@@ -26,8 +26,13 @@ for (const event of ['input', 'paste']) {
 for (const input of [indexInput, radicandInput, operandInput]) input.addEventListener('keydown', (event) => (event.key === 'Enter' ? simplifyButton.click() : null));
 
 simplifyButton.addEventListener('click', () => {
+    if (!radicandInput.value) {
+        showAlert('Provide a radicand first!', 'warning');
+        showResult(simplifyButton, 'warning');
+        return;
+    }
+
     message.textContent = '';
-    if (!radicandInput.value) return showAlert('Provide a radicand first!', 'error');
     output.classList.remove('hidden');
 
     const index = indexInput.value ? Number.parseInt(indexInput.value) : 2;

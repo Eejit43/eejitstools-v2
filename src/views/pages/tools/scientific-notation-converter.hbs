@@ -3,16 +3,25 @@ Scientific notation can be represented using e notation, such as
 (plus sign optional), or using standard scientific notation, such as
 <code>5 x 10<sup>2</sup></code>
 (written as
-<code>5 x 10^2</code>). Both variants can be used in this converter.<br /><br />
-Decimal:
-<input type="text" id="decimal-input" style="width: 10rem" />
-<button id="decimal-convert" disabled>Convert</button><button id="decimal-reset" style="margin-right: 40px" disabled>Reset</button>
-<i id="decimal-arrow" class="fa-solid fa-arrow-right" style="color: var(--neutral-color-300)"></i>
-<input id="scientific-output" style="width: 10rem; margin-left: 40px" readonly />
-<button id="scientific-output-copy" disabled>Copy scientific e notation</button><button id="scientific-output-copy-2" disabled>Copy scientific notation</button>
-<br />Scientific (e) Notation:
-<input id="scientific-input" style="width: 10rem" />
-<button id="scientific-convert" disabled>Convert</button><button id="scientific-reset" style="margin-right: 40px" disabled>Reset</button>
-<i id="scientific-arrow" class="fa-solid fa-arrow-right" style="color: var(--neutral-color-300)"></i>
-<input id="decimal-output" style="width: 10rem; margin-left: 40px" readonly />
-<button id="decimal-output-copy" disabled>Copy</button>
+<code>5 x 10^2</code>). Both variants can be used in this converter.
+
+<div>
+    Decimal:
+    <input type="text" id="decimal-input" style="width: 10rem" />
+    <button id="decimal-convert" disabled>Convert</button>
+    <button id="decimal-reset" class="button-danger" disabled>Reset</button>
+    <i id="decimal-arrow" class="fa-solid fa-arrow-right"></i>
+    <input id="scientific-output" readonly />
+    <button id="scientific-output-copy" class="button-copy" disabled>Copy scientific e notation</button>
+    <button id="scientific-output-copy-2" class="button-copy" disabled>Copy scientific notation</button>
+</div>
+
+<div>
+    Scientific (e) Notation:
+    <input id="scientific-input" style="width: 10rem" />
+    <button id="scientific-convert" disabled>Convert</button>
+    <button id="scientific-reset" class="button-danger" disabled>Reset</button>
+    <i id="scientific-arrow" class="fa-solid fa-arrow-right"></i>
+    <input id="decimal-output" readonly />
+    <button id="decimal-output-copy" class="button-copy" disabled>Copy</button>
+</div>

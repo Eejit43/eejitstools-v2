@@ -1,81 +1,88 @@
 A letter with a bar over it multiplies that value by 1,000. For example,
 <span style="border-top: 1px solid">M</span>
-equals 1,000,000. These numbers can be entered by putting an underscore before the letter, for example, _M will mean
-<span style="border-top: 1px solid">M</span>.<br /><em>Technically</em>, 4 million or above cannot be represented in roman numerals, however I have added functionality for it.<br /><br />
-Integer:
-<input type="text" id="integer-input" style="width: 10rem" />
-<button id="integer-convert" disabled>Convert</button><button id="integer-reset" style="margin-right: 40px" disabled>Reset</button>
-<i id="integer-arrow" class="fa-solid fa-arrow-right" style="color: var(--neutral-color-300)"></i>
-<button id="roman-output" class="fakeinput" style="width: 10rem; margin-left: 40px">​</button>
-<button id="roman-output-copy" disabled>Copy w/ macrons</button><button id="roman-output-copy-2" disabled>Copy w/ underscores</button>
-<br />Roman Numeral:
-<input id="roman-input" style="width: 10rem; text-transform: unset" />
-<button id="roman-convert" disabled>Convert</button><button id="roman-reset" style="margin-right: 40px" disabled>Reset</button>
-<i id="roman-arrow" class="fa-solid fa-arrow-right" style="color: var(--neutral-color-300)"></i>
-<input id="integer-output" style="width: 10rem; margin-left: 40px" readonly />
-<button id="integer-output-copy" disabled>Copy</button>
-<br /><br />All Roman Numerals:
-<table class="info-table roman-numerals" style="overflow-x: hidden; width: 15em; margin: 15px 0">
-    <tbody>
-        <tr>
-            <th>Roman<br />Numeral</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">I</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">V</td>
-            <td>5</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">X</td>
-            <td>10</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">L</td>
-            <td>50</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">C</td>
-            <td>100</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">D</td>
-            <td>500</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'">M</td>
-            <td>1,000</td>
-        </tr>
-        <!-- <tr>
-                    <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">I</span> ( _I )</td>
-                    <td>1,000</td>
-                </tr> -->
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">V</span> ( _V )</td>
-            <td>5,000</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">X</span> ( _X )</td>
-            <td>10,000</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">L</span> ( _L )</td>
-            <td>50,000</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">C</span> ( _C )</td>
-            <td>100,000</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">D</span> ( _D )</td>
-            <td>500,000</td>
-        </tr>
-        <tr>
-            <td style="font-family: 'Times New Roman'"><span style="border-top: 1.5px solid">M</span> ( _M )</td>
-            <td>1,000,000</td>
-        </tr>
-    </tbody>
-</table>
+equals 1,000,000. These numbers can be entered by putting an underscore before the letter, such as _M for the previous example.
+
+<div>
+    Integer:
+    <input type="text" id="integer-input" />
+    <button id="integer-convert" disabled>Convert</button>
+    <button id="integer-reset" class="button-danger" disabled>Reset</button>
+    <i id="integer-arrow" class="fa-solid fa-arrow-right"></i>
+    <button id="roman-output" class="fake-input">​</button>
+    <button id="roman-output-copy" class="button-copy" disabled>Copy with macrons</button>
+    <button id="roman-output-copy-2" class="button-copy" disabled>Copy with underscores</button>
+</div>
+
+<div>
+    Roman Numeral:
+    <input id="roman-input" />
+    <button id="roman-convert" disabled>Convert</button>
+    <button id="roman-reset" class="button-danger" disabled>Reset</button>
+    <i id="roman-arrow" class="fa-solid fa-arrow-right"></i>
+    <input id="integer-output" readonly />
+    <button id="integer-output-copy" class="button-copy" disabled>Copy</button>
+</div>
+
+<section>
+    <h2>All Roman Numerals:</h2>
+    <table class="info-table roman-numerals">
+        <tbody>
+            <tr>
+                <th>Roman Numeral</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>I</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>V</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>X</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>1,000</td>
+            </tr>
+            <tr>
+                <td><span>V</span></td>
+                <td>5,000</td>
+            </tr>
+            <tr>
+                <td><span>X</span></td>
+                <td>10,000</td>
+            </tr>
+            <tr>
+                <td><span>L</span></td>
+                <td>50,000</td>
+            </tr>
+            <tr>
+                <td><span>C</span></td>
+                <td>100,000</td>
+            </tr>
+            <tr>
+                <td><span>D</span></td>
+                <td>500,000</td>
+            </tr>
+            <tr>
+                <td><span>M</span></td>
+                <td>1,000,000</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

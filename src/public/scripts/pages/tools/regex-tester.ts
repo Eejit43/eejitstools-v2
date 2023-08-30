@@ -1,4 +1,4 @@
-import { copyValue, resetResult, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '../../functions.js';
 
 const regexInput = document.querySelector('#regex-input') as HTMLInputElement;
 const flagsInput = document.querySelector('#flags-input') as HTMLInputElement;
@@ -35,7 +35,6 @@ clearButton.addEventListener('click', () => {
     clearButton.disabled = true;
     clearButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('regex');
 
     setTimeout(() => {
         copyResultButton.disabled = true;
@@ -55,7 +54,6 @@ clearAllButton.addEventListener('click', () => {
     clearAllButton.disabled = true;
     clearAllButton.innerHTML = 'Cleared!';
     showAlert('Cleared!', 'success');
-    resetResult('regex');
 
     setTimeout(() => {
         copyResultButton.disabled = true;
@@ -66,14 +64,14 @@ clearAllButton.addEventListener('click', () => {
 });
 switchButton.addEventListener('click', () => {
     if (outputText.value.length === 0) {
-        showAlert('Nothing to move!', 'error');
-        showResult('switch', 'error');
+        showAlert('Nothing to move!', 'warning');
+        showResult(switchButton, 'warning');
     } else {
         textInput.value = outputText.value;
         outputText.value = '';
         copyResultButton.disabled = true;
         showAlert('Moved to input!', 'success');
-        showResult('switch', 'success');
+        showResult(switchButton, 'success');
     }
 });
 copyResultButton.addEventListener('click', () => copyValue(copyResultButton, outputText));
@@ -82,23 +80,21 @@ copyResultButton.addEventListener('click', () => copyValue(copyResultButton, out
  * Runs the regex tester.
  */
 function runRegexTester() {
-    let isValid = true;
+    let regex: RegExp | null = null;
+    let replacer: string | null = null;
     try {
-        new RegExp(regexInput.value, flagsInput.value);
-    } catch {
-        isValid = false;
-    }
+        regex = new RegExp(regexInput.value, flagsInput.value);
+        replacer = JSON.parse(`"${replaceInput.value.replaceAll('"', '\\"')}"`) as string;
+    } catch {} // eslint-disable-line no-empty
     if (textInput.value.length === 0 || regexInput.value.length === 0) {
-        showAlert('Empty values(s)!', 'error');
-        showResult('regex', 'error');
-    } else if (isValid) {
-        const finalRegex = new RegExp(regexInput.value, flagsInput.value);
-        const replace = JSON.parse(`"${replaceInput.value.replaceAll('"', '\\"')}"`) as string;
-        showResult('regex', 'success');
-        outputText.value = textInput.value.replace(finalRegex, replace);
+        showAlert('Empty values(s)!', 'warning');
+        showResult(runButton, 'warning');
+    } else if (regex && replacer) {
+        showResult(runButton, 'success');
+        outputText.value = textInput.value.replace(regex, replacer);
         copyResultButton.disabled = false;
     } else {
-        showAlert('Invalid regex!', 'error');
-        showResult('regex', 'error');
+        showAlert(`Invalid ${regex ? 'replacer' : 'regex'}!`, 'error');
+        showResult(runButton, 'error');
     }
 }

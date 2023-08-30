@@ -1,21 +1,25 @@
-{{! TODO: ADD A HANDLER FOR IF REGEX FAILS! }}
+<section>
+    <h2>Input:</h2>
+    <div id="regex-inputs">
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet" target="_blank" class="external-link">Regex</a>:
+        <input id="regex-input" />
 
-Input:<br />
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet" target="_blank" class="external-link">Regex</a>:
-<input id="regex-input" style="width: 320px; max-width: 70%" />　<a
-    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags"
-    target="_blank"
-    class="external-link"
->Flags</a>:
-<input id="flags-input" value="g" style="width: 4rem" /><br />
-Replace string (leave empty to delete):
-<input id="replace-input" style="width: 320px; max-width: 70%" /><br />
-<textarea id="text-input" style="width: 450px; max-width: 70%; height: 100px; max-height: 350px; resize: both"></textarea>
-<br /><button id="run-button">Run regex <i id="regex-result"></i></button>
-<button id="clear-button">Clear Input</button>
-<button id="clear-all-button">Clear All</button>
-<button id="switch-button">Move output to input <i id="switch-result"></i></button>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags" target="_blank" class="external-link">Flags</a>:
+        <input id="flags-input" value="g" />
+    </div>
+    <div>
+        Replace string (leave empty to delete):
+        <input id="replace-input" />
+    </div>
+    <textarea id="text-input"></textarea>
+    <button id="run-button">Run regex</button>
+    <button id="clear-button" class="button-danger">Clear input</button>
+    <button id="clear-all-button" class="button-danger">Clear all</button>
+    <button id="switch-button">Move output to input</button>
+</section>
 <hr />
-Output:<br />
-<textarea id="output-text" style="width: 450px; max-width: 70%; height: 100px; max-height: 350px; resize: both" readonly></textarea>
-<br /><button id="copy-result-button" disabled>Copy</button>
+<section>
+    <h2>Output:</h2>
+    <textarea id="output-text" readonly></textarea>
+    <button id="copy-result-button" class="button-copy" disabled>Copy</button>
+</section>

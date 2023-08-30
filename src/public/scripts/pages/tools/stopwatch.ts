@@ -55,7 +55,7 @@ function resetStopwatch() {
     displayTime();
 
     startButton.disabled = false;
-    stopButton.disabled = false;
+    stopButton.disabled = true;
 }
 
 /**

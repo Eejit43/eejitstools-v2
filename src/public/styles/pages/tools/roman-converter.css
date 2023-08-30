@@ -1,8 +1,35 @@
-@media (width <= 700px) {
-    .roman-numerals {
-        display: table;
-        margin: 50px 0 0;
-        width: 50%;
-        min-width: 50%;
+.toolbox {
+    & div {
+        &:first-of-type {
+            margin-top: 0.5em;
+        }
+
+        &:last-of-type {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    & input,
+    & .fake-input {
+        width: 150px !important;
+    }
+}
+
+#integer-arrow,
+#roman-arrow {
+    margin-inline: 40px;
+    color: var(--neutral-color-300);
+}
+
+.roman-numerals {
+    margin: 0 10px;
+    width: 15em;
+
+    & tr > td:first-of-type {
+        font-family: "Times New Roman", Times, serif;
+
+        & span {
+            border-top: 1.5px solid;
+        }
     }
 }

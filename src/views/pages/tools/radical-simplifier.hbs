@@ -1,18 +1,24 @@
-Input (<span class="code">\(operand \cdot \sqrt[index]{radicand}\)</span>):<br />
-Index:
-<input id="index" style="width: 100px" placeholder="2" />
-<br />
-Radicand:
-<input id="radicand" style="width: 100px" />
-<br />
-Operand:
-<input id="operand" style="width: 100px" placeholder="1" />
-<br />
-<button id="simplify">Simplify</button>
-<button id="reset">Reset</button>
-<br />
+<section>
+    <h2>Input (<span class="code">\(operand \cdot \sqrt[index]{radicand}\)</span>):</h2>
+    <div>
+        Index:
+        <input id="index" placeholder="2" />
+    </div>
+    <div>
+        Radicand:
+        <input id="radicand" />
+    </div>
+    <div>
+        Operand:
+        <input id="operand" placeholder="1" />
+    </div>
+
+    <button id="simplify">Simplify</button>
+    <button id="reset" class="button-danger">Reset</button>
+</section>
 <hr />
-<br />
-Result:<br />
-<span id="output" class="code hidden"></span>
-<span id="message">Nothing yet!</span>
+<section>
+    <h2>Result:</h2>
+    <span id="output" class="code hidden"></span>
+    <span id="message">Nothing yet!</span>
+</section>

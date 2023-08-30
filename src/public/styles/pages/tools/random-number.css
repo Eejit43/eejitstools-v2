@@ -1,3 +1,23 @@
-#random-number .odometer-ribbon-inner {
-    transition: transform 0.5s !important;
+.toolbox {
+    & div {
+        margin-block: 0.25em;
+    }
+
+    & input {
+        width: calc(6ch + 12px) !important;
+    }
+}
+
+#random-number-container {
+    text-align: center;
+}
+
+#random-number {
+    color: var(--info-color-300);
+    font-size: 90px;
+    font-family: var(--font-family);
+
+    & .odometer-ribbon-inner {
+        transition: transform 0.3s !important;
+    }
 }
