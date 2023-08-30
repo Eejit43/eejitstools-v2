@@ -4,7 +4,7 @@ setInterval(() => {
     const currentTime = new Date();
 
     updateInnerHtml(document.querySelector('#time') as HTMLSpanElement, currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' }));
-    updateInnerHtml(document.querySelector('#dst') as HTMLSpanElement, isDaylightSavingsTimeObserved(currentTime) ? 'In' : 'Not');
+    updateInnerHtml(document.querySelector('#dst') as HTMLSpanElement, isDaylightSavingsTimeObserved(currentTime) ? 'Yes' : 'No');
     updateInnerHtml(
         document.querySelector('#date') as HTMLSpanElement,
         `${currentTime.toLocaleDateString(undefined, { year: 'numeric', month: 'long', weekday: 'long', day: 'numeric' })} (${currentTime.toLocaleDateString()})`,

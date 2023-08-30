@@ -206,8 +206,8 @@ function showWeatherAlert(alert: Alert) {
 
     const alertText = `${alert.title}\n\n${alert.description
         .replaceAll('\n', ' ')
-        .replaceAll(/^\* (.*?)\.{3}/g, '– $1:\n ')
-        .replaceAll(/ \* (.*?)\.{3}/g, '\n\n– $1:\n ')}\n\n– AFFECTED REGIONS:\n ${alert.regions.join(', ')}`;
+        .replaceAll(/^\* (.*?)\.{3}/g, '– $1:\n   ')
+        .replaceAll(/ \* (.*?)\.{3}/g, '\n\n– $1:\n   ')}`;
 
     if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
         alertDisplay.style.display = 'unset';

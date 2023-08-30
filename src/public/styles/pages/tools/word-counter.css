@@ -1,0 +1,18 @@
+#input {
+    margin-bottom: 1em;
+    width: 60%;
+    min-width: 60%;
+    max-width: 70%;
+    height: 250px;
+    min-height: 250px;
+    max-height: 350px;
+    resize: both;
+}
+
+.count-result {
+    color: var(--neutral-color-200);
+}
+
+#reset {
+    margin-top: 1em;
+}

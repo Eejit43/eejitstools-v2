@@ -1,11 +1,13 @@
-<input type="text" id="hours" max="23" maxlength="2" value="0" class="invisible-input" />h
-<input type="text" id="minutes" max="59" maxlength="2" value="1" class="invisible-input" />m
-<input type="text" id="seconds" max="59" maxlength="2" value="0" class="invisible-input" />s
-<br /><button id="start-timer">Start <i id="timer-result"></i></button>
+<div id="inputs-container">
+    <input type="text" id="hours" max="23" maxlength="2" value="0" class="invisible-input" />h
+    <input type="text" id="minutes" max="59" maxlength="2" value="1" class="invisible-input" />m
+    <input type="text" id="seconds" max="59" maxlength="2" value="0" class="invisible-input" />s
+</div>
+<button id="start-timer">Start</button>
 <button id="pause-resume-timer" disabled>Pause</button>
-<button id="reset">Reset</button>
+<button id="reset" class="button-danger">Reset</button>
 <hr />
-<div style="text-align: center; margin: 0; font-weight: 600; font-size: 90px; margin-top: 50px; line-height: 100%; padding-bottom: 25px">
-    <span id="timer">0h 0m 0s</span><br />
-    <span id="timer-time" style="font-size: 30px"></span>
+<div id="timer-container">
+    <div id="timer">0h 0m 0s</div>
+    <div id="timer-time"></div>
 </div>

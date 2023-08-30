@@ -1,0 +1,9 @@
+.toolbox section input {
+    display: block;
+    margin-block: 1em;
+}
+
+#message {
+    margin-block: 0.5em;
+    font-size: 16px;
+}

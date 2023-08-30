@@ -1,0 +1,18 @@
+.toolbox {
+    & .basic-grid {
+        row-gap: 60px;
+    }
+
+    & input {
+        display: block;
+        margin-bottom: 0.25em;
+    }
+}
+
+#standard-arrow,
+#unix-arrow {
+    display: block;
+    margin: 0.5em 80px;
+    color: var(--neutral-color-300);
+    font-size: 30px;
+}

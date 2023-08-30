@@ -1,9 +1,24 @@
+#svg-input {
+    width: 50%;
+    min-width: 40%;
+    max-width: 90%;
+    resize: both;
+}
+
+#svg-preview {
+    margin-bottom: 1em;
+}
+
 #svg-preview,
 #png-canvas {
-    margin-top: 15px;
     border: 4px solid #16181c;
     padding: 5px;
     width: 200px;
     height: 200px;
     color: black;
+}
+
+#width-input,
+#height-input {
+    width: 70px;
 }

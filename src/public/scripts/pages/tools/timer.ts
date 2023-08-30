@@ -1,4 +1,4 @@
-import { resetResult, showAlert, showResult } from '../../functions.js';
+import { showAlert, showResult } from '../../functions.js';
 
 const startTimerButton = document.querySelector('#start-timer') as HTMLButtonElement;
 const pauseResumeTimerButton = document.querySelector('#pause-resume-timer') as HTMLButtonElement;
@@ -44,7 +44,6 @@ resetButton.addEventListener('click', () => {
     timerDisplay.textContent = '0h 0m 0s';
 
     showAlert('Reset!', 'success');
-    resetResult('timer');
 });
 hoursInput.addEventListener('input', () => {
     hoursInput.value = hoursInput.value.replaceAll(/((?!\d).)/g, '');
@@ -89,11 +88,11 @@ function startTimer() {
     const seconds = Number.parseInt(secondsInput.value);
 
     if (Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)) {
-        showAlert('Empty input!', 'error');
-        showResult('timer', 'error');
+        showAlert('Empty input!', 'warning');
+        showResult(startButton, 'warning');
     } else if (hours <= 0 && minutes <= 0 && seconds <= 0) {
         showAlert('Invalid input!', 'error');
-        showResult('timer', 'error');
+        showResult(startButton, 'error');
     } else {
         startTimerButton.disabled = true;
         pauseResumeTimerButton.disabled = false;

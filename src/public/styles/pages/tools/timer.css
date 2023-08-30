@@ -1,0 +1,12 @@
+#inputs-container {
+    margin-bottom: 0.5em;
+}
+
+#timer-container {
+    font-size: 90px;
+    text-align: center;
+
+    & #timer-time {
+        font-size: 30px;
+    }
+}

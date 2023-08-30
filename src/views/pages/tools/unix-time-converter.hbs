@@ -1,22 +1,22 @@
 <div class="basic-grid" style="--min-width: 450px">
-    <div>
-        Standard Time:<br />
+    <section>
+        <h2>Standard Time:</h2>
         <input id="standard-input" style="width: 225px; max-width: 50%" />
-        <br /><button id="standard-input-reset">Set to current time</button>
-        <br /><i id="standard-arrow" class="fa-solid fa-arrow-down" style="color: var(--success-color-300); font-size: 30px; margin-left: 100px; margin-top: 20px"></i>
-        <div id="unix-output-title">UNIX Time (seconds):</div>
+        <button id="standard-input-reset">Set to current time</button>
+        <i id="standard-arrow" class="fa-solid fa-arrow-down"></i>
+        <h2 id="unix-output-title">UNIX Time (seconds):</h2>
         <input id="unix-output" style="width: 150px; max-width: 50%" readonly />
-        <br /><button id="unix-output-copy" disabled>Copy</button>
+        <button id="unix-output-copy" class="button-copy" disabled>Copy</button>
         <button id="unix-output-switch" disabled>Switch to milliseconds</button>
-    </div>
-    <div>
-        <div id="unix-input-title">UNIX Time (seconds):</div>
+    </section>
+    <section>
+        <h2 id="unix-input-title">UNIX Time (seconds):</h2>
         <input id="unix-input" style="width: 150px; max-width: 50%" />
-        <br /><button id="unix-input-reset">Set to current time</button>
+        <button id="unix-input-reset">Set to current time</button>
         <button id="unix-input-switch">Switch to milliseconds</button>
-        <br /><i id="unix-arrow" class="fa-solid fa-arrow-down" style="color: var(--success-color-300); font-size: 30px; margin-left: 100px; margin-top: 20px"></i>
-        Standard Time:<br />
+        <i id="unix-arrow" class="fa-solid fa-arrow-down"></i>
+        <h2>Standard Time:</h2>
         <input id="standard-output" style="width: 225px; max-width: 50%" readonly />
-        <br /><button id="standard-output-copy" disabled>Copy</button>
-    </div>
+        <button id="standard-output-copy" class="button-copy" disabled>Copy</button>
+    </section>
 </div>

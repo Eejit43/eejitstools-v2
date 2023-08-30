@@ -1,0 +1,11 @@
+.toolbox {
+    color: var(--neutral-color-200);
+
+    & span:not([data-tooltip]) {
+        color: var(--neutral-color-100);
+    }
+}
+
+.break-above {
+    margin-top: 1em;
+}

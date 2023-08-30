@@ -13,8 +13,8 @@ const standardOutputCopyButton = document.querySelector('#standard-output-copy')
 const standardOutput = document.querySelector('#standard-output') as HTMLInputElement;
 const unixOutput = document.querySelector('#unix-output') as HTMLInputElement;
 
-const unixOutputTitle = document.querySelector('#unix-output-title') as HTMLDivElement;
-const unixInputTitle = document.querySelector('#unix-input-title') as HTMLDivElement;
+const unixOutputTitle = document.querySelector('#unix-output-title') as HTMLHeadingElement;
+const unixInputTitle = document.querySelector('#unix-input-title') as HTMLHeadingElement;
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);
