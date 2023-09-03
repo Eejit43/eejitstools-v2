@@ -248,6 +248,10 @@ kbd {
     font-size: 80px;
     text-align: center;
 
+    & i {
+        font-size: 65px;
+    }
+
     @media (width <= 700px) {
         font-size: 50px;
     }

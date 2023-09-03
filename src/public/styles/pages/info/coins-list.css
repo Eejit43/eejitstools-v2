@@ -3,6 +3,10 @@
     margin-top: 1em;
 }
 
+#login-password {
+    width: calc(4ch + 12px);
+}
+
 div#toggle-buttons button {
     margin: 0 5px 20px;
 
