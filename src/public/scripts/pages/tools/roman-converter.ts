@@ -136,7 +136,7 @@ function romanize(number: number) {
     romanOutputValue =
         barredNumerals.replaceAll('I', 'Ī').replaceAll('V', 'V̄').replaceAll('X', 'X̄').replaceAll('L', 'L̄').replaceAll('C', 'C̄').replaceAll('D', 'D̄').replaceAll('M', 'M̄') + regularNumerals;
     romanOutputValue2 = barredNumerals.replaceAll(/([A-Z])/g, '_$1') + regularNumerals;
-    return barredNumerals.length > 0 ? `<span style="border-top: 1px solid">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
+    return barredNumerals.length > 0 ? `<span class="roman-numeral-big">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
 }
 
 /**

@@ -1,3 +1,7 @@
 .toolbox section textarea {
     width: 50%;
 }
+
+#separator {
+    width: calc(6ch + 12px);
+}

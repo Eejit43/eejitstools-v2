@@ -204,6 +204,11 @@ nav * {
     &:hover {
         color: var(--neutral-color-300);
     }
+
+    & i {
+        transform: translateY(1.5px);
+        margin-left: 2px;
+    }
 }
 
 #last-commit-info {

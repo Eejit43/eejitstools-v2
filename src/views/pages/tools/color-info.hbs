@@ -20,37 +20,37 @@
     </div>
 </div>
 
-<div class="color-grid" style="--min-width: 500px">
+<div class="color-grid">
     <div id="manual-inputs">
         <h2>Manual Input & Results:</h2>
         <div>
             Name:
-            <input id="name" style="width: calc(20ch + 12px)" />
+            <input id="name-input" />
             <button id="copy-name" class="button-copy">Copy</button>
         </div>
         <div>
             Hex (Hexadecimal):
-            <input id="hex" style="width: calc(9ch + 12px)" />
+            <input id="hex-input" />
             <button id="copy-hex" class="button-copy">Copy</button>
         </div>
         <div>
             Decimal:
-            <input id="decimal" style="width: calc(10ch + 12px)" class="no-arrow" type="number" min="0" max="16777215" />
+            <input id="decimal-input" class="no-arrow" type="number" min="0" max="16777215" />
             <button id="copy-decimal" class="button-copy">Copy</button>
         </div>
         <div>
             RGB (Red, Green, Blue):
-            <input id="rgb" style="width: calc(21ch + 12px)" />
+            <input id="rgb-input" />
             <button id="copy-rgb" class="button-copy">Copy</button>
         </div>
         <div>
             HSL (Hue, Saturation, Lightness):
-            <input id="hsl" style="width: calc(30ch + 12px)" />
+            <input id="hsl-input" />
             <button id="copy-hsl" class="button-copy">Copy</button>
         </div>
         <div>
             Alpha Value:
-            <input id="alpha" style="width: calc(4ch + 12px)" class="no-arrow" type="number" min="0" max="1" />
+            <input id="alpha-input" class="no-arrow" type="number" min="0" max="1" />
             <button id="copy-alpha" class="button-copy">Copy</button>
         </div>
     </div>
@@ -59,13 +59,13 @@
         <div>
             Luminance (relative, see
             <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef" target="_blank" class="external-link">WCAG definition</a>):
-            <input id="luminance" style="width: calc(5ch + 12px)" disabled />
+            <input id="luminance-output" disabled />
             <button id="copy-luminance" class="button-copy">Copy</button>
         </div>
         <div>
             Temperature (Kelvin, estimated, from
             <a href="https://www.zombieprototypes.com/?p=210" target="_blank" class="external-link">color temperature scale</a>):
-            <input id="temperature" style="width: calc(5ch + 12px)" disabled />
+            <input id="temperature-output" disabled />
             <button id="copy-temperature" class="button-copy">Copy</button>
         </div>
     </div>

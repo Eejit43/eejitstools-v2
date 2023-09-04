@@ -3,6 +3,8 @@
 }
 
 #rates-grid {
+    --min-width: 200px;
+
     margin-top: 1em;
 }
 

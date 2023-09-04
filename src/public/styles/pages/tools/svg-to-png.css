@@ -1,3 +1,7 @@
+section div.basic-grid {
+    --min-width: 200px;
+}
+
 #svg-input {
     width: 50%;
     min-width: 40%;

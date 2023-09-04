@@ -136,7 +136,7 @@ function displayTime() {
  * The function called when the timer ends.
  */
 function timerEnd() {
-    timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: #ffaa00"></i>';
+    timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: var(--brand-color-3)"></i>';
     audio.play();
     pauseResumeTimerButton.disabled = true;
 }

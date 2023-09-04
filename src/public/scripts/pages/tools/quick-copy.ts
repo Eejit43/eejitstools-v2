@@ -126,7 +126,7 @@ async function clipboardDisplay() {
                 if (text.length === 0) {
                     copiedText.value = '';
                     selectClipboardButton.disabled = true;
-                    showWarning('<span style="color: var(--success-color-300)"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
+                    showWarning('<span class="success"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
                 } else {
                     copiedText.value = text;
                     selectClipboardButton.disabled = false;
@@ -140,7 +140,7 @@ async function clipboardDisplay() {
                 selectClipboardButton.disabled = true;
 
                 if (storedData !== blob.size || (storedData === blob.size && !/Clipboard has image!/.test(clipboardWarning.innerHTML)))
-                    showWarning(`<span style="color: var(--neutral-color-300)"><i class="far fa-image"></i> Clipboard has image! (<a href="${url}" target="_blank">view</a>)<br /></span>`);
+                    showWarning(`<span class="neutral"><i class="far fa-image"></i> Clipboard has image! (<a href="${url}" target="_blank">view</a>)<br /></span>`);
                 if (storedData !== blob.size) storedData = blob.size;
             }
     } catch (error) {
@@ -152,7 +152,7 @@ async function clipboardDisplay() {
         if (text.length === 0) {
             copiedText.value = '';
             selectClipboardButton.disabled = true;
-            showWarning('<span style="color:#009c3f"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
+            showWarning('<span class="success"><i class="far fa-clipboard"></i> Your clipboard is empty!<br /></span>');
         } else {
             copiedText.value = text;
             selectClipboardButton.disabled = false;

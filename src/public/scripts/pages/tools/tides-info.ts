@@ -75,16 +75,7 @@ async function getData(position: GeolocationPosition) {
 
     const nextExtremes = `The ${closestExtreme}, and the ${nextExtreme}.`;
 
-    const table = [
-        '<table class="info-table" style="width: 40%; margin: 0 0 10px 10px">',
-        '<thead>',
-        '<tr>',
-        '<th style="width: 300px">Time</th>',
-        '<th style="width: 100px">Type</th>',
-        '</tr>',
-        '</thead>',
-        '<tbody>',
-    ];
+    const table = ['<table class="info-table">', '<thead>', '<tr>', '<th>Time</th>', '<th>Type</th>', '</tr>', '</thead>', '<tbody>'];
     for (const extreme of data.extremes)
         table.push(
             '<tr>',

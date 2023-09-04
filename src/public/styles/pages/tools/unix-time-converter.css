@@ -1,5 +1,7 @@
 .toolbox {
     & .basic-grid {
+        --min-width: 450px;
+
         row-gap: 60px;
     }
 
@@ -7,6 +9,16 @@
         display: block;
         margin-bottom: 0.25em;
     }
+}
+
+#standard-output,
+#standard-input {
+    width: calc(35ch + 12px);
+}
+
+#unix-output,
+#unix-input {
+    width: calc(14ch + 12px);
 }
 
 #standard-arrow,

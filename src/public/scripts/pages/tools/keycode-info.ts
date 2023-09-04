@@ -28,10 +28,10 @@ keyCodeCell.addEventListener('click', () => copyKeycodeInfo(keyCodeValue));
 keyAsciiCell.addEventListener('click', () => copyKeycodeInfo(keyAsciiValue));
 keyUnicodeCell.addEventListener('click', () => copyKeycodeInfo(keyUnicodeValue));
 window.addEventListener('focus', () => {
-    ready.innerHTML = '<span style="color: var(--success-color-300)"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
+    ready.innerHTML = '<span class="success"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
 });
 window.addEventListener('blur', () => {
-    ready.innerHTML = '<span style="color: var(--error-color-300)"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
+    ready.innerHTML = '<span class="error"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
 });
 
 /**

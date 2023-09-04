@@ -1,3 +1,7 @@
+div.basic-grid {
+    --min-width: 450px;
+}
+
 #clear-clipboard {
     margin-bottom: 1em;
     padding: 8px;

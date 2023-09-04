@@ -13,6 +13,10 @@ h2 {
     gap: 10px;
     margin-bottom: 1em;
 
+    &:nth-of-type(2) {
+        --min-width: 500px;
+    }
+
     & div {
         margin-top: 20px;
     }
@@ -54,6 +58,35 @@ h2 {
 #manual-inputs div,
 #color-info div {
     margin-top: 0;
+}
+
+#name-input {
+    width: calc(20ch + 12px);
+}
+
+#hex-input {
+    width: calc(9ch + 12px);
+}
+
+#decimal-input {
+    width: calc(10ch + 12px);
+}
+
+#rgb-input {
+    width: calc(21ch + 12px);
+}
+
+#hsl-input {
+    width: calc(30ch + 12px);
+}
+
+#alpha-input {
+    width: calc(4ch + 12px);
+}
+
+#luminance-output,
+#temperature-output {
+    width: calc(5ch + 12px);
 }
 
 #color-history {

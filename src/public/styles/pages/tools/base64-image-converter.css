@@ -1,0 +1,7 @@
+section div.basic-grid {
+    --min-width: 200px;
+}
+
+#image-result {
+    max-width: 80%;
+}
