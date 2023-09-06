@@ -14,7 +14,7 @@ export default function (fastify: FastifyInstance) {
             ip = parsedInformation.ip; // eslint-disable-line prefer-destructuring
         }
 
-        const ipInformation = (await (await fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${process.env.ABSTRACT_API_KEY}&ip_address=${ip}`)).text()) as string;
+        const ipInformation = (await (await fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${process.env.ABSTRACT_API_API_KEY}&ip_address=${ip}`)).text()) as string;
 
         reply.send(ipInformation);
     });
