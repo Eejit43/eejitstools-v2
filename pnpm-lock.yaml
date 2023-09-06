@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^0.7.37
     version: 0.7.37
   mathjs:
-    specifier: ^11.10.1
-    version: 11.10.1
+    specifier: ^11.11.0
+    version: 11.11.0
   stylelint:
     specifier: ^15.10.3
     version: 15.10.3
@@ -2098,8 +2098,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /fraction.js@4.3.4:
+    resolution: {integrity: sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q==}
+    dev: true
+
   /fraction.js@4.3.6:
     resolution: {integrity: sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==}
+    dev: false
 
   /fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
@@ -2631,8 +2636,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /mathjs@11.10.1:
-    resolution: {integrity: sha512-XcYBJFM7hsIXcE9443RxxMmK3sI41RJo0GltX4vZ8NlVg+puGAwyhTUBUoa4orLkBbbnetGCdqEPrOQvhToi2A==}
+  /mathjs@11.11.0:
+    resolution: {integrity: sha512-i1Ao/tv1mlNd09XlOMOUu3KMySX3S0jhHNfDPzh0sCnPf1i62x6RjxhLwZ9ytmVSs0OdhF3moI4O84VSEjmUFw==}
     engines: {node: '>= 14'}
     hasBin: true
     dependencies:
@@ -2640,7 +2645,7 @@ packages:
       complex.js: 2.1.1
       decimal.js: 10.4.3
       escape-latex: 1.2.0
-      fraction.js: 4.3.6
+      fraction.js: 4.3.4
       javascript-natural-sort: 0.7.1
       seedrandom: 3.0.5
       tiny-emitter: 2.1.0
