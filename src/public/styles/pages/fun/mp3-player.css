@@ -1,14 +1,19 @@
+:root {
+    --playlist-primary: var(--warning-color-200);
+    --playlist-primary-hover: var(--warning-color-300);
+}
+
 .player,
 .playlists {
     margin: auto;
-    border: 3px solid #31353d;
+    border: 3px solid var(--full-page-active);
     border-radius: 15px;
-    background-color: #1e2529;
+    background-color: var(--full-page-background);
     padding: 10px;
     width: 450px;
     max-width: 90%;
     height: min-content;
-    color: #ffc266;
+    color: var(--playlist-primary);
 }
 
 .playlists {
@@ -78,7 +83,7 @@
 
     & div {
         margin-bottom: 8px;
-        color: #ffc266;
+        color: var(--playlist-primary);
     }
 }
 
@@ -93,10 +98,10 @@
 }
 
 #playlists-list a {
-    color: #ffc266;
+    color: var(--playlist-primary);
 
     &:hover {
-        color: #f1a93c;
+        color: var(--playlist-primary-hover);
     }
 }
 
@@ -105,12 +110,16 @@
     margin-top: 20px;
     margin-bottom: 5px;
 
+    &:first-of-type {
+        margin-top: 0;
+    }
+
     & > a {
-        color: #ffc266;
+        color: var(--playlist-primary);
         font-size: 20px;
 
         &:hover {
-            color: #f1a93c;
+            color: var(--playlist-primary-hover);
         }
     }
 
@@ -125,15 +134,15 @@
     cursor: pointer;
     margin-top: 15px !important;
     border-radius: 5px;
-    background-color: #3b3d43;
+    background-color: var(--full-page-active);
 
     &:hover {
-        background-color: #31353d;
+        background-color: var(--full-page-active-hover);
     }
 }
 
 .active-track {
-    background-color: #31353d;
+    background-color: var(--full-page-active-hover);
     font-weight: bold;
 }
 
@@ -150,14 +159,14 @@
     padding-top: 7px;
     padding-bottom: 7px;
     pointer-events: none;
-    color: #e9cc95;
+    color: var(--playlist-primary);
     font-size: 14px;
 }
 
 .active-track > .playlist-info-track,
 .active-track > .playlist-duration,
 .active-track > .playlist-play {
-    color: #ffc266 !important;
+    color: var(--playlist-primary) !important;
 }
 
 .playlist-play {
@@ -185,21 +194,21 @@
 .player-icon,
 #shuffle-icon {
     cursor: pointer;
-    color: #ffc266;
+    color: var(--playlist-primary);
     font-size: 20px;
 }
 
 .player-icon:hover,
 #toggle-shuffle:hover #shuffle-icon,
 #toggle-shuffle:hover #shuffle-status {
-    color: #f1a93c;
+    color: var(--playlist-primary-hover);
 }
 
 #shuffle-status {
     transform: translate(-8px, 2px);
     cursor: pointer;
     border-radius: 10px;
-    background-color: #1e2529;
+    background-color: var(--full-page-background);
     padding: 1.5px;
     width: 10px;
     font-size: 10px;
@@ -209,13 +218,13 @@
     cursor: pointer;
     margin-top: 15px;
     border-radius: 10px;
-    background-color: #d9d9f2;
+    background-color: var(--neutral-color-100);
     width: 100%;
 }
 
 #progress-bar {
     border-radius: 10px;
-    background-color: #ffc266;
+    background-color: var(--playlist-primary);
     width: 0%;
     max-width: 100%;
     height: 5px;
