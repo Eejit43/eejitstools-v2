@@ -4,6 +4,7 @@ import setupApodRoute from './apod.js';
 import setupCalendarRoutes from './calendar.js';
 import setupCoinsListRoutes from './coins-list.js';
 import setupCorsAnywhereRoute from './cors-anywhere.js';
+import setupIpInfoRoute from './ip-info.js';
 import setupTwemojiRoute from './twemoji.js';
 
 /**
@@ -16,5 +17,6 @@ export default function setupRoutes(fastify: FastifyInstance) {
     setupCalendarRoutes(fastify);
     setupCoinsListRoutes(fastify);
     setupCorsAnywhereRoute(fastify);
+    setupIpInfoRoute(fastify);
     setupTwemojiRoute(fastify);
 }

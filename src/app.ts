@@ -14,7 +14,7 @@ import setupRoutes from './route-handlers/index.js';
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
 
 // Load layouts and static assets
-const fastify = Fastify();
+const fastify = Fastify({ trustProxy: true });
 
 await fastify.register(fastifyRateLimit.default);
 fastify.register(pointOfView, { engine: { handlebars }, root: 'src/views/', layout: 'layouts/layout.hbs' });

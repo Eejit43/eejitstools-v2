@@ -1,8 +1,3 @@
-:root {
-    --footer-gray: #31353d;
-    --footer-green: #1e2529;
-}
-
 #show-shortcuts {
     position: fixed;
     right: 0;
@@ -10,10 +5,10 @@
     margin: 0;
     border: none;
     border-radius: 0;
-    background-color: var(--footer-gray);
+    background-color: var(--full-page-border);
     width: 32px;
     height: 32px;
-    color: whitesmoke;
+    color: var(--neutral-color-100);
     font-size: 18px;
     text-align: center;
 
@@ -29,10 +24,10 @@
     margin: 0;
     border: none;
     border-radius: 5px 0 0;
-    background-color: var(--footer-gray);
+    background-color: var(--full-page-border);
     width: 32px;
     height: 32px;
-    color: whitesmoke;
+    color: var(--neutral-color-100);
     font-size: 18px;
     text-align: center;
 
@@ -43,8 +38,8 @@
 
 #show-shortcuts:hover,
 #scroll-to-top:hover {
-    background-color: #2b2e35;
-    color: dimgray;
+    background-color: #2d3239;
+    color: var(--neutral-color-200);
 }
 
 #shortcuts {
@@ -75,9 +70,9 @@
     box-shadow:
         0 4px 8px 0 rgb(0 0 0 / 20%),
         0 6px 20px 0 rgb(0 0 0 / 18.8%);
-    border: 3px solid var(--footer-gray);
+    border: 3px solid var(--full-page-border);
     border-radius: 5px;
-    background-color: var(--footer-green);
+    background-color: var(--full-page-background);
     padding: 0;
     width: 30%;
     min-width: 300px;
@@ -100,9 +95,9 @@
 }
 
 #shortcuts-header {
-    background-color: var(--footer-green);
+    background-color: var(--full-page-background);
     padding: 5px 15px;
-    color: whitesmoke;
+    color: var(--neutral-color-100);
     font-size: 22px;
 }
 
@@ -111,21 +106,21 @@
     top: 0;
     right: 10px;
     cursor: pointer;
-    color: whitesmoke;
+    color: var(--neutral-color-100);
     font-weight: bold;
     font-size: 28px;
 
     &:hover,
     &:focus {
-        color: dimgray;
+        color: var(--neutral-color-200);
         text-decoration: none;
     }
 }
 
 #shortcuts-list {
-    background-color: var(--footer-green);
+    background-color: var(--full-page-background);
     padding: 15px;
-    color: whitesmoke;
+    color: var(--neutral-color-100);
     font-size: 18px;
     line-height: 150%;
 }

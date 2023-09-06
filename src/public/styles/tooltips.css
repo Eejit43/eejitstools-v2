@@ -43,7 +43,6 @@
 [data-tooltip]::after {
     z-index: 1000;
     border-radius: 5px;
-    background-color: black;
     background-color: rgb(43 43 43 / 95%);
     padding: 8px;
     width: 160px;

@@ -189,11 +189,11 @@ nav * {
         }
 
         &.fa-sun-bright {
-            color: #ffac33;
+            color: var(--warning-color-300);
         }
 
         &.fa-moon-stars {
-            color: wheat;
+            color: var(--warning-color-100);
         }
     }
 }

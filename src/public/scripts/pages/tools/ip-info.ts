@@ -15,7 +15,7 @@ interface IPInformation {
 const ipInfo = document.querySelector('#ip-info') as HTMLDivElement;
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
-fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=6b7d5eb7b17e420fbd0f8733e4b726fa').then(async (response) => {
+fetch('/ip-info').then(async (response) => {
     const data = (await response.json()) as IPInformation;
 
     const output = [
