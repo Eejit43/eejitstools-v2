@@ -14,6 +14,7 @@
     --info-color-100: #accee5;
     --info-color-200: #7aaacc;
     --info-color-300: #4680a9;
+    --info-color-350: #2f6d9a;
     --info-color-400: #144466;
     --info-color-500: #021726;
     --error-color-100: #e5acac;
@@ -29,6 +30,7 @@
     --success-color-100: #ace5ba;
     --success-color-200: #7acc8f;
     --success-color-300: #46a95f;
+    --success-color-350: #309649;
     --success-color-400: #146629;
     --success-color-500: #011a07;
 
@@ -46,8 +48,11 @@
     --neutral-color-100: #a3b3bf;
     --neutral-color-150: #879cac;
     --neutral-color-200: #6a7f8d;
+    --neutral-color-250: #4d697b;
     --neutral-color-300: #3f5d73;
+    --neutral-color-350: #223f54;
     --neutral-color-400: #162e3f;
+    --neutral-color-450: #061621;
     --neutral-color-500: #020d14;
 
     /* Element-specific variables */
@@ -55,6 +60,16 @@
     --link-color-hover: var(--info-color-400);
     --input-background: #252525;
     --input-background-hover: #2a2a2a;
+    --dark-border: #16181c;
+    --table-background: #31363d;
+    --table-border: #1b1e24;
+
+    /* Colors for full-page tools */
+    --full-page-background: #1e2529;
+    --full-page-border: #31353d;
+    --full-page-color: #ffecd1;
+    --full-page-active: #2b3d47;
+    --full-page-active-hover: #344a56;
 
     /* Fonts */
     --font-family: "Source Sans Pro", sans-serif;
@@ -245,7 +260,7 @@ kbd {
     }
 
     & th {
-        border: 4px solid #1b1e24;
+        border: 4px solid var(--table-border);
         background-color: #292d33;
         padding: 10px;
         font-size: 18px;
@@ -258,11 +273,11 @@ kbd {
     }
 
     & tr {
-        background-color: #31363d;
+        background-color: var(--table-background);
     }
 
     & td {
-        border: 4px solid #1b1e24;
+        border: 4px solid var(--table-border);
         padding: 20px;
         font-weight: 500;
         font-size: 18px;

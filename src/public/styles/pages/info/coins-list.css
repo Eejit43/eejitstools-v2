@@ -58,15 +58,27 @@ button.coin-type-expand {
 }
 
 tr[data-obtained="false"] {
-    background-color: #944646;
+    background-color: var(--error-color-300);
 }
 
 tr[data-obtained="true"] {
-    background-color: #378036;
+    background-color: var(--success-color-350);
 }
 
 tr[data-upgrade="true"] {
-    background-color: #414187;
+    background-color: var(--info-color-350);
+}
+
+#missing-text {
+    color: var(--error-color-300);
+}
+
+#obtained-text {
+    color: var(--success-color-350);
+}
+
+#needing-upgrade-text {
+    color: var(--info-color-350);
 }
 
 .new-row-message {
@@ -189,7 +201,7 @@ button.coin-variant-expand {
 /* History */
 #change-history {
     margin-top: 20px;
-    border: 4px solid #16181c;
+    border: 4px solid var(--dark-border);
     padding: 15px;
     padding-left: 10px;
 

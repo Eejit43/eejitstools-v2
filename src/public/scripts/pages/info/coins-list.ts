@@ -125,51 +125,78 @@ async function loadCoinsList() {
 
     const toggleMissingCoinsButton = document.createElement('button');
     toggleMissingCoinsButton.id = 'toggle-missing-coins';
-    toggleMissingCoinsButton.textContent = 'Hide missing coins';
     toggleMissingCoinsButton.dataset.shown = 'true';
     toggleMissingCoinsButton.addEventListener('click', () => {
         if (toggleMissingCoinsButton.dataset.shown === 'true') {
             toggleMissingCoinsButton.dataset.shown = 'false';
-            toggleMissingCoinsButton.textContent = 'Show missing coins';
             coinsList.classList.add('missing-hidden');
+
+            toggleMissingCoinsButton.innerHTML = '';
+            toggleMissingCoinsButton.append('Show ', missingText, ' coins');
         } else {
             toggleMissingCoinsButton.dataset.shown = 'true';
-            toggleMissingCoinsButton.textContent = 'Hide missing coins';
             coinsList.classList.remove('missing-hidden');
+
+            toggleMissingCoinsButton.innerHTML = '';
+            toggleMissingCoinsButton.append('Hide ', missingText, ' coins');
         }
     });
 
+    const missingText = document.createElement('span');
+    missingText.id = 'missing-text';
+    missingText.textContent = 'missing';
+
+    toggleMissingCoinsButton.append('Hide ', missingText, ' coins');
+
     const toggleObtainedCoinsButton = document.createElement('button');
     toggleObtainedCoinsButton.id = 'toggle-obtained-coins';
-    toggleObtainedCoinsButton.textContent = 'Show obtained coins';
     toggleObtainedCoinsButton.dataset.shown = 'false';
     toggleObtainedCoinsButton.addEventListener('click', () => {
         if (toggleObtainedCoinsButton.dataset.shown === 'true') {
             toggleObtainedCoinsButton.dataset.shown = 'false';
-            toggleObtainedCoinsButton.textContent = 'Show obtained coins';
             coinsList.classList.add('obtained-hidden');
+
+            toggleObtainedCoinsButton.innerHTML = '';
+            toggleObtainedCoinsButton.append('Show ', obtainedText, ' coins');
         } else {
             toggleObtainedCoinsButton.dataset.shown = 'true';
-            toggleObtainedCoinsButton.textContent = 'Hide obtained coins';
             coinsList.classList.remove('obtained-hidden');
+
+            toggleObtainedCoinsButton.innerHTML = '';
+            toggleObtainedCoinsButton.append('Hide ', obtainedText, ' coins');
         }
     });
 
+    const obtainedText = document.createElement('span');
+    obtainedText.id = 'obtained-text';
+    obtainedText.textContent = 'obtained';
+
+    toggleObtainedCoinsButton.append('Show ', obtainedText, ' coins');
+
     const toggleNeedsUpgradeCoinsButton = document.createElement('button');
     toggleNeedsUpgradeCoinsButton.id = 'toggle-needs-upgrade-coins';
-    toggleNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
     toggleNeedsUpgradeCoinsButton.dataset.shown = 'true';
     toggleNeedsUpgradeCoinsButton.addEventListener('click', () => {
         if (toggleNeedsUpgradeCoinsButton.dataset.shown === 'true') {
             toggleNeedsUpgradeCoinsButton.dataset.shown = 'false';
-            toggleNeedsUpgradeCoinsButton.textContent = 'Show coins needing upgrade';
             coinsList.classList.add('upgrade-hidden');
+
+            toggleNeedsUpgradeCoinsButton.innerHTML = '';
+            toggleNeedsUpgradeCoinsButton.append('Show coins ', needingUpgradeText);
         } else {
             toggleNeedsUpgradeCoinsButton.dataset.shown = 'true';
-            toggleNeedsUpgradeCoinsButton.textContent = 'Hide coins needing upgrade';
             coinsList.classList.remove('upgrade-hidden');
+
+            toggleNeedsUpgradeCoinsButton.innerHTML = '';
+            toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
         }
     });
+
+    const needingUpgradeText = document.createElement('span');
+    needingUpgradeText.id = 'needing-upgrade-text';
+    needingUpgradeText.textContent = 'needing upgrade';
+
+    toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
 
     buttonsDiv.append(reloadButton);
     buttonsDiv.append(showAllVariantsButton);

@@ -5,9 +5,9 @@
 .keycodes {
     word-wrap: break-word;
     margin: 30px auto;
-    border: 4px solid #1b1e24;
+    border: 4px solid var(--table-border);
     border-collapse: collapse;
-    background-color: #31363d;
+    background-color: var(--table-background);
     width: 70%;
     table-layout: fixed;
     overflow-y: scroll;
@@ -31,7 +31,7 @@
     }
 
     & td {
-        border: 3px solid #1b1e24;
+        border: 3px solid var(--table-border);
         padding: 8px;
         font-weight: 500;
         font-size: 18px;

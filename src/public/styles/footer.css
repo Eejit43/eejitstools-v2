@@ -1,3 +1,8 @@
+:root {
+    --footer-gray: #31353d;
+    --footer-green: #1e2529;
+}
+
 #show-shortcuts {
     position: fixed;
     right: 0;
@@ -5,7 +10,7 @@
     margin: 0;
     border: none;
     border-radius: 0;
-    background-color: #31353d;
+    background-color: var(--footer-gray);
     width: 32px;
     height: 32px;
     color: whitesmoke;
@@ -24,7 +29,7 @@
     margin: 0;
     border: none;
     border-radius: 5px 0 0;
-    background-color: #31353d;
+    background-color: var(--footer-gray);
     width: 32px;
     height: 32px;
     color: whitesmoke;
@@ -70,9 +75,9 @@
     box-shadow:
         0 4px 8px 0 rgb(0 0 0 / 20%),
         0 6px 20px 0 rgb(0 0 0 / 18.8%);
-    border: 3px solid #31353d;
+    border: 3px solid var(--footer-gray);
     border-radius: 5px;
-    background-color: #1e2529;
+    background-color: var(--footer-green);
     padding: 0;
     width: 30%;
     min-width: 300px;
@@ -95,7 +100,7 @@
 }
 
 #shortcuts-header {
-    background-color: #1e2529;
+    background-color: var(--footer-green);
     padding: 5px 15px;
     color: whitesmoke;
     font-size: 22px;
@@ -118,7 +123,7 @@
 }
 
 #shortcuts-list {
-    background-color: #1e2529;
+    background-color: var(--footer-green);
     padding: 15px;
     color: whitesmoke;
     font-size: 18px;
