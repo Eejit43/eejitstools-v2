@@ -278,13 +278,7 @@ interface Style {
     link: string;
 }
 
-type Imports = Record<
-    string,
-    {
-        script?: Script;
-        style?: Style;
-    }
->;
+type Imports = Record<string, { script?: Script; style?: Style }>;
 
 const imports: Imports = {
     mathJax: {
@@ -302,6 +296,9 @@ const imports: Imports = {
     },
     chroma: {
         script: { link: 'https://cdn.jsdelivr.net/npm/chroma-js/chroma.min.js' },
+    },
+    suncalc: {
+        script: { link: 'https://cdn.jsdelivr.net/npm/suncalc3/suncalc.js' },
     },
 };
 
@@ -419,7 +416,7 @@ const preParsedPages: PreParsedPages = {
         'time-converter': { title: 'Time Converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs.script] },
         time: { title: 'Time', icon: 'clock', description: 'Displays the current time and date (in your time zone), as well as detailed time information' },
         'unix-time-converter': { title: 'UNIX Time Converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
-        'weather-info': { title: 'Weather Info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts' },
+        'weather-info': { title: 'Weather Info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts', additionalScripts: [imports.suncalc.script] },
         'word-counter': { title: 'Word Counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' },
     },
     info: {

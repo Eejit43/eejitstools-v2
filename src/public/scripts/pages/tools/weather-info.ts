@@ -1,4 +1,13 @@
-import { requestGeolocation } from '../../functions.js';
+import { requestGeolocation, twemojiUpdate } from '../../functions.js';
+
+declare global {
+    interface Window {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        SunCalc: {
+            getMoonIllumination: (date: Date) => { fraction: number; phase: { name: string; emoji: string } };
+        };
+    }
+}
 
 const uvIndexes: Record<number, { color: string; text: string }> = {
     0: { color: '#83c88b', text: 'Low' },
@@ -58,18 +67,6 @@ interface WeatherInformation {
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
-interface LunarData {
-    phase: Record<
-        string,
-        {
-            phaseName: string;
-            lighting: number;
-            isPhaseLimit: boolean | number;
-            svg: string;
-        }
-    >;
-}
-
 const message = document.querySelector('#message') as HTMLDivElement;
 const result = document.querySelector('#result') as HTMLDivElement;
 
@@ -79,7 +76,7 @@ const longitudeDisplay = document.querySelector('#longitude') as HTMLSpanElement
 const stationDisplay = document.querySelector('#station') as HTMLSpanElement;
 const updatedDisplay = document.querySelector('#updated') as HTMLSpanElement;
 
-requestGeolocation(getData, result);
+requestGeolocation(getData, message);
 
 /**
  * Fetches weather information for the specified permission and displays the information.
@@ -145,6 +142,8 @@ async function getData(position: GeolocationPosition) {
             icon: 'sun-cloud',
             name: 'UV Index',
             value: () => {
+                const uvIndex = Math.round((data.uv + Number.EPSILON) * 100) / 100;
+
                 let description;
                 if (uvIndexDescription) {
                     description = document.createElement('span');
@@ -173,11 +172,9 @@ async function getData(position: GeolocationPosition) {
             icon: 'moon',
             name: 'Moon Phase',
             value: () => {
-                const moonPhaseElement = document.createElement('span');
-                moonPhaseElement.id = 'moon-phase';
-                moonPhaseElement.textContent = 'Loading...';
+                const moonInformation = window.SunCalc.getMoonIllumination(new Date());
 
-                return [moonPhaseElement];
+                return [`${moonInformation.phase.name} (${Math.round(moonInformation.fraction * 100)}% illuminated) ${moonInformation.phase.emoji}`];
             },
         },
     ];
@@ -220,32 +217,10 @@ async function getData(position: GeolocationPosition) {
         }
     else alertsList.textContent = 'None';
 
+    twemojiUpdate();
+
     message.innerHTML = '';
     result.classList.add('has-data');
-
-    const lunarData = (await (
-        await fetch(
-            `https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${
-                new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000
-            }`,
-        )
-    ).json()) as LunarData;
-
-    const day = new Date().getDate();
-    let { phaseName } = lunarData.phase[day];
-    const lighting = Math.round(lunarData.phase[day].lighting);
-    if (phaseName === 'Waxing' && lighting < 50) phaseName = 'Waxing crescent';
-    else if (phaseName === 'Waxing' && lighting > 50) phaseName = 'Waxing gibbous';
-
-    if (phaseName === 'Waning' && lighting < 50) phaseName = 'Waning crescent';
-    else if (phaseName === 'Waning' && lighting > 50) phaseName = 'Waning gibbous';
-
-    const html = `${phaseName} ${lunarData.phase[day].isPhaseLimit ? '' : `(${lighting}% illuminated)`} ${lunarData.phase[day].svg
-        .replaceAll(/<a.*?>(.*?)<\/a>/g, '$1')
-        .replaceAll('style="pointer-events:all;cursor:pointer"', '')
-        .replaceAll(/<svg(.*?)>/g, `<svg style="transform: translateY(3px)"$1><title>${phaseName} moon</title>`)}`;
-
-    (document.querySelector('#moon-phase') as HTMLSpanElement).innerHTML = html;
 }
 
 /**

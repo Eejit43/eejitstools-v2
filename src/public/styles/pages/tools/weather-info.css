@@ -35,7 +35,7 @@
 
 #weather-icon {
     position: absolute;
-    transform: translateX(2px);
+    transform: translateX(4px);
     width: 25px;
     height: 25px;
 }

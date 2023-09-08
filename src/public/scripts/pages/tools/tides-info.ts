@@ -29,7 +29,7 @@ const nextClosestExtremeTimeDisplay = document.querySelector('#next-closest-extr
 
 const upcomingExtremesTableBody = document.querySelector('#upcoming-extremes tbody') as HTMLTableSectionElement;
 
-requestGeolocation(getData, result);
+requestGeolocation(getData, message);
 
 /**
  * Fetches tidal information for the specified permission and displays the information.
