@@ -202,13 +202,13 @@ document.querySelector('#show-shortcuts')!.addEventListener('click', () => {
 });
 
 document.querySelector('#close-shortcuts')!.addEventListener('click', () => {
-    addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('click', (event) => {
-    if (event.target === shortcutsModal) addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    if (event.target === shortcutsModal) addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape' && shortcutsModal.style.display === 'block') addAnimation('#shortcuts', 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    if (event.code === 'Escape' && shortcutsModal.style.display === 'block') addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });

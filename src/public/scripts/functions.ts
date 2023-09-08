@@ -139,17 +139,15 @@ export function updateInnerHtml(element: HTMLElement, string: string) {
  * @param element Selectors for element.
  * @param animation The animation to add.
  */
-export function addAnimation(element: string, animation: string) {
+export function addAnimation(element: HTMLElement, animation: string) {
     return new Promise((resolve) => {
-        const foundElement = document.querySelector(element)!;
+        element.classList.add(animation);
 
-        foundElement.classList.add(animation);
-
-        foundElement.addEventListener(
+        element.addEventListener(
             'animationend',
             (event) => {
                 event.stopPropagation();
-                foundElement.classList.remove(animation);
+                element.classList.remove(animation);
                 resolve('Animation ended');
             },
             { once: true },
