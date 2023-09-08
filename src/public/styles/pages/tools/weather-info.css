@@ -1,4 +1,41 @@
+#result {
+    display: none;
+
+    &.has-data {
+        display: unset;
+    }
+
+    & span {
+        color: var(--neutral-color-200);
+    }
+
+    & div:not(#active-alerts-container) {
+        margin-block: 8px;
+        color: var(--neutral-color-200);
+        font-size: 20px;
+
+        & span {
+            color: var(--neutral-color-150);
+        }
+    }
+}
+
+#active-alerts-container {
+    margin-block: 1.5em;
+}
+
 .alert {
     cursor: pointer;
     text-decoration: underline dotted;
+}
+
+#alert-display {
+    display: none;
+}
+
+#weather-icon {
+    position: absolute;
+    transform: translateX(2px);
+    width: 25px;
+    height: 25px;
 }

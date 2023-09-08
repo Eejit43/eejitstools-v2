@@ -1,1 +1,33 @@
-<div id="result">Fetching tidal data <i class="fa-solid fa-spinner fa-pulse"></i></div>
+<div id="message">Fetching tidal data <i class="fa-solid fa-spinner fa-pulse"></i></div>
+<div id="result">
+    <p>
+        Based on information at latitude
+        <span id="latitude"></span>
+        and longitude
+        <span id="longitude"></span>,
+        <span id="distance"></span>
+        away.
+    </p>
+    <p class="break-below">Updated at <span id="updated"></span>.</p>
+    <p>The tide is currently <span id="tide-state"></span>.</p>
+    <p>The
+        <span id="closest-extreme-type"></span>
+        <span id="closest-extreme"></span>
+        is at
+        <span id="closest-extreme-time"></span>, and the
+        <span id="next-closest-extreme-type"></span>
+        <span id="next-closest-extreme"></span>
+        is at
+        <span id="next-closest-extreme-time"></span>.</p>
+
+    <table id="upcoming-extremes" class="info-table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

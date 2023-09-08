@@ -1,1 +1,16 @@
-<div id="result">Fetching weather data <i class="fa-solid fa-spinner fa-pulse"></i></div>
+<div id="message">Fetching weather data <i class="fa-solid fa-spinner fa-pulse"></i></div>
+<div id="result">
+    <p>
+        Information for
+        <span id="location"></span>, located at latitude
+        <span id="latitude"></span>, longitude
+        <span id="longitude"></span>, from station
+        <span id="station"></span>.
+    </p>
+    <p>Updated at <span id="updated"></span>.</p>
+    <div id="active-alerts-container">
+        Active alerts:
+        <span id="active-alerts"></span>
+        <textarea id="alert-display"></textarea>
+    </div>
+</div>

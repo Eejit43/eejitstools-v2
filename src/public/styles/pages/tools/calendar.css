@@ -180,6 +180,10 @@
         }
     }
 
+    &:checked:hover + .todo-label .checkbox-container {
+        background-color: #3c759e;
+    }
+
     &:disabled + .todo-label .checkbox-container {
         border-color: var(--checkbox-border-color);
         background-color: rgb(144 152 169 / 30%);
@@ -219,8 +223,6 @@
             opacity: 1;
             border-radius: 50%;
             background-color: var(--checkbox-color);
-            width: 100%;
-            height: 100%;
             content: "";
         }
 

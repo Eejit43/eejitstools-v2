@@ -18,8 +18,8 @@ const ipInfo = document.querySelector('#ip-info') as HTMLDivElement;
 fetch('/ip-info').then(async (response) => {
     const data = (await response.json()) as IPInformation;
 
-    const output = [
-        { icon: 'network-wired', name: 'IP Address', value: `${data.ip_address}` },
+    const output: { icon: string; name: string; nameTooltip?: string; value: string }[] = [
+        { icon: 'network-wired', name: 'IP Address', value: data.ip_address },
         {
             icon: 'house-signal',
             name: 'ISP',
@@ -56,16 +56,4 @@ fetch('/ip-info').then(async (response) => {
 
         ipInfo.append(row);
     }
-
-    // (document.querySelector('#ip-address') as HTMLSpanElement).innerHTML = `${data.ip_address} (${
-    //     data.security.is_vpn ? 'Is' : 'Not'
-    // } a known <span class="tooltip-bottom" data-tooltip="Virtual private network">VPN</span>)`;
-    // (document.querySelector('#isp') as HTMLSpanElement).textContent = `${data.connection.isp_name} ${
-    //     data.connection.isp_name === data.connection.organization_name ? '' : `(${data.connection.organization_name}) `
-    // }(${data.connection.connection_type})`;
-    // (document.querySelector('#location') as HTMLSpanElement).textContent = `${data.city} (${data.postal_code}), ${data.region ? `${data.region}, ` : ''}${data.country}`;
-    // (document.querySelector('#latitude') as HTMLSpanElement).textContent = data.latitude.toString();
-    // (document.querySelector('#longitude') as HTMLSpanElement).textContent = data.longitude.toString();
-
-    // (document.querySelector('#reload-prompt') as HTMLDivElement).textContent = '';
 });

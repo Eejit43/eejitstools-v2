@@ -1,48 +1,19 @@
-const result = document.querySelector('#result') as HTMLDivElement;
+import { requestGeolocation } from '../../functions.js';
 
-/**
- * Requests the browser's current location and handles any errors.
- */
-function getLocation() {
-    if (navigator.geolocation)
-        navigator.geolocation.getCurrentPosition(getData, (error) => {
-            switch (error.code) {
-                case error.PERMISSION_DENIED: {
-                    result.innerHTML = '<span class="error">Permission to fetch location data denied! Allow this then reload.</span>';
-                    break;
-                }
-                case error.POSITION_UNAVAILABLE: {
-                    result.innerHTML = '<span class="error">Location information is unavailable. Try again later.</span>';
-                    break;
-                }
-                case error.TIMEOUT: {
-                    result.innerHTML = '<span class="error">The request to get your location timed out. Try again later.</span>';
-                    break;
-                }
-                default: {
-                    result.innerHTML = '<span class="error">Unable to fetch location data!</span>';
-                }
-            }
-        });
-    else result.innerHTML = '<span class="error">Geolocation is not supported by this browser.</span>';
-}
-
-getLocation();
-
-const uvIndexes = {
+const uvIndexes: Record<number, { color: string; text: string }> = {
     0: { color: '#83c88b', text: 'Low' },
     1: { color: '#fedc00', text: 'Moderate' },
     2: { color: '#f89c1b', text: 'High' },
-    3: { color: '#ee1d23', text: 'Very High' },
+    3: { color: '#ee1d23', text: 'Very high' },
     4: { color: '#d83484', text: 'Extreme' },
 };
 
-const airQualities = {
+const airQualities: Record<number, { color: string; text: string }> = {
     0: { color: '#a6ce39', text: 'Good' },
     1: { color: '#fff201', text: 'Moderate' },
-    2: { color: '#f6901e', text: 'Unhealthy for Sensitive Groups' },
+    2: { color: '#f6901e', text: 'Unhealthy for sensitive groups' },
     3: { color: '#ed1d24', text: 'Unhealthy' },
-    4: { color: '#a2064a', text: 'Very Unhealthy' },
+    4: { color: '#a2064a', text: 'Very unhealthy' },
     5: { color: '#891a1c', text: 'Hazardous' },
 };
 
@@ -99,16 +70,26 @@ interface LunarData {
     >;
 }
 
+const message = document.querySelector('#message') as HTMLDivElement;
+const result = document.querySelector('#result') as HTMLDivElement;
+
+const locationDisplay = document.querySelector('#location') as HTMLSpanElement;
+const latitudeDisplay = document.querySelector('#latitude') as HTMLSpanElement;
+const longitudeDisplay = document.querySelector('#longitude') as HTMLSpanElement;
+const stationDisplay = document.querySelector('#station') as HTMLSpanElement;
+const updatedDisplay = document.querySelector('#updated') as HTMLSpanElement;
+
+requestGeolocation(getData, result);
+
 /**
  * Fetches weather information for the specified permission and displays the information.
  * @param position The position to fetch location for.
  */
 async function getData(position: GeolocationPosition) {
-    const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${position.coords.latitude}&lon=${position.coords.longitude}&key=8cb466c81e01454d8044dd368b240a6a&include=alerts&units=I`);
-    const fullData = (await response.json()) as WeatherInformation;
+    const fullData = (await (await fetch(`/weather-info?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`)).json()) as WeatherInformation;
     const data = fullData.data[0];
 
-    let uvIndexDescription;
+    let uvIndexDescription: { color: string; text: string } | undefined;
 
     const uvIndex = data.uv;
     if (uvIndex > 0 && uvIndex < 3) uvIndexDescription = uvIndexes[0];
@@ -117,7 +98,7 @@ async function getData(position: GeolocationPosition) {
     else if (uvIndex >= 8 && uvIndex < 11) uvIndexDescription = uvIndexes[3];
     else if (uvIndex >= 11) uvIndexDescription = uvIndexes[4];
 
-    let airQualityDescription;
+    let airQualityDescription: { color: string; text: string } | undefined;
 
     const airQuality = data.aqi;
     if (airQuality >= 0 && airQuality < 51) airQualityDescription = airQualities[0];
@@ -127,38 +108,104 @@ async function getData(position: GeolocationPosition) {
     else if (airQuality >= 201 && airQuality < 301) airQualityDescription = airQualities[4];
     else if (airQuality >= 301) airQualityDescription = airQualities[5];
 
-    result.innerHTML = [
-        `Information from ${data.city_name}, ${data.state_code} (${data.country_code}) – Latitude: ${data.lat}, Longitude: ${data.lon} – Station ID: ${data.station}`,
-        `Updated at ${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        })}<br />`,
-        'Active Alerts: <span id="alerts"></span>',
-        '<textarea style="width: 40rem; max-width: 80%; margin-bottom: 25px; display: none" id="alert-display" readonly></textarea>',
-        `Sunrise: ${new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`,
-        `Sunset: ${new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}`,
-        `Weather: ${data.weather.description} <img height="25" width="25" style="transform: translateY(6px)" src="https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png" alt="${data.weather.description}">`,
-        `Precipitation: ${data.precip} inches/hour`,
-        `Snowfall: ${data.snow} inches/hour`,
-        `Cloud Cover: ${data.clouds}%`,
-        `Wind: ${data.wind_spd} miles/hour (${data.wind_cdir_full})`,
-        `Temperature: ${data.temp}°F${data.app_temp === data.temp ? '' : ` (Feels like ${data.app_temp}°F)`}`,
-        `Relative Humidity: ${data.rh}%`,
-        `Dew Point: ${data.dewpt}°F`,
-        `Visibility: ${data.vis} miles`,
-        `Pressure: ${data.pres} millibars`,
-        `UV Index: ${uvIndex}${uvIndexDescription ? ` (<span style="color: ${uvIndexDescription.color}">${uvIndexDescription.text}</span>)` : ''}`,
-        `Air Quality: ${airQuality}${airQualityDescription ? ` (<span style="color: ${airQualityDescription.color}">${airQualityDescription.text}</span>)` : ''}`,
-        'Moon Phase: <span id="moon-phase">Loading...</span>',
-    ].join('<br />');
+    locationDisplay.textContent = `${data.city_name}, ${data.state_code} (${data.country_code})`;
+    latitudeDisplay.textContent = data.lat.toString();
+    longitudeDisplay.textContent = data.lon.toString();
+    stationDisplay.textContent = data.station;
+    updatedDisplay.textContent = `${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })}`;
+
+    const output: { icon: string; name: string; value: string | (() => (HTMLElement | string)[]) }[] = [
+        { icon: 'sunrise', name: 'Sunrise', value: new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' }) },
+        { icon: 'sunset', name: 'Sunset', value: new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' }) },
+        {
+            icon: 'cloud-sun-rain',
+            name: 'Weather',
+            value: () => {
+                const weatherIcon = document.createElement('img');
+                weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png`;
+                weatherIcon.id = 'weather-icon';
+
+                return [data.weather.description, weatherIcon];
+            },
+        },
+        { icon: 'raindrops', name: 'Precipitation', value: `${data.precip} inches/hour` },
+        { icon: 'snowflakes', name: 'Snowfall', value: `${data.snow} inches/hour` },
+        { icon: 'clouds', name: 'Cloud Cover', value: `${data.clouds}%` },
+        { icon: 'wind', name: 'Wind', value: `${data.wind_spd} miles/hour (${data.wind_cdir_full})` },
+        { icon: 'temperature-three-quarters', name: 'Temperature', value: `${data.temp}°F${data.app_temp === data.temp ? '' : ` (Feels like ${data.app_temp}°F)`}` },
+        { icon: 'droplet-percent', name: 'Relative Humidity', value: `${data.rh}%` },
+        { icon: 'droplet-degree', name: 'Dew Point', value: `${data.dewpt}°F` },
+        { icon: 'cloud-fog', name: 'Visibility', value: `${data.vis} miles` },
+        { icon: 'gauge-high', name: 'Pressure', value: `${data.pres} millibars` },
+        {
+            icon: 'sun-cloud',
+            name: 'UV Index',
+            value: () => {
+                let description;
+                if (uvIndexDescription) {
+                    description = document.createElement('span');
+                    description.textContent = uvIndexDescription.text;
+                    description.style.color = uvIndexDescription.color;
+                }
+
+                return description ? [uvIndex.toString(), ' (', description, ')'] : [uvIndex.toString()];
+            },
+        },
+        {
+            icon: 'wind-warning',
+            name: 'Air Quality',
+            value: () => {
+                let description;
+                if (airQualityDescription) {
+                    description = document.createElement('span');
+                    description.textContent = airQualityDescription.text;
+                    description.style.color = airQualityDescription.color;
+                }
+
+                return description ? [airQuality.toString(), ' (', description, ')'] : [airQuality.toString()];
+            },
+        },
+        {
+            icon: 'moon',
+            name: 'Moon Phase',
+            value: () => {
+                const moonPhaseElement = document.createElement('span');
+                moonPhaseElement.id = 'moon-phase';
+                moonPhaseElement.textContent = 'Loading...';
+
+                return [moonPhaseElement];
+            },
+        },
+    ];
+
+    for (const item of output) {
+        const row = document.createElement('div');
+
+        const icon = document.createElement('i');
+        icon.className = `fa-regular fa-${item.icon}`;
+
+        row.append(icon, ' ', item.name);
+
+        const value = document.createElement('span');
+
+        if (typeof item.value === 'string') value.textContent = item.value.trim();
+        else value.append(...item.value());
+
+        row.append(': ', value);
+
+        result.append(row);
+    }
 
     const { alerts } = fullData;
 
     const newAlerts = [];
     for (const alert of alerts) if (!/has been replaced/.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(Date.now() / 1000)) newAlerts.push(alert);
 
-    const alertsList = document.querySelector('#alerts') as HTMLSpanElement;
+    const alertsList = document.querySelector('#active-alerts') as HTMLSpanElement;
 
     if (newAlerts.length > 0)
         for (const [index, alert] of newAlerts.entries()) {
@@ -173,12 +220,16 @@ async function getData(position: GeolocationPosition) {
         }
     else alertsList.textContent = 'None';
 
-    const lunarResponse = await fetch(
-        `https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${
-            new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000
-        }`,
-    );
-    const lunarData = (await lunarResponse.json()) as LunarData;
+    message.innerHTML = '';
+    result.classList.add('has-data');
+
+    const lunarData = (await (
+        await fetch(
+            `https://www.icalendar37.net/lunar/api/?lang=en&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}&size=20&lightColor=%23ffffd2&shadeColor=%2314191f&texturize=false&LDZ=${
+                new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime() / 1000
+            }`,
+        )
+    ).json()) as LunarData;
 
     const day = new Date().getDate();
     let { phaseName } = lunarData.phase[day];
@@ -209,8 +260,8 @@ function showWeatherAlert(alert: Alert) {
         .replaceAll(/^\* (.*?)\.{3}/g, '– $1:\n   ')
         .replaceAll(/ \* (.*?)\.{3}/g, '\n\n– $1:\n   ')}`;
 
-    if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'unset') {
-        alertDisplay.style.display = 'unset';
+    if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'block') {
+        alertDisplay.style.display = 'block';
         alertDisplay.value = alertText;
     } else alertDisplay.style.display = 'none';
 }

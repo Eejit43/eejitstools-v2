@@ -1,4 +1,17 @@
-.info-table {
-    margin: 0 0 10px 10px;
+#result {
+    display: none;
+
+    &.has-data {
+        display: unset;
+    }
+
+    & span:not(#closest-extreme-type, #next-closest-extreme-type) {
+        color: var(--neutral-color-200);
+    }
+}
+
+#upcoming-extremes {
+    margin-top: 1em;
+    margin-left: 1em;
     width: 40%;
 }

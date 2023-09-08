@@ -139,8 +139,8 @@ export function updateInnerHtml(element: HTMLElement, string: string) {
  * @param element Selectors for element.
  * @param animation The animation to add.
  */
-export const addAnimation = (element: string, animation: string) =>
-    new Promise((resolve) => {
+export function addAnimation(element: string, animation: string) {
+    return new Promise((resolve) => {
         const foundElement = document.querySelector(element)!;
 
         foundElement.classList.add(animation);
@@ -155,6 +155,7 @@ export const addAnimation = (element: string, animation: string) =>
             { once: true },
         );
     });
+}
 
 /**
  * Converts a string to title case.
@@ -193,4 +194,26 @@ export function createBase64ObjectUrl(data: string, mimeType: string) {
     const byteArray = new Uint8Array(byteNumbers);
     const file = new Blob([byteArray], { type: mimeType + ';base64' });
     return URL.createObjectURL(file);
+}
+
+const errorMessages: Record<number, string> = {
+    [GeolocationPositionError.PERMISSION_DENIED]: 'Permission to fetch location data denied! Allow this then reload.',
+    [GeolocationPositionError.POSITION_UNAVAILABLE]: 'Location information is unavailable. Try again later.',
+    [GeolocationPositionError.TIMEOUT]: 'The request to get your location timed out. Try again later.',
+};
+
+/**
+ * Requests and handles geolocation from the user's browser.
+ * @param callback The function to call with the resulting position.
+ * @param errorElement The element to update with any error during geolocation request.
+ */
+export function requestGeolocation(callback: (position: GeolocationPosition) => unknown, errorElement: HTMLElement) {
+    navigator.geolocation.getCurrentPosition(callback, (error) => {
+        const errorSpan = document.createElement('span');
+        errorSpan.classList.add('error');
+        errorSpan.textContent = errorMessages[error.code] ?? 'Unable to fetch location data!';
+
+        errorElement.innerHTML = '';
+        errorElement.append(errorSpan);
+    });
 }

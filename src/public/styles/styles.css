@@ -57,7 +57,7 @@
 
     /* Element-specific variables */
     --link-color: #2b71a5;
-    --link-color-hover: var(--info-color-400);
+    --link-color-hover: #1e5c8b;
     --input-background: #252525;
     --input-background-hover: #2a2a2a;
     --dark-border: #16181c;
@@ -73,6 +73,7 @@
 
     /* Fonts */
     --font-family: "Source Sans Pro", sans-serif;
+    --font-family-serif: "Times New Roman", "Times", serif;
     --font-family-monospace: "Fira Mono", monospace;
 }
 
@@ -188,6 +189,10 @@ kbd {
     color: var(--neutral-color-300);
 }
 
+.break-below {
+    margin-bottom: 1em;
+}
+
 .brand-colors * {
     &:nth-child(1) {
         color: var(--brand-color-1);
@@ -224,6 +229,15 @@ kbd {
 
 .toastify {
     cursor: unset;
+}
+
+[data-icon-after]::after {
+    padding-left: 3px;
+    content: attr(data-icon-after);
+    font-weight: bold;
+    font-size: calc(1em - 2px);
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 6 Pro";
 }
 
 /*

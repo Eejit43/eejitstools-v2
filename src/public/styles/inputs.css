@@ -181,15 +181,6 @@ button:not(.fake-input) {
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 6 Pro";
     }
-
-    &[data-icon-after]::after {
-        padding-left: 3px;
-        content: attr(data-icon-after);
-        font-weight: bold;
-        font-size: calc(1em - 2px);
-        /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
-    }
 }
 
 .invisible-input[type="text"]:not(input[type="file"], input[type="checkbox"]),
