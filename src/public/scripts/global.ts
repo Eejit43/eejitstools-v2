@@ -8,17 +8,17 @@ const logo = document.querySelector('.logo') as HTMLSpanElement;
 logo.addEventListener('mouseover', () => {
     const letters = logo.querySelectorAll('span');
     for (const [index, letter] of letters.entries()) {
-        const beforeContent = letter.dataset.value!;
+        const contentBefore = letter.dataset.value!;
 
         let iterations = 0;
 
         const interval = setInterval(
             () => {
-                letter.textContent = [...beforeContent].map(() => String.fromCodePoint(Math.floor(Math.random() * 94) + 33)).join('');
+                letter.textContent = [...contentBefore].map(() => String.fromCodePoint(Math.floor(Math.random() * 94) + 33)).join('');
 
                 if (iterations >= 10) {
                     clearInterval(interval);
-                    letter.textContent = beforeContent;
+                    letter.textContent = contentBefore;
                 }
 
                 iterations++;
@@ -89,8 +89,7 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-results table tbody tr td a.selected') ??
-            document.querySelector('.search-box .search-results table tbody tr td a')) as HTMLAnchorElement | null;
+        const result = (document.querySelector('.search-box .search-result-selected') ?? document.querySelector('.search-box a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -103,9 +102,9 @@ document.querySelector('.search-button')!.addEventListener('click', () => search
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        const firstResult = document.querySelector('.search-box .search-results table tbody tr td a');
+        const firstResult = document.querySelector('.search-box a');
         if (firstResult) {
-            const currentResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
+            const currentResult = document.querySelector('.search-box .search-result-selected');
 
             const nextTrElement = currentResult
                 ? event.key === 'ArrowUp'
@@ -114,11 +113,11 @@ document.addEventListener('keydown', (event) => {
                 : null;
 
             if (nextTrElement) {
-                if (currentResult) currentResult.classList.remove('selected');
-                nextTrElement.querySelector('td a')!.classList.add('selected');
-            } else if (!currentResult) firstResult.classList.add('selected');
+                if (currentResult) currentResult.classList.remove('search-result-selected');
+                nextTrElement.querySelector('td a')!.classList.add('search-result-selected');
+            } else if (!currentResult) firstResult.classList.add('search-result-selected');
 
-            const selectedResult = document.querySelector('.search-box .search-results table tbody tr td a.selected');
+            const selectedResult = document.querySelector('.search-box .search-result-selected');
             if (selectedResult) selectedResult.parentElement!.parentElement!.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }

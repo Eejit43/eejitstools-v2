@@ -158,7 +158,7 @@ nav * {
                 color: var(--neutral-color-200);
 
                 &:hover,
-                &.selected {
+                &.search-result-selected {
                     color: var(--neutral-color-300);
                 }
             }
