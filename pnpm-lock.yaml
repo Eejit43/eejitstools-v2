@@ -9,8 +9,8 @@ dependencies:
     specifier: ^8.0.3
     version: 8.0.3
   '@fastify/static':
-    specifier: ^6.11.1
-    version: 6.11.1
+    specifier: ^6.11.2
+    version: 6.11.2
   '@fastify/view':
     specifier: ^8.1.0
     version: 8.1.0
@@ -39,11 +39,11 @@ dependencies:
     specifier: ^4.7.8
     version: 4.7.8
   mongoose:
-    specifier: ^7.5.1
-    version: 7.5.1
+    specifier: ^7.5.2
+    version: 7.5.2
   node-html-parser:
-    specifier: ^6.1.9
-    version: 6.1.9
+    specifier: ^6.1.10
+    version: 6.1.10
   postcss:
     specifier: ^8.4.29
     version: 8.4.29
@@ -53,8 +53,8 @@ dependencies:
 
 devDependencies:
   '@eejit/eslint-config-typescript':
-    specifier: ^2.18.0
-    version: 2.18.0(typescript@5.2.2)
+    specifier: ^2.18.1
+    version: 2.18.1(typescript@5.2.2)
   '@eejit/prettier-config':
     specifier: ^2.0.2
     version: 2.0.2(postcss@8.4.29)(typescript@5.2.2)
@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^1.1.1
     version: 1.1.1(stylelint@15.10.3)
   '@tsconfig/recommended':
-    specifier: ^1.0.2
-    version: 1.0.2
+    specifier: ^1.0.3
+    version: 1.0.3
   '@types/chroma-js':
     specifier: ^2.4.1
     version: 2.4.1
@@ -458,13 +458,13 @@ packages:
     dependencies:
       postcss-selector-parser: 6.0.13
 
-  /@eejit/eslint-config-typescript@2.18.0(typescript@5.2.2):
-    resolution: {integrity: sha512-XbhlNPAdvs8QIn4VMA4HLiQcySl8z4nUnRltAhhRft7HCGDBIa5tTZ/514ASYjPWSCr5EMzvlANInyY2A05Aow==}
+  /@eejit/eslint-config-typescript@2.18.1(typescript@5.2.2):
+    resolution: {integrity: sha512-1e35a2D/FHQsMfWeSGLipiFFroTengOBH9FFU0PEYUbMptpQgHQhIuooBQCwEZ2XfdbJ9ajrsBomtUEZRo0iog==}
     dependencies:
       '@typescript-eslint/eslint-plugin': 6.7.0(@typescript-eslint/parser@6.7.0)(eslint@8.49.0)(typescript@5.2.2)
       '@typescript-eslint/parser': 6.7.0(eslint@8.49.0)(typescript@5.2.2)
       eslint: 8.49.0
-      eslint-plugin-jsdoc: 46.8.0(eslint@8.49.0)
+      eslint-plugin-jsdoc: 46.8.1(eslint@8.49.0)
       eslint-plugin-unicorn: 48.0.1(eslint@8.49.0)
     transitivePeerDependencies:
       - supports-color
@@ -783,8 +783,8 @@ packages:
       mime: 3.0.0
     dev: false
 
-  /@fastify/static@6.11.1:
-    resolution: {integrity: sha512-d8cJyPhZ0WNQTPniMNV+Q8ADuILpcMMETmkyg5Co1voT48aQXFpQP8jJmQDGo858GG3xt7v0YXeawmpGzooYaw==}
+  /@fastify/static@6.11.2:
+    resolution: {integrity: sha512-EH7mh7q4MfNdT7N07ZVlwsX/ObngMvQ7KBP0FXAuPov99Fjn80KSJMdxQhhYKAKWW1jXiFdrk8X7d6uGWdZFxg==}
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       '@fastify/send': 2.1.0
@@ -885,8 +885,8 @@ packages:
       tslib: 2.6.1
     dev: true
 
-  /@tsconfig/recommended@1.0.2:
-    resolution: {integrity: sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==}
+  /@tsconfig/recommended@1.0.3:
+    resolution: {integrity: sha512-+jby/Guq9H8O7NWgCv6X8VAiQE8Dr/nccsCtL74xyHKhu2Knu5EAKmOZj3nLCnLm1KooUzKY+5DsnGVqhM8/wQ==}
     dev: true
 
   /@types/chroma-js@2.4.1:
@@ -1773,8 +1773,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-plugin-jsdoc@46.8.0(eslint@8.49.0):
-    resolution: {integrity: sha512-qsYP7LN/ji5htZAdfAr8qX0bRZcbTU0hpuECR50UpaqkPyXsWgp2y77RPQ4t7fR5bHpgnGcD5L43PxjyOvIfQA==}
+  /eslint-plugin-jsdoc@46.8.1(eslint@8.49.0):
+    resolution: {integrity: sha512-uTce7IBluPKXIQMWJkIwFsI1gv7sZRmLjctca2K5DIxPi8fSBj9f4iru42XmGwuiMyH2f3nfc60sFmnSGv4Z/A==}
     engines: {node: '>=16'}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
@@ -2812,8 +2812,8 @@ packages:
       '@mongodb-js/saslprep': 1.1.0
     dev: false
 
-  /mongoose@7.5.1:
-    resolution: {integrity: sha512-gJCkUtW3KgAu7Uf8HTVv+S3wf9+xldR5LFYM6mABJJQHQB0aWUGyC3bWsl2X/6dVHZSoQq3wh5UV7rWC4FrewA==}
+  /mongoose@7.5.2:
+    resolution: {integrity: sha512-yEkmI1jfiog7QUvMWz3eB/XoA3/5DrVvSz+z3V5hnq8VtZIHC7ujEV0RKzRXwr8QNMOs+OTB7+aK7R/N/V3yXA==}
     engines: {node: '>=14.20.1'}
     dependencies:
       bson: 5.4.0
@@ -2882,8 +2882,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-html-parser@6.1.9:
-    resolution: {integrity: sha512-nQ+MRf0PmRTLcMalVqMsWvceSaBydBCBlnQSL78HVk/E8e0Aazyao4SI9aB67XAAgOgHMsw7q5dJBUPPt9XE3g==}
+  /node-html-parser@6.1.10:
+    resolution: {integrity: sha512-6/uWdWxjQWQ7tMcFK2wWlrflsQUzh1HsEzlIf2j5+TtzfhT2yUvg3DwZYAmjEHeR3uX74ko7exjHW69J0tOzIg==}
     dependencies:
       css-select: 5.1.0
       he: 1.2.0
