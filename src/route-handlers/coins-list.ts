@@ -59,7 +59,7 @@ export default function (fastify: FastifyInstance) {
             return coinVariant;
         });
 
-        await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
+        await coinsModel.replaceOne({ id: coinTypeId }, { name: databaseCoinType.name, id: databaseCoinType.id, coins: databaseCoinType.coins });
 
         reply.send(JSON.stringify({ success: true }, null, 2));
     });
