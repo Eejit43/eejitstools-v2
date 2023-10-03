@@ -28,7 +28,7 @@
     },
     "devDependencies": {
         "@eejit/eslint-config-typescript": "^2.19.1",
-        "@eejit/prettier-config": "^2.0.3",
+        "@eejit/prettier-config": "^2.0.4",
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.3",
         "@types/chroma-js": "^2.4.1",
