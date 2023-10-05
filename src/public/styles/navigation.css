@@ -7,7 +7,7 @@ nav {
     grid-template-columns: 1fr repeat(4, fit-content(100%));
     column-gap: 25px;
     align-items: center;
-    z-index: 5000;
+    z-index: 2000;
     background-color: #1b1e24 !important;
     padding: 30px 25px;
     font-size: 20px;
