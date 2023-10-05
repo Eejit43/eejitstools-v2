@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import setupAllPageRoutes from './all-pages.js';
-import setupApodRoute from './apod.js';
+import setupApodRoute from './astronomy-picture.js';
 import setupCalendarRoutes from './calendar.js';
 import setupCoinsListRoutes from './coins-list.js';
 import setupCorsAnywhereRoute from './cors-anywhere.js';

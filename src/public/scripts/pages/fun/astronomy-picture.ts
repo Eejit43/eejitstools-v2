@@ -1,4 +1,4 @@
-import { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/apod.js';
+import { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/astronomy-picture.js';
 import { showAlert } from '../../functions.js';
 
 const resultElement = document.querySelector('#result') as HTMLDivElement;
@@ -89,15 +89,15 @@ function checkApod(yearInput: number, monthInput: number, dateInput: number) {
 
 /**
  * Fetches the Astronomy Picture of the Day (APOD) for the provided date.
- * @param yearInput The year input.
- * @param monthInput The month input.
- * @param dateInput The date input.
+ * @param providedYear The provided year.
+ * @param providedMonth The provided month.
+ * @param providedDate The provided date.
  */
-async function fetchApod(yearInput: number, monthInput: number, dateInput: number) {
+async function fetchApod(providedYear: number, providedMonth: number, providedDate: number) {
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
     const { success, error, source, date, title, credit, explanation, media } = (await (
-        await fetch(`/apod/${yearInput}/${monthInput.toString().padStart(2, '0')}/${dateInput.toString().padStart(2, '0')}`)
+        await fetch(`/astronomy-picture/${providedYear}/${providedMonth.toString().padStart(2, '0')}/${providedDate.toString().padStart(2, '0')}`)
     ).json()) as FullApodEntry;
 
     if (!success && error) return showAlert(error, 'error');
@@ -107,7 +107,7 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
         `<center style="font-size: 30px">${title}</center>`,
         getMediaElement(media),
         credit ? `<center>${credit}</center><br />` : '',
-        explanation,
+        `<div id="apod-explanation">${explanation}</div>`,
     ].filter(Boolean);
 
     resultElement.innerHTML = result.join('');
@@ -117,6 +117,27 @@ async function fetchApod(yearInput: number, monthInput: number, dateInput: numbe
         imageElement.parentElement!.addEventListener('mouseover', () => (imageElement.src = media.annotated!));
         imageElement.parentElement!.addEventListener('mouseout', () => (imageElement.src = media.src));
     }
+
+    for (const linkElement of document.querySelectorAll('#apod-explanation a[href^="https://apod.nasa.gov/apod/ap"]') as NodeListOf<HTMLAnchorElement>)
+        linkElement.addEventListener('click', (event) => {
+            if (event.metaKey) return;
+
+            event.preventDefault();
+
+            const dateString = linkElement.href.match(/ap(\d{6})/)![1];
+
+            const yearShort = Number.parseInt(dateString.slice(0, 2));
+
+            const year = yearShort < 95 ? 2000 + yearShort : 1900 + yearShort;
+            const month = Number.parseInt(dateString.slice(2, 4));
+            const date = Number.parseInt(dateString.slice(4, 6));
+
+            yearInput.value = year.toString();
+            monthInput.value = month.toString();
+            dateInput.value = date.toString();
+
+            checkApod(year, month, date);
+        });
 }
 
 /**

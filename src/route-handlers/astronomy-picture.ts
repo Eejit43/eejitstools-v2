@@ -39,7 +39,7 @@ export interface ApodEntryMedia {
  */
 export default function (fastify: FastifyInstance) {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    fastify.get('/apod/:year/:month/:date', async (request: FastifyRequest<{ Params: { year: string; month: string; date: string } }>, reply) => {
+    fastify.get('/astronomy-picture/:year/:month/:date', async (request: FastifyRequest<{ Params: { year: string; month: string; date: string } }>, reply) => {
         logApiRequest(request);
 
         let result: ApodEntry;
@@ -103,7 +103,7 @@ export default function (fastify: FastifyInstance) {
             }
 
             const explanation = html.innerHTML
-                .match(/explanation:.*?tomorrow|explanation<\/b>:.*?tomorrow|explanation:.*?<hr>/gi)?.[0]
+                .match(/explanation(<\/b>)?:.*?tomorrow(?!,)|explanation:.*?<hr>/gi)?.[0]
                 .replaceAll(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
                 .replaceAll(/<b> (.*?) <\/b>/g, '$1')
                 .replaceAll(/(\w|>)\/ /g, '$1/')
