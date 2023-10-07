@@ -1,4 +1,4 @@
-import { requestGeolocation, twemojiUpdate } from '../../functions.js';
+import { requestGeolocation, titleCase, twemojiUpdate } from '../../functions.js';
 
 declare global {
     interface Window {
@@ -174,7 +174,7 @@ async function getData(position: GeolocationPosition) {
             value: () => {
                 const moonInformation = window.SunCalc.getMoonIllumination(new Date());
 
-                return [`${moonInformation.phase.name} (${Math.round(moonInformation.fraction * 100)}% illuminated) ${moonInformation.phase.emoji}`];
+                return [`${titleCase(moonInformation.phase.name)} (${Math.round(moonInformation.fraction * 100)}% illuminated) ${moonInformation.phase.emoji}`];
             },
         },
     ];
