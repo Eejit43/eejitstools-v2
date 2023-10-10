@@ -16,7 +16,7 @@ export default function (fastify: FastifyInstance) {
 
         if (!containsValidChars) return reply.type('image/png').send();
 
-        const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${request.params.id}.svg`);
+        const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${emojiId}.svg`);
         if (!response.ok) return reply.type('image/png').send();
 
         const canvas = Canvas.createCanvas(500, 500);
