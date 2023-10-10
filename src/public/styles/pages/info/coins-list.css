@@ -89,6 +89,10 @@ tr[data-upgrade="true"] {
         background-color: #3e434b;
     }
 
+    &[data-disabled="true"] {
+        background-color: #2b3037;
+    }
+
     & i.fa-plus {
         padding-right: 6px;
     }

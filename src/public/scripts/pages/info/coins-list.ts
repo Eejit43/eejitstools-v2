@@ -344,20 +344,24 @@ async function loadCoinsList() {
             const newRowMessageCell = document.createElement('td');
             newRowMessageCell.colSpan = 5;
             newRowMessageCell.textContent = 'Add new row';
-            newRowMessageCell.addEventListener('click', () => {
-                const year = coinVariant.coins.at(-1) ? (Number.parseInt(coinVariant.coins.at(-1)!.year) + 1).toString() : new Date().getFullYear().toString();
+            newRowMessageCell.addEventListener('click', async () => {
+                if (newRowMessage.dataset.disabled === 'true') return;
+
+                const coinVariantCoins = [...coinsData[coinType.id].coins[coinVariant.id].coins.values()];
+
+                const year = coinVariantCoins.at(-1)?.year ? (Number.parseInt(coinVariantCoins.at(-1)!.year!) + 1).toString() : new Date().getFullYear().toString();
                 const id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
 
                 const row = generateCoinRow(coinType, coinVariant, { year, id, obtained: false });
                 newRowMessage.before(row);
-
-                addCoin(coinType.id, coinVariant.id, year, id);
 
                 coinsData[coinType.id].coins[coinVariant.id].coins.set(id.toString(), { year, id, obtained: false });
 
                 loadVariantTotals(coinType.id, coinVariant.id);
 
                 addCoinChangeEntry({ year }, coinVariant.name, undefined, undefined, 'was created!');
+
+                await addCoin(coinType.id, coinVariant.id, year, id);
             });
 
             const plusIcon = document.createElement('i');
@@ -610,6 +614,7 @@ type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
 async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: string, data: PartialNullable<Coin>) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
     const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+    const addRowButtons = document.querySelectorAll('tr.new-row-message') as NodeListOf<HTMLTableRowElement>;
 
     for (const element of editableElements) element.contentEditable = 'false';
 
@@ -617,6 +622,8 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
         if (checkbox.disabled) checkbox.dataset.disabled = 'true';
         checkbox.disabled = true;
     }
+
+    for (const button of addRowButtons) button.dataset.disabled = 'true';
 
     const result = (await fetch('/coins-list-edit', {
         method: 'POST',
@@ -628,10 +635,13 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
     else showAlert('Coin data updated successfully!', 'success');
 
     for (const element of editableElements) element.contentEditable = 'true';
+
     for (const checkbox of checkboxes) {
         if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
         delete checkbox.dataset.disabled;
     }
+
+    for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
 
 /**
@@ -644,6 +654,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
 async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: string, coinId: string) {
     const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
     const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+    const addRowButtons = document.querySelectorAll('tr.new-row-message') as NodeListOf<HTMLTableRowElement>;
 
     for (const element of editableElements) element.contentEditable = 'false';
 
@@ -651,6 +662,8 @@ async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: stri
         if (checkbox.disabled) checkbox.dataset.disabled = 'true';
         checkbox.disabled = true;
     }
+
+    for (const button of addRowButtons) button.dataset.disabled = 'true';
 
     const result = (await fetch('/coins-list-add-coin', {
         method: 'POST',
@@ -662,10 +675,13 @@ async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: stri
     else showAlert('Successfully added a new coin row!', 'success');
 
     for (const element of editableElements) element.contentEditable = 'true';
+
     for (const checkbox of checkboxes) {
         if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
         delete checkbox.dataset.disabled;
     }
+
+    for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
 
 /**
