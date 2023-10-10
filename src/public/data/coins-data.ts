@@ -51,6 +51,7 @@ export const coinsData: CoinType[] = [
         name: 'Nickels',
         id: 'nickels',
         coins: [
+            { name: 'Liberty Head Nickel', id: 'liberty-head' },
             { name: 'Buffalo / Indian Head Nickel', id: 'buffalo' },
             { name: 'Early Jefferson Nickel', id: 'early-jefferson' },
             { name: 'Modern Jefferson Nickel', id: 'modern-jefferson' },
