@@ -345,7 +345,7 @@ async function loadCoinsList() {
             newRowMessageCell.colSpan = 5;
             newRowMessageCell.textContent = 'Add new row';
             newRowMessageCell.addEventListener('click', () => {
-                const year = new Date().getFullYear().toString();
+                const year = coinVariant.coins.at(-1) ? (Number.parseInt(coinVariant.coins.at(-1)!.year) + 1).toString() : new Date().getFullYear().toString();
                 const id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
 
                 const row = generateCoinRow(coinType, coinVariant, { year, id, obtained: false });
@@ -354,6 +354,8 @@ async function loadCoinsList() {
                 addCoin(coinType.id, coinVariant.id, year, id);
 
                 coinsData[coinType.id].coins[coinVariant.id].coins.set(id.toString(), { year, id, obtained: false });
+
+                loadVariantTotals(coinType.id, coinVariant.id);
 
                 addCoinChangeEntry({ year }, coinVariant.name, undefined, undefined, 'was created!');
             });
@@ -407,6 +409,8 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'year', { year: newValue });
 
         coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.year = newValue;
+
+        loadVariantTotals(coinType.id, coinVariant.id);
 
         await updateCoinData(coinType.id, coinVariant.id, coin.id, { year: newValue });
     });
