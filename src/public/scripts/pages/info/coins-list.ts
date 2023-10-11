@@ -565,9 +565,7 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
 
         await updateCoinData(coinType.id, coinVariant.id, coin.id, { obtained: obtainedCheck.checked || null });
 
-        if (needsUpgradeCheck.checked) needsUpgradeCheck.click();
-
-        needsUpgradeCheck.disabled = !obtainedCheck.checked;
+        if (!obtainedCheck.checked && needsUpgradeCheck.checked) needsUpgradeCheck.click();
     });
     obtained.append(obtainedCheck);
     row.append(obtained);
@@ -576,7 +574,6 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
     const needsUpgradeCheck = document.createElement('input');
     needsUpgradeCheck.type = 'checkbox';
     needsUpgradeCheck.checked = coin.upgrade ?? false;
-    needsUpgradeCheck.disabled = !coin.obtained;
     needsUpgradeCheck.addEventListener('change', async () => {
         row.dataset.upgrade = needsUpgradeCheck.checked.toString();
 
@@ -593,6 +590,8 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         loadVariantTotals(coinType.id, coinVariant.id);
 
         await updateCoinData(coinType.id, coinVariant.id, coin.id, { upgrade: needsUpgradeCheck.checked || null });
+
+        if (needsUpgradeCheck.checked && !obtainedCheck.checked) obtainedCheck.click();
     });
     needsUpgrade.append(needsUpgradeCheck);
     row.append(needsUpgrade);
@@ -665,10 +664,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
 
     for (const element of editableElements) element.contentEditable = 'false';
 
-    for (const checkbox of checkboxes) {
-        if (checkbox.disabled) checkbox.dataset.disabled = 'true';
-        checkbox.disabled = true;
-    }
+    for (const checkbox of checkboxes) checkbox.disabled = true;
 
     for (const button of addRowButtons) button.dataset.disabled = 'true';
 
@@ -683,10 +679,7 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
 
     for (const element of editableElements) element.contentEditable = 'true';
 
-    for (const checkbox of checkboxes) {
-        if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
-        delete checkbox.dataset.disabled;
-    }
+    for (const checkbox of checkboxes) checkbox.disabled = false;
 
     for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
@@ -705,10 +698,7 @@ async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: stri
 
     for (const element of editableElements) element.contentEditable = 'false';
 
-    for (const checkbox of checkboxes) {
-        if (checkbox.disabled) checkbox.dataset.disabled = 'true';
-        checkbox.disabled = true;
-    }
+    for (const checkbox of checkboxes) checkbox.disabled = true;
 
     for (const button of addRowButtons) button.dataset.disabled = 'true';
 
@@ -723,10 +713,7 @@ async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: stri
 
     for (const element of editableElements) element.contentEditable = 'true';
 
-    for (const checkbox of checkboxes) {
-        if (checkbox.dataset.disabled !== 'true') checkbox.disabled = false;
-        delete checkbox.dataset.disabled;
-    }
+    for (const checkbox of checkboxes) checkbox.disabled = false;
 
     for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
