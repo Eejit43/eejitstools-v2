@@ -468,12 +468,12 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
 
     const mintage = document.createElement('td');
     mintage.contentEditable = 'true';
-    mintage.textContent = coin.mintage ? formatMintage(coin.mintage) : '';
+    mintage.textContent = coin.mintage ? formatMintage(coin.mintage) : '???';
     mintage.addEventListener('focus', () => (mintage.textContent = coin.mintage?.toString() ?? ''));
     mintage.addEventListener('blur', async () => {
         const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent) : null;
 
-        mintage.textContent = mintageNumber ? formatMintage(mintageNumber) : '';
+        mintage.textContent = mintageNumber ? formatMintage(mintageNumber) : '???';
 
         if (mintageNumber === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) return;
 
