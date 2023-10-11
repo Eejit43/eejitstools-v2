@@ -49,6 +49,8 @@ const mintMarks: Record<string, string> = {
     C: 'Charlotte (North Carolina)',
 };
 
+type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
+
 interface CoinVariantById {
     name: string;
     id: string;
@@ -321,7 +323,7 @@ async function loadCoinsList() {
             const coinVariantTableHead = document.createElement('thead');
             const coinVariantTableHeadRow = document.createElement('tr');
 
-            for (const header of ['Year', 'Mint Mark', 'Specification/Notes', 'Obtained', 'Needs Upgrade']) {
+            for (const header of ['Year', 'Mint Mark', 'Mintage', 'Specification/Notes', 'Obtained', 'Needs Upgrade']) {
                 const infoHeader = document.createElement('th');
                 infoHeader.textContent = header;
                 coinVariantTableHeadRow.append(infoHeader);
@@ -342,7 +344,7 @@ async function loadCoinsList() {
             newRowMessage.classList.add('new-row-message');
 
             const newRowMessageCell = document.createElement('td');
-            newRowMessageCell.colSpan = 5;
+            newRowMessageCell.colSpan = 6;
             newRowMessageCell.textContent = 'Add new row';
             newRowMessageCell.addEventListener('click', async () => {
                 if (newRowMessage.dataset.disabled === 'true') return;
@@ -463,6 +465,26 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
     });
     mintMark.append(tooltip);
     row.append(mintMark);
+
+    const mintage = document.createElement('td');
+    mintage.contentEditable = 'true';
+    mintage.textContent = coin.mintage ? formatMintage(coin.mintage) : '';
+    mintage.addEventListener('focus', () => (mintage.textContent = coin.mintage?.toString() ?? ''));
+    mintage.addEventListener('blur', async () => {
+        const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent) : null;
+
+        mintage.textContent = mintageNumber ? formatMintage(mintageNumber) : '';
+
+        if (mintageNumber === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) return;
+
+        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage', { mintage: mintageNumber });
+
+        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage = mintageNumber;
+
+        await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintage: mintageNumber });
+    });
+
+    row.append(mintage);
 
     const specification = document.createElement('td');
     if (!coin.comparison) {
@@ -602,7 +624,16 @@ function getCoinYears(variant: CoinVariantById): string {
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
 
-type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
+/**
+ * Formats a mintage number to a cleaner representation (number rounded to 2 decimal places).
+ * @param mintage The mintage number to format.
+ */
+function formatMintage(mintage: number) {
+    if (mintage >= 1_000_000_000) return `${Math.round((mintage / 1_000_000_000 + Number.EPSILON) * 100) / 100} billion`;
+    if (mintage >= 1_000_000) return `${Math.round((mintage / 1_000_000 + Number.EPSILON) * 100) / 100} million`;
+    if (mintage >= 1000) return `${Math.round((mintage / 1000 + Number.EPSILON) * 100) / 100} thousand`;
+    return mintage.toString();
+}
 
 /**
  * Updates the coin data in the database.
@@ -734,6 +765,8 @@ if (password) {
         showResult(loginButton, 'success', false);
 
         await loadCoinsList();
+
+        exportDataButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
         showResult(loginButton, 'error', false);

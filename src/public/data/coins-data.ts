@@ -27,6 +27,7 @@ export interface Coin {
     id: string;
     year: string;
     mintMark?: string;
+    mintage?: number;
     specification?: string;
     image?: string;
     comparison?: string;
