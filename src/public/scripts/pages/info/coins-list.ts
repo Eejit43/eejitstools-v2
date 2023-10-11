@@ -469,19 +469,35 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
     const mintage = document.createElement('td');
     mintage.contentEditable = 'true';
     mintage.textContent = coin.mintage ? formatMintage(coin.mintage) : '???';
-    mintage.addEventListener('focus', () => (mintage.textContent = coin.mintage?.toString() ?? ''));
+    if (coin.mintageForAllVarieties) mintage.classList.add('mintage-for-all-varieties');
+    mintage.addEventListener('focus', () => {
+        mintage.textContent = coin.mintage?.toString() ?? '';
+        if (coin.mintageForAllVarieties) mintage.textContent += ' (all)';
+        mintage.classList.remove('mintage-for-all-varieties');
+    });
     mintage.addEventListener('blur', async () => {
-        const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent) : null;
+        const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent.replace(/ (all)$/, '')) : null;
+        let mintageForAllVarieties: boolean | null | undefined = mintage.textContent?.endsWith(' (all)');
+        if (!mintageForAllVarieties) mintageForAllVarieties = null;
 
         mintage.textContent = mintageNumber ? formatMintage(mintageNumber) : '???';
+        if (mintageForAllVarieties) mintage.classList.add('mintage-for-all-varieties');
 
-        if ((mintageNumber ?? '') === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) return;
+        if ((mintageNumber ?? '') !== (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) {
+            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage', { mintage: mintageNumber });
 
-        addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage', { mintage: mintageNumber });
+            coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage = mintageNumber;
 
-        coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage = mintageNumber;
+            await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintage: mintageNumber });
+        }
 
-        await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintage: mintageNumber });
+        if (mintageForAllVarieties !== coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintageForAllVarieties ?? null) {
+            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage "for all varieties"', { mintageForAllVarieties });
+
+            coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
+
+            await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintageForAllVarieties });
+        }
     });
 
     row.append(mintage);

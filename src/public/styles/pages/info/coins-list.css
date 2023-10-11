@@ -45,6 +45,10 @@ button.coin-type-expand {
 .coin-variant-table {
     margin: 20px auto;
     width: 50%;
+
+    & input[type="checkbox"] {
+        transform: scale(1.3);
+    }
 }
 
 .coin-table-message td {
@@ -111,6 +115,10 @@ tr[data-upgrade="true"] {
     &:hover {
         color: var(--neutral-color-150);
     }
+}
+
+.mintage-for-all-varieties::after {
+    content: " (for all varieties)";
 }
 
 .coin-type-comparison {

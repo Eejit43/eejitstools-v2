@@ -28,6 +28,7 @@ export interface Coin {
     year: string;
     mintMark?: string;
     mintage?: number;
+    mintageForAllVarieties?: boolean;
     specification?: string;
     image?: string;
     comparison?: string;
