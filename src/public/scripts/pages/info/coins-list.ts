@@ -475,7 +475,7 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
 
         mintage.textContent = mintageNumber ? formatMintage(mintageNumber) : '???';
 
-        if (mintageNumber === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) return;
+        if ((mintageNumber ?? '') === (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintage ?? '')) return;
 
         addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage', { mintage: mintageNumber });
 
