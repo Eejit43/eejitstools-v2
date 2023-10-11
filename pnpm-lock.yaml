@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^0.7.37
     version: 0.7.37
   mathjs:
-    specifier: ^11.11.1
-    version: 11.11.1
+    specifier: ^11.11.2
+    version: 11.11.2
   stylelint:
     specifier: ^15.10.3
     version: 15.10.3
@@ -111,8 +111,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@babel/runtime@7.22.15:
-    resolution: {integrity: sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==}
+  /@babel/runtime@7.23.1:
+    resolution: {integrity: sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
@@ -2684,12 +2684,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /mathjs@11.11.1:
-    resolution: {integrity: sha512-uWrwMrhU31TCqHKmm1yFz0C352njGUVr/I1UnpMOxI/VBTTbCktx/mREUXx5Vyg11xrFdg/F3wnMM7Ql/csVsQ==}
+  /mathjs@11.11.2:
+    resolution: {integrity: sha512-SL4/0Fxm9X4sgovUpJTeyVeZ2Ifnk4tzLPTYWDyR3AIx9SabnXYqtCkyJtmoF3vZrDPKGkLvrhbIL4YN2YbXLQ==}
     engines: {node: '>= 14'}
     hasBin: true
     dependencies:
-      '@babel/runtime': 7.22.15
+      '@babel/runtime': 7.23.1
       complex.js: 2.1.1
       decimal.js: 10.4.3
       escape-latex: 1.2.0

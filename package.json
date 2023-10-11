@@ -33,7 +33,7 @@
         "@tsconfig/recommended": "^1.0.3",
         "@types/chroma-js": "^2.4.1",
         "@types/ua-parser-js": "^0.7.37",
-        "mathjs": "^11.11.1",
+        "mathjs": "^11.11.2",
         "stylelint": "^15.10.3",
         "tree-kill": "^1.2.2",
         "typescript": "^5.2.2"
