@@ -491,8 +491,10 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
             await updateCoinData(coinType.id, coinVariant.id, coin.id, { mintage: mintageNumber });
         }
 
-        if (mintageForAllVarieties !== coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintageForAllVarieties ?? null) {
-            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage "for all varieties"', { mintageForAllVarieties });
+        if (mintageForAllVarieties !== (coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintageForAllVarieties ?? null)) {
+            addCoinChangeEntry(coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!, coinVariant.name, 'mintage "for all varieties"', {
+                mintageForAllVarieties: mintageForAllVarieties ?? false,
+            });
 
             coinsData[coinType.id].coins[coinVariant.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
 
