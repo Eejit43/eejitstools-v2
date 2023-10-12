@@ -390,12 +390,16 @@ async function loadCoinsList() {
 
     loadPopupImages();
 
-    // Handle paste events to contenteditable elements
-    for (const element of document.querySelectorAll('#coins-list [contenteditable]') as NodeListOf<HTMLElement>)
+    // Strip newlines and formatting from contenteditable element interactions
+    for (const element of document.querySelectorAll('#coins-list [contenteditable]') as NodeListOf<HTMLElement>) {
+        element.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') event.preventDefault();
+        });
+
         element.addEventListener('paste', (event) => {
             event.preventDefault();
 
-            const text = event.clipboardData!.getData('text/plain');
+            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
 
             const range = document.getSelection()!.getRangeAt(0);
             range.deleteContents();
@@ -409,6 +413,7 @@ async function loadCoinsList() {
             selection.removeAllRanges();
             selection.addRange(range);
         });
+    }
 }
 
 /**
@@ -680,16 +685,6 @@ function formatMintage(mintage: number) {
  * @param data The data to update.
  */
 async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId: string, data: PartialNullable<Coin>) {
-    const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
-    const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
-    const addRowButtons = document.querySelectorAll('tr.new-row-message') as NodeListOf<HTMLTableRowElement>;
-
-    for (const element of editableElements) element.contentEditable = 'false';
-
-    for (const checkbox of checkboxes) checkbox.disabled = true;
-
-    for (const button of addRowButtons) button.dataset.disabled = 'true';
-
     const result = (await fetch('/coins-list-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -698,12 +693,6 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
 
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Coin data updated successfully!', 'success');
-
-    for (const element of editableElements) element.contentEditable = 'true';
-
-    for (const checkbox of checkboxes) checkbox.disabled = false;
-
-    for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
 
 /**
@@ -714,16 +703,6 @@ async function updateCoinData(coinTypeId: string, coinVariantId: string, coinId:
  * @param coinId The id of the coin to add.
  */
 async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: string, coinId: string) {
-    const editableElements = document.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>;
-    const checkboxes = document.querySelectorAll('td > input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
-    const addRowButtons = document.querySelectorAll('tr.new-row-message') as NodeListOf<HTMLTableRowElement>;
-
-    for (const element of editableElements) element.contentEditable = 'false';
-
-    for (const checkbox of checkboxes) checkbox.disabled = true;
-
-    for (const button of addRowButtons) button.dataset.disabled = 'true';
-
     const result = (await fetch('/coins-list-add-coin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -732,12 +711,6 @@ async function addCoin(coinTypeId: string, coinVariantId: string, coinYear: stri
 
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Successfully added a new coin row!', 'success');
-
-    for (const element of editableElements) element.contentEditable = 'true';
-
-    for (const checkbox of checkboxes) checkbox.disabled = false;
-
-    for (const button of addRowButtons) button.dataset.disabled = 'false';
 }
 
 /**
