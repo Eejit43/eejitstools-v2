@@ -389,6 +389,26 @@ async function loadCoinsList() {
     for (const coinType of unindexedCoinsData) for (const coinVariant of coinType.coins) loadVariantTotals(coinType.id, coinVariant.id);
 
     loadPopupImages();
+
+    // Handle paste events to contenteditable elements
+    for (const element of document.querySelectorAll('#coins-list [contenteditable]') as NodeListOf<HTMLElement>)
+        element.addEventListener('paste', (event) => {
+            event.preventDefault();
+
+            const text = event.clipboardData!.getData('text/plain');
+
+            const range = document.getSelection()!.getRangeAt(0);
+            range.deleteContents();
+
+            const textNode = document.createTextNode(text);
+            range.insertNode(textNode);
+            range.selectNodeContents(textNode);
+            range.collapse(false);
+
+            const selection = window.getSelection()!;
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
 }
 
 /**
