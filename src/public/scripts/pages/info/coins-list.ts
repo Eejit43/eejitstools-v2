@@ -501,7 +501,7 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
         mintage.classList.remove('mintage-for-all-varieties');
     });
     mintage.addEventListener('blur', async () => {
-        const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent.replace(/ (all)$/, '')) : null;
+        const mintageNumber = mintage.textContent ? Number.parseInt(mintage.textContent.replaceAll(',', '').replace(/ (all)$/, '')) : null;
         let mintageForAllVarieties: boolean | null | undefined = mintage.textContent?.endsWith(' (all)');
         if (!mintageForAllVarieties) mintageForAllVarieties = null;
 
