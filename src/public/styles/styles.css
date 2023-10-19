@@ -87,6 +87,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    &:not(textarea, input):focus {
+        transition:
+            outline 0.2s ease,
+            border-radius 0.2s ease;
+        outline: 2px solid #7aacfe !important;
+        outline-offset: 0.3ch;
+        border-radius: 2px;
+    }
 }
 
 html {
