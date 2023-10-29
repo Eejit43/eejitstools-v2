@@ -42,8 +42,8 @@ dependencies:
     specifier: ^7.6.3
     version: 7.6.3
   node-html-parser:
-    specifier: ^6.1.10
-    version: 6.1.10
+    specifier: ^6.1.11
+    version: 6.1.11
   postcss:
     specifier: ^8.4.31
     version: 8.4.31
@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^0.7.38
     version: 0.7.38
   mathjs:
-    specifier: ^11.11.2
-    version: 11.11.2
+    specifier: ^12.0.0
+    version: 12.0.0
   stylelint:
     specifier: ^15.11.0
     version: 15.11.0
@@ -111,8 +111,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@babel/runtime@7.23.1:
-    resolution: {integrity: sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==}
+  /@babel/runtime@7.23.2:
+    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
@@ -2679,12 +2679,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /mathjs@11.11.2:
-    resolution: {integrity: sha512-SL4/0Fxm9X4sgovUpJTeyVeZ2Ifnk4tzLPTYWDyR3AIx9SabnXYqtCkyJtmoF3vZrDPKGkLvrhbIL4YN2YbXLQ==}
-    engines: {node: '>= 14'}
+  /mathjs@12.0.0:
+    resolution: {integrity: sha512-Oz3swPplNPe7taoP6WrkKhQzhDE2SwvOgLzu8H3EN+hEadw2GjEJUm6Xl+hrioHoB8g2BYb3gfw1glSzhdBKYw==}
+    engines: {node: '>= 18'}
     hasBin: true
     dependencies:
-      '@babel/runtime': 7.23.1
+      '@babel/runtime': 7.23.2
       complex.js: 2.1.1
       decimal.js: 10.4.3
       escape-latex: 1.2.0
@@ -2926,8 +2926,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-html-parser@6.1.10:
-    resolution: {integrity: sha512-6/uWdWxjQWQ7tMcFK2wWlrflsQUzh1HsEzlIf2j5+TtzfhT2yUvg3DwZYAmjEHeR3uX74ko7exjHW69J0tOzIg==}
+  /node-html-parser@6.1.11:
+    resolution: {integrity: sha512-FAgwwZ6h0DSDWxfD0Iq1tsDcBCxdJB1nXpLPPxX8YyVWzbfCjKWEzaynF4gZZ/8hziUmp7ZSaKylcn0iKhufUQ==}
     dependencies:
       css-select: 5.1.0
       he: 1.2.0

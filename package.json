@@ -22,7 +22,7 @@
         "fastify": "^4.24.3",
         "handlebars": "^4.7.8",
         "mongoose": "^7.6.3",
-        "node-html-parser": "^6.1.10",
+        "node-html-parser": "^6.1.11",
         "postcss": "^8.4.31",
         "postcss-preset-env": "^9.2.0"
     },
@@ -33,10 +33,10 @@
         "@tsconfig/recommended": "^1.0.3",
         "@types/chroma-js": "^2.4.2",
         "@types/ua-parser-js": "^0.7.38",
-        "mathjs": "^11.11.2",
+        "mathjs": "^12.0.0",
         "stylelint": "^15.11.0",
         "tree-kill": "^1.2.2",
         "typescript": "^5.2.2"
     },
-    "packageManager": "pnpm@8.9.2"
+    "packageManager": "pnpm@8.10.0"
 }
