@@ -21,13 +21,13 @@
         "esbuild-postcss": "^0.0.4",
         "fastify": "^4.24.3",
         "handlebars": "^4.7.8",
-        "mongoose": "^7.6.3",
+        "mongoose": "^8.0.0",
         "node-html-parser": "^6.1.11",
         "postcss": "^8.4.31",
-        "postcss-preset-env": "^9.2.0"
+        "postcss-preset-env": "^9.3.0"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^3.0.0",
+        "@eejit/eslint-config-typescript": "^3.0.1",
         "@eejit/prettier-config": "^2.0.5",
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.3",
