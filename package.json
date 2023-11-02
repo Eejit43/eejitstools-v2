@@ -38,5 +38,5 @@
         "tree-kill": "^1.2.2",
         "typescript": "^5.2.2"
     },
-    "packageManager": "pnpm@8.10.1"
+    "packageManager": "pnpm@8.10.2"
 }
