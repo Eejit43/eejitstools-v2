@@ -27,12 +27,12 @@
         "postcss-preset-env": "^9.3.0"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^3.0.1",
+        "@eejit/eslint-config-typescript": "^3.1.0",
         "@eejit/prettier-config": "^2.0.5",
         "@eejit/stylelint-config": "^1.1.1",
         "@tsconfig/recommended": "^1.0.3",
-        "@types/chroma-js": "^2.4.2",
-        "@types/ua-parser-js": "^0.7.38",
+        "@types/chroma-js": "^2.4.3",
+        "@types/ua-parser-js": "^0.7.39",
         "mathjs": "^12.0.0",
         "stylelint": "^15.11.0",
         "tree-kill": "^1.2.2",
