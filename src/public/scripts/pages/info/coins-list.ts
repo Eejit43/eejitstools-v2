@@ -473,8 +473,8 @@ function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVarian
             tooltip.textContent.toLowerCase() === 'none'
                 ? `Likely minted in ${mintMarks.P}`
                 : tooltip.textContent.toUpperCase() in mintMarks
-                ? `Minted in ${mintMarks[tooltip.textContent]}`
-                : 'Unknown';
+                  ? `Minted in ${mintMarks[tooltip.textContent]}`
+                  : 'Unknown';
         tooltip.textContent = tooltip.textContent.toLowerCase() === 'none' ? 'None' : tooltip.textContent.toUpperCase();
         tooltip.classList.add('tooltip-bottom');
 
@@ -731,8 +731,8 @@ function addCoinChangeEntry(coinData: PartialNullable<Coin>, variant: string, ty
         changeText
             ? ` ${changeText}`
             : coinData[Object.keys(changes as Coin)[0] as keyof Coin]
-            ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"`
-            : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`
+              ? `'s ${type} was changed from "${coinData[Object.keys(changes as Coin)[0] as keyof Coin]!}" to "${Object.values(changes as Coin)[0] as string | boolean}"`
+              : `'s ${type} was set to "${Object.values(changes as Coin)[0] as string | boolean}"`
     }`;
 
     const timeTooltip = document.createElement('span');
