@@ -280,7 +280,7 @@ interface Style {
 
 type Imports = Record<string, { script?: Script; style?: Style }>;
 
-const imports: Imports = {
+const imports = {
     mathJax: {
         script: { link: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' },
     },
@@ -300,7 +300,7 @@ const imports: Imports = {
     suncalc: {
         script: { link: 'https://cdn.jsdelivr.net/npm/suncalc3/suncalc.js' },
     },
-};
+} satisfies Imports;
 
 export const blankProperties = {
     title: "Eejit's Tools",
