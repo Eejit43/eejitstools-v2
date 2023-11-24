@@ -27,72 +27,34 @@ const phoneticAlphabet = [
     { letter: 'Z', codeWord: 'Zulu' },
 ];
 
-export const imageAmounts: Record<string, Record<string, number>> = {
-    '1-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '2-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '5-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '10-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '20-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '50-cent': {
-        belgium: 3,
-        monaco: 2,
-        netherlands: 2,
-        spain: 2,
-        'vatican-city': 5,
-    },
-    '1-euro': {
-        belgium: 3,
-        france: 2,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 3,
-        'vatican-city': 5,
-    },
-    '2-euro': {
-        belgium: 3,
-        france: 2,
-        monaco: 2,
-        netherlands: 2,
-        'san-marino': 2,
-        spain: 3,
-        'vatican-city': 5,
-    },
+const centCommonAmounts = {
+    belgium: 3,
+    monaco: 2,
+    netherlands: 2,
+    'san-marino': 2,
+    spain: 2,
+    'vatican-city': 5,
+};
+
+const euroCommonAmounts = {
+    belgium: 3,
+    france: 2,
+    monaco: 2,
+    netherlands: 2,
+    'san-marino': 2,
+    spain: 3,
+    'vatican-city': 5,
+};
+
+export const euroImageAmounts: Record<string, Record<string, number>> = {
+    '1-cent': centCommonAmounts,
+    '2-cent': centCommonAmounts,
+    '5-cent': centCommonAmounts,
+    '10-cent': centCommonAmounts,
+    '20-cent': centCommonAmounts,
+    '50-cent': centCommonAmounts,
+    '1-euro': euroCommonAmounts,
+    '2-euro': euroCommonAmounts,
 };
 
 const euroCoins = {
