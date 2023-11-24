@@ -1,5 +1,5 @@
 import { Coin, CoinType, ParsedCoinType, ParsedCoinVariant } from '../../../data/coins-data.js';
-import { showAlert, showResult } from '../../functions.js';
+import { loadPopupImages, showAlert, showResult } from '../../functions.js';
 
 const passwordInput = document.querySelector('#login-password') as HTMLInputElement;
 const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
@@ -771,57 +771,40 @@ if (password) {
     }
 }
 
-/**
- * Adds modal functionality to all images with the "popup-image" class.
- */
-function loadPopupImages() {
-    const modal = document.querySelector('#modal') as HTMLDivElement;
-    const images = document.querySelectorAll('img.popup-image') as NodeListOf<HTMLImageElement>;
-    const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
-    const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
-    const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
-    const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
-    const closeButton = document.querySelector('#close-modal') as HTMLSpanElement;
+// Load popup images
+loadPopupImages();
 
-    for (const image of images)
-        image.addEventListener('click', () => {
-            modal.style.display = 'block';
-            if (modalImage.src !== image.src) modalImage.src = image.src;
-            if (modalCaption.textContent !== image.alt) modalCaption.textContent = image.alt;
-        });
-
-    for (const imageTextButton of imageTextButtons)
-        imageTextButton.addEventListener('click', () => {
-            modal.style.display = 'block';
-            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
-            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
-        });
-
-    for (const coinTypeComparisonButton of coinTypeComparisonButtons)
-        coinTypeComparisonButton.addEventListener('click', () => {
-            modal.style.display = 'block';
-            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
-            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
-        });
-
-    for (const element of [closeButton, modal]) element.addEventListener('click', () => (modal.style.display = 'none'));
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.style.display === 'block') modal.style.display = 'none';
+const modal = document.querySelector('#modal') as HTMLDivElement;
+const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
+const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
+const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
+const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
+for (const imageTextButton of imageTextButtons)
+    imageTextButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
+        if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
     });
-}
 
+for (const coinTypeComparisonButton of coinTypeComparisonButtons)
+    coinTypeComparisonButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
+        if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
+    });
+
+// Add functionality to data exporter
 exportDataButton.addEventListener('click', async () => {
     const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType[] & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 
     const file = new Blob([JSON.stringify(coinsData)], { type: 'application/json' });
-    const a = document.createElement('a');
+    const anchor = document.createElement('a');
     const url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = `coins-list data (${new Date().toLocaleString()}).json`;
-    a.click();
+    anchor.href = url;
+    anchor.download = `coins-list data (${new Date().toLocaleString()}).json`;
+    anchor.click();
 
     setTimeout(() => URL.revokeObjectURL(url), 0);
 });

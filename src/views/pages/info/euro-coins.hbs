@@ -1,0 +1,57 @@
+Images modified from those provided by the
+<a href="https://www.ecb.europa.eu/euro/coins" target="_blank" class="external-link">European Central Bank</a>.
+
+<table class="info-table needs-scroll">
+    <thead>
+        <tr>
+            {{#each additionalData.euroCoins.types}}
+                <th>{{this.name}}</th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#each additionalData.euroCoins.types}}
+                <td>
+                    <img src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/euro-coins/types/{{this.code}}.png" class="popup-image" alt="{{this.name}} coin reverse" />
+                </td>
+            {{/each}}
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Variants:</h2>
+
+<div class="basic-grid">
+    {{#each additionalData.euroCoins.types}}
+        <div>
+            <h4>{{this.name}}:</h4>
+            <table class="info-table country-variant-table">
+                <tbody>
+                    {{#each ../additionalData.euroCoins.countries}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>
+                                {{#iterateEuroCoin ../this.code this.code}}
+                                    <img
+                                        src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/euro-coins/countries/{{../../this.code}}/{{../this.code}}{{this.code}}.png"
+                                        class="popup-image"
+                                        alt="{{../this.name}} {{../../this.name}} coin obverse{{this.text}}"
+                                    />
+                                {{/iterateEuroCoin}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/each}}
+</div>
+
+<div id="modal">
+    <span id="close-modal">&times;</span>
+    <img id="modal-image" />
+    <div id="modal-caption"></div>
+</div>

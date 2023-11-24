@@ -1,0 +1,24 @@
+div.toolbox {
+    & table {
+        max-width: 80%;
+        table-layout: fixed;
+
+        &.country-variant-table {
+            display: inline-block;
+            margin: 8px auto 30px;
+        }
+
+        & td {
+            padding: 12px;
+
+            &:has(img) {
+                font-size: 0;
+            }
+        }
+
+        & img {
+            margin-block: 2px;
+            max-width: 100%;
+        }
+    }
+}

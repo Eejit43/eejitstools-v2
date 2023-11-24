@@ -7,11 +7,18 @@ import Fastify, { FastifyError, FastifyRequest } from 'fastify';
 import handlebars from 'handlebars';
 import mongoose from 'mongoose';
 import path from 'node:path';
-import { allPages, blankProperties, toneIndicators } from './public/data/pages.js';
+import { allPages, blankProperties, imageAmounts, toneIndicators } from './public/data/pages.js';
 import setupRoutes from './route-handlers/index.js';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);
+handlebars.registerHelper('iterateEuroCoin', (type: string, country: string, options: Handlebars.HelperOptions) => {
+    const amount = imageAmounts[type][country] ?? 1;
+
+    let accumulator = '';
+    for (let index = 1; index <= amount; ++index) accumulator += options.fn({ code: index === 1 ? '' : `-${index}`, text: amount > 1 ? ` ${index}` : '' });
+    return accumulator;
+});
 
 // Load layouts and static assets
 const fastify = Fastify({ trustProxy: true });
