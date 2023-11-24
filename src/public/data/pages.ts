@@ -46,7 +46,15 @@ const euroCommonAmounts = {
     'vatican-city': 5,
 };
 
-export const euroImageAmounts: Record<string, Record<string, number>> = {
+export const euroImageAmounts: Record<string, number> = {
+    '10-cent': 2,
+    '20-cent': 2,
+    '50-cent': 2,
+    '1-euro': 2,
+    '2-euro': 2,
+};
+
+export const euroVariantImageAmounts: Record<string, Record<string, number>> = {
     '1-cent': centCommonAmounts,
     '2-cent': centCommonAmounts,
     '5-cent': centCommonAmounts,

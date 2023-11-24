@@ -13,7 +13,13 @@ Images modified from those provided by the
         <tr>
             {{#each additionalData.euroCoins.types}}
                 <td>
-                    <img src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/euro-coins/types/{{this.code}}.png" class="popup-image" alt="{{this.name}} coin reverse" />
+                    {{#iterateEuroCoin this.code}}
+                        <img
+                            src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/euro-coins/types/{{../this.code}}{{this.code}}.png"
+                            class="popup-image"
+                            alt="{{../this.name}} coin reverse{{this.text}}"
+                        />
+                    {{/iterateEuroCoin}}
                 </td>
             {{/each}}
         </tr>
@@ -34,13 +40,13 @@ Images modified from those provided by the
                         <tr>
                             <td>{{this.name}}</td>
                             <td>
-                                {{#iterateEuroCoin ../this.code this.code}}
+                                {{#iterateEuroCoinVariant ../this.code this.code}}
                                     <img
                                         src="https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/euro-coins/countries/{{../../this.code}}/{{../this.code}}{{this.code}}.png"
                                         class="popup-image"
                                         alt="{{../this.name}} {{../../this.name}} coin obverse{{this.text}}"
                                     />
-                                {{/iterateEuroCoin}}
+                                {{/iterateEuroCoinVariant}}
                             </td>
                         </tr>
                     {{/each}}
