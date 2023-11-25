@@ -9,12 +9,12 @@ interface ExchangeRateData {
 const ratesGrid = document.querySelector('#rates-grid') as HTMLDivElement;
 
 const currencies = [
-    { name: 'CAD', symbol: '$' },
-    { name: 'EUR', symbol: '€' },
-    { name: 'GBP', symbol: '£' },
-    { name: 'AUD', symbol: '$' },
-    { name: 'CRC', symbol: '₡' },
-    { name: 'JPY', symbol: '¥' },
+    { name: 'Canadian Dollar', abbreviation: 'CAD', symbol: '$' },
+    { name: 'Euro', abbreviation: 'EUR', symbol: '€' },
+    { name: 'Great British Pound Sterling', abbreviation: 'GBP', symbol: '£' },
+    { name: 'Australian Dollar', abbreviation: 'AUD', symbol: '$' },
+    { name: 'Costa Rican Colón', abbreviation: 'CRC', symbol: '₡' },
+    { name: 'Japanese Yen', abbreviation: 'JPY', symbol: '¥' },
 ];
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
@@ -47,7 +47,11 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
 
             startCurrency.append(' =');
 
-            container.append(startCurrency, ` ${currency.symbol}${rates[currency.name].toLocaleString()} ${currency.name}`);
+            const endCurrencyTooltip = document.createElement('span');
+            endCurrencyTooltip.textContent = currency.abbreviation;
+            endCurrencyTooltip.dataset.tooltip = currency.name;
+
+            container.append(startCurrency, ` ${currency.symbol}${rates[currency.abbreviation].toLocaleString()} `, endCurrencyTooltip);
 
             return container;
         }),
@@ -61,9 +65,9 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
 
             const startCurrency = document.createElement('span');
             startCurrency.classList.add('start-currency');
-            startCurrency.textContent = `${currency.symbol}1 ${currency.name} =`;
+            startCurrency.textContent = `${currency.symbol}1 ${currency.abbreviation} =`;
 
-            container.append(startCurrency, ` $${(1 / rates[currency.name]).toLocaleString()} USD`);
+            container.append(startCurrency, ` $${(1 / rates[currency.abbreviation]).toLocaleString()} USD`);
 
             return container;
         }),
@@ -72,17 +76,4 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
     ratesGrid.innerHTML = '';
 
     ratesGrid.append(firstDiv, secondDiv);
-
-    // (document.querySelector('#usd-cad') as HTMLSpanElement).textContent = `$${rates.CAD.toLocaleString()}`;
-    // (document.querySelector('#usd-eur') as HTMLSpanElement).textContent = `€${rates.EUR.toLocaleString()}`;
-    // (document.querySelector('#usd-gbp') as HTMLSpanElement).textContent = `£${rates.GBP.toLocaleString()}`;
-    // (document.querySelector('#usd-aud') as HTMLSpanElement).textContent = `$${rates.AUD.toLocaleString()}`;
-    // (document.querySelector('#usd-crc') as HTMLSpanElement).textContent = `₡${rates.CRC.toLocaleString()}`;
-    // (document.querySelector('#usd-jpy') as HTMLSpanElement).textContent = `¥${rates.JPY.toLocaleString()}`;
-    // (document.querySelector('#cad-usd') as HTMLSpanElement).textContent = `$${(1 / rates.CAD).toLocaleString()}`;
-    // (document.querySelector('#eur-usd') as HTMLSpanElement).textContent = `$${(1 / rates.EUR).toLocaleString()}`;
-    // (document.querySelector('#gbp-usd') as HTMLSpanElement).textContent = `$${(1 / rates.GBP).toLocaleString()}`;
-    // (document.querySelector('#aud-usd') as HTMLSpanElement).textContent = `$${(1 / rates.AUD).toLocaleString()}`;
-    // (document.querySelector('#crc-usd') as HTMLSpanElement).textContent = `$${(1 / rates.CRC).toLocaleString()}`;
-    // (document.querySelector('#jpy-usd') as HTMLSpanElement).textContent = `$${(1 / rates.JPY).toLocaleString()}`;
 });
