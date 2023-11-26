@@ -148,6 +148,7 @@ nav * {
             border-top: 2px solid var(--neutral-color-200);
             padding-top: 15px;
             padding-bottom: 15px;
+            width: 300px;
 
             & .results-title {
                 padding-bottom: 5px;
