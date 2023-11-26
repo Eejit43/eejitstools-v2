@@ -388,7 +388,28 @@ async function loadCoinsList() {
 
     for (const coinType of unindexedCoinsData) for (const coinVariant of coinType.coins) loadVariantTotals(coinType.id, coinVariant.id);
 
+    // Load popup images
     loadPopupImages();
+
+    const modal = document.querySelector('#modal') as HTMLDivElement;
+    const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
+    const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
+    const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
+    const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
+
+    for (const imageTextButton of imageTextButtons)
+        imageTextButton.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
+            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
+        });
+
+    for (const coinTypeComparisonButton of coinTypeComparisonButtons)
+        coinTypeComparisonButton.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
+            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
+        });
 
     // Strip newlines and formatting from contenteditable element interactions
     for (const element of document.querySelectorAll('#coins-list [contenteditable]') as NodeListOf<HTMLElement>) {
@@ -770,28 +791,6 @@ if (password) {
         showResult(loginButton, 'error', false);
     }
 }
-
-// Load popup images
-loadPopupImages();
-
-const modal = document.querySelector('#modal') as HTMLDivElement;
-const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
-const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
-const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
-const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
-for (const imageTextButton of imageTextButtons)
-    imageTextButton.addEventListener('click', () => {
-        modal.style.display = 'block';
-        if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
-        if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
-    });
-
-for (const coinTypeComparisonButton of coinTypeComparisonButtons)
-    coinTypeComparisonButton.addEventListener('click', () => {
-        modal.style.display = 'block';
-        if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
-        if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
-    });
 
 // Add functionality to data exporter
 exportDataButton.addEventListener('click', async () => {
