@@ -6,7 +6,6 @@ import { logApiRequest } from '../app.js';
  * @param fastify The Fastify instance.
  */
 export default function (fastify: FastifyInstance) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { url: string } }>, reply) => {
         logApiRequest(request);
 

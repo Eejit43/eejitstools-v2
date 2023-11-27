@@ -63,7 +63,6 @@ export default function (fastify: FastifyInstance) {
     const todoOptionsModel = model('todo-options', new Schema({ data: Array }));
     let todoOptions: TodoOption[] | null = null;
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
         const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
@@ -73,7 +72,6 @@ export default function (fastify: FastifyInstance) {
         reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
     });
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: Record<string, boolean>; year: string; month: string; date: string } }>, reply) => {
         const { password, todo } = request.body;
         const year = Number.parseInt(request.body.year);

@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
 import { Coin, ParsedCoinType, coinsData } from '../public/data/coins-data.js';
 
@@ -9,10 +9,12 @@ import { Coin, ParsedCoinType, coinsData } from '../public/data/coins-data.js';
 export default function (fastify: FastifyInstance) {
     const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
 
-    fastify.get('/coins-login', (request, reply) => reply.send(JSON.stringify({ success: (request.query as { password: string }).password === process.env.COINS_PASSWORD }, null, 2)));
+    fastify.get('/coins-login', (request: FastifyRequest<{ Querystring: { password: string } }>, reply) =>
+        reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)),
+    );
 
-    fastify.get('/coins-list', async (request, reply) => {
-        if ((request.query as { password: string }).password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+    fastify.get('/coins-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
+        if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
         const mergedCoinsData = await Promise.all(
             coinsData.map(async (coinType) => {
@@ -34,8 +36,8 @@ export default function (fastify: FastifyInstance) {
         reply.send(JSON.stringify(mergedCoinsData, null, 2));
     });
 
-    fastify.post('/coins-list-edit', async (request, reply) => {
-        const { coinTypeId, coinVariantId, coinId, data, password } = request.body as { coinTypeId: string; coinVariantId: string; coinId: string; data: Partial<Coin>; password: string };
+    fastify.post('/coins-list-edit', async (request: FastifyRequest<{ Body: { coinTypeId: string; coinVariantId: string; coinId: string; data: Partial<Coin>; password: string } }>, reply) => {
+        const { coinTypeId, coinVariantId, coinId, data, password } = request.body;
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
@@ -64,8 +66,8 @@ export default function (fastify: FastifyInstance) {
         reply.send(JSON.stringify({ success: true }, null, 2));
     });
 
-    fastify.post('/coins-list-add-coin', async (request, reply) => {
-        const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body as { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: string; password: string };
+    fastify.post('/coins-list-add-coin', async (request: FastifyRequest<{ Body: { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: string; password: string } }>, reply) => {
+        const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body;
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 

@@ -1,5 +1,3 @@
-// Lists of coins: https://mycoinguides.com/listing-of-coin-guides
-
 export interface CoinType {
     name: string;
     id: string;

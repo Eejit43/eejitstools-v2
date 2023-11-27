@@ -5,7 +5,6 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
  * @param fastify The Fastify instance.
  */
 export default function (fastify: FastifyInstance) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.get('/weather-info', async (request: FastifyRequest<{ Querystring: { latitude: string; longitude: string } }>, reply) => {
         const { latitude, longitude } = request.query;
 

@@ -7,7 +7,6 @@ import { logApiRequest } from '../app.js';
  * @param fastify The Fastify instance.
  */
 export default function (fastify: FastifyInstance) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.get('/twemoji/:id', async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
         logApiRequest(request);
 

@@ -38,7 +38,6 @@ export interface ApodEntryMedia {
  * @param fastify The Fastify instance.
  */
 export default function (fastify: FastifyInstance) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     fastify.get('/astronomy-picture/:year/:month/:date', async (request: FastifyRequest<{ Params: { year: string; month: string; date: string } }>, reply) => {
         logApiRequest(request);
 
