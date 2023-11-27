@@ -1,6 +1,6 @@
 import { CalendarEvents } from '../../../../route-handlers/calendar.js';
-import { holidayEmojis } from '../../../data/pages.js';
 import { twemojiUpdate } from '../../functions.js';
+import { holidayEmojis } from './calendar.js';
 
 const countdownContainer = document.querySelector('#countdowns') as HTMLDivElement;
 
