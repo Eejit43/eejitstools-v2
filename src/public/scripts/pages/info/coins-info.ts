@@ -22,9 +22,11 @@ async function loadCoinsInfo() {
         coinTypeElement.addEventListener('click', () => loadCoinTypeInfo(coinType));
 
         const coinTypeImage = document.createElement('img');
-        coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${
-            coinType.coins.at(-1)?.id ? `${coinType.id}/${coinType.coins.at(-1)?.id}` : 'default'
-        }.png`;
+
+        const lastCoinVariant = coinType.coins.at(-1);
+
+        coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${lastCoinVariant ? `${coinType.id}/${lastCoinVariant.id}` : 'default'}.png`;
+        coinTypeImage.alt = lastCoinVariant?.name ?? 'Default coin image';
 
         coinTypeElement.prepend(coinTypeImage);
 
@@ -61,6 +63,7 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
 
         const coinTypeImage = document.createElement('img');
         coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
+        coinTypeImage.alt = coinVariant.name;
 
         coinVariantElement.prepend(coinTypeImage);
 
@@ -98,6 +101,12 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
     header.textContent = coinVariant.name;
 
     outputDiv.append(header);
+
+    const informationGrid = document.createElement('div');
+    informationGrid.id = 'information-grid';
+    informationGrid.classList.add('basic-grid');
+
+    const informationGridCell = document.createElement('div');
 
     const coinInformation: { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[] = [
         { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(coinVariant) },
@@ -169,8 +178,16 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
         row.append(': ', value);
 
-        outputDiv.append(row);
+        informationGridCell.append(row);
     }
+
+    const imageElement = document.createElement('img');
+    imageElement.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
+    imageElement.alt = coinVariant.name;
+
+    informationGrid.append(informationGridCell, imageElement);
+
+    outputDiv.append(informationGrid);
 }
 
 /**
