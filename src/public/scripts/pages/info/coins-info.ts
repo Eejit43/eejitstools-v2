@@ -1,5 +1,6 @@
 import { FilteredCoin } from '../../../../route-handlers/coins-info';
 import { CoinType, CoinVariant } from '../../../../route-handlers/coins-list';
+import { loadPopupImages } from '../../functions.js';
 
 const outputDiv = document.querySelector('#output') as HTMLDivElement;
 const outputGridDiv = document.querySelector('#output-grid') as HTMLDivElement;
@@ -184,10 +185,13 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
     const imageElement = document.createElement('img');
     imageElement.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
     imageElement.alt = coinVariant.name;
+    imageElement.classList.add('popup-image');
 
     informationGrid.append(informationGridCell, imageElement);
 
     outputDiv.append(informationGrid);
+
+    loadPopupImages();
 }
 
 /**

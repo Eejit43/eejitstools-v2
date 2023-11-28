@@ -4,6 +4,8 @@
     }
 
     & #information-grid {
+        --min-width: 350px;
+
         & .coin-information-row {
             margin-block: 8px;
             color: var(--neutral-color-150);
