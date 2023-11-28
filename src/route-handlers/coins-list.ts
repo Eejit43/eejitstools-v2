@@ -14,6 +14,11 @@ export interface CoinVariant<Coin> {
     note?: string;
     years?: string;
     active?: true;
+    composition: string[];
+    weight: number;
+    diameter: number;
+    thickness: number;
+    numistaEntry: number;
     coins: Coin[];
 }
 

@@ -99,15 +99,50 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
     outputDiv.append(header);
 
-    const coinInformation: { icon: string; name: string; value: string }[] = [
+    const coinInformation: { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[] = [
         { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(coinVariant) },
-        { icon: 'coins', name: 'Total Minted', value: '' },
+        {
+            icon: 'coins',
+            name: 'Total Minted',
+            value: () => {
+                const variantTotalsAlreadyAdded: FilteredCoin[] = [];
+
+                let total = 0;
+
+                for (const coin of coinVariant.coins) {
+                    if (!coin.mintage) continue;
+
+                    if (coin.mintageForAllVarieties)
+                        if (variantTotalsAlreadyAdded.some((variant) => variant.year === coin.year && variant.mintMark === coin.mintMark)) continue;
+                        else variantTotalsAlreadyAdded.push(coin);
+
+                    total += coin.mintage;
+                }
+
+                const lastDateWithMintage = coinVariant.coins.findLast((coin) => coin.mintage)?.year;
+
+                if (!lastDateWithMintage) return '';
+
+                return `${total.toLocaleString()}${lastDateWithMintage === coinVariant.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
+            },
+        },
         { icon: 'dollar-sign', name: 'Value', value: `$${coinType.value.toFixed(2)}` },
-        { icon: 'vial', name: 'Composition', value: '' },
-        { icon: 'weight-scale', name: 'Weight', value: '' },
-        { icon: 'circle', name: 'Diameter', value: '' },
-        { icon: 'coin-blank', name: 'Thickness', value: '' },
-        { icon: 'database', name: 'Numista Entry', value: '' },
+        { icon: 'vial', name: 'Composition', value: coinVariant.composition?.join(', ') || null },
+        { icon: 'weight-scale', name: 'Weight', value: coinVariant.weight ? `${coinVariant.weight} grams` : null },
+        { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
+        { icon: 'coin-blank', name: 'Thickness', value: coinVariant.thickness ? `${coinVariant.thickness} mm` : null },
+        {
+            icon: 'database',
+            name: 'Numista Entry',
+            value: () => {
+                if (!coinVariant.numistaEntry) return null;
+
+                const linkElement = document.createElement('a');
+                linkElement.href = `https://en.numista.com/catalogue/pieces${coinVariant.numistaEntry}.html`;
+
+                return linkElement;
+            },
+        },
     ];
 
     for (const item of coinInformation) {
@@ -123,7 +158,10 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
         const value = document.createElement('span');
 
-        if (item.value) value.textContent = item.value.trim();
+        const itemValue = typeof item.value === 'function' ? item.value() : item.value;
+        if (itemValue)
+            if (typeof itemValue === 'string') value.textContent = itemValue;
+            else value.append(itemValue);
         else {
             value.dataset.unknown = 'true';
             value.textContent = 'Unknown';
