@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import setupAllPageRoutes from './all-pages.js';
 import setupApodRoute from './astronomy-picture.js';
 import setupCalendarRoutes from './calendar.js';
+import setupCoinsInfoRoute from './coins-info.js';
 import setupCoinsListRoutes from './coins-list.js';
 import setupCorsAnywhereRoute from './cors-anywhere.js';
 import setupIpInfoRoute from './ip-info.js';
@@ -17,6 +18,7 @@ export default function setupRoutes(fastify: FastifyInstance) {
     setupAllPageRoutes(fastify);
     setupApodRoute(fastify);
     setupCalendarRoutes(fastify);
+    setupCoinsInfoRoute(fastify);
     setupCoinsListRoutes(fastify);
     setupCorsAnywhereRoute(fastify);
     setupIpInfoRoute(fastify);

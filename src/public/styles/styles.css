@@ -240,6 +240,15 @@ kbd {
     cursor: unset;
 }
 
+[data-icon-before]::before {
+    padding-right: 3px;
+    content: attr(data-icon-before);
+    font-weight: bold;
+    font-size: calc(1em - 2px);
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 6 Pro";
+}
+
 [data-icon-after]::after {
     padding-left: 3px;
     content: attr(data-icon-after);

@@ -1,4 +1,4 @@
-import { Coin, CoinType, ParsedCoinType, ParsedCoinVariant } from '../../../data/coins-data.js';
+import { Coin, CoinType, CoinVariant } from '../../../../route-handlers/coins-list.js';
 import { loadPopupImages, showAlert, showResult } from '../../functions.js';
 
 const passwordInput = document.querySelector('#login-password') as HTMLInputElement;
@@ -66,7 +66,7 @@ let coinsData: Record<string, { name: string; id: string; coins: Record<string, 
  * Load the coins list.
  */
 async function loadCoinsList() {
-    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as ParsedCoinType[];
+    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType<CoinVariant<Coin>>[];
 
     coinsData = Object.fromEntries(
         unindexedCoinsData.map((coinType) => [
@@ -443,7 +443,7 @@ async function loadCoinsList() {
  * @param coinVariant The coin variant to generate the coin row for.
  * @param coin The coin to generate the coin row for.
  */
-function generateCoinRow(coinType: ParsedCoinType, coinVariant: ParsedCoinVariant, coin: Coin) {
+function generateCoinRow(coinType: CoinType<CoinVariant<Coin>>, coinVariant: CoinVariant<Coin>, coin: Coin) {
     const row = document.createElement('tr');
     row.dataset.id = coin.id.toString();
     row.dataset.obtained = (coin.obtained ?? false).toString();
@@ -794,7 +794,7 @@ if (password) {
 
 // Add functionality to data exporter
 exportDataButton.addEventListener('click', async () => {
-    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType[] & { error?: string };
+    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType<CoinVariant<Coin>>[] & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 

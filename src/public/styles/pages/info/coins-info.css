@@ -1,0 +1,32 @@
+#output {
+    margin-bottom: 1em;
+}
+
+#output-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+
+    & .coin-type {
+        transition:
+            opacity 100ms ease,
+            border-radius 100ms ease;
+        margin: auto;
+        border: 2px solid var(--neutral-color-150);
+        border-radius: 3px;
+        background-color: #272a32;
+        padding: 8px;
+        width: 200px;
+        text-align: center;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        & img {
+            width: 100%;
+        }
+    }
+}

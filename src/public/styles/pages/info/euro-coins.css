@@ -6,6 +6,7 @@ div.toolbox {
         &.country-variant-table {
             display: inline-block;
             margin: 8px auto 30px;
+            max-width: 250px;
         }
 
         & td {

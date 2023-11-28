@@ -7,7 +7,8 @@ import Fastify, { FastifyError, FastifyRequest } from 'fastify';
 import handlebars from 'handlebars';
 import mongoose from 'mongoose';
 import path from 'node:path';
-import { allPages, blankProperties, euroImageAmounts, euroVariantImageAmounts, toneIndicators } from './public/data/pages.js';
+import { euroImageAmounts, euroVariantImageAmounts, toneIndicators } from './public/data/pages-data.js';
+import { allPages, blankProperties } from './public/data/pages.js';
 import setupRoutes from './route-handlers/index.js';
 
 // Add Handlebars helper functions

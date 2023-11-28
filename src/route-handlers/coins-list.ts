@@ -1,14 +1,42 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
-import { Coin, ParsedCoinType, coinsData } from '../public/data/coins-data.js';
+
+export interface CoinType<CoinVariant> {
+    name: string;
+    id: string;
+    value: number;
+    coins: CoinVariant[];
+}
+
+export interface CoinVariant<Coin> {
+    name: string;
+    id: string;
+    note?: string;
+    years?: string;
+    active?: true;
+    coins: Coin[];
+}
+
+export interface Coin {
+    id: string;
+    year: string;
+    mintMark?: string;
+    mintage?: number;
+    mintageForAllVarieties?: boolean;
+    specification?: string;
+    image?: string;
+    comparison?: string;
+    obtained: boolean;
+    upgrade?: boolean;
+}
+
+export const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
 
 /**
  * Sets up all coin related routes.
  * @param fastify The Fastify instance.
  */
 export default function (fastify: FastifyInstance) {
-    const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
-
     fastify.get('/coins-login', (request: FastifyRequest<{ Querystring: { password: string } }>, reply) =>
         reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)),
     );
@@ -16,24 +44,18 @@ export default function (fastify: FastifyInstance) {
     fastify.get('/coins-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const mergedCoinsData = await Promise.all(
-            coinsData.map(async (coinType) => {
-                let coinsDatabaseEntry = (await coinsModel.findOne({ id: coinType.id })) as ParsedCoinType | null;
-                if (!coinsDatabaseEntry)
-                    coinsDatabaseEntry = coinsModel.create({
-                        name: coinType.name,
-                        id: coinType.id,
-                        coins: coinType.coins?.map((variant) => ({
-                            ...variant,
-                            coins: variant.coins?.map((coin) => ({ ...coin, id: Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000) })),
-                        })),
-                    }) as unknown as ParsedCoinType;
+        const foundCoins = (await coinsModel.find({}).lean()) as (CoinType<CoinVariant<Coin>> & { _id?: number; __v?: number })[]; // eslint-disable-line @typescript-eslint/naming-convention
 
-                return { name: coinsDatabaseEntry.name, id: coinsDatabaseEntry.id, coins: coinsDatabaseEntry.coins };
-            }),
-        );
+        const sortedCoinInfo = foundCoins
+            .map((type) => {
+                delete type._id;
+                delete type.__v;
 
-        reply.send(JSON.stringify(mergedCoinsData, null, 2));
+                return type;
+            })
+            .sort((a, b) => a.value - b.value);
+
+        reply.send(JSON.stringify(sortedCoinInfo, null, 2));
     });
 
     fastify.post('/coins-list-edit', async (request: FastifyRequest<{ Body: { coinTypeId: string; coinVariantId: string; coinId: string; data: Partial<Coin>; password: string } }>, reply) => {
@@ -41,7 +63,7 @@ export default function (fastify: FastifyInstance) {
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null;
+        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType<CoinVariant<Coin>> | null;
         if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
 
         databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
@@ -71,7 +93,7 @@ export default function (fastify: FastifyInstance) {
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as ParsedCoinType | null;
+        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType<CoinVariant<Coin>> | null;
         if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
 
         const databaseCoinVariant = databaseCoinType.coins.find((variant) => variant.id === coinVariantId);
