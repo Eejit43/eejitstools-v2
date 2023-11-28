@@ -45,6 +45,7 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
     const backButtonDiv = document.createElement('div');
 
     const backButton = document.createElement('button');
+    backButton.id = 'back-button';
     backButton.textContent = 'Back';
     backButton.dataset.iconBefore = '\uF053';
     backButton.addEventListener('click', loadCoinsInfo);
@@ -53,16 +54,84 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
     outputDiv.append(backButtonDiv);
 
     for (const coinVariant of coinType.coins) {
-        const coinTypeElement = document.createElement('div');
-        coinTypeElement.classList.add('coin-type');
-        coinTypeElement.textContent = `${coinVariant.name} (${getCoinYears(coinVariant)})`;
+        const coinVariantElement = document.createElement('div');
+        coinVariantElement.classList.add('coin-type');
+        coinVariantElement.textContent = `${coinVariant.name} (${getCoinYears(coinVariant)})`;
+        coinVariantElement.addEventListener('click', () => loadCoinVariantInfo(coinType, coinVariant));
 
         const coinTypeImage = document.createElement('img');
         coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
 
-        coinTypeElement.prepend(coinTypeImage);
+        coinVariantElement.prepend(coinTypeImage);
 
-        outputGridDiv.append(coinTypeElement);
+        outputGridDiv.append(coinVariantElement);
+    }
+}
+
+/**
+ * Loads information for a coin variant.
+ * @param coinType The coin variant's parent type.
+ * @param coinVariant The coin variant to load information for.
+ */
+function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coinVariant: CoinVariant<FilteredCoin>) {
+    outputDiv.innerHTML = '';
+    outputGridDiv.innerHTML = '';
+
+    const backButtonDiv = document.createElement('div');
+    backButtonDiv.id = 'back-button-container';
+
+    const startOverButton = document.createElement('button');
+    startOverButton.textContent = 'Start Over';
+    startOverButton.dataset.iconBefore = '\uF323';
+    startOverButton.addEventListener('click', loadCoinsInfo);
+
+    const backButton = document.createElement('button');
+    backButton.id = 'back-button';
+    backButton.textContent = 'Back';
+    backButton.dataset.iconBefore = '\uF053';
+    backButton.addEventListener('click', () => loadCoinTypeInfo(coinType));
+
+    backButtonDiv.append(startOverButton, document.createTextNode(' '), backButton);
+    outputDiv.append(backButtonDiv);
+
+    const header = document.createElement('h2');
+    header.textContent = coinVariant.name;
+
+    outputDiv.append(header);
+
+    const coinInformation: { icon: string; name: string; value: string }[] = [
+        { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(coinVariant) },
+        { icon: 'coins', name: 'Total Minted', value: '' },
+        { icon: 'dollar-sign', name: 'Value', value: `$${coinType.value.toFixed(2)}` },
+        { icon: 'vial', name: 'Composition', value: '' },
+        { icon: 'weight-scale', name: 'Weight', value: '' },
+        { icon: 'circle', name: 'Diameter', value: '' },
+        { icon: 'coin-blank', name: 'Thickness', value: '' },
+        { icon: 'database', name: 'Numista Entry', value: '' },
+    ];
+
+    for (const item of coinInformation) {
+        const row = document.createElement('div');
+        row.classList.add('coin-information-row');
+
+        const icon = document.createElement('i');
+        icon.className = `fa-regular fa-${item.icon}`;
+
+        row.append(icon, ' ');
+
+        row.append(item.name);
+
+        const value = document.createElement('span');
+
+        if (item.value) value.textContent = item.value.trim();
+        else {
+            value.dataset.unknown = 'true';
+            value.textContent = 'Unknown';
+        }
+
+        row.append(': ', value);
+
+        outputDiv.append(row);
     }
 }
 
@@ -78,3 +147,18 @@ export function getCoinYears(variant: CoinVariant<FilteredCoin>): string {
 
     return startYear === endYear ? startYear : `${startYear}–${endYear}`;
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowLeft') return;
+
+    if (
+        event.altKey ||
+        event.metaKey ||
+        (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true'))
+    )
+        return;
+
+    const backButton = document.querySelector('#back-button') as HTMLButtonElement | null;
+
+    if (backButton) backButton.click();
+});

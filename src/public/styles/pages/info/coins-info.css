@@ -1,5 +1,20 @@
 #output {
-    margin-bottom: 1em;
+    & #back-button-container {
+        margin-bottom: 1em;
+    }
+
+    & .coin-information-row {
+        margin-block: 8px;
+        color: var(--neutral-color-150);
+
+        & span {
+            color: var(--neutral-color-100);
+
+            &[data-unknown="true"] {
+                color: var(--error-color-200);
+            }
+        }
+    }
 }
 
 #output-grid {
