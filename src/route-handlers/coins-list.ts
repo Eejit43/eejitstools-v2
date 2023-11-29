@@ -8,17 +8,22 @@ export interface CoinType<CoinVariant> {
     coins: CoinVariant[];
 }
 
+export interface CoinComposition {
+    type: string;
+    value: number;
+}
+
 export interface CoinVariant<Coin> {
     name: string;
     id: string;
     note?: string;
     years?: string;
     active?: true;
-    composition: string[];
-    weight: number;
+    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startDate: number; endDate: number }[];
+    mass: number | { value: number; startDate: number; endDate: number }[];
     diameter: number;
     thickness: number;
-    numistaEntry: number;
+    numistaEntry: number | number[];
     wikipediaArticle: string;
     coins: Coin[];
 }

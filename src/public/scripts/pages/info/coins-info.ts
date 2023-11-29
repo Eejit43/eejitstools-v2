@@ -95,7 +95,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
     backButton.dataset.iconBefore = '\uF053';
     backButton.addEventListener('click', () => loadCoinTypeInfo(coinType));
 
-    backButtonDiv.append(startOverButton, document.createTextNode(' '), backButton);
+    backButtonDiv.append(startOverButton, ' ', backButton);
     outputDiv.append(backButtonDiv);
 
     const header = document.createElement('h2');
@@ -137,8 +137,26 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             },
         },
         { icon: 'dollar-sign', name: 'Value', value: `$${coinType.value.toFixed(2)}` },
-        { icon: 'vial', name: 'Composition', value: coinVariant.composition?.join(', ') || null },
-        { icon: 'weight-scale', name: 'Weight', value: coinVariant.weight ? `${coinVariant.weight} grams` : null },
+        {
+            icon: 'vial',
+            name: 'Composition',
+            value: coinVariant.composition
+                ? 'amounts' in coinVariant.composition
+                    ? coinVariant.composition.amounts.map((entry) => `${entry.value}% ${entry.type}`).join(', ')
+                    : coinVariant.composition
+                          .map((yearRange) => `${yearRange.amounts.map((entry) => `${entry.value}% ${entry.type}`).join(', ')} (${yearRange.startDate}–${yearRange.endDate})`)
+                          .join(', ')
+                : null,
+        },
+        {
+            icon: 'weight-scale',
+            name: 'Mass',
+            value: coinVariant.mass
+                ? typeof coinVariant.mass === 'number'
+                    ? `${coinVariant.mass} grams`
+                    : coinVariant.mass.map((yearRange) => `${yearRange.value} grams (${yearRange.startDate}–${yearRange.endDate})`).join(', ')
+                : null,
+        },
         { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
         { icon: 'coin-blank', name: 'Thickness', value: coinVariant.thickness ? `${coinVariant.thickness} mm` : null },
         {
@@ -147,12 +165,21 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             value: () => {
                 if (!coinVariant.numistaEntry) return null;
 
-                const linkElement = document.createElement('a');
-                linkElement.href = `https://en.numista.com/catalogue/pieces${coinVariant.numistaEntry}.html`;
-                linkElement.target = '_blank';
-                linkElement.textContent = `#${coinVariant.numistaEntry}`;
+                const linkContainer = document.createElement('span');
 
-                return linkElement;
+                const numistaIds = typeof coinVariant.numistaEntry === 'number' ? [coinVariant.numistaEntry] : coinVariant.numistaEntry;
+
+                for (const [index, numistaId] of numistaIds.entries()) {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = `https://en.numista.com/catalogue/pieces${numistaId}.html`;
+                    linkElement.target = '_blank';
+                    linkElement.textContent = `#${numistaId}`;
+
+                    linkContainer.append(linkElement);
+                    if (index !== numistaIds.length - 1) linkContainer.append(', ');
+                }
+
+                return linkContainer;
             },
         },
         {
