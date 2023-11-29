@@ -168,14 +168,14 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             value: () => {
                 if (!coinVariant.mass) return null;
 
-                if (typeof coinVariant.mass === 'number') return `${coinVariant.mass} grams`;
+                if (typeof coinVariant.mass === 'number') return `${coinVariant.mass.toFixed(2)} grams`;
 
                 const listElement = document.createElement('ul');
 
                 for (const yearRange of coinVariant.mass) {
                     const listItem = document.createElement('li');
 
-                    if (yearRange.value) listItem.append(`${yearRange.value} grams`);
+                    if (yearRange.value) listItem.append(`${yearRange.value.toFixed(2)} grams`);
                     else {
                         const unknownSpan = document.createElement('span');
                         unknownSpan.dataset.unknown = 'true';
