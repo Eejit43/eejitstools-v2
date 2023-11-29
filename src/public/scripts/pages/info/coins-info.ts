@@ -141,25 +141,89 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
         {
             icon: 'vial',
             name: 'Composition',
-            value: coinVariant.composition
-                ? 'amounts' in coinVariant.composition
-                    ? coinVariant.composition.amounts.map((entry) => `${entry.value}% ${entry.type}`).join(', ')
-                    : coinVariant.composition
-                          .map((yearRange) => `${yearRange.amounts.map((entry) => `${entry.value}% ${entry.type}`).join(', ')} (${yearRange.startDate}–${yearRange.endDate})`)
-                          .join(', ')
-                : null,
+            value: () => {
+                if (!coinVariant.composition) return null;
+
+                if ('amounts' in coinVariant.composition) return coinVariant.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
+                else {
+                    const listElement = document.createElement('ul');
+
+                    for (const yearRange of coinVariant.composition) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${yearRange.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ')} (${formatYearRange(
+                            yearRange.startYear,
+                            yearRange.endYear,
+                        )})`;
+
+                        listElement.append(listItem);
+                    }
+
+                    return listElement;
+                }
+            },
         },
         {
             icon: 'weight-scale',
             name: 'Mass',
-            value: coinVariant.mass
-                ? typeof coinVariant.mass === 'number'
-                    ? `${coinVariant.mass} grams`
-                    : coinVariant.mass.map((yearRange) => `${yearRange.value} grams (${yearRange.startDate}–${yearRange.endDate})`).join(', ')
-                : null,
+            value: () => {
+                if (!coinVariant.mass) return null;
+
+                if (typeof coinVariant.mass === 'number') return `${coinVariant.mass} grams`;
+
+                const listElement = document.createElement('ul');
+
+                for (const yearRange of coinVariant.mass) {
+                    const listItem = document.createElement('li');
+
+                    if (yearRange.value) listItem.append(`${yearRange.value} grams`);
+                    else {
+                        const unknownSpan = document.createElement('span');
+                        unknownSpan.dataset.unknown = 'true';
+                        unknownSpan.textContent = 'Unknown';
+
+                        listItem.append(unknownSpan);
+                    }
+
+                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
+            },
         },
         { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
-        { icon: 'coin-blank', name: 'Thickness', value: coinVariant.thickness ? `${coinVariant.thickness} mm` : null },
+        {
+            icon: 'coin-blank',
+            name: 'Thickness',
+            value: () => {
+                if (!coinVariant.thickness) return null;
+
+                if (typeof coinVariant.thickness === 'number') return `${coinVariant.thickness} mm`;
+
+                const listElement = document.createElement('ul');
+
+                for (const yearRange of coinVariant.thickness) {
+                    const listItem = document.createElement('li');
+
+                    if (yearRange.value) listItem.append(`${yearRange.value} mm`);
+                    else {
+                        const unknownSpan = document.createElement('span');
+                        unknownSpan.dataset.unknown = 'true';
+                        unknownSpan.textContent = 'Unknown';
+
+                        listItem.append(unknownSpan);
+                    }
+
+                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
+            },
+        },
+        { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `reeded (${coinVariant.edge.reeds} reeds)`) : null },
         {
             icon: 'database',
             name: 'Numista Entry',
@@ -192,7 +256,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
                 const linkElement = document.createElement('a');
                 linkElement.href = `https://en.wikipedia.org/wiki/${coinVariant.wikipediaArticle.replaceAll(' ', '_')}`;
                 linkElement.target = '_blank';
-                linkElement.textContent = coinVariant.wikipediaArticle;
+                linkElement.textContent = coinVariant.wikipediaArticle.replace('#', ' § ');
 
                 return linkElement;
             },
@@ -210,11 +274,12 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
         row.append(item.name);
 
-        const value = document.createElement('span');
+        let value = document.createElement('span');
 
         const itemValue = typeof item.value === 'function' ? item.value() : item.value;
         if (itemValue)
             if (typeof itemValue === 'string') value.textContent = itemValue;
+            else if (itemValue.tagName === 'SPAN') value = itemValue;
             else value.append(itemValue);
         else {
             value.dataset.unknown = 'true';
@@ -248,7 +313,25 @@ export function getCoinYears(variant: CoinVariant<FilteredCoin>): string {
     const startYear = variant.coins[0].year;
     const endYear = variant.active ? 'date' : variant.coins.at(-1)!.year;
 
-    return startYear === endYear ? startYear : `${startYear}–${endYear}`;
+    return formatYearRange(startYear, endYear);
+}
+
+/**
+ * Formats the percentage and type of a coin's composition.
+ * @param value The composition percentage.
+ * @param type The composition type.
+ */
+function formatComposition(value: number, type: string) {
+    return value === 100 ? `${type.slice(0, 1).toUpperCase()}${type.slice(1)}` : `${value}% ${type}`;
+}
+
+/**
+ * Formats a year range to either a single year or a range.
+ * @param startYear The start year.
+ * @param endYear The end year.
+ */
+function formatYearRange(startYear: string | number, endYear: string | number): string {
+    return startYear === endYear ? startYear.toString() : `${startYear}–${endYear}`;
 }
 
 document.addEventListener('keydown', (event) => {

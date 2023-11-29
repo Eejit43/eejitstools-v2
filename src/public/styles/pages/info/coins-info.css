@@ -10,6 +10,14 @@
             margin-block: 8px;
             color: var(--neutral-color-150);
 
+            & ul {
+                margin-left: 35px;
+
+                & li::marker {
+                    content: "– ";
+                }
+            }
+
             & span {
                 color: var(--neutral-color-100);
 

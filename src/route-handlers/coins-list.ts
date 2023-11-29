@@ -19,10 +19,11 @@ export interface CoinVariant<Coin> {
     note?: string;
     years?: string;
     active?: true;
-    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startDate: number; endDate: number }[];
-    mass: number | { value: number; startDate: number; endDate: number }[];
+    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear: number }[];
+    mass: number | null | { value: number | null; startYear: number; endYear: number }[];
     diameter: number;
-    thickness: number;
+    thickness: number | null | { value: number | null; startYear: number; endYear: number }[];
+    edge: string | { reeds: number };
     numistaEntry: number | number[];
     wikipediaArticle: string;
     coins: Coin[];
