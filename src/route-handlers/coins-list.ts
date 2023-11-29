@@ -19,6 +19,7 @@ export interface CoinVariant<Coin> {
     diameter: number;
     thickness: number;
     numistaEntry: number;
+    wikipediaArticle: string;
     coins: Coin[];
 }
 

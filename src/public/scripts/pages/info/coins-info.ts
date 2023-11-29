@@ -149,7 +149,22 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
                 const linkElement = document.createElement('a');
                 linkElement.href = `https://en.numista.com/catalogue/pieces${coinVariant.numistaEntry}.html`;
+                linkElement.target = '_blank';
                 linkElement.textContent = `#${coinVariant.numistaEntry}`;
+
+                return linkElement;
+            },
+        },
+        {
+            icon: 'newspaper',
+            name: 'Wikipedia Article',
+            value: () => {
+                if (!coinVariant.wikipediaArticle) return null;
+
+                const linkElement = document.createElement('a');
+                linkElement.href = `https://en.wikipedia.org/wiki/${coinVariant.wikipediaArticle.replaceAll(' ', '_')}`;
+                linkElement.target = '_blank';
+                linkElement.textContent = coinVariant.wikipediaArticle;
 
                 return linkElement;
             },
