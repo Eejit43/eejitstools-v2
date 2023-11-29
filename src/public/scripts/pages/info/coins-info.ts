@@ -46,6 +46,7 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
     outputGridDiv.innerHTML = '';
 
     const backButtonDiv = document.createElement('div');
+    backButtonDiv.id = 'back-button-container';
 
     const backButton = document.createElement('button');
     backButton.id = 'back-button';
