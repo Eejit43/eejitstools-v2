@@ -22,7 +22,6 @@ export interface CoinVariant<Coin> {
     composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear: number }[];
     mass: number | null | { value: number | null; startYear: number; endYear: number }[];
     diameter: number;
-    thickness: number | null | { value: number | null; startYear: number; endYear: number }[];
     edge: string | { reeds: number };
     numistaEntry: number | number[];
     wikipediaArticle: string;

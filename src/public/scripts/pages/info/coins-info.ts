@@ -193,36 +193,6 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             },
         },
         { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
-        {
-            icon: 'coin-blank',
-            name: 'Thickness',
-            value: () => {
-                if (!coinVariant.thickness) return null;
-
-                if (typeof coinVariant.thickness === 'number') return `${coinVariant.thickness} mm`;
-
-                const listElement = document.createElement('ul');
-
-                for (const yearRange of coinVariant.thickness) {
-                    const listItem = document.createElement('li');
-
-                    if (yearRange.value) listItem.append(`${yearRange.value} mm`);
-                    else {
-                        const unknownSpan = document.createElement('span');
-                        unknownSpan.dataset.unknown = 'true';
-                        unknownSpan.textContent = 'Unknown';
-
-                        listItem.append(unknownSpan);
-                    }
-
-                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
-
-                    listElement.append(listItem);
-                }
-
-                return listElement;
-            },
-        },
         { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `reeded (${coinVariant.edge.reeds} reeds)`) : null },
         {
             icon: 'database',
