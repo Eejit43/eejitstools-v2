@@ -149,6 +149,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
                 const linkElement = document.createElement('a');
                 linkElement.href = `https://en.numista.com/catalogue/pieces${coinVariant.numistaEntry}.html`;
+                linkElement.textContent = `#${coinVariant.numistaEntry}`;
 
                 return linkElement;
             },
