@@ -79,6 +79,8 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
  * @param coinVariant The coin variant to load information for.
  */
 function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coinVariant: CoinVariant<FilteredCoin>) {
+    if (coinType.constants) coinVariant = { ...coinType.constants, ...coinVariant };
+
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
 

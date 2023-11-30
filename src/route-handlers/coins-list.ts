@@ -5,6 +5,7 @@ export interface CoinType<CoinVariant> {
     name: string;
     id: string;
     value: number;
+    constants?: Omit<CoinVariant, 'name' | 'id' | 'note' | 'years' | 'active' | 'coins'>;
     coins: CoinVariant[];
 }
 
