@@ -24,8 +24,8 @@ export interface CoinVariant<Coin> {
     mass: number | null | { value: number | null; startYear: number; endYear?: number }[];
     diameter: number;
     edge: string | { reeds: number };
-    numistaEntry: number | number[];
-    wikipediaArticle: string;
+    numistaEntry: number | number[] | false;
+    wikipediaArticle: string | string[];
     coins: Coin[];
 }
 
@@ -42,7 +42,7 @@ export interface Coin {
     upgrade?: boolean;
 }
 
-export const coinsModel = model('coins-data', new Schema({ name: String, id: String, coins: Array }));
+export const coinsModel = model('coins-data', new Schema({ name: String, id: String, value: Number, constants: Object, coins: Array }, {}));
 
 /**
  * Sets up all coin related routes.

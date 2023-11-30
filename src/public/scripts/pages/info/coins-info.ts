@@ -200,6 +200,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             icon: 'database',
             name: `Numista ${coinVariant.numistaEntry && Array.isArray(coinVariant.numistaEntry) && coinVariant.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,
             value: () => {
+                if (coinVariant.numistaEntry === false) return 'None';
                 if (!coinVariant.numistaEntry) return null;
 
                 const linkContainer = document.createElement('span');
@@ -225,12 +226,21 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             value: () => {
                 if (!coinVariant.wikipediaArticle) return null;
 
-                const linkElement = document.createElement('a');
-                linkElement.href = `https://en.wikipedia.org/wiki/${coinVariant.wikipediaArticle.replaceAll(' ', '_')}`;
-                linkElement.target = '_blank';
-                linkElement.textContent = coinVariant.wikipediaArticle.replace('#', ' § ');
+                const linkContainer = document.createElement('span');
 
-                return linkElement;
+                const wikipediaArticles = typeof coinVariant.wikipediaArticle === 'string' ? [coinVariant.wikipediaArticle] : coinVariant.wikipediaArticle;
+
+                for (const [index, wikipediaArticle] of wikipediaArticles.entries()) {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = `https://en.wikipedia.org/wiki/${wikipediaArticle.replaceAll(' ', '_')}`;
+                    linkElement.target = '_blank';
+                    linkElement.textContent = wikipediaArticle.replace('#', ' § ');
+
+                    linkContainer.append(linkElement);
+                    if (index !== wikipediaArticles.length - 1) linkContainer.append(', ');
+                }
+
+                return linkContainer;
             },
         },
     ];
