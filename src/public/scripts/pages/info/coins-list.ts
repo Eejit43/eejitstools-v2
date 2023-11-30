@@ -34,7 +34,7 @@ loginButton.addEventListener('click', async () => {
         exportDataButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
-        showResult(loginButton, 'error', false);
+        showResult(loginButton, 'error');
         loginButton.disabled = true;
         setTimeout(() => (loginButton.disabled = false), 1000);
     }
@@ -788,7 +788,7 @@ if (password) {
         exportDataButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
-        showResult(loginButton, 'error', false);
+        showResult(loginButton, 'error');
     }
 }
 
