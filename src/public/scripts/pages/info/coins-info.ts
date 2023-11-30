@@ -198,7 +198,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
         { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `reeded (${coinVariant.edge.reeds} reeds)`) : null },
         {
             icon: 'database',
-            name: 'Numista Entry',
+            name: `Numista ${coinVariant.numistaEntry && Array.isArray(coinVariant.numistaEntry) && coinVariant.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,
             value: () => {
                 if (!coinVariant.numistaEntry) return null;
 
