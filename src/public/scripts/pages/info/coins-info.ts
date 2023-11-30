@@ -195,7 +195,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             },
         },
         { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
-        { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `reeded (${coinVariant.edge.reeds} reeds)`) : null },
+        { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `Reeded (${coinVariant.edge.reeds} reeds)`) : null },
         {
             icon: 'database',
             name: `Numista ${coinVariant.numistaEntry && Array.isArray(coinVariant.numistaEntry) && coinVariant.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,
