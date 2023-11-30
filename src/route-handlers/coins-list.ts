@@ -20,8 +20,8 @@ export interface CoinVariant<Coin> {
     note?: string;
     years?: string;
     active?: true;
-    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear: number }[];
-    mass: number | null | { value: number | null; startYear: number; endYear: number }[];
+    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear?: number }[];
+    mass: number | null | { value: number | null; startYear: number; endYear?: number }[];
     diameter: number;
     edge: string | { reeds: number };
     numistaEntry: number | number[];

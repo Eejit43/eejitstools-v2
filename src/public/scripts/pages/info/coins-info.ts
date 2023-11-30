@@ -302,8 +302,8 @@ function formatComposition(value: number, type: string) {
  * @param startYear The start year.
  * @param endYear The end year.
  */
-function formatYearRange(startYear: string | number, endYear: string | number): string {
-    return startYear === endYear ? startYear.toString() : `${startYear}–${endYear}`;
+function formatYearRange(startYear: string | number, endYear: string | number | undefined): string {
+    return startYear === endYear ? startYear.toString() : `${startYear}–${endYear ?? 'date'}`;
 }
 
 document.addEventListener('keydown', (event) => {
