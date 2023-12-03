@@ -169,7 +169,7 @@ const preParsedPages: PreParsedPages = {
         },
         'state-abbreviations': { title: 'State Abbreviations', icon: 'map-location-dot', description: 'List of all state abbreviations', additionalData: { stateAbbreviations } },
         'text-abbreviations': { title: 'Text Abbreviations', icon: 'text', description: 'List of common abbreviations used in text', additionalData: { textAbbreviations } },
-        'tone-indicators': { title: 'Tone Indicators', icon: 'slash-back', description: 'List of common tone indicators', additionalData: { toneIndicators } },
+        'tone-indicators': { title: 'Tone Indicators', icon: 'slash-forward', description: 'List of common tone indicators', additionalData: { toneIndicators } },
     },
     fun: {
         'astronomy-picture': {
