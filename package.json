@@ -34,7 +34,7 @@
         "@types/chroma-js": "^2.4.3",
         "@types/ua-parser-js": "^0.7.39",
         "mathjs": "^12.2.0",
-        "stylelint": "^16.0.1",
+        "stylelint": "^16.0.2",
         "tree-kill": "^1.2.2",
         "typescript": "^5.3.3"
     },
