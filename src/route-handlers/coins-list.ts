@@ -75,8 +75,11 @@ export default function (fastify: FastifyInstance) {
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType<CoinVariant<Coin>> | null;
+        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId }).lean()) as (CoinType<CoinVariant<Coin>> & { _id?: number; __v?: number }) | null; // eslint-disable-line @typescript-eslint/naming-convention
         if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
+
+        delete databaseCoinType._id;
+        delete databaseCoinType.__v;
 
         databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
             if (coinVariant.id === coinVariantId)
@@ -95,7 +98,7 @@ export default function (fastify: FastifyInstance) {
             return coinVariant;
         });
 
-        await coinsModel.replaceOne({ id: coinTypeId }, { name: databaseCoinType.name, id: databaseCoinType.id, value: databaseCoinType.value, coins: databaseCoinType.coins });
+        await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
 
         reply.send(JSON.stringify({ success: true }, null, 2));
     });
