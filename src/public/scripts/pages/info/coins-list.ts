@@ -67,6 +67,7 @@ let coinsData: Record<string, { name: string; id: string; coins: Record<string, 
  */
 async function loadCoinsList() {
     const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinType<CoinVariant<Coin>>[];
+    for (const coinType of unindexedCoinsData) coinType.coins = coinType.coins.filter((coinVariant) => !coinVariant.hiddenInList);
 
     coinsData = Object.fromEntries(
         unindexedCoinsData.map((coinType) => [
