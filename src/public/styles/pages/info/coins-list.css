@@ -15,34 +15,34 @@ div#toggle-buttons button {
     }
 }
 
-.coin-type {
+.coin-denomination {
     margin-bottom: 8px;
     font-size: 30px;
 }
 
-.coin-type-image {
+.coin-denomination-image {
     vertical-align: middle;
     margin-right: 6px;
     max-height: 30px;
 }
 
-button.coin-type-expand {
+button.coin-denomination-expand {
     vertical-align: middle;
     margin-left: 10px;
 }
 
-.coin-variant {
+.coin-design {
     margin-block: 8px;
     font-size: 18px;
 }
 
-.coin-variant-image {
+.coin-design-image {
     vertical-align: middle;
     margin-right: 6px;
     max-height: 18px;
 }
 
-.coin-variant-table {
+.coin-table {
     margin: 20px auto;
     width: 50%;
 
@@ -102,7 +102,7 @@ tr[data-upgrade="true"] {
     }
 }
 
-.coin-variant-note {
+.coin-design-note {
     text-decoration: none;
 }
 
@@ -126,7 +126,7 @@ tr[data-upgrade="true"] {
     text-decoration: underline dotted;
 }
 
-button.coin-variant-expand {
+button.coin-design-expand {
     margin-left: 5px;
 }
 

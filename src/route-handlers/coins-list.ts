@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
 
-export interface CoinType<CoinVariant> {
+export interface CoinDenomination<CoinDesign> {
     name: string;
     id: string;
     value: number;
-    constants?: Omit<CoinVariant, 'name' | 'id' | 'note' | 'years' | 'active' | 'coins'>;
-    coins: CoinVariant[];
+    constants?: Omit<CoinDesign, 'name' | 'id' | 'note' | 'years' | 'active' | 'coins'>;
+    designs: CoinDesign[];
 }
 
 export interface CoinComposition {
@@ -14,7 +14,7 @@ export interface CoinComposition {
     value: number;
 }
 
-export interface CoinVariant<Coin> {
+export interface CoinDesign<Coin> {
     name: string;
     id: string;
     hiddenInList?: true;
@@ -57,36 +57,36 @@ export default function (fastify: FastifyInstance) {
     fastify.get('/coins-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const foundCoins = (await coinsModel.find({}).lean()) as (CoinType<CoinVariant<Coin>> & { _id?: number; __v?: number })[]; // eslint-disable-line @typescript-eslint/naming-convention
+        const foundCoins = (await coinsModel.find({}).lean()) as (CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number })[]; // eslint-disable-line @typescript-eslint/naming-convention
 
         const sortedCoinInfo = foundCoins
-            .map((type) => {
-                delete type._id;
-                delete type.__v;
+            .map((denomination) => {
+                delete denomination._id;
+                delete denomination.__v;
 
-                return type;
+                return denomination;
             })
             .sort((a, b) => a.value - b.value);
 
         reply.send(JSON.stringify(sortedCoinInfo, null, 2));
     });
 
-    fastify.post('/coins-list-edit', async (request: FastifyRequest<{ Body: { coinTypeId: string; coinVariantId: string; coinId: string; data: Partial<Coin>; password: string } }>, reply) => {
-        const { coinTypeId, coinVariantId, coinId, data, password } = request.body;
+    fastify.post('/coins-list-edit', async (request: FastifyRequest<{ Body: { denominationId: string; designId: string; coinId: string; data: Partial<Coin>; password: string } }>, reply) => {
+        const { denominationId, designId, coinId, data, password } = request.body;
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId }).lean()) as (CoinType<CoinVariant<Coin>> & { _id?: number; __v?: number }) | null; // eslint-disable-line @typescript-eslint/naming-convention
-        if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
+        const databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as (CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number }) | null; // eslint-disable-line @typescript-eslint/naming-convention
+        if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
 
-        delete databaseCoinType._id;
-        delete databaseCoinType.__v;
+        delete databaseCoinDenomination._id;
+        delete databaseCoinDenomination.__v;
 
-        databaseCoinType.coins = databaseCoinType.coins.map((coinVariant) => {
-            if (coinVariant.id === coinVariantId)
+        databaseCoinDenomination.designs = databaseCoinDenomination.designs.map((design) => {
+            if (design.id === designId)
                 return {
-                    ...coinVariant,
-                    coins: coinVariant.coins.map((coin) => {
+                    ...design,
+                    coins: design.coins.map((coin) => {
                         if (coin.id === coinId)
                             for (const [key, value] of Object.entries(data))
                                 if (value === null) delete coin[key as keyof Coin];
@@ -96,28 +96,28 @@ export default function (fastify: FastifyInstance) {
                     }),
                 };
 
-            return coinVariant;
+            return design;
         });
 
-        await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
+        await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
 
         reply.send(JSON.stringify({ success: true }, null, 2));
     });
 
-    fastify.post('/coins-list-add-coin', async (request: FastifyRequest<{ Body: { coinTypeId: string; coinVariantId: string; coinYear: string; coinId: string; password: string } }>, reply) => {
-        const { coinTypeId, coinVariantId, coinYear, coinId, password } = request.body;
+    fastify.post('/coins-list-add-coin', async (request: FastifyRequest<{ Body: { denominationId: string; designId: string; coinYear: string; coinId: string; password: string } }>, reply) => {
+        const { denominationId, designId, coinYear, coinId, password } = request.body;
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinType = (await coinsModel.findOne({ id: coinTypeId })) as CoinType<CoinVariant<Coin>> | null;
-        if (!databaseCoinType) return reply.send(JSON.stringify({ error: 'Invalid coin type!' }, null, 2));
+        const databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId })) as CoinDenomination<CoinDesign<Coin>> | null;
+        if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
 
-        const databaseCoinVariant = databaseCoinType.coins.find((variant) => variant.id === coinVariantId);
-        if (!databaseCoinVariant) return reply.send(JSON.stringify({ error: 'Invalid coin variant!' }, null, 2));
+        const databaseCoinDesign = databaseCoinDenomination.designs.find((design) => design.id === designId);
+        if (!databaseCoinDesign) return reply.send(JSON.stringify({ error: 'Invalid coin design!' }, null, 2));
 
-        databaseCoinVariant.coins.push({ year: coinYear, obtained: false, id: coinId });
+        databaseCoinDesign.coins.push({ year: coinYear, obtained: false, id: coinId });
 
-        await coinsModel.replaceOne({ id: coinTypeId }, databaseCoinType);
+        await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
 
         reply.send(JSON.stringify({ success: true }, null, 2));
     });

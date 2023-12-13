@@ -1,47 +1,49 @@
 import { FilteredCoin } from '../../../../route-handlers/coins-info';
-import { CoinType, CoinVariant } from '../../../../route-handlers/coins-list';
+import { CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list';
 import { loadPopupImages } from '../../functions.js';
 
 const outputDiv = document.querySelector('#output') as HTMLDivElement;
 const outputGridDiv = document.querySelector('#output-grid') as HTMLDivElement;
 
-let coinsInfo: CoinType<CoinVariant<FilteredCoin>>[];
+let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[];
 
 /**
  * Loads all coin information and displays it in the document.
  */
 async function loadCoinsInfo() {
-    if (!coinsInfo) coinsInfo = (await (await fetch('/coins-info')).json()) as CoinType<CoinVariant<FilteredCoin>>[];
+    if (!coinsInfo) coinsInfo = (await (await fetch('/coins-info')).json()) as CoinDenomination<CoinDesign<FilteredCoin>>[];
 
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
 
-    for (const coinType of coinsInfo) {
-        const coinTypeElement = document.createElement('div');
-        coinTypeElement.classList.add('coin-type');
-        coinTypeElement.textContent = `${coinType.name} ($${coinType.value.toFixed(2)})`;
-        coinTypeElement.addEventListener('click', () => loadCoinTypeInfo(coinType));
+    for (const denomination of coinsInfo) {
+        const coinDenominationElement = document.createElement('div');
+        coinDenominationElement.classList.add('information-button');
+        coinDenominationElement.textContent = `${denomination.name} ($${denomination.value.toFixed(2)})`;
+        coinDenominationElement.addEventListener('click', () => loadCoinDenominationInfo(denomination));
 
-        const coinTypeImage = document.createElement('img');
+        const coinDenominationImage = document.createElement('img');
 
-        const lastCoinVariant = coinType.coins.at(-1);
+        const lastCoinDesign = denomination.designs.at(-1);
 
-        coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${lastCoinVariant ? `${coinType.id}/${lastCoinVariant.id}` : 'default'}.png`;
-        coinTypeImage.alt = lastCoinVariant?.name ?? 'Default coin image';
+        coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${
+            lastCoinDesign ? `${denomination.id}/${lastCoinDesign.id}` : 'default'
+        }.png`;
+        coinDenominationImage.alt = lastCoinDesign?.name ?? 'Default coin image';
 
-        coinTypeElement.prepend(coinTypeImage);
+        coinDenominationElement.prepend(coinDenominationImage);
 
-        outputGridDiv.append(coinTypeElement);
+        outputGridDiv.append(coinDenominationElement);
     }
 }
 
 loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
 
 /**
- * Loads information for a coin type.
- * @param coinType The coin type to load information for.
+ * Loads information for a coin denomination.
+ * @param denomination The denomination to load information for.
  */
-function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
+function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<FilteredCoin>>) {
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
 
@@ -57,29 +59,29 @@ function loadCoinTypeInfo(coinType: CoinType<CoinVariant<FilteredCoin>>) {
     backButtonDiv.append(backButton);
     outputDiv.append(backButtonDiv);
 
-    for (const coinVariant of coinType.coins) {
-        const coinVariantElement = document.createElement('div');
-        coinVariantElement.classList.add('coin-type');
-        coinVariantElement.textContent = `${coinVariant.name} (${getCoinYears(coinVariant)})`;
-        coinVariantElement.addEventListener('click', () => loadCoinVariantInfo(coinType, coinVariant));
+    for (const design of denomination.designs) {
+        const coinDesignElement = document.createElement('div');
+        coinDesignElement.classList.add('information-button');
+        coinDesignElement.textContent = `${design.name} (${getCoinYears(design)})`;
+        coinDesignElement.addEventListener('click', () => loadCoinDesignInfo(denomination, design));
 
-        const coinTypeImage = document.createElement('img');
-        coinTypeImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
-        coinTypeImage.alt = coinVariant.name;
+        const coinDesignImage = document.createElement('img');
+        coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${design.id}.png`;
+        coinDesignImage.alt = design.name;
 
-        coinVariantElement.prepend(coinTypeImage);
+        coinDesignElement.prepend(coinDesignImage);
 
-        outputGridDiv.append(coinVariantElement);
+        outputGridDiv.append(coinDesignElement);
     }
 }
 
 /**
- * Loads information for a coin variant.
- * @param coinType The coin variant's parent type.
- * @param coinVariant The coin variant to load information for.
+ * Loads information for a coin design.
+ * @param denomination The coin designs's parent denomination.
+ * @param design The coin design to load information for.
  */
-function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coinVariant: CoinVariant<FilteredCoin>) {
-    if (coinType.constants) coinVariant = { ...coinType.constants, ...coinVariant };
+function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCoin>>, design: CoinDesign<FilteredCoin>) {
+    if (denomination.constants) design = { ...denomination.constants, ...design };
 
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
@@ -96,13 +98,13 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
     backButton.id = 'back-button';
     backButton.textContent = 'Back';
     backButton.dataset.iconBefore = '\uF053';
-    backButton.addEventListener('click', () => loadCoinTypeInfo(coinType));
+    backButton.addEventListener('click', () => loadCoinDenominationInfo(denomination));
 
     backButtonDiv.append(startOverButton, ' ', backButton);
     outputDiv.append(backButtonDiv);
 
     const header = document.createElement('h2');
-    header.textContent = coinVariant.name;
+    header.textContent = design.name;
 
     outputDiv.append(header);
 
@@ -112,8 +114,8 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
     const informationGridCell = document.createElement('div');
 
-    const coinInformation: { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[] = [
-        { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(coinVariant) },
+    const designInformation: { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[] = [
+        { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(design) },
         {
             icon: 'coins',
             name: 'Total Minted',
@@ -122,7 +124,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 
                 let total = 0;
 
-                for (const coin of coinVariant.coins) {
+                for (const coin of design.coins) {
                     if (!coin.mintage) continue;
 
                     if (coin.mintageForAllVarieties)
@@ -132,25 +134,25 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
                     total += coin.mintage;
                 }
 
-                const lastDateWithMintage = coinVariant.coins.findLast((coin) => coin.mintage)?.year;
+                const lastDateWithMintage = design.coins.findLast((coin) => coin.mintage)?.year;
 
                 if (!lastDateWithMintage) return '';
 
-                return `${total.toLocaleString()}${lastDateWithMintage === coinVariant.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
+                return `${total.toLocaleString()}${lastDateWithMintage === design.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
             },
         },
-        { icon: 'dollar-sign', name: 'Value', value: `$${coinType.value.toFixed(2)}` },
+        { icon: 'dollar-sign', name: 'Value', value: `$${denomination.value.toFixed(2)}` },
         {
             icon: 'vial',
             name: 'Composition',
             value: () => {
-                if (!coinVariant.composition) return null;
+                if (!design.composition) return null;
 
-                if ('amounts' in coinVariant.composition) return coinVariant.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
+                if ('amounts' in design.composition) return design.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
                 else {
                     const listElement = document.createElement('ul');
 
-                    for (const yearRange of coinVariant.composition) {
+                    for (const yearRange of design.composition) {
                         const listItem = document.createElement('li');
                         listItem.textContent = `${yearRange.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ')} (${formatYearRange(
                             yearRange.startYear,
@@ -168,13 +170,13 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             icon: 'weight-scale',
             name: 'Mass',
             value: () => {
-                if (!coinVariant.mass) return null;
+                if (!design.mass) return null;
 
-                if (typeof coinVariant.mass === 'number') return `${coinVariant.mass.toFixed(2)} grams`;
+                if (typeof design.mass === 'number') return `${design.mass.toFixed(2)} grams`;
 
                 const listElement = document.createElement('ul');
 
-                for (const yearRange of coinVariant.mass) {
+                for (const yearRange of design.mass) {
                     const listItem = document.createElement('li');
 
                     if (yearRange.value) listItem.append(`${yearRange.value.toFixed(2)} grams`);
@@ -194,18 +196,18 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
                 return listElement;
             },
         },
-        { icon: 'circle', name: 'Diameter', value: coinVariant.diameter ? `${coinVariant.diameter} mm` : null },
-        { icon: 'coin-blank', name: 'Edge', value: coinVariant.edge ? (typeof coinVariant.edge === 'string' ? coinVariant.edge : `Reeded (${coinVariant.edge.reeds} reeds)`) : null },
+        { icon: 'circle', name: 'Diameter', value: design.diameter ? `${design.diameter} mm` : null },
+        { icon: 'coin-blank', name: 'Edge', value: design.edge ? (typeof design.edge === 'string' ? design.edge : `Reeded (${design.edge.reeds} reeds)`) : null },
         {
             icon: 'database',
-            name: `Numista ${coinVariant.numistaEntry && Array.isArray(coinVariant.numistaEntry) && coinVariant.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,
+            name: `Numista ${design.numistaEntry && Array.isArray(design.numistaEntry) && design.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,
             value: () => {
-                if (coinVariant.numistaEntry === false) return 'None';
-                if (!coinVariant.numistaEntry) return null;
+                if (design.numistaEntry === false) return 'None';
+                if (!design.numistaEntry) return null;
 
                 const linkContainer = document.createElement('span');
 
-                const numistaIds = typeof coinVariant.numistaEntry === 'number' ? [coinVariant.numistaEntry] : coinVariant.numistaEntry;
+                const numistaIds = typeof design.numistaEntry === 'number' ? [design.numistaEntry] : design.numistaEntry;
 
                 for (const [index, numistaId] of numistaIds.entries()) {
                     const linkElement = document.createElement('a');
@@ -224,11 +226,11 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
             icon: 'newspaper',
             name: 'Wikipedia Article',
             value: () => {
-                if (!coinVariant.wikipediaArticle) return null;
+                if (!design.wikipediaArticle) return null;
 
                 const linkContainer = document.createElement('span');
 
-                const wikipediaArticles = typeof coinVariant.wikipediaArticle === 'string' ? [coinVariant.wikipediaArticle] : coinVariant.wikipediaArticle;
+                const wikipediaArticles = typeof design.wikipediaArticle === 'string' ? [design.wikipediaArticle] : design.wikipediaArticle;
 
                 for (const [index, wikipediaArticle] of wikipediaArticles.entries()) {
                     const linkElement = document.createElement('a');
@@ -245,7 +247,7 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
         },
     ];
 
-    for (const item of coinInformation) {
+    for (const item of designInformation) {
         const row = document.createElement('div');
         row.classList.add('coin-information-row');
 
@@ -273,12 +275,12 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
         informationGridCell.append(row);
     }
 
-    const imageElement = document.createElement('img');
-    imageElement.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${coinType.id}/${coinVariant.id}.png`;
-    imageElement.alt = coinVariant.name;
-    imageElement.classList.add('popup-image');
+    const coinDesignImage = document.createElement('img');
+    coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${design.id}.png`;
+    coinDesignImage.alt = design.name;
+    coinDesignImage.classList.add('popup-image');
 
-    informationGrid.append(informationGridCell, imageElement);
+    informationGrid.append(informationGridCell, coinDesignImage);
 
     outputDiv.append(informationGrid);
 
@@ -286,14 +288,14 @@ function loadCoinVariantInfo(coinType: CoinType<CoinVariant<FilteredCoin>>, coin
 }
 
 /**
- * Gets the year range for a given coin variant.
- * @param variant The coin variant to get the year range for.
+ * Gets the year range for a given coin design.
+ * @param design The coin design to get the year range for.
  */
-export function getCoinYears(variant: CoinVariant<FilteredCoin>): string {
-    if (variant.years) return variant.years;
+export function getCoinYears(design: CoinDesign<FilteredCoin>): string {
+    if (design.years) return design.years;
 
-    const startYear = variant.coins[0].year;
-    const endYear = variant.active ? 'date' : variant.coins.at(-1)!.year;
+    const startYear = design.coins[0].year;
+    const endYear = design.active ? 'date' : design.coins.at(-1)!.year;
 
     return formatYearRange(startYear, endYear);
 }

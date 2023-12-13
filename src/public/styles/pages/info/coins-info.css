@@ -39,7 +39,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
 
-    & .coin-type {
+    & .information-button {
         transition:
             opacity 100ms ease,
             border-radius 100ms ease;
