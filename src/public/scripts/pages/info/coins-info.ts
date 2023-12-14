@@ -24,12 +24,10 @@ async function loadCoinsInfo() {
 
         const coinDenominationImage = document.createElement('img');
 
-        const lastCoinDesign = denomination.designs.at(-1);
+        const lastCoinDesign = denomination.designs.at(-1)!;
 
-        coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${
-            lastCoinDesign ? `${denomination.id}/${lastCoinDesign.id}` : 'default'
-        }.png`;
-        coinDenominationImage.alt = lastCoinDesign?.name ?? 'Default coin image';
+        coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${lastCoinDesign.id}.png`;
+        coinDenominationImage.alt = lastCoinDesign.name;
 
         coinDenominationElement.prepend(coinDenominationImage);
 
@@ -66,7 +64,7 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
         coinDesignElement.addEventListener('click', () => loadCoinDesignInfo(denomination, design));
 
         const coinDesignImage = document.createElement('img');
-        coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${design.id}.png`;
+        coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${design.id}.png`;
         coinDesignImage.alt = design.name;
 
         coinDesignElement.prepend(coinDesignImage);
@@ -276,7 +274,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
     }
 
     const coinDesignImage = document.createElement('img');
-    coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${design.id}.png`;
+    coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${design.id}.png`;
     coinDesignImage.alt = design.name;
     coinDesignImage.classList.add('popup-image');
 

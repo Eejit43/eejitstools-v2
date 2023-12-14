@@ -247,12 +247,12 @@ async function loadCoinsList() {
         coinDenominationDiv.classList.add('coin-denomination');
         coinDenominationDiv.textContent = denomination.name;
 
+        const lastCoinDesign = denomination.designs.at(-1)!;
+
         const coinDenominationImage = document.createElement('img');
-        coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${
-            denomination.designs.at(-1)?.id ? `${denomination.id}/${denomination.designs.at(-1)?.id}` : 'default'
-        }.png`;
+        coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${lastCoinDesign.id}.png`;
         coinDenominationImage.classList.add('coin-denomination-image', 'popup-image');
-        coinDenominationImage.alt = denomination.name;
+        coinDenominationImage.alt = lastCoinDesign.name;
 
         const showDesignsButton = document.createElement('button');
         showDesignsButton.classList.add('coin-denomination-expand');
@@ -298,7 +298,7 @@ async function loadCoinsList() {
             }
 
             const coinDesignImage = document.createElement('img');
-            coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${design.id ? `${denomination.id}/${design.id}` : 'default'}.png`;
+            coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${design.id}.png`;
             coinDesignImage.classList.add('coin-design-image', 'popup-image');
             coinDesignImage.alt = design.name;
 
