@@ -43,7 +43,9 @@ export interface Coin {
     upgrade?: boolean;
 }
 
-export const coinsModel = model('coins-data', new Schema({ name: String, id: String, value: Number, constants: Object, coins: Array }, {}));
+export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number }; // eslint-disable-line @typescript-eslint/naming-convention
+
+export const coinsModel = model('coins-data', new Schema({ name: String, id: String, value: Number, constants: Object, designs: Array }, {}));
 
 /**
  * Sets up all coin related routes.
@@ -57,7 +59,8 @@ export default function (fastify: FastifyInstance) {
     fastify.get('/coins-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const foundCoins = (await coinsModel.find({}).lean()) as (CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number })[]; // eslint-disable-line @typescript-eslint/naming-convention
+        let foundCoins = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
+        foundCoins = await patchCoinDatabase(foundCoins);
 
         const sortedCoinInfo = foundCoins
             .map((denomination) => {
@@ -76,8 +79,10 @@ export default function (fastify: FastifyInstance) {
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as (CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number }) | null; // eslint-disable-line @typescript-eslint/naming-convention
+        let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as DatabaseCoinDenomination | null;
         if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
+
+        databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
 
         delete databaseCoinDenomination._id;
         delete databaseCoinDenomination.__v;
@@ -109,8 +114,10 @@ export default function (fastify: FastifyInstance) {
 
         if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        const databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId })) as CoinDenomination<CoinDesign<Coin>> | null;
+        let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as CoinDenomination<CoinDesign<Coin>> | null;
         if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
+
+        databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
 
         const databaseCoinDesign = databaseCoinDenomination.designs.find((design) => design.id === designId);
         if (!databaseCoinDesign) return reply.send(JSON.stringify({ error: 'Invalid coin design!' }, null, 2));
@@ -121,4 +128,51 @@ export default function (fastify: FastifyInstance) {
 
         reply.send(JSON.stringify({ success: true }, null, 2));
     });
+}
+
+/**
+ * Patches the coin database to add IDs to all coins.
+ * @param coinsData The data to patch.
+ * @returns The patched data.
+ */
+export async function patchCoinDatabase(coinsData: DatabaseCoinDenomination[]) {
+    return Promise.all(coinsData.map((denomination) => patchCoinDatabaseDenomination(denomination)));
+}
+
+/**
+ * Patches the coin database to add IDs to all coins.
+ * @param denomination The denomination to patch.
+ * @returns The patched denomination.
+ */
+async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenomination) {
+    if (denomination.designs.every((design) => design.coins.every((coin) => coin.id))) return denomination;
+
+    const newDenomination = { ...denomination };
+
+    newDenomination.designs = denomination.designs.map((design) => ({
+        ...design,
+        coins: design.coins.map((coin) => {
+            if (!coin.id) coin.id = generateUniqueCoinId(design);
+
+            return coin;
+        }),
+    }));
+
+    await coinsModel.replaceOne({ id: denomination.id }, newDenomination);
+
+    return newDenomination;
+}
+
+/**
+ * Generates a unique coin ID.
+ * @param design The design to generate the ID for.
+ * @returns The generated ID.
+ */
+function generateUniqueCoinId(design: CoinDesign<Coin>) {
+    let id: string;
+
+    do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
+    while (design.coins.some((coin) => coin.id === id));
+
+    return id;
 }

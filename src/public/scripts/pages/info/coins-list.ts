@@ -353,12 +353,15 @@ async function loadCoinsList() {
                 const coinDesignCoins = [...coinsData[denomination.id].coins[design.id].coins.values()];
 
                 const year = coinDesignCoins.at(-1)?.year ? (Number.parseInt(coinDesignCoins.at(-1)!.year!) + 1).toString() : new Date().getFullYear().toString();
-                const id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
+
+                let id: string;
+                do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
+                while (design.coins.some((coin) => coin.id === id));
 
                 const row = generateCoinRow(denomination, design, { year, id, obtained: false });
                 newRowMessage.before(row);
 
-                coinsData[denomination.id].coins[design.id].coins.set(id.toString(), { year, id, obtained: false });
+                coinsData[denomination.id].coins[design.id].coins.set(id, { year, id, obtained: false });
 
                 loadDesignTotals(denomination.id, design.id);
 

@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { Coin, CoinDenomination, CoinDesign, coinsModel } from './coins-list.js';
+import { Coin, DatabaseCoinDenomination, coinsModel, patchCoinDatabase } from './coins-list.js';
 
 export type FilteredCoin = Omit<Coin, 'obtained' | 'upgrade'>;
 
@@ -9,7 +9,8 @@ export type FilteredCoin = Omit<Coin, 'obtained' | 'upgrade'>;
  */
 export default function (fastify: FastifyInstance) {
     fastify.get('/coins-info', async (request, reply) => {
-        const foundCoins = (await coinsModel.find({}).lean()) as (CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number })[]; // eslint-disable-line @typescript-eslint/naming-convention
+        let foundCoins = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
+        foundCoins = await patchCoinDatabase(foundCoins);
 
         const filteredCoinInfo = foundCoins
             .map((denomination) => {
@@ -18,7 +19,7 @@ export default function (fastify: FastifyInstance) {
 
                 return {
                     ...denomination,
-                    coins: denomination.designs.map((design) => ({
+                    designs: denomination.designs.map((design) => ({
                         ...design,
                         coins: design.coins?.map((coin) => {
                             // @ts-expect-error While this is marked as required, it doesn't need to be given to the end user
