@@ -518,7 +518,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
     const mintageCell = document.createElement('td');
     mintageCell.contentEditable = 'true';
-    mintageCell.textContent = coin.mintage ? formatMintage(coin.mintage) : '???';
+    mintageCell.textContent = 'mintage' in coin ? formatMintage(coin.mintage!) : '???';
     if (coin.mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
     mintageCell.addEventListener('focus', () => {
         mintageCell.textContent = coin.mintage?.toString() ?? '';
