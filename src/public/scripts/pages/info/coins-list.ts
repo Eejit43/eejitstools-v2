@@ -530,7 +530,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         let mintageForAllVarieties: boolean | null | undefined = mintageCell.textContent?.endsWith(' (all)');
         if (!mintageForAllVarieties) mintageForAllVarieties = null;
 
-        mintageCell.textContent = mintageNumber ? formatMintage(mintageNumber) : '???';
+        mintageCell.textContent = mintageNumber === null ? '???' : formatMintage(mintageNumber);
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
 
         if ((mintageNumber ?? '') !== (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintage ?? '')) {
