@@ -501,7 +501,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
             tooltipSpan.textContent.toLowerCase() === 'none'
                 ? `Likely minted in ${mintMarks.P}`
                 : tooltipSpan.textContent.toUpperCase() in mintMarks
-                  ? `Minted in ${mintMarks[tooltipSpan.textContent]}`
+                  ? `Minted in ${mintMarks[tooltipSpan.textContent.toUpperCase()]}`
                   : 'Unknown';
         tooltipSpan.textContent = tooltipSpan.textContent.toLowerCase() === 'none' ? 'None' : tooltipSpan.textContent.toUpperCase();
         tooltipSpan.classList.add('tooltip-bottom');
