@@ -44,6 +44,7 @@ const mintMarks: Record<string, string> = {
     P: 'Philadelphia (Pennsylvania)',
     D: 'Denver (Colorado)',
     S: 'San Francisco (California)',
+    O: 'New Orleans (Louisiana)',
     W: 'West Point (New York)',
     CC: 'Carson City (Nevada)',
     C: 'Charlotte (North Carolina)',
