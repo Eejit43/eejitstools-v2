@@ -275,16 +275,16 @@ async function loadCoinsList() {
 
         for (const design of denomination.designs) {
             const amountTooltip = document.createElement('span');
-            amountTooltip.id = `${design.id}-amount-tooltip`;
+            amountTooltip.id = `${design.id}-${denomination.id}-amount-tooltip`;
 
             const coinDesignDiv = document.createElement('div');
             coinDesignDiv.classList.add('coin-design', 'hidden');
 
             const coinDesignYears = document.createElement('span');
-            coinDesignYears.id = `${design.id}-years`;
+            coinDesignYears.id = `${design.id}-${denomination.id}-years`;
 
             const needsUpgradeTotal = document.createElement('span');
-            needsUpgradeTotal.id = `${design.id}-needs-upgrade`;
+            needsUpgradeTotal.id = `${design.id}-${denomination.id}-needs-upgrade`;
 
             coinDesignDiv.innerHTML = `${design.name} (${coinDesignYears.outerHTML}) (${amountTooltip.outerHTML}${needsUpgradeTotal.outerHTML})`;
 
@@ -663,9 +663,9 @@ function loadDesignTotals(denomination: string, design: string) {
     const needsUpgradeCoins = [...designData.coins.values()].filter((coin) => coin.upgrade).length;
     const totalCoins = [...designData.coins.values()].length;
 
-    const amountTooltip = document.querySelector(`#${design}-amount-tooltip`) as HTMLSpanElement;
-    const yearSpan = document.querySelector(`#${design}-years`) as HTMLSpanElement;
-    const upgradeSpan = document.querySelector(`#${design}-needs-upgrade`) as HTMLSpanElement;
+    const amountTooltip = document.querySelector(`#${design}-${denomination}-amount-tooltip`) as HTMLSpanElement;
+    const yearSpan = document.querySelector(`#${design}-${denomination}-years`) as HTMLSpanElement;
+    const upgradeSpan = document.querySelector(`#${design}-${denomination}-needs-upgrade`) as HTMLSpanElement;
 
     amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10_000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
     amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;
