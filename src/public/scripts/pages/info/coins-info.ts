@@ -194,7 +194,36 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 return listElement;
             },
         },
-        { icon: 'circle', name: 'Diameter', value: design.diameter ? `${design.diameter} mm` : null },
+        {
+            icon: 'circle',
+            name: 'Diameter',
+            value: () => {
+                if (!design.diameter) return null;
+
+                if (typeof design.diameter === 'number') return `${design.diameter} mm`;
+
+                const listElement = document.createElement('ul');
+
+                for (const yearRange of design.diameter) {
+                    const listItem = document.createElement('li');
+
+                    if (yearRange.value) listItem.append(`${yearRange.value} mm`);
+                    else {
+                        const unknownSpan = document.createElement('span');
+                        unknownSpan.dataset.unknown = 'true';
+                        unknownSpan.textContent = 'Unknown';
+
+                        listItem.append(unknownSpan);
+                    }
+
+                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
+            },
+        },
         {
             icon: 'coin-blank',
             name: 'Edge',
