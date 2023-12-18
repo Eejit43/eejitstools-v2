@@ -195,7 +195,38 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             },
         },
         { icon: 'circle', name: 'Diameter', value: design.diameter ? `${design.diameter} mm` : null },
-        { icon: 'coin-blank', name: 'Edge', value: design.edge ? (typeof design.edge === 'string' ? design.edge : `Reeded (${design.edge.reeds} reeds)`) : null },
+        {
+            icon: 'coin-blank',
+            name: 'Edge',
+            value: () => {
+                if (!design.edge) return null;
+
+                if (typeof design.edge === 'string') return design.edge;
+
+                if (typeof design.edge === 'object' && 'reeds' in design.edge) return `Reeded (${design.edge.reeds} reeds)`;
+
+                const listElement = document.createElement('ul');
+
+                for (const yearRange of design.edge) {
+                    const listItem = document.createElement('li');
+
+                    if (yearRange.value) listItem.append(typeof yearRange.value === 'string' ? yearRange.value : `Reeded (${yearRange.value.reeds} reeds)`);
+                    else {
+                        const unknownSpan = document.createElement('span');
+                        unknownSpan.dataset.unknown = 'true';
+                        unknownSpan.textContent = 'Unknown';
+
+                        listItem.append(unknownSpan);
+                    }
+
+                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
+            },
+        },
         {
             icon: 'database',
             name: `Numista ${design.numistaEntry && Array.isArray(design.numistaEntry) && design.numistaEntry.length > 1 ? 'Entries' : 'Entry'}`,

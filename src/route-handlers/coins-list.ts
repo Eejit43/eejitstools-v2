@@ -24,7 +24,7 @@ export interface CoinDesign<Coin> {
     composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear?: number }[];
     mass: number | null | { value: number | null; startYear: number; endYear?: number }[];
     diameter: number;
-    edge: string | { reeds: number };
+    edge: string | { reeds: number } | { value: string | { reeds: number }; startYear: number; endYear?: number }[];
     numistaEntry: number | number[] | false;
     wikipediaArticle: string | string[];
     coins: Coin[];
