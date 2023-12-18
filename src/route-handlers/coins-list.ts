@@ -17,7 +17,6 @@ export interface CoinComposition {
 export interface CoinDesign<Coin> {
     name: string;
     id: string;
-    hiddenInList?: true;
     note?: string;
     years?: string;
     active?: true;

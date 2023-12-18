@@ -68,7 +68,6 @@ let coinsData: Record<string, { name: string; id: string; coins: Record<string, 
  */
 async function loadCoinsList() {
     const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<CoinDesign<Coin>>[];
-    for (const coinDenomination of unindexedCoinsData) coinDenomination.designs = coinDenomination.designs.filter((design) => !design.hiddenInList);
 
     coinsData = Object.fromEntries(
         unindexedCoinsData.map((denomination) => [
@@ -127,8 +126,25 @@ async function loadCoinsList() {
         }
     });
 
+    const toggleUnobtainedDesignsButton = document.createElement('button');
+    toggleUnobtainedDesignsButton.textContent = 'Show unobtained designs';
+    toggleUnobtainedDesignsButton.dataset.shown = 'true';
+    coinsList.classList.add('unobtained-designs-hidden');
+    toggleUnobtainedDesignsButton.addEventListener('click', () => {
+        if (toggleUnobtainedDesignsButton.dataset.shown === 'true') {
+            toggleUnobtainedDesignsButton.dataset.shown = 'false';
+            coinsList.classList.remove('unobtained-designs-hidden');
+
+            toggleUnobtainedDesignsButton.textContent = 'Hide unobtained designs';
+        } else {
+            toggleUnobtainedDesignsButton.dataset.shown = 'true';
+            coinsList.classList.add('unobtained-designs-hidden');
+
+            toggleUnobtainedDesignsButton.textContent = 'Show unobtained designs';
+        }
+    });
+
     const toggleMissingCoinsButton = document.createElement('button');
-    toggleMissingCoinsButton.id = 'toggle-missing-coins';
     toggleMissingCoinsButton.dataset.shown = 'true';
     toggleMissingCoinsButton.addEventListener('click', () => {
         if (toggleMissingCoinsButton.dataset.shown === 'true') {
@@ -153,7 +169,6 @@ async function loadCoinsList() {
     toggleMissingCoinsButton.append('Hide ', missingText, ' coins');
 
     const toggleObtainedCoinsButton = document.createElement('button');
-    toggleObtainedCoinsButton.id = 'toggle-obtained-coins';
     toggleObtainedCoinsButton.dataset.shown = 'false';
     toggleObtainedCoinsButton.addEventListener('click', () => {
         if (toggleObtainedCoinsButton.dataset.shown === 'true') {
@@ -178,7 +193,6 @@ async function loadCoinsList() {
     toggleObtainedCoinsButton.append('Show ', obtainedText, ' coins');
 
     const toggleNeedsUpgradeCoinsButton = document.createElement('button');
-    toggleNeedsUpgradeCoinsButton.id = 'toggle-needs-upgrade-coins';
     toggleNeedsUpgradeCoinsButton.dataset.shown = 'true';
     toggleNeedsUpgradeCoinsButton.addEventListener('click', () => {
         if (toggleNeedsUpgradeCoinsButton.dataset.shown === 'true') {
@@ -204,6 +218,8 @@ async function loadCoinsList() {
 
     buttonsDiv.append(reloadButton);
     buttonsDiv.append(showAllDesignsButton);
+    buttonsDiv.append(document.createTextNode(' | '));
+    buttonsDiv.append(toggleUnobtainedDesignsButton);
     buttonsDiv.append(document.createTextNode(' | '));
     buttonsDiv.append(toggleMissingCoinsButton);
     buttonsDiv.append(toggleObtainedCoinsButton);
@@ -275,11 +291,13 @@ async function loadCoinsList() {
         coinDenominationDiv.append(showDesignsButton);
 
         for (const design of denomination.designs) {
-            const amountTooltip = document.createElement('span');
-            amountTooltip.id = `${design.id}-${denomination.id}-amount-tooltip`;
-
             const coinDesignDiv = document.createElement('div');
             coinDesignDiv.classList.add('coin-design', 'hidden');
+
+            if (design.coins.every((coin) => !coin.obtained)) coinDesignDiv.dataset.noneObtained = 'true';
+
+            const amountTooltip = document.createElement('span');
+            amountTooltip.id = `${design.id}-${denomination.id}-amount-tooltip`;
 
             const coinDesignYears = document.createElement('span');
             coinDesignYears.id = `${design.id}-${denomination.id}-years`;
@@ -676,6 +694,9 @@ function loadDesignTotals(denomination: string, design: string) {
     yearSpan.textContent = getCoinYears(designData);
 
     upgradeSpan.textContent = needsUpgradeCoins > 0 ? `, ${needsUpgradeCoins} needing upgrade` : '';
+
+    if (obtainedCoins === 0) amountTooltip.parentElement!.dataset.noneObtained = 'true';
+    else delete amountTooltip.parentElement!.dataset.noneObtained;
 }
 
 /**

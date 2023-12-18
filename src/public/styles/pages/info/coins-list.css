@@ -61,6 +61,10 @@ button.coin-denomination-expand {
     display: none;
 }
 
+#coins-list.unobtained-designs-hidden .coin-design[data-none-obtained="true"] {
+    display: none;
+}
+
 tr[data-obtained="false"] {
     background-color: var(--error-color-300);
 }
