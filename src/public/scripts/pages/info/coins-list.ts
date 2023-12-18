@@ -492,6 +492,8 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     tooltipSpan.addEventListener('focus', () => {
         delete tooltipSpan.dataset.tooltip;
         tooltipSpan.classList.remove('tooltip-bottom');
+
+        if (tooltipSpan.textContent?.toLowerCase() === 'none') tooltipSpan.textContent = '';
     });
     tooltipSpan.addEventListener('blur', async () => {
         if (!tooltipSpan.textContent) tooltipSpan.textContent = 'None';
