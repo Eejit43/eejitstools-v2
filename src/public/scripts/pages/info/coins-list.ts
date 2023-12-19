@@ -216,14 +216,7 @@ async function loadCoinsList() {
 
     toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
 
-    buttonsDiv.append(reloadButton);
-    buttonsDiv.append(showAllDesignsButton);
-    buttonsDiv.append(document.createTextNode(' | '));
-    buttonsDiv.append(toggleUnobtainedDesignsButton);
-    buttonsDiv.append(document.createTextNode(' | '));
-    buttonsDiv.append(toggleMissingCoinsButton);
-    buttonsDiv.append(toggleObtainedCoinsButton);
-    buttonsDiv.append(toggleNeedsUpgradeCoinsButton);
+    buttonsDiv.append(reloadButton, showAllDesignsButton, ' | ', toggleUnobtainedDesignsButton, ' | ', toggleMissingCoinsButton, toggleObtainedCoinsButton, toggleNeedsUpgradeCoinsButton);
 
     coinsList.append(buttonsDiv);
 
@@ -293,8 +286,12 @@ async function loadCoinsList() {
         for (const design of denomination.designs) {
             const coinDesignDiv = document.createElement('div');
             coinDesignDiv.classList.add('coin-design', 'hidden');
-
             if (design.coins.every((coin) => !coin.obtained)) coinDesignDiv.dataset.noneObtained = 'true';
+
+            const coinDesignLink = document.createElement('a');
+            coinDesignLink.textContent = design.name;
+            coinDesignLink.href = `/info/coins-info?denomination=${denomination.id}&design=${design.id}`;
+            coinDesignLink.target = '_blank';
 
             const amountTooltip = document.createElement('span');
             amountTooltip.id = `${design.id}-${denomination.id}-amount-tooltip`;
@@ -305,7 +302,7 @@ async function loadCoinsList() {
             const needsUpgradeTotal = document.createElement('span');
             needsUpgradeTotal.id = `${design.id}-${denomination.id}-needs-upgrade`;
 
-            coinDesignDiv.innerHTML = `${design.name} (${coinDesignYears.outerHTML}) (${amountTooltip.outerHTML}${needsUpgradeTotal.outerHTML})`;
+            coinDesignDiv.append(coinDesignLink, ' (', coinDesignYears, ') (', amountTooltip, needsUpgradeTotal, ')');
 
             if (design.note) {
                 const coinDesignNote = document.createElement('span');
@@ -609,8 +606,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
                 await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationEditor.textContent! || null });
             });
-            specificationCell.append(specificationEditor);
-            specificationCell.append(document.createTextNode(' '));
+            specificationCell.append(specificationEditor, ' ');
             comparisonSpan.textContent = `(${comparisonSpan.textContent})`;
             specificationCell.append(comparisonSpan);
         } else specificationCell.append(comparisonSpan);

@@ -16,11 +16,27 @@ async function loadCoinsInfo() {
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
 
+    const searchParameters = new URLSearchParams(window.location.search);
+    const denominationSearch = searchParameters.get('denomination');
+    const designSearch = searchParameters.get('design');
+
+    const foundDenomination = denominationSearch ? coinsInfo.find((denomination) => denomination.id === denominationSearch) : null;
+    const foundDesign = foundDenomination && designSearch ? foundDenomination.designs.find((design) => design.id === designSearch) : null;
+
+    if (foundDenomination && foundDesign) return loadCoinDesignInfo(foundDenomination, foundDesign);
+    else if (foundDenomination) return loadCoinDenominationInfo(foundDenomination);
+
     for (const denomination of coinsInfo) {
         const coinDenominationElement = document.createElement('div');
         coinDenominationElement.classList.add('information-button');
         coinDenominationElement.textContent = `${denomination.name} ($${denomination.value.toFixed(2)})`;
-        coinDenominationElement.addEventListener('click', () => loadCoinDenominationInfo(denomination));
+        coinDenominationElement.addEventListener('click', () => {
+            const searchParameters = new URLSearchParams(window.location.search);
+            searchParameters.set('denomination', denomination.id);
+            window.history.pushState(null, '', `?${searchParameters.toString()}`);
+
+            loadCoinDenominationInfo(denomination);
+        });
 
         const coinDenominationImage = document.createElement('img');
 
@@ -34,8 +50,6 @@ async function loadCoinsInfo() {
         outputGridDiv.append(coinDenominationElement);
     }
 }
-
-loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
 
 /**
  * Loads information for a coin denomination.
@@ -52,7 +66,13 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
     backButton.id = 'back-button';
     backButton.textContent = 'Back';
     backButton.dataset.iconBefore = '\uF053';
-    backButton.addEventListener('click', loadCoinsInfo);
+    backButton.addEventListener('click', () => {
+        const searchParameters = new URLSearchParams(window.location.search);
+        searchParameters.delete('denomination');
+        window.history.pushState(null, '', `?${searchParameters.toString()}`);
+
+        loadCoinsInfo();
+    });
 
     backButtonDiv.append(backButton);
     outputDiv.append(backButtonDiv);
@@ -61,7 +81,14 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
         const coinDesignElement = document.createElement('div');
         coinDesignElement.classList.add('information-button');
         coinDesignElement.textContent = `${design.name} (${getCoinYears(design)})`;
-        coinDesignElement.addEventListener('click', () => loadCoinDesignInfo(denomination, design));
+        coinDesignElement.addEventListener('click', () => {
+            const searchParameters = new URLSearchParams(window.location.search);
+            searchParameters.set('denomination', denomination.id);
+            searchParameters.set('design', design.id);
+            window.history.pushState(null, '', `?${searchParameters.toString()}`);
+
+            loadCoinDesignInfo(denomination, design);
+        });
 
         const coinDesignImage = document.createElement('img');
         coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${design.id}.png`;
@@ -90,13 +117,26 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
     const startOverButton = document.createElement('button');
     startOverButton.textContent = 'Start Over';
     startOverButton.dataset.iconBefore = '\uF323';
-    startOverButton.addEventListener('click', loadCoinsInfo);
+    startOverButton.addEventListener('click', () => {
+        const searchParameters = new URLSearchParams(window.location.search);
+        searchParameters.delete('denomination');
+        searchParameters.delete('design');
+        window.history.pushState(null, '', `?${searchParameters.toString()}`);
+
+        loadCoinsInfo();
+    });
 
     const backButton = document.createElement('button');
     backButton.id = 'back-button';
     backButton.textContent = 'Back';
     backButton.dataset.iconBefore = '\uF053';
-    backButton.addEventListener('click', () => loadCoinDenominationInfo(denomination));
+    backButton.addEventListener('click', () => {
+        const searchParameters = new URLSearchParams(window.location.search);
+        searchParameters.delete('design');
+        window.history.pushState(null, '', `?${searchParameters.toString()}`);
+
+        loadCoinDenominationInfo(denomination);
+    });
 
     backButtonDiv.append(startOverButton, ' ', backButton);
     outputDiv.append(backButtonDiv);
@@ -376,6 +416,8 @@ function formatYearRange(startYear: string | number, endYear: string | number | 
     return startYear === endYear ? startYear.toString() : `${startYear}–${endYear ?? 'date'}`;
 }
 
+loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
+
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'ArrowLeft') return;
 
@@ -389,4 +431,17 @@ document.addEventListener('keydown', (event) => {
     const backButton = document.querySelector('#back-button') as HTMLButtonElement | null;
 
     if (backButton) backButton.click();
+});
+
+window.addEventListener('popstate', () => {
+    const searchParameters = new URLSearchParams(window.location.search);
+    const denominationSearch = searchParameters.get('denomination');
+    const designSearch = searchParameters.get('design');
+
+    const foundDenomination = denominationSearch ? coinsInfo.find((denomination) => denomination.id === denominationSearch) : null;
+    const foundDesign = foundDenomination && designSearch ? foundDenomination.designs.find((design) => design.id === designSearch) : null;
+
+    if (foundDenomination && foundDesign) loadCoinDesignInfo(foundDenomination, foundDesign);
+    else if (foundDenomination) loadCoinDenominationInfo(foundDenomination);
+    else loadCoinsInfo();
 });
