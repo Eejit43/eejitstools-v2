@@ -144,14 +144,16 @@ export async function patchCoinDatabase(coinsData: DatabaseCoinDenomination[]) {
  * @returns The patched denomination.
  */
 async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenomination) {
-    if (denomination.designs.every((design) => design.coins.every((coin) => coin.id))) return denomination;
+    if (denomination.designs.every((design) => design.coins.every((coin) => 'id' in coin && 'obtained' in coin))) return denomination;
 
     const newDenomination = { ...denomination };
 
     newDenomination.designs = denomination.designs.map((design) => ({
         ...design,
         coins: design.coins.map((coin) => {
-            if (!coin.id) coin.id = generateUniqueCoinId(design);
+            if (!('id' in coin)) (coin as Partial<Coin>).id = generateUniqueCoinId(design);
+
+            if (!('obtained' in coin)) (coin as Partial<Coin>).obtained = false;
 
             return coin;
         }),
