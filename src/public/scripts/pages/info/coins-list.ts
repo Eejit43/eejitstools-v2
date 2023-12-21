@@ -408,54 +408,12 @@ async function loadCoinsList() {
 
     for (const denomination of unindexedCoinsData) for (const design of denomination.designs) loadDesignTotals(denomination.id, design.id);
 
-    // Load popup images
     loadPopupImages();
-
-    const modal = document.querySelector('#modal') as HTMLDivElement;
-    const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
-    const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
-    const imageTextButtons = document.querySelectorAll('sup.coin-image-icon') as NodeListOf<HTMLElement>;
-    const coinTypeComparisonButtons = document.querySelectorAll('span.coin-type-comparison') as NodeListOf<HTMLSpanElement>;
-
-    for (const imageTextButton of imageTextButtons)
-        imageTextButton.addEventListener('click', () => {
-            modal.style.display = 'block';
-            if (modalImage.src !== imageTextButton.dataset.image) modalImage.src = imageTextButton.dataset.image!;
-            if (modalCaption.textContent !== imageTextButton.dataset.name) modalCaption.textContent = imageTextButton.dataset.name!;
-        });
-
-    for (const coinTypeComparisonButton of coinTypeComparisonButtons)
-        coinTypeComparisonButton.addEventListener('click', () => {
-            modal.style.display = 'block';
-            if (modalImage.src !== coinTypeComparisonButton.dataset.image) modalImage.src = coinTypeComparisonButton.dataset.image!;
-            if (modalCaption.textContent !== coinTypeComparisonButton.dataset.name) modalCaption.textContent = coinTypeComparisonButton.dataset.name!;
-        });
-
-    // Strip newlines and formatting from contenteditable element interactions
-    for (const element of document.querySelectorAll('#coins-list [contenteditable]') as NodeListOf<HTMLElement>) {
-        element.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') event.preventDefault();
-        });
-
-        element.addEventListener('paste', (event) => {
-            event.preventDefault();
-
-            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
-
-            const range = document.getSelection()!.getRangeAt(0);
-            range.deleteContents();
-
-            const textNode = document.createTextNode(text);
-            range.insertNode(textNode);
-            range.selectNodeContents(textNode);
-            range.collapse(false);
-
-            const selection = window.getSelection()!;
-            selection.removeAllRanges();
-            selection.addRange(range);
-        });
-    }
 }
+
+const modal = document.querySelector('#modal') as HTMLDivElement;
+const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
+const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
 
 /**
  * Generates a coin row for a given coin.
@@ -493,6 +451,12 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         coinImage.classList.add('coin-image-icon', 'fa-solid', 'fa-image');
         coinImage.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${coin.image}.png`;
         coinImage.dataset.name = `${design.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+        coinImage.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== coinImage.dataset.image) modalImage.src = coinImage.dataset.image!;
+            if (modalCaption.textContent !== coinImage.dataset.name) modalCaption.textContent = coinImage.dataset.name!;
+        });
+
         yearCell.append(coinImage);
     }
 
@@ -592,6 +556,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         comparisonSpan.textContent = 'View type comparison';
         comparisonSpan.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/${coin.comparison}.png`;
         comparisonSpan.dataset.name = `Type Comparison: ${design.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+        comparisonSpan.addEventListener('click', () => {
+            modal.style.display = 'block';
+            if (modalImage.src !== comparisonSpan.dataset.image) modalImage.src = comparisonSpan.dataset.image!;
+            if (modalCaption.textContent !== comparisonSpan.dataset.name) modalCaption.textContent = comparisonSpan.dataset.name!;
+        });
 
         if (coin.specification) {
             const specificationEditor = document.createElement('span');
@@ -664,6 +633,31 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     });
     needsUpgradeCell.append(needsUpgradeCheckbox);
     row.append(needsUpgradeCell);
+
+    // Strip newlines and formatting from contenteditable element interactions
+    for (const element of row.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>) {
+        element.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') event.preventDefault();
+        });
+
+        element.addEventListener('paste', (event) => {
+            event.preventDefault();
+
+            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
+
+            const range = document.getSelection()!.getRangeAt(0);
+            range.deleteContents();
+
+            const textNode = document.createTextNode(text);
+            range.insertNode(textNode);
+            range.selectNodeContents(textNode);
+            range.collapse(false);
+
+            const selection = window.getSelection()!;
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
+    }
 
     return row;
 }

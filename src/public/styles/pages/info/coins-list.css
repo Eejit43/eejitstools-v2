@@ -122,6 +122,7 @@ tr[data-upgrade="true"] {
 }
 
 .mintage-for-all-varieties::after {
+    cursor: text;
     content: " (for all varieties)";
 }
 
