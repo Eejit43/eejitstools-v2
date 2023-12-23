@@ -61,7 +61,8 @@ button.coin-denomination-expand {
     display: none;
 }
 
-#coins-list.unobtained-designs-hidden .coin-design[data-none-obtained="true"] {
+#coins-list.unobtained-sections-hidden .coin-denomination[data-none-obtained="true"],
+#coins-list.unobtained-sections-hidden .coin-design[data-none-obtained="true"] {
     display: none;
 }
 

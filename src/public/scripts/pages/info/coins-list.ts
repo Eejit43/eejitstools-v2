@@ -61,7 +61,7 @@ interface CoinDesignById {
     coins: Map<string, PartialNullable<Coin>>;
 }
 
-let coinsData: Record<string, { name: string; id: string; coins: Record<string, CoinDesignById> }>;
+let coinsData: Record<string, { name: string; id: string; designs: Record<string, CoinDesignById> }>;
 
 /**
  * Load the coins list.
@@ -74,7 +74,7 @@ async function loadCoinsList() {
             denomination.id,
             {
                 ...denomination,
-                coins: Object.fromEntries(denomination.designs.map((design) => [design.id, { ...design, coins: new Map(design.coins.map((coin) => [coin.id.toString(), coin])) }])),
+                designs: Object.fromEntries(denomination.designs.map((design) => [design.id, { ...design, coins: new Map(design.coins.map((coin) => [coin.id.toString(), coin])) }])),
             },
         ]),
     );
@@ -126,21 +126,21 @@ async function loadCoinsList() {
         }
     });
 
-    const toggleUnobtainedDesignsButton = document.createElement('button');
-    toggleUnobtainedDesignsButton.textContent = 'Show unobtained designs';
-    toggleUnobtainedDesignsButton.dataset.shown = 'true';
-    coinsList.classList.add('unobtained-designs-hidden');
-    toggleUnobtainedDesignsButton.addEventListener('click', () => {
-        if (toggleUnobtainedDesignsButton.dataset.shown === 'true') {
-            toggleUnobtainedDesignsButton.dataset.shown = 'false';
-            coinsList.classList.remove('unobtained-designs-hidden');
+    const toggleUnobtainedSectionsButton = document.createElement('button');
+    toggleUnobtainedSectionsButton.textContent = 'Show unobtained denominations/designs';
+    toggleUnobtainedSectionsButton.dataset.shown = 'true';
+    coinsList.classList.add('unobtained-sections-hidden');
+    toggleUnobtainedSectionsButton.addEventListener('click', () => {
+        if (toggleUnobtainedSectionsButton.dataset.shown === 'true') {
+            toggleUnobtainedSectionsButton.dataset.shown = 'false';
+            coinsList.classList.remove('unobtained-sections-hidden');
 
-            toggleUnobtainedDesignsButton.textContent = 'Hide unobtained designs';
+            toggleUnobtainedSectionsButton.textContent = 'Hide unobtained denominations/designs';
         } else {
-            toggleUnobtainedDesignsButton.dataset.shown = 'true';
-            coinsList.classList.add('unobtained-designs-hidden');
+            toggleUnobtainedSectionsButton.dataset.shown = 'true';
+            coinsList.classList.add('unobtained-sections-hidden');
 
-            toggleUnobtainedDesignsButton.textContent = 'Show unobtained designs';
+            toggleUnobtainedSectionsButton.textContent = 'Show unobtained denominations/designs';
         }
     });
 
@@ -216,7 +216,7 @@ async function loadCoinsList() {
 
     toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
 
-    buttonsDiv.append(reloadButton, showAllDesignsButton, ' | ', toggleUnobtainedDesignsButton, ' | ', toggleMissingCoinsButton, toggleObtainedCoinsButton, toggleNeedsUpgradeCoinsButton);
+    buttonsDiv.append(reloadButton, showAllDesignsButton, ' | ', toggleUnobtainedSectionsButton, ' | ', toggleMissingCoinsButton, toggleObtainedCoinsButton, toggleNeedsUpgradeCoinsButton);
 
     coinsList.append(buttonsDiv);
 
@@ -255,6 +255,7 @@ async function loadCoinsList() {
     for (const denomination of unindexedCoinsData) {
         const coinDenominationDiv = document.createElement('div');
         coinDenominationDiv.classList.add('coin-denomination');
+        if (denomination.designs.every((design) => design.coins.every((coin) => !coin.obtained))) coinDenominationDiv.dataset.noneObtained = 'true';
         coinDenominationDiv.textContent = denomination.name;
 
         const lastCoinDesign = denomination.designs.at(-1)!;
@@ -366,7 +367,7 @@ async function loadCoinsList() {
             newRowMessageCell.addEventListener('click', async () => {
                 if (newRowMessage.dataset.disabled === 'true') return;
 
-                const coinDesignCoins = [...coinsData[denomination.id].coins[design.id].coins.values()];
+                const coinDesignCoins = [...coinsData[denomination.id].designs[design.id].coins.values()];
 
                 const year = coinDesignCoins.at(-1)?.year ? (Number.parseInt(coinDesignCoins.at(-1)!.year!) + 1).toString() : new Date().getFullYear().toString();
 
@@ -377,7 +378,7 @@ async function loadCoinsList() {
                 const row = generateCoinRow(denomination, design, { year, id, obtained: false });
                 newRowMessage.before(row);
 
-                coinsData[denomination.id].coins[design.id].coins.set(id, { year, id, obtained: false });
+                coinsData[denomination.id].designs[design.id].coins.set(id, { year, id, obtained: false });
 
                 loadDesignTotals(denomination.id, design.id);
 
@@ -434,11 +435,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     yearEditor.contentEditable = 'true';
     yearEditor.addEventListener('blur', async () => {
         const newValue = yearEditor.textContent! || 'UNKNOWN';
-        if (newValue === coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.year) return;
+        if (newValue === coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.year) return;
 
-        addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'year', { year: newValue });
+        addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'year', { year: newValue });
 
-        coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.year = newValue;
+        coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.year = newValue;
 
         loadDesignTotals(denomination.id, design.id);
 
@@ -487,11 +488,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
         const newValue = tooltipSpan.textContent && tooltipSpan.textContent !== 'None' ? tooltipSpan.textContent : null;
 
-        if (tooltipSpan.textContent === (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
+        if (tooltipSpan.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
 
-        addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'mint mark', { mintMark: tooltipSpan.textContent });
+        addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', { mintMark: tooltipSpan.textContent });
 
-        coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintMark = newValue;
+        coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark = newValue;
 
         await updateCoinData(denomination.id, design.id, coin.id, { mintMark: newValue });
     });
@@ -515,20 +516,20 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         mintageCell.textContent = mintageNumber === null ? '???' : formatMintage(mintageNumber);
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
 
-        if ((mintageNumber ?? '') !== (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintage ?? '')) {
-            addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'mintage', { mintage: mintageNumber });
+        if ((mintageNumber ?? '') !== (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintage ?? '')) {
+            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage', { mintage: mintageNumber });
 
-            coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintage = mintageNumber;
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintage = mintageNumber;
 
             await updateCoinData(denomination.id, design.id, coin.id, { mintage: mintageNumber });
         }
 
-        if (mintageForAllVarieties !== (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintageForAllVarieties ?? null)) {
-            addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'mintage "for all varieties"', {
+        if (mintageForAllVarieties !== (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties ?? null)) {
+            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage "for all varieties"', {
                 mintageForAllVarieties: mintageForAllVarieties ?? false,
             });
 
-            coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
 
             await updateCoinData(denomination.id, design.id, coin.id, { mintageForAllVarieties });
         }
@@ -541,11 +542,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         specificationCell.contentEditable = 'true';
         specificationCell.textContent = coin.specification ?? '';
         specificationCell.addEventListener('blur', async () => {
-            if (specificationCell.textContent === (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.specification ?? '')) return;
+            if (specificationCell.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
 
-            addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationCell.textContent });
+            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationCell.textContent });
 
-            coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.specification = specificationCell.textContent! || null;
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationCell.textContent! || null;
 
             await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationCell.textContent! || null });
         });
@@ -567,11 +568,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
             specificationEditor.textContent = coin.specification;
             specificationEditor.contentEditable = 'true';
             specificationEditor.addEventListener('blur', async () => {
-                if (specificationEditor.textContent === (coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.specification ?? '')) return;
+                if (specificationEditor.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
 
-                addCoinChangeEntry(coinsData[denomination.id].coins[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationEditor.textContent! });
+                addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationEditor.textContent! });
 
-                coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.specification = specificationEditor.textContent! || null;
+                coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationEditor.textContent! || null;
 
                 await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationEditor.textContent! || null });
             });
@@ -590,14 +591,14 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         row.dataset.obtained = obtainedCheckbox.checked.toString();
 
         addCoinChangeEntry(
-            coinsData[denomination.id].coins[design.id].coins.get(coin.id)!,
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!,
             design.name,
             'obtained',
             { obtained: obtainedCheckbox.checked },
             `was marked as ${obtainedCheckbox.checked ? 'obtained' : 'not obtained'}`,
         );
 
-        coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.obtained = obtainedCheckbox.checked || null;
+        coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.obtained = obtainedCheckbox.checked || null;
 
         loadDesignTotals(denomination.id, design.id);
 
@@ -616,14 +617,14 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         row.dataset.upgrade = needsUpgradeCheckbox.checked.toString();
 
         addCoinChangeEntry(
-            coinsData[denomination.id].coins[design.id].coins.get(coin.id)!,
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!,
             design.name,
             'upgrade',
             { upgrade: needsUpgradeCheckbox.checked },
             `was marked as ${needsUpgradeCheckbox.checked ? 'needing an upgrade' : 'not needing an upgrade'}`,
         );
 
-        coinsData[denomination.id].coins[design.id].coins.get(coin.id)!.upgrade = needsUpgradeCheckbox.checked || null;
+        coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.upgrade = needsUpgradeCheckbox.checked || null;
 
         loadDesignTotals(denomination.id, design.id);
 
@@ -668,7 +669,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
  * @param design The coin design to load the totals for.
  */
 function loadDesignTotals(denomination: string, design: string) {
-    const designData = coinsData[denomination].coins[design];
+    const designData = coinsData[denomination].designs[design];
 
     const obtainedCoins = [...designData.coins.values()].filter((coin) => coin.obtained).length;
     const needsUpgradeCoins = [...designData.coins.values()].filter((coin) => coin.upgrade).length;
@@ -685,8 +686,18 @@ function loadDesignTotals(denomination: string, design: string) {
 
     upgradeSpan.textContent = needsUpgradeCoins > 0 ? `, ${needsUpgradeCoins} needing upgrade` : '';
 
-    if (obtainedCoins === 0) amountTooltip.parentElement!.dataset.noneObtained = 'true';
-    else delete amountTooltip.parentElement!.dataset.noneObtained;
+    if (obtainedCoins === 0) {
+        amountTooltip.parentElement!.dataset.noneObtained = 'true';
+
+        const denominationData = coinsData[denomination];
+
+        if (Object.values(denominationData.designs).every((design) => [...design.coins.values()].every((coin) => !coin.obtained)))
+            amountTooltip.parentElement!.parentElement!.dataset.noneObtained = 'true';
+        else delete amountTooltip.parentElement!.parentElement!.dataset.noneObtained;
+    } else {
+        delete amountTooltip.parentElement!.dataset.noneObtained;
+        delete amountTooltip.parentElement!.parentElement!.dataset.noneObtained;
+    }
 }
 
 /**
