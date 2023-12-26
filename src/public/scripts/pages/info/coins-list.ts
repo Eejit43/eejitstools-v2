@@ -450,7 +450,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     if (coin.image) {
         const coinImage = document.createElement('sup');
         coinImage.classList.add('coin-image-icon', 'fa-solid', 'fa-image');
-        coinImage.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/images/${design.id}/${coin.image}.png`;
+        coinImage.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/images/${design.id}/${coin.image}`;
         coinImage.dataset.name = `${design.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
         coinImage.addEventListener('click', () => {
             modal.style.display = 'block';
@@ -555,8 +555,8 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         const comparisonSpan = document.createElement('span');
         comparisonSpan.classList.add('coin-type-comparison');
         comparisonSpan.textContent = 'View type comparison';
-        comparisonSpan.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/comparisons/${design.id}/${coin.comparison}.png`;
-        comparisonSpan.dataset.name = `Type Comparison: ${design.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
+        comparisonSpan.dataset.image = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/comparisons/${design.id}/${coin.comparison}.jpg`;
+        comparisonSpan.dataset.name = `Type comparison: ${design.name} - ${coin.year}${coin.mintMark ? `  (${coin.mintMark})` : ''}${coin.specification ? ` (${coin.specification})` : ''}`;
         comparisonSpan.addEventListener('click', () => {
             modal.style.display = 'block';
             if (modalImage.src !== comparisonSpan.dataset.image) modalImage.src = comparisonSpan.dataset.image!;
