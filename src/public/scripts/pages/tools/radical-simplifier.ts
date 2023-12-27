@@ -9,18 +9,18 @@ declare global {
     }
 }
 
+const operandInput = document.querySelector('#operand') as HTMLInputElement;
 const indexInput = document.querySelector('#index') as HTMLInputElement;
 const radicandInput = document.querySelector('#radicand') as HTMLInputElement;
-const operandInput = document.querySelector('#operand') as HTMLInputElement;
 const simplifyButton = document.querySelector('#simplify') as HTMLButtonElement;
 const resetButton = document.querySelector('#reset') as HTMLButtonElement;
 const output = document.querySelector('#output') as HTMLSpanElement;
 const message = document.querySelector('#message') as HTMLSpanElement;
 
 for (const event of ['input', 'paste']) {
+    operandInput.addEventListener(event, () => (operandInput.value = operandInput.value.replaceAll(/\D/g, '')));
     indexInput.addEventListener(event, () => (indexInput.value = indexInput.value.replaceAll(/\D/g, '')));
     radicandInput.addEventListener(event, () => (radicandInput.value = radicandInput.value.replaceAll(/[^\d-]/g, '').replaceAll(/(?<!^)-/g, '')));
-    operandInput.addEventListener(event, () => (operandInput.value = operandInput.value.replaceAll(/\D/g, '')));
 }
 
 for (const input of [indexInput, radicandInput, operandInput]) input.addEventListener('keydown', (event) => (event.key === 'Enter' ? simplifyButton.click() : null));
@@ -35,8 +35,8 @@ simplifyButton.addEventListener('click', () => {
     message.textContent = '';
     output.classList.remove('hidden');
 
-    const index = indexInput.value ? Number.parseInt(indexInput.value) : 2;
     const operand = operandInput.value ? Number.parseInt(operandInput.value) : 1;
+    const index = indexInput.value ? Number.parseInt(indexInput.value) : 2;
     const originalRadicand = Number.parseInt(radicandInput.value);
     const negativeRadicand = originalRadicand < 0;
 
@@ -85,9 +85,9 @@ simplifyButton.addEventListener('click', () => {
 resetButton.addEventListener('click', () => {
     message.textContent = 'Nothing yet!';
     output.classList.add('hidden');
+    operandInput.value = '';
     indexInput.value = '';
     radicandInput.value = '';
-    operandInput.value = '';
     showAlert('Reset!', 'success');
 });
 
