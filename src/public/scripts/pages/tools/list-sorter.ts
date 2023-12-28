@@ -3,7 +3,7 @@ import { copyValue, showAlert, showResult, shuffleArray } from '../../functions.
 const input = document.querySelector('#input') as HTMLTextAreaElement;
 const separatorInput = document.querySelector('#separator') as HTMLInputElement;
 const alphabetizeButton = document.querySelector('#alphabetize') as HTMLButtonElement;
-const numerizeButton = document.querySelector('#numerize') as HTMLButtonElement;
+const numericalOrderButton = document.querySelector('#numerical-order') as HTMLButtonElement;
 const randomizeButton = document.querySelector('#randomize') as HTMLButtonElement;
 const reverseButton = document.querySelector('#reverse') as HTMLButtonElement;
 const clearButton = document.querySelector('#clear') as HTMLButtonElement;
@@ -12,7 +12,7 @@ const copyResultButton = document.querySelector('#copy-result') as HTMLButtonEle
 
 /* Add event listeners */
 alphabetizeButton.addEventListener('click', alphabetize);
-numerizeButton.addEventListener('click', numerize);
+numericalOrderButton.addEventListener('click', numericalOrder);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
 clearButton.addEventListener('click', () => {
@@ -54,12 +54,12 @@ function alphabetize() {
 }
 
 /**
- * Numerizes the provided string and displays the result.
+ * Sorts the provided string in numerical order and displays the result.
  */
-function numerize() {
+function numericalOrder() {
     if (input.value.length === 0) {
         showAlert('Empty input!', 'warning');
-        showResult(numerizeButton, 'warning');
+        showResult(numericalOrderButton, 'warning');
     } else {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
@@ -67,7 +67,7 @@ function numerize() {
             .filter((x) => x === 0 || Boolean(x))
             .sort((a, b) => a - b)
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
-        showResult(numerizeButton, 'success');
+        showResult(numericalOrderButton, 'success');
         copyResultButton.disabled = false;
     }
 }
