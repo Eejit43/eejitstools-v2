@@ -10,7 +10,7 @@
     },
     "prettier": "@eejit/prettier-config",
     "dependencies": {
-        "@fastify/rate-limit": "^9.0.1",
+        "@fastify/rate-limit": "^9.1.0",
         "@fastify/static": "^6.12.0",
         "@fastify/view": "^8.2.0",
         "canvas": "^2.11.2",
@@ -23,11 +23,11 @@
         "handlebars": "^4.7.8",
         "mongoose": "^8.0.3",
         "node-html-parser": "^6.1.12",
-        "postcss": "^8.4.32",
+        "postcss": "^8.4.33",
         "postcss-preset-env": "^9.3.0"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^5.0.0",
+        "@eejit/eslint-config-typescript": "^6.0.0",
         "@eejit/prettier-config": "^2.1.2",
         "@eejit/stylelint-config": "^2.0.0",
         "@tsconfig/recommended": "^1.0.3",
@@ -38,5 +38,5 @@
         "tree-kill": "^1.2.2",
         "typescript": "^5.3.3"
     },
-    "packageManager": "pnpm@8.13.1"
+    "packageManager": "pnpm@8.14.0"
 }
