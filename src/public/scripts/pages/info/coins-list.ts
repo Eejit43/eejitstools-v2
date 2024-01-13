@@ -382,7 +382,7 @@ async function loadCoinsList() {
 
                 loadDesignTotals(denomination.id, design.id);
 
-                addCoinChangeEntry({ year }, design.name, undefined, undefined, 'was created!');
+                addCoinChangeEntry({ year }, design.name, undefined, undefined, 'was created');
 
                 await addCoin(denomination.id, design.id, year, id);
             });
