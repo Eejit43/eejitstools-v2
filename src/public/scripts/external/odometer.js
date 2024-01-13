@@ -65,7 +65,8 @@
 
     transitionCheckStyles = document.createElement('div').style;
 
-    TRANSITION_SUPPORT = transitionCheckStyles.transition != null || transitionCheckStyles.webkitTransition != null || transitionCheckStyles.mozTransition != null || transitionCheckStyles.oTransition != null;
+    TRANSITION_SUPPORT =
+        transitionCheckStyles.transition != null || transitionCheckStyles.webkitTransition != null || transitionCheckStyles.mozTransition != null || transitionCheckStyles.oTransition != null;
 
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -150,7 +151,7 @@
                             }
                             return this[0].odometer.update(val);
                         });
-                    })(property)
+                    })(property),
                 );
             }
             return _results;
@@ -210,7 +211,7 @@
                                 },
                                 set: function (val) {
                                     return _this.update(val);
-                                }
+                                },
                             });
                         })(property);
                     }
@@ -255,7 +256,7 @@
         Odometer.prototype.startWatchingMutations = function () {
             if (this.watchMutations) {
                 return this.observer.observe(this.el, {
-                    childList: true
+                    childList: true,
                 });
             }
         };
@@ -308,8 +309,8 @@
                             }, 0);
                             return true;
                         },
-                        false
-                    )
+                        false,
+                    ),
                 );
             }
             return _results;
@@ -328,7 +329,7 @@
             return (this.format = {
                 repeating: repeating,
                 radix: radix,
-                precision: precision
+                precision: precision,
             });
         };
 
@@ -543,7 +544,34 @@
         };
 
         Odometer.prototype.animateSlide = function (newValue) {
-            var boosted, cur, diff, digitCount, digits, dist, end, fractionalCount, frame, frames, i, incr, j, mark, numEl, oldValue, start, _base, _i, _j, _k, _l, _len, _len1, _len2, _m, _ref, _results;
+            var boosted,
+                cur,
+                diff,
+                digitCount,
+                digits,
+                dist,
+                end,
+                fractionalCount,
+                frame,
+                frames,
+                i,
+                incr,
+                j,
+                mark,
+                numEl,
+                oldValue,
+                start,
+                _base,
+                _i,
+                _j,
+                _k,
+                _l,
+                _len,
+                _len1,
+                _len2,
+                _m,
+                _ref,
+                _results;
             oldValue = this.value;
             fractionalCount = this.getFractionalDigitCount(oldValue, newValue);
             if (fractionalCount) {
@@ -658,8 +686,8 @@
             _results.push(
                 (el.odometer = new Odometer({
                     el: el,
-                    value: (_ref1 = el.innerText) != null ? _ref1 : el.textContent
-                }))
+                    value: (_ref1 = el.innerText) != null ? _ref1 : el.textContent,
+                })),
             );
         }
         return _results;
@@ -681,7 +709,7 @@
                     return Odometer.init();
                 }
             },
-            false
+            false,
         );
     }
 
@@ -694,4 +722,4 @@
     } else {
         window.Odometer = Odometer;
     }
-}.call(this));
+}).call(this);
