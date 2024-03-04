@@ -19,7 +19,7 @@
         "consola": "^3.2.3",
         "esbuild": "^0.20.1",
         "esbuild-postcss": "^0.0.4",
-        "fastify": "^4.26.1",
+        "fastify": "^4.26.2",
         "handlebars": "^4.7.8",
         "mongoose": "^8.2.0",
         "node-html-parser": "^6.1.12",
@@ -27,9 +27,9 @@
         "postcss-preset-env": "^9.4.0"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^8.1.0",
+        "@eejit/eslint-config-typescript": "^8.2.0",
         "@eejit/prettier-config": "^2.2.3",
-        "@eejit/stylelint-config": "^2.0.0",
+        "@eejit/stylelint-config": "^3.0.0",
         "@tsconfig/recommended": "^1.0.3",
         "@types/chroma-js": "^2.4.4",
         "@types/ua-parser-js": "^0.7.39",
