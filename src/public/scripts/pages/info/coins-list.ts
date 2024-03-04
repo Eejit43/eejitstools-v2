@@ -316,6 +316,7 @@ async function loadCoinsList() {
 
             const coinDesignImage = document.createElement('img');
             coinDesignImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${design.id}.png`;
+            coinDesignImage.loading = 'lazy';
             coinDesignImage.classList.add('coin-design-image', 'popup-image');
             coinDesignImage.alt = design.name;
 
