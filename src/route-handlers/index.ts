@@ -5,6 +5,7 @@ import setupCalendarRoutes from './calendar.js';
 import setupCoinsInfoRoute from './coins-info.js';
 import setupCoinsListRoutes from './coins-list.js';
 import setupCorsAnywhereRoute from './cors-anywhere.js';
+import setupForeignCollectionsList from './foreign-collections-list.js';
 import setupIpInfoRoute from './ip-info.js';
 import setupTidesInfoRoute from './tides-info.js';
 import setupTwemojiRoute from './twemoji.js';
@@ -21,6 +22,7 @@ export default function setupRoutes(fastify: FastifyInstance) {
     setupCoinsInfoRoute(fastify);
     setupCoinsListRoutes(fastify);
     setupCorsAnywhereRoute(fastify);
+    setupForeignCollectionsList(fastify);
     setupIpInfoRoute(fastify);
     setupTidesInfoRoute(fastify);
     setupTwemojiRoute(fastify);

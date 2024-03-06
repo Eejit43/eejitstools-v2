@@ -1,0 +1,31 @@
+Welcome! Here is a list of countries I have coins, stamps, and banknotes I have!
+
+<div id="login-container">
+    Password:
+    <input type="text" id="login-password" />
+    <button id="login-button">Login</button>
+</div>
+
+<hr />
+<div id="collections-list-message">Please login to view this!</div>
+<div id="collections-list" style="display: none">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Has Coin(s)</th>
+                <th>Has Banknote(s)</th>
+                <th>Has Stamp(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="new-row-message">
+                <td colspan="4"><i class="fa-solid fa-plus"></i>Add new row</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<button id="export-data" data-icon-after="&#xf019" disabled>Export country data</button>

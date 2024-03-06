@@ -1,0 +1,38 @@
+#login-container {
+    margin-top: 1em;
+}
+
+#login-password {
+    width: calc(4ch + 12px);
+}
+
+#collection-list table {
+    margin: 20px auto;
+    width: 50%;
+
+    & input[type="checkbox"] {
+        transform: scale(1.3);
+    }
+}
+
+#collection-list th {
+    text-align: center;
+}
+
+#new-row-message {
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #3e434b;
+    }
+
+    & i.fa-plus {
+        padding-right: 6px;
+    }
+}
+
+button#export-data {
+    margin-top: 1em;
+    padding: 5px;
+}

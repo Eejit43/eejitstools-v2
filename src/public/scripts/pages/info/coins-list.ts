@@ -29,7 +29,7 @@ loginButton.addEventListener('click', async () => {
         showAlert('Logged in!', 'success');
         showResult(loginButton, 'success', false);
 
-        loadCoinsList();
+        await loadCoinsList();
 
         exportDataButton.disabled = false;
     } else {
@@ -736,11 +736,13 @@ function formatMintage(mintage: number) {
  * @param data The data to update.
  */
 async function updateCoinData(denominationId: string, designId: string, coinId: string, data: PartialNullable<Coin>) {
-    const result = (await fetch('/coins-list-edit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ denominationId, designId, coinId, data, password: passwordInput.dataset.input }),
-    })) as { error?: string };
+    const result = (await (
+        await fetch('/coins-list-edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ denominationId, designId, coinId, data, password: passwordInput.dataset.input }),
+        })
+    ).json()) as { error?: string };
 
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Coin data updated successfully!', 'success');
@@ -754,11 +756,13 @@ async function updateCoinData(denominationId: string, designId: string, coinId: 
  * @param coinId The id of the coin to add.
  */
 async function addCoin(denominationId: string, designId: string, coinYear: string, coinId: string) {
-    const result = (await fetch('/coins-list-add-coin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ denominationId, designId, coinYear, coinId, password: passwordInput.dataset.input }),
-    })) as { error?: string };
+    const result = (await (
+        await fetch('/coins-list-add-coin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ denominationId, designId, coinYear, coinId, password: passwordInput.dataset.input }),
+        })
+    ).json()) as { error?: string };
 
     if (result.error) showAlert(result.error, 'error');
     else showAlert('Successfully added a new coin row!', 'success');
