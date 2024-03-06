@@ -92,8 +92,13 @@ function reloadTableData() {
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
-        nameCell.textContent = country.name;
         nameCell.contentEditable = 'true';
+
+        if (country.name.includes(', ')) {
+            const textAfter = country.name.slice(country.name.indexOf(', ') + 2);
+            nameCell.textContent = textAfter + ' ' + country.name.slice(0, country.name.indexOf(','));
+        } else nameCell.textContent = country.name;
+
         nameCell.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') event.preventDefault();
         });
@@ -115,6 +120,9 @@ function reloadTableData() {
             selection.removeAllRanges();
             selection.addRange(range);
         });
+
+        nameCell.addEventListener('focus', () => (nameCell.textContent = country.name));
+
         nameCell.addEventListener('blur', async () => {
             nameCell.contentEditable = 'false';
             for (const input of tableBody.querySelectorAll('input')) input.disabled = true;
@@ -139,6 +147,7 @@ function reloadTableData() {
 
             newRowMessage.dataset.disabled = 'false';
         });
+
         row.append(nameCell);
 
         for (const type of ['coins', 'banknotes', 'stamps'] as const) {
