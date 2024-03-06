@@ -157,7 +157,7 @@ const preParsedPages: PreParsedPages = {
         'coins-info': { title: 'Coins Info', icon: 'coin', description: 'Information about all coins that have been produced for circulation in the United States' },
         'coins-list': { title: 'Coins List', icon: 'coins', description: 'A list of coins I have and need' },
         'euro-coins': { title: 'Euro Coins', icon: 'euro-sign', description: 'A list of all euro coin designs', additionalData: { euroCoins } },
-        'foreign-collections-list': { title: 'Foreign Collection List', icon: 'earth-americas', description: 'A list of countries I have coins, stamps, and banknotes from' },
+        'foreign-collections-list': { title: 'Foreign Collection List', icon: 'earth-americas', description: 'A list of countries, territories, etc. I have coins, banknotes, and stamps from' },
         'minecraft-codes': {
             title: 'Minecraft Formatting Codes',
             icon: 'gamepad-modern',
