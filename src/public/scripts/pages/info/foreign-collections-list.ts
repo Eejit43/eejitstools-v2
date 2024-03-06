@@ -55,6 +55,8 @@ async function loadCollectionList() {
     reloadTableData();
 
     newRowMessage.addEventListener('click', async () => {
+        if (newRowMessage.dataset.disabled === 'true') return;
+
         let id: string;
         do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
         while (collectionData.some((country) => country.id === id));
@@ -92,7 +94,32 @@ function reloadTableData() {
         const nameCell = document.createElement('td');
         nameCell.textContent = country.name;
         nameCell.contentEditable = 'true';
+        nameCell.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') event.preventDefault();
+        });
+
+        nameCell.addEventListener('paste', (event) => {
+            event.preventDefault();
+
+            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
+
+            const range = document.getSelection()!.getRangeAt(0);
+            range.deleteContents();
+
+            const textNode = document.createTextNode(text);
+            range.insertNode(textNode);
+            range.selectNodeContents(textNode);
+            range.collapse(false);
+
+            const selection = window.getSelection()!;
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
         nameCell.addEventListener('blur', async () => {
+            nameCell.contentEditable = 'false';
+            for (const input of tableBody.querySelectorAll('input')) input.disabled = true;
+            newRowMessage.dataset.disabled = 'true';
+
             const result = (await (
                 await fetch('/foreign-collections-list-edit', {
                     method: 'POST',
@@ -109,6 +136,8 @@ function reloadTableData() {
 
                 reloadTableData();
             }
+
+            newRowMessage.dataset.disabled = 'false';
         });
         row.append(nameCell);
 
@@ -116,13 +145,30 @@ function reloadTableData() {
             const obtained = country.data[type];
 
             const cell = document.createElement('td');
+            cell.dataset.obtained = typeof obtained === 'boolean' ? obtained.toString() : 'na';
             row.append(cell);
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.checked = obtained;
-            checkbox.addEventListener('change', async () => {
-                let sortedData = { ...country.data, [type]: checkbox.checked };
+            checkbox.checked = !!obtained;
+
+            if (obtained === null) checkbox.indeterminate = true;
+
+            checkbox.addEventListener('click', async () => {
+                nameCell.contentEditable = 'false';
+                for (const input of tableBody.querySelectorAll('input')) input.disabled = true;
+                newRowMessage.dataset.disabled = 'true';
+
+                let obtained;
+                if (cell.dataset.obtained === 'na') {
+                    obtained = false;
+                    cell.dataset.obtained = 'false';
+                } else {
+                    obtained = cell.dataset.obtained === 'false' ? true : null;
+                    cell.dataset.obtained = obtained ? 'true' : 'na';
+                }
+
+                let sortedData = { ...country.data, [type]: obtained };
                 sortedData = { coins: sortedData.coins, banknotes: sortedData.banknotes, stamps: sortedData.stamps };
 
                 const result = (await (
@@ -141,6 +187,8 @@ function reloadTableData() {
 
                     reloadTableData();
                 }
+
+                newRowMessage.dataset.disabled = 'false';
             });
             cell.append(checkbox);
         }

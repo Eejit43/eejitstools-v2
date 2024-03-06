@@ -4,7 +4,7 @@ import { Schema, model } from 'mongoose';
 interface ForeignCollectionCountry {
     id: string;
     name: string;
-    data: { coins: boolean; banknotes: boolean; stamps: boolean };
+    data: { coins: boolean | null; banknotes: boolean | null; stamps: boolean | null };
 }
 
 export type ForeignCollectionsList = ForeignCollectionCountry[];

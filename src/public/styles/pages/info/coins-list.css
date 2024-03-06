@@ -47,7 +47,9 @@ button.coin-denomination-expand {
     width: 50%;
 
     & input[type="checkbox"] {
+        display: block;
         transform: scale(1.3);
+        margin: auto;
     }
 }
 

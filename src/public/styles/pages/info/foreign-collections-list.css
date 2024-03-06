@@ -6,12 +6,28 @@
     width: calc(4ch + 12px);
 }
 
-#collection-list table {
+#collections-list table {
     margin: 20px auto;
     width: 50%;
 
-    & input[type="checkbox"] {
-        transform: scale(1.3);
+    & td {
+        & input[type="checkbox"] {
+            display: block;
+            transform: scale(1.3);
+            margin: auto;
+        }
+
+        &[data-obtained="false"] {
+            background-color: var(--error-color-300);
+        }
+
+        &[data-obtained="true"] {
+            background-color: var(--success-color-350);
+        }
+
+        &[data-obtained="na"] {
+            background-color: var(--neutral-color-200);
+        }
     }
 }
 
@@ -27,12 +43,15 @@
         background-color: #3e434b;
     }
 
+    &[data-disabled="true"] {
+        background-color: #2b3037;
+    }
+
     & i.fa-plus {
         padding-right: 6px;
     }
 }
 
 button#export-data {
-    margin-top: 1em;
     padding: 5px;
 }
