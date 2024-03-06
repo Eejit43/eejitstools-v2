@@ -5,6 +5,7 @@ const passwordInput = document.querySelector('#login-password') as HTMLInputElem
 const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
 const collectionsListMessage = document.querySelector('#collections-list-message') as HTMLDivElement;
 const collectionsList = document.querySelector('#collections-list') as HTMLDivElement;
+const collectionsListTableBody = collectionsList.querySelector('tbody') as HTMLTableSectionElement;
 const newRowMessage = document.querySelector('#new-row-message') as HTMLTableRowElement;
 const exportDataButton = document.querySelector('#export-data') as HTMLButtonElement;
 
@@ -57,6 +58,10 @@ async function loadCollectionList() {
     newRowMessage.addEventListener('click', async () => {
         if (newRowMessage.dataset.disabled === 'true') return;
 
+        for (const element of collectionsListTableBody.querySelectorAll('[contenteditable]')) (element as HTMLElement).contentEditable = 'false';
+        for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
+        newRowMessage.dataset.disabled = 'true';
+
         let id: string;
         do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
         while (collectionData.some((country) => country.id === id));
@@ -77,6 +82,8 @@ async function loadCollectionList() {
 
             reloadTableData();
         }
+
+        newRowMessage.dataset.disabled = 'false';
     });
 }
 
@@ -84,9 +91,7 @@ async function loadCollectionList() {
  * Reloads the table's data from the stored variable.
  */
 function reloadTableData() {
-    const tableBody = collectionsList.querySelector('tbody') as HTMLTableSectionElement;
-
-    while (tableBody.children.length > 1) tableBody.children[0].remove();
+    while (collectionsListTableBody.children.length > 1) collectionsListTableBody.children[0].remove();
 
     for (const country of collectionData) {
         const row = document.createElement('tr');
@@ -125,7 +130,7 @@ function reloadTableData() {
 
         nameCell.addEventListener('blur', async () => {
             nameCell.contentEditable = 'false';
-            for (const input of tableBody.querySelectorAll('input')) input.disabled = true;
+            for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
             newRowMessage.dataset.disabled = 'true';
 
             const result = (await (
@@ -165,7 +170,7 @@ function reloadTableData() {
 
             checkbox.addEventListener('click', async () => {
                 nameCell.contentEditable = 'false';
-                for (const input of tableBody.querySelectorAll('input')) input.disabled = true;
+                for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
                 newRowMessage.dataset.disabled = 'true';
 
                 let obtained;
