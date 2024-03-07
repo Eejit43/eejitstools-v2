@@ -58,25 +58,25 @@ async function loadCollectionList() {
     newRowMessage.addEventListener('click', async () => {
         if (newRowMessage.dataset.disabled === 'true') return;
 
-        for (const element of collectionsListTableBody.querySelectorAll('[contenteditable]')) (element as HTMLElement).contentEditable = 'false';
-        for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
-        newRowMessage.dataset.disabled = 'true';
+        disableElements();
 
         let id: string;
         do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
-        while (collectionData.some((country) => country.id === id));
+        while (collectionData.some((entry) => entry.id === id));
 
         const result = (await (
-            await fetch('/foreign-collections-list-add-country', {
+            await fetch('/foreign-collections-list-add-entry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: 'Unknown Country', data: { coins: false, banknotes: false, stamps: false }, password: passwordInput.dataset.input }),
+                body: JSON.stringify({ name: 'Unknown Entry', type: 'Unknown Type', data: { coins: false, banknotes: false, stamps: false }, password: passwordInput.dataset.input }),
             })
         ).json()) as { error?: string; data: ForeignCollectionsList };
 
-        if (result.error) showAlert(result.error, 'error');
-        else {
-            showAlert('Successfully added a new country row!', 'success');
+        if (result.error) {
+            showAlert(result.error, 'error');
+            reloadTableData();
+        } else {
+            showAlert('Successfully added a new entry row!', 'success');
 
             collectionData = result.data;
 
@@ -93,57 +93,35 @@ async function loadCollectionList() {
 function reloadTableData() {
     while (collectionsListTableBody.children.length > 1) collectionsListTableBody.children[0].remove();
 
-    for (const country of collectionData) {
+    for (const entry of collectionData) {
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
         nameCell.contentEditable = 'true';
 
-        if (country.name.includes(', ')) {
-            const textAfter = country.name.slice(country.name.indexOf(', ') + 2);
-            nameCell.textContent = textAfter + ' ' + country.name.slice(0, country.name.indexOf(','));
-        } else nameCell.textContent = country.name;
+        if (entry.name.includes(', ')) {
+            const textAfter = entry.name.slice(entry.name.indexOf(', ') + 2);
+            nameCell.textContent = textAfter + ' ' + entry.name.slice(0, entry.name.indexOf(','));
+        } else nameCell.textContent = entry.name;
 
-        nameCell.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') event.preventDefault();
-        });
-
-        nameCell.addEventListener('paste', (event) => {
-            event.preventDefault();
-
-            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
-
-            const range = document.getSelection()!.getRangeAt(0);
-            range.deleteContents();
-
-            const textNode = document.createTextNode(text);
-            range.insertNode(textNode);
-            range.selectNodeContents(textNode);
-            range.collapse(false);
-
-            const selection = window.getSelection()!;
-            selection.removeAllRanges();
-            selection.addRange(range);
-        });
-
-        nameCell.addEventListener('focus', () => (nameCell.textContent = country.name));
+        nameCell.addEventListener('focus', () => (nameCell.textContent = entry.name));
 
         nameCell.addEventListener('blur', async () => {
-            nameCell.contentEditable = 'false';
-            for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
-            newRowMessage.dataset.disabled = 'true';
+            disableElements();
 
             const result = (await (
                 await fetch('/foreign-collections-list-edit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: country.id, name: nameCell.textContent, data: country.data, password: passwordInput.dataset.input }),
+                    body: JSON.stringify({ id: entry.id, name: nameCell.textContent, type: entry.type, data: entry.data, password: passwordInput.dataset.input }),
                 })
             ).json()) as { error?: string; data: ForeignCollectionsList };
 
-            if (result.error) showAlert(result.error, 'error');
-            else {
-                showAlert('Successfully edited the country name!', 'success');
+            if (result.error) {
+                showAlert(result.error, 'error');
+                reloadTableData();
+            } else {
+                showAlert('Successfully edited the entry name!', 'success');
 
                 collectionData = result.data;
 
@@ -155,8 +133,63 @@ function reloadTableData() {
 
         row.append(nameCell);
 
+        const typeCell = document.createElement('td');
+        typeCell.contentEditable = 'true';
+        typeCell.textContent = entry.type;
+
+        typeCell.addEventListener('blur', async () => {
+            disableElements();
+
+            const result = (await (
+                await fetch('/foreign-collections-list-edit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: entry.id, name: entry.name, type: typeCell.textContent, data: entry.data, password: passwordInput.dataset.input }),
+                })
+            ).json()) as { error?: string; data: ForeignCollectionsList };
+
+            if (result.error) {
+                showAlert(result.error, 'error');
+                reloadTableData();
+            } else {
+                showAlert('Successfully edited the entry type!', 'success');
+
+                collectionData = result.data;
+
+                reloadTableData();
+            }
+
+            newRowMessage.dataset.disabled = 'false';
+        });
+
+        row.append(typeCell);
+
+        for (const element of [nameCell, typeCell]) {
+            element.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') event.preventDefault();
+            });
+
+            element.addEventListener('paste', (event) => {
+                event.preventDefault();
+
+                const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
+
+                const range = document.getSelection()!.getRangeAt(0);
+                range.deleteContents();
+
+                const textNode = document.createTextNode(text);
+                range.insertNode(textNode);
+                range.selectNodeContents(textNode);
+                range.collapse(false);
+
+                const selection = window.getSelection()!;
+                selection.removeAllRanges();
+                selection.addRange(range);
+            });
+        }
+
         for (const type of ['coins', 'banknotes', 'stamps'] as const) {
-            const obtained = country.data[type];
+            const obtained = entry.data[type];
 
             const cell = document.createElement('td');
             cell.dataset.obtained = typeof obtained === 'boolean' ? obtained.toString() : 'na';
@@ -169,9 +202,7 @@ function reloadTableData() {
             if (obtained === null) checkbox.indeterminate = true;
 
             checkbox.addEventListener('click', async () => {
-                nameCell.contentEditable = 'false';
-                for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
-                newRowMessage.dataset.disabled = 'true';
+                disableElements();
 
                 let obtained;
                 if (cell.dataset.obtained === 'na') {
@@ -182,20 +213,22 @@ function reloadTableData() {
                     cell.dataset.obtained = obtained ? 'true' : 'na';
                 }
 
-                let sortedData = { ...country.data, [type]: obtained };
+                let sortedData = { ...entry.data, [type]: obtained };
                 sortedData = { coins: sortedData.coins, banknotes: sortedData.banknotes, stamps: sortedData.stamps };
 
                 const result = (await (
                     await fetch('/foreign-collections-list-edit', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: country.id, name: country.name, data: sortedData, password: passwordInput.dataset.input }),
+                        body: JSON.stringify({ id: entry.id, name: entry.name, type: entry.type, data: sortedData, password: passwordInput.dataset.input }),
                     })
                 ).json()) as { error?: string; data: ForeignCollectionsList };
 
-                if (result.error) showAlert(result.error, 'error');
-                else {
-                    showAlert(`Successfully updated the country's "${type}" obtained status!`, 'success');
+                if (result.error) {
+                    showAlert(result.error, 'error');
+                    reloadTableData();
+                } else {
+                    showAlert(`Successfully updated the entry's "${type}" obtained status!`, 'success');
 
                     collectionData = result.data;
 
@@ -209,6 +242,15 @@ function reloadTableData() {
 
         newRowMessage.before(row);
     }
+}
+
+/**
+ * Disables all elements in the table.
+ */
+function disableElements() {
+    for (const element of collectionsListTableBody.querySelectorAll('[contenteditable]')) (element as HTMLElement).contentEditable = 'false';
+    for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
+    newRowMessage.dataset.disabled = 'true';
 }
 
 const parameters = new URLSearchParams(window.location.search);

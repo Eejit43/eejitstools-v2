@@ -189,7 +189,6 @@ function sortObject<T extends DatabaseCoinDenomination | CoinDesign<Coin> | Coin
 /**
  * Generates a unique coin ID.
  * @param design The design to generate the ID for.
- * @returns The generated ID.
  */
 function generateUniqueCoinId(design: CoinDesign<Coin>) {
     let id: string;
