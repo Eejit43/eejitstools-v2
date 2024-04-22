@@ -50,7 +50,7 @@ export const coinsModel = model('coins-data', new Schema({ name: String, id: Str
  * Sets up all coin related routes.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupCoinsListRoutes(fastify: FastifyInstance) {
     fastify.get('/coins-login', (request: FastifyRequest<{ Querystring: { password: string } }>, reply) =>
         reply.send(JSON.stringify({ success: request.query.password === process.env.COINS_PASSWORD }, null, 2)),
     );

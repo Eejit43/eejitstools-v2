@@ -18,7 +18,7 @@ const foreignCollectionsList = model('foreign-collections-list', new Schema({ da
  * Sets up all foreign collection related routes.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupForeignCollectionsList(fastify: FastifyInstance) {
     fastify.get('/foreign-collections-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 

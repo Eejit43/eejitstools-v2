@@ -17,7 +17,7 @@ interface Calendar {
  * Sets up all calendar related routes.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupCalendarRoutes(fastify: FastifyInstance) {
     let calendarEventsCache: string | null = null;
 
     fastify.get('/calendar-events', async (request, reply) => {

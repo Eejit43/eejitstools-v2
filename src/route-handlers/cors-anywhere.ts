@@ -5,7 +5,7 @@ import { logApiRequest } from '../app.js';
  * Sets up the cors-anywhere route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupCorsAnywhereRoute(fastify: FastifyInstance) {
     fastify.get('/cors-anywhere', async (request: FastifyRequest<{ Querystring: { url: string } }>, reply) => {
         logApiRequest(request);
 

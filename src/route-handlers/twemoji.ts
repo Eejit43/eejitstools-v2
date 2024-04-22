@@ -6,7 +6,7 @@ import { logApiRequest } from '../app.js';
  * Sets up the cors-anywhere route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupTwemojiRoute(fastify: FastifyInstance) {
     fastify.get('/twemoji/:id', async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
         logApiRequest(request);
 

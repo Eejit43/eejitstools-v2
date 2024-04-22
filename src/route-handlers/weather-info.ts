@@ -4,7 +4,7 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
  * Sets up the weather-info route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupWeatherInfoRoute(fastify: FastifyInstance) {
     fastify.get('/weather-info', async (request: FastifyRequest<{ Querystring: { latitude: string; longitude: string } }>, reply) => {
         const { latitude, longitude } = request.query;
 

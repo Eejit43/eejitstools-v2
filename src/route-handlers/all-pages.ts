@@ -9,7 +9,7 @@ import { allPages } from '../public/data/pages.js';
  * Sets up the cors-anywhere route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupAllPageRoutes(fastify: FastifyInstance) {
     fastify.get('/pages', (request, reply) =>
         reply.send(
             JSON.stringify(

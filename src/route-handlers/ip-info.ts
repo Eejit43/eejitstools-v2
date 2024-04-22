@@ -4,7 +4,7 @@ import { FastifyInstance } from 'fastify';
  * Sets up the ip-info route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupIpInfoRoute(fastify: FastifyInstance) {
     fastify.get('/ip-info', async (request, reply) => {
         let { ip } = request;
         if (ip === '127.0.0.1') {

@@ -7,7 +7,7 @@ export default [
     ...sharedConfig,
     {
         languageOptions: {
-            parserOptions: { project: ['./tsconfig.json', './src/public/scripts/tsconfig.json', './src/public/data/tsconfig.json'] },
+            parserOptions: { project: ['./tsconfig.json', './src/public/tsconfig.json'] },
         },
     },
 ];

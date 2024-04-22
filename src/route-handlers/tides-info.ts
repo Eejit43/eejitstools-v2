@@ -4,7 +4,7 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
  * Sets up the tides-info route.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupTidesInfoRoute(fastify: FastifyInstance) {
     fastify.get('/tides-info', async (request: FastifyRequest<{ Querystring: { latitude: string; longitude: string } }>, reply) => {
         const { latitude, longitude } = request.query;
 

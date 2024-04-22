@@ -7,7 +7,7 @@ export type FilteredCoin = Omit<Coin, 'obtained' | 'upgrade'>;
  * Sets up all coin related routes.
  * @param fastify The Fastify instance.
  */
-export default function (fastify: FastifyInstance) {
+export default function setupCoinsInfoRoute(fastify: FastifyInstance) {
     fastify.get('/coins-info', async (request, reply) => {
         let foundCoins = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
         foundCoins = await patchCoinDatabase(foundCoins);
