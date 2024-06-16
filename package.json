@@ -17,9 +17,9 @@
         "chalk": "^5.3.0",
         "chokidar": "^3.6.0",
         "consola": "^3.2.3",
-        "esbuild": "^0.21.4",
+        "esbuild": "^0.21.5",
         "esbuild-postcss": "^0.0.4",
-        "fastify": "^4.27.0",
+        "fastify": "^4.28.0",
         "handlebars": "^4.7.8",
         "mongoose": "^8.4.1",
         "node-html-parser": "^6.1.13",
@@ -27,7 +27,7 @@
         "postcss-preset-env": "^9.5.14"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^10.2.0",
+        "@eejit/eslint-config-typescript": "^11.0.0",
         "@eejit/prettier-config": "^2.3.0",
         "@eejit/stylelint-config": "^3.0.1",
         "@tsconfig/recommended": "^1.0.6",
@@ -39,5 +39,5 @@
         "tree-kill": "^1.2.2",
         "typescript": "^5.4.5"
     },
-    "packageManager": "pnpm@9.2.0"
+    "packageManager": "pnpm@9.3.0"
 }
