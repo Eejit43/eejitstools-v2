@@ -10,6 +10,9 @@ const copyVerticalButton = document.querySelector('#copy-result-vertical') as HT
 const copySpacesButton = document.querySelector('#copy-result-spaces') as HTMLButtonElement;
 
 /* Add event listeners */
+input.addEventListener('input', () => {
+    input.value = input.value.replaceAll('…', '...');
+});
 toMorseButton.addEventListener('click', toMorse);
 fromMorseButton.addEventListener('click', fromMorse);
 clearButton.addEventListener('click', () => {
