@@ -31,7 +31,7 @@ handlebars.registerHelper('iterateEuroCoinVariant', (type: string, country: stri
 // Load layouts and static assets
 const fastify = Fastify({ trustProxy: true });
 
-await fastify.register(fastifyRateLimit.default);
+await fastify.register(fastifyRateLimit);
 fastify.register(pointOfView, { engine: { handlebars }, root: 'src/views/', layout: 'layouts/layout.hbs' });
 fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.meta.url).pathname), 'public') });
 
