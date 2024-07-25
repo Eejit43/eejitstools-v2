@@ -82,10 +82,12 @@ copyResultButton.addEventListener('click', () => copyValue(copyResultButton, out
 function runRegexTester() {
     let regex: RegExp | null = null;
     let replacer: string | null = null;
+
     try {
         regex = new RegExp(regexInput.value, flagsInput.value);
         replacer = JSON.parse(`"${replaceInput.value.replaceAll('"', '\\"')}"`) as string;
     } catch {} // eslint-disable-line no-empty
+
     if (textInput.value.length === 0 || regexInput.value.length === 0) {
         showAlert('Empty values(s)!', 'warning');
         showResult(runButton, 'warning');
