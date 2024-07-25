@@ -89,7 +89,7 @@ function runRegexTester() {
     if (textInput.value.length === 0 || regexInput.value.length === 0) {
         showAlert('Empty values(s)!', 'warning');
         showResult(runButton, 'warning');
-    } else if (regex && replacer) {
+    } else if (regex && replacer !== null) {
         showResult(runButton, 'success');
         outputText.value = textInput.value.replace(regex, replacer);
         copyResultButton.disabled = false;
