@@ -119,8 +119,8 @@ async function clipboardDisplay() {
         const data = await navigator.clipboard.read();
 
         for (const datum of data)
-            if (datum.types.includes('text/plain')) {
-                const blob = await datum.getType('text/plain'); // eslint-disable-line no-await-in-loop
+            if (datum.types.includes('text/plain') || datum.types.length === 0) {
+                const blob = (await datum.getType('text/plain')) || new Blob([''], { type: 'text/plain' }); // eslint-disable-line no-await-in-loop
                 const text = await blob.text(); // eslint-disable-line no-await-in-loop
 
                 if (text.length === 0) {
@@ -139,13 +139,13 @@ async function clipboardDisplay() {
                 copiedText.value = '';
                 selectClipboardButton.disabled = true;
 
-                if (storedData !== blob.size || (storedData === blob.size && !/Clipboard has image!/.test(clipboardWarning.innerHTML)))
+                if (storedData !== blob.size || (storedData === blob.size && !clipboardWarning.innerHTML.includes('Clipboard has image!')))
                     showWarning(`<span class="neutral"><i class="far fa-image"></i> Clipboard has image! (<a href="${url}" target="_blank">view</a>)<br /></span>`);
                 if (storedData !== blob.size) storedData = blob.size;
             }
     } catch (error) {
-        if (/focused/.test((error as Error).message)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
-        else if (/user gesture/.test((error as Error).message)) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
+        if ((error as Error).message.includes('focused')) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+        else if ((error as Error).message.includes('user gesture')) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
 
         const text = await navigator.clipboard.readText();
 
