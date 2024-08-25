@@ -21,10 +21,10 @@
         "esbuild-postcss": "^0.0.4",
         "fastify": "^4.28.1",
         "handlebars": "^4.7.8",
-        "mongoose": "^8.5.3",
+        "mongoose": "^8.5.4",
         "node-html-parser": "^6.1.13",
         "postcss": "^8.4.41",
-        "postcss-preset-env": "^10.0.1"
+        "postcss-preset-env": "^10.0.2"
     },
     "devDependencies": {
         "@eejit/eslint-config-typescript": "^13.1.0",
@@ -32,12 +32,12 @@
         "@eejit/stylelint-config": "^3.0.2",
         "@tsconfig/recommended": "^1.0.7",
         "@types/chroma-js": "^2.4.4",
-        "@types/node": "^20.16.0",
+        "@types/node": "^20.16.1",
         "@types/ua-parser-js": "^0.7.39",
         "mathjs": "^13.0.3",
         "stylelint": "^16.8.2",
         "tree-kill": "^1.2.2",
         "typescript": "^5.5.4"
     },
-    "packageManager": "pnpm@9.7.1"
+    "packageManager": "pnpm@9.8.0"
 }
