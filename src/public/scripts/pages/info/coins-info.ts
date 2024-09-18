@@ -424,7 +424,8 @@ document.addEventListener('keydown', (event) => {
     if (
         event.altKey ||
         event.metaKey ||
-        (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true'))
+        (document.activeElement &&
+            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only'))
     )
         return;
 

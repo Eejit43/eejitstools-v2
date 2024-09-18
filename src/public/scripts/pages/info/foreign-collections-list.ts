@@ -97,7 +97,7 @@ function reloadTableData() {
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
-        nameCell.contentEditable = 'true';
+        nameCell.contentEditable = 'plaintext-only';
 
         if (entry.name.includes(', ')) {
             const textAfter = entry.name.slice(entry.name.indexOf(', ') + 2);
@@ -134,7 +134,7 @@ function reloadTableData() {
         row.append(nameCell);
 
         const typeCell = document.createElement('td');
-        typeCell.contentEditable = 'true';
+        typeCell.contentEditable = 'plaintext-only';
         typeCell.textContent = entry.type;
 
         typeCell.addEventListener('blur', async () => {
@@ -172,7 +172,7 @@ function reloadTableData() {
             element.addEventListener('paste', (event) => {
                 event.preventDefault();
 
-                const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
+                const text = event.clipboardData!.getData('text/plain').replaceAll(/[\n\r]/g, ' ');
 
                 const range = document.getSelection()!.getRangeAt(0);
                 range.deleteContents();

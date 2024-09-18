@@ -224,7 +224,7 @@ async function loadCoinsList() {
         if (!event.altKey) return;
         if (
             document.activeElement &&
-            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true')
+            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
         )
             return;
 
@@ -433,7 +433,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
     const yearEditor = document.createElement('span');
     yearEditor.textContent = coin.year;
-    yearEditor.contentEditable = 'true';
+    yearEditor.contentEditable = 'plaintext-only';
     yearEditor.addEventListener('blur', async () => {
         const newValue = yearEditor.textContent! || 'UNKNOWN';
         if (newValue === coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.year) return;
@@ -469,7 +469,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     tooltipSpan.classList.add('tooltip-bottom');
     tooltipSpan.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
     tooltipSpan.textContent = coin.mintMark ?? 'None';
-    tooltipSpan.contentEditable = 'true';
+    tooltipSpan.contentEditable = 'plaintext-only';
     tooltipSpan.addEventListener('focus', () => {
         delete tooltipSpan.dataset.tooltip;
         tooltipSpan.classList.remove('tooltip-bottom');
@@ -501,7 +501,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     row.append(mintMarkCell);
 
     const mintageCell = document.createElement('td');
-    mintageCell.contentEditable = 'true';
+    mintageCell.contentEditable = 'plaintext-only';
     mintageCell.textContent = 'mintage' in coin ? formatMintage(coin.mintage!) : '???';
     if (coin.mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
     mintageCell.addEventListener('focus', () => {
@@ -540,7 +540,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
     const specificationCell = document.createElement('td');
     if (!coin.comparison) {
-        specificationCell.contentEditable = 'true';
+        specificationCell.contentEditable = 'plaintext-only';
         specificationCell.textContent = coin.specification ?? '';
         specificationCell.addEventListener('blur', async () => {
             if (specificationCell.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
@@ -567,7 +567,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         if (coin.specification) {
             const specificationEditor = document.createElement('span');
             specificationEditor.textContent = coin.specification;
-            specificationEditor.contentEditable = 'true';
+            specificationEditor.contentEditable = 'plaintext-only';
             specificationEditor.addEventListener('blur', async () => {
                 if (specificationEditor.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
 
@@ -637,7 +637,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     row.append(needsUpgradeCell);
 
     // Strip newlines and formatting from contenteditable element interactions
-    for (const element of row.querySelectorAll('[contenteditable]') as NodeListOf<HTMLElement>) {
+    for (const element of row.querySelectorAll('[contenteditable=plaintext-only]') as NodeListOf<HTMLElement>) {
         element.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') event.preventDefault();
         });
@@ -645,7 +645,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         element.addEventListener('paste', (event) => {
             event.preventDefault();
 
-            const text = event.clipboardData!.getData('text/plain').replaceAll(/\r?\n|\r/g, '');
+            const text = event.clipboardData!.getData('text/plain').replaceAll(/[\n\r]/g, ' ');
 
             const range = document.getSelection()!.getRangeAt(0);
             range.deleteContents();

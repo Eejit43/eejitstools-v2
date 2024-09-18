@@ -128,7 +128,10 @@ const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
-    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'true'))
+    if (
+        document.activeElement &&
+        (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
+    )
         return;
 
     switch (event.code) {
