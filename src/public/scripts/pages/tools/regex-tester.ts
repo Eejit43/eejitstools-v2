@@ -24,7 +24,20 @@ for (const element of [regexInput, replaceInput])
 for (const element of [regexInput, replaceInput])
     element.addEventListener('paste', (event) => {
         event.preventDefault();
-        element.value += event.clipboardData?.getData('text').replaceAll('\n', '\\n').replaceAll('\r', '\\r');
+
+        const text = event.clipboardData!.getData('text/plain').replaceAll('\n', '\\n').replaceAll('\r', '\\r');
+
+        const range = document.getSelection()!.getRangeAt(0);
+        range.deleteContents();
+
+        const textNode = document.createTextNode(text);
+        range.insertNode(textNode);
+        range.selectNodeContents(textNode);
+        range.collapse(false);
+
+        const selection = document.getSelection()!;
+        selection.removeAllRanges();
+        selection.addRange(range);
     });
 runButton.addEventListener('click', runRegexTester);
 clearButton.addEventListener('click', () => {
