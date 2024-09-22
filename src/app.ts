@@ -66,7 +66,7 @@ fastify.setNotFoundHandler((request, reply) =>
 // Start server
 const port = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 
-fastify.listen({ port: process.env.PORT ? Number.parseInt(process.env.PORT) : 3000, host: '0.0.0.0' }, (error) => {
+fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
         if ((error as FastifyError).code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
         else consola.error(error);
