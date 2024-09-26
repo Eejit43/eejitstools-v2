@@ -132,7 +132,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Chapara', file: 'Chapara', duration: '5:22' },
             { name: 'Cow Bull', file: 'Cow Bull', duration: '5:28' },
             { name: 'Ascent', file: 'Ascent', duration: '2:56' },
-            { name: 'Atacameños', file: 'Atacameños', duration: '2:46' },
+            { name: 'Atacameños', file: 'Atacame%C3%B1os', duration: '2:46' },
             { name: 'The Flight Of The Condor', file: 'The Flight Of The Condor', duration: '5:22' },
             { name: 'At The Party', file: 'At The Party', duration: '2:18' },
             { name: 'Socoroma', file: 'Socoroma', duration: '3:08' },
