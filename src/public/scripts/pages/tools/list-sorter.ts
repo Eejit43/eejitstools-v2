@@ -6,6 +6,7 @@ const alphabetizeButton = document.querySelector('#alphabetize') as HTMLButtonEl
 const numericalOrderButton = document.querySelector('#numerical-order') as HTMLButtonElement;
 const randomizeButton = document.querySelector('#randomize') as HTMLButtonElement;
 const reverseButton = document.querySelector('#reverse') as HTMLButtonElement;
+const removeDuplicatesButton = document.querySelector('#remove-duplicates') as HTMLButtonElement;
 const clearButton = document.querySelector('#clear') as HTMLButtonElement;
 const result = document.querySelector('#result') as HTMLTextAreaElement;
 const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
@@ -15,6 +16,7 @@ alphabetizeButton.addEventListener('click', alphabetize);
 numericalOrderButton.addEventListener('click', numericalOrder);
 randomizeButton.addEventListener('click', randomize);
 reverseButton.addEventListener('click', reverse);
+removeDuplicatesButton.addEventListener('click', removeDuplicates);
 clearButton.addEventListener('click', () => {
     input.value = '';
     result.value = '';
@@ -37,7 +39,7 @@ copyResultButton.addEventListener('click', () => {
 });
 
 /**
- * Alphabetizes the provided string and displays the result.
+ * Alphabetizes the provided list and displays the result.
  */
 function alphabetize() {
     if (input.value.length === 0) {
@@ -48,13 +50,14 @@ function alphabetize() {
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .sort((a, b) => a.localeCompare(b))
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
+
         showResult(alphabetizeButton, 'success');
         copyResultButton.disabled = false;
     }
 }
 
 /**
- * Sorts the provided string in numerical order and displays the result.
+ * Sorts the provided list in numerical order and displays the result.
  */
 function numericalOrder() {
     if (input.value.length === 0) {
@@ -67,13 +70,14 @@ function numericalOrder() {
             .filter((x) => x === 0 || Boolean(x))
             .sort((a, b) => a - b)
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
+
         showResult(numericalOrderButton, 'success');
         copyResultButton.disabled = false;
     }
 }
 
 /**
- * Randomizes the provided string and displays the result.
+ * Randomizes the provided list and displays the result.
  */
 function randomize() {
     if (input.value.length === 0) {
@@ -81,13 +85,14 @@ function randomize() {
         showResult(randomizeButton, 'warning');
     } else {
         result.value = shuffleArray(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string)).join(JSON.parse(`"${separatorInput.value}"`) as string);
+
         showResult(randomizeButton, 'success');
         copyResultButton.disabled = false;
     }
 }
 
 /**
- * Reverses the provided string and displays the result.
+ * Reverses the provided list and displays the result.
  */
 function reverse() {
     if (input.value.length === 0) {
@@ -98,7 +103,24 @@ function reverse() {
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .reverse()
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
+
         showResult(reverseButton, 'success');
+        copyResultButton.disabled = false;
+    }
+}
+
+/**
+ * Removes duplicates from the provided list and displays the result.
+ */
+function removeDuplicates() {
+    if (input.value.length === 0) {
+        showAlert('Empty input!', 'warning');
+        showResult(reverseButton, 'warning');
+    } else {
+        const set = new Set(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string));
+        result.value = [...set.values()].join(JSON.parse(`"${separatorInput.value}"`) as string);
+
+        showResult(removeDuplicatesButton, 'success');
         copyResultButton.disabled = false;
     }
 }
