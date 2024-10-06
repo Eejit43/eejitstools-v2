@@ -10,7 +10,7 @@
     },
     "prettier": "@eejit/prettier-config",
     "dependencies": {
-        "@fastify/rate-limit": "^10.1.0",
+        "@fastify/rate-limit": "^10.1.1",
         "@fastify/static": "^8.0.1",
         "@fastify/view": "^10.0.1",
         "canvas": "^3.0.0-rc2",
@@ -24,17 +24,17 @@
         "mongoose": "^8.7.0",
         "node-html-parser": "^6.1.13",
         "postcss": "^8.4.47",
-        "postcss-preset-env": "^10.0.5"
+        "postcss-preset-env": "^10.0.6"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^13.2.0",
+        "@eejit/eslint-config-typescript": "^13.3.0",
         "@eejit/prettier-config": "^3.0.0",
         "@eejit/stylelint-config": "^4.0.0",
         "@tsconfig/recommended": "^1.0.7",
         "@types/chroma-js": "^2.4.4",
         "@types/node": "^20.16.10",
         "@types/ua-parser-js": "^0.7.39",
-        "mathjs": "^13.1.1",
+        "mathjs": "^13.2.0",
         "stylelint": "^16.9.0",
         "tree-kill": "^1.2.2",
         "typescript": "^5.6.2"
