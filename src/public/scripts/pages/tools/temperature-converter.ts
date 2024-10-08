@@ -1,9 +1,9 @@
-import type math from 'mathjs';
+import type { MathJsInstance } from '../../../../../node_modules/mathjs/types/index';
 import { copyValue, showAlert, showResult } from '../../functions.js';
 
 declare global {
     interface Window {
-        math: typeof math;
+        math: MathJsInstance;
     }
 }
 
@@ -68,7 +68,12 @@ function convert() {
     if (/^-?(\d+)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
         message.textContent = '';
         output.value = Number(
-            window.math.format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), { notation: 'fixed', precision: 4 }).replaceAll(/[^\d.-]/g, ''),
+            window.math
+                .format(window.math.evaluate(`${input.value} ${types[inputType.value]} to ${types[outputType.value]}`), {
+                    notation: 'fixed',
+                    precision: 4,
+                })
+                .replaceAll(/[^\d.-]/g, ''),
         ).toLocaleString();
         copyOutputButton.disabled = false;
     } else {

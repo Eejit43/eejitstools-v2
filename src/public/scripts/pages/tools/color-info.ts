@@ -62,9 +62,13 @@ saturateButton.addEventListener('click', () => updateResults(window.chroma(hexIn
 
 desaturateButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).desaturate(0.5)));
 
-increaseLuminanceButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 1.5)));
+increaseLuminanceButton.addEventListener('click', () =>
+    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 1.5)),
+);
 
-decreaseLuminanceButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 0.5)));
+decreaseLuminanceButton.addEventListener('click', () =>
+    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 0.5)),
+);
 
 nameInput.addEventListener('blur', () => {
     if (window.chroma.valid(nameInput.value)) {

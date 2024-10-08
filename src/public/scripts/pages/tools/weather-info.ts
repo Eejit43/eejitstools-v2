@@ -83,7 +83,9 @@ requestGeolocation(getData, message);
  * @param position The position to fetch location for.
  */
 async function getData(position: GeolocationPosition) {
-    const fullData = (await (await fetch(`/weather-info?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`)).json()) as WeatherInformation;
+    const fullData = (await (
+        await fetch(`/weather-info?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`)
+    ).json()) as WeatherInformation;
     const data = fullData.data[0];
 
     let uvIndexDescription: { color: string; text: string } | undefined;
@@ -109,15 +111,31 @@ async function getData(position: GeolocationPosition) {
     latitudeDisplay.textContent = data.lat.toString();
     longitudeDisplay.textContent = data.lon.toString();
     stationDisplay.textContent = data.station;
-    updatedDisplay.textContent = `${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(data.ts * 1000).toLocaleDateString(undefined, {
+    updatedDisplay.textContent = `${new Date(data.ts * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}, ${new Date(
+        data.ts * 1000,
+    ).toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
     })}`;
 
     const output: { icon: string; name: string; value: string | (() => (HTMLElement | string)[]) }[] = [
-        { icon: 'sunrise', name: 'Sunrise', value: new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' }) },
-        { icon: 'sunset', name: 'Sunset', value: new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' }) },
+        {
+            icon: 'sunrise',
+            name: 'Sunrise',
+            value: new Date(`${data.sunrise} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        },
+        {
+            icon: 'sunset',
+            name: 'Sunset',
+            value: new Date(`${data.sunset} ${new Date().toLocaleDateString()} UTC`).toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        },
         {
             icon: 'cloud-sun-rain',
             name: 'Weather',
@@ -133,7 +151,11 @@ async function getData(position: GeolocationPosition) {
         { icon: 'snowflakes', name: 'Snowfall', value: `${data.snow} inches/hour` },
         { icon: 'clouds', name: 'Cloud Cover', value: `${data.clouds}%` },
         { icon: 'wind', name: 'Wind', value: `${data.wind_spd} miles/hour (${data.wind_cdir_full})` },
-        { icon: 'temperature-three-quarters', name: 'Temperature', value: `${data.temp}°F${data.app_temp === data.temp ? '' : ` (Feels like ${data.app_temp}°F)`}` },
+        {
+            icon: 'temperature-three-quarters',
+            name: 'Temperature',
+            value: `${data.temp}°F${data.app_temp === data.temp ? '' : ` (Feels like ${data.app_temp}°F)`}`,
+        },
         { icon: 'droplet-percent', name: 'Relative Humidity', value: `${data.rh}%` },
         { icon: 'droplet-degree', name: 'Dew Point', value: `${data.dewpt}°F` },
         { icon: 'cloud-fog', name: 'Visibility', value: `${data.vis} miles` },
@@ -174,7 +196,9 @@ async function getData(position: GeolocationPosition) {
             value: () => {
                 const moonInformation = window.SunCalc.getMoonIllumination(new Date());
 
-                return [`${titleCase(moonInformation.phase.name)} (${Math.round(moonInformation.fraction * 100)}% illuminated) ${moonInformation.phase.emoji}`];
+                return [
+                    `${titleCase(moonInformation.phase.name)} (${Math.round(moonInformation.fraction * 100)}% illuminated) ${moonInformation.phase.emoji}`,
+                ];
             },
         },
     ];
@@ -200,7 +224,12 @@ async function getData(position: GeolocationPosition) {
     const { alerts } = fullData;
 
     const newAlerts = [];
-    for (const alert of alerts) if (!/has been replaced/.test(alert.title) && Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(Date.now() / 1000)) newAlerts.push(alert);
+    for (const alert of alerts)
+        if (
+            !/has been replaced/.test(alert.title) &&
+            Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(Date.now() / 1000)
+        )
+            newAlerts.push(alert);
 
     const alertsList = document.querySelector('#active-alerts') as HTMLSpanElement;
 

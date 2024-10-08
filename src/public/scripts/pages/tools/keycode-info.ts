@@ -15,7 +15,12 @@ const keyAsciiCell = document.querySelector('#key-ascii-cell') as HTMLTableCellE
 const keyUnicode = document.querySelector('#key-unicode') as HTMLDivElement;
 const keyUnicodeCell = document.querySelector('#key-unicode-cell') as HTMLTableCellElement;
 
-let keyValue: string, keyRepeatingValue: string, keyLocationValue: string, keyCodeValue: string, keyAsciiValue: string, keyUnicodeValue: string;
+let keyValue: string,
+    keyRepeatingValue: string,
+    keyLocationValue: string,
+    keyCodeValue: string,
+    keyAsciiValue: string,
+    keyUnicodeValue: string;
 
 let valuesExist = false;
 
@@ -31,7 +36,8 @@ window.addEventListener('focus', () => {
     ready.innerHTML = '<span class="success"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
 });
 window.addEventListener('blur', () => {
-    ready.innerHTML = '<span class="error"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
+    ready.innerHTML =
+        '<span class="error"><i class="fa-solid fa-exclamation-triangle"></i> Focus the tab in order for keys to be identified!</span>';
 });
 
 /**

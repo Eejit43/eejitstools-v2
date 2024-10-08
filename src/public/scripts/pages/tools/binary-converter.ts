@@ -149,7 +149,8 @@ function addBinarySpacers(binary: string) {
 
     let result = (binaryParts[0].padStart(Math.ceil(binaryParts[0].length / 4) * 4, '0').match(/[01]{4}/g) as string[]).join(' ');
 
-    if (binaryParts.length > 1) result += `.${(binaryParts[1].padEnd(Math.ceil(binaryParts[1].length / 4) * 4, '0').match(/[01]{4}/g) as string[]).join(' ')}`;
+    if (binaryParts.length > 1)
+        result += `.${(binaryParts[1].padEnd(Math.ceil(binaryParts[1].length / 4) * 4, '0').match(/[01]{4}/g) as string[]).join(' ')}`;
 
     return sign + result;
 }

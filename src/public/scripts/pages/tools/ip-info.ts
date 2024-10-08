@@ -26,7 +26,11 @@ fetch('/ip-info').then(async (response) => {
             nameTooltip: 'Internet Service Provider',
             value: `${data.connection.isp_name} ${data.connection.isp_name === data.connection.organization_name ? '' : `(${data.connection.organization_name}) `}(${data.connection.connection_type})`,
         },
-        { icon: 'location-dot', name: 'Location', value: `${data.city} (${data.postal_code}), ${data.region ? `${data.region}, ` : ''}${data.country}` },
+        {
+            icon: 'location-dot',
+            name: 'Location',
+            value: `${data.city} (${data.postal_code}), ${data.region ? `${data.region}, ` : ''}${data.country}`,
+        },
         { icon: 'globe', name: 'Latitude (north-south)', value: data.latitude.toString() },
         { icon: 'globe', name: 'Longitude (east-west)', value: data.longitude.toString() },
     ];

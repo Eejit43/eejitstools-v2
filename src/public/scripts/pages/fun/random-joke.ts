@@ -13,7 +13,9 @@ async function fetchJoke() {
     const response = await fetch('https://v2.jokeapi.dev/joke/Miscellaneous,Pun?safe-mode');
     const data = (await response.json()) as { joke?: string; setup: string; delivery: string };
 
-    jokeOutput.innerHTML = data.joke ? data.joke.replaceAll('\n', '<br />') : `${data.setup.replaceAll('\n', '<br />')}<br />${data.delivery.replaceAll('\n', '<br />')}`;
+    jokeOutput.innerHTML = data.joke
+        ? data.joke.replaceAll('\n', '<br />')
+        : `${data.setup.replaceAll('\n', '<br />')}<br />${data.delivery.replaceAll('\n', '<br />')}`;
 }
 
 fetchJoke(); // eslint-disable-line unicorn/prefer-top-level-await

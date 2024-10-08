@@ -111,7 +111,10 @@ function encode() {
                 encodedResult.value = reader.result as string;
                 encodedCopyResultButton.disabled = false;
                 encodedOpenResultButton.disabled = false;
-                encodedOpenResultLink.href = createBase64ObjectUrl((reader.result as string).replaceAll(/data:image\/.*?;base64,/g, ''), 'image/' + imageType);
+                encodedOpenResultLink.href = createBase64ObjectUrl(
+                    (reader.result as string).replaceAll(/data:image\/.*?;base64,/g, ''),
+                    'image/' + imageType,
+                );
                 showResult(encodeButton, 'success');
             } else {
                 showAlert('Unsupported file type!', 'error');

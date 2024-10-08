@@ -26,7 +26,11 @@ integerInput.addEventListener('input', () => {
 integerInput.addEventListener('input', () => {
     integerConvertButton.disabled = integerInput.value.length === 0;
 
-    integerResetButton.disabled = !(integerInput.value.length > 0 || romanOutput.innerHTML !== '​' || integerArrow.style.color !== 'dimgray');
+    integerResetButton.disabled = !(
+        integerInput.value.length > 0 ||
+        romanOutput.innerHTML !== '​' ||
+        integerArrow.style.color !== 'dimgray'
+    );
 });
 integerConvertButton.addEventListener('click', convertInteger);
 integerResetButton.addEventListener('click', () => {
@@ -90,7 +94,11 @@ function convertInteger() {
 function convertRoman() {
     romanInput.value = romanInput.value.toUpperCase();
     const input = romanInput.value.replaceAll(/_(\w)/g, (match) => match.toLowerCase()).replaceAll('_', '');
-    if (/^m*(?:d?c{0,3}|c[dm])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[vx])M{0,3}(?:D?C{0,3}|C[DM])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[VX])$/.test(input) === true) {
+    if (
+        /^m*(?:d?c{0,3}|c[dm])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[vx])M{0,3}(?:D?C{0,3}|C[DM])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[VX])$/.test(
+            input,
+        ) === true
+    ) {
         integerOutputValue = deromanize(input).toString();
         integerOutput.value = deromanize(input).toString();
         integerOutputCopyButton.disabled = false;
@@ -134,7 +142,14 @@ function romanize(number: number) {
         }
 
     romanOutputValue =
-        barredNumerals.replaceAll('I', 'Ī').replaceAll('V', 'V̄').replaceAll('X', 'X̄').replaceAll('L', 'L̄').replaceAll('C', 'C̄').replaceAll('D', 'D̄').replaceAll('M', 'M̄') + regularNumerals;
+        barredNumerals
+            .replaceAll('I', 'Ī')
+            .replaceAll('V', 'V̄')
+            .replaceAll('X', 'X̄')
+            .replaceAll('L', 'L̄')
+            .replaceAll('C', 'C̄')
+            .replaceAll('D', 'D̄')
+            .replaceAll('M', 'M̄') + regularNumerals;
     romanOutputValue2 = barredNumerals.replaceAll(/([A-Z])/g, '_$1') + regularNumerals;
     return barredNumerals.length > 0 ? `<span class="roman-numeral-big">${barredNumerals}</span>${regularNumerals}` : regularNumerals;
 }

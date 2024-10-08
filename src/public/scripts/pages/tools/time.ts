@@ -3,7 +3,10 @@ import { updateInnerHtml } from '../../functions.js';
 setInterval(() => {
     const currentTime = new Date();
 
-    updateInnerHtml(document.querySelector('#time') as HTMLSpanElement, currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' }));
+    updateInnerHtml(
+        document.querySelector('#time') as HTMLSpanElement,
+        currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' }),
+    );
     updateInnerHtml(document.querySelector('#dst') as HTMLSpanElement, isDaylightSavingsTimeObserved(currentTime) ? 'Yes' : 'No');
     updateInnerHtml(
         document.querySelector('#date') as HTMLSpanElement,
@@ -15,7 +18,10 @@ setInterval(() => {
         `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`,
     );
     updateInnerHtml(document.querySelector('#jp-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'Japan' }));
-    updateInnerHtml(document.querySelector('#cr-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'America/Costa_Rica' }));
+    updateInnerHtml(
+        document.querySelector('#cr-time') as HTMLSpanElement,
+        currentTime.toLocaleString([], { timeZone: 'America/Costa_Rica' }),
+    );
     updateInnerHtml(document.querySelector('#gb-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'Europe/London' }));
     updateInnerHtml(document.querySelector('#utc-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'UTC' }));
 }, 100);
@@ -26,5 +32,8 @@ setInterval(() => {
  * @see https://stackoverflow.com/questions/11887934
  */
 function isDaylightSavingsTimeObserved(date: Date) {
-    return date.getTimezoneOffset() < Math.max(new Date(date.getFullYear(), 0, 1).getTimezoneOffset(), new Date(date.getFullYear(), 6, 1).getTimezoneOffset());
+    return (
+        date.getTimezoneOffset() <
+        Math.max(new Date(date.getFullYear(), 0, 1).getTimezoneOffset(), new Date(date.getFullYear(), 6, 1).getTimezoneOffset())
+    );
 }

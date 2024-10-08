@@ -39,7 +39,8 @@ window.addEventListener('focus', () => {
     if (clipboardReadAllowed) clipboardDisplay();
 });
 window.addEventListener('blur', () => {
-    if (clipboardReadAllowed) showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+    if (clipboardReadAllowed)
+        showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
 });
 
 let clipboardReadAllowed = false;
@@ -140,12 +141,16 @@ async function clipboardDisplay() {
                 selectClipboardButton.disabled = true;
 
                 if (storedData !== blob.size || (storedData === blob.size && !clipboardWarning.innerHTML.includes('Clipboard has image!')))
-                    showWarning(`<span class="neutral"><i class="far fa-image"></i> Clipboard has image! (<a href="${url}" target="_blank">view</a>)<br /></span>`);
+                    showWarning(
+                        `<span class="neutral"><i class="far fa-image"></i> Clipboard has image! (<a href="${url}" target="_blank">view</a>)<br /></span>`,
+                    );
                 if (storedData !== blob.size) storedData = blob.size;
             }
     } catch (error) {
-        if ((error as Error).message.includes('focused')) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
-        else if ((error as Error).message.includes('user gesture')) return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
+        if ((error as Error).message.includes('focused'))
+            return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+        else if ((error as Error).message.includes('user gesture'))
+            return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
 
         const text = await navigator.clipboard.readText();
 

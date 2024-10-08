@@ -20,10 +20,14 @@ const message = document.querySelector('#message') as HTMLSpanElement;
 for (const event of ['input', 'paste']) {
     operandInput.addEventListener(event, () => (operandInput.value = operandInput.value.replaceAll(/\D/g, '')));
     indexInput.addEventListener(event, () => (indexInput.value = indexInput.value.replaceAll(/\D/g, '')));
-    radicandInput.addEventListener(event, () => (radicandInput.value = radicandInput.value.replaceAll(/[^\d-]/g, '').replaceAll(/(?<!^)-/g, '')));
+    radicandInput.addEventListener(
+        event,
+        () => (radicandInput.value = radicandInput.value.replaceAll(/[^\d-]/g, '').replaceAll(/(?<!^)-/g, '')),
+    );
 }
 
-for (const input of [indexInput, radicandInput, operandInput]) input.addEventListener('keydown', (event) => (event.key === 'Enter' ? simplifyButton.click() : null));
+for (const input of [indexInput, radicandInput, operandInput])
+    input.addEventListener('keydown', (event) => (event.key === 'Enter' ? simplifyButton.click() : null));
 
 simplifyButton.addEventListener('click', () => {
     if (!radicandInput.value) {
@@ -72,12 +76,18 @@ simplifyButton.addEventListener('click', () => {
 
     const original = `${operand && operand !== 1 ? `${operand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${originalRadicand}}`,
         factored = `\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${primeFactors.join(' \\cdot ')}}`,
-        mappedFactors = `${negativeRadicand ? 'i ' : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${Object.entries(primeFactorsObject)
+        mappedFactors = `${negativeRadicand ? 'i ' : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${Object.entries(
+            primeFactorsObject,
+        )
             .map(([number, amount]) => `${number}${amount === 1 ? '' : `^${amount}`}`)
             .join(' \\cdot ')}}`,
-        finalOutput = outputRadicand === 1 ? outputOperand : `${outputOperand && outputOperand !== 1 ? `${outputOperand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${outputRadicand}}`;
+        finalOutput =
+            outputRadicand === 1
+                ? outputOperand
+                : `${outputOperand && outputOperand !== 1 ? `${outputOperand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${outputRadicand}}`;
 
-    if (original === finalOutput) message.textContent = `The radical is already in its simplest form.${primeFactors.length === 1 ? ` ${radicand} is a prime number.` : ''}`;
+    if (original === finalOutput)
+        message.textContent = `The radical is already in its simplest form.${primeFactors.length === 1 ? ` ${radicand} is a prime number.` : ''}`;
     output.textContent = `\\(${[original, factored, mappedFactors, finalOutput].filter((output, index, array) => output !== array[index - 1]).join(' = ')}\\)`;
     window.MathJax.typeset(); // Parse LaTeX math to visual representation
 });

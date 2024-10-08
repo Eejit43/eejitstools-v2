@@ -61,7 +61,14 @@ if (password) {
 }
 
 document.addEventListener('keydown', (event) => {
-    if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey
+    )
+        return;
 
     switch (event.code) {
         case 'ArrowUp': {
@@ -130,7 +137,8 @@ function previousDay() {
         currentMonth = displayedMonth;
         currentYear = displayedYear;
         showCalendar(new Date(displayedYear, displayedMonth + 1, 0).getDate(), currentMonth, currentYear);
-    } else if (currentMonth === displayedMonth && currentYear === displayedYear) updateDisplayedDate(displayedDate - 1, displayedMonth, displayedYear);
+    } else if (currentMonth === displayedMonth && currentYear === displayedYear)
+        updateDisplayedDate(displayedDate - 1, displayedMonth, displayedYear);
     else {
         currentMonth = displayedMonth;
         currentYear = displayedYear;
@@ -148,7 +156,8 @@ function nextDay() {
         currentMonth = displayedMonth;
         currentYear = displayedYear;
         showCalendar(1, displayedMonth, displayedYear);
-    } else if (currentMonth === displayedMonth && currentYear === displayedYear) updateDisplayedDate(displayedDate + 1, displayedMonth, displayedYear);
+    } else if (currentMonth === displayedMonth && currentYear === displayedYear)
+        updateDisplayedDate(displayedDate + 1, displayedMonth, displayedYear);
     else {
         currentMonth = displayedMonth;
         currentYear = displayedYear;
@@ -218,8 +227,10 @@ function showCalendar(date: number | null, month: number, year: number) {
                 const cell = document.createElement('td');
                 cell.dataset.date = currentDate.toString();
                 cell.textContent = currentDate.toString();
-                if (currentDate === currentTime.getDate() && month === currentTime.getMonth() && year === currentTime.getFullYear()) cell.classList.add('current-date');
-                if (currentDate === displayedDate && month === displayedMonth && year === displayedYear) cell.classList.add('selected-date');
+                if (currentDate === currentTime.getDate() && month === currentTime.getMonth() && year === currentTime.getFullYear())
+                    cell.classList.add('current-date');
+                if (currentDate === displayedDate && month === displayedMonth && year === displayedYear)
+                    cell.classList.add('selected-date');
                 cell.addEventListener('click', () => updateDisplayedDate(Number.parseInt(cell.dataset.date!), month, year));
                 row.append(cell);
                 currentDate++;
@@ -256,7 +267,9 @@ function updateDisplayedDate(date: number, month: number, year: number) {
         eventsList.innerHTML = '';
 
         const events = [
-            dateCell.dataset.holiday?.split(', ')?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`),
+            dateCell.dataset.holiday
+                ?.split(', ')
+                ?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`),
             dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null,
         ]
             .flat()
@@ -334,13 +347,17 @@ function loadTodoList() {
             todoCheckbox.classList.add('todo-checkbox');
             todoCheckbox.id = `todo-${todo.id}`;
             todoCheckbox.dataset.id = todo.id;
-            todoCheckbox.checked = !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
+            todoCheckbox.checked =
+                !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', () => {
                 const todoFinal: Record<string, boolean> = {};
-                for (const checkbox of todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>) todoFinal[checkbox.dataset.id!] = checkbox.checked;
+                for (const checkbox of todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>)
+                    todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
                 todoSaveButton.disabled = !Object.entries(todoFinal).some(
-                    ([id, checked]) => !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !== checked,
+                    ([id, checked]) =>
+                        !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !==
+                        checked,
                 );
             });
 

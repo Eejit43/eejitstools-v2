@@ -15,7 +15,11 @@ declare function toastify(options: { text: string; duration: number; position: s
  * Update emojis on the loaded content.
  */
 export function twemojiUpdate() {
-    (twemoji as Twemoji).parse(document.body, { base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/', folder: 'svg', ext: '.svg' });
+    (twemoji as Twemoji).parse(document.body, {
+        base: 'https://raw.githubusercontent.com/jdecked/twemoji/main/assets/',
+        folder: 'svg',
+        ext: '.svg',
+    });
 }
 
 /**
@@ -64,7 +68,11 @@ export function showResult(element: HTMLElement, type: 'success' | 'error' | 'wa
  * @param type The type of icon to show.
  * @param arrowType The direction of the arrow (defaults to `right`).
  */
-export function updateArrow(element: HTMLElement, type: 'success' | 'error' | 'warning' | 'info' | 'reset', arrowType: 'up' | 'down' | 'right' | 'left' = 'right') {
+export function updateArrow(
+    element: HTMLElement,
+    type: 'success' | 'error' | 'warning' | 'info' | 'reset',
+    arrowType: 'up' | 'down' | 'right' | 'left' = 'right',
+) {
     element.style.color = `var(--${type === 'reset' ? 'neutral' : type}-color-300)`;
     element.className = `fa-solid fa-arrow-${arrowType}`;
 }
@@ -114,7 +122,12 @@ export function copyText(element: HTMLButtonElement, text: string) {
  * @param input String to be modified.
  */
 export function escapeHtml(input: string) {
-    return input.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    return input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
 }
 
 /**

@@ -48,7 +48,9 @@ let collectionData: ForeignCollectionsList;
  * Load the coins list.
  */
 async function loadCollectionList() {
-    collectionData = (await (await fetch(`/foreign-collections-list?password=${passwordInput.dataset.input!}`)).json()) as ForeignCollectionsList;
+    collectionData = (await (
+        await fetch(`/foreign-collections-list?password=${passwordInput.dataset.input!}`)
+    ).json()) as ForeignCollectionsList;
 
     collectionsListMessage.style.display = 'none';
     collectionsList.style.display = 'block';
@@ -68,7 +70,12 @@ async function loadCollectionList() {
             await fetch('/foreign-collections-list-add-entry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: 'Unknown Entry', type: 'Unknown Type', data: { coins: false, banknotes: false, stamps: false }, password: passwordInput.dataset.input }),
+                body: JSON.stringify({
+                    name: 'Unknown Entry',
+                    type: 'Unknown Type',
+                    data: { coins: false, banknotes: false, stamps: false },
+                    password: passwordInput.dataset.input,
+                }),
             })
         ).json()) as { error?: string; data: ForeignCollectionsList };
 
@@ -113,7 +120,13 @@ function reloadTableData() {
                 await fetch('/foreign-collections-list-edit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: entry.id, name: nameCell.textContent, type: entry.type, data: entry.data, password: passwordInput.dataset.input }),
+                    body: JSON.stringify({
+                        id: entry.id,
+                        name: nameCell.textContent,
+                        type: entry.type,
+                        data: entry.data,
+                        password: passwordInput.dataset.input,
+                    }),
                 })
             ).json()) as { error?: string; data: ForeignCollectionsList };
 
@@ -144,7 +157,13 @@ function reloadTableData() {
                 await fetch('/foreign-collections-list-edit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: entry.id, name: entry.name, type: typeCell.textContent, data: entry.data, password: passwordInput.dataset.input }),
+                    body: JSON.stringify({
+                        id: entry.id,
+                        name: entry.name,
+                        type: typeCell.textContent,
+                        data: entry.data,
+                        password: passwordInput.dataset.input,
+                    }),
                 })
             ).json()) as { error?: string; data: ForeignCollectionsList };
 
@@ -220,7 +239,13 @@ function reloadTableData() {
                     await fetch('/foreign-collections-list-edit', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: entry.id, name: entry.name, type: entry.type, data: sortedData, password: passwordInput.dataset.input }),
+                        body: JSON.stringify({
+                            id: entry.id,
+                            name: entry.name,
+                            type: entry.type,
+                            data: sortedData,
+                            password: passwordInput.dataset.input,
+                        }),
                     })
                 ).json()) as { error?: string; data: ForeignCollectionsList };
 
@@ -248,7 +273,8 @@ function reloadTableData() {
  * Disables all elements in the table.
  */
 function disableElements() {
-    for (const element of collectionsListTableBody.querySelectorAll('[contenteditable]')) (element as HTMLElement).contentEditable = 'false';
+    for (const element of collectionsListTableBody.querySelectorAll('[contenteditable]'))
+        (element as HTMLElement).contentEditable = 'false';
     for (const input of collectionsListTableBody.querySelectorAll('input')) input.disabled = true;
     newRowMessage.dataset.disabled = 'true';
 }
@@ -277,7 +303,9 @@ if (password) {
 
 // Add functionality to data exporter
 exportDataButton.addEventListener('click', async () => {
-    const coinsData = (await (await fetch(`/foreign-collections-list?password=${passwordInput.dataset.input!}`)).json()) as ForeignCollectionsList & { error?: string };
+    const coinsData = (await (
+        await fetch(`/foreign-collections-list?password=${passwordInput.dataset.input!}`)
+    ).json()) as ForeignCollectionsList & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 

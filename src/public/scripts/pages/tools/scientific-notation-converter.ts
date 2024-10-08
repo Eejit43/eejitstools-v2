@@ -1,9 +1,9 @@
-import type math from 'mathjs';
+import type { MathJsInstance } from '../../../../../node_modules/mathjs/types/index';
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
 declare global {
     interface Window {
-        math: typeof math;
+        math: MathJsInstance;
     }
 }
 
@@ -34,7 +34,11 @@ decimalInput.addEventListener('input', () => {
 decimalInput.addEventListener('input', () => {
     decimalConvertButton.disabled = decimalInput.value.length === 0;
 
-    decimalResetButton.disabled = !(decimalInput.value.length > 0 || scientificOutput.value.length > 0 || decimalArrow.style.color !== 'dimgray');
+    decimalResetButton.disabled = !(
+        decimalInput.value.length > 0 ||
+        scientificOutput.value.length > 0 ||
+        decimalArrow.style.color !== 'dimgray'
+    );
 });
 decimalConvertButton.addEventListener('click', convertDecimal);
 decimalResetButton.addEventListener('click', () => {
@@ -55,7 +59,11 @@ scientificOutputCopy2Button.addEventListener('click', () => copyText(scientificO
 scientificInput.addEventListener('input', () => {
     scientificConvertButton.disabled = scientificInput.value.length === 0;
 
-    scientificResetButton.disabled = !(scientificInput.value.length > 0 || decimalOutput.value !== '' || scientificArrow.style.color !== 'dimgray');
+    scientificResetButton.disabled = !(
+        scientificInput.value.length > 0 ||
+        decimalOutput.value !== '' ||
+        scientificArrow.style.color !== 'dimgray'
+    );
 });
 scientificConvertButton.addEventListener('click', convertScientific);
 scientificResetButton.addEventListener('click', () => {
@@ -77,7 +85,12 @@ function convertDecimal() {
     if (/^[+-]?(\d+)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
         scientificOutput.value = window.math.bignumber(decimalInput.value).toExponential();
         scientificOutputValue = window.math.bignumber(decimalInput.value).toExponential();
-        scientificOutputValue2 = window.math.bignumber(decimalInput.value).toExponential().toString().replace('e+', ' x 10^').replace('e-', ' x 10^-');
+        scientificOutputValue2 = window.math
+            .bignumber(decimalInput.value)
+            .toExponential()
+            .toString()
+            .replace('e+', ' x 10^')
+            .replace('e-', ' x 10^-');
         scientificOutputCopyButton.disabled = false;
         scientificOutputCopy2Button.disabled = false;
         updateArrow(decimalArrow, 'success');

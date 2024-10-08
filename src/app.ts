@@ -17,14 +17,16 @@ handlebars.registerHelper('iterateEuroCoin', (type: string, options: Handlebars.
     const amount = euroImageAmounts[type] ?? 1;
 
     let accumulator = '';
-    for (let index = 1; index <= amount; ++index) accumulator += options.fn({ code: index === 1 ? '' : `-${index}`, text: amount > 1 ? ` ${index}` : '' });
+    for (let index = 1; index <= amount; ++index)
+        accumulator += options.fn({ code: index === 1 ? '' : `-${index}`, text: amount > 1 ? ` ${index}` : '' });
     return accumulator;
 });
 handlebars.registerHelper('iterateEuroCoinVariant', (type: string, country: string, options: Handlebars.HelperOptions) => {
     const amount = euroVariantImageAmounts[type][country] ?? 1;
 
     let accumulator = '';
-    for (let index = 1; index <= amount; ++index) accumulator += options.fn({ code: index === 1 ? '' : `-${index}`, text: amount > 1 ? ` ${index}` : '' });
+    for (let index = 1; index <= amount; ++index)
+        accumulator += options.fn({ code: index === 1 ? '' : `-${index}`, text: amount > 1 ? ` ${index}` : '' });
     return accumulator;
 });
 
@@ -41,10 +43,17 @@ const processedCommitSha = commitSha?.slice(0, 7) ?? 'abcdefg';
 const commitMessage = (process.env.RAILWAY_GIT_COMMIT_MESSAGE ?? 'Some commit message!').split('\n\n')[0];
 const commitAuthor = process.env.RAILWAY_GIT_AUTHOR ?? 'Someone';
 
-export const commitInfo = { sha: processedCommitSha, message: commitMessage, author: commitAuthor, url: commitSha ? `/commit/${commitSha}` : '' };
+export const commitInfo = {
+    sha: processedCommitSha,
+    message: commitMessage,
+    author: commitAuthor,
+    url: commitSha ? `/commit/${commitSha}` : '',
+};
 
 // Register pages
-fastify.get('/', (request, reply) => reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }));
+fastify.get('/', (request, reply) =>
+    reply.view('/index', { ...blankProperties, commitInfo, title: 'Home', pages: allPages, additionalStyles: [{ link: 'index.css' }] }),
+);
 
 fastify.get('/tone-indicators', (request, reply) => reply.send(JSON.stringify(toneIndicators, null, 2)));
 
@@ -56,11 +65,27 @@ fastify.setErrorHandler((error, request, reply) => {
 
     consola.error(error);
 
-    reply.status(error.statusCode ?? 500).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Error', message: 'Looks like an error occurred!', status: error.statusCode ?? 500 });
+    reply
+        .status(error.statusCode ?? 500)
+        .view('/error.hbs', {
+            ...blankProperties,
+            commitInfo,
+            title: 'Error',
+            message: 'Looks like an error occurred!',
+            status: error.statusCode ?? 500,
+        });
 });
 
 fastify.setNotFoundHandler((request, reply) =>
-    reply.status(404).view('/error.hbs', { ...blankProperties, commitInfo, title: 'Not Found', message: 'Unable to find the requested page!', status: 404 }),
+    reply
+        .status(404)
+        .view('/error.hbs', {
+            ...blankProperties,
+            commitInfo,
+            title: 'Not Found',
+            message: 'Unable to find the requested page!',
+            status: 404,
+        }),
 );
 
 // Start server
@@ -68,12 +93,15 @@ const port = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
-        if ((error as FastifyError).code === 'EADDRINUSE') consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
+        if ((error as FastifyError).code === 'EADDRINUSE')
+            consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
         else consola.error(error);
         process.exit(1); // eslint-disable-line unicorn/no-process-exit
     }
 
-    consola.success(`${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV === 'production' ? '' : ` (${chalk.blueBright(`http://localhost:${port}`)})`}`);
+    consola.success(
+        `${chalk.green('Server is now listening on port')} ${chalk.yellow(port)}${process.env.NODE_ENV === 'production' ? '' : ` (${chalk.blueBright(`http://localhost:${port}`)})`}`,
+    );
 });
 
 // Custom error/warning handlers

@@ -97,7 +97,9 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
     resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
 
     const { success, error, source, date, title, credit, explanation, media } = (await (
-        await fetch(`/astronomy-picture/${providedYear}/${providedMonth.toString().padStart(2, '0')}/${providedDate.toString().padStart(2, '0')}`)
+        await fetch(
+            `/astronomy-picture/${providedYear}/${providedMonth.toString().padStart(2, '0')}/${providedDate.toString().padStart(2, '0')}`,
+        )
     ).json()) as FullApodEntry;
 
     if (!success && error) return showAlert(error, 'error');
@@ -118,7 +120,9 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
         imageElement.parentElement!.addEventListener('mouseout', () => (imageElement.src = media.src));
     }
 
-    for (const linkElement of document.querySelectorAll('#apod-explanation a[href^="https://apod.nasa.gov/apod/ap"]') as NodeListOf<HTMLAnchorElement>)
+    for (const linkElement of document.querySelectorAll(
+        '#apod-explanation a[href^="https://apod.nasa.gov/apod/ap"]',
+    ) as NodeListOf<HTMLAnchorElement>)
         linkElement.addEventListener('click', (event) => {
             if (event.metaKey) return;
 

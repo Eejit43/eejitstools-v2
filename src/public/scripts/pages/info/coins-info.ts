@@ -166,7 +166,8 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                     if (!coin.mintage) continue;
 
                     if (coin.mintageForAllVarieties)
-                        if (variantTotalsAlreadyAdded.some((variant) => variant.year === coin.year && variant.mintMark === coin.mintMark)) continue;
+                        if (variantTotalsAlreadyAdded.some((variant) => variant.year === coin.year && variant.mintMark === coin.mintMark))
+                            continue;
                         else variantTotalsAlreadyAdded.push(coin);
 
                     total += coin.mintage;
@@ -186,7 +187,8 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             value: () => {
                 if (!design.composition) return null;
 
-                if ('amounts' in design.composition) return design.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
+                if ('amounts' in design.composition)
+                    return design.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
                 else {
                     const listElement = document.createElement('ul');
 
@@ -279,7 +281,8 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 for (const yearRange of design.edge) {
                     const listItem = document.createElement('li');
 
-                    if (yearRange.value) listItem.append(typeof yearRange.value === 'string' ? yearRange.value : `Reeded (${yearRange.value.reeds} reeds)`);
+                    if (yearRange.value)
+                        listItem.append(typeof yearRange.value === 'string' ? yearRange.value : `Reeded (${yearRange.value.reeds} reeds)`);
                     else {
                         const unknownSpan = document.createElement('span');
                         unknownSpan.dataset.unknown = 'true';
@@ -425,7 +428,9 @@ document.addEventListener('keydown', (event) => {
         event.altKey ||
         event.metaKey ||
         (document.activeElement &&
-            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only'))
+            (document.activeElement.tagName === 'INPUT' ||
+                document.activeElement.tagName === 'TEXTAREA' ||
+                (document.activeElement as HTMLElement).contentEditable === 'plaintext-only'))
     )
         return;
 

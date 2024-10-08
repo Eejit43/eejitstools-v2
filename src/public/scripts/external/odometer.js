@@ -39,7 +39,10 @@
 
     RIBBON_HTML = '<span class="odometer-ribbon"><span class="odometer-ribbon-inner">' + VALUE_HTML + '</span></span>';
 
-    DIGIT_HTML = '<span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner">' + RIBBON_HTML + '</span></span>';
+    DIGIT_HTML =
+        '<span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner">' +
+        RIBBON_HTML +
+        '</span></span>';
 
     FORMAT_MARK_HTML = '<span class="odometer-formatting-mark"></span>';
 
@@ -66,9 +69,16 @@
     transitionCheckStyles = document.createElement('div').style;
 
     TRANSITION_SUPPORT =
-        transitionCheckStyles.transition != null || transitionCheckStyles.webkitTransition != null || transitionCheckStyles.mozTransition != null || transitionCheckStyles.oTransition != null;
+        transitionCheckStyles.transition != null ||
+        transitionCheckStyles.webkitTransition != null ||
+        transitionCheckStyles.mozTransition != null ||
+        transitionCheckStyles.oTransition != null;
 
-    requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    requestAnimationFrame =
+        window.requestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame;
 
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
@@ -99,7 +109,9 @@
 
     now = function () {
         var _ref, _ref1;
-        return (_ref = (_ref1 = window.performance) != null ? (typeof _ref1.now === 'function' ? _ref1.now() : void 0) : void 0) != null ? _ref : +new Date();
+        return (_ref = (_ref1 = window.performance) != null ? (typeof _ref1.now === 'function' ? _ref1.now() : void 0) : void 0) != null
+            ? _ref
+            : +new Date();
     };
 
     round = function (val, precision) {

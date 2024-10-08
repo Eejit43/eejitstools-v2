@@ -89,7 +89,8 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-result-selected') ?? document.querySelector('.search-box a')) as HTMLAnchorElement | null;
+        const result = (document.querySelector('.search-box .search-result-selected') ??
+            document.querySelector('.search-box a')) as HTMLAnchorElement | null;
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -130,7 +131,9 @@ document.addEventListener('keydown', (event) => {
     if (!event.altKey) return;
     if (
         document.activeElement &&
-        (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
+        (document.activeElement.tagName === 'INPUT' ||
+            document.activeElement.tagName === 'TEXTAREA' ||
+            (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
     )
         return;
 
@@ -208,9 +211,11 @@ document.querySelector('#close-shortcuts')!.addEventListener('click', () => {
 });
 
 document.addEventListener('click', (event) => {
-    if (event.target === shortcutsModal) addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    if (event.target === shortcutsModal)
+        addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape' && shortcutsModal.style.display === 'block') addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    if (event.code === 'Escape' && shortcutsModal.style.display === 'block')
+        addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });

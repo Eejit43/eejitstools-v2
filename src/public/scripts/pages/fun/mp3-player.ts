@@ -111,7 +111,8 @@ for (const category of audioTracks) {
     for (const [index, track] of category.tracks.entries()) createTrackItem(category, index, track);
 }
 
-for (const playButton of document.querySelectorAll('.playlist-section-title > i.player-icon')) playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
+for (const playButton of document.querySelectorAll('.playlist-section-title > i.player-icon'))
+    playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
 
 let audioCategory = 'general';
 let audioIndex = 0;
@@ -371,7 +372,13 @@ function toggleMute() {
 }
 
 document.addEventListener('keydown', (event) => {
-    if ((document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) || event.ctrlKey || event.metaKey || event.altKey) return; // eslint-disable-line @typescript-eslint/prefer-nullish-coalescing
+    if (
+        (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey
+    )
+        return; // eslint-disable-line @typescript-eslint/prefer-nullish-coalescing
 
     if (event.code === 'Space') {
         event.preventDefault();

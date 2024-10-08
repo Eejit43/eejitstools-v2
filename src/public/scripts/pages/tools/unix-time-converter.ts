@@ -39,11 +39,14 @@ let unixOutputState = 's';
 function updateStandardTime() {
     const currentTime = new Date();
 
-    standardInput.value = `${currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${currentTime.toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    })}`;
+    standardInput.value = `${currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' })}, ${currentTime.toLocaleDateString(
+        undefined,
+        {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        },
+    )}`;
 
     updateUnixOutput();
 }
@@ -84,7 +87,8 @@ function updateUnixTime() {
  * Updates the standard time output.
  */
 function updateStandardOutput() {
-    const unixTime = unixInputState === 'ms' ? new Date(Number.parseInt(unixInput.value)) : new Date(Number.parseInt(unixInput.value) * 1000);
+    const unixTime =
+        unixInputState === 'ms' ? new Date(Number.parseInt(unixInput.value)) : new Date(Number.parseInt(unixInput.value) * 1000);
     if (unixInput.value.length === 0) {
         updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
@@ -98,7 +102,9 @@ function updateStandardOutput() {
 
         const timeString = unixTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' });
         standardOutput.value = `${
-            unixInputState === 'ms' ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, '0')} $1`) : timeString
+            unixInputState === 'ms'
+                ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, '0')} $1`)
+                : timeString
         }, ${unixTime.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
         standardOutputCopyButton.disabled = false;
     }

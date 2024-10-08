@@ -25,7 +25,9 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
 
         const holidays = (
             (await (
-                await fetch(`https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)
+                await fetch(
+                    `https://www.googleapis.com/calendar/v3/calendars/en.usa%23holiday%40group.v.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`,
+                )
             ).json()) as Calendar
         ).items
             .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
@@ -33,7 +35,9 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         const moonPhases = (
             (await (
-                await fetch(`https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`)
+                await fetch(
+                    `https://www.googleapis.com/calendar/v3/calendars/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/events?key=${process.env.GOOGLE_CALENDAR_API_KEY!}`,
+                )
             ).json()) as Calendar
         ).items
             .map((moonPhase) => ({
@@ -64,7 +68,8 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
     let todoOptions: TodoOption[] | null = null;
 
     fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
-        if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+        if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD)
+            return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
         const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
         if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
@@ -72,34 +77,43 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
         reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
     });
 
-    fastify.post('/calendar-todo-edit', async (request: FastifyRequest<{ Body: { password: string; todo: Record<string, boolean>; year: string; month: string; date: string } }>, reply) => {
-        const { password, todo } = request.body;
-        const year = Number.parseInt(request.body.year);
-        const month = Number.parseInt(request.body.month);
-        const date = Number.parseInt(request.body.date);
+    fastify.post(
+        '/calendar-todo-edit',
+        async (
+            request: FastifyRequest<{
+                Body: { password: string; todo: Record<string, boolean>; year: string; month: string; date: string };
+            }>,
+            reply,
+        ) => {
+            const { password, todo } = request.body;
+            const year = Number.parseInt(request.body.year);
+            const month = Number.parseInt(request.body.month);
+            const date = Number.parseInt(request.body.date);
 
-        if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+            if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(date)) return reply.send(JSON.stringify({ error: 'A date parameter is NaN!' }, null, 2));
-        if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
-        if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
+            if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(date))
+                return reply.send(JSON.stringify({ error: 'A date parameter is NaN!' }, null, 2));
+            if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
+            if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
-        let yearEntry: TodoData | null = await todoModel.findOne({ year });
-        if (!yearEntry) {
-            await todoModel.create({ year, dates: {} });
-            yearEntry = (await todoModel.findOne({ year }))!;
-        }
+            let yearEntry: TodoData | null = await todoModel.findOne({ year });
+            if (!yearEntry) {
+                await todoModel.create({ year, dates: {} });
+                yearEntry = (await todoModel.findOne({ year }))!;
+            }
 
-        if (!yearEntry.dates) yearEntry.dates = {};
-        if (!yearEntry.dates[month]) yearEntry.dates[month] = {};
-        yearEntry.dates[month][date] = todo;
+            if (!yearEntry.dates) yearEntry.dates = {};
+            if (!yearEntry.dates[month]) yearEntry.dates[month] = {};
+            yearEntry.dates[month][date] = todo;
 
-        await todoModel.replaceOne({ year }, yearEntry);
+            await todoModel.replaceOne({ year }, yearEntry);
 
-        const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
+            const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
 
-        if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
+            if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
 
-        reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
-    });
+            reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
+        },
+    );
 }

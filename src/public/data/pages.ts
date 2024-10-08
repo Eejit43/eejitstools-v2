@@ -1,4 +1,12 @@
-import { euroCoins, minecraftColorCodes, minecraftFormattingCodes, phoneticAlphabet, stateAbbreviations, textAbbreviations, toneIndicators } from './pages-data.js';
+import {
+    euroCoins,
+    minecraftColorCodes,
+    minecraftFormattingCodes,
+    phoneticAlphabet,
+    stateAbbreviations,
+    textAbbreviations,
+    toneIndicators,
+} from './pages-data.js';
 
 interface Script {
     link: string;
@@ -66,12 +74,25 @@ type PreParsedPages = Record<string, Record<string, Page>>;
 const preParsedPages: PreParsedPages = {
     tools: {
         'base64-converter': { title: 'Base64 Encode/Decode', icon: 'code', description: 'Encode and decode to and from Base64 format' },
-        'base64-image-converter': { title: 'Base64 Image Encode/Decode', icon: 'file-image', description: 'Encode and decode images to and from Base64 format' },
+        'base64-image-converter': {
+            title: 'Base64 Image Encode/Decode',
+            icon: 'file-image',
+            description: 'Encode and decode images to and from Base64 format',
+        },
         'binary-converter': { title: 'Binary Converter', icon: 'binary', description: 'Convert to and from binary/octal/decimal/hex' },
         'binary-text': { title: 'Binary Text Converter', icon: 'file-binary', description: 'Convert to and from binary text' },
-        'browser-info': { title: 'Browser Info', icon: 'laptop', description: 'Shows basic information about your browser and operating system', additionalScripts: [imports.uaParser.script] },
+        'browser-info': {
+            title: 'Browser Info',
+            icon: 'laptop',
+            description: 'Shows basic information about your browser and operating system',
+            additionalScripts: [imports.uaParser.script],
+        },
         calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with a personal to-do list', toolbox: false },
-        'case-changer': { title: 'Case Changer', icon: 'font-case', description: 'Change a string to uppercase, lowercase, title case, or sentence case' },
+        'case-changer': {
+            title: 'Case Changer',
+            icon: 'font-case',
+            description: 'Change a string to uppercase, lowercase, title case, or sentence case',
+        },
         'color-info': {
             title: 'Color Information',
             icon: 'palette',
@@ -88,16 +109,26 @@ const preParsedPages: PreParsedPages = {
             additionalScripts: [imports.odometer.script],
             additionalStyles: [imports.odometer.style],
         },
-        'currency-exchange': { title: 'Currency Exchange Rates', icon: 'coins', description: 'Shows information for various currency conversions', keywords: ['usd', 'money'] },
+        'currency-exchange': {
+            title: 'Currency Exchange Rates',
+            icon: 'coins',
+            description: 'Shows information for various currency conversions',
+            keywords: ['usd', 'money'],
+        },
         'image-converter': { title: 'Image Converter', icon: 'file-image', description: 'Convert images to and from various formats' },
         'ip-info': {
             title: 'IP Info',
             icon: 'router',
-            description: 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address and IP provided information',
+            description:
+                'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address and IP provided information',
             toolboxTitle: '<span data-tooltip="Internet Protocol">IP</span> Info',
             keywords: ['internet', 'isp'],
         },
-        'keycode-info': { title: 'Keycode Information', icon: 'keyboard', description: 'Click any keyboard key to get information about it' },
+        'keycode-info': {
+            title: 'Keycode Information',
+            icon: 'keyboard',
+            description: 'Click any keyboard key to get information about it',
+        },
         'length-converter': {
             title: 'Length Converter',
             icon: 'ruler-horizontal',
@@ -110,7 +141,11 @@ const preParsedPages: PreParsedPages = {
             description: 'Alphabetize, sort in numerical order, randomize, and reverse lists',
         },
         'morse-code-converter': { title: 'Morse Code Converter', icon: 'message-dots', description: 'Convert to and from Morse code' },
-        'quick-copy': { title: 'Quick Copy', icon: 'clipboard', description: 'Clipboard display, clear clipboard button, and useful characters' },
+        'quick-copy': {
+            title: 'Quick Copy',
+            icon: 'clipboard',
+            description: 'Clipboard display, clear clipboard button, and useful characters',
+        },
         'radical-simplifier': {
             title: 'Radical Simplifier',
             icon: 'square-root-variable',
@@ -126,7 +161,11 @@ const preParsedPages: PreParsedPages = {
             additionalStyles: [imports.odometer.style],
         },
         'regex-tester': { title: 'Regex Tester', icon: 'highlighter', description: 'Test and run regex', keywords: ['regular expression'] },
-        'roman-converter': { title: 'Roman Numeral Converter', icon: 'i', description: 'Convert to and from roman numerals, with high value number support' },
+        'roman-converter': {
+            title: 'Roman Numeral Converter',
+            icon: 'i',
+            description: 'Convert to and from roman numerals, with high value number support',
+        },
         'scientific-notation-converter': {
             title: 'Scientific Notation Converter',
             icon: 'e',
@@ -137,8 +176,10 @@ const preParsedPages: PreParsedPages = {
         'svg-to-png': {
             title: 'SVG to PNG',
             icon: 'file-image',
-            description: 'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images',
-            toolboxTitle: '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter',
+            description:
+                'Convert <span data-tooltip="Scalable Vector Graphics">SVG</span> files to <span data-tooltip="Portable Network Graphics">PNG</span> images',
+            toolboxTitle:
+                '<span data-tooltip="Scalable Vector Graphics">SVG</span> to <span data-tooltip="Portable Network Graphics">PNG</span> Converter',
         },
         'temperature-converter': {
             title: 'Temperature Converter',
@@ -147,24 +188,60 @@ const preParsedPages: PreParsedPages = {
             additionalScripts: [imports.mathJs.script],
         },
         'tides-info': { title: 'Tides Info', icon: 'water', description: 'Shows current tidal information and for the next 7 days' },
-        'time-converter': { title: 'Time Converter', icon: 'hourglass-clock', description: 'Convert between units of time', additionalScripts: [imports.mathJs.script] },
+        'time-converter': {
+            title: 'Time Converter',
+            icon: 'hourglass-clock',
+            description: 'Convert between units of time',
+            additionalScripts: [imports.mathJs.script],
+        },
         time: { title: 'Time', icon: 'clock', description: 'Displays the current time and date, as well as detailed time information' },
-        'unix-time-converter': { title: 'UNIX Time Converter', icon: 'calendar-clock', description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back' },
-        'weather-info': { title: 'Weather Info', icon: 'cloud-sun-rain', description: 'Shows current weather information and alerts', additionalScripts: [imports.suncalc.script] },
-        'word-counter': { title: 'Word Counter', icon: 'file-word', description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text' },
+        'unix-time-converter': {
+            title: 'UNIX Time Converter',
+            icon: 'calendar-clock',
+            description: 'Convert from date strings to UNIX time (in seconds or milliseconds), and back',
+        },
+        'weather-info': {
+            title: 'Weather Info',
+            icon: 'cloud-sun-rain',
+            description: 'Shows current weather information and alerts',
+            additionalScripts: [imports.suncalc.script],
+        },
+        'word-counter': {
+            title: 'Word Counter',
+            icon: 'file-word',
+            description: 'Displays total characters, words, sentences, lines, and paragraphs in a piece of text',
+        },
     },
     info: {
-        'coins-info': { title: 'Coins Info', icon: 'coin', description: 'Information about all coins that have been produced for circulation in the United States' },
+        'coins-info': {
+            title: 'Coins Info',
+            icon: 'coin',
+            description: 'Information about all coins that have been produced for circulation in the United States',
+        },
         'coins-list': { title: 'Coins List', icon: 'coins', description: 'A list of coins I have and need' },
-        'euro-coins': { title: 'Euro Coins', icon: 'euro-sign', description: 'A list of all euro coin designs', additionalData: { euroCoins } },
-        'foreign-collections-list': { title: 'Foreign Collection List', icon: 'earth-americas', description: 'A list of countries, territories, etc. I have coins, banknotes, and stamps from' },
+        'euro-coins': {
+            title: 'Euro Coins',
+            icon: 'euro-sign',
+            description: 'A list of all euro coin designs',
+            additionalData: { euroCoins },
+        },
+        'foreign-collections-list': {
+            title: 'Foreign Collection List',
+            icon: 'earth-americas',
+            description: 'A list of countries, territories, etc. I have coins, banknotes, and stamps from',
+        },
         'minecraft-codes': {
             title: 'Minecraft Formatting Codes',
             icon: 'gamepad-modern',
             description: 'A list of all Minecraft color and formatting codes',
             additionalData: { minecraftColorCodes, minecraftFormattingCodes },
         },
-        'phonetic-alphabet': { title: 'NATO Phonetic Alphabet', icon: 'arrow-down-a-z', description: 'A list of words used as a replacement for letters', additionalData: { phoneticAlphabet } },
+        'phonetic-alphabet': {
+            title: 'NATO Phonetic Alphabet',
+            icon: 'arrow-down-a-z',
+            description: 'A list of words used as a replacement for letters',
+            additionalData: { phoneticAlphabet },
+        },
         'queer-calendar': {
             title: 'Queer Calendar',
             icon: 'calendar-days',
@@ -172,17 +249,37 @@ const preParsedPages: PreParsedPages = {
             toolboxTitle:
                 '<span style="color: var(--brand-color-1)">Q</span><span style="color: var(--brand-color-2)">u</span><span style="color: var(--brand-color-4)">e</span><span style="color: var(--brand-color-6)">e</span><span style="color: var(--brand-color-8)">r</span> Calendar',
         },
-        'state-abbreviations': { title: 'State Abbreviations', icon: 'map-location-dot', description: 'A list of all state abbreviations', additionalData: { stateAbbreviations } },
-        'text-abbreviations': { title: 'Text Abbreviations', icon: 'text', description: 'A list of common abbreviations used in text', additionalData: { textAbbreviations } },
-        'tone-indicators': { title: 'Tone Indicators', icon: 'slash-forward', description: 'A list of common tone indicators', additionalData: { toneIndicators } },
+        'state-abbreviations': {
+            title: 'State Abbreviations',
+            icon: 'map-location-dot',
+            description: 'A list of all state abbreviations',
+            additionalData: { stateAbbreviations },
+        },
+        'text-abbreviations': {
+            title: 'Text Abbreviations',
+            icon: 'text',
+            description: 'A list of common abbreviations used in text',
+            additionalData: { textAbbreviations },
+        },
+        'tone-indicators': {
+            title: 'Tone Indicators',
+            icon: 'slash-forward',
+            description: 'A list of common tone indicators',
+            additionalData: { toneIndicators },
+        },
     },
     fun: {
         'astronomy-picture': {
             title: 'Astronomy Picture of the Day',
             icon: 'planet-ringed',
-            description: 'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)',
+            description:
+                'View <span class="tooltip-bottom" data-tooltip="National Aeronautics and Space Administration">NASA</span>\'s Astronomy Picture of the Day (APOD)',
         },
-        'eight-ball': { title: 'Magic Eight Ball', icon: 'pool-8-ball', description: 'Ask the Magic Eight Ball a question and receive an answer!' },
+        'eight-ball': {
+            title: 'Magic Eight Ball',
+            icon: 'pool-8-ball',
+            description: 'Ask the Magic Eight Ball a question and receive an answer!',
+        },
         'mp3-player': { title: 'MP3 Player', icon: 'music', description: 'Play some music!', toolbox: false },
         'random-fact': { title: 'Random Fact', icon: 'circle-info', description: 'Generate a random fact' },
         'random-joke': { title: 'Random Joke', icon: 'face-grin-tears', description: 'Generate a random joke' },

@@ -84,7 +84,9 @@ function randomize() {
         showAlert('Empty input!', 'warning');
         showResult(randomizeButton, 'warning');
     } else {
-        result.value = shuffleArray(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string)).join(JSON.parse(`"${separatorInput.value}"`) as string);
+        result.value = shuffleArray(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string)).join(
+            JSON.parse(`"${separatorInput.value}"`) as string,
+        );
 
         showResult(randomizeButton, 'success');
         copyResultButton.disabled = false;

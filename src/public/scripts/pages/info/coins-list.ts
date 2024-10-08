@@ -67,14 +67,21 @@ let coinsData: Record<string, { name: string; id: string; designs: Record<string
  * Load the coins list.
  */
 async function loadCoinsList() {
-    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<CoinDesign<Coin>>[];
+    const unindexedCoinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<
+        CoinDesign<Coin>
+    >[];
 
     coinsData = Object.fromEntries(
         unindexedCoinsData.map((denomination) => [
             denomination.id,
             {
                 ...denomination,
-                designs: Object.fromEntries(denomination.designs.map((design) => [design.id, { ...design, coins: new Map(design.coins.map((coin) => [coin.id.toString(), coin])) }])),
+                designs: Object.fromEntries(
+                    denomination.designs.map((design) => [
+                        design.id,
+                        { ...design, coins: new Map(design.coins.map((coin) => [coin.id.toString(), coin])) },
+                    ]),
+                ),
             },
         ]),
     );
@@ -118,11 +125,13 @@ async function loadCoinsList() {
         if (showAllDesignsButton.dataset.expanded === 'true') {
             showAllDesignsButton.dataset.expanded = 'false';
             showAllDesignsButton.textContent = 'Show all designs';
-            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>) if (button.dataset.expanded === 'true') button.click();
+            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>)
+                if (button.dataset.expanded === 'true') button.click();
         } else {
             showAllDesignsButton.dataset.expanded = 'true';
             showAllDesignsButton.textContent = 'Hide all designs';
-            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>) if (button.dataset.expanded === 'false') button.click();
+            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>)
+                if (button.dataset.expanded === 'false') button.click();
         }
     });
 
@@ -216,7 +225,16 @@ async function loadCoinsList() {
 
     toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
 
-    buttonsDiv.append(reloadButton, showAllDesignsButton, ' | ', toggleUnobtainedSectionsButton, ' | ', toggleMissingCoinsButton, toggleObtainedCoinsButton, toggleNeedsUpgradeCoinsButton);
+    buttonsDiv.append(
+        reloadButton,
+        showAllDesignsButton,
+        ' | ',
+        toggleUnobtainedSectionsButton,
+        ' | ',
+        toggleMissingCoinsButton,
+        toggleObtainedCoinsButton,
+        toggleNeedsUpgradeCoinsButton,
+    );
 
     coinsList.append(buttonsDiv);
 
@@ -224,7 +242,9 @@ async function loadCoinsList() {
         if (!event.altKey) return;
         if (
             document.activeElement &&
-            (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
+            (document.activeElement.tagName === 'INPUT' ||
+                document.activeElement.tagName === 'TEXTAREA' ||
+                (document.activeElement as HTMLElement).contentEditable === 'plaintext-only')
         )
             return;
 
@@ -255,7 +275,8 @@ async function loadCoinsList() {
     for (const denomination of unindexedCoinsData) {
         const coinDenominationDiv = document.createElement('div');
         coinDenominationDiv.classList.add('coin-denomination');
-        if (denomination.designs.every((design) => design.coins.every((coin) => !coin.obtained))) coinDenominationDiv.dataset.noneObtained = 'true';
+        if (denomination.designs.every((design) => design.coins.every((coin) => !coin.obtained)))
+            coinDenominationDiv.dataset.noneObtained = 'true';
         coinDenominationDiv.textContent = denomination.name;
 
         const lastCoinDesign = denomination.designs.at(-1)!;
@@ -370,7 +391,9 @@ async function loadCoinsList() {
 
                 const coinDesignCoins = [...coinsData[denomination.id].designs[design.id].coins.values()];
 
-                const year = coinDesignCoins.at(-1)?.year ? (Number.parseInt(coinDesignCoins.at(-1)!.year!) + 1).toString() : new Date().getFullYear().toString();
+                const year = coinDesignCoins.at(-1)?.year
+                    ? (Number.parseInt(coinDesignCoins.at(-1)!.year!) + 1).toString()
+                    : new Date().getFullYear().toString();
 
                 let id: string;
                 do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
@@ -467,7 +490,11 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     const mintMarkCell = document.createElement('td');
     const tooltipSpan = document.createElement('span');
     tooltipSpan.classList.add('tooltip-bottom');
-    tooltipSpan.dataset.tooltip = coin.mintMark ? (coin.mintMark in mintMarks ? `Minted in ${mintMarks[coin.mintMark]}` : 'Unknown') : `Likely minted in ${mintMarks.P}`;
+    tooltipSpan.dataset.tooltip = coin.mintMark
+        ? coin.mintMark in mintMarks
+            ? `Minted in ${mintMarks[coin.mintMark]}`
+            : 'Unknown'
+        : `Likely minted in ${mintMarks.P}`;
     tooltipSpan.textContent = coin.mintMark ?? 'None';
     tooltipSpan.contentEditable = 'plaintext-only';
     tooltipSpan.addEventListener('focus', () => {
@@ -491,7 +518,9 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
         if (tooltipSpan.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
 
-        addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', { mintMark: tooltipSpan.textContent });
+        addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', {
+            mintMark: tooltipSpan.textContent,
+        });
 
         coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark = newValue;
 
@@ -510,7 +539,9 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         mintageCell.classList.remove('mintage-for-all-varieties');
     });
     mintageCell.addEventListener('blur', async () => {
-        const mintageNumber = mintageCell.textContent ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, '')) : null;
+        const mintageNumber = mintageCell.textContent
+            ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, ''))
+            : null;
         let mintageForAllVarieties: boolean | null | undefined = mintageCell.textContent?.endsWith(' (all)');
         if (!mintageForAllVarieties) mintageForAllVarieties = null;
 
@@ -518,7 +549,9 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
 
         if ((mintageNumber ?? '') !== (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintage ?? '')) {
-            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage', { mintage: mintageNumber });
+            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage', {
+                mintage: mintageNumber,
+            });
 
             coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintage = mintageNumber;
 
@@ -526,9 +559,14 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         }
 
         if (mintageForAllVarieties !== (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties ?? null)) {
-            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage "for all varieties"', {
-                mintageForAllVarieties: mintageForAllVarieties ?? false,
-            });
+            addCoinChangeEntry(
+                coinsData[denomination.id].designs[design.id].coins.get(coin.id)!,
+                design.name,
+                'mintage "for all varieties"',
+                {
+                    mintageForAllVarieties: mintageForAllVarieties ?? false,
+                },
+            );
 
             coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
 
@@ -543,9 +581,12 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         specificationCell.contentEditable = 'plaintext-only';
         specificationCell.textContent = coin.specification ?? '';
         specificationCell.addEventListener('blur', async () => {
-            if (specificationCell.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
+            if (specificationCell.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? ''))
+                return;
 
-            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationCell.textContent });
+            addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', {
+                specification: specificationCell.textContent,
+            });
 
             coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationCell.textContent! || null;
 
@@ -569,9 +610,15 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
             specificationEditor.textContent = coin.specification;
             specificationEditor.contentEditable = 'plaintext-only';
             specificationEditor.addEventListener('blur', async () => {
-                if (specificationEditor.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')) return;
+                if (
+                    specificationEditor.textContent ===
+                    (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification ?? '')
+                )
+                    return;
 
-                addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', { specification: specificationEditor.textContent! });
+                addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', {
+                    specification: specificationEditor.textContent!,
+                });
 
                 coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationEditor.textContent! || null;
 
@@ -776,7 +823,13 @@ async function addCoin(denominationId: string, designId: string, coinYear: strin
  * @param changes The changes that were made.
  * @param changeText The text to display for the change (if `changes` is not provided).
  */
-function addCoinChangeEntry(coinData: PartialNullable<Coin>, designName: string, type?: string, changes?: PartialNullable<Coin>, changeText?: string) {
+function addCoinChangeEntry(
+    coinData: PartialNullable<Coin>,
+    designName: string,
+    type?: string,
+    changes?: PartialNullable<Coin>,
+    changeText?: string,
+) {
     const { year, mintMark, specification } = coinData as Coin;
 
     if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
@@ -828,7 +881,9 @@ if (password) {
 
 // Add functionality to data exporter
 exportDataButton.addEventListener('click', async () => {
-    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<CoinDesign<Coin>>[] & { error?: string };
+    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<
+        CoinDesign<Coin>
+    >[] & { error?: string };
 
     if (coinsData.error) return showAlert(coinsData.error, 'error');
 

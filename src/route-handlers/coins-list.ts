@@ -44,7 +44,10 @@ export interface Coin {
 
 export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number }; // eslint-disable-line @typescript-eslint/naming-convention
 
-export const coinsModel = model('coins-data', new Schema({ name: String, id: String, value: Number, constants: Object, designs: Array }, {}));
+export const coinsModel = model(
+    'coins-data',
+    new Schema({ name: String, id: String, value: Number, constants: Object, designs: Array }, {}),
+);
 
 /**
  * Sets up all coin related routes.
@@ -56,7 +59,8 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
     );
 
     fastify.get('/coins-list', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
-        if (request.query.password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+        if (request.query.password !== process.env.COINS_PASSWORD)
+            return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
         let foundCoins = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
         foundCoins = await patchCoinDatabase(foundCoins);
@@ -73,60 +77,76 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
         reply.send(JSON.stringify(sortedCoinInfo, null, 2));
     });
 
-    fastify.post('/coins-list-edit', async (request: FastifyRequest<{ Body: { denominationId: string; designId: string; coinId: string; data: Partial<Coin>; password: string } }>, reply) => {
-        const { denominationId, designId, coinId, data, password } = request.body;
+    fastify.post(
+        '/coins-list-edit',
+        async (
+            request: FastifyRequest<{
+                Body: { denominationId: string; designId: string; coinId: string; data: Partial<Coin>; password: string };
+            }>,
+            reply,
+        ) => {
+            const { denominationId, designId, coinId, data, password } = request.body;
 
-        if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+            if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as DatabaseCoinDenomination | null;
-        if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
+            let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as DatabaseCoinDenomination | null;
+            if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
 
-        databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
+            databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
 
-        delete databaseCoinDenomination._id;
-        delete databaseCoinDenomination.__v;
+            delete databaseCoinDenomination._id;
+            delete databaseCoinDenomination.__v;
 
-        databaseCoinDenomination.designs = databaseCoinDenomination.designs.map((design) => {
-            if (design.id === designId)
-                return {
-                    ...design,
-                    coins: design.coins.map((coin) => {
-                        if (coin.id === coinId)
-                            for (const [key, value] of Object.entries(data))
-                                if (value === null) delete coin[key as keyof Coin];
-                                else coin[key as keyof Coin] = value as never;
+            databaseCoinDenomination.designs = databaseCoinDenomination.designs.map((design) => {
+                if (design.id === designId)
+                    return {
+                        ...design,
+                        coins: design.coins.map((coin) => {
+                            if (coin.id === coinId)
+                                for (const [key, value] of Object.entries(data))
+                                    if (value === null) delete coin[key as keyof Coin];
+                                    else coin[key as keyof Coin] = value as never;
 
-                        return coin;
-                    }),
-                };
+                            return coin;
+                        }),
+                    };
 
-            return design;
-        });
+                return design;
+            });
 
-        await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
+            await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
 
-        reply.send(JSON.stringify({ success: true }, null, 2));
-    });
+            reply.send(JSON.stringify({ success: true }, null, 2));
+        },
+    );
 
-    fastify.post('/coins-list-add-coin', async (request: FastifyRequest<{ Body: { denominationId: string; designId: string; coinYear: string; coinId: string; password: string } }>, reply) => {
-        const { denominationId, designId, coinYear, coinId, password } = request.body;
+    fastify.post(
+        '/coins-list-add-coin',
+        async (
+            request: FastifyRequest<{
+                Body: { denominationId: string; designId: string; coinYear: string; coinId: string; password: string };
+            }>,
+            reply,
+        ) => {
+            const { denominationId, designId, coinYear, coinId, password } = request.body;
 
-        if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
+            if (password !== process.env.COINS_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as DatabaseCoinDenomination | null;
-        if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
+            let databaseCoinDenomination = (await coinsModel.findOne({ id: denominationId }).lean()) as DatabaseCoinDenomination | null;
+            if (!databaseCoinDenomination) return reply.send(JSON.stringify({ error: 'Invalid coin denomination!' }, null, 2));
 
-        databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
+            databaseCoinDenomination = await patchCoinDatabaseDenomination(databaseCoinDenomination);
 
-        const databaseCoinDesign = databaseCoinDenomination.designs.find((design) => design.id === designId);
-        if (!databaseCoinDesign) return reply.send(JSON.stringify({ error: 'Invalid coin design!' }, null, 2));
+            const databaseCoinDesign = databaseCoinDenomination.designs.find((design) => design.id === designId);
+            if (!databaseCoinDesign) return reply.send(JSON.stringify({ error: 'Invalid coin design!' }, null, 2));
 
-        databaseCoinDesign.coins.push({ year: coinYear, obtained: false, id: coinId });
+            databaseCoinDesign.coins.push({ year: coinYear, obtained: false, id: coinId });
 
-        await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
+            await coinsModel.replaceOne({ id: denominationId }, databaseCoinDenomination);
 
-        reply.send(JSON.stringify({ success: true }, null, 2));
-    });
+            reply.send(JSON.stringify({ success: true }, null, 2));
+        },
+    );
 }
 
 /**
@@ -139,8 +159,32 @@ export async function patchCoinDatabase(coinsData: DatabaseCoinDenomination[]) {
 }
 
 const denominationParameterOrder: (keyof DatabaseCoinDenomination)[] = ['_id', 'name', 'id', 'value', 'constants', 'designs', '__v'];
-const designParameterOrder: (keyof CoinDesign<Coin>)[] = ['name', 'id', 'note', 'years', 'active', 'composition', 'mass', 'diameter', 'edge', 'numistaEntry', 'wikipediaArticle', 'coins'];
-const coinParameterOrder: (keyof Coin)[] = ['id', 'year', 'mintMark', 'mintage', 'mintageForAllVarieties', 'specification', 'image', 'comparison', 'obtained', 'upgrade'];
+const designParameterOrder: (keyof CoinDesign<Coin>)[] = [
+    'name',
+    'id',
+    'note',
+    'years',
+    'active',
+    'composition',
+    'mass',
+    'diameter',
+    'edge',
+    'numistaEntry',
+    'wikipediaArticle',
+    'coins',
+];
+const coinParameterOrder: (keyof Coin)[] = [
+    'id',
+    'year',
+    'mintMark',
+    'mintage',
+    'mintageForAllVarieties',
+    'specification',
+    'image',
+    'comparison',
+    'obtained',
+    'upgrade',
+];
 
 /**
  * Patches the coin database to add IDs to all coins.
@@ -170,7 +214,8 @@ async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenominat
         coins: design.coins.map((coin) => sortObject(coin, coinParameterOrder)),
     }));
 
-    if (JSON.stringify(denomination) !== JSON.stringify(sortedDenomination)) await coinsModel.replaceOne({ id: denomination.id }, sortedDenomination);
+    if (JSON.stringify(denomination) !== JSON.stringify(sortedDenomination))
+        await coinsModel.replaceOne({ id: denomination.id }, sortedDenomination);
 
     return sortedDenomination;
 }

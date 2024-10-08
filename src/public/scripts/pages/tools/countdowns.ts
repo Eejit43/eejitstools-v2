@@ -6,7 +6,9 @@ const countdownContainer = document.querySelector('#countdowns') as HTMLDivEleme
 
 const { holidays } = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 
-const parsedHolidays = holidays.map((holiday, index) => ({ ...holiday, id: `holiday-${index}` })).filter((holiday) => getTimeUntil(holiday.date) && !/^first day of/i.test(holiday.name));
+const parsedHolidays = holidays
+    .map((holiday, index) => ({ ...holiday, id: `holiday-${index}` }))
+    .filter((holiday) => getTimeUntil(holiday.date) && !/^first day of/i.test(holiday.name));
 
 const result = parsedHolidays.map((holiday) => {
     const container = document.createElement('div');
@@ -16,7 +18,12 @@ const result = parsedHolidays.map((holiday) => {
 
     const eventTooltip = document.createElement('span');
     eventTooltip.textContent = holiday.name;
-    eventTooltip.dataset.tooltip = new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    eventTooltip.dataset.tooltip = new Date(`${holiday.date} 00:00:00`).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
 
     timeUntilSpan.append('Time until ', eventTooltip, ':');
 

@@ -23,9 +23,10 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
 
     const rates = fullData.conversion_rates;
 
-    (document.querySelector('#last-updated') as HTMLSpanElement).textContent = `${new Date(fullData.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(
-        fullData.time_last_update_unix * 1000,
-    ).toLocaleTimeString('en-US')}`;
+    (document.querySelector('#last-updated') as HTMLSpanElement).textContent =
+        `${new Date(fullData.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(
+            fullData.time_last_update_unix * 1000,
+        ).toLocaleTimeString('en-US')}`;
 
     const firstDiv = document.createElement('div');
 

@@ -119,5 +119,8 @@ function convert() {
     const blobUrl = createBase64ObjectUrl(url.replaceAll(/data:image\/.*?;base64,/g, ''), `image/${outputTypePicker.value}`);
     openConvertedResultLink.href = downloadConvertedResultLink.href = blobUrl;
     openConvertedResultButton.disabled = downloadConvertedResultButton.disabled = false;
-    downloadConvertedResultLink.setAttribute('download', `${uploadedImage!.name.replace(/\.[^./]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`);
+    downloadConvertedResultLink.setAttribute(
+        'download',
+        `${uploadedImage!.name.replace(/\.[^./]+$/, '') || 'download'}.${outputTypePicker.value === 'jpeg' ? 'jpg' : outputTypePicker.value}`,
+    );
 }

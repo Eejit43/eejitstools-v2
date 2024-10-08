@@ -15,7 +15,14 @@ export default function setupAllPageRoutes(fastify: FastifyInstance) {
             JSON.stringify(
                 Object.values(allPages)
                     .flatMap((category) => Object.values(category))
-                    .map((page) => ({ title: page.title, id: page.id, category: page.category, link: page.link, description: page.descriptionParsed, keywords: page.keywords })),
+                    .map((page) => ({
+                        title: page.title,
+                        id: page.id,
+                        category: page.category,
+                        link: page.link,
+                        description: page.descriptionParsed,
+                        keywords: page.keywords,
+                    })),
                 null,
                 2,
             ),
@@ -32,7 +39,11 @@ export default function setupAllPageRoutes(fastify: FastifyInstance) {
     );
 
     const pagesWithStyles = new Set(
-        fs.readdirSync('src/public/styles/pages').flatMap((category) => fs.readdirSync(`src/public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`)),
+        fs
+            .readdirSync('src/public/styles/pages')
+            .flatMap((category) =>
+                fs.readdirSync(`src/public/styles/pages/${category}`).map((style) => `${category}/${style.replace(/\.css$/, '')}`),
+            ),
     );
 
     let totalCategories = 0,
@@ -51,10 +62,17 @@ export default function setupAllPageRoutes(fastify: FastifyInstance) {
                 continue;
             }
             fastify.get(pageInfo.link, (request, reply) => {
-                reply.view(`pages/${category}/${page}`, { commitInfo, ...pageInfo, script: pagesWithScripts.has(`${category}/${page}`), style: pagesWithStyles.has(`${category}/${page}`) });
+                reply.view(`pages/${category}/${page}`, {
+                    commitInfo,
+                    ...pageInfo,
+                    script: pagesWithScripts.has(`${category}/${page}`),
+                    style: pagesWithStyles.has(`${category}/${page}`),
+                });
             });
         }
     }
 
-    consola.log(`${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`);
+    consola.log(
+        `${chalk.blue('[Page Auto-Loader]:')} Successfully parsed and auto-loaded ${chalk.yellow(totalPages)} pages in ${chalk.yellow(totalCategories)} categories!`,
+    );
 }
