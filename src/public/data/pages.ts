@@ -87,7 +87,7 @@ const preParsedPages: PreParsedPages = {
             description: 'Shows basic information about your browser and operating system',
             additionalScripts: [imports.uaParser.script],
         },
-        calendar: { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with a personal to-do list', toolbox: false },
+        'calendar': { title: 'Calendar', icon: 'calendar', description: 'A simple calendar with a personal to-do list', toolbox: false },
         'case-changer': {
             title: 'Case Changer',
             icon: 'font-case',
@@ -99,9 +99,9 @@ const preParsedPages: PreParsedPages = {
             description: 'Use a color picker or manually input colors to view information about the color and manipulate it',
             additionalScripts: [imports.chroma.script],
         },
-        timer: { title: 'Countdown Timer', icon: 'bell', description: 'A simple countdown timer with end time display' },
-        countdowns: { title: 'Countdowns', icon: 'hourglass-half', description: 'Shows countdowns until upcoming major holidays' },
-        counter: {
+        'timer': { title: 'Countdown Timer', icon: 'bell', description: 'A simple countdown timer with end time display' },
+        'countdowns': { title: 'Countdowns', icon: 'hourglass-half', description: 'Shows countdowns until upcoming major holidays' },
+        'counter': {
             title: 'Counter',
             icon: 'calculator',
             description: 'Press a key or button to add one to a counter',
@@ -172,7 +172,7 @@ const preParsedPages: PreParsedPages = {
             description: 'Convert between scientific (<i>e</i>) notation and decimal form',
             additionalScripts: [imports.mathJs.script],
         },
-        stopwatch: { title: 'Stopwatch', icon: 'stopwatch', description: 'Simple stopwatch that displays down to the milliseconds' },
+        'stopwatch': { title: 'Stopwatch', icon: 'stopwatch', description: 'Simple stopwatch that displays down to the milliseconds' },
         'svg-to-png': {
             title: 'SVG to PNG',
             icon: 'file-image',
@@ -194,7 +194,7 @@ const preParsedPages: PreParsedPages = {
             description: 'Convert between units of time',
             additionalScripts: [imports.mathJs.script],
         },
-        time: { title: 'Time', icon: 'clock', description: 'Displays the current time and date, as well as detailed time information' },
+        'time': { title: 'Time', icon: 'clock', description: 'Displays the current time and date, as well as detailed time information' },
         'unix-time-converter': {
             title: 'UNIX Time Converter',
             icon: 'calendar-clock',

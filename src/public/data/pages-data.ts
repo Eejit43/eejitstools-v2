@@ -28,21 +28,21 @@ export const phoneticAlphabet = [
 ];
 
 export const centCommonAmounts = {
-    belgium: 3,
-    monaco: 2,
-    netherlands: 2,
+    'belgium': 3,
+    'monaco': 2,
+    'netherlands': 2,
     'san-marino': 2,
-    spain: 2,
+    'spain': 2,
     'vatican-city': 5,
 };
 
 export const euroCommonAmounts = {
-    belgium: 3,
-    france: 2,
-    monaco: 2,
-    netherlands: 2,
+    'belgium': 3,
+    'france': 2,
+    'monaco': 2,
+    'netherlands': 2,
     'san-marino': 2,
-    spain: 3,
+    'spain': 3,
     'vatican-city': 5,
 };
 

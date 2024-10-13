@@ -65,27 +65,23 @@ fastify.setErrorHandler((error, request, reply) => {
 
     consola.error(error);
 
-    reply
-        .status(error.statusCode ?? 500)
-        .view('/error.hbs', {
-            ...blankProperties,
-            commitInfo,
-            title: 'Error',
-            message: 'Looks like an error occurred!',
-            status: error.statusCode ?? 500,
-        });
+    reply.status(error.statusCode ?? 500).view('/error.hbs', {
+        ...blankProperties,
+        commitInfo,
+        title: 'Error',
+        message: 'Looks like an error occurred!',
+        status: error.statusCode ?? 500,
+    });
 });
 
 fastify.setNotFoundHandler((request, reply) =>
-    reply
-        .status(404)
-        .view('/error.hbs', {
-            ...blankProperties,
-            commitInfo,
-            title: 'Not Found',
-            message: 'Unable to find the requested page!',
-            status: 404,
-        }),
+    reply.status(404).view('/error.hbs', {
+        ...blankProperties,
+        commitInfo,
+        title: 'Not Found',
+        message: 'Unable to find the requested page!',
+        status: 404,
+    }),
 );
 
 // Start server
