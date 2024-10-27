@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
 
 export interface CalendarEvents {
@@ -41,9 +41,9 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             ).json()) as Calendar
         ).items
             .map((moonPhase) => ({
-                phase: moonPhase.summary.match(/([\w ]+) \d/)![1],
+                phase: /([\w ]+) \d/.exec(moonPhase.summary)![1],
                 date: moonPhase.start.date,
-                time: moonPhase.summary.match(/[\w ]+ ([\w:]+)/)![1].replace(/(\d)([ap]m)/, '$1 $2'),
+                time: /[\w ]+ ([\w:]+)/.exec(moonPhase.summary)![1].replace(/(\d)([ap]m)/, '$1 $2'),
             }))
             .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         const result: CalendarEvents = { holidays, moonPhases };
@@ -70,7 +70,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
     fastify.get('/calendar-todo', async (request: FastifyRequest<{ Querystring: { password: string } }>, reply) => {
         if (request.query.password !== process.env.CALENDAR_TODO_PASSWORD)
             return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
-        const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
+        const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
         if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
 
@@ -109,7 +109,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
 
             await todoModel.replaceOne({ year }, yearEntry);
 
-            const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates]));
+            const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
             if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
 

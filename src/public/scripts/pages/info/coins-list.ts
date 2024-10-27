@@ -1,11 +1,11 @@
-import { Coin, CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list.js';
+import type { Coin, CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list.js';
 import { loadPopupImages, showAlert, showResult } from '../../functions.js';
 
-const passwordInput = document.querySelector('#login-password') as HTMLInputElement;
-const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
-const coinsList = document.querySelector('#coins-list') as HTMLDivElement;
-const changeHistory = document.querySelector('#change-history') as HTMLUListElement;
-const exportDataButton = document.querySelector('#export-data') as HTMLButtonElement;
+const passwordInput = document.querySelector<HTMLInputElement>('#login-password')!;
+const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;
+const coinsList = document.querySelector<HTMLDivElement>('#coins-list')!;
+const changeHistory = document.querySelector<HTMLUListElement>('#change-history')!;
+const exportDataButton = document.querySelector<HTMLButtonElement>('#export-data')!;
 
 for (const type of ['input', 'paste'])
     passwordInput.addEventListener(type, () => {
@@ -125,12 +125,12 @@ async function loadCoinsList() {
         if (showAllDesignsButton.dataset.expanded === 'true') {
             showAllDesignsButton.dataset.expanded = 'false';
             showAllDesignsButton.textContent = 'Show all designs';
-            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>)
+            for (const button of document.querySelectorAll<HTMLButtonElement>('.coin-denomination-expand'))
                 if (button.dataset.expanded === 'true') button.click();
         } else {
             showAllDesignsButton.dataset.expanded = 'true';
             showAllDesignsButton.textContent = 'Hide all designs';
-            for (const button of document.querySelectorAll('.coin-denomination-expand') as NodeListOf<HTMLButtonElement>)
+            for (const button of document.querySelectorAll<HTMLButtonElement>('.coin-denomination-expand'))
                 if (button.dataset.expanded === 'false') button.click();
         }
     });
@@ -436,9 +436,9 @@ async function loadCoinsList() {
     loadPopupImages();
 }
 
-const modal = document.querySelector('#modal') as HTMLDivElement;
-const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
-const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
+const modal = document.querySelector<HTMLDivElement>('#modal')!;
+const modalImage = document.querySelector<HTMLImageElement>('#modal-image')!;
+const modalCaption = document.querySelector<HTMLDivElement>('#modal-caption')!;
 
 /**
  * Generates a coin row for a given coin.
@@ -684,7 +684,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     row.append(needsUpgradeCell);
 
     // Strip newlines and formatting from contenteditable element interactions
-    for (const element of row.querySelectorAll('[contenteditable=plaintext-only]') as NodeListOf<HTMLElement>) {
+    for (const element of row.querySelectorAll<HTMLElement>('[contenteditable=plaintext-only]')) {
         element.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') event.preventDefault();
         });
@@ -723,9 +723,9 @@ function loadDesignTotals(denomination: string, design: string) {
     const needsUpgradeCoins = [...designData.coins.values()].filter((coin) => coin.upgrade).length;
     const totalCoins = [...designData.coins.values()].length;
 
-    const amountTooltip = document.querySelector(`#${design}-${denomination}-amount-tooltip`) as HTMLSpanElement;
-    const yearSpan = document.querySelector(`#${design}-${denomination}-years`) as HTMLSpanElement;
-    const upgradeSpan = document.querySelector(`#${design}-${denomination}-needs-upgrade`) as HTMLSpanElement;
+    const amountTooltip = document.querySelector<HTMLSpanElement>(`#${design}-${denomination}-amount-tooltip`)!;
+    const yearSpan = document.querySelector<HTMLSpanElement>(`#${design}-${denomination}-years`)!;
+    const upgradeSpan = document.querySelector<HTMLSpanElement>(`#${design}-${denomination}-needs-upgrade`)!;
 
     amountTooltip.dataset.tooltip = `${Math.ceil((obtainedCoins / totalCoins) * 10_000) / 100}% completed, ${totalCoins - obtainedCoins} missing`;
     amountTooltip.textContent = `${obtainedCoins}/${totalCoins}`;

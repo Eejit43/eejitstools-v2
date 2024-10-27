@@ -1,5 +1,5 @@
-const getJokeButton = document.querySelector('#get-joke') as HTMLButtonElement;
-const jokeOutput = document.querySelector('#joke-output') as HTMLDivElement;
+const getJokeButton = document.querySelector<HTMLButtonElement>('#get-joke')!;
+const jokeOutput = document.querySelector<HTMLDivElement>('#joke-output')!;
 
 /* Add event listeners */
 getJokeButton.addEventListener('click', fetchJoke);

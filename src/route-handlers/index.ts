@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 import setupAllPageRoutes from './all-pages.js';
 import setupApodRoute from './astronomy-picture.js';
 import setupCalendarRoutes from './calendar.js';

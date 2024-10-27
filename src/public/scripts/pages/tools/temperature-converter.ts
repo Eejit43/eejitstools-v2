@@ -1,4 +1,4 @@
-import type { MathJsInstance } from '../../../../../node_modules/mathjs/types/index';
+import type { MathJsInstance } from 'mathjs';
 import { copyValue, showAlert, showResult } from '../../functions.js';
 
 declare global {
@@ -7,14 +7,14 @@ declare global {
     }
 }
 
-const inputType = document.querySelector('#input-type') as HTMLSelectElement;
-const input = document.querySelector('#input') as HTMLInputElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const switchButton = document.querySelector('#switch') as HTMLButtonElement;
-const message = document.querySelector('#message') as HTMLDivElement;
-const outputType = document.querySelector('#output-type') as HTMLSelectElement;
-const output = document.querySelector('#output') as HTMLInputElement;
-const copyOutputButton = document.querySelector('#copy-output') as HTMLButtonElement;
+const inputType = document.querySelector<HTMLSelectElement>('#input-type')!;
+const input = document.querySelector<HTMLInputElement>('#input')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const switchButton = document.querySelector<HTMLButtonElement>('#switch')!;
+const message = document.querySelector<HTMLDivElement>('#message')!;
+const outputType = document.querySelector<HTMLSelectElement>('#output-type')!;
+const output = document.querySelector<HTMLInputElement>('#output')!;
+const copyOutputButton = document.querySelector<HTMLButtonElement>('#copy-output')!;
 
 /* Add event listeners */
 inputType.addEventListener('change', convert);

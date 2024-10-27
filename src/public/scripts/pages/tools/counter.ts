@@ -1,9 +1,9 @@
 import { showAlert } from '../../functions.js';
 
-const numberDisplay = document.querySelector('#counter') as HTMLSpanElement;
-const activationSelect = document.querySelector('#activation-button') as HTMLSelectElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const manualActivationButton = document.querySelector('#manual-activation') as HTMLButtonElement;
+const numberDisplay = document.querySelector<HTMLSpanElement>('#counter')!;
+const activationSelect = document.querySelector<HTMLSelectElement>('#activation-button')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const manualActivationButton = document.querySelector<HTMLButtonElement>('#manual-activation')!;
 
 let number = 0;
 let key = 'Space';

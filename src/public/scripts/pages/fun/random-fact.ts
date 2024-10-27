@@ -1,5 +1,5 @@
-const getFactButton = document.querySelector('#get-fact') as HTMLButtonElement;
-const factOutput = document.querySelector('#fact-output') as HTMLDivElement;
+const getFactButton = document.querySelector<HTMLButtonElement>('#get-fact')!;
+const factOutput = document.querySelector<HTMLDivElement>('#fact-output')!;
 
 /* Add event listeners */
 getFactButton.addEventListener('click', fetchFact);

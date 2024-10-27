@@ -1,13 +1,13 @@
-import { ForeignCollectionsList } from '../../../../route-handlers/foreign-collections-list.js';
+import type { ForeignCollectionsList } from '../../../../route-handlers/foreign-collections-list.js';
 import { showAlert, showResult } from '../../functions.js';
 
-const passwordInput = document.querySelector('#login-password') as HTMLInputElement;
-const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
-const collectionsListMessage = document.querySelector('#collections-list-message') as HTMLDivElement;
-const collectionsList = document.querySelector('#collections-list') as HTMLDivElement;
-const collectionsListTableBody = collectionsList.querySelector('tbody') as HTMLTableSectionElement;
-const newRowMessage = document.querySelector('#new-row-message') as HTMLTableRowElement;
-const exportDataButton = document.querySelector('#export-data') as HTMLButtonElement;
+const passwordInput = document.querySelector<HTMLInputElement>('#login-password')!;
+const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;
+const collectionsListMessage = document.querySelector<HTMLDivElement>('#collections-list-message')!;
+const collectionsList = document.querySelector<HTMLDivElement>('#collections-list')!;
+const collectionsListTableBody = collectionsList.querySelector<HTMLTableSectionElement>('tbody')!;
+const newRowMessage = document.querySelector<HTMLTableRowElement>('#new-row-message')!;
+const exportDataButton = document.querySelector<HTMLButtonElement>('#export-data')!;
 
 for (const type of ['input', 'paste'])
     passwordInput.addEventListener(type, () => {

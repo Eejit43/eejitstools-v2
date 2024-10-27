@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
 
 interface ForeignCollectionEntry {
@@ -10,7 +10,7 @@ interface ForeignCollectionEntry {
 
 export type ForeignCollectionsList = ForeignCollectionEntry[];
 
-type DatabaseForeignCollectionsList = { data: ForeignCollectionsList } & { _id?: number; __v?: number }; // eslint-disable-line @typescript-eslint/naming-convention
+type DatabaseForeignCollectionsList = { data: ForeignCollectionsList } & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
 
 const foreignCollectionsList = model('foreign-collections-list', new Schema({ data: Array }, {}));
 

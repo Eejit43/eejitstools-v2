@@ -12,7 +12,7 @@ interface IPInformation {
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
-const ipInfo = document.querySelector('#ip-info') as HTMLDivElement;
+const ipInfo = document.querySelector<HTMLDivElement>('#ip-info')!;
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
 fetch('/ip-info').then(async (response) => {

@@ -1,19 +1,19 @@
 import { showAlert } from '../../functions.js';
 
-const ready = document.querySelector('#ready') as HTMLDivElement;
-const keyResults = document.querySelector('#key-results') as HTMLTableRowElement;
-const key = document.querySelector('#key') as HTMLDivElement;
-const keyCell = document.querySelector('#key-cell') as HTMLTableCellElement;
-const keyRepeating = document.querySelector('#key-repeating') as HTMLDivElement;
-const keyRepeatingCell = document.querySelector('#key-repeating-cell') as HTMLTableCellElement;
-const keyLocation = document.querySelector('#key-location') as HTMLDivElement;
-const keyLocationCell = document.querySelector('#key-location-cell') as HTMLTableCellElement;
-const keyCode = document.querySelector('#key-code') as HTMLDivElement;
-const keyCodeCell = document.querySelector('#key-code-cell') as HTMLTableCellElement;
-const keyAscii = document.querySelector('#key-ascii') as HTMLDivElement;
-const keyAsciiCell = document.querySelector('#key-ascii-cell') as HTMLTableCellElement;
-const keyUnicode = document.querySelector('#key-unicode') as HTMLDivElement;
-const keyUnicodeCell = document.querySelector('#key-unicode-cell') as HTMLTableCellElement;
+const ready = document.querySelector<HTMLDivElement>('#ready')!;
+const keyResults = document.querySelector<HTMLTableRowElement>('#key-results')!;
+const key = document.querySelector<HTMLDivElement>('#key')!;
+const keyCell = document.querySelector<HTMLTableCellElement>('#key-cell')!;
+const keyRepeating = document.querySelector<HTMLDivElement>('#key-repeating')!;
+const keyRepeatingCell = document.querySelector<HTMLTableCellElement>('#key-repeating-cell')!;
+const keyLocation = document.querySelector<HTMLDivElement>('#key-location')!;
+const keyLocationCell = document.querySelector<HTMLTableCellElement>('#key-location-cell')!;
+const keyCode = document.querySelector<HTMLDivElement>('#key-code')!;
+const keyCodeCell = document.querySelector<HTMLTableCellElement>('#key-code-cell')!;
+const keyAscii = document.querySelector<HTMLDivElement>('#key-ascii')!;
+const keyAsciiCell = document.querySelector<HTMLTableCellElement>('#key-ascii-cell')!;
+const keyUnicode = document.querySelector<HTMLDivElement>('#key-unicode')!;
+const keyUnicodeCell = document.querySelector<HTMLTableCellElement>('#key-unicode-cell')!;
 
 let keyValue: string,
     keyRepeatingValue: string,

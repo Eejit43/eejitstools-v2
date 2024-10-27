@@ -1,18 +1,18 @@
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
-const integerInput = document.querySelector('#integer-input') as HTMLInputElement;
-const integerConvertButton = document.querySelector('#integer-convert') as HTMLButtonElement;
-const integerResetButton = document.querySelector('#integer-reset') as HTMLButtonElement;
-const integerArrow = document.querySelector('#integer-arrow') as HTMLElement;
-const romanOutput = document.querySelector('#roman-output') as HTMLButtonElement; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
-const romanOutputCopyButton = document.querySelector('#roman-output-copy') as HTMLButtonElement;
-const romanOutputCopy2Button = document.querySelector('#roman-output-copy-2') as HTMLButtonElement;
-const romanInput = document.querySelector('#roman-input') as HTMLInputElement;
-const romanConvertButton = document.querySelector('#roman-convert') as HTMLButtonElement;
-const romanResetButton = document.querySelector('#roman-reset') as HTMLButtonElement;
-const romanArrow = document.querySelector('#roman-arrow') as HTMLElement;
-const integerOutput = document.querySelector('#integer-output') as HTMLInputElement;
-const integerOutputCopyButton = document.querySelector('#integer-output-copy') as HTMLButtonElement;
+const integerInput = document.querySelector<HTMLInputElement>('#integer-input')!;
+const integerConvertButton = document.querySelector<HTMLButtonElement>('#integer-convert')!;
+const integerResetButton = document.querySelector<HTMLButtonElement>('#integer-reset')!;
+const integerArrow = document.querySelector<HTMLElement>('#integer-arrow')!;
+const romanOutput = document.querySelector<HTMLButtonElement>('#roman-output')!; // This *is* actually a button, it functions as a fake input as HTML is needed to add top borders to characters
+const romanOutputCopyButton = document.querySelector<HTMLButtonElement>('#roman-output-copy')!;
+const romanOutputCopy2Button = document.querySelector<HTMLButtonElement>('#roman-output-copy-2')!;
+const romanInput = document.querySelector<HTMLInputElement>('#roman-input')!;
+const romanConvertButton = document.querySelector<HTMLButtonElement>('#roman-convert')!;
+const romanResetButton = document.querySelector<HTMLButtonElement>('#roman-reset')!;
+const romanArrow = document.querySelector<HTMLElement>('#roman-arrow')!;
+const integerOutput = document.querySelector<HTMLInputElement>('#integer-output')!;
+const integerOutputCopyButton = document.querySelector<HTMLButtonElement>('#integer-output-copy')!;
 
 let romanOutputValue: string, romanOutputValue2: string, integerOutputValue: string;
 

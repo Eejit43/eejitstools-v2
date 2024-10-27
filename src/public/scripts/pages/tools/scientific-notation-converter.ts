@@ -1,4 +1,4 @@
-import type { MathJsInstance } from '../../../../../node_modules/mathjs/types/index';
+import type { MathJsInstance } from 'mathjs';
 import { copyText, showAlert, updateArrow } from '../../functions.js';
 
 declare global {
@@ -7,19 +7,19 @@ declare global {
     }
 }
 
-const decimalInput = document.querySelector('#decimal-input') as HTMLInputElement;
-const decimalConvertButton = document.querySelector('#decimal-convert') as HTMLButtonElement;
-const decimalResetButton = document.querySelector('#decimal-reset') as HTMLButtonElement;
-const decimalArrow = document.querySelector('#decimal-arrow') as HTMLElement;
-const scientificOutput = document.querySelector('#scientific-output') as HTMLInputElement;
-const scientificOutputCopyButton = document.querySelector('#scientific-output-copy') as HTMLButtonElement;
-const scientificOutputCopy2Button = document.querySelector('#scientific-output-copy-2') as HTMLButtonElement;
-const scientificInput = document.querySelector('#scientific-input') as HTMLInputElement;
-const scientificConvertButton = document.querySelector('#scientific-convert') as HTMLButtonElement;
-const scientificResetButton = document.querySelector('#scientific-reset') as HTMLButtonElement;
-const scientificArrow = document.querySelector('#scientific-arrow') as HTMLElement;
-const decimalOutput = document.querySelector('#decimal-output') as HTMLInputElement;
-const decimalOutputCopyButton = document.querySelector('#decimal-output-copy') as HTMLButtonElement;
+const decimalInput = document.querySelector<HTMLInputElement>('#decimal-input')!;
+const decimalConvertButton = document.querySelector<HTMLButtonElement>('#decimal-convert')!;
+const decimalResetButton = document.querySelector<HTMLButtonElement>('#decimal-reset')!;
+const decimalArrow = document.querySelector<HTMLElement>('#decimal-arrow')!;
+const scientificOutput = document.querySelector<HTMLInputElement>('#scientific-output')!;
+const scientificOutputCopyButton = document.querySelector<HTMLButtonElement>('#scientific-output-copy')!;
+const scientificOutputCopy2Button = document.querySelector<HTMLButtonElement>('#scientific-output-copy-2')!;
+const scientificInput = document.querySelector<HTMLInputElement>('#scientific-input')!;
+const scientificConvertButton = document.querySelector<HTMLButtonElement>('#scientific-convert')!;
+const scientificResetButton = document.querySelector<HTMLButtonElement>('#scientific-reset')!;
+const scientificArrow = document.querySelector<HTMLElement>('#scientific-arrow')!;
+const decimalOutput = document.querySelector<HTMLInputElement>('#decimal-output')!;
+const decimalOutputCopyButton = document.querySelector<HTMLButtonElement>('#decimal-output-copy')!;
 
 let decimalOutputValue: string, scientificOutputValue: string, scientificOutputValue2: string;
 

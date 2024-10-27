@@ -1,5 +1,5 @@
 import Canvas from 'canvas';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { logApiRequest } from '../app.js';
 
 /**

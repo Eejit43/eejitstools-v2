@@ -1,18 +1,18 @@
 import { createBase64ObjectUrl, escapeHtml, showAlert } from '../../functions.js';
 
-const fileUploadLabel = document.querySelector('#file-upload-label') as HTMLLabelElement;
-const fileUpload = document.querySelector('#file-upload') as HTMLInputElement;
-const fileUploadMessage = document.querySelector('#file-message') as HTMLDivElement;
-const loadButton = document.querySelector('#load') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const imagePreview = document.querySelector('#image-preview') as HTMLCanvasElement;
-const outputTypePicker = document.querySelector('#output-type') as HTMLSelectElement;
-const convertButton = document.querySelector('#convert') as HTMLButtonElement;
-const imageOutput = document.querySelector('#image-output') as HTMLImageElement;
-const openConvertedResultLink = document.querySelector('#open-converted-link') as HTMLAnchorElement;
-const openConvertedResultButton = document.querySelector('#open-converted-result') as HTMLButtonElement;
-const downloadConvertedResultLink = document.querySelector('#download-converted-link') as HTMLAnchorElement;
-const downloadConvertedResultButton = document.querySelector('#download-converted-result') as HTMLButtonElement;
+const fileUploadLabel = document.querySelector<HTMLLabelElement>('#file-upload-label')!;
+const fileUpload = document.querySelector<HTMLInputElement>('#file-upload')!;
+const fileUploadMessage = document.querySelector<HTMLDivElement>('#file-message')!;
+const loadButton = document.querySelector<HTMLButtonElement>('#load')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const imagePreview = document.querySelector<HTMLCanvasElement>('#image-preview')!;
+const outputTypePicker = document.querySelector<HTMLSelectElement>('#output-type')!;
+const convertButton = document.querySelector<HTMLButtonElement>('#convert')!;
+const imageOutput = document.querySelector<HTMLImageElement>('#image-output')!;
+const openConvertedResultLink = document.querySelector<HTMLAnchorElement>('#open-converted-link')!;
+const openConvertedResultButton = document.querySelector<HTMLButtonElement>('#open-converted-result')!;
+const downloadConvertedResultLink = document.querySelector<HTMLAnchorElement>('#download-converted-link')!;
+const downloadConvertedResultButton = document.querySelector<HTMLButtonElement>('#download-converted-result')!;
 
 let uploadedImage: File | null = null;
 

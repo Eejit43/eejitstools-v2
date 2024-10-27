@@ -1,12 +1,12 @@
 import { escapeHtml, showAlert } from '../../functions.js';
 
-const eventsTitle = document.querySelector('#events-title') as HTMLDivElement;
-const eventsDisplay = document.querySelector('#events') as HTMLUListElement;
-const monthInput = document.querySelector('#month-input') as HTMLInputElement;
-const dateInput = document.querySelector('#date-input') as HTMLInputElement;
-const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
-const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
-const yearOverview = document.querySelector('#year-overview') as HTMLAnchorElement;
+const eventsTitle = document.querySelector<HTMLDivElement>('#events-title')!;
+const eventsDisplay = document.querySelector<HTMLUListElement>('#events')!;
+const monthInput = document.querySelector<HTMLInputElement>('#month-input')!;
+const dateInput = document.querySelector<HTMLInputElement>('#date-input')!;
+const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!;
+const resetDateButton = document.querySelector<HTMLButtonElement>('#reset-date')!;
+const yearOverview = document.querySelector<HTMLAnchorElement>('#year-overview')!;
 
 /* Add event listeners */
 getDateButton.addEventListener('click', getFromDate);

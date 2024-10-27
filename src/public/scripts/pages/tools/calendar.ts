@@ -2,22 +2,22 @@ import type { CalendarEvents } from '../../../../route-handlers/calendar.js';
 import { holidayEmojis, moonEmojis } from '../../../data/emojis.js';
 import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
 
-const monthYearDisplay = document.querySelector('#month-year') as HTMLDivElement;
-const calendarBody = document.querySelector('#calendar-body')!;
-const previousMonthButton = document.querySelector('#previous-month') as HTMLButtonElement;
-const nextMonthButton = document.querySelector('#next-month') as HTMLButtonElement;
-const currentDateButton = document.querySelector('#current-date') as HTMLButtonElement;
-const jumpMonthSelection = document.querySelector('#jump-month') as HTMLSelectElement;
-const jumpYearSelection = document.querySelector('#jump-year') as HTMLSelectElement;
+const monthYearDisplay = document.querySelector<HTMLDivElement>('#month-year')!;
+const calendarBody = document.querySelector<HTMLTableSectionElement>('#calendar-body')!;
+const previousMonthButton = document.querySelector<HTMLButtonElement>('#previous-month')!;
+const nextMonthButton = document.querySelector<HTMLButtonElement>('#next-month')!;
+const currentDateButton = document.querySelector<HTMLButtonElement>('#current-date')!;
+const jumpMonthSelection = document.querySelector<HTMLSelectElement>('#jump-month')!;
+const jumpYearSelection = document.querySelector<HTMLSelectElement>('#jump-year')!;
 
-const displayDay = document.querySelector('#display-day') as HTMLDivElement;
-const displayDate = document.querySelector('#display-date') as HTMLDivElement;
-const displayMonthYear = document.querySelector('#display-month-year') as HTMLDivElement;
-const eventsList = document.querySelector('#events-list') as HTMLUListElement;
+const displayDay = document.querySelector<HTMLDivElement>('#display-day')!;
+const displayDate = document.querySelector<HTMLDivElement>('#display-date')!;
+const displayMonthYear = document.querySelector<HTMLDivElement>('#display-month-year')!;
+const eventsList = document.querySelector<HTMLUListElement>('#events-list')!;
 
-const loginPassword = document.querySelector('#login-password') as HTMLInputElement;
-const loginButton = document.querySelector('#login-button') as HTMLButtonElement;
-const todoList = document.querySelector('#todo-list') as HTMLDivElement;
+const loginPassword = document.querySelector<HTMLInputElement>('#login-password')!;
+const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;
+const todoList = document.querySelector<HTMLDivElement>('#todo-list')!;
 
 previousMonthButton.addEventListener('click', previousMonth);
 nextMonthButton.addEventListener('click', nextMonth);
@@ -92,7 +92,7 @@ document.addEventListener('keydown', (event) => {
             break;
         }
         case 'KeyS': {
-            const saveButton = document.querySelector('#todo-save-button') as HTMLButtonElement;
+            const saveButton = document.querySelector<HTMLButtonElement>('#todo-save-button')!;
             if (saveButton && !saveButton.disabled) saveButton.click();
         }
     }
@@ -260,7 +260,7 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
-    const dateCell = document.querySelector(`[data-date="${date}"]`) as HTMLTableCellElement;
+    const dateCell = document.querySelector<HTMLTableCellElement>(`[data-date="${date}"]`)!;
     dateCell.classList.add('selected-date');
 
     if (dateCell.dataset.holiday ?? dateCell.dataset.phase) {
@@ -294,7 +294,7 @@ function loadCalendarEvents() {
     for (const holiday of events.holidays) {
         const date = new Date(`${holiday.date}T00:00:00`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
+            const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!;
             cell.classList.add('holiday');
             if (cell.dataset.holiday) cell.dataset.holiday += `, ${holiday.name}`;
             else cell.dataset.holiday = holiday.name;
@@ -304,7 +304,7 @@ function loadCalendarEvents() {
     for (const moonPhase of events.moonPhases) {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
         if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector(`[data-date="${date.getDate()}"]`) as HTMLTableCellElement;
+            const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!;
             cell.dataset.phase = moonPhase.phase;
             cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
@@ -332,7 +332,7 @@ function loadTodoList() {
         if (
             todo.frequency === 'daily' ||
             (todo.frequency === 'weekly' && todoListDate.getDay() === 0) ||
-            (/days:/.test(todo.frequency) &&
+            (todo.frequency.includes('days:') &&
                 todo.frequency
                     .replace('days:', '')
                     .split(',')
@@ -351,7 +351,7 @@ function loadTodoList() {
                 !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[todo.id];
             todoCheckbox.addEventListener('change', () => {
                 const todoFinal: Record<string, boolean> = {};
-                for (const checkbox of todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>)
+                for (const checkbox of todoList.querySelectorAll<HTMLInputElement>('.todo-checkbox'))
                     todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
                 todoSaveButton.disabled = !Object.entries(todoFinal).some(
@@ -397,7 +397,7 @@ function loadTodoList() {
     todoSaveButton.textContent = 'Save changes';
     todoSaveButton.disabled = true;
     todoSaveButton.addEventListener('click', async () => {
-        const allCheckboxes = todoList.querySelectorAll('.todo-checkbox') as NodeListOf<HTMLInputElement>;
+        const allCheckboxes = todoList.querySelectorAll<HTMLInputElement>('.todo-checkbox');
         for (const checkbox of allCheckboxes) checkbox.disabled = true;
         todoSaveButton.disabled = true;
 

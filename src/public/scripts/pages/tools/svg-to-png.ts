@@ -1,13 +1,13 @@
 import { showAlert, showResult, stringToHtml } from '../../functions.js';
 
-const svgInput = document.querySelector('#svg-input') as HTMLTextAreaElement;
-const loadSvgButton = document.querySelector('#load-svg') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const svgPreview = document.querySelector('#svg-preview') as HTMLDivElement;
-const widthInput = document.querySelector('#width-input') as HTMLInputElement;
-const heightInput = document.querySelector('#height-input') as HTMLInputElement;
-const savePngButton = document.querySelector('#save-png') as HTMLButtonElement;
-const canvas = document.querySelector('#png-canvas') as HTMLCanvasElement;
+const svgInput = document.querySelector<HTMLTextAreaElement>('#svg-input')!;
+const loadSvgButton = document.querySelector<HTMLButtonElement>('#load-svg')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const svgPreview = document.querySelector<HTMLDivElement>('#svg-preview')!;
+const widthInput = document.querySelector<HTMLInputElement>('#width-input')!;
+const heightInput = document.querySelector<HTMLInputElement>('#height-input')!;
+const savePngButton = document.querySelector<HTMLButtonElement>('#save-png')!;
+const canvas = document.querySelector<HTMLCanvasElement>('#png-canvas')!;
 
 const context = canvas.getContext('2d')!;
 

@@ -1,19 +1,19 @@
-import { AudioCategory, AudioTrack, audioTracks } from '../../../data/audio-tracks.js';
+import { type AudioCategory, type AudioTrack, audioTracks } from '../../../data/audio-tracks.js';
 import { shuffleArray } from '../../functions.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
-const audio = document.querySelector('#audio') as HTMLAudioElement;
-const sourceAudio = document.querySelector('#source-audio') as HTMLSourceElement;
+const audio = document.querySelector<HTMLAudioElement>('#audio')!;
+const sourceAudio = document.querySelector<HTMLSourceElement>('#source-audio')!;
 
-const timer = document.querySelector('#timer') as HTMLDivElement;
-const title = document.querySelector('#title') as HTMLDivElement;
-const duration = document.querySelector('#duration') as HTMLDivElement;
+const timer = document.querySelector<HTMLDivElement>('#timer')!;
+const title = document.querySelector<HTMLDivElement>('#title')!;
+const duration = document.querySelector<HTMLDivElement>('#duration')!;
 
-const progressBarContainer = document.querySelector('.progress') as HTMLDivElement;
-const progressBar = document.querySelector('#progress-bar') as HTMLDivElement;
+const progressBarContainer = document.querySelector<HTMLDivElement>('.progress')!;
+const progressBar = document.querySelector<HTMLDivElement>('#progress-bar')!;
 
-const toggleShuffleButton = document.querySelector('#toggle-shuffle') as HTMLSpanElement;
+const toggleShuffleButton = document.querySelector<HTMLSpanElement>('#toggle-shuffle')!;
 const shuffleStatusIcon = document.querySelector('#shuffle-status')!;
 const previousButton = document.querySelector('#previous')!;
 const rewindButton = document.querySelector('#rewind')!;
@@ -22,9 +22,9 @@ const forwardButton = document.querySelector('#forward')!;
 const nextButton = document.querySelector('#next')!;
 const toggleMuteButton = document.querySelector('#toggle-mute')!;
 
-const playlistsList = document.querySelector('#playlists-list') as HTMLUListElement;
+const playlistsList = document.querySelector<HTMLUListElement>('#playlists-list')!;
 
-const playlist = document.querySelector('#playlist') as HTMLDivElement;
+const playlist = document.querySelector<HTMLDivElement>('#playlist')!;
 
 progressBarContainer.addEventListener('click', handleProgressBarClick);
 
@@ -378,7 +378,7 @@ document.addEventListener('keydown', (event) => {
         event.metaKey ||
         event.altKey
     )
-        return; // eslint-disable-line @typescript-eslint/prefer-nullish-coalescing
+        return;
 
     if (event.code === 'Space') {
         event.preventDefault();

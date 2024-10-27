@@ -1,12 +1,12 @@
 import { showAlert } from '../../functions.js';
 
-const input = document.querySelector('#input') as HTMLTextAreaElement;
-const characterDisplay = document.querySelector('#character-count') as HTMLSpanElement;
-const wordDisplay = document.querySelector('#word-count') as HTMLSpanElement;
-const sentenceDisplay = document.querySelector('#sentence-count') as HTMLSpanElement;
-const lineDisplay = document.querySelector('#line-count') as HTMLSpanElement;
-const paragraphDisplay = document.querySelector('#paragraph-count') as HTMLSpanElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
+const input = document.querySelector<HTMLTextAreaElement>('#input')!;
+const characterDisplay = document.querySelector<HTMLSpanElement>('#character-count')!;
+const wordDisplay = document.querySelector<HTMLSpanElement>('#word-count')!;
+const sentenceDisplay = document.querySelector<HTMLSpanElement>('#sentence-count')!;
+const lineDisplay = document.querySelector<HTMLSpanElement>('#line-count')!;
+const paragraphDisplay = document.querySelector<HTMLSpanElement>('#paragraph-count')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
 
 /* Add event listeners */
 input.addEventListener('input', () => {

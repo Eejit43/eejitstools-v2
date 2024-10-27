@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { watch } from 'chokidar';
 import { consola } from 'consola';
-import { ChildProcess, exec, execSync, spawn } from 'node:child_process';
+import { type ChildProcess, exec, execSync, spawn } from 'node:child_process';
 import { rmSync } from 'node:fs';
 import * as readline from 'node:readline';
 import { promisify } from 'node:util';

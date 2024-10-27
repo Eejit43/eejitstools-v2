@@ -1,13 +1,13 @@
 import { showAlert, showResult } from '../../functions.js';
 
-const startTimerButton = document.querySelector('#start-timer') as HTMLButtonElement;
-const pauseResumeTimerButton = document.querySelector('#pause-resume-timer') as HTMLButtonElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const hoursInput = document.querySelector('#hours') as HTMLInputElement;
-const minutesInput = document.querySelector('#minutes') as HTMLInputElement;
-const secondsInput = document.querySelector('#seconds') as HTMLInputElement;
-const timerDisplay = document.querySelector('#timer') as HTMLSpanElement;
-const timerTime = document.querySelector('#timer-time') as HTMLSpanElement;
+const startTimerButton = document.querySelector<HTMLButtonElement>('#start-timer')!;
+const pauseResumeTimerButton = document.querySelector<HTMLButtonElement>('#pause-resume-timer')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const hoursInput = document.querySelector<HTMLInputElement>('#hours')!;
+const minutesInput = document.querySelector<HTMLInputElement>('#minutes')!;
+const secondsInput = document.querySelector<HTMLInputElement>('#seconds')!;
+const timerDisplay = document.querySelector<HTMLSpanElement>('#timer')!;
+const timerTime = document.querySelector<HTMLSpanElement>('#timer-time')!;
 
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);

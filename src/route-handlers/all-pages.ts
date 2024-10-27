@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import consola from 'consola';
-import { FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 import fs from 'node:fs';
 import { commitInfo } from '../app.js';
 import { allPages } from '../public/data/pages.js';

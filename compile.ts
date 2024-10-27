@@ -1,4 +1,4 @@
-import { BuildOptions, build } from 'esbuild';
+import { type BuildOptions, build } from 'esbuild';
 import postcss from 'esbuild-postcss';
 import { cpSync } from 'node:fs';
 

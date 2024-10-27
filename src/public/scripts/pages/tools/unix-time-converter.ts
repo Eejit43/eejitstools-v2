@@ -1,20 +1,20 @@
 import { copyValue, updateArrow } from '../../functions.js';
 
-const standardInput = document.querySelector('#standard-input') as HTMLInputElement;
-const standardInputResetButton = document.querySelector('#standard-input-reset') as HTMLButtonElement;
-const standardArrow = document.querySelector('#standard-arrow') as HTMLElement;
-const unixInput = document.querySelector('#unix-input') as HTMLInputElement;
-const unixInputResetButton = document.querySelector('#unix-input-reset') as HTMLButtonElement;
-const unixInputSwitchButton = document.querySelector('#unix-input-switch') as HTMLButtonElement;
-const unixArrow = document.querySelector('#unix-arrow') as HTMLElement;
-const unixOutputCopyButton = document.querySelector('#unix-output-copy') as HTMLButtonElement;
-const unixOutputSwitchButton = document.querySelector('#unix-output-switch') as HTMLButtonElement;
-const standardOutputCopyButton = document.querySelector('#standard-output-copy') as HTMLButtonElement;
-const standardOutput = document.querySelector('#standard-output') as HTMLInputElement;
-const unixOutput = document.querySelector('#unix-output') as HTMLInputElement;
+const standardInput = document.querySelector<HTMLInputElement>('#standard-input')!;
+const standardInputResetButton = document.querySelector<HTMLButtonElement>('#standard-input-reset')!;
+const standardArrow = document.querySelector<HTMLElement>('#standard-arrow')!;
+const unixInput = document.querySelector<HTMLInputElement>('#unix-input')!;
+const unixInputResetButton = document.querySelector<HTMLButtonElement>('#unix-input-reset')!;
+const unixInputSwitchButton = document.querySelector<HTMLButtonElement>('#unix-input-switch')!;
+const unixArrow = document.querySelector<HTMLElement>('#unix-arrow')!;
+const unixOutputCopyButton = document.querySelector<HTMLButtonElement>('#unix-output-copy')!;
+const unixOutputSwitchButton = document.querySelector<HTMLButtonElement>('#unix-output-switch')!;
+const standardOutputCopyButton = document.querySelector<HTMLButtonElement>('#standard-output-copy')!;
+const standardOutput = document.querySelector<HTMLInputElement>('#standard-output')!;
+const unixOutput = document.querySelector<HTMLInputElement>('#unix-output')!;
 
-const unixOutputTitle = document.querySelector('#unix-output-title') as HTMLHeadingElement;
-const unixInputTitle = document.querySelector('#unix-input-title') as HTMLHeadingElement;
+const unixOutputTitle = document.querySelector<HTMLHeadingElement>('#unix-output-title')!;
+const unixInputTitle = document.querySelector<HTMLHeadingElement>('#unix-input-title')!;
 
 /* Add event listeners */
 standardInput.addEventListener('input', updateUnixOutput);

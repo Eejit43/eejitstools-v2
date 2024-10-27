@@ -1,38 +1,37 @@
-import type chroma from 'chroma-js';
-import type { Color } from 'chroma-js';
+import type { ChromaStatic, Color } from 'chroma-js';
 import { copyValue, showAlert } from '../../functions.js';
 
 declare global {
     interface Window {
-        chroma: typeof chroma;
+        chroma: ChromaStatic;
     }
 }
 
-const generateRandomButton = document.querySelector('#generate-random') as HTMLButtonElement;
-const colorDisplay = document.querySelector('#color-display') as HTMLDivElement;
-const colorPicker = document.querySelector('#color-picker') as HTMLInputElement;
-const darkenButton = document.querySelector('#darken') as HTMLButtonElement;
-const brightenButton = document.querySelector('#brighten') as HTMLButtonElement;
-const saturateButton = document.querySelector('#saturate') as HTMLButtonElement;
-const desaturateButton = document.querySelector('#desaturate') as HTMLButtonElement;
-const increaseLuminanceButton = document.querySelector('#increase-luminance') as HTMLButtonElement;
-const decreaseLuminanceButton = document.querySelector('#decrease-luminance') as HTMLButtonElement;
-const nameInput = document.querySelector('#name-input') as HTMLInputElement;
-const hexInput = document.querySelector('#hex-input') as HTMLInputElement;
-const decimalInput = document.querySelector('#decimal-input') as HTMLInputElement;
-const rgbInput = document.querySelector('#rgb-input') as HTMLInputElement;
-const hslInput = document.querySelector('#hsl-input') as HTMLInputElement;
-const alphaInput = document.querySelector('#alpha-input') as HTMLInputElement;
-const copyNameButton = document.querySelector('#copy-name') as HTMLButtonElement;
-const copyHexButton = document.querySelector('#copy-hex') as HTMLButtonElement;
-const copyDecimalButton = document.querySelector('#copy-decimal') as HTMLButtonElement;
-const copyRgbButton = document.querySelector('#copy-rgb') as HTMLButtonElement;
-const copyHslButton = document.querySelector('#copy-hsl') as HTMLButtonElement;
-const copyAlphaButton = document.querySelector('#copy-alpha') as HTMLButtonElement;
-const luminanceOutput = document.querySelector('#luminance-output') as HTMLInputElement;
-const temperatureOutput = document.querySelector('#temperature-output') as HTMLInputElement;
-const colorHistory = document.querySelector('#color-history') as HTMLUListElement;
-const fullColor = document.querySelector('#full-color') as HTMLDivElement;
+const generateRandomButton = document.querySelector<HTMLButtonElement>('#generate-random')!;
+const colorDisplay = document.querySelector<HTMLDivElement>('#color-display')!;
+const colorPicker = document.querySelector<HTMLInputElement>('#color-picker')!;
+const darkenButton = document.querySelector<HTMLButtonElement>('#darken')!;
+const brightenButton = document.querySelector<HTMLButtonElement>('#brighten')!;
+const saturateButton = document.querySelector<HTMLButtonElement>('#saturate')!;
+const desaturateButton = document.querySelector<HTMLButtonElement>('#desaturate')!;
+const increaseLuminanceButton = document.querySelector<HTMLButtonElement>('#increase-luminance')!;
+const decreaseLuminanceButton = document.querySelector<HTMLButtonElement>('#decrease-luminance')!;
+const nameInput = document.querySelector<HTMLInputElement>('#name-input')!;
+const hexInput = document.querySelector<HTMLInputElement>('#hex-input')!;
+const decimalInput = document.querySelector<HTMLInputElement>('#decimal-input')!;
+const rgbInput = document.querySelector<HTMLInputElement>('#rgb-input')!;
+const hslInput = document.querySelector<HTMLInputElement>('#hsl-input')!;
+const alphaInput = document.querySelector<HTMLInputElement>('#alpha-input')!;
+const copyNameButton = document.querySelector<HTMLButtonElement>('#copy-name')!;
+const copyHexButton = document.querySelector<HTMLButtonElement>('#copy-hex')!;
+const copyDecimalButton = document.querySelector<HTMLButtonElement>('#copy-decimal')!;
+const copyRgbButton = document.querySelector<HTMLButtonElement>('#copy-rgb')!;
+const copyHslButton = document.querySelector<HTMLButtonElement>('#copy-hsl')!;
+const copyAlphaButton = document.querySelector<HTMLButtonElement>('#copy-alpha')!;
+const luminanceOutput = document.querySelector<HTMLInputElement>('#luminance-output')!;
+const temperatureOutput = document.querySelector<HTMLInputElement>('#temperature-output')!;
+const colorHistory = document.querySelector<HTMLUListElement>('#color-history')!;
+const fullColor = document.querySelector<HTMLDivElement>('#full-color')!;
 
 generateRandomButton.addEventListener('click', generateRandomColor);
 

@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { Schema, model } from 'mongoose';
 
 export interface CoinDenomination<CoinDesign> {
@@ -42,7 +42,7 @@ export interface Coin {
     upgrade?: boolean;
 }
 
-export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: number; __v?: number }; // eslint-disable-line @typescript-eslint/naming-convention
+export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
 
 export const coinsModel = model(
     'coins-data',

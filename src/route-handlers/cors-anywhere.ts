@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { logApiRequest } from '../app.js';
 
 /**
@@ -20,7 +20,7 @@ export default function setupCorsAnywhereRoute(fastify: FastifyInstance) {
 
         if (!url) return;
 
-        for (const [key, value] of Object.entries(request.query)) if (key !== 'url') url!.searchParams.append(key, value);
+        for (const [key, value] of Object.entries(request.query)) if (key !== 'url') url.searchParams.append(key, value);
 
         let response;
         try {

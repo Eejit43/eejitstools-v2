@@ -1,18 +1,18 @@
 import { copyValue, createBase64ObjectUrl, escapeHtml, showAlert, showResult } from '../../functions.js';
 
-const fileUploadLabel = document.querySelector('#file-upload-label') as HTMLLabelElement;
-const fileUpload = document.querySelector('#file-upload') as HTMLInputElement;
-const fileUploadMessage = document.querySelector('#file-message') as HTMLDivElement;
-const encodeButton = document.querySelector('#encode') as HTMLButtonElement;
-const clearUploadButton = document.querySelector('#clear-upload') as HTMLButtonElement;
-const encodedResult = document.querySelector('#encoded-result') as HTMLTextAreaElement;
-const encodedCopyResultButton = document.querySelector('#encoded-copy-result') as HTMLButtonElement;
-const encodedOpenResultLink = document.querySelector('#encoded-open-result-link') as HTMLAnchorElement;
-const encodedOpenResultButton = document.querySelector('#encoded-open-result') as HTMLButtonElement;
-const input = document.querySelector('#string-input') as HTMLTextAreaElement;
-const decodeButton = document.querySelector('#decode') as HTMLButtonElement;
-const clearStringButton = document.querySelector('#clear-string') as HTMLButtonElement;
-const imageResult = document.querySelector('#image-result') as HTMLImageElement;
+const fileUploadLabel = document.querySelector<HTMLLabelElement>('#file-upload-label')!;
+const fileUpload = document.querySelector<HTMLInputElement>('#file-upload')!;
+const fileUploadMessage = document.querySelector<HTMLDivElement>('#file-message')!;
+const encodeButton = document.querySelector<HTMLButtonElement>('#encode')!;
+const clearUploadButton = document.querySelector<HTMLButtonElement>('#clear-upload')!;
+const encodedResult = document.querySelector<HTMLTextAreaElement>('#encoded-result')!;
+const encodedCopyResultButton = document.querySelector<HTMLButtonElement>('#encoded-copy-result')!;
+const encodedOpenResultLink = document.querySelector<HTMLAnchorElement>('#encoded-open-result-link')!;
+const encodedOpenResultButton = document.querySelector<HTMLButtonElement>('#encoded-open-result')!;
+const input = document.querySelector<HTMLTextAreaElement>('#string-input')!;
+const decodeButton = document.querySelector<HTMLButtonElement>('#decode')!;
+const clearStringButton = document.querySelector<HTMLButtonElement>('#clear-string')!;
+const imageResult = document.querySelector<HTMLImageElement>('#image-result')!;
 
 let uploadedFile: File | null = null;
 

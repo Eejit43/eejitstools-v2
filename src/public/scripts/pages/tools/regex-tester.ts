@@ -1,15 +1,15 @@
 import { copyValue, showAlert, showResult } from '../../functions.js';
 
-const regexInput = document.querySelector('#regex-input') as HTMLInputElement;
-const flagsInput = document.querySelector('#flags-input') as HTMLInputElement;
-const replaceInput = document.querySelector('#replace-input') as HTMLInputElement;
-const textInput = document.querySelector('#text-input') as HTMLTextAreaElement;
-const runButton = document.querySelector('#run-button') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear-button') as HTMLButtonElement;
-const clearAllButton = document.querySelector('#clear-all-button') as HTMLButtonElement;
-const switchButton = document.querySelector('#switch-button') as HTMLButtonElement;
-const outputText = document.querySelector('#output-text') as HTMLTextAreaElement;
-const copyResultButton = document.querySelector('#copy-result-button') as HTMLButtonElement;
+const regexInput = document.querySelector<HTMLInputElement>('#regex-input')!;
+const flagsInput = document.querySelector<HTMLInputElement>('#flags-input')!;
+const replaceInput = document.querySelector<HTMLInputElement>('#replace-input')!;
+const textInput = document.querySelector<HTMLTextAreaElement>('#text-input')!;
+const runButton = document.querySelector<HTMLButtonElement>('#run-button')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear-button')!;
+const clearAllButton = document.querySelector<HTMLButtonElement>('#clear-all-button')!;
+const switchButton = document.querySelector<HTMLButtonElement>('#switch-button')!;
+const outputText = document.querySelector<HTMLTextAreaElement>('#output-text')!;
+const copyResultButton = document.querySelector<HTMLButtonElement>('#copy-result-button')!;
 
 /* Add event listeners */
 for (const element of [regexInput, replaceInput])

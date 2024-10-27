@@ -1,13 +1,13 @@
 import { copyValue, showAlert } from '../../functions.js';
 
-const inputType = document.querySelector('#input-type') as HTMLSelectElement;
-const input = document.querySelector('#input') as HTMLInputElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const message = document.querySelector('#message') as HTMLDivElement;
-const outputType = document.querySelector('#output-type') as HTMLSelectElement;
-const output = document.querySelector('#output') as HTMLInputElement;
-const copyOutputButton = document.querySelector('#copy-output') as HTMLButtonElement;
-const toggleSpacersButton = document.querySelector('#toggle-spacers') as HTMLButtonElement;
+const inputType = document.querySelector<HTMLSelectElement>('#input-type')!;
+const input = document.querySelector<HTMLInputElement>('#input')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const message = document.querySelector<HTMLDivElement>('#message')!;
+const outputType = document.querySelector<HTMLSelectElement>('#output-type')!;
+const output = document.querySelector<HTMLInputElement>('#output')!;
+const copyOutputButton = document.querySelector<HTMLButtonElement>('#copy-output')!;
+const toggleSpacersButton = document.querySelector<HTMLButtonElement>('#toggle-spacers')!;
 
 /* Add event listeners */
 inputType.addEventListener('change', findInput);

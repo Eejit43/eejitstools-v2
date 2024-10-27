@@ -1,9 +1,9 @@
 import { showAlert } from '../../functions.js';
 
-const questionInput = document.querySelector('#question-input') as HTMLInputElement;
-const rollButton = document.querySelector('#roll') as HTMLButtonElement;
-const questionDisplay = document.querySelector('#question-display') as HTMLDivElement;
-const answerOutput = document.querySelector('#answer-output') as HTMLDivElement;
+const questionInput = document.querySelector<HTMLInputElement>('#question-input')!;
+const rollButton = document.querySelector<HTMLButtonElement>('#roll')!;
+const questionDisplay = document.querySelector<HTMLDivElement>('#question-display')!;
+const answerOutput = document.querySelector<HTMLDivElement>('#answer-output')!;
 
 /* Add event listeners */
 questionInput.addEventListener('keydown', (event) => {

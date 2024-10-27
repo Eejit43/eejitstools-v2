@@ -37,44 +37,42 @@ interface Alert {
 
 interface WeatherInformation {
     alerts: Alert[];
-    data: [
-        {
-            app_temp: number;
-            aqi: number;
-            city_name: string;
-            clouds: number;
-            country_code: string;
-            dewpt: number;
-            lat: number;
-            lon: number;
-            precip: number;
-            pres: number;
-            rh: number;
-            snow: number;
-            state_code: string;
-            station: string;
-            sunrise: string;
-            sunset: string;
-            temp: number;
-            ts: number;
-            uv: number;
-            vis: number;
-            weather: { description: string; icon: string };
-            wind_cdir_full: string;
-            wind_spd: number;
-        },
-    ];
+    data: {
+        app_temp: number;
+        aqi: number;
+        city_name: string;
+        clouds: number;
+        country_code: string;
+        dewpt: number;
+        lat: number;
+        lon: number;
+        precip: number;
+        pres: number;
+        rh: number;
+        snow: number;
+        state_code: string;
+        station: string;
+        sunrise: string;
+        sunset: string;
+        temp: number;
+        ts: number;
+        uv: number;
+        vis: number;
+        weather: { description: string; icon: string };
+        wind_cdir_full: string;
+        wind_spd: number;
+    }[];
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
-const message = document.querySelector('#message') as HTMLDivElement;
-const result = document.querySelector('#result') as HTMLDivElement;
+const message = document.querySelector<HTMLDivElement>('#message')!;
+const result = document.querySelector<HTMLDivElement>('#result')!;
 
-const locationDisplay = document.querySelector('#location') as HTMLSpanElement;
-const latitudeDisplay = document.querySelector('#latitude') as HTMLSpanElement;
-const longitudeDisplay = document.querySelector('#longitude') as HTMLSpanElement;
-const stationDisplay = document.querySelector('#station') as HTMLSpanElement;
-const updatedDisplay = document.querySelector('#updated') as HTMLSpanElement;
+const locationDisplay = document.querySelector<HTMLSpanElement>('#location')!;
+const latitudeDisplay = document.querySelector<HTMLSpanElement>('#latitude')!;
+const longitudeDisplay = document.querySelector<HTMLSpanElement>('#longitude')!;
+const stationDisplay = document.querySelector<HTMLSpanElement>('#station')!;
+const updatedDisplay = document.querySelector<HTMLSpanElement>('#updated')!;
 
 requestGeolocation(getData, message);
 
@@ -226,12 +224,12 @@ async function getData(position: GeolocationPosition) {
     const newAlerts = [];
     for (const alert of alerts)
         if (
-            !/has been replaced/.test(alert.title) &&
+            !alert.title.includes('has been replaced') &&
             Math.floor(new Date(alert.ends_local).getTime() / 1000) >= Math.floor(Date.now() / 1000)
         )
             newAlerts.push(alert);
 
-    const alertsList = document.querySelector('#active-alerts') as HTMLSpanElement;
+    const alertsList = document.querySelector<HTMLSpanElement>('#active-alerts')!;
 
     if (newAlerts.length > 0)
         for (const [index, alert] of newAlerts.entries()) {
@@ -257,7 +255,7 @@ async function getData(position: GeolocationPosition) {
  * @param alert The alert.
  */
 function showWeatherAlert(alert: Alert) {
-    const alertDisplay = document.querySelector('#alert-display') as HTMLTextAreaElement;
+    const alertDisplay = document.querySelector<HTMLTextAreaElement>('#alert-display')!;
 
     const alertText = `${alert.title}\n\n${alert.description
         .replaceAll('\n', ' ')

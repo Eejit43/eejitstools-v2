@@ -1,14 +1,14 @@
 import { copyText, showAlert } from '../../functions.js';
 
-const clearClipboardButton = document.querySelector('#clear-clipboard') as HTMLButtonElement;
-const copyZwsButton = document.querySelector('#copy-zws') as HTMLButtonElement;
-const copyNbspButton = document.querySelector('#copy-nbsp') as HTMLButtonElement;
-const copyEmsButton = document.querySelector('#copy-ems') as HTMLButtonElement;
-const copyEnsButton = document.querySelector('#copy-ens') as HTMLButtonElement;
-const copyTsButton = document.querySelector('#copy-ts') as HTMLButtonElement;
-const clipboardWarning = document.querySelector('#clipboard-warning') as HTMLDivElement;
-const copiedText = document.querySelector('#copied-text') as HTMLTextAreaElement;
-const selectClipboardButton = document.querySelector('#select-clipboard') as HTMLButtonElement;
+const clearClipboardButton = document.querySelector<HTMLButtonElement>('#clear-clipboard')!;
+const copyZwsButton = document.querySelector<HTMLButtonElement>('#copy-zws')!;
+const copyNbspButton = document.querySelector<HTMLButtonElement>('#copy-nbsp')!;
+const copyEmsButton = document.querySelector<HTMLButtonElement>('#copy-ems')!;
+const copyEnsButton = document.querySelector<HTMLButtonElement>('#copy-ens')!;
+const copyTsButton = document.querySelector<HTMLButtonElement>('#copy-ts')!;
+const clipboardWarning = document.querySelector<HTMLDivElement>('#clipboard-warning')!;
+const copiedText = document.querySelector<HTMLTextAreaElement>('#copied-text')!;
+const selectClipboardButton = document.querySelector<HTMLButtonElement>('#select-clipboard')!;
 
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);

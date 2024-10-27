@@ -1,4 +1,8 @@
 {
     "extends": "@eejit/eslint-config-typescript/tsconfig-dom.json",
-    "include": ["data/*.ts", "scripts/*.ts", "scripts/pages/**/*.ts"]
+    "include": ["data/*.ts", "scripts/*.ts", "scripts/pages/**/*.ts"],
+
+    "compilerOptions": {
+        "moduleResolution": "Bundler" // Allow importing of dependencies for types
+    }
 }

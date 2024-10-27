@@ -3,7 +3,7 @@ import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
 import chalk from 'chalk';
 import { consola } from 'consola';
-import Fastify, { FastifyError, FastifyRequest } from 'fastify';
+import Fastify, { type FastifyError, type FastifyRequest } from 'fastify';
 import handlebars from 'handlebars';
 import mongoose from 'mongoose';
 import path from 'node:path';

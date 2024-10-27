@@ -12,22 +12,22 @@ interface TideData {
     timestamp: number;
 }
 
-const message = document.querySelector('#message') as HTMLDivElement;
-const result = document.querySelector('#result') as HTMLDivElement;
+const message = document.querySelector<HTMLDivElement>('#message')!;
+const result = document.querySelector<HTMLDivElement>('#result')!;
 
-const latitudeDisplay = document.querySelector('#latitude') as HTMLSpanElement;
-const longitudeDisplay = document.querySelector('#longitude') as HTMLSpanElement;
-const distanceDisplay = document.querySelector('#distance') as HTMLSpanElement;
-const updatedDisplay = document.querySelector('#updated') as HTMLSpanElement;
-const tideStateDisplay = document.querySelector('#tide-state') as HTMLSpanElement;
-const closestExtremeTypeDisplay = document.querySelector('#closest-extreme-type') as HTMLSpanElement;
-const closestExtremeDisplay = document.querySelector('#closest-extreme') as HTMLSpanElement;
-const closestExtremeTimeDisplay = document.querySelector('#closest-extreme-time') as HTMLSpanElement;
-const nextClosestExtremeTypeDisplay = document.querySelector('#next-closest-extreme-type') as HTMLSpanElement;
-const nextClosestExtremeDisplay = document.querySelector('#next-closest-extreme') as HTMLSpanElement;
-const nextClosestExtremeTimeDisplay = document.querySelector('#next-closest-extreme-time') as HTMLSpanElement;
+const latitudeDisplay = document.querySelector<HTMLSpanElement>('#latitude')!;
+const longitudeDisplay = document.querySelector<HTMLSpanElement>('#longitude')!;
+const distanceDisplay = document.querySelector<HTMLSpanElement>('#distance')!;
+const updatedDisplay = document.querySelector<HTMLSpanElement>('#updated')!;
+const tideStateDisplay = document.querySelector<HTMLSpanElement>('#tide-state')!;
+const closestExtremeTypeDisplay = document.querySelector<HTMLSpanElement>('#closest-extreme-type')!;
+const closestExtremeDisplay = document.querySelector<HTMLSpanElement>('#closest-extreme')!;
+const closestExtremeTimeDisplay = document.querySelector<HTMLSpanElement>('#closest-extreme-time')!;
+const nextClosestExtremeTypeDisplay = document.querySelector<HTMLSpanElement>('#next-closest-extreme-type')!;
+const nextClosestExtremeDisplay = document.querySelector<HTMLSpanElement>('#next-closest-extreme')!;
+const nextClosestExtremeTimeDisplay = document.querySelector<HTMLSpanElement>('#next-closest-extreme-time')!;
 
-const upcomingExtremesTableBody = document.querySelector('#upcoming-extremes tbody') as HTMLTableSectionElement;
+const upcomingExtremesTableBody = document.querySelector<HTMLTableSectionElement>('#upcoming-extremes tbody')!;
 
 requestGeolocation(getData, message);
 

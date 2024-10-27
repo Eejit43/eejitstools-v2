@@ -6,7 +6,7 @@ declare global {
     }
 }
 
-const browserInfo = document.querySelector('#browser-info') as HTMLDivElement;
+const browserInfo = document.querySelector<HTMLDivElement>('#browser-info')!;
 
 const parser = new window.UAParser();
 

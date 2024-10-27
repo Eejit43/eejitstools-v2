@@ -2,7 +2,7 @@ import type { CalendarEvents } from '../../../../route-handlers/calendar.js';
 import { holidayEmojis } from '../../../data/emojis.js';
 import { twemojiUpdate } from '../../functions.js';
 
-const countdownContainer = document.querySelector('#countdowns') as HTMLDivElement;
+const countdownContainer = document.querySelector<HTMLDivElement>('#countdowns')!;
 
 const { holidays } = (await (await fetch('/calendar-events')).json()) as CalendarEvents;
 

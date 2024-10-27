@@ -1,15 +1,15 @@
 import { copyValue, showAlert, showResult, shuffleArray } from '../../functions.js';
 
-const input = document.querySelector('#input') as HTMLTextAreaElement;
-const separatorInput = document.querySelector('#separator') as HTMLInputElement;
-const alphabetizeButton = document.querySelector('#alphabetize') as HTMLButtonElement;
-const numericalOrderButton = document.querySelector('#numerical-order') as HTMLButtonElement;
-const randomizeButton = document.querySelector('#randomize') as HTMLButtonElement;
-const reverseButton = document.querySelector('#reverse') as HTMLButtonElement;
-const removeDuplicatesButton = document.querySelector('#remove-duplicates') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const result = document.querySelector('#result') as HTMLTextAreaElement;
-const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
+const input = document.querySelector<HTMLTextAreaElement>('#input')!;
+const separatorInput = document.querySelector<HTMLInputElement>('#separator')!;
+const alphabetizeButton = document.querySelector<HTMLButtonElement>('#alphabetize')!;
+const numericalOrderButton = document.querySelector<HTMLButtonElement>('#numerical-order')!;
+const randomizeButton = document.querySelector<HTMLButtonElement>('#randomize')!;
+const reverseButton = document.querySelector<HTMLButtonElement>('#reverse')!;
+const removeDuplicatesButton = document.querySelector<HTMLButtonElement>('#remove-duplicates')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const result = document.querySelector<HTMLTextAreaElement>('#result')!;
+const copyResultButton = document.querySelector<HTMLButtonElement>('#copy-result')!;
 
 /* Add event listeners */
 alphabetizeButton.addEventListener('click', alphabetize);

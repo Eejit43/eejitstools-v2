@@ -1,11 +1,11 @@
 import { copyValue, showAlert, showResult } from '../../functions.js';
 
-const input = document.querySelector('#input') as HTMLTextAreaElement;
-const toBinaryButton = document.querySelector('#to-binary') as HTMLButtonElement;
-const fromBinaryButton = document.querySelector('#from-binary') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const result = document.querySelector('#result') as HTMLTextAreaElement;
-const resultCopyButton = document.querySelector('#copy-result') as HTMLButtonElement;
+const input = document.querySelector<HTMLTextAreaElement>('#input')!;
+const toBinaryButton = document.querySelector<HTMLButtonElement>('#to-binary')!;
+const fromBinaryButton = document.querySelector<HTMLButtonElement>('#from-binary')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const result = document.querySelector<HTMLTextAreaElement>('#result')!;
+const resultCopyButton = document.querySelector<HTMLButtonElement>('#copy-result')!;
 
 /* Add event listeners */
 toBinaryButton.addEventListener('click', toBinary);

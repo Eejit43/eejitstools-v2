@@ -1,13 +1,13 @@
 import { copyValue, showAlert, showResult } from '../../functions.js';
 
-const input = document.querySelector('#input') as HTMLTextAreaElement;
-const toUpperButton = document.querySelector('#to-upper') as HTMLButtonElement;
-const toLowerButton = document.querySelector('#to-lower') as HTMLButtonElement;
-const toTitleButton = document.querySelector('#to-title') as HTMLButtonElement;
-const toSentenceButton = document.querySelector('#to-sentence') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const result = document.querySelector('#result') as HTMLTextAreaElement;
-const copyResultButton = document.querySelector('#copy-result') as HTMLButtonElement;
+const input = document.querySelector<HTMLTextAreaElement>('#input')!;
+const toUpperButton = document.querySelector<HTMLButtonElement>('#to-upper')!;
+const toLowerButton = document.querySelector<HTMLButtonElement>('#to-lower')!;
+const toTitleButton = document.querySelector<HTMLButtonElement>('#to-title')!;
+const toSentenceButton = document.querySelector<HTMLButtonElement>('#to-sentence')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const result = document.querySelector<HTMLTextAreaElement>('#result')!;
+const copyResultButton = document.querySelector<HTMLButtonElement>('#copy-result')!;
 
 /* Add event listeners */
 toUpperButton.addEventListener('click', toUpper);

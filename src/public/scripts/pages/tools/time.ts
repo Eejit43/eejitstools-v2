@@ -4,26 +4,34 @@ setInterval(() => {
     const currentTime = new Date();
 
     updateInnerHtml(
-        document.querySelector('#time') as HTMLSpanElement,
+        document.querySelector<HTMLSpanElement>('#time')!,
         currentTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' }),
     );
-    updateInnerHtml(document.querySelector('#dst') as HTMLSpanElement, isDaylightSavingsTimeObserved(currentTime) ? 'Yes' : 'No');
+
+    updateInnerHtml(document.querySelector<HTMLSpanElement>('#dst')!, isDaylightSavingsTimeObserved(currentTime) ? 'Yes' : 'No');
+
     updateInnerHtml(
-        document.querySelector('#date') as HTMLSpanElement,
+        document.querySelector<HTMLSpanElement>('#date')!,
         `${currentTime.toLocaleDateString(undefined, { year: 'numeric', month: 'long', weekday: 'long', day: 'numeric' })} (${currentTime.toLocaleDateString()})`,
     );
-    updateInnerHtml(document.querySelector('#unix') as HTMLSpanElement, currentTime.getTime().toString());
+
+    updateInnerHtml(document.querySelector<HTMLSpanElement>('#unix')!, currentTime.getTime().toString());
+
     updateInnerHtml(
-        document.querySelector('#timezone') as HTMLSpanElement,
+        document.querySelector<HTMLSpanElement>('#timezone')!,
         `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`,
     );
-    updateInnerHtml(document.querySelector('#jp-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'Japan' }));
+
+    updateInnerHtml(document.querySelector<HTMLSpanElement>('#jp-time')!, currentTime.toLocaleString([], { timeZone: 'Japan' }));
+
     updateInnerHtml(
-        document.querySelector('#cr-time') as HTMLSpanElement,
+        document.querySelector<HTMLSpanElement>('#cr-time')!,
         currentTime.toLocaleString([], { timeZone: 'America/Costa_Rica' }),
     );
-    updateInnerHtml(document.querySelector('#gb-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'Europe/London' }));
-    updateInnerHtml(document.querySelector('#utc-time') as HTMLSpanElement, currentTime.toLocaleString([], { timeZone: 'UTC' }));
+
+    updateInnerHtml(document.querySelector<HTMLSpanElement>('#gb-time')!, currentTime.toLocaleString([], { timeZone: 'Europe/London' }));
+
+    updateInnerHtml(document.querySelector<HTMLSpanElement>('#utc-time')!, currentTime.toLocaleString([], { timeZone: 'UTC' }));
 }, 100);
 
 /**

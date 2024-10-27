@@ -199,7 +199,7 @@ export function shuffleArray(array: unknown[]) {
  */
 export function createBase64ObjectUrl(data: string, mimeType: string) {
     const byteCharacters = atob(data);
-    const byteNumbers = Array.from({ length: byteCharacters.length }) as number[];
+    const byteNumbers = Array.from({ length: byteCharacters.length }) as number[]; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
     for (let index = 0; index < byteCharacters.length; index++) byteNumbers[index] = byteCharacters.codePointAt(index)!;
 
     const byteArray = new Uint8Array(byteNumbers);
@@ -233,11 +233,11 @@ export function requestGeolocation(callback: (position: GeolocationPosition) => 
  * Adds modal functionality to all images with the "popup-image" class.
  */
 export function loadPopupImages() {
-    const modal = document.querySelector('#modal') as HTMLDivElement;
-    const images = document.querySelectorAll('img.popup-image') as NodeListOf<HTMLImageElement>;
-    const modalImage = document.querySelector('#modal-image') as HTMLImageElement;
-    const modalCaption = document.querySelector('#modal-caption') as HTMLDivElement;
-    const closeButton = document.querySelector('#close-modal') as HTMLSpanElement;
+    const modal = document.querySelector<HTMLDivElement>('#modal')!;
+    const images = document.querySelectorAll<HTMLImageElement>('img.popup-image');
+    const modalImage = document.querySelector<HTMLImageElement>('#modal-image')!;
+    const modalCaption = document.querySelector<HTMLDivElement>('#modal-caption')!;
+    const closeButton = document.querySelector<HTMLSpanElement>('#close-modal')!;
 
     for (const image of images)
         image.addEventListener('click', () => {

@@ -1,5 +1,5 @@
-import { FastifyInstance } from 'fastify';
-import { Coin, DatabaseCoinDenomination, coinsModel, patchCoinDatabase } from './coins-list.js';
+import type { FastifyInstance } from 'fastify';
+import { type Coin, type DatabaseCoinDenomination, coinsModel, patchCoinDatabase } from './coins-list.js';
 
 export type FilteredCoin = Omit<Coin, 'obtained' | 'upgrade'>;
 

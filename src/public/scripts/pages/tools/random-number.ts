@@ -1,10 +1,10 @@
 import { showAlert, showResult } from '../../functions.js';
 
-const minNumberInput = document.querySelector('#min-number') as HTMLInputElement;
-const maxNumberInput = document.querySelector('#max-number') as HTMLInputElement;
-const generateButton = document.querySelector('#generate-number') as HTMLButtonElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const outputNumber = document.querySelector('#random-number') as HTMLSpanElement;
+const minNumberInput = document.querySelector<HTMLInputElement>('#min-number')!;
+const maxNumberInput = document.querySelector<HTMLInputElement>('#max-number')!;
+const generateButton = document.querySelector<HTMLButtonElement>('#generate-number')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const outputNumber = document.querySelector<HTMLSpanElement>('#random-number')!;
 
 /* Add event listeners */
 generateButton.addEventListener('click', generateNumber);

@@ -306,7 +306,7 @@ export const allPages = structuredClone(preParsedPages) as AllPages;
 
 for (const [category, pages] of Object.entries(preParsedPages))
     for (const [id, page] of Object.entries(pages)) {
-        (allPages[category] as Record<string, ParsedPage>)[id] = {
+        allPages[category][id] = {
             ...blankProperties,
             ...page,
             descriptionParsed: page.description.replaceAll(/<(.*?) ?.*?>(.*?)<\/\1>/g, '$2'),

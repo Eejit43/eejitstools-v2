@@ -1,9 +1,9 @@
-import { FilteredCoin } from '../../../../route-handlers/coins-info';
-import { CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list';
+import type { FilteredCoin } from '../../../../route-handlers/coins-info';
+import type { CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list';
 import { loadPopupImages } from '../../functions.js';
 
-const outputDiv = document.querySelector('#output') as HTMLDivElement;
-const outputGridDiv = document.querySelector('#output-grid') as HTMLDivElement;
+const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
+const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;
 
 let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[];
 
@@ -434,7 +434,7 @@ document.addEventListener('keydown', (event) => {
     )
         return;
 
-    const backButton = document.querySelector('#back-button') as HTMLButtonElement | null;
+    const backButton = document.querySelector<HTMLButtonElement>('#back-button');
 
     if (backButton) backButton.click();
 });

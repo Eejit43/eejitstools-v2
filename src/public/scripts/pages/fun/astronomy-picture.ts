@@ -1,12 +1,12 @@
-import { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/astronomy-picture.js';
+import type { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/astronomy-picture.js';
 import { showAlert } from '../../functions.js';
 
-const resultElement = document.querySelector('#result') as HTMLDivElement;
-const monthInput = document.querySelector('#month-input') as HTMLInputElement;
-const dateInput = document.querySelector('#date-input') as HTMLInputElement;
-const yearInput = document.querySelector('#year-input') as HTMLInputElement;
-const getDateButton = document.querySelector('#get-date') as HTMLButtonElement;
-const resetDateButton = document.querySelector('#reset-date') as HTMLButtonElement;
+const resultElement = document.querySelector<HTMLDivElement>('#result')!;
+const monthInput = document.querySelector<HTMLInputElement>('#month-input')!;
+const dateInput = document.querySelector<HTMLInputElement>('#date-input')!;
+const yearInput = document.querySelector<HTMLInputElement>('#year-input')!;
+const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!;
+const resetDateButton = document.querySelector<HTMLButtonElement>('#reset-date')!;
 
 /* Add event listeners */
 getDateButton.addEventListener('click', () => {
@@ -115,20 +115,18 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
     resultElement.innerHTML = result.join('');
 
     if (media.annotated) {
-        const imageElement = document.querySelector('a#apod-link > img') as HTMLImageElement;
+        const imageElement = document.querySelector<HTMLImageElement>('a#apod-link > img')!;
         imageElement.parentElement!.addEventListener('mouseover', () => (imageElement.src = media.annotated!));
         imageElement.parentElement!.addEventListener('mouseout', () => (imageElement.src = media.src));
     }
 
-    for (const linkElement of document.querySelectorAll(
-        '#apod-explanation a[href^="https://apod.nasa.gov/apod/ap"]',
-    ) as NodeListOf<HTMLAnchorElement>)
+    for (const linkElement of document.querySelectorAll<HTMLAnchorElement>('#apod-explanation a[href^="https://apod.nasa.gov/apod/ap"]'))
         linkElement.addEventListener('click', (event) => {
             if (event.metaKey) return;
 
             event.preventDefault();
 
-            const dateString = linkElement.href.match(/ap(\d{6})/)![1];
+            const dateString = /ap(\d{6})/.exec(linkElement.href)![1];
 
             const yearShort = Number.parseInt(dateString.slice(0, 2));
 

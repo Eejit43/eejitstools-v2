@@ -9,13 +9,13 @@ declare global {
     }
 }
 
-const operandInput = document.querySelector('#operand') as HTMLInputElement;
-const indexInput = document.querySelector('#index') as HTMLInputElement;
-const radicandInput = document.querySelector('#radicand') as HTMLInputElement;
-const simplifyButton = document.querySelector('#simplify') as HTMLButtonElement;
-const resetButton = document.querySelector('#reset') as HTMLButtonElement;
-const output = document.querySelector('#output') as HTMLSpanElement;
-const message = document.querySelector('#message') as HTMLSpanElement;
+const operandInput = document.querySelector<HTMLInputElement>('#operand')!;
+const indexInput = document.querySelector<HTMLInputElement>('#index')!;
+const radicandInput = document.querySelector<HTMLInputElement>('#radicand')!;
+const simplifyButton = document.querySelector<HTMLButtonElement>('#simplify')!;
+const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
+const output = document.querySelector<HTMLSpanElement>('#output')!;
+const message = document.querySelector<HTMLSpanElement>('#message')!;
 
 for (const event of ['input', 'paste']) {
     operandInput.addEventListener(event, () => (operandInput.value = operandInput.value.replaceAll(/\D/g, '')));
@@ -63,7 +63,7 @@ simplifyButton.addEventListener('click', () => {
         }
 
         if (amount / index >= 1) {
-            (outputOperand as number) *= Math.pow(Number(number), (amount - (amount % index)) / index);
+            outputOperand *= Math.pow(Number(number), (amount - (amount % index)) / index);
             outputRadicand *= Math.pow(Number(number), amount % index);
         }
         if (amount / index < 1) outputRadicand *= Math.pow(Number(number), amount);

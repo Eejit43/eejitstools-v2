@@ -1,13 +1,13 @@
 import { copyText, showAlert, showResult } from '../../functions.js';
 
-const input = document.querySelector('#input') as HTMLTextAreaElement;
-const toMorseButton = document.querySelector('#to-morse') as HTMLButtonElement;
-const fromMorseButton = document.querySelector('#from-morse') as HTMLButtonElement;
-const clearButton = document.querySelector('#clear') as HTMLButtonElement;
-const result = document.querySelector('#result') as HTMLTextAreaElement;
-const copyButton = document.querySelector('#copy-result') as HTMLButtonElement;
-const copyVerticalButton = document.querySelector('#copy-result-vertical') as HTMLButtonElement;
-const copySpacesButton = document.querySelector('#copy-result-spaces') as HTMLButtonElement;
+const input = document.querySelector<HTMLTextAreaElement>('#input')!;
+const toMorseButton = document.querySelector<HTMLButtonElement>('#to-morse')!;
+const fromMorseButton = document.querySelector<HTMLButtonElement>('#from-morse')!;
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
+const result = document.querySelector<HTMLTextAreaElement>('#result')!;
+const copyButton = document.querySelector<HTMLButtonElement>('#copy-result')!;
+const copyVerticalButton = document.querySelector<HTMLButtonElement>('#copy-result-vertical')!;
+const copySpacesButton = document.querySelector<HTMLButtonElement>('#copy-result-spaces')!;
 
 /* Add event listeners */
 input.addEventListener('input', () => {

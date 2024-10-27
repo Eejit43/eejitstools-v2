@@ -4,7 +4,7 @@ import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './funct
 twemojiUpdate();
 
 /* Funky logo hover effect */
-const logo = document.querySelector('.logo') as HTMLSpanElement;
+const logo = document.querySelector<HTMLSpanElement>('.logo')!;
 logo.addEventListener('mouseover', () => {
     const letters = logo.querySelectorAll('span');
     for (const [index, letter] of letters.entries()) {
@@ -29,7 +29,7 @@ logo.addEventListener('mouseover', () => {
 });
 
 /* Navigation time display */
-const timeDisplay = document.querySelector('#time-display') as HTMLSpanElement;
+const timeDisplay = document.querySelector<HTMLSpanElement>('#time-display')!;
 const timeIcon = document.querySelector('#time-icon')!;
 setInterval(() => {
     const currentTime = new Date();
@@ -66,8 +66,8 @@ document.addEventListener('scroll', resizeNav);
 resizeNav();
 
 /* Search Bar */
-const searchResult = document.querySelector('.search-results') as HTMLDivElement;
-const searchInput = document.querySelector('.search-text') as HTMLInputElement;
+const searchResult = document.querySelector<HTMLDivElement>('.search-results')!;
+const searchInput = document.querySelector<HTMLInputElement>('.search-text')!;
 
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
@@ -89,8 +89,9 @@ searchInput.addEventListener('input', () => {
 
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const result = (document.querySelector('.search-box .search-result-selected') ??
-            document.querySelector('.search-box a')) as HTMLAnchorElement | null;
+        const result =
+            document.querySelector<HTMLAnchorElement>('.search-box .search-result-selected') ??
+            document.querySelector<HTMLAnchorElement>('.search-box a');
         if (result) window.open(result.href, event.metaKey ? '_blank' : '_self');
     } else if (event.key === 'Escape') {
         searchInput.value = '';
@@ -200,7 +201,7 @@ document.querySelector('#scroll-to-top')!.addEventListener('click', () => {
 });
 
 /* Keyboard shortcuts popup */
-const shortcutsModal = document.querySelector('#shortcuts') as HTMLDivElement;
+const shortcutsModal = document.querySelector<HTMLDivElement>('#shortcuts')!;
 
 document.querySelector('#show-shortcuts')!.addEventListener('click', () => {
     shortcutsModal.style.display = 'block';

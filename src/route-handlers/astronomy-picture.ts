@@ -1,5 +1,5 @@
 import consola from 'consola';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { parse } from 'node-html-parser';
 import { logApiRequest } from '../app.js';
 
@@ -84,8 +84,8 @@ export default function setupApodRoute(fastify: FastifyInstance) {
                     ?.innerHTML.split(/\s[–-]\s/)[1]
                     .trim();
 
-                const credit = html.innerHTML
-                    .match(/credit.*?<\/center>/is)?.[0]
+                const credit = /credit.*?<\/center>/is
+                    .exec(html.innerHTML)?.[0]
                     ?.replace(/ <\/b>/gi, '')
                     ?.replace(/ ?<\/center>/gi, '')
                     ?.trim();

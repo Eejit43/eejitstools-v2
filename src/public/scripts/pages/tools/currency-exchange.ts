@@ -6,7 +6,7 @@ interface ExchangeRateData {
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
-const ratesGrid = document.querySelector('#rates-grid') as HTMLDivElement;
+const ratesGrid = document.querySelector<HTMLDivElement>('#rates-grid')!;
 
 const currencies = [
     { name: 'Canadian Dollar', abbreviation: 'CAD', symbol: '$' },
@@ -23,7 +23,7 @@ fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').
 
     const rates = fullData.conversion_rates;
 
-    (document.querySelector('#last-updated') as HTMLSpanElement).textContent =
+    document.querySelector<HTMLSpanElement>('#last-updated')!.textContent =
         `${new Date(fullData.time_last_update_unix * 1000).toLocaleDateString('en-US')}, ${new Date(
             fullData.time_last_update_unix * 1000,
         ).toLocaleTimeString('en-US')}`;
