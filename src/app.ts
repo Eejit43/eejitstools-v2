@@ -35,7 +35,7 @@ const fastify = Fastify({ trustProxy: true });
 
 await fastify.register(fastifyRateLimit);
 fastify.register(pointOfView, { engine: { handlebars }, root: 'src/views/', layout: 'layouts/layout.hbs' });
-fastify.register(fastifyStatic, { root: path.join(import.meta.dirname, 'public') });
+fastify.register(fastifyStatic, { root: path.join(path.dirname(new URL(import.meta.url).pathname), 'public') });
 
 // Define latest commit info
 const commitSha = process.env.RAILWAY_GIT_COMMIT_SHA;
