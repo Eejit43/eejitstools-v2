@@ -306,8 +306,7 @@ kbd {
         text-align: center;
 
         @media (width <= 700px) {
-            padding: 20px;
-            font-size: 14px;
+            font-size: 16px;
         }
     }
 
