@@ -3,8 +3,7 @@
     "type": "module",
     "scripts": {
         "build": "pnpm run remove-compiled && npx esbuild compile.ts --outfile=compile.js --target=node20 --platform=node && node compile.js",
-        "dev": "pnpm run build && node development.js --enable-source-maps",
-        "force-deploy": "railway up",
+        "dev": "pnpm run build && node --env-file=.env development.js --enable-source-maps",
         "remove-compiled": "rm -rf dist && find . -maxdepth 1 -type f \\( -name '*.js' -o -name '*.js.map' \\) ! -name 'eslint.config.js' -delete",
         "start": "node --no-warnings --enable-source-maps --max-old-space-size=100 dist/app.js"
     },

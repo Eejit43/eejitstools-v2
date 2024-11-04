@@ -11,10 +11,7 @@ import { compileTypescript } from './compile.js';
 readline.emitKeypressEvents(process.stdin);
 
 const config = {
-    command: {
-        name: 'railway',
-        args: 'run node --no-warnings --enable-source-maps dist/app.js'.split(' '),
-    },
+    command: { name: 'pnpm', args: ['run', 'start'] },
     watch: ['ts', 'hbs', 'css'],
     ignored: ['node_modules', 'dist', '.git', 'development.ts'],
 };
@@ -28,8 +25,11 @@ let running: ChildProcess;
  */
 async function spawnProcess() {
     rmSync('dist', { recursive: true, force: true });
+
     await compileTypescript();
+
     consola.success('Successfully compiled TypeScript and CSS!');
+
     running = spawn(config.command.name, config.command.args, { stdio: 'inherit', shell: true });
 }
 
@@ -48,8 +48,11 @@ function logMessage(...message: string[]) {
  */
 async function restartProcess() {
     logMessage('Restarting...');
+
     await kill(running.pid!);
+
     spawnProcess();
+
     await new Promise((resolve) => setTimeout(resolve, 500));
 }
 
@@ -58,7 +61,9 @@ async function restartProcess() {
  */
 function stopProcess() {
     logMessage('Killing process...');
+
     execSync('pnpm run remove-compiled');
+
     process.exit(0); // eslint-disable-line unicorn/no-process-exit
 }
 
@@ -67,6 +72,7 @@ function stopProcess() {
  */
 function openWebsite() {
     logMessage('Opening website...');
+
     exec(`open http://localhost:${process.env.PORT ?? 3000}`);
 }
 
