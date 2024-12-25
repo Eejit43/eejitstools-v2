@@ -112,7 +112,9 @@ for (const category of audioTracks) {
 }
 
 for (const playButton of document.querySelectorAll('.playlist-section-title > i.player-icon'))
-    playButton.addEventListener('click', () => shuffleSection(playButton.parentElement!.id));
+    playButton.addEventListener('click', () => {
+        shuffleSection(playButton.parentElement!.id);
+    });
 
 let audioCategory = 'general';
 let audioIndex = 0;
@@ -162,7 +164,7 @@ function toggleAudio() {
         playPauseButton.classList.add('fa-pause');
         document.querySelector(`#playlist-track-${audioCategory}-${audioIndex}`)?.classList.add('active-track');
         pauseToPlay(audioCategory, audioIndex);
-        audio.play();
+        void audio.play();
     } else {
         playPauseButton.classList.add('fa-play');
         playPauseButton.classList.remove('fa-pause');
@@ -278,7 +280,11 @@ function rewind() {
  * Switches to the next song.
  */
 function next() {
-    if (shuffled) return loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
+    if (shuffled) {
+        loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
+        return;
+    }
+
     if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) {
         const oldIndex = audioIndex;
         audioIndex++;
@@ -360,14 +366,14 @@ function playToPause(category: string, index: number) {
  * Toggles the audio's mute state.
  */
 function toggleMute() {
-    if (audio.muted === false) {
-        audio.muted = true;
-        toggleMuteButton.classList.remove('fa-volume-up');
-        toggleMuteButton.classList.add('fa-volume-mute');
-    } else {
+    if (audio.muted) {
         audio.muted = false;
         toggleMuteButton.classList.remove('fa-volume-mute');
         toggleMuteButton.classList.add('fa-volume-up');
+    } else {
+        audio.muted = true;
+        toggleMuteButton.classList.remove('fa-volume-up');
+        toggleMuteButton.classList.add('fa-volume-mute');
     }
 }
 

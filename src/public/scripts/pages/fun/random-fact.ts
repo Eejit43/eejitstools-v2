@@ -16,4 +16,4 @@ async function fetchFact() {
     factOutput.textContent = data.text.replaceAll('`', "'").trim();
 }
 
-fetchFact(); // eslint-disable-line unicorn/prefer-top-level-await
+void fetchFact(); // eslint-disable-line unicorn/prefer-top-level-await

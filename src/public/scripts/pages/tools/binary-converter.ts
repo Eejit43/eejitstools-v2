@@ -90,11 +90,18 @@ function findInput() {
  */
 function convert(value: string, radix: number) {
     const periods = value.match(/\./g);
-    if (periods && periods.length > 1) return notValid();
+    if (periods && periods.length > 1) {
+        notValid();
+        return;
+    }
 
     let result = parseNumberWithRadix(value, radix).toString(radices[outputType.value].number);
 
-    if (!result || result.toString() === 'NaN') return notValid(); // Not using isNaN() as it won't account for hex values
+    // Not using isNaN() as it won't account for hex values
+    if (!result || result.toString() === 'NaN') {
+        notValid();
+        return;
+    }
 
     switch (radices[outputType.value].name) {
         case 'binary': {
@@ -132,7 +139,7 @@ function parseNumberWithRadix(number: string, radix = 10) {
  * Handles an invalid input.
  */
 function notValid() {
-    message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${radices[inputType.value] ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
+    message.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Malformed input${inputType.value in radices ? ` (should be in ${radices[inputType.value].name} format)` : ''}!<br />`;
     output.value = '';
     copyOutputButton.disabled = true;
     toggleSpacersButton.disabled = true;

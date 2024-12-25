@@ -39,7 +39,7 @@ document.addEventListener('keydown', (event) => {
     if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
     if (event.altKey && event.code === 'KeyR') generateRandomColor();
     if (event.altKey && event.code === 'KeyL') {
-        navigator.clipboard.writeText(colorPicker.value);
+        void navigator.clipboard.writeText(colorPicker.value);
         showAlert('Copied current color!', 'success');
     }
 });
@@ -53,21 +53,29 @@ colorPicker.addEventListener('input', () => {
     } else setRedBorder(colorPicker);
 });
 
-darkenButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).darken(0.5)));
+darkenButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).darken(0.5));
+});
 
-brightenButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).brighten(0.5)));
+brightenButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).brighten(0.5));
+});
 
-saturateButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).saturate(0.5)));
+saturateButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).saturate(0.5));
+});
 
-desaturateButton.addEventListener('click', () => updateResults(window.chroma(hexInput.value).desaturate(0.5)));
+desaturateButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).desaturate(0.5));
+});
 
-increaseLuminanceButton.addEventListener('click', () =>
-    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 1.5)),
-);
+increaseLuminanceButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 1.5));
+});
 
-decreaseLuminanceButton.addEventListener('click', () =>
-    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 0.5)),
-);
+decreaseLuminanceButton.addEventListener('click', () => {
+    updateResults(window.chroma(hexInput.value).luminance(window.chroma(hexInput.value).luminance() * 0.5));
+});
 
 nameInput.addEventListener('blur', () => {
     if (window.chroma.valid(nameInput.value)) {
@@ -111,17 +119,29 @@ alphaInput.addEventListener('blur', () => {
     } else setRedBorder(alphaInput);
 });
 
-copyNameButton.addEventListener('click', () => copyValue(copyNameButton, nameInput));
+copyNameButton.addEventListener('click', () => {
+    copyValue(copyNameButton, nameInput);
+});
 
-copyHexButton.addEventListener('click', () => copyValue(copyHexButton, hexInput));
+copyHexButton.addEventListener('click', () => {
+    copyValue(copyHexButton, hexInput);
+});
 
-copyDecimalButton.addEventListener('click', () => copyValue(copyDecimalButton, decimalInput));
+copyDecimalButton.addEventListener('click', () => {
+    copyValue(copyDecimalButton, decimalInput);
+});
 
-copyRgbButton.addEventListener('click', () => copyValue(copyRgbButton, rgbInput));
+copyRgbButton.addEventListener('click', () => {
+    copyValue(copyRgbButton, rgbInput);
+});
 
-copyHslButton.addEventListener('click', () => copyValue(copyHslButton, hslInput));
+copyHslButton.addEventListener('click', () => {
+    copyValue(copyHslButton, hslInput);
+});
 
-copyAlphaButton.addEventListener('click', () => copyValue(copyAlphaButton, alphaInput));
+copyAlphaButton.addEventListener('click', () => {
+    copyValue(copyAlphaButton, alphaInput);
+});
 
 fullColor.addEventListener('click', () => (fullColor.style.display = 'none'));
 
@@ -153,7 +173,9 @@ function updateResults(color: Color) {
 
     const appendedElement = colorHistory.appendChild(colorHistoryElement); // eslint-disable-line unicorn/prefer-dom-node-append
 
-    appendedElement.addEventListener('click', () => updateResults(color));
+    appendedElement.addEventListener('click', () => {
+        updateResults(color);
+    });
 
     fullColor.style.backgroundColor = colorDisplay.style.color;
 }
@@ -176,7 +198,7 @@ generateRandomColor();
  * @param element The element to update.
  */
 function setRedBorder(element: HTMLInputElement) {
-    if (element.value?.length > 0) element.style.border = '1px solid var(--error-color-300)';
+    if (element.value.length > 0) element.style.border = '1px solid var(--error-color-300)';
 }
 
 /**

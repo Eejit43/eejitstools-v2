@@ -87,8 +87,8 @@ export default function setupApodRoute(fastify: FastifyInstance) {
                 const credit = /credit.*?<\/center>/is
                     .exec(html.innerHTML)?.[0]
                     ?.replace(/ <\/b>/gi, '')
-                    ?.replace(/ ?<\/center>/gi, '')
-                    ?.trim();
+                    .replaceAll(/ ?<\/center>/gi, '')
+                    .trim();
 
                 const media = { type: mediaType } as ApodEntryMedia;
 

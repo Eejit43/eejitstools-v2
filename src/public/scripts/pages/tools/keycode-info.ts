@@ -26,12 +26,24 @@ let valuesExist = false;
 
 /* Add event listeners */
 document.addEventListener('keydown', keyInfo);
-keyCell.addEventListener('click', () => copyKeycodeInfo(keyValue));
-keyRepeatingCell.addEventListener('click', () => copyKeycodeInfo(keyRepeatingValue));
-keyLocationCell.addEventListener('click', () => copyKeycodeInfo(keyLocationValue));
-keyCodeCell.addEventListener('click', () => copyKeycodeInfo(keyCodeValue));
-keyAsciiCell.addEventListener('click', () => copyKeycodeInfo(keyAsciiValue));
-keyUnicodeCell.addEventListener('click', () => copyKeycodeInfo(keyUnicodeValue));
+keyCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyValue);
+});
+keyRepeatingCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyRepeatingValue);
+});
+keyLocationCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyLocationValue);
+});
+keyCodeCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyCodeValue);
+});
+keyAsciiCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyAsciiValue);
+});
+keyUnicodeCell.addEventListener('click', () => {
+    copyKeycodeInfo(keyUnicodeValue);
+});
 window.addEventListener('focus', () => {
     ready.innerHTML = '<span class="success"><i class="fa-solid fa-check"></i> Ready to get key information!</span>';
 });
@@ -46,7 +58,7 @@ window.addEventListener('blur', () => {
  */
 function copyKeycodeInfo(string: string) {
     if (valuesExist) {
-        navigator.clipboard.writeText(string);
+        void navigator.clipboard.writeText(string);
         showAlert('Copied!', 'success');
     }
 }
@@ -85,8 +97,8 @@ function keyInfo(event: KeyboardEvent) {
     }
     keyCode.textContent = event.code;
     keyCodeValue = event.code;
-    keyAscii.textContent = event.which.toString();
-    keyAsciiValue = event.which.toString();
+    keyAscii.textContent = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
+    keyAsciiValue = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
     keyUnicode.textContent = String(event.key).codePointAt(0)!.toString();
     keyUnicodeValue = String(event.key).codePointAt(0)!.toString();
 }

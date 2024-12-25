@@ -101,10 +101,18 @@ fastify.listen({ port, host: '0.0.0.0' }, (error) => {
 });
 
 // Custom error/warning handlers
-process.on('uncaughtException', (error) => consola.error(error));
-process.on('uncaughtExceptionMonitor', (error) => consola.error(error));
-process.on('unhandledRejection', (error) => consola.error(error));
-process.on('warning', (warning) => consola.warn(warning));
+process.on('uncaughtException', (error) => {
+    consola.error(error);
+});
+process.on('uncaughtExceptionMonitor', (error) => {
+    consola.error(error);
+});
+process.on('unhandledRejection', (error) => {
+    consola.error(error);
+});
+process.on('warning', (warning) => {
+    consola.warn(warning);
+});
 
 // Connect to database
 mongoose.set('strictQuery', true);

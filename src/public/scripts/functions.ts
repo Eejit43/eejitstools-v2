@@ -1,6 +1,6 @@
-// @ts-ignore (URL import, types added below)
+// @ts-expect-error (URL import, types added below)
 import toastify from 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify-es.js';
-// @ts-ignore (URL import, types added below)
+// @ts-expect-error (URL import, types added below)
 import twemoji from 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.esm.js';
 
 interface Twemoji {
@@ -59,7 +59,10 @@ export function showResult(element: HTMLElement, type: 'success' | 'error' | 'wa
 
     element.classList.add(className);
 
-    if (remove) setTimeout(() => element.classList.remove(className), 2000);
+    if (remove)
+        setTimeout(() => {
+            element.classList.remove(className);
+        }, 2000);
 }
 
 /**
@@ -83,7 +86,7 @@ export function updateArrow(
  * @param copyElement The element of the value to be copied.
  */
 export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElement | HTMLTextAreaElement) {
-    navigator.clipboard.writeText(copyElement.value);
+    void navigator.clipboard.writeText(copyElement.value);
 
     const content = element.textContent;
 
@@ -103,7 +106,7 @@ export function copyValue(element: HTMLButtonElement, copyElement: HTMLInputElem
  * @param text The text to copy.
  */
 export function copyText(element: HTMLButtonElement, text: string) {
-    navigator.clipboard.writeText(text);
+    void navigator.clipboard.writeText(text);
 
     const content = element.textContent;
 

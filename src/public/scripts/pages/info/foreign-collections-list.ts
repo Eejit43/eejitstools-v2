@@ -307,7 +307,10 @@ exportDataButton.addEventListener('click', async () => {
         await fetch(`/foreign-collections-list?password=${passwordInput.dataset.input!}`)
     ).json()) as ForeignCollectionsList & { error?: string };
 
-    if (coinsData.error) return showAlert(coinsData.error, 'error');
+    if (coinsData.error) {
+        showAlert(coinsData.error, 'error');
+        return;
+    }
 
     const file = new Blob([JSON.stringify(coinsData)], { type: 'application/json' });
     const anchor = document.createElement('a');
@@ -316,5 +319,7 @@ exportDataButton.addEventListener('click', async () => {
     anchor.download = `foreign-collection-list data (${new Date().toLocaleString()}).json`;
     anchor.click();
 
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 0);
 });

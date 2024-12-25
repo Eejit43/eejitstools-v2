@@ -100,7 +100,9 @@ searchInput.addEventListener('keydown', (event) => {
     }
 });
 
-document.querySelector('.search-button')!.addEventListener('click', () => searchInput.focus());
+document.querySelector('.search-button')!.addEventListener('click', () => {
+    searchInput.focus();
+});
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -148,7 +150,7 @@ document.addEventListener('keydown', (event) => {
             break;
         }
         case 'KeyC': {
-            navigator.clipboard.writeText('');
+            void navigator.clipboard.writeText('');
             showAlert('Cleared clipboard!', 'success', 500);
             break;
         }
@@ -167,8 +169,8 @@ document.addEventListener('keydown', (event) => {
                 if (pathname === '/') finalUrl = 'src/views/index.hbs';
                 else if (pathname === '/search') finalUrl = 'src/views/search.hbs';
                 else {
-                    const category = pathname.split('/')[1];
-                    const page = allPages[category]?.[pathname.split('/')[2]];
+                    const [, category, rawPage] = pathname.split('/');
+                    const page = category in allPages ? allPages[category][rawPage] : undefined;
 
                     finalUrl = page ? `src/views/pages/${category}/${page.id}.hbs` : 'src/views/error.hbs';
                 }
@@ -180,8 +182,8 @@ document.addEventListener('keydown', (event) => {
                 if (pathname === '/') finalUrl = 'src/public/scripts/global.ts';
                 else if (pathname === '/search') finalUrl = 'src/public/scripts/search.ts';
                 else {
-                    const category = pathname.split('/')[1];
-                    const page = allPages[category]?.[pathname.split('/')[2]];
+                    const [, category, rawPage] = pathname.split('/');
+                    const page = category in allPages ? allPages[category][rawPage] : undefined;
 
                     finalUrl = page ? `src/public/scripts/pages/${category}/${page.id}.ts` : 'src/public/scripts/global.ts';
                 }
@@ -208,15 +210,15 @@ document.querySelector('#show-shortcuts')!.addEventListener('click', () => {
 });
 
 document.querySelector('#close-shortcuts')!.addEventListener('click', () => {
-    addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+    void addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('click', (event) => {
     if (event.target === shortcutsModal)
-        addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+        void addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });
 
 document.addEventListener('keydown', (event) => {
     if (event.code === 'Escape' && shortcutsModal.style.display === 'block')
-        addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
+        void addAnimation(shortcutsModal, 'animate-out-top').then(() => (shortcutsModal.style.display = 'none'));
 });

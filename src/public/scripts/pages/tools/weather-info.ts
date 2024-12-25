@@ -236,7 +236,9 @@ async function getData(position: GeolocationPosition) {
             const alertElement = document.createElement('span');
             alertElement.classList.add('alert');
             alertElement.textContent = `${alert.title.replaceAll(/ issued.*/g, '')} (${alert.severity})`;
-            alertElement.addEventListener('click', () => showWeatherAlert(alert));
+            alertElement.addEventListener('click', () => {
+                showWeatherAlert(alert);
+            });
 
             alertsList.append(alertElement);
 

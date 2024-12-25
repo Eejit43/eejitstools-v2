@@ -14,29 +14,29 @@ const selectClipboardButton = document.querySelector<HTMLButtonElement>('#select
 clearClipboardButton.addEventListener('click', clearClipboard);
 copyZwsButton.addEventListener('click', () => {
     copyText(copyZwsButton, '\u200B');
-    clipboardDisplay();
+    void clipboardDisplay();
 });
 copyNbspButton.addEventListener('click', () => {
     copyText(copyNbspButton, '\u00A0');
-    clipboardDisplay();
+    void clipboardDisplay();
 });
 copyEmsButton.addEventListener('click', () => {
     copyText(copyEmsButton, '\u2003');
-    clipboardDisplay();
+    void clipboardDisplay();
 });
 copyEnsButton.addEventListener('click', () => {
     copyText(copyEnsButton, '\u2002');
-    clipboardDisplay();
+    void clipboardDisplay();
 });
 copyTsButton.addEventListener('click', () => {
     copyText(copyTsButton, '\u2009');
-    clipboardDisplay();
+    void clipboardDisplay();
 });
 selectClipboardButton.addEventListener('click', () => {
     copiedText.select();
 });
 window.addEventListener('focus', () => {
-    if (clipboardReadAllowed) clipboardDisplay();
+    if (clipboardReadAllowed) void clipboardDisplay();
 });
 window.addEventListener('blur', () => {
     if (clipboardReadAllowed)
@@ -57,12 +57,12 @@ function showWarning(message: string) {
  * Clears the clipboard.
  */
 function clearClipboard() {
-    navigator.clipboard.writeText('');
+    void navigator.clipboard.writeText('');
 
     clearClipboardButton.disabled = true;
     clearClipboardButton.textContent = 'Cleared!';
     showAlert('Cleared!', 'success');
-    clipboardDisplay();
+    void clipboardDisplay();
 
     setTimeout(() => {
         clearClipboardButton.disabled = false;
@@ -89,7 +89,7 @@ async function requestPermission() {
     }
 }
 
-requestPermission(); // eslint-disable-line unicorn/prefer-top-level-await
+void requestPermission(); // eslint-disable-line unicorn/prefer-top-level-await
 
 let interval: number | null = null;
 
@@ -100,8 +100,8 @@ let interval: number | null = null;
 function handlePermission(state: PermissionState) {
     if (state === 'granted' || state === 'prompt') {
         if (interval) clearInterval(interval);
-        clipboardDisplay();
-        if (clipboardReadAllowed === false) interval = setInterval(clipboardDisplay, 500) as unknown as number;
+        void clipboardDisplay();
+        if (!clipboardReadAllowed) interval = setInterval(clipboardDisplay, 500) as unknown as number;
         clipboardReadAllowed = true;
     } else {
         if (interval) clearInterval(interval);
@@ -120,8 +120,8 @@ async function clipboardDisplay() {
         const data = await navigator.clipboard.read();
 
         for (const datum of data)
-            if (datum.types.includes('text/plain') || datum.types.length === 0) {
-                const blob = (await datum.getType('text/plain')) || new Blob([''], { type: 'text/plain' }); // eslint-disable-line no-await-in-loop
+            if (datum.types.includes('text/plain')) {
+                const blob = await datum.getType('text/plain'); // eslint-disable-line no-await-in-loop
                 const text = await blob.text(); // eslint-disable-line no-await-in-loop
 
                 if (text.length === 0) {
@@ -147,10 +147,13 @@ async function clipboardDisplay() {
                 if (storedData !== blob.size) storedData = blob.size;
             }
     } catch (error) {
-        if ((error as Error).message.includes('focused'))
-            return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
-        else if ((error as Error).message.includes('user gesture'))
-            return showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
+        if ((error as Error).message.includes('focused')) {
+            showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
+            return;
+        } else if ((error as Error).message.includes('user gesture')) {
+            showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
+            return;
+        }
 
         const text = await navigator.clipboard.readText();
 

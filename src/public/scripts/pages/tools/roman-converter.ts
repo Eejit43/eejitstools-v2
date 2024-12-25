@@ -66,9 +66,15 @@ romanResetButton.addEventListener('click', () => {
     showAlert('Reset!', 'success');
     updateArrow(romanArrow, 'reset');
 });
-romanOutputCopyButton.addEventListener('click', () => copyText(romanOutputCopyButton, romanOutputValue));
-romanOutputCopy2Button.addEventListener('click', () => copyText(romanOutputCopy2Button, romanOutputValue2));
-integerOutputCopyButton.addEventListener('click', () => copyText(integerOutputCopyButton, integerOutputValue));
+romanOutputCopyButton.addEventListener('click', () => {
+    copyText(romanOutputCopyButton, romanOutputValue);
+});
+romanOutputCopy2Button.addEventListener('click', () => {
+    copyText(romanOutputCopy2Button, romanOutputValue2);
+});
+integerOutputCopyButton.addEventListener('click', () => {
+    copyText(integerOutputCopyButton, integerOutputValue);
+});
 
 /**
  * Converts the provided integer to roman numerals and displays the result.
@@ -97,7 +103,7 @@ function convertRoman() {
     if (
         /^m*(?:d?c{0,3}|c[dm])(?:l?x{0,3}|x[cl])(?:(?:vi?){0,3}|i[vx])M{0,3}(?:D?C{0,3}|C[DM])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[VX])$/.test(
             input,
-        ) === true
+        )
     ) {
         integerOutputValue = deromanize(input).toString();
         integerOutput.value = deromanize(input).toString();

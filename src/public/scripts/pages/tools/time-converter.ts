@@ -55,7 +55,9 @@ switchButton.addEventListener('click', () => {
     showResult(switchButton, 'success');
 });
 outputType.addEventListener('change', convert);
-copyOutputButton.addEventListener('click', () => copyValue(copyOutputButton, output));
+copyOutputButton.addEventListener('click', () => {
+    copyValue(copyOutputButton, output);
+});
 
 /**
  * Converts the provided time value and displays the result.

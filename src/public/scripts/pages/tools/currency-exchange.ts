@@ -18,7 +18,7 @@ const currencies = [
 ];
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
-fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').then(async (response) => {
+void fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').then(async (response) => {
     const fullData = (await response.json()) as ExchangeRateData;
 
     const rates = fullData.conversion_rates;

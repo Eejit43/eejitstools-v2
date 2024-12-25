@@ -56,11 +56,14 @@ export default function setupAllPageRoutes(fastify: FastifyInstance) {
 
         for (let page of pages) {
             page = page.replace(/.hbs$/, '');
-            const pageInfo = allPages[category]?.[page];
-            if (!pageInfo) {
+
+            if (!(page in allPages[category])) {
                 consola.log(`${chalk.blue('[Page Auto-Loader]')} ${chalk.red(`Unable to find page information for ${category}/${page}!`)}`);
                 continue;
             }
+
+            const pageInfo = allPages[category][page];
+
             fastify.get(pageInfo.link, (request, reply) => {
                 reply.view(`pages/${category}/${page}`, {
                     commitInfo,

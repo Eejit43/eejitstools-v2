@@ -21,8 +21,16 @@ fileUpload.addEventListener('change', () => {
     const file = fileUpload.files?.[0];
 
     if (file) {
-        if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
-        if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+        if (!file.type.startsWith('image/')) {
+            showAlert('File must be an image!', 'error');
+            return;
+        }
+
+        if (file.type === 'image/heic') {
+            showAlert('HEIC images are not supported by this tool!', 'error');
+            return;
+        }
+
         uploadedImage = file;
         fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(file.name)}</code>`;
 
@@ -40,19 +48,36 @@ fileUploadLabel.addEventListener('drop', (event) => {
 
         if (firstItem.kind === 'file') {
             const file = firstItem.getAsFile()!;
-            if (!file.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
-            if (file.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+
+            if (!file.type.startsWith('image/')) {
+                showAlert('File must be an image!', 'error');
+                return;
+            }
+
+            if (file.type === 'image/heic') {
+                showAlert('HEIC images are not supported by this tool!', 'error');
+                return;
+            }
+
             uploadedImage = file;
             fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(file.name)}</code>`;
 
             loadButton.disabled = false;
         }
     } else {
-        const firstFile = event.dataTransfer?.files?.[0];
+        const firstFile = event.dataTransfer?.files[0];
 
         if (firstFile) {
-            if (!firstFile.type.startsWith('image/')) return showAlert('File must be an image!', 'error');
-            if (firstFile.type === 'image/heic') return showAlert('HEIC images are not supported by this tool!', 'error');
+            if (!firstFile.type.startsWith('image/')) {
+                showAlert('File must be an image!', 'error');
+                return;
+            }
+
+            if (firstFile.type === 'image/heic') {
+                showAlert('HEIC images are not supported by this tool!', 'error');
+                return;
+            }
+
             uploadedImage = firstFile;
             fileUploadMessage.innerHTML = `Uploaded: <code>${escapeHtml(firstFile.name)}</code>`;
 

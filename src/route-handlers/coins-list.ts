@@ -44,6 +44,8 @@ export interface Coin {
 
 export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
 
+type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
+
 export const coinsModel = model(
     'coins-data',
     new Schema({ name: String, id: String, value: Number, constants: Object, designs: Array }, {}),
@@ -81,7 +83,7 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
         '/coins-list-edit',
         async (
             request: FastifyRequest<{
-                Body: { denominationId: string; designId: string; coinId: string; data: Partial<Coin>; password: string };
+                Body: { denominationId: string; designId: string; coinId: string; data: PartialNullable<Coin>; password: string };
             }>,
             reply,
         ) => {
@@ -103,9 +105,10 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
                         ...design,
                         coins: design.coins.map((coin) => {
                             if (coin.id === coinId)
-                                for (const [key, value] of Object.entries(data))
-                                    if (value === null) delete coin[key as keyof Coin];
-                                    else coin[key as keyof Coin] = value as never;
+                                for (const [key, value] of Object.entries(data) as [keyof Coin, string | number | boolean | null][])
+                                    if (value === null)
+                                        delete coin[key]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
+                                    else (coin[key] as typeof value) = value; // eslint-disable-line @typescript-eslint/non-nullable-type-assertion-style
 
                             return coin;
                         }),

@@ -76,7 +76,7 @@ function checkApod(yearInput: number, monthInput: number, dateInput: number) {
         new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() >= new Date('6/16/1995 00:00:00').getTime() &&
         new Date(`${monthInput}/${dateInput}/${yearInput} 00:00:00`).getTime() <= Date.now()
     )
-        fetchApod(yearInput, monthInput, dateInput);
+        void fetchApod(yearInput, monthInput, dateInput);
     else
         showAlert(
             `Date out of range! Must be between ${new Date('6/16/1995 00:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })} and ${new Date().toLocaleDateString(
@@ -102,7 +102,10 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
         )
     ).json()) as FullApodEntry;
 
-    if (!success && error) return showAlert(error, 'error');
+    if (!success && error) {
+        showAlert(error, 'error');
+        return;
+    }
 
     const result = [
         `Astronomy ${media.type === 'image' ? 'Picture' : '<strike>Picture</strike> Video'} of the Day for <a href="${source}" target="_blank" class="external-link">${date}</a>:<br /><br />`,

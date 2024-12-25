@@ -449,7 +449,7 @@ const modalCaption = document.querySelector<HTMLDivElement>('#modal-caption')!;
 function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, design: CoinDesign<Coin>, coin: Coin) {
     const row = document.createElement('tr');
     row.dataset.id = coin.id.toString();
-    row.dataset.obtained = (coin.obtained ?? false).toString();
+    row.dataset.obtained = coin.obtained.toString();
     row.dataset.upgrade = (coin.upgrade ?? false).toString();
 
     const yearCell = document.createElement('td');
@@ -634,7 +634,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     const obtainedCell = document.createElement('td');
     const obtainedCheckbox = document.createElement('input');
     obtainedCheckbox.type = 'checkbox';
-    obtainedCheckbox.checked = coin.obtained ?? false;
+    obtainedCheckbox.checked = coin.obtained;
     obtainedCheckbox.addEventListener('change', async () => {
         row.dataset.obtained = obtainedCheckbox.checked.toString();
 
@@ -885,7 +885,10 @@ exportDataButton.addEventListener('click', async () => {
         CoinDesign<Coin>
     >[] & { error?: string };
 
-    if (coinsData.error) return showAlert(coinsData.error, 'error');
+    if (coinsData.error) {
+        showAlert(coinsData.error, 'error');
+        return;
+    }
 
     const file = new Blob([JSON.stringify(coinsData)], { type: 'application/json' });
     const anchor = document.createElement('a');
@@ -894,5 +897,7 @@ exportDataButton.addEventListener('click', async () => {
     anchor.download = `coins-list data (${new Date().toLocaleString()}).json`;
     anchor.click();
 
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 0);
 });

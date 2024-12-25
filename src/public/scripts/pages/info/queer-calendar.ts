@@ -58,7 +58,7 @@ function getFromDate() {
 
         eventsTitle.textContent = `Events on ${monthValue}/${dateValue}/${year}:`;
 
-        addEvents(year, monthValue, dateValue);
+        void addEvents(year, monthValue, dateValue);
     }
 }
 
@@ -71,7 +71,7 @@ function getCurrent() {
     monthInput.value = '';
     dateInput.value = '';
 
-    addEvents(year, month, date);
+    void addEvents(year, month, date);
 }
 
 /**

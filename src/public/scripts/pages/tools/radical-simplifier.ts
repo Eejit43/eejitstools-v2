@@ -27,7 +27,9 @@ for (const event of ['input', 'paste']) {
 }
 
 for (const input of [indexInput, radicandInput, operandInput])
-    input.addEventListener('keydown', (event) => (event.key === 'Enter' ? simplifyButton.click() : null));
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') simplifyButton.click();
+    });
 
 simplifyButton.addEventListener('click', () => {
     if (!radicandInput.value) {
@@ -71,7 +73,7 @@ simplifyButton.addEventListener('click', () => {
 
     if (negativeRadicand) {
         if (outputOperand === 1) outputOperand = '';
-        outputOperand += 'i';
+        outputOperand = `${outputOperand}i`;
     }
 
     const original = `${operand && operand !== 1 ? `${operand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${originalRadicand}}`,

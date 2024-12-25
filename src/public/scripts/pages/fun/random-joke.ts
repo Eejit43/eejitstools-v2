@@ -18,4 +18,4 @@ async function fetchJoke() {
         : `${data.setup.replaceAll('\n', '<br />')}<br />${data.delivery.replaceAll('\n', '<br />')}`;
 }
 
-fetchJoke(); // eslint-disable-line unicorn/prefer-top-level-await
+void fetchJoke(); // eslint-disable-line unicorn/prefer-top-level-await

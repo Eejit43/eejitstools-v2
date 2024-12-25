@@ -103,8 +103,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
                 yearEntry = (await todoModel.findOne({ year }))!;
             }
 
-            if (!yearEntry.dates) yearEntry.dates = {};
-            if (!yearEntry.dates[month]) yearEntry.dates[month] = {};
+            if (!('month' in yearEntry.dates)) yearEntry.dates[month] = {};
             yearEntry.dates[month][date] = todo;
 
             await todoModel.replaceOne({ year }, yearEntry);

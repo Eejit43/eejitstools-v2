@@ -5,7 +5,7 @@ import { loadPopupImages } from '../../functions.js';
 const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
 const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;
 
-let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[];
+let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[] | undefined;
 
 /**
  * Loads all coin information and displays it in the document.
@@ -23,8 +23,13 @@ async function loadCoinsInfo() {
     const foundDenomination = denominationSearch ? coinsInfo.find((denomination) => denomination.id === denominationSearch) : null;
     const foundDesign = foundDenomination && designSearch ? foundDenomination.designs.find((design) => design.id === designSearch) : null;
 
-    if (foundDenomination && foundDesign) return loadCoinDesignInfo(foundDenomination, foundDesign);
-    else if (foundDenomination) return loadCoinDenominationInfo(foundDenomination);
+    if (foundDenomination && foundDesign) {
+        loadCoinDesignInfo(foundDenomination, foundDesign);
+        return;
+    } else if (foundDenomination) {
+        loadCoinDenominationInfo(foundDenomination);
+        return;
+    }
 
     for (const denomination of coinsInfo) {
         const coinDenominationElement = document.createElement('div');
@@ -71,7 +76,7 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
         searchParameters.delete('denomination');
         window.history.pushState(null, '', searchParameters.size > 0 ? `?${searchParameters.toString()}` : window.location.pathname);
 
-        loadCoinsInfo();
+        void loadCoinsInfo();
     });
 
     backButtonDiv.append(backButton);
@@ -123,7 +128,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
         searchParameters.delete('design');
         window.history.pushState(null, '', searchParameters.size > 0 ? `?${searchParameters.toString()}` : window.location.pathname);
 
-        loadCoinsInfo();
+        void loadCoinsInfo();
     });
 
     const backButton = document.createElement('button');
@@ -175,7 +180,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
 
                 const lastDateWithMintage = design.coins.findLast((coin) => coin.mintage)?.year;
 
-                if (!lastDateWithMintage) return '';
+                if (!lastDateWithMintage) return null;
 
                 return `${total.toLocaleString()}${lastDateWithMintage === design.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
             },
@@ -185,8 +190,6 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             icon: 'vial',
             name: 'Composition',
             value: () => {
-                if (!design.composition) return null;
-
                 if ('amounts' in design.composition)
                     return design.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
                 else {
@@ -419,7 +422,7 @@ function formatYearRange(startYear: string | number, endYear: string | number | 
     return startYear === endYear ? startYear.toString() : `${startYear}–${endYear ?? 'date'}`;
 }
 
-loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
+void loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
 
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'ArrowLeft') return;
@@ -444,10 +447,10 @@ window.addEventListener('popstate', () => {
     const denominationSearch = searchParameters.get('denomination');
     const designSearch = searchParameters.get('design');
 
-    const foundDenomination = denominationSearch ? coinsInfo.find((denomination) => denomination.id === denominationSearch) : null;
+    const foundDenomination = denominationSearch ? coinsInfo!.find((denomination) => denomination.id === denominationSearch) : null;
     const foundDesign = foundDenomination && designSearch ? foundDenomination.designs.find((design) => design.id === designSearch) : null;
 
     if (foundDenomination && foundDesign) loadCoinDesignInfo(foundDenomination, foundDesign);
     else if (foundDenomination) loadCoinDenominationInfo(foundDenomination);
-    else loadCoinsInfo();
+    else void loadCoinsInfo();
 });

@@ -55,7 +55,7 @@ decodeButton.addEventListener('click', () => {
         showResult(decodeButton, 'warning');
     } else {
         const string = /data:image\/.*?;base64,/.test(input.value) ? input.value : 'data:image/png;base64,' + input.value;
-        displayImage(string);
+        void displayImage(string);
     }
 });
 clearUploadButton.addEventListener('click', () => {
@@ -135,8 +135,12 @@ function isBase64Image(base64: string): Promise<boolean> {
     const image = new Image();
     image.src = escapeHtml(base64);
     return new Promise((resolve) => {
-        image.addEventListener('load', () => resolve(!(image.height === 0 || image.width === 0)));
-        image.addEventListener('error', () => resolve(false));
+        image.addEventListener('load', () => {
+            resolve(!(image.height === 0 || image.width === 0));
+        });
+        image.addEventListener('error', () => {
+            resolve(false);
+        });
     });
 }
 

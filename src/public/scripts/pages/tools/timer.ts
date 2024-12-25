@@ -137,6 +137,6 @@ function displayTime() {
  */
 function timerEnd() {
     timerDisplay.innerHTML = 'Ended! <i class="fa-solid fa-bell fa-shake" style="color: var(--brand-color-3)"></i>';
-    audio.play();
+    void audio.play();
     pauseResumeTimerButton.disabled = true;
 }

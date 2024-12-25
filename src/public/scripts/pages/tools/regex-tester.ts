@@ -87,7 +87,9 @@ switchButton.addEventListener('click', () => {
         showResult(switchButton, 'success');
     }
 });
-copyResultButton.addEventListener('click', () => copyValue(copyResultButton, outputText));
+copyResultButton.addEventListener('click', () => {
+    copyValue(copyResultButton, outputText);
+});
 
 /**
  * Runs the regex tester.

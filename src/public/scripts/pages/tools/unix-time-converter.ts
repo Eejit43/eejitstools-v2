@@ -26,9 +26,13 @@ unixInput.addEventListener('input', () => {
 });
 unixInputResetButton.addEventListener('click', updateUnixTime);
 unixInputSwitchButton.addEventListener('click', switchUnixInput);
-unixOutputCopyButton.addEventListener('click', () => copyValue(unixOutputCopyButton, unixOutput));
+unixOutputCopyButton.addEventListener('click', () => {
+    copyValue(unixOutputCopyButton, unixOutput);
+});
 unixOutputSwitchButton.addEventListener('click', switchUnixOutput);
-standardOutputCopyButton.addEventListener('click', () => copyValue(standardOutputCopyButton, standardOutput));
+standardOutputCopyButton.addEventListener('click', () => {
+    copyValue(standardOutputCopyButton, standardOutput);
+});
 
 let unixInputState = 's';
 let unixOutputState = 's';

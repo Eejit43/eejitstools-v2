@@ -30,7 +30,7 @@ loginPassword.addEventListener('keydown', (event) => {
 
 interface TodoData {
     todo: { title: string; id: string; frequency: string }[];
-    data: Record<string, Record<string, Record<string, Record<string, string>>>>;
+    data: Record<string, Record<string, Record<string, Record<string, string> | undefined> | undefined> | undefined>;
 }
 
 let todoData = null as TodoData | null;
@@ -92,7 +92,7 @@ document.addEventListener('keydown', (event) => {
             break;
         }
         case 'KeyS': {
-            const saveButton = document.querySelector<HTMLButtonElement>('#todo-save-button')!;
+            const saveButton = document.querySelector<HTMLButtonElement>('#todo-save-button');
             if (saveButton && !saveButton.disabled) saveButton.click();
         }
     }
@@ -231,7 +231,9 @@ function showCalendar(date: number | null, month: number, year: number) {
                     cell.classList.add('current-date');
                 if (currentDate === displayedDate && month === displayedMonth && year === displayedYear)
                     cell.classList.add('selected-date');
-                cell.addEventListener('click', () => updateDisplayedDate(Number.parseInt(cell.dataset.date!), month, year));
+                cell.addEventListener('click', () => {
+                    updateDisplayedDate(Number.parseInt(cell.dataset.date!), month, year);
+                });
                 row.append(cell);
                 currentDate++;
             }
@@ -255,7 +257,7 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     displayedMonth = month;
     displayedYear = year;
 
-    document.querySelector('.selected-date')?.classList?.remove('selected-date');
+    document.querySelector('.selected-date')?.classList.remove('selected-date');
     displayDay.textContent = new Date(year, month, date).toLocaleString(undefined, { weekday: 'long' });
     displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
@@ -269,7 +271,7 @@ function updateDisplayedDate(date: number, month: number, year: number) {
         const events = [
             dateCell.dataset.holiday
                 ?.split(', ')
-                ?.map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`),
+                .map((holiday) => `${holidayEmojis[holiday] ? `${holidayEmojis[holiday]} ` : ''}${holiday}`),
             dateCell.dataset.phase ? `${moonEmojis[dateCell.dataset.phase]} ${dateCell.dataset.phase} (${dateCell.dataset.time!})` : null,
         ]
             .flat()
@@ -322,8 +324,6 @@ function loadCalendarEvents() {
  * Loads the todo list.
  */
 function loadTodoList() {
-    if (!todoList) return showAlert('Please log in to use the todo list!', 'error');
-
     const todoListDate = new Date(displayedYear, displayedMonth, displayedDate);
 
     todoList.innerHTML = '';

@@ -40,7 +40,7 @@ await spawnProcess();
  * @param message The message(s) to log.
  */
 function logMessage(...message: string[]) {
-    consola.log(`${chalk.blue('[Auto Reload]:')}`, ...message);
+    consola.log(chalk.blue('[Auto Reload]:'), ...message);
 }
 
 /**
@@ -51,7 +51,7 @@ async function restartProcess() {
 
     await kill(running.pid!);
 
-    spawnProcess();
+    void spawnProcess();
 
     await new Promise((resolve) => setTimeout(resolve, 500));
 }
@@ -87,13 +87,16 @@ process.stdin.on('keypress', (string, key: { ctrl: boolean; name: string }) => {
     if (key.ctrl)
         switch (key.name) {
             case 'c': {
-                return stopProcess();
+                stopProcess();
+                return;
             }
             case 'r': {
-                return restartProcess();
+                void restartProcess();
+                return;
             }
             case 'o': {
-                return openWebsite();
+                openWebsite();
+                return;
             }
         }
 });

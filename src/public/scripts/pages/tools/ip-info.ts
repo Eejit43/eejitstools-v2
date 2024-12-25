@@ -15,7 +15,7 @@ interface IPInformation {
 const ipInfo = document.querySelector<HTMLDivElement>('#ip-info')!;
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
-fetch('/ip-info').then(async (response) => {
+void fetch('/ip-info').then(async (response) => {
     const data = (await response.json()) as IPInformation;
 
     const output: { icon: string; name: string; nameTooltip?: string; value: string }[] = [
