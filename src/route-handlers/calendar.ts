@@ -99,7 +99,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
 
             let yearEntry: TodoData | null = await todoModel.findOne({ year });
             if (!yearEntry) {
-                await todoModel.create({ year, dates: {} });
+                await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
                 yearEntry = (await todoModel.findOne({ year }))!;
             }
 
