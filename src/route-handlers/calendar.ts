@@ -97,16 +97,13 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
             if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
-            let yearEntry: TodoData | null = await todoModel.findOne({ year });
-            if (!yearEntry) {
-                await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
-                yearEntry = (await todoModel.findOne({ year }))!;
-            }
+            let yearEntry = await todoModel.findOne({ year });
+            if (!yearEntry) yearEntry = await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
 
-            if (!('month' in yearEntry.dates)) yearEntry.dates[month] = {};
-            yearEntry.dates[month][date] = todo;
+            if (month in yearEntry.dates) yearEntry.set(`dates.${month}.${date}`, todo);
+            else yearEntry.set(`dates.${month}`, { [date]: todo });
 
-            await todoModel.replaceOne({ year }, yearEntry);
+            await yearEntry.save();
 
             const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
