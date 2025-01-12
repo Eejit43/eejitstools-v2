@@ -9,33 +9,33 @@
     },
     "prettier": "@eejit/prettier-config",
     "dependencies": {
-        "@fastify/rate-limit": "^10.2.1",
-        "@fastify/static": "^8.0.3",
-        "@fastify/view": "^10.0.1",
+        "@fastify/rate-limit": "^10.2.2",
+        "@fastify/static": "^8.0.4",
+        "@fastify/view": "^10.0.2",
         "canvas": "^3.0.1",
         "chalk": "^5.4.1",
         "chokidar": "^4.0.3",
         "consola": "^3.3.3",
         "esbuild": "^0.24.2",
         "esbuild-postcss": "^0.0.4",
-        "fastify": "^5.2.0",
+        "fastify": "^5.2.1",
         "handlebars": "^4.7.8",
-        "mongoose": "^8.9.3",
+        "mongoose": "^8.9.4",
         "node-html-parser": "^7.0.1",
         "postcss": "^8.4.49",
         "postcss-preset-env": "^10.1.3"
     },
     "devDependencies": {
-        "@eejit/eslint-config-typescript": "^13.11.2",
+        "@eejit/eslint-config-typescript": "^13.12.0",
         "@eejit/prettier-config": "^3.3.0",
-        "@eejit/stylelint-config": "^4.0.0",
+        "@eejit/stylelint-config": "^5.0.0",
         "@tsconfig/recommended": "^1.0.8",
-        "@types/chroma-js": "^2.4.5",
+        "@types/chroma-js": "^3.1.0",
         "@types/node": "^22.10.5",
         "@types/ua-parser-js": "^0.7.39",
         "mathjs": "^14.0.1",
-        "stylelint": "^16.12.0",
+        "stylelint": "^16.13.0",
         "tree-kill": "^1.2.2",
-        "typescript": "^5.7.2"
+        "typescript": "^5.7.3"
     }
 }
