@@ -45,7 +45,7 @@ async function loadCoinsInfo() {
 
         const coinDenominationImage = document.createElement('img');
 
-        const lastCoinDesign = denomination.designs.at(-1)!;
+        const lastCoinDesign = denomination.designs.findLast((design) => !design.nifc)!;
 
         coinDenominationImage.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/coins-list/${denomination.id}/designs/${lastCoinDesign.id}.png`;
         coinDenominationImage.alt = lastCoinDesign.name;
@@ -83,6 +83,8 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
     outputDiv.append(backButtonDiv);
 
     for (const design of denomination.designs) {
+        if (design.nifc) continue;
+
         const coinDesignElement = document.createElement('div');
         coinDesignElement.classList.add('information-button');
         coinDesignElement.textContent = `${design.name} (${getCoinYears(design)})`;

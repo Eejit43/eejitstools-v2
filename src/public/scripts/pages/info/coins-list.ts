@@ -326,11 +326,13 @@ async function loadCoinsList() {
 
             coinDesignDiv.append(coinDesignLink, ' (', coinDesignYears, ') (', amountTooltip, needsUpgradeTotal, ')');
 
-            if (design.note) {
+            const note = design.note ?? (design.nifc ? 'NIFC (Not Intended For Circulation)' : null);
+
+            if (note) {
                 const coinDesignNote = document.createElement('span');
                 coinDesignNote.classList.add('coin-design-note', 'tooltip-right');
                 coinDesignNote.textContent = '*';
-                coinDesignNote.dataset.tooltip = design.note;
+                coinDesignNote.dataset.tooltip = note;
 
                 coinDesignDiv.append(coinDesignNote);
             }

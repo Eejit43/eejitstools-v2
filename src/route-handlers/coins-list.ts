@@ -17,6 +17,7 @@ export interface CoinComposition {
 export interface CoinDesign<Coin> {
     name: string;
     id: string;
+    nifc?: true;
     note?: string;
     years?: string;
     active?: true;

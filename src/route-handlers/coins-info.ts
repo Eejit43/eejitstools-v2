@@ -19,18 +19,22 @@ export default function setupCoinsInfoRoute(fastify: FastifyInstance) {
 
                 return {
                     ...denomination,
-                    designs: denomination.designs.map((design) => ({
-                        ...design,
-                        coins: design.coins.map((coin) => {
-                            // @ts-expect-error While this is marked as required, it doesn't need to be given to the end user
-                            delete coin.id;
-                            // @ts-expect-error While these are marked as required, they shouldn't be given to the end user
-                            delete coin.obtained;
-                            delete coin.upgrade;
+                    designs: denomination.designs.map((design) => {
+                        delete design.note;
 
-                            return coin;
-                        }),
-                    })),
+                        return {
+                            ...design,
+                            coins: design.coins.map((coin) => {
+                                // @ts-expect-error While this is marked as required, it doesn't need to be given to the end user
+                                delete coin.id;
+                                // @ts-expect-error While these are marked as required, they shouldn't be given to the end user
+                                delete coin.obtained;
+                                delete coin.upgrade;
+
+                                return coin;
+                            }),
+                        };
+                    }),
                 };
             })
             .sort((a, b) => a.value - b.value);
