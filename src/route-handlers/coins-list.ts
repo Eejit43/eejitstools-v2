@@ -41,6 +41,7 @@ export interface Coin {
     comparison?: string;
     obtained: boolean;
     upgrade?: boolean;
+    hidden?: true;
 }
 
 export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
@@ -65,19 +66,25 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
         if (request.query.password !== process.env.COINS_PASSWORD)
             return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 
-        let foundCoins = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
-        foundCoins = await patchCoinDatabase(foundCoins);
+        let foundDenominations = (await coinsModel.find({}).lean()) as DatabaseCoinDenomination[];
+        foundDenominations = await patchCoinDatabase(foundDenominations);
 
-        const sortedCoinInfo = foundCoins
+        const sortedDenominations = foundDenominations
             .map((denomination) => {
                 delete denomination._id;
                 delete denomination.__v;
+
+                denomination.designs = denomination.designs.map((design) => {
+                    design.coins = design.coins.filter((coin) => !coin.hidden);
+
+                    return design;
+                });
 
                 return denomination;
             })
             .sort((a, b) => a.value - b.value);
 
-        reply.send(JSON.stringify(sortedCoinInfo, null, 2));
+        reply.send(JSON.stringify(sortedDenominations, null, 2));
     });
 
     fastify.post(
@@ -166,6 +173,7 @@ const denominationParameterOrder: (keyof DatabaseCoinDenomination)[] = ['_id', '
 const designParameterOrder: (keyof CoinDesign<Coin>)[] = [
     'name',
     'id',
+    'nifc',
     'note',
     'years',
     'active',
@@ -188,6 +196,7 @@ const coinParameterOrder: (keyof Coin)[] = [
     'comparison',
     'obtained',
     'upgrade',
+    'hidden',
 ];
 
 /**
@@ -211,12 +220,9 @@ async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenominat
 
     const sortedDenomination = sortObject(newDenomination, denominationParameterOrder);
 
-    sortedDenomination.designs = sortedDenomination.designs.map((design) => sortObject(design, designParameterOrder));
-
-    sortedDenomination.designs = sortedDenomination.designs.map((design) => ({
-        ...design,
-        coins: design.coins.map((coin) => sortObject(coin, coinParameterOrder)),
-    }));
+    sortedDenomination.designs = sortedDenomination.designs.map((design) =>
+        sortObject({ ...design, coins: design.coins.map((coin) => sortObject(coin, coinParameterOrder)) }, designParameterOrder),
+    );
 
     if (JSON.stringify(denomination) !== JSON.stringify(sortedDenomination))
         await coinsModel.replaceOne({ id: denomination.id }, sortedDenomination);

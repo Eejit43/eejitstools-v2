@@ -27,9 +27,10 @@ export default function setupCoinsInfoRoute(fastify: FastifyInstance) {
                             coins: design.coins.map((coin) => {
                                 // @ts-expect-error While this is marked as required, it doesn't need to be given to the end user
                                 delete coin.id;
-                                // @ts-expect-error While these are marked as required, they shouldn't be given to the end user
+                                // @ts-expect-error While this is marked as required, it shouldn't be given to the end user
                                 delete coin.obtained;
                                 delete coin.upgrade;
+                                delete coin.hidden;
 
                                 return coin;
                             }),
