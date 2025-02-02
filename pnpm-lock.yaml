@@ -42,8 +42,8 @@ importers:
         specifier: ^4.7.8
         version: 4.7.8
       mongoose:
-        specifier: ^8.9.5
-        version: 8.9.5
+        specifier: ^8.9.6
+        version: 8.9.6
       node-html-parser:
         specifier: ^7.0.1
         version: 7.0.1
@@ -62,25 +62,25 @@ importers:
         version: 3.3.0(postcss@8.5.1)(typescript@5.7.3)
       '@eejit/stylelint-config':
         specifier: ^5.0.0
-        version: 5.0.0(stylelint@16.14.0(typescript@5.7.3))
+        version: 5.0.0(stylelint@16.14.1(typescript@5.7.3))
       '@tsconfig/recommended':
         specifier: ^1.0.8
         version: 1.0.8
       '@types/chroma-js':
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^3.1.1
+        version: 3.1.1
       '@types/node':
-        specifier: ^22.10.10
-        version: 22.10.10
+        specifier: ^22.13.0
+        version: 22.13.0
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
       mathjs:
-        specifier: ^14.1.0
-        version: 14.1.0
+        specifier: ^14.2.0
+        version: 14.2.0
       stylelint:
-        specifier: ^16.14.0
-        version: 16.14.0(typescript@5.7.3)
+        specifier: ^16.14.1
+        version: 16.14.1(typescript@5.7.3)
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -649,8 +649,8 @@ packages:
   '@tsconfig/recommended@1.0.8':
     resolution: {integrity: sha512-TotjFaaXveVUdsrXCdalyF6E5RyG6+7hHHQVZonQtdlk1rJZ1myDIvPUUKPhoYv+JAzThb2lQJh9+9ZfF46hsA==}
 
-  '@types/chroma-js@3.1.0':
-    resolution: {integrity: sha512-Uwl3SOtUkbQ6Ye6ZYu4q4xdLGBzmY839sEHYtOT7i691neeyd+7fXWT5VIkcUSfNwIFrIjQutNYQn9h4q5HFvg==}
+  '@types/chroma-js@3.1.1':
+    resolution: {integrity: sha512-SFCr4edNkZ1bGaLzGz7rgR1bRzVX4MmMxwsIa3/Bh6ose8v+hRpneoizHv0KChdjxaXyjRtaMq7sCuZSzPomQA==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -658,8 +658,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@22.10.10':
-    resolution: {integrity: sha512-X47y/mPNzxviAGY5TcYPtYL8JsY3kAq2n8fMmKoRCxq/c4v4pyGNCzM2R6+M5/umG4ZfHuT+sgqDYqWc9rJ6ww==}
+  '@types/node@22.13.0':
+    resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1557,8 +1557,8 @@ packages:
     resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
     engines: {node: 20 || >=22}
 
-  mathjs@14.1.0:
-    resolution: {integrity: sha512-W/aOnRs7YxoUfUe0si968BJ41Q07tApNNZL3JRpgnPdDO+qQO4YXbVdT8muP0vCrYBkmKGn/izseXlrAITgYqg==}
+  mathjs@14.2.0:
+    resolution: {integrity: sha512-CcJV1cQwRSrQIAAX3sWejFPUvUsQnTZYisEEuoMBw3gMDJDQzvKQlrul/vjKAbdtW7zaDzPCl04h1sf0wh41TA==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -1655,8 +1655,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@8.9.5:
-    resolution: {integrity: sha512-SPhOrgBm0nKV3b+IIHGqpUTOmgVL5Z3OO9AwkFEmvOZznXTvplbomstCnPOGAyungtRXE5pJTgKpKcZTdjeESg==}
+  mongoose@8.9.6:
+    resolution: {integrity: sha512-ipLvXwNPVuuuq5H3lnSD0lpaRH3DlCoC6emnMVJvweTwxU29uxDJWxMsNpERDQt8JMvYF1HGVuTK+Id2BlQLCA==}
     engines: {node: '>=16.20.1'}
 
   mpath@0.9.0:
@@ -2280,8 +2280,8 @@ packages:
     peerDependencies:
       stylelint: '>= 16.9.0'
 
-  stylelint@16.14.0:
-    resolution: {integrity: sha512-orePw2dKxzXC0hd1VmxrDBqgf1KUV9DYsZY4guKLE9XcQD7m0BxVnWMaoQqMNsQIG14MyyTHf6zoajvOnDra8g==}
+  stylelint@16.14.1:
+    resolution: {integrity: sha512-oqCL7AC3786oTax35T/nuLL8p2C3k/8rHKAooezrPGRvUX0wX+qqs5kMWh5YYT4PHQgVDobHT4tw55WgpYG6Sw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -2750,10 +2750,10 @@ snapshots:
       - typescript
       - vue-tsc
 
-  '@eejit/stylelint-config@5.0.0(stylelint@16.14.0(typescript@5.7.3))':
+  '@eejit/stylelint-config@5.0.0(stylelint@16.14.1(typescript@5.7.3))':
     dependencies:
-      stylelint-config-standard: 37.0.0(stylelint@16.14.0(typescript@5.7.3))
-      stylelint-use-nesting: 6.0.0(stylelint@16.14.0(typescript@5.7.3))
+      stylelint-config-standard: 37.0.0(stylelint@16.14.1(typescript@5.7.3))
+      stylelint-use-nesting: 6.0.0(stylelint@16.14.1(typescript@5.7.3))
     transitivePeerDependencies:
       - stylelint
 
@@ -3002,13 +3002,13 @@ snapshots:
 
   '@tsconfig/recommended@1.0.8': {}
 
-  '@types/chroma-js@3.1.0': {}
+  '@types/chroma-js@3.1.1': {}
 
   '@types/estree@1.0.6': {}
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@22.10.10':
+  '@types/node@22.13.0':
     dependencies:
       undici-types: 6.20.0
 
@@ -3941,7 +3941,7 @@ snapshots:
 
   lru-cache@11.0.2: {}
 
-  mathjs@14.1.0:
+  mathjs@14.2.0:
     dependencies:
       '@babel/runtime': 7.26.0
       '@lambdatest/node-tunnel': 4.0.8
@@ -4013,7 +4013,7 @@ snapshots:
       bson: 6.10.1
       mongodb-connection-string-url: 3.0.2
 
-  mongoose@8.9.5:
+  mongoose@8.9.6:
     dependencies:
       bson: 6.10.1
       kareem: 2.6.3
@@ -4663,20 +4663,20 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stylelint-config-recommended@15.0.0(stylelint@16.14.0(typescript@5.7.3)):
+  stylelint-config-recommended@15.0.0(stylelint@16.14.1(typescript@5.7.3)):
     dependencies:
-      stylelint: 16.14.0(typescript@5.7.3)
+      stylelint: 16.14.1(typescript@5.7.3)
 
-  stylelint-config-standard@37.0.0(stylelint@16.14.0(typescript@5.7.3)):
+  stylelint-config-standard@37.0.0(stylelint@16.14.1(typescript@5.7.3)):
     dependencies:
-      stylelint: 16.14.0(typescript@5.7.3)
-      stylelint-config-recommended: 15.0.0(stylelint@16.14.0(typescript@5.7.3))
+      stylelint: 16.14.1(typescript@5.7.3)
+      stylelint-config-recommended: 15.0.0(stylelint@16.14.1(typescript@5.7.3))
 
-  stylelint-use-nesting@6.0.0(stylelint@16.14.0(typescript@5.7.3)):
+  stylelint-use-nesting@6.0.0(stylelint@16.14.1(typescript@5.7.3)):
     dependencies:
-      stylelint: 16.14.0(typescript@5.7.3)
+      stylelint: 16.14.1(typescript@5.7.3)
 
-  stylelint@16.14.0(typescript@5.7.3):
+  stylelint@16.14.1(typescript@5.7.3):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
       '@csstools/css-tokenizer': 3.0.3
