@@ -18,9 +18,9 @@
         "consola": "^3.4.2",
         "esbuild": "^0.25.1",
         "esbuild-postcss": "^0.0.4",
-        "fastify": "^5.2.1",
+        "fastify": "^5.2.2",
         "handlebars": "^4.7.8",
-        "mongoose": "^8.12.2",
+        "mongoose": "^8.13.1",
         "node-html-parser": "^7.0.1",
         "postcss": "^8.5.3",
         "postcss-preset-env": "^10.1.5"
@@ -31,10 +31,10 @@
         "@eejit/stylelint-config": "^5.0.0",
         "@tsconfig/recommended": "^1.0.8",
         "@types/chroma-js": "^3.1.1",
-        "@types/node": "^22.13.11",
+        "@types/node": "^22.13.14",
         "@types/ua-parser-js": "^0.7.39",
-        "mathjs": "^14.3.1",
-        "stylelint": "^16.16.0",
+        "mathjs": "^14.4.0",
+        "stylelint": "^16.17.0",
         "tree-kill": "^1.2.2",
         "typescript": "^5.8.2"
     }
