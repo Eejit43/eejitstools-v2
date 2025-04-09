@@ -43,7 +43,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Vanishing Groove (Pixel Party) - Shinkonet', file: 'Vanishing Groove', duration: '3:57' },
             { name: 'Granularity (Pixel Party) - Shinkonet', file: 'Granularity', duration: '4:05' },
             { name: 'House Set of Hypixel (Pixel Party) - Shinkonet', file: 'House Set of Hypixel', duration: '6:02' },
-            { name: 'Jawbreaker (Pixel Party) - Shinkonet', file: 'Jawbreaker', duration: '3:58' },
+            { name: 'Jawbreaker (Pixel Party) - Shinkonet', file: 'Jawbreaker', duration: '2:33' },
             { name: 'Nyny (Stereo Pants) - Unknown', file: 'Nyny', duration: '2:12' },
             { name: 'Pump it Up (Stereo Pants) - Hyperdon', file: 'Pump it Up', duration: '3:26' },
             { name: 'Flowering Nights (Stereo Pants) - Hyperdon', file: 'Flowering Nights', duration: '2:11' },
