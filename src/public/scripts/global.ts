@@ -14,7 +14,7 @@ logo.addEventListener('mouseover', () => {
 
         const interval = setInterval(
             () => {
-                letter.textContent = [...contentBefore].map(() => String.fromCodePoint(Math.floor(Math.random() * 94) + 33)).join('');
+                letter.textContent = [...contentBefore].map(() => String.fromCodePoint(Math.floor(Math.random() * 94) + 33)).join(''); // eslint-disable-line @typescript-eslint/no-misused-spread
 
                 if (iterations >= 10) {
                     clearInterval(interval);

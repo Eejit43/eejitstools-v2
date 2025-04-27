@@ -506,7 +506,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         if (tooltipSpan.textContent?.toLowerCase() === 'none') tooltipSpan.textContent = '';
     });
     tooltipSpan.addEventListener('blur', async () => {
-        if (!tooltipSpan.textContent) tooltipSpan.textContent = 'None';
+        tooltipSpan.textContent ??= 'None';
         tooltipSpan.dataset.tooltip =
             tooltipSpan.textContent.toLowerCase() === 'none'
                 ? `Likely minted in ${mintMarks.P}`
@@ -544,8 +544,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         const mintageNumber = mintageCell.textContent
             ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, ''))
             : null;
-        let mintageForAllVarieties: boolean | null | undefined = mintageCell.textContent?.endsWith(' (all)');
-        if (!mintageForAllVarieties) mintageForAllVarieties = null;
+        const mintageForAllVarieties = mintageCell.textContent?.endsWith(' (all)') ?? null;
 
         mintageCell.textContent = mintageNumber === null ? '???' : formatMintage(mintageNumber);
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');

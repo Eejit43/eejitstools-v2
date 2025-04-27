@@ -72,7 +72,7 @@ function fromBinary() {
  * @param string String to encode.
  */
 function stringToBinary(string: string) {
-    return [...string].map((character) => character.codePointAt(0)!.toString(2)).join(' ');
+    return [...string].map((character) => character.codePointAt(0)!.toString(2)).join(' '); // eslint-disable-line @typescript-eslint/no-misused-spread
 }
 
 /**

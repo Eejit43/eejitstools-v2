@@ -1,9 +1,9 @@
-import type { ChromaStatic, Color } from 'chroma-js';
+import type Chroma from 'chroma-js';
 import { copyValue, showAlert } from '../../functions.js';
 
 declare global {
     interface Window {
-        chroma: ChromaStatic;
+        chroma: typeof Chroma;
     }
 }
 
@@ -153,7 +153,7 @@ document.addEventListener('keydown', (event) => {
  * Updates a color to all values.
  * @param color The color to update results for.
  */
-function updateResults(color: Color) {
+function updateResults(color: Chroma.Color) {
     for (const element of [colorPicker, nameInput, hexInput, decimalInput, rgbInput, hslInput, alphaInput]) resetBorder(element);
 
     colorDisplay.style.color = color.hex();

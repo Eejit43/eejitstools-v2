@@ -72,7 +72,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
         const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
-        if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
+        todoOptions ??= (await todoOptionsModel.findOne({}))!.data;
 
         reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
     });
@@ -98,7 +98,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
             let yearEntry = await todoModel.findOne({ year });
-            if (!yearEntry) yearEntry = await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
+            yearEntry ??= await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
 
             if (month in yearEntry.dates) yearEntry.set(`dates.${month}.${date}`, todo);
             else yearEntry.set(`dates.${month}`, { [date]: todo });
@@ -107,7 +107,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
 
             const data = Object.fromEntries(((await todoModel.find({})) as TodoData[]).map((todo) => [todo.year, todo.dates])); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
-            if (!todoOptions) todoOptions = (await todoOptionsModel.findOne({}))!.data;
+            todoOptions ??= (await todoOptionsModel.findOne({}))!.data;
 
             reply.send(JSON.stringify({ todo: todoOptions, data }, null, 2));
         },

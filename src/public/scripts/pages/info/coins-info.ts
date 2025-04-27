@@ -11,7 +11,7 @@ let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[] | undefined;
  * Loads all coin information and displays it in the document.
  */
 async function loadCoinsInfo() {
-    if (!coinsInfo) coinsInfo = (await (await fetch('/coins-info')).json()) as CoinDenomination<CoinDesign<FilteredCoin>>[];
+    coinsInfo ??= (await (await fetch('/coins-info')).json()) as CoinDenomination<CoinDesign<FilteredCoin>>[];
 
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';

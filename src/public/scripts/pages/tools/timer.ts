@@ -114,7 +114,7 @@ function displayTime() {
 
     remaining = (targetTime - Date.now()) / 1000;
 
-    if (!timeout) timeout = setTimeout(timerEnd, remaining * 1000) as unknown as number;
+    timeout ??= setTimeout(timerEnd, remaining * 1000) as unknown as number;
 
     if (remaining <= 0) return;
 

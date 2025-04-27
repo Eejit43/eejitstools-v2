@@ -100,7 +100,7 @@ const morseConversion: Record<string, string> = {
  * @param string The string to convert.
  */
 function convertToMorse(string: string) {
-    return [...string.toLowerCase()]
+    return [...string.toLowerCase()] // eslint-disable-line @typescript-eslint/no-misused-spread
         .map((character) => morseConversion[character] ?? character)
         .join(' ')
         .replaceAll(/ {3}/g, ' / ');
