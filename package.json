@@ -37,5 +37,10 @@
         "stylelint": "^16.19.1",
         "tree-kill": "^1.2.2",
         "typescript": "^5.8.3"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "canvas"
+        ]
     }
 }
