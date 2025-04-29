@@ -34,6 +34,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Treaty (Radio Mix) - Yothu Yindi', file: 'Treaty (Radio Mix)', duration: '4:03' },
             { name: 'Mahna Mahna - The Muppets (on The Ed Sullivan Show)', file: 'Mahna Mahna', duration: '2:51' },
             { name: 'Deja Vu - Dave Rodgers', file: 'Deja Vu', duration: '3:00' },
+            { name: 'Spanish Flea - Herb Alpert', file: 'Spanish Flea', duration: '2:06' },
         ],
     },
     {
@@ -211,6 +212,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Also Sprach Zarathustra - Strauss', file: 'Also Sprach Zarathustra', duration: '1:48' },
             { name: 'Cello Suite No. 1 (G Major) - Bach', file: 'Cello Suite', duration: '2:19' },
             { name: 'Clair de lune - Claude Debussy', file: 'Clair de lune', duration: '4:55' },
+            { name: 'Morning Mood - Edvard Grieg', file: 'Morning Mood', duration: '3:49' },
         ],
     },
     {
