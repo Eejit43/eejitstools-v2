@@ -149,6 +149,8 @@ document.addEventListener('keydown', (event) => {
     if (fullColor.style.display === 'block' && event.code === 'Escape') fullColor.style.display = 'none';
 });
 
+let lastColorHex = '';
+
 /**
  * Updates a color to all values.
  * @param color The color to update results for.
@@ -167,17 +169,20 @@ function updateResults(color: Chroma.Color) {
     luminanceOutput.value = color.luminance().toLocaleString();
     temperatureOutput.value = color.temperature().toString();
 
-    const colorHistoryElement = document.createElement('li');
-    colorHistoryElement.style.color = color.hex();
-    colorHistoryElement.textContent = color.hex();
-
-    const appendedElement = colorHistory.appendChild(colorHistoryElement); // eslint-disable-line unicorn/prefer-dom-node-append
-
-    appendedElement.addEventListener('click', () => {
-        updateResults(color);
-    });
-
     fullColor.style.backgroundColor = colorDisplay.style.color;
+
+    if (lastColorHex !== color.hex()) {
+        const colorHistoryElement = document.createElement('li');
+        colorHistoryElement.style.color = color.hex();
+        colorHistoryElement.textContent = color.hex();
+        colorHistoryElement.addEventListener('click', () => {
+            updateResults(color);
+        });
+
+        colorHistory.append(colorHistoryElement);
+    }
+
+    lastColorHex = color.hex();
 }
 
 /**
