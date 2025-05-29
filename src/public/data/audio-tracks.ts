@@ -85,6 +85,33 @@ export const audioTracks: AudioCategory[] = [
         ],
     },
     {
+        name: 'Spanish',
+        id: 'spanish',
+        tracks: [
+            {
+                name: 'Laughing River Running (Riendo El Rio Corre) - Tish Hinojosa',
+                file: 'Laughing River Running (Riendo El Rio Corre)',
+                duration: '3:15',
+            },
+            { name: 'Ocho Kandelikas - Pink Martini', file: 'Ocho Kandelikas', duration: '2:17' },
+            { name: 'Oye Como Va - Santana', file: 'Oye Como Va', duration: '4:18' },
+            { name: 'Madre Tierra (Oye) - Chayanne', file: 'Madre Tierra (Oye)', duration: '3:26' },
+            { name: 'El Mismo Sol - Alvaro Soler', file: 'El Mismo Sol', duration: '2:58' },
+            { name: 'La Libertad - Alvaro Soler', file: 'La Libertad', duration: '3:13' },
+            { name: 'Puebla - Alvaro Soler', file: 'Puebla', duration: '3:10' },
+            { name: 'Soy Yo - Bomba Estéreo', file: 'Soy Yo', duration: '2:44' },
+            { name: 'Ríe y Llora - Celia Cruz', file: 'Ríe y Llora', duration: '3:21' },
+            { name: 'Bidi Bidi Bom Bom - Selena', file: 'Bidi Bidi Bom Bom', duration: '3:26' },
+            { name: 'Calaverita - La Santa Cecilia', file: 'Calaverita', duration: '3:18' },
+            { name: 'Somos los Prietos - ChocQuibTown', file: 'Somos los Prietos', duration: '3:46' },
+            { name: 'No Tengo Dinero - MAFFiO', file: 'No Tengo Dinero', duration: '3:36' },
+            { name: 'La Lista - Aldrey', file: 'La Lista', duration: '3:28' },
+            { name: 'Robarte un Beso - Carlos Vives, Sebastian Yatra', file: 'Robarte un Beso', duration: '3:17' },
+            { name: 'Cuando Nadie Ve - Morat', file: 'Cuando Nadie Ve', duration: '3:45' },
+            { name: 'No Se Va - Morat', file: 'No Se Va', duration: '3:36' },
+        ],
+    },
+    {
         name: 'Records/Jazz',
         id: 'records-jazz',
         tracks: [
