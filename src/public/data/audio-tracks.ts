@@ -102,6 +102,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Soy Yo - Bomba Estéreo', file: 'Soy Yo', duration: '2:44' },
             { name: 'Ríe y Llora - Celia Cruz', file: 'Ríe y Llora', duration: '3:21' },
             { name: 'Bidi Bidi Bom Bom - Selena', file: 'Bidi Bidi Bom Bom', duration: '3:26' },
+            { name: 'Maquillaje - Mecano', file: 'Maquillaje', duration: '2:29' },
             { name: 'Calaverita - La Santa Cecilia', file: 'Calaverita', duration: '3:18' },
             { name: 'Somos los Prietos - ChocQuibTown', file: 'Somos los Prietos', duration: '3:46' },
             { name: 'No Tengo Dinero - MAFFiO', file: 'No Tengo Dinero', duration: '3:36' },
