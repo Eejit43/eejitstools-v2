@@ -23,7 +23,7 @@
         "mongoose": "^8.15.1",
         "node-html-parser": "^7.0.1",
         "postcss": "^8.5.4",
-        "postcss-preset-env": "^10.2.0"
+        "postcss-preset-env": "^10.2.1"
     },
     "devDependencies": {
         "@eejit/eslint-config-typescript": "^14.4.0",
