@@ -22,7 +22,6 @@
         "handlebars": "^4.7.8",
         "mongoose": "^8.15.2",
         "node-html-parser": "^7.0.1",
-        "postcss": "^8.5.5",
         "postcss-preset-env": "^10.2.3"
     },
     "devDependencies": {

@@ -47,9 +47,6 @@ importers:
       node-html-parser:
         specifier: ^7.0.1
         version: 7.0.1
-      postcss:
-        specifier: ^8.5.5
-        version: 8.5.5
       postcss-preset-env:
         specifier: ^10.2.3
         version: 10.2.3(postcss@8.5.5)
