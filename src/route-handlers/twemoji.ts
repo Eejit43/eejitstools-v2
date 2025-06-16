@@ -18,10 +18,19 @@ export default function setupTwemojiRoute(fastify: FastifyInstance) {
         const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${emojiId}.svg`);
         if (!response.ok) return reply.type('image/png').send();
 
+        const imageBuffer = Buffer.from(await response.arrayBuffer());
+
+        let svg = imageBuffer.toString('utf8');
+        if (!svg.includes('width=')) svg = svg.replace('<svg', '<svg width="500" height="500"');
+
+        const patchedBuffer = Buffer.from(svg);
+
         const canvas = Canvas.createCanvas(500, 500);
-        const image = await Canvas.loadImage(Buffer.from(await response.arrayBuffer()));
-        image.height = image.width = 500;
-        canvas.getContext('2d').drawImage(image, 0, 0, 500, 500);
+        const context = canvas.getContext('2d');
+
+        const image = await Canvas.loadImage(patchedBuffer);
+        context.drawImage(image, 0, 0, 500, 500);
+
         reply.type('image/png').send(canvas.toBuffer());
     });
 }

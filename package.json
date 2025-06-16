@@ -33,6 +33,7 @@
         "@types/node": "latest",
         "@types/ua-parser-js": "^0.7.39",
         "mathjs": "^14.5.2",
+        "postcss": "^8.5.5",
         "stylelint": "^16.20.0",
         "tree-kill": "^1.2.2",
         "typescript": "^5.8.3"
