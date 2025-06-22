@@ -28,7 +28,6 @@
         "@eejit/eslint-config-typescript": "^14.4.0",
         "@eejit/prettier-config": "^3.4.0",
         "@eejit/stylelint-config": "^5.0.0",
-        "@tsconfig/recommended": "^1.0.8",
         "@types/chroma-js": "^3.1.1",
         "@types/node": "latest",
         "@types/ua-parser-js": "^0.7.39",

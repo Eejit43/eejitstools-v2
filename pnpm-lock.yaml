@@ -60,9 +60,6 @@ importers:
       '@eejit/stylelint-config':
         specifier: ^5.0.0
         version: 5.0.0(stylelint@16.20.0(typescript@5.8.3))
-      '@tsconfig/recommended':
-        specifier: ^1.0.8
-        version: 1.0.8
       '@types/chroma-js':
         specifier: ^3.1.1
         version: 3.1.1
@@ -679,9 +676,6 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
-
-  '@tsconfig/recommended@1.0.8':
-    resolution: {integrity: sha512-TotjFaaXveVUdsrXCdalyF6E5RyG6+7hHHQVZonQtdlk1rJZ1myDIvPUUKPhoYv+JAzThb2lQJh9+9ZfF46hsA==}
 
   '@types/chroma-js@3.1.1':
     resolution: {integrity: sha512-SFCr4edNkZ1bGaLzGz7rgR1bRzVX4MmMxwsIa3/Bh6ose8v+hRpneoizHv0KChdjxaXyjRtaMq7sCuZSzPomQA==}
@@ -3182,8 +3176,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@tsconfig/recommended@1.0.8': {}
 
   '@types/chroma-js@3.1.1': {}
 
