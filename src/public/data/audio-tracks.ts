@@ -35,6 +35,7 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Mahna Mahna - The Muppets (on The Ed Sullivan Show)', file: 'Mahna Mahna', duration: '2:51' },
             { name: 'Deja Vu - Dave Rodgers', file: 'Deja Vu', duration: '3:00' },
             { name: 'Spanish Flea - Herb Alpert', file: 'Spanish Flea', duration: '2:06' },
+            { name: 'Así Es La Vida - Cirque du Soleil (Luzia Soundtrack)', file: 'Así Es La Vida', duration: '4:49' },
         ],
     },
     {
