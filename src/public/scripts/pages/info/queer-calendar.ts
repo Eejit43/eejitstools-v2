@@ -36,12 +36,15 @@ const date = currentTime.getDate().toString().padStart(2, '0');
 monthInput.placeholder = month;
 dateInput.placeholder = date;
 
-yearOverview.href = `https://en.pronouns.page/calendar/${year}-labels.png`;
+yearOverview.href = `https://en.pronouns.page/calendar/en/${year}-labels.png`;
 
 interface CalendarData {
     events: string[];
     eventsRaw: {
-        flag: string | null;
+        display?: {
+            type: string;
+            name: string;
+        };
     }[];
 }
 
@@ -99,9 +102,9 @@ async function addEvents(year: string, month: string, date: string) {
     for (const [index, eventText] of events.entries()) {
         const listElement = document.createElement('li');
 
-        if (eventsRaw[index].flag) {
+        if (eventsRaw[index].display?.type === 'flag') {
             const imageElement = document.createElement('img');
-            imageElement.src = `https://en.pronouns.page/flags/${eventsRaw[index].flag}.png`;
+            imageElement.src = `https://en.pronouns.page/flags/${eventsRaw[index].display.name}.png`;
 
             listElement.append(imageElement, eventText);
         } else listElement.textContent = eventText;
