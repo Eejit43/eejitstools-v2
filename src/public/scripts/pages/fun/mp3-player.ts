@@ -4,7 +4,6 @@ import { shuffleArray } from '../../functions.js';
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 
 const audio = document.querySelector<HTMLAudioElement>('#audio')!;
-const sourceAudio = document.querySelector<HTMLSourceElement>('#source-audio')!;
 
 const timer = document.querySelector<HTMLDivElement>('#timer')!;
 const title = document.querySelector<HTMLDivElement>('#title')!;
@@ -127,7 +126,7 @@ let audioIndex = 0;
  */
 function loadNewTrack(category: string, index: number, play = true) {
     const track = tracksByCategory[category].tracks[index];
-    sourceAudio.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/mp3-player/${category}/${track.file}.mp3`;
+    audio.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/mp3-player/${category}/${encodeURIComponent(track.file)}.mp3`;
     title.textContent = track.name;
     audio.load();
     if (play) toggleAudio();

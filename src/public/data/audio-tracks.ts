@@ -36,6 +36,11 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Deja Vu - Dave Rodgers', file: 'Deja Vu', duration: '3:00' },
             { name: 'Spanish Flea - Herb Alpert', file: 'Spanish Flea', duration: '2:06' },
             { name: 'Así Es La Vida - Cirque du Soleil (Luzia Soundtrack)', file: 'Así Es La Vida', duration: '4:49' },
+            {
+                name: 'Which of the Pickwick Triplets Did It? - Only Murders in the Building',
+                file: 'Which of the Pickwick Triplets Did It?',
+                duration: '2:47',
+            },
         ],
     },
     {
