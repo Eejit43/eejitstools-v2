@@ -27,7 +27,8 @@ h2 {
     cursor: pointer;
     margin-top: 0;
     border: 4px solid var(--dark-border);
-    background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa),
+    background-image:
+        repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa),
         repeating-linear-gradient(45deg, #aaa 25%, white 25%, white 75%, #aaa 75%, #aaa);
     background-position:
         0 0,

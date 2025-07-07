@@ -99,13 +99,8 @@
 }
 
 html {
-    background-image: repeating-linear-gradient(
-            90deg,
-            rgb(171 171 171 / 6%) 0,
-            rgb(171 171 171 / 6%) 1px,
-            transparent 1px,
-            transparent 96px
-        ),
+    background-image:
+        repeating-linear-gradient(90deg, rgb(171 171 171 / 6%) 0, rgb(171 171 171 / 6%) 1px, transparent 1px, transparent 96px),
         repeating-linear-gradient(0deg, rgb(171 171 171 / 6%) 0, rgb(171 171 171 / 6%) 1px, transparent 1px, transparent 96px),
         repeating-linear-gradient(0deg, rgb(171 171 171 / 9%) 0, rgb(171 171 171 / 9%) 1px, transparent 1px, transparent 12px),
         repeating-linear-gradient(90deg, rgb(171 171 171 / 9%) 0, rgb(171 171 171 / 9%) 1px, transparent 1px, transparent 12px),
