@@ -336,7 +336,7 @@
             if (!parsed) {
                 throw new Error('Odometer: Unparsable digit format');
             }
-            (_ref1 = parsed.slice(1, 4)), (repeating = _ref1[0]), (radix = _ref1[1]), (fractional = _ref1[2]);
+            ((_ref1 = parsed.slice(1, 4)), (repeating = _ref1[0]), (radix = _ref1[1]), (fractional = _ref1[2]));
             precision = (fractional != null ? fractional.length : void 0) || 0;
             return (this.format = {
                 repeating: repeating,
