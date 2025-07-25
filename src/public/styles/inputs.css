@@ -103,7 +103,7 @@ select {
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
+        font-family: "Font Awesome 7 Pro";
     }
 
     &:hover {
@@ -150,7 +150,7 @@ button:not(.fake-input) {
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
+        font-family: "Font Awesome 7 Pro";
     }
 
     &.button-result-error::after {
@@ -160,7 +160,7 @@ button:not(.fake-input) {
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
+        font-family: "Font Awesome 7 Pro";
     }
 
     &.button-result-warning::after {
@@ -170,7 +170,7 @@ button:not(.fake-input) {
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
+        font-family: "Font Awesome 7 Pro";
     }
 
     &.button-copy::after {
@@ -179,7 +179,7 @@ button:not(.fake-input) {
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-        font-family: "Font Awesome 6 Pro";
+        font-family: "Font Awesome 7 Pro";
     }
 }
 
