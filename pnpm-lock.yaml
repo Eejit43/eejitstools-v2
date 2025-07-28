@@ -42,8 +42,8 @@ importers:
         specifier: ^4.7.8
         version: 4.7.8
       mongoose:
-        specifier: ^8.16.4
-        version: 8.16.4
+        specifier: ^8.16.5
+        version: 8.16.5
       node-html-parser:
         specifier: ^7.0.1
         version: 7.0.1
@@ -65,13 +65,13 @@ importers:
         version: 3.1.1
       '@types/node':
         specifier: latest
-        version: 24.0.15
+        version: 24.1.0
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
       mathjs:
-        specifier: ^14.5.3
-        version: 14.5.3
+        specifier: ^14.6.0
+        version: 14.6.0
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -675,8 +675,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@24.0.15':
-    resolution: {integrity: sha512-oaeTSbCef7U/z7rDeJA138xpG3NuKc64/rZ2qmUFkFJmnMsAPaluIifqyWd8hSSMxyP9oie3dLAqYPblag9KgA==}
+  '@types/node@24.1.0':
+    resolution: {integrity: sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==}
 
   '@types/ua-parser-js@0.7.39':
     resolution: {integrity: sha512-P/oDfpofrdtF5xw433SPALpdSchtJmY7nsJItf8h3KXqOslkbySh8zq4dSWXH2oTjRvJ5PczVEoCZPow6GicLg==}
@@ -1639,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  mathjs@14.5.3:
-    resolution: {integrity: sha512-srHhiZwFPUjHuRywRG/+5xWUNcQJsDBNMYaSu7zEN+th6BB2TkUmBkIc2cpdDqtgu40Q7DneAsFmyzo8q3ugmA==}
+  mathjs@14.6.0:
+    resolution: {integrity: sha512-5vI2BLB5GKQmiSK9BH6hVkZ+GgqpdnOgEfmHl7mqVmdQObLynr63KueyYYLCQMzj66q69mV2XZZGQqqxeftQbA==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -1745,8 +1745,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@8.16.4:
-    resolution: {integrity: sha512-jslgdQ8pY2vcNSKPv3Dbi5ogo/NT8zcvf6kPDyD8Sdsjsa1at3AFAF0F5PT+jySPGSPbvlNaQ49nT9h+Kx2UDA==}
+  mongoose@8.16.5:
+    resolution: {integrity: sha512-Ey84Jf1c426FEMj16+j/VqFKupFN2Ey5uAy6TTAN9HlFP4OcunL7j9O7vTuwAipzlZdjctxP0OK9MRJ4Aa/jNg==}
     engines: {node: '>=16.20.1'}
 
   mpath@0.9.0:
@@ -3149,7 +3149,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@24.0.15':
+  '@types/node@24.1.0':
     dependencies:
       undici-types: 7.8.0
 
@@ -4180,7 +4180,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  mathjs@14.5.3:
+  mathjs@14.6.0:
     dependencies:
       '@babel/runtime': 7.27.0
       complex.js: 2.4.2
@@ -4252,7 +4252,7 @@ snapshots:
       bson: 6.10.4
       mongodb-connection-string-url: 3.0.2
 
-  mongoose@8.16.4:
+  mongoose@8.16.5:
     dependencies:
       bson: 6.10.4
       kareem: 2.6.3
