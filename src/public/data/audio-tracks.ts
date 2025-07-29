@@ -41,6 +41,7 @@ export const audioTracks: AudioCategory[] = [
                 file: 'Which of the Pickwick Triplets Did It?',
                 duration: '2:47',
             },
+            { name: 'Betty Boop - Charlie Puth (_Blan Kato Remix)', file: 'Betty Boop', duration: '3:27' },
         ],
     },
     {
