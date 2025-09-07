@@ -91,12 +91,7 @@ function convertDecimal() {
     if (/^[+-]?(\d+)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
         scientificOutput.value = window.math.bignumber(decimalInput.value).toExponential();
         scientificOutputValue = window.math.bignumber(decimalInput.value).toExponential();
-        scientificOutputValue2 = window.math
-            .bignumber(decimalInput.value)
-            .toExponential()
-            .toString()
-            .replace('e+', ' x 10^')
-            .replace('e-', ' x 10^-');
+        scientificOutputValue2 = window.math.bignumber(decimalInput.value).toExponential().replace('e+', ' x 10^').replace('e-', ' x 10^-');
         scientificOutputCopyButton.disabled = false;
         scientificOutputCopy2Button.disabled = false;
         updateArrow(decimalArrow, 'success');

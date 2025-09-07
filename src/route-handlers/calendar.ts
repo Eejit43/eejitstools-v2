@@ -32,7 +32,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
         ).items
             .map((holiday) => ({ name: holiday.summary, date: holiday.start.date }))
             .filter((holiday) => !holiday.name.includes(' (substitute)'))
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            .toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         const moonPhases = (
             (await (
                 await fetch(
@@ -45,7 +45,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
                 date: moonPhase.start.date,
                 time: /[\w ]+ ([\w:]+)/.exec(moonPhase.summary)![1].replace(/(\d)([ap]m)/, '$1 $2'),
             }))
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            .toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         const result: CalendarEvents = { holidays, moonPhases };
 
         calendarEventsCache = JSON.stringify(result, null, 2);

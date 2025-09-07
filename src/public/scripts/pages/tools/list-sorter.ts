@@ -48,7 +48,7 @@ function alphabetize() {
     } else {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
-            .sort((a, b) => a.localeCompare(b))
+            .toSorted((a, b) => a.localeCompare(b))
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(alphabetizeButton, 'success');
@@ -67,8 +67,8 @@ function numericalOrder() {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .map((value) => Number.parseInt(value))
-            .filter((x) => x === 0 || Boolean(x))
-            .sort((a, b) => a - b)
+            .filter((number) => !!number || number === 0)
+            .toSorted((a, b) => a - b)
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(numericalOrderButton, 'success');
@@ -103,7 +103,7 @@ function reverse() {
     } else {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
-            .reverse()
+            .toReversed()
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(reverseButton, 'success');

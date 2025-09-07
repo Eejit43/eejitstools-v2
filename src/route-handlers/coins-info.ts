@@ -38,7 +38,7 @@ export default function setupCoinsInfoRoute(fastify: FastifyInstance) {
                     }),
                 };
             })
-            .sort((a, b) => a.value - b.value);
+            .toSorted((a, b) => a.value - b.value);
 
         reply.send(JSON.stringify(filteredCoinInfo, null, 2));
     });

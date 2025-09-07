@@ -79,7 +79,7 @@ async function loadCoinsList() {
                 designs: Object.fromEntries(
                     denomination.designs.map((design) => [
                         design.id,
-                        { ...design, coins: new Map(design.coins.map((coin) => [coin.id.toString(), coin])) },
+                        { ...design, coins: new Map(design.coins.map((coin) => [coin.id, coin])) },
                     ]),
                 ),
             },
@@ -450,7 +450,7 @@ const modalCaption = document.querySelector<HTMLDivElement>('#modal-caption')!;
  */
 function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, design: CoinDesign<Coin>, coin: Coin) {
     const row = document.createElement('tr');
-    row.dataset.id = coin.id.toString();
+    row.dataset.id = coin.id;
     row.dataset.obtained = coin.obtained.toString();
     row.dataset.upgrade = (coin.upgrade ?? false).toString();
 
@@ -460,7 +460,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     yearEditor.textContent = coin.year;
     yearEditor.contentEditable = 'plaintext-only';
     yearEditor.addEventListener('blur', async () => {
-        const newValue = yearEditor.textContent! || 'UNKNOWN';
+        const newValue = yearEditor.textContent || 'UNKNOWN';
         if (newValue === coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.year) return;
 
         addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'year', { year: newValue });
@@ -503,10 +503,10 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         delete tooltipSpan.dataset.tooltip;
         tooltipSpan.classList.remove('tooltip-bottom');
 
-        if (tooltipSpan.textContent?.toLowerCase() === 'none') tooltipSpan.textContent = '';
+        if (tooltipSpan.textContent.toLowerCase() === 'none') tooltipSpan.textContent = '';
     });
     tooltipSpan.addEventListener('blur', async () => {
-        tooltipSpan.textContent ??= 'None';
+        tooltipSpan.textContent ||= 'None';
         tooltipSpan.dataset.tooltip =
             tooltipSpan.textContent.toLowerCase() === 'none'
                 ? `Likely minted in ${mintMarks.P}`
@@ -544,7 +544,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         const mintageNumber = mintageCell.textContent
             ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, ''))
             : null;
-        const mintageForAllVarieties = mintageCell.textContent?.endsWith(' (all)') ?? null;
+        const mintageForAllVarieties = mintageCell.textContent.endsWith(' (all)');
 
         mintageCell.textContent = mintageNumber === null ? '???' : formatMintage(mintageNumber);
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
@@ -564,9 +564,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
                 coinsData[denomination.id].designs[design.id].coins.get(coin.id)!,
                 design.name,
                 'mintage "for all varieties"',
-                {
-                    mintageForAllVarieties: mintageForAllVarieties ?? false,
-                },
+                { mintageForAllVarieties },
             );
 
             coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
@@ -589,9 +587,9 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
                 specification: specificationCell.textContent,
             });
 
-            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationCell.textContent! || null;
+            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationCell.textContent || null;
 
-            await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationCell.textContent! || null });
+            await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationCell.textContent || null });
         });
     }
     if (coin.comparison) {
@@ -618,12 +616,12 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
                     return;
 
                 addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'specification', {
-                    specification: specificationEditor.textContent!,
+                    specification: specificationEditor.textContent,
                 });
 
-                coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationEditor.textContent! || null;
+                coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.specification = specificationEditor.textContent || null;
 
-                await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationEditor.textContent! || null });
+                await updateCoinData(denomination.id, design.id, coin.id, { specification: specificationEditor.textContent || null });
             });
             specificationCell.append(specificationEditor, ' ');
             comparisonSpan.textContent = `(${comparisonSpan.textContent})`;

@@ -47,7 +47,7 @@ export default function setupForeignCollectionsList(fastify: FastifyInstance) {
             foundEntry.type = type;
             foundEntry.data = data;
 
-            const sortedData = foundList.data.sort((a, b) => a.name.localeCompare(b.name));
+            const sortedData = foundList.data.toSorted((a, b) => a.name.localeCompare(b.name));
 
             await foreignCollectionsList.replaceOne({}, { data: sortedData });
 
@@ -71,7 +71,7 @@ export default function setupForeignCollectionsList(fastify: FastifyInstance) {
 
             foundList.data.push({ id, name, type, data });
 
-            const sortedData = foundList.data.sort((a, b) => a.name.localeCompare(b.name));
+            const sortedData = foundList.data.toSorted((a, b) => a.name.localeCompare(b.name));
 
             await foreignCollectionsList.replaceOne({}, { data: sortedData });
 

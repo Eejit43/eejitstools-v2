@@ -57,8 +57,7 @@ const navbar = document.querySelector('nav')!;
  * Resizes the navigation bar on scroll.
  */
 function resizeNav() {
-    if (document.documentElement.scrollTop > 80) navbar.classList.add('nav-shrunk');
-    else navbar.classList.remove('nav-shrunk');
+    navbar.classList.toggle('nav-shrunk', document.documentElement.scrollTop > 80);
 }
 
 document.addEventListener('scroll', resizeNav);

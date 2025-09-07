@@ -86,7 +86,7 @@ export default function setupApodRoute(fastify: FastifyInstance) {
 
                 const credit = /credit.*?<\/center>/is
                     .exec(html.innerHTML)?.[0]
-                    ?.replace(/ <\/b>/gi, '')
+                    ?.replaceAll(/ <\/b>/gi, '')
                     .replaceAll(/ ?<\/center>/gi, '')
                     .trim();
 

@@ -99,6 +99,6 @@ function keyInfo(event: KeyboardEvent) {
     keyCodeValue = event.code;
     keyAscii.textContent = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
     keyAsciiValue = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
-    keyUnicode.textContent = String(event.key).codePointAt(0)!.toString();
-    keyUnicodeValue = String(event.key).codePointAt(0)!.toString();
+    keyUnicode.textContent = event.key.codePointAt(0)!.toString();
+    keyUnicodeValue = event.key.codePointAt(0)!.toString();
 }
