@@ -82,7 +82,7 @@ export default function setupCoinsListRoutes(fastify: FastifyInstance) {
 
                 return denomination;
             })
-            .toSorted((a, b) => a.value - b.value);
+            .sort((a, b) => a.value - b.value); // eslint-disable-line unicorn/no-array-sort
 
         reply.send(JSON.stringify(sortedDenominations, null, 2));
     });
@@ -236,7 +236,7 @@ async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenominat
  * @param order The sort order.
  */
 function sortObject<T extends DatabaseCoinDenomination | CoinDesign<Coin> | Coin>(object: T, order: (keyof T)[]): T {
-    const sortedEntries = Object.entries(object).toSorted(([a], [b]) => order.indexOf(a as keyof T) - order.indexOf(b as keyof T));
+    const sortedEntries = Object.entries(object).sort(([a], [b]) => order.indexOf(a as keyof T) - order.indexOf(b as keyof T)); // eslint-disable-line unicorn/no-array-sort
 
     return Object.fromEntries(sortedEntries) as T;
 }

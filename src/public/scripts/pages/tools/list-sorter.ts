@@ -48,7 +48,7 @@ function alphabetize() {
     } else {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
-            .toSorted((a, b) => a.localeCompare(b))
+            .sort((a, b) => a.localeCompare(b)) // eslint-disable-line unicorn/no-array-sort
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(alphabetizeButton, 'success');
@@ -68,7 +68,7 @@ function numericalOrder() {
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
             .map((value) => Number.parseInt(value))
             .filter((number) => !!number || number === 0)
-            .toSorted((a, b) => a - b)
+            .sort((a, b) => a - b) // eslint-disable-line unicorn/no-array-sort
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(numericalOrderButton, 'success');
@@ -103,7 +103,7 @@ function reverse() {
     } else {
         result.value = input.value
             .split(JSON.parse(`"${separatorInput.value}"`) as string)
-            .toReversed()
+            .reverse() // eslint-disable-line unicorn/no-array-reverse
             .join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(reverseButton, 'success');

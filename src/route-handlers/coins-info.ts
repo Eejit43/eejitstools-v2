@@ -38,7 +38,7 @@ export default function setupCoinsInfoRoute(fastify: FastifyInstance) {
                     }),
                 };
             })
-            .toSorted((a, b) => a.value - b.value);
+            .sort((a, b) => a.value - b.value); // eslint-disable-line unicorn/no-array-sort
 
         reply.send(JSON.stringify(filteredCoinInfo, null, 2));
     });
