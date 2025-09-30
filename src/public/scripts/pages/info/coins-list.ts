@@ -544,7 +544,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         const mintageNumber = mintageCell.textContent
             ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, ''))
             : null;
-        const mintageForAllVarieties = mintageCell.textContent.endsWith(' (all)');
+        const mintageForAllVarieties = mintageCell.textContent.endsWith(' (all)') || null;
 
         mintageCell.textContent = mintageNumber === null ? '???' : formatMintage(mintageNumber);
         if (mintageForAllVarieties) mintageCell.classList.add('mintage-for-all-varieties');
