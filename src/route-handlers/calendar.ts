@@ -97,8 +97,8 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             if (month < 1 || month > 12) return reply.send(JSON.stringify({ error: 'Invalid month parameter!' }, null, 2));
             if (date < 1 || date > 31) return reply.send(JSON.stringify({ error: 'Invalid date parameter!' }, null, 2));
 
-            let yearEntry = await todoModel.findOne({ year });
-            yearEntry ??= await todoModel.create({ year, dates: { [month]: { [date]: todo } } });
+            let yearEntry = await todoModel.findOne({ year: year.toString() });
+            yearEntry ??= await todoModel.create({ year: year.toString(), dates: { [month]: { [date]: todo } } });
 
             if (month in yearEntry.dates) yearEntry.set(`dates.${month}.${date}`, todo);
             else yearEntry.set(`dates.${month}`, { [date]: todo });
