@@ -12,7 +12,16 @@ Welcome! Here is a list of coins I have and need!
 <hr />
 <ul id="change-history">No changes made!</ul>
 
-<button id="export-data" data-icon-after="&#xf019" disabled>Export coin data</button>
+<div class="button-row-container">
+    <button id="export-data" data-icon-after="&#xf019" disabled>Export coin data</button>
+    <button id="generate-needed-list" data-icon-after="&#xf0ae" disabled>Generate needed list</button>
+    <button id="generate-simplified-needed-list" data-icon-after="&#xf0ae" disabled>Generate simplified needed list</button>
+</div>
+
+<div id="needed-list-modal">
+    <span id="close-needed-list-modal">&times;</span>
+    <div id="needed-list-modal-content"></div>
+</div>
 
 <div id="modal">
     <span id="close-modal">&times;</span>

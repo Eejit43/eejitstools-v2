@@ -6,6 +6,11 @@ const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;
 const coinsList = document.querySelector<HTMLDivElement>('#coins-list')!;
 const changeHistory = document.querySelector<HTMLUListElement>('#change-history')!;
 const exportDataButton = document.querySelector<HTMLButtonElement>('#export-data')!;
+const generateNeededListButton = document.querySelector<HTMLButtonElement>('#generate-needed-list')!;
+const generateSimplifiedNeededListButton = document.querySelector<HTMLButtonElement>('#generate-simplified-needed-list')!;
+const neededListModal = document.querySelector<HTMLDivElement>('#needed-list-modal')!;
+const closeNeededListModalButton = document.querySelector<HTMLSpanElement>('#close-needed-list-modal')!;
+const neededListModalContent = document.querySelector<HTMLDivElement>('#needed-list-modal-content')!;
 
 for (const type of ['input', 'paste'])
     passwordInput.addEventListener(type, () => {
@@ -32,6 +37,8 @@ loginButton.addEventListener('click', async () => {
         await loadCoinsList();
 
         exportDataButton.disabled = false;
+        generateNeededListButton.disabled = false;
+        generateSimplifiedNeededListButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
         showResult(loginButton, 'error');
@@ -872,6 +879,8 @@ if (password) {
         await loadCoinsList();
 
         exportDataButton.disabled = false;
+        generateNeededListButton.disabled = false;
+        generateSimplifiedNeededListButton.disabled = false;
     } else {
         showAlert('Incorrect password!', 'error');
         showResult(loginButton, 'error');
@@ -900,3 +909,70 @@ exportDataButton.addEventListener('click', async () => {
         URL.revokeObjectURL(url);
     }, 0);
 });
+
+generateNeededListButton.addEventListener('click', () => handleGenerateNeededList(false));
+
+generateSimplifiedNeededListButton.addEventListener('click', () => handleGenerateNeededList(true));
+
+for (const element of [closeNeededListModalButton, neededListModal])
+    element.addEventListener('click', () => (neededListModal.style.display = 'none'));
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && neededListModal.style.display === 'block') neededListModal.style.display = 'none';
+});
+
+/**
+ * Handles generating the needed coins list.
+ * @param isSimplified Whether to generate a simplified list.
+ */
+async function handleGenerateNeededList(isSimplified: boolean) {
+    const coinsData = (await (await fetch(`/coins-list?password=${passwordInput.dataset.input!}`)).json()) as CoinDenomination<
+        CoinDesign<Coin>
+    >[] & { error?: string };
+
+    if (coinsData.error) {
+        showAlert(coinsData.error, 'error');
+        return;
+    }
+
+    const currentYear = new Date().getFullYear();
+
+    neededListModal.style.display = 'block';
+
+    neededListModalContent.textContent = coinsData
+        .map((denomination) => {
+            const headerDecoration = '='.repeat(denomination.name.length + 4);
+            const header = `${headerDecoration}\n  ${denomination.name}\n${headerDecoration}`;
+
+            const filteredDesigns = denomination.designs
+                .map((design) => {
+                    const obtainedCoins = design.coins.filter((coin) => coin.obtained);
+                    if (obtainedCoins.length <= 10) return null;
+
+                    const filteredCoins = design.coins.filter(
+                        (coin) =>
+                            (!coin.obtained || coin.upgrade) &&
+                            Number.parseInt(coin.year) <= currentYear &&
+                            (isSimplified ? (coin.mintage ? coin.mintage > 5_000_000 : true) : true),
+                    );
+
+                    if (filteredCoins.length === 0) return null;
+
+                    if (isSimplified) filteredCoins.sort((a, b) => (b.mintage ?? 0) - (a.mintage ?? 0));
+
+                    const mappedFilteredCoins = filteredCoins.map(
+                        (coin) =>
+                            ` - ${coin.year}${coin.mintMark ? ` ${coin.mintMark}` : ''}${coin.specification ? ` (${coin.specification})` : ''}${coin.mintage ? ` - ${formatMintage(coin.mintage)}` : ''}${coin.upgrade ? ' (UPGRADE ONLY)' : ''}`,
+                    );
+
+                    return `${design.name}\n${mappedFilteredCoins.join('\n')}`;
+                })
+                .filter(Boolean);
+
+            if (filteredDesigns.length === 0) return null;
+
+            return `${header}\n${filteredDesigns.join('\n\n')}`;
+        })
+        .filter(Boolean)
+        .join('\n\n\n');
+}
