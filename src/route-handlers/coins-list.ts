@@ -205,18 +205,19 @@ const coinParameterOrder: (keyof Coin)[] = [
  * @returns The patched denomination.
  */
 async function patchCoinDatabaseDenomination(denomination: DatabaseCoinDenomination) {
-    const newDenomination = { ...denomination };
+    const newDenomination = {
+        ...denomination,
+        designs: denomination.designs.map((design) => ({
+            ...design,
+            coins: design.coins.map((coin) => {
+                if (!('id' in coin)) (coin as Partial<Coin>).id = generateUniqueCoinId(design);
 
-    newDenomination.designs = denomination.designs.map((design) => ({
-        ...design,
-        coins: design.coins.map((coin) => {
-            if (!('id' in coin)) (coin as Partial<Coin>).id = generateUniqueCoinId(design);
+                if (!('obtained' in coin)) (coin as Partial<Coin>).obtained = false;
 
-            if (!('obtained' in coin)) (coin as Partial<Coin>).obtained = false;
-
-            return coin;
-        }),
-    }));
+                return coin;
+            }),
+        })),
+    };
 
     const sortedDenomination = sortObject(newDenomination, denominationParameterOrder);
 

@@ -60,7 +60,7 @@ fastify.get('/tone-indicators', (request, reply) => reply.send(JSON.stringify(to
 setupRoutes(fastify);
 
 // Setup error handlers
-fastify.setErrorHandler((error, request, reply) => {
+fastify.setErrorHandler((error: FastifyError, request, reply) => {
     if (error.statusCode === 429) return reply.status(429).send('Woah there! Stop sending so many requests!');
 
     consola.error(error);
