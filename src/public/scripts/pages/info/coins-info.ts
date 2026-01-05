@@ -317,7 +317,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
 
                 for (const [index, numistaId] of numistaIds.entries()) {
                     const linkElement = document.createElement('a');
-                    linkElement.href = `https://en.numista.com/catalogue/pieces${numistaId}.html`;
+                    linkElement.href = `https://en.numista.com/${numistaId}`;
                     linkElement.target = '_blank';
                     linkElement.textContent = `#${numistaId}`;
 
