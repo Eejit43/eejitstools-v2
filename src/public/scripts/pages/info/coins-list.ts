@@ -315,7 +315,11 @@ async function loadCoinsList() {
         for (const design of denomination.designs) {
             const coinDesignDiv = document.createElement('div');
             coinDesignDiv.classList.add('coin-design', 'hidden');
-            if (design.coins.every((coin) => !coin.obtained)) coinDesignDiv.dataset.noneObtained = 'true';
+            if (design.coins.every((coin) => !coin.obtained)) {
+                coinDesignDiv.dataset.noneObtained = 'true';
+                if (design.active || Number.parseInt(design.coins.at(-1)!.year) >= new Date().getFullYear() - 5)
+                    coinDesignDiv.dataset.noneObtainedOverride = 'true';
+            }
 
             const coinDesignLink = document.createElement('a');
             coinDesignLink.textContent = design.name;

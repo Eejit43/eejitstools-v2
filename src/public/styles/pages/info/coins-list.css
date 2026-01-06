@@ -74,7 +74,7 @@ button.coin-denomination-expand {
 }
 
 #coins-list.unobtained-sections-hidden .coin-denomination[data-none-obtained="true"],
-#coins-list.unobtained-sections-hidden .coin-design[data-none-obtained="true"] {
+#coins-list.unobtained-sections-hidden .coin-design[data-none-obtained="true"]:not([data-none-obtained-override="true"]) {
     display: none;
 }
 
