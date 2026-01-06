@@ -272,6 +272,36 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             },
         },
         {
+            icon: 'arrows-up-down',
+            name: 'Thickness',
+            value: () => {
+                if (!design.thickness) return null;
+
+                if (typeof design.thickness === 'number') return `${design.thickness} mm`;
+
+                const listElement = document.createElement('ul');
+
+                for (const yearRange of design.thickness) {
+                    const listItem = document.createElement('li');
+
+                    if (yearRange.value) listItem.append(`${yearRange.value} mm`);
+                    else {
+                        const unknownSpan = document.createElement('span');
+                        unknownSpan.dataset.unknown = 'true';
+                        unknownSpan.textContent = 'Unknown';
+
+                        listItem.append(unknownSpan);
+                    }
+
+                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
+            },
+        },
+        {
             icon: 'coin-blank',
             name: 'Edge',
             value: () => {
