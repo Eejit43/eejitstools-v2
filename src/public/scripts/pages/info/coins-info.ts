@@ -34,7 +34,7 @@ async function loadCoinsInfo() {
     for (const denomination of coinsInfo) {
         const coinDenominationElement = document.createElement('div');
         coinDenominationElement.classList.add('information-button');
-        coinDenominationElement.textContent = `${denomination.name} ($${denomination.value >= 0.01 ? denomination.value.toFixed(2) : denomination.value})`;
+        coinDenominationElement.textContent = `${denomination.name}\n($${denomination.value >= 0.01 ? denomination.value.toFixed(2) : denomination.value})`;
         coinDenominationElement.addEventListener('click', () => {
             const searchParameters = new URLSearchParams(window.location.search);
             searchParameters.set('denomination', denomination.id);
@@ -87,7 +87,7 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
 
         const coinDesignElement = document.createElement('div');
         coinDesignElement.classList.add('information-button');
-        coinDesignElement.textContent = `${design.name} (${getCoinYears(design)})`;
+        coinDesignElement.textContent = `${design.name}\n(${getCoinYears(design)})`;
         coinDesignElement.addEventListener('click', () => {
             const searchParameters = new URLSearchParams(window.location.search);
             searchParameters.set('denomination', denomination.id);
