@@ -181,6 +181,7 @@ const designParameterOrder: (keyof CoinDesign<Coin>)[] = [
     'composition',
     'mass',
     'diameter',
+    'thickness',
     'edge',
     'numistaEntry',
     'wikipediaArticle',
