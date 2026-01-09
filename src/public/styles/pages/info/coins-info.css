@@ -40,22 +40,22 @@
     gap: 10px;
 
     & .information-button {
+        width: 200px;
+        margin: auto;
+        padding: 8px;
+        text-align: center;
+        white-space: pre-wrap;
+        background-color: #272a32;
+        border: 2px solid var(--neutral-color-150);
+        border-radius: 3px;
         transition:
             opacity 100ms ease,
             border-radius 100ms ease;
-        margin: auto;
-        border: 2px solid var(--neutral-color-150);
-        border-radius: 3px;
-        background-color: #272a32;
-        padding: 8px;
-        width: 200px;
-        text-align: center;
-        white-space: pre-wrap;
 
         &:hover {
+            border-radius: 8px;
             opacity: 0.8;
             cursor: pointer;
-            border-radius: 8px;
         }
 
         & img {

@@ -1,11 +1,11 @@
 #input {
-    margin-bottom: 1em;
     width: 60%;
     min-width: 60%;
     max-width: 70%;
     height: 250px;
     min-height: 250px;
     max-height: 350px;
+    margin-bottom: 1em;
     resize: both;
 }
 

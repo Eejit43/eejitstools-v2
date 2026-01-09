@@ -1,16 +1,16 @@
 nav {
-    display: grid;
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    grid-template-columns: 1fr repeat(4, fit-content(100%));
-    column-gap: 25px;
-    align-items: center;
     z-index: 2000;
-    background-color: #1b1e24 !important;
+    display: grid;
     padding: 30px 25px;
+    grid-template-columns: 1fr repeat(4, fit-content(100%));
+    align-items: center;
+    column-gap: 25px;
     font-size: 20px;
+    background-color: #1b1e24 !important;
 
     @media (width <= 600px) {
         column-gap: 15px;
@@ -43,12 +43,12 @@ nav {
     }
 
     & .search-box {
-        padding: 3px;
         height: 40px;
+        padding: 3px;
 
         @media (width <= 600px) {
-            padding: 2px;
             height: 38px;
+            padding: 2px;
         }
     }
 }
@@ -80,37 +80,37 @@ nav * {
 }
 
 .search-box {
-    border: 2px solid #3b3b3f;
-    border-radius: 10px;
-    background-color: var(--input-background);
-    padding: 5px;
     width: max-content;
     height: 44px;
+    padding: 5px;
     color: var(--neutral-color-100);
+    background-color: var(--input-background);
+    border: 2px solid #3b3b3f;
+    border-radius: 10px;
 
     @media (width <= 600px) {
-        padding: 3px;
         height: 40px;
+        padding: 3px;
     }
 
     & .search-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         float: right;
-        cursor: pointer;
-        margin: auto;
+        display: flex;
         width: 30px;
         height: 30px;
+        margin: auto;
+        align-items: center;
+        justify-content: center;
         color: var(--neutral-color-100);
+        cursor: pointer;
     }
 
     & .search-text {
-        border: none !important;
-        background-color: var(--input-background) !important;
-        padding: 6px 0 !important;
         width: 0 !important;
+        padding: 6px 0 !important;
         color: var(--neutral-color-100) !important;
+        background-color: var(--input-background) !important;
+        border: none !important;
 
         &::placeholder {
             color: var(--neutral-color-100);
@@ -119,25 +119,25 @@ nav * {
 }
 
 .search-results {
-    display: none;
     z-index: -100;
+    display: none;
 
     & table {
         display: block;
-        margin-top: 1px;
-        border: 2px solid #3b3b3f;
-        border-radius: 10px;
-        background-color: var(--input-background);
-        padding: 8px;
         width: 300px;
         max-height: 500px;
-        overflow-y: scroll;
+        margin-top: 1px;
+        padding: 8px;
         color: var(--neutral-color-100);
         font-size: 18px;
+        background-color: var(--input-background);
+        border: 2px solid #3b3b3f;
+        border-radius: 10px;
+        overflow-y: scroll;
 
         & tr:first-of-type > td {
-            border-top: none;
             padding-top: 0;
+            border-top: none;
         }
 
         & tr:last-of-type > td {
@@ -145,10 +145,10 @@ nav * {
         }
 
         & td {
-            border-top: 2px solid var(--neutral-color-200);
+            width: 300px;
             padding-top: 15px;
             padding-bottom: 15px;
-            width: 300px;
+            border-top: 2px solid var(--neutral-color-200);
 
             & .results-title {
                 padding-bottom: 5px;
@@ -169,9 +169,9 @@ nav * {
 
 .search-box:hover > .search-text,
 .search-text:focus {
-    box-shadow: none !important;
-    padding: 7px 0 6px 8px !important;
     width: 249px !important;
+    padding: 7px 0 6px 8px !important;
+    box-shadow: none !important;
 }
 
 .search-box:hover > .search-results,
@@ -207,8 +207,8 @@ nav * {
     }
 
     & i {
-        transform: translateY(1.5px);
         margin-left: 2px;
+        transform: translateY(1.5px);
     }
 }
 

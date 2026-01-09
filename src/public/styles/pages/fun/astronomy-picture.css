@@ -5,9 +5,9 @@
 
 a#apod-link {
     display: block;
-    margin: 20px auto;
     width: 900px;
     max-width: 90%;
+    margin: 20px auto;
 
     & > img {
         width: 100%;
@@ -16,10 +16,10 @@ a#apod-link {
 
 div#apod-embed-container {
     position: relative;
-    margin: 15px auto;
-    padding-top: 40%;
     width: 900px;
     max-width: 90%;
+    margin: 15px auto;
+    padding-top: 40%;
     overflow: hidden;
 
     & > iframe {
@@ -33,13 +33,13 @@ div#apod-embed-container {
 /* Date fetcher */
 #month-input,
 #date-input {
-    margin-right: 1em;
     width: 2.5em;
+    margin-right: 1em;
 }
 
 #year-input {
-    margin-right: 1em;
     width: 4em;
+    margin-right: 1em;
 }
 
 #reset-date {

@@ -21,14 +21,14 @@ div#toggle-buttons button {
 }
 
 .coin-denomination-image {
-    vertical-align: middle;
-    margin-right: 6px;
     max-height: 30px;
+    margin-right: 6px;
+    vertical-align: middle;
 }
 
 button.coin-denomination-expand {
-    vertical-align: middle;
     margin-left: 10px;
+    vertical-align: middle;
 }
 
 .coin-design {
@@ -37,14 +37,14 @@ button.coin-denomination-expand {
 }
 
 .coin-design-image {
-    vertical-align: middle;
-    margin-right: 6px;
     max-height: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
 }
 
 .coin-table {
-    margin: 20px auto;
     width: 50%;
+    margin: 20px auto;
 
     & td {
         padding: 12px 15px;
@@ -58,8 +58,8 @@ button.coin-denomination-expand {
 
     & input[type="checkbox"] {
         display: block;
-        transform: scale(1.2);
         margin: auto;
+        transform: scale(1.2);
     }
 }
 
@@ -125,9 +125,9 @@ tr[data-upgrade="true"] {
 
 .coin-image-icon {
     display: unset;
+    padding-left: 2px;
     transition: 0.3s;
     cursor: pointer;
-    padding-left: 2px;
 
     &:hover {
         color: var(--neutral-color-150);
@@ -140,8 +140,8 @@ tr[data-upgrade="true"] {
 }
 
 .coin-type-comparison {
-    cursor: pointer;
     text-decoration: underline dotted;
+    cursor: pointer;
 }
 
 button.coin-design-expand {
@@ -151,9 +151,9 @@ button.coin-design-expand {
 /* History */
 #change-history {
     margin-top: 20px;
-    border: 4px solid var(--dark-border);
     padding: 15px;
     padding-left: 10px;
+    border: 4px solid var(--dark-border);
 
     & li {
         margin-inline: 30px;
@@ -183,30 +183,30 @@ button#generate-simplified-needed-list {
 }
 
 #needed-list-modal {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9999;
-    background-color: rgb(0 0 0 / 90%);
-    padding-top: 100px;
+    display: none;
     width: 100%;
     height: 100%;
+    padding-top: 100px;
+    background-color: rgb(0 0 0 / 90%);
     overflow: auto;
 }
 
 #needed-list-modal-content {
     display: block;
-    animation-duration: 0.6s;
-    animation-name: zoom;
-    margin: auto;
-    padding: 10px 0;
     width: 80%;
     max-width: 700px;
     height: 150px;
+    margin: auto;
+    padding: 10px 0;
     color: var(--neutral-color-100);
     font-family: monospace;
     white-space: preserve;
+    animation-duration: 0.6s;
+    animation-name: zoom;
 }
 
 @keyframes zoom {
@@ -223,15 +223,15 @@ button#generate-simplified-needed-list {
     position: absolute;
     top: 15px;
     right: 35px;
-    transition: 0.3s;
     color: var(--neutral-color-100);
     font-weight: bold;
     font-size: 40px;
+    transition: 0.3s;
 
     &:hover,
     &:focus {
-        cursor: pointer;
         color: var(--neutral-color-200);
         text-decoration: none;
+        cursor: pointer;
     }
 }

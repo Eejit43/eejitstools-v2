@@ -5,8 +5,8 @@ div.toolbox {
 
         &.country-variant-table {
             display: inline-block;
-            margin: 8px auto 30px;
             max-width: 250px;
+            margin: 8px auto 30px;
         }
 
         & td {
@@ -18,8 +18,8 @@ div.toolbox {
         }
 
         & img {
-            margin-block: 2px;
             max-width: 100%;
+            margin-block: 2px;
         }
     }
 }

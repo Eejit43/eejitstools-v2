@@ -3,8 +3,8 @@
 .odometer.odometer-auto-theme,
 .odometer.odometer-theme-default {
     -moz-box-orient: vertical;
-    display: inline-block;
     position: relative;
+    display: inline-block;
     vertical-align: middle;
     *vertical-align: auto;
 }
@@ -17,8 +17,8 @@
 .odometer.odometer-auto-theme .odometer-digit,
 .odometer.odometer-theme-default .odometer-digit {
     -moz-box-orient: vertical;
-    display: inline-block;
     position: relative;
+    display: inline-block;
     vertical-align: middle;
     *vertical-align: auto;
 }
@@ -44,11 +44,11 @@
 
 .odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
 .odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
-    display: block;
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    display: block;
     text-align: left;
+    overflow: hidden;
 }
 
 .odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
@@ -96,8 +96,8 @@
 
 .odometer.odometer-auto-theme,
 .odometer.odometer-theme-default {
-    line-height: 1.1em;
     font-family: "Helvetica Neue", sans-serif;
+    line-height: 1.1em;
 }
 
 .odometer.odometer-auto-theme .odometer-value,

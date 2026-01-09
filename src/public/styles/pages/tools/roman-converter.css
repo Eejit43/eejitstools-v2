@@ -22,8 +22,8 @@
 }
 
 .roman-numerals {
-    margin: 0 10px;
     width: 15em;
+    margin: 0 10px;
 
     & tr > td:first-of-type {
         font-family: var(--font-family-serif);

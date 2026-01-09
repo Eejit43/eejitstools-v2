@@ -89,12 +89,12 @@
     padding: 0;
 
     &:not(textarea, input):focus {
+        border-radius: 2px;
+        outline: 2px solid #7aacfe !important;
+        outline-offset: 0.3ch;
         transition:
             outline 0.2s ease,
             border-radius 0.2s ease;
-        outline: 2px solid #7aacfe !important;
-        outline-offset: 0.3ch;
-        border-radius: 2px;
     }
 }
 
@@ -127,11 +127,11 @@ a {
 
     &.external-link::after {
         padding-left: 3px;
-        content: "\f08e";
         font-weight: bold;
         font-size: calc(1em - 3px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f08e";
     }
 }
 
@@ -154,38 +154,38 @@ h2 {
 
 code,
 .code {
-    border-radius: 3px;
-    background-color: #2f3136;
     padding: 0.2em;
     font-size: 85%;
     font-family: monospace;
     white-space: pre-wrap;
-    word-break: break-all;
+    background-color: #2f3136;
+    border-radius: 3px;
+    overflow-wrap: break-word;
 }
 
 hr {
+    width: 100%;
     margin-block: 30px;
+    color: var(--neutral-color-200);
     border: 1px solid currentcolor;
     border-radius: 3px;
-    width: 100%;
-    color: var(--neutral-color-200);
 }
 
 /* Keyboard input */
 kbd {
     display: inline-block;
-    box-shadow:
-        0 1px 1px rgb(0 0 0 / 20%),
-        0 2px 0 0 rgb(255 255 255 / 70%) inset;
-    border: 1px solid #b4b4b4;
-    border-radius: 3px;
-    background-color: #eee;
     padding: 2px 4px;
     color: var(--neutral-color-450);
     font-weight: bold;
     font-size: 0.85em;
     line-height: 1;
     white-space: nowrap;
+    background-color: #eee;
+    border: 1px solid #b4b4b4;
+    border-radius: 3px;
+    box-shadow:
+        0 1px 1px rgb(0 0 0 / 20%),
+        0 2px 0 0 rgb(255 255 255 / 70%) inset;
 }
 
 .success {
@@ -244,20 +244,20 @@ kbd {
 
 [data-icon-before]::before {
     padding-right: 3px;
-    content: attr(data-icon-before);
     font-weight: bold;
     font-size: calc(1em - 2px);
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: "Font Awesome 7 Pro";
+    content: attr(data-icon-before);
 }
 
 [data-icon-after]::after {
     padding-left: 3px;
-    content: attr(data-icon-after);
     font-weight: bold;
     font-size: calc(1em - 2px);
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: "Font Awesome 7 Pro";
+    content: attr(data-icon-after);
 }
 
 /*
@@ -267,15 +267,15 @@ kbd {
 */
 
 .toolbox {
-    margin: 140px auto 0;
-    border: 2px solid var(--neutral-color-100);
-    background-color: #1f2229;
-    padding: 10px 30px 30px;
     width: 95%;
     max-width: 95%;
+    margin: 140px auto 0;
+    padding: 10px 30px 30px;
     color: var(--neutral-color-100);
     font-weight: 500;
     font-size: 18px;
+    background-color: #1f2229;
+    border: 2px solid var(--neutral-color-100);
 
     @media (width <= 700px) {
         max-width: 85%;
@@ -283,22 +283,22 @@ kbd {
 }
 
 .info-table {
-    margin: 30px auto;
-    border-collapse: collapse;
     width: 75%;
-    overflow-y: scroll;
+    margin: 30px auto;
     color: var(--neutral-color-100);
+    border-collapse: collapse;
+    overflow-y: scroll;
 
     &.small-width {
         max-width: 500px;
     }
 
     & th {
-        border: 4px solid var(--table-border);
-        background-color: #292d33;
         padding: 10px;
         font-size: 18px;
         text-align: center;
+        background-color: #292d33;
+        border: 4px solid var(--table-border);
 
         @media (width <= 700px) {
             font-size: 16px;
@@ -310,11 +310,11 @@ kbd {
     }
 
     & td {
-        border: 4px solid var(--table-border);
         padding: 20px;
         font-weight: 500;
         font-size: 18px;
         text-align: left;
+        border: 4px solid var(--table-border);
 
         @media (width <= 700px) {
             padding: 14px;
@@ -326,8 +326,8 @@ kbd {
 @media (width <= 700px) {
     .info-table.needs-scroll {
         display: inline-block;
-        margin: 8px auto 30px;
         min-width: 90%;
+        margin: 8px auto 30px;
     }
 }
 
@@ -365,12 +365,12 @@ kbd {
 
 .error-image {
     display: block;
-    filter: drop-shadow(0 0 0.75rem dimgray);
+    width: 500px;
+    max-width: 60%;
     margin: 0 auto;
     margin-top: 30px;
     border-radius: 3px;
-    width: 500px;
-    max-width: 60%;
+    filter: drop-shadow(0 0 0.75rem dimgray);
 }
 
 /*
@@ -385,35 +385,35 @@ kbd {
 
 img.emoji {
     display: inline-block;
-    vertical-align: -0.1em;
-    margin: 0 0.05em 0 0.1em;
-    background-size: 0.9em 0.9em;
     width: 0.9em;
     height: 0.9em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    background-size: 0.9em 0.9em;
     pointer-events: none;
 }
 
 .spoiler {
-    display: inline-block;
     position: relative;
-    cursor: text;
-    border-radius: 3px;
-    background-color: #393f42;
+    display: inline-block;
     padding: 3px;
+    background-color: #393f42;
+    border-radius: 3px;
+    cursor: text;
 
     @media (hover) {
         &::before {
-            display: flex;
             position: absolute;
-            justify-content: center;
+            inset: 0;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #1f2225;
+            border-radius: 3px;
             opacity: 1;
             transition: opacity 0.3s ease;
-            inset: 0;
-            border-radius: 3px;
-            background-color: #1f2225;
             content: "";
-            text-align: center;
         }
 
         &:hover::before {
@@ -434,22 +434,22 @@ img.emoji {
 }
 
 #overlay {
-    display: block;
     position: fixed;
-    z-index: 9999;
     inset: 0;
-    background-color: rgb(0 0 0 / 40%);
+    z-index: 9999;
+    display: block;
     width: 100%;
     height: 100%;
+    background-color: rgb(0 0 0 / 40%);
 
     & .noscript-message {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
         color: var(--error-color-300);
         font-weight: bold;
         font-size: 50px;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -461,11 +461,11 @@ img.emoji {
 
     &::after {
         padding-left: 3px;
-        content: "\f178";
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f178";
     }
 
     @media (width <= 700px) {
@@ -484,32 +484,32 @@ img.emoji {
 }
 
 #modal {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9999;
-    background-color: rgb(0 0 0 / 90%);
-    padding-top: 100px;
+    display: none;
     width: 100%;
     height: 100%;
+    padding-top: 100px;
+    background-color: rgb(0 0 0 / 90%);
     overflow: auto;
 }
 
 #modal-image {
     display: block;
-    margin: auto;
     width: 80%;
     max-width: 700px;
+    margin: auto;
 }
 
 #modal-caption {
     display: block;
-    margin: auto;
-    padding: 10px 0;
     width: 80%;
     max-width: 700px;
     height: 150px;
+    margin: auto;
+    padding: 10px 0;
     color: var(--neutral-color-100);
     text-align: center;
 }
@@ -534,16 +534,16 @@ img.emoji {
     position: absolute;
     top: 15px;
     right: 35px;
-    transition: 0.3s;
     color: var(--neutral-color-100);
     font-weight: bold;
     font-size: 40px;
+    transition: 0.3s;
 
     &:hover,
     &:focus {
-        cursor: pointer;
         color: var(--neutral-color-200);
         text-decoration: none;
+        cursor: pointer;
     }
 }
 

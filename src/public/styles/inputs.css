@@ -1,18 +1,18 @@
 textarea {
     display: block;
-    transition: box-shadow 0.1s ease;
-    margin: 0.5rem 0;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: var(--input-background);
-    padding: 3px;
     width: 40%;
     height: 120px;
     min-height: 80px;
     max-height: 240px;
-    resize: vertical;
+    margin: 0.5rem 0;
+    padding: 3px;
     color: var(--neutral-color-200);
     font-family: var(--font-family-monospace);
+    background-color: var(--input-background);
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: box-shadow 0.1s ease;
+    resize: vertical;
 
     @media (width <= 700px) {
         width: 85%;
@@ -20,24 +20,24 @@ textarea {
 }
 
 .fake-input {
-    overflow: scroll;
-    user-select: text;
     text-align: left;
+    user-select: text;
+    overflow: scroll;
 }
 
 input:not(input[type="file"], input[type="checkbox"], input[type="color"]),
 .fake-input {
-    transition: all 0.2s ease;
-    cursor: pointer;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: var(--input-background);
-    padding: 3px 5px;
     width: 200px;
-    scrollbar-width: none;
+    padding: 3px 5px;
     color: var(--neutral-color-200);
     font-size: 12px;
     font-family: var(--font-family-monospace);
+    background-color: var(--input-background);
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    scrollbar-width: none;
 }
 
 input::-webkit-scrollbar,
@@ -57,10 +57,10 @@ input[type="file"] {
 }
 
 input[type="color"] {
-    cursor: pointer;
+    background-color: var(--input-background);
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: var(--input-background);
+    cursor: pointer;
 
     &:hover {
         background-color: var(--input-background-hover);
@@ -68,47 +68,47 @@ input[type="color"] {
 }
 
 select {
-    transition: all 0.2s ease;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: var(--input-background);
-    padding: 3px 5px;
     width: min-content;
+    padding: 3px 5px;
     color: var(--neutral-color-100);
     font-size: 12px;
     font-family: var(--font-family-monospace);
+    background-color: var(--input-background);
+    border: 1px solid #444;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .file-upload {
     display: block;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    margin-block: 3px;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: var(--input-background);
-    padding: 6px;
     width: max-content;
     height: max-content;
+    margin-block: 3px;
+    padding: 6px;
     color: var(--neutral-color-100);
     font-weight: normal;
     font-size: 16px;
+    background-color: var(--input-background);
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
     &::before {
         padding-right: 3px;
-        content: "\f574";
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f574";
     }
 
     &:hover {
-        transition: all 0.2s ease;
         background-color: var(--input-background-hover);
+        transition: all 0.2s ease;
     }
 
     & ~ #file-message {
@@ -118,17 +118,17 @@ select {
 }
 
 button:not(.fake-input) {
-    transition: all 0.2s ease;
-    cursor: pointer;
-    margin: 3px 0;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: var(--input-background);
-    padding: 3px 5px;
     width: max-content;
     height: max-content;
+    margin: 3px 0;
+    padding: 3px 5px;
     color: var(--neutral-color-100);
     font-family: var(--font-family);
+    background-color: var(--input-background);
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
     &:disabled {
         opacity: 0.5;
@@ -145,58 +145,58 @@ button:not(.fake-input) {
 
     &.button-result-success::after {
         padding-left: 3px;
-        content: "\f00c";
         color: var(--success-color-300);
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f00c";
     }
 
     &.button-result-error::after {
         padding-left: 3px;
-        content: "\f00d";
         color: var(--error-color-300);
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f00d";
     }
 
     &.button-result-warning::after {
         padding-left: 3px;
-        content: "\f071";
         color: var(--warning-color-300);
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f071";
     }
 
     &.button-copy::after {
         padding-left: 3px;
-        content: "\f0c5";
         font-weight: bold;
         font-size: calc(1em - 2px);
         /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
         font-family: "Font Awesome 7 Pro";
+        content: "\f0c5";
     }
 }
 
 .invisible-input[type="text"]:not(input[type="file"], input[type="checkbox"]),
 .invisible-input[type="number"]:not(input[type="file"], input[type="checkbox"]) {
-    border: none;
-    border-bottom: 1px solid var(--neutral-color-100);
-    border-radius: 0;
-    background-color: transparent;
-    padding-bottom: 0;
     width: 1.35em;
-    overflow: hidden;
+    padding-bottom: 0;
     color: var(--neutral-color-100);
     font-weight: 500;
     font-size: 50px;
     font-family: var(--font-family);
     text-align: right;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--neutral-color-100);
+    border-radius: 0;
+    overflow: hidden;
 }
 
 .invisible-input[type="text"]:focus:not(input[type="file"], input[type="checkbox"]),
@@ -209,6 +209,6 @@ button:not(.fake-input) {
 .invisible-input[type="number"]::-webkit-outer-spin-button,
 .no-arrow[type="number"]::-webkit-inner-spin-button,
 .no-arrow[type="number"]::-webkit-outer-spin-button {
-    appearance: none;
     margin: 0;
+    appearance: none;
 }

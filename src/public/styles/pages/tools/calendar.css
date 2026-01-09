@@ -19,13 +19,13 @@
 
 #main-calendar,
 #date-display {
+    width: 85%;
     margin: auto;
+    padding: 15px;
+    color: var(--full-page-color);
+    background-color: var(--full-page-background);
     border: 3px solid var(--full-page-border);
     border-radius: 15px;
-    background-color: var(--full-page-background);
-    padding: 15px;
-    width: 85%;
-    color: var(--full-page-color);
 }
 
 #month-year {
@@ -34,12 +34,12 @@
 }
 
 #calendar {
+    width: 100%;
     margin: auto;
     margin-bottom: 10px;
-    border-collapse: collapse;
-    width: 100%;
     table-layout: fixed;
     font-size: 20px;
+    border-collapse: collapse;
 
     & th {
         padding: 5px;
@@ -52,15 +52,15 @@
 
     & td {
         position: relative;
-        border: 1px solid var(--full-page-border);
-        padding: 5px;
         width: 100%;
         height: 100%;
+        padding: 5px;
         text-align: center;
+        border: 1px solid var(--full-page-border);
 
         &:not(.no-date):hover {
-            cursor: pointer;
             background-color: var(--full-page-border);
+            cursor: pointer;
         }
     }
 }
@@ -147,8 +147,8 @@
 }
 
 #login-password {
-    margin-top: 15px;
     width: 50px;
+    margin-top: 15px;
 }
 
 #todo-list {
@@ -164,13 +164,13 @@
         }
 
         & .checkbox-container {
-            animation: wave 400ms ease;
-            border-color: var(--checkbox-color);
             background-color: var(--checkbox-color);
+            border-color: var(--checkbox-color);
+            animation: wave 400ms ease;
 
             &::before {
-                transform: scale(2.5);
                 opacity: 0;
+                transform: scale(2.5);
                 transition: all 400ms ease;
             }
 
@@ -185,20 +185,20 @@
     }
 
     &:disabled + .todo-label .checkbox-container {
-        border-color: var(--checkbox-border-color);
         background-color: rgb(144 152 169 / 30%);
+        border-color: var(--checkbox-border-color);
     }
 
     &:checked:disabled + .todo-label .checkbox-container {
-        border-color: var(--checkbox-border-color);
         background-color: var(--checkbox-border-color);
+        border-color: var(--checkbox-border-color);
     }
 }
 
 /* Inspired by https://codepen.io/avstorm/pen/yjLGGN */
 .todo-label {
-    cursor: pointer;
     margin: auto;
+    cursor: pointer;
     user-select: none;
 
     & span {
@@ -209,34 +209,34 @@
 
     & .checkbox-container {
         position: relative;
-        vertical-align: middle;
-        transform: scale(1);
-        transition: all 200ms ease;
-        border: 1px solid var(--checkbox-border-color);
-        border-radius: 3px;
         width: 18px;
         height: 18px;
+        vertical-align: middle;
+        border: 1px solid var(--checkbox-border-color);
+        border-radius: 3px;
+        transform: scale(1);
+        transition: all 200ms ease;
 
         &::before {
             display: block;
-            transform: scale(0);
-            opacity: 1;
-            border-radius: 50%;
             background-color: var(--checkbox-color);
+            border-radius: 50%;
+            opacity: 1;
+            transform: scale(0);
             content: "";
         }
 
         & svg {
-            fill: none;
-            stroke: white;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 16px;
-            stroke-dashoffset: 16px;
             position: absolute;
             top: 3px;
             left: 2px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             transform: translate3d(0, 0, 0);
             transition: all 300ms ease;
             transition-delay: 100ms;
@@ -248,15 +248,15 @@
         padding-inline: 18px;
 
         &::after {
-            display: block;
             position: absolute;
             top: 50%;
             left: 13px;
-            transform: translateY(-50%);
-            transition: width 200ms ease-in-out;
-            background-color: currentcolor;
+            display: block;
             width: 0%;
             height: 2px;
+            background-color: currentcolor;
+            transform: translateY(-50%);
+            transition: width 200ms ease-in-out;
             content: "";
         }
     }

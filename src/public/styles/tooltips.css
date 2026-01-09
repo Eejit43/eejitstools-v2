@@ -3,18 +3,18 @@
 /* Base styles for the element that has a tooltip */
 [data-tooltip] {
     position: relative;
-    cursor: pointer;
     text-align: center;
     text-decoration: underline dotted;
+    cursor: pointer;
 }
 
 /* Base styles for the entire tooltip */
 [data-tooltip]::before,
 [data-tooltip]::after {
     position: absolute;
-    transform: translate3d(0, 0, 0);
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 0, 0);
     transition:
         opacity 0.2s ease-in-out,
         visibility 0.2s ease-in-out,
@@ -27,30 +27,30 @@
 [data-tooltip]:hover::after,
 [data-tooltip]:focus::before,
 [data-tooltip]:focus::after {
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
 }
 
 /* Base styles for the tooltip's directional arrow */
 [data-tooltip]::before {
     z-index: 1001;
-    border: 6px solid transparent;
     background-color: transparent;
+    border: 6px solid transparent;
     content: "";
 }
 
 /* Base styles for the tooltip's content area */
 [data-tooltip]::after {
     z-index: 1000;
-    border-radius: 5px;
-    background-color: rgb(43 43 43 / 95%);
-    padding: 8px;
     width: 160px;
-    content: attr(data-tooltip);
+    padding: 8px;
     color: var(--neutral-color-100);
     font-size: 14px;
     line-height: 1.2;
-    word-break: break-word;
+    background-color: rgb(43 43 43 / 95%);
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    content: attr(data-tooltip);
 }
 
 /* Directions */

@@ -34,10 +34,10 @@ header {
 }
 
 .tools-table {
-    margin: 45px auto 30px;
-    border-collapse: collapse;
     width: 70%;
+    margin: 45px auto 30px;
     color: var(--neutral-color-100);
+    border-collapse: collapse;
 
     @media (width <= 700px) {
         width: 85%;
@@ -48,11 +48,11 @@ header {
     }
 
     & td {
-        border: 4px solid #1b1e24;
         padding: 20px;
         font-weight: 500;
         font-size: 19px;
         text-align: left;
+        border: 4px solid #1b1e24;
 
         @media (width <= 700px) {
             padding: 12px;

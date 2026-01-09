@@ -3,16 +3,16 @@
 }
 
 .keycodes {
-    word-wrap: break-word;
-    margin: 30px auto;
-    border: 4px solid var(--table-border);
-    border-collapse: collapse;
-    background-color: var(--table-background);
     width: 70%;
+    margin: 30px auto;
     table-layout: fixed;
-    overflow-y: scroll;
     color: var(--neutral-color-100);
     line-height: 150%;
+    background-color: var(--table-background);
+    border: 4px solid var(--table-border);
+    border-collapse: collapse;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
 
     @media (width <= 700px) {
         width: 95%;
@@ -31,19 +31,19 @@
     }
 
     & td {
-        border: 3px solid var(--table-border);
         padding: 8px;
         font-weight: 500;
         font-size: 18px;
         text-align: center;
+        border: 3px solid var(--table-border);
 
         @media (width <= 700px) {
             font-size: 16px;
         }
 
         &:hover {
-            cursor: not-allowed;
             background-color: #3a3f47;
+            cursor: not-allowed;
         }
     }
 }

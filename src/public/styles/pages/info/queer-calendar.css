@@ -9,9 +9,9 @@
         }
 
         & img {
+            height: 0.8em;
             margin-right: 0.25em;
             border-radius: 3px;
-            height: 0.8em;
         }
     }
 }
