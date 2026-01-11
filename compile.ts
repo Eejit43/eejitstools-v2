@@ -1,6 +1,7 @@
 import { type BuildOptions, build } from 'esbuild';
 import postcss from 'esbuild-postcss';
 import { cpSync } from 'node:fs';
+import { replaceTscAliasPaths } from 'tsc-alias';
 
 const banner = {
     js: '// This file was automatically compiled from TypeScript. View the original file for a more human-readable version.\n',
@@ -25,13 +26,19 @@ export async function compileTypescript() {
         build({ entryPoints: ['src/route-handlers/*.ts'], outdir: 'dist/route-handlers', ...buildParameters.node }),
 
         // Data and scripts
-        build({ entryPoints: ['src/public/data/*.ts'], outdir: 'dist/public/data', ...buildParameters.node }),
+        build({ entryPoints: ['src/public/data/*.ts'], outdir: 'dist/public/data', ...buildParameters.browser }),
         build({ entryPoints: ['src/public/scripts/*.ts'], outdir: 'dist/public/scripts', ...buildParameters.browser }),
         build({ entryPoints: ['src/public/scripts/pages/**/*.ts'], outdir: 'dist/public/scripts/pages', ...buildParameters.browser }),
 
         // CSS
         build({ entryPoints: ['src/public/styles/*.css'], outdir: 'dist/public/styles', ...buildParameters.css }),
         build({ entryPoints: ['src/public/styles/pages/**/*.css'], outdir: 'dist/public/styles/pages', ...buildParameters.css }),
+    ]);
+
+    // Resolve aliased imports
+    await Promise.all([
+        replaceTscAliasPaths({ configFile: 'tsconfig.json', outDir: './' }),
+        replaceTscAliasPaths({ configFile: './src/public/tsconfig.json', outDir: 'dist' }),
     ]);
 
     // Copy views folder
@@ -46,8 +53,8 @@ export async function compileTypescript() {
 
     // Copy favicons folder
     cpSync('src/public/favicons', 'dist/public/favicons', { recursive: true });
-    cpSync('src/public/apple-touch-icon.png', 'dist/public/apple-touch-icon.png', { recursive: true });
-    cpSync('src/public/favicon.ico', 'dist/public/favicon.ico', { recursive: true });
+    cpSync('src/public/apple-touch-icon.png', 'dist/public/apple-touch-icon.png');
+    cpSync('src/public/favicon.ico', 'dist/public/favicon.ico');
 }
 
 await compileTypescript();

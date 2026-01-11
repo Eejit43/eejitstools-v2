@@ -1,4 +1,4 @@
-import { showAlert } from '../../functions.js';
+import { showAlert } from '@scripts/functions.js';
 
 const input = document.querySelector<HTMLTextAreaElement>('#input')!;
 const characterDisplay = document.querySelector<HTMLSpanElement>('#character-count')!;

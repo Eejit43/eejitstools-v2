@@ -1,3 +1,3 @@
-import { loadPopupImages } from '../../functions.js';
+import { loadPopupImages } from '@scripts/functions.js';
 
 loadPopupImages();

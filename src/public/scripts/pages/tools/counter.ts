@@ -1,4 +1,4 @@
-import { showAlert } from '../../functions.js';
+import { showAlert } from '@scripts/functions.js';
 
 const numberDisplay = document.querySelector<HTMLSpanElement>('#counter')!;
 const activationSelect = document.querySelector<HTMLSelectElement>('#activation-button')!;

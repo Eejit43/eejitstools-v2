@@ -1,4 +1,4 @@
-import { escapeHtml, showAlert } from '../../functions.js';
+import { escapeHtml, showAlert } from '@scripts/functions.js';
 
 const eventsTitle = document.querySelector<HTMLDivElement>('#events-title')!;
 const eventsDisplay = document.querySelector<HTMLUListElement>('#events')!;

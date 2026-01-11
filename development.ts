@@ -1,3 +1,4 @@
+import { compileTypescript } from '@root/compile.js';
 import chalk from 'chalk';
 import { watch } from 'chokidar';
 import { consola } from 'consola';
@@ -6,7 +7,6 @@ import { rmSync } from 'node:fs';
 import * as readline from 'node:readline';
 import { promisify } from 'node:util';
 import treeKill from 'tree-kill';
-import { compileTypescript } from './compile.js';
 
 readline.emitKeypressEvents(process.stdin);
 

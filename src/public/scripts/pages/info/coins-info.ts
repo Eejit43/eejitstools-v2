@@ -1,6 +1,6 @@
-import type { FilteredCoin } from '../../../../route-handlers/coins-info';
-import type { CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list';
-import { loadPopupImages } from '../../functions.js';
+import type { FilteredCoin } from '@route-handlers/coins-info';
+import type { CoinDenomination, CoinDesign } from '@route-handlers/coins-list';
+import { loadPopupImages } from '@scripts/functions.js';
 
 const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
 const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;

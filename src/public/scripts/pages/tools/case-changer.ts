@@ -1,4 +1,4 @@
-import { copyValue, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '@scripts/functions.js';
 
 const input = document.querySelector<HTMLTextAreaElement>('#input')!;
 const toUpperButton = document.querySelector<HTMLButtonElement>('#to-upper')!;

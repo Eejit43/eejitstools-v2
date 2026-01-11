@@ -1,5 +1,5 @@
-import type { ApodEntryMedia, FullApodEntry } from '../../../../route-handlers/astronomy-picture.js';
-import { showAlert } from '../../functions.js';
+import type { ApodEntryMedia, FullApodEntry } from '@route-handlers/astronomy-picture.js';
+import { showAlert } from '@scripts/functions.js';
 
 const resultElement = document.querySelector<HTMLDivElement>('#result')!;
 const monthInput = document.querySelector<HTMLInputElement>('#month-input')!;

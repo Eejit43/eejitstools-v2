@@ -1,4 +1,4 @@
-import { updateInnerHtml } from '../../functions.js';
+import { updateInnerHtml } from '@scripts/functions.js';
 
 setInterval(() => {
     const currentTime = new Date();

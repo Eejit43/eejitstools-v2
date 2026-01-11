@@ -1,4 +1,4 @@
-import { copyValue, updateArrow } from '../../functions.js';
+import { copyValue, updateArrow } from '@scripts/functions.js';
 
 const standardInput = document.querySelector<HTMLInputElement>('#standard-input')!;
 const standardInputResetButton = document.querySelector<HTMLButtonElement>('#standard-input-reset')!;

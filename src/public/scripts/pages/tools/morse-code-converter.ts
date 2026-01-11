@@ -1,4 +1,4 @@
-import { copyText, showAlert, showResult } from '../../functions.js';
+import { copyText, showAlert, showResult } from '@scripts/functions.js';
 
 const input = document.querySelector<HTMLTextAreaElement>('#input')!;
 const toMorseButton = document.querySelector<HTMLButtonElement>('#to-morse')!;

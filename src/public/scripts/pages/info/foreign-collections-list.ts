@@ -1,5 +1,5 @@
-import type { ForeignCollectionsList } from '../../../../route-handlers/foreign-collections-list.js';
-import { showAlert, showResult } from '../../functions.js';
+import type { ForeignCollectionsList } from '@route-handlers/foreign-collections-list.js';
+import { showAlert, showResult } from '@scripts/functions.js';
 
 const passwordInput = document.querySelector<HTMLInputElement>('#login-password')!;
 const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;

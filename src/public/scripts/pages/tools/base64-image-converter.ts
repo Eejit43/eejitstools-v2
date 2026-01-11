@@ -1,4 +1,4 @@
-import { copyValue, createBase64ObjectUrl, escapeHtml, showAlert, showResult } from '../../functions.js';
+import { copyValue, createBase64ObjectUrl, escapeHtml, showAlert, showResult } from '@scripts/functions.js';
 
 const fileUploadLabel = document.querySelector<HTMLLabelElement>('#file-upload-label')!;
 const fileUpload = document.querySelector<HTMLInputElement>('#file-upload')!;

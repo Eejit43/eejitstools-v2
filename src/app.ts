@@ -1,15 +1,15 @@
+import { euroImageAmounts, euroVariantImageAmounts, toneIndicators } from '@data/pages-data.js';
+import { allPages, blankProperties } from '@data/pages.js';
 import fastifyRateLimit from '@fastify/rate-limit';
 import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';
+import setupRoutes from '@route-handlers/index.js';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import Fastify, { type FastifyError, type FastifyRequest } from 'fastify';
 import handlebars from 'handlebars';
 import mongoose from 'mongoose';
 import path from 'node:path';
-import { euroImageAmounts, euroVariantImageAmounts, toneIndicators } from './public/data/pages-data.js';
-import { allPages, blankProperties } from './public/data/pages.js';
-import setupRoutes from './route-handlers/index.js';
 
 // Add Handlebars helper functions
 handlebars.registerHelper('isEmpty', handlebars.Utils.isEmpty);

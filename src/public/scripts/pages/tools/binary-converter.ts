@@ -1,4 +1,4 @@
-import { copyValue, showAlert } from '../../functions.js';
+import { copyValue, showAlert } from '@scripts/functions.js';
 
 const inputType = document.querySelector<HTMLSelectElement>('#input-type')!;
 const input = document.querySelector<HTMLInputElement>('#input')!;

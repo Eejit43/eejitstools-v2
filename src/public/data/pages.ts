@@ -6,7 +6,7 @@ import {
     stateAbbreviations,
     textAbbreviations,
     toneIndicators,
-} from './pages-data.js';
+} from '@data/pages-data.js';
 
 interface Script {
     link: string;

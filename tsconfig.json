@@ -1,4 +1,13 @@
 {
     "extends": "@eejit/eslint-config-typescript/tsconfig.json",
-    "include": ["development.ts", "src/app.ts", "src/route-handlers/*.ts"]
+    "include": ["development.ts", "src/app.ts", "src/route-handlers/*.ts"],
+    "compilerOptions": {
+        "paths": {
+            "@route-handlers/*": ["./src/route-handlers/*"],
+            "@data/*": ["./src/public/data/*"],
+            "@scripts/*": ["./src/public/scripts/*"],
+            "@/*": ["./src/*"],
+            "@root/*": ["./*"]
+        }
+    }
 }

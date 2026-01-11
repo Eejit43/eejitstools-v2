@@ -1,4 +1,4 @@
-import { requestGeolocation, titleCase } from '../../functions.js';
+import { requestGeolocation, titleCase } from '@scripts/functions.js';
 
 interface TideData {
     origin: {

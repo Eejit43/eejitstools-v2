@@ -1,5 +1,5 @@
-import type { Coin, CoinDenomination, CoinDesign } from '../../../../route-handlers/coins-list.js';
-import { loadPopupImages, showAlert, showResult } from '../../functions.js';
+import type { Coin, CoinDenomination, CoinDesign } from '@route-handlers/coins-list.js';
+import { loadPopupImages, showAlert, showResult } from '@scripts/functions.js';
 
 const passwordInput = document.querySelector<HTMLInputElement>('#login-password')!;
 const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;

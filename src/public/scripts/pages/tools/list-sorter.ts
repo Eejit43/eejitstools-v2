@@ -1,4 +1,4 @@
-import { copyValue, showAlert, showResult, shuffleArray } from '../../functions.js';
+import { copyValue, showAlert, showResult, shuffleArray } from '@scripts/functions.js';
 
 const input = document.querySelector<HTMLTextAreaElement>('#input')!;
 const separatorInput = document.querySelector<HTMLInputElement>('#separator')!;

@@ -1,5 +1,5 @@
-import { allPages } from '../data/pages.js';
-import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from './functions.js';
+import { allPages } from '@data/pages.js';
+import { addAnimation, showAlert, twemojiUpdate, updateInnerHtml } from '@scripts/functions.js';
 
 twemojiUpdate();
 

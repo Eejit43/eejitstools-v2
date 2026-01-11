@@ -1,4 +1,4 @@
-import { showAlert, showResult } from '../../functions.js';
+import { showAlert, showResult } from '@scripts/functions.js';
 
 const minNumberInput = document.querySelector<HTMLInputElement>('#min-number')!;
 const maxNumberInput = document.querySelector<HTMLInputElement>('#max-number')!;

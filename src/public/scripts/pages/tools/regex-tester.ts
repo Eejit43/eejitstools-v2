@@ -1,4 +1,4 @@
-import { copyValue, showAlert, showResult } from '../../functions.js';
+import { copyValue, showAlert, showResult } from '@scripts/functions.js';
 
 const regexInput = document.querySelector<HTMLInputElement>('#regex-input')!;
 const flagsInput = document.querySelector<HTMLInputElement>('#flags-input')!;

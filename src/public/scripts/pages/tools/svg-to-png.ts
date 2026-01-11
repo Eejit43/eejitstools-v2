@@ -1,4 +1,4 @@
-import { showAlert, showResult, stringToHtml } from '../../functions.js';
+import { showAlert, showResult, stringToHtml } from '@scripts/functions.js';
 
 const svgInput = document.querySelector<HTMLTextAreaElement>('#svg-input')!;
 const loadSvgButton = document.querySelector<HTMLButtonElement>('#load-svg')!;

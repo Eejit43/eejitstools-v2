@@ -1,5 +1,5 @@
-import { type AudioCategory, type AudioTrack, audioTracks } from '../../../data/audio-tracks.js';
-import { shuffleArray } from '../../functions.js';
+import { type AudioCategory, type AudioTrack, audioTracks } from '@data/audio-tracks.js';
+import { shuffleArray } from '@scripts/functions.js';
 
 const tracksByCategory = Object.fromEntries(audioTracks.map((category) => [category.id, category]));
 

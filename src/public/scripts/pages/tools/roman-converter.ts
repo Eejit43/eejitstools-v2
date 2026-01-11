@@ -1,4 +1,4 @@
-import { copyText, showAlert, updateArrow } from '../../functions.js';
+import { copyText, showAlert, updateArrow } from '@scripts/functions.js';
 
 const integerInput = document.querySelector<HTMLInputElement>('#integer-input')!;
 const integerConvertButton = document.querySelector<HTMLButtonElement>('#integer-convert')!;

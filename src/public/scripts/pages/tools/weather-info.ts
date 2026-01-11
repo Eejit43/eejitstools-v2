@@ -1,4 +1,4 @@
-import { requestGeolocation, titleCase, twemojiUpdate } from '../../functions.js';
+import { requestGeolocation, titleCase, twemojiUpdate } from '@scripts/functions.js';
 
 declare global {
     interface Window {

@@ -1,5 +1,5 @@
+import { copyValue, showAlert } from '@scripts/functions.js';
 import type Chroma from 'chroma-js';
-import { copyValue, showAlert } from '../../functions.js';
 
 declare global {
     interface Window {

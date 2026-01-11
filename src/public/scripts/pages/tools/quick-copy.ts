@@ -1,4 +1,4 @@
-import { copyText, showAlert } from '../../functions.js';
+import { copyText, showAlert } from '@scripts/functions.js';
 
 const clearClipboardButton = document.querySelector<HTMLButtonElement>('#clear-clipboard')!;
 const copyZwsButton = document.querySelector<HTMLButtonElement>('#copy-zws')!;

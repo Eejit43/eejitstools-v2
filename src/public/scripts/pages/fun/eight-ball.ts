@@ -1,4 +1,4 @@
-import { showAlert } from '../../functions.js';
+import { showAlert } from '@scripts/functions.js';
 
 const questionInput = document.querySelector<HTMLInputElement>('#question-input')!;
 const rollButton = document.querySelector<HTMLButtonElement>('#roll')!;

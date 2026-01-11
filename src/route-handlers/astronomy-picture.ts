@@ -1,7 +1,7 @@
+import { logApiRequest } from '@/app.js';
 import consola from 'consola';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { parse } from 'node-html-parser';
-import { logApiRequest } from '../app.js';
 
 interface ApodEntry {
     success: boolean;

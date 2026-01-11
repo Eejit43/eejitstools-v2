@@ -1,6 +1,6 @@
-import type { CalendarEvents } from '../../../../route-handlers/calendar.js';
-import { holidayEmojis, moonEmojis } from '../../../data/emojis.js';
-import { showAlert, showResult, twemojiUpdate } from '../../functions.js';
+import { holidayEmojis, moonEmojis } from '@data/emojis.js';
+import type { CalendarEvents } from '@route-handlers/calendar.js';
+import { showAlert, showResult, twemojiUpdate } from '@scripts/functions.js';
 
 const monthYearDisplay = document.querySelector<HTMLDivElement>('#month-year')!;
 const calendarBody = document.querySelector<HTMLTableSectionElement>('#calendar-body')!;

@@ -1,5 +1,5 @@
+import { logApiRequest } from '@/app.js';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
-import { logApiRequest } from '../app.js';
 
 /**
  * Sets up the cors-anywhere route.

@@ -1,4 +1,4 @@
-import { showAlert, showResult } from '../../functions.js';
+import { showAlert, showResult } from '@scripts/functions.js';
 
 declare global {
     interface Window {

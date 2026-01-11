@@ -1,9 +1,9 @@
+import { commitInfo } from '@/app.js';
+import { allPages } from '@data/pages.js';
 import chalk from 'chalk';
 import consola from 'consola';
 import type { FastifyInstance } from 'fastify';
 import fs from 'node:fs';
-import { commitInfo } from '../app.js';
-import { allPages } from '../public/data/pages.js';
 
 /**
  * Sets up the cors-anywhere route.

@@ -1,4 +1,4 @@
-import { showAlert } from '../../functions.js';
+import { showAlert } from '@scripts/functions.js';
 
 const ready = document.querySelector<HTMLDivElement>('#ready')!;
 const keyResults = document.querySelector<HTMLTableRowElement>('#key-results')!;

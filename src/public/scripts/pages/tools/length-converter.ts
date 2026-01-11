@@ -1,5 +1,5 @@
+import { copyValue, showAlert, showResult } from '@scripts/functions.js';
 import type { MathJsInstance } from 'mathjs';
-import { copyValue, showAlert, showResult } from '../../functions.js';
 
 declare global {
     interface Window {
