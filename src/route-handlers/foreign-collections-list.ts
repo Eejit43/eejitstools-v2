@@ -15,6 +15,19 @@ type DatabaseForeignCollectionsList = { data: ForeignCollectionsList } & { _id?:
 const foreignCollectionsList = model('foreign-collections-list', new Schema({ data: Array }, {}));
 
 /**
+ * Sorts foreign collection entries.
+ * @param a The first entry to compare.
+ * @param b The second entry to compare.
+ */
+function sortData(a: ForeignCollectionEntry, b: ForeignCollectionEntry) {
+    const aStartsWithQuestionMark = a.name.startsWith('?');
+    const bStartsWithQuestionMark = b.name.startsWith('?');
+    if (aStartsWithQuestionMark && !bStartsWithQuestionMark) return 1;
+    if (!aStartsWithQuestionMark && bStartsWithQuestionMark) return -1;
+    return a.name.localeCompare(b.name);
+}
+
+/**
  * Sets up all foreign collection related routes.
  * @param fastify The Fastify instance.
  */
@@ -47,7 +60,7 @@ export default function setupForeignCollectionsList(fastify: FastifyInstance) {
             foundEntry.type = type;
             foundEntry.data = data;
 
-            const sortedData = foundList.data.sort((a, b) => a.name.localeCompare(b.name)); // eslint-disable-line unicorn/no-array-sort
+            const sortedData = foundList.data.toSorted(sortData);
 
             await foreignCollectionsList.replaceOne({}, { data: sortedData });
 
@@ -71,7 +84,7 @@ export default function setupForeignCollectionsList(fastify: FastifyInstance) {
 
             foundList.data.push({ id, name, type, data });
 
-            const sortedData = foundList.data.sort((a, b) => a.name.localeCompare(b.name)); // eslint-disable-line unicorn/no-array-sort
+            const sortedData = foundList.data.toSorted(sortData);
 
             await foreignCollectionsList.replaceOne({}, { data: sortedData });
 

@@ -71,8 +71,8 @@ async function loadCollectionList() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    name: 'Unknown Entry',
-                    type: 'Unknown Type',
+                    name: '???',
+                    type: 'Unknown',
                     data: { coins: false, banknotes: false, stamps: false },
                     password: passwordInput.dataset.input,
                 }),
