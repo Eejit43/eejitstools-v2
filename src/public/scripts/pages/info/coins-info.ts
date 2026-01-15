@@ -159,7 +159,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
 
     const informationGridCell = document.createElement('div');
 
-    const designInformation: { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[] = [
+    const designInformation = [
         { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(design) },
         {
             icon: 'coins',
@@ -271,36 +271,38 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 return listElement;
             },
         },
-        {
-            icon: 'arrows-up-down',
-            name: 'Thickness',
-            value: () => {
-                if (!design.thickness) return null;
+        design.thickness === false
+            ? null
+            : {
+                  icon: 'arrows-up-down',
+                  name: 'Thickness',
+                  value: () => {
+                      if (!design.thickness) return null;
 
-                if (typeof design.thickness === 'number') return `${design.thickness} mm`;
+                      if (typeof design.thickness === 'number') return `${design.thickness} mm`;
 
-                const listElement = document.createElement('ul');
+                      const listElement = document.createElement('ul');
 
-                for (const yearRange of design.thickness) {
-                    const listItem = document.createElement('li');
+                      for (const yearRange of design.thickness) {
+                          const listItem = document.createElement('li');
 
-                    if (yearRange.value) listItem.append(`${yearRange.value} mm`);
-                    else {
-                        const unknownSpan = document.createElement('span');
-                        unknownSpan.dataset.unknown = 'true';
-                        unknownSpan.textContent = 'Unknown';
+                          if (yearRange.value) listItem.append(`${yearRange.value} mm`);
+                          else {
+                              const unknownSpan = document.createElement('span');
+                              unknownSpan.dataset.unknown = 'true';
+                              unknownSpan.textContent = 'Unknown';
 
-                        listItem.append(unknownSpan);
-                    }
+                              listItem.append(unknownSpan);
+                          }
 
-                    listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+                          listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
 
-                    listElement.append(listItem);
-                }
+                          listElement.append(listItem);
+                      }
 
-                return listElement;
-            },
-        },
+                      return listElement;
+                  },
+              },
         {
             icon: 'coin-blank',
             name: 'Edge',
@@ -381,7 +383,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 return linkContainer;
             },
         },
-    ];
+    ].filter(Boolean) as { icon: string; name: string; value: string | null | (() => HTMLElement | string | null) }[];
 
     for (const item of designInformation) {
         const row = document.createElement('div');
