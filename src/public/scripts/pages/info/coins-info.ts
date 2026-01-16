@@ -160,7 +160,11 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
     const informationGridCell = document.createElement('div');
 
     const designInformation = [
-        { icon: 'calendar-range', name: 'Years Minted', value: getCoinYears(design) },
+        {
+            icon: 'calendar-range',
+            name: `${!design.active && design.coins[0].year === design.coins.at(-1)!.year ? 'Year' : 'Years'} Minted`,
+            value: getCoinYears(design),
+        },
         {
             icon: 'coins',
             name: 'Total Minted',
@@ -362,7 +366,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
         },
         {
             icon: 'newspaper',
-            name: 'Wikipedia Article',
+            name: `Wikipedia ${design.wikipediaArticle && Array.isArray(design.wikipediaArticle) && design.wikipediaArticle.length > 1 ? 'Articles' : 'Article'}`,
             value: () => {
                 if (!design.wikipediaArticle) return null;
 
