@@ -191,7 +191,11 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 return `${total.toLocaleString()}${lastDateWithMintage === design.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
             },
         },
-        { icon: 'dollar-sign', name: 'Value', value: `$${denomination.value.toFixed(2)}` },
+        {
+            icon: 'dollar-sign',
+            name: 'Value',
+            value: `$${denomination.value >= 0.01 ? denomination.value.toFixed(2) : denomination.value}`,
+        },
         {
             icon: 'vial',
             name: 'Composition',
