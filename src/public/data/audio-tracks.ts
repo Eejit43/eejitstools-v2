@@ -43,6 +43,11 @@ export const audioTracks: AudioCategory[] = [
             },
             { name: 'Betty Boop - Charlie Puth (_Blan Kato Remix)', file: 'Betty Boop', duration: '3:27' },
             { name: 'Feels So Good - Chuck Mangione', file: 'Feels So Good', duration: '9:42' },
+            {
+                name: 'The Ballad of Ambrose & Gunnel (Severance: Season 2) - Theodore Shapiro',
+                file: 'The Ballad of Ambrose & Gunnel',
+                duration: '4:27',
+            },
         ],
     },
     {
