@@ -160,6 +160,13 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
     const informationGridCell = document.createElement('div');
 
     const designInformation = [
+        design.alternativeNames
+            ? {
+                  icon: 'tags',
+                  name: `Alternative ${design.alternativeNames.length > 1 ? 'Names' : 'Name'}`,
+                  value: design.alternativeNames.join(', '),
+              }
+            : null,
         {
             icon: 'calendar-range',
             name: `${!design.active && design.coins[0].year === design.coins.at(-1)!.year ? 'Year' : 'Years'} Minted`,
