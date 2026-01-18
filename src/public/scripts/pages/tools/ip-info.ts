@@ -8,7 +8,7 @@ interface IPInformation {
     longitude: number;
     latitude: number;
     security: { is_vpn: boolean };
-    connection: { isp_name: string; organization_name: string; connection_type: string };
+    connection: { isp_name: string; organization_name: string | null; connection_type: string | null };
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -24,7 +24,7 @@ void fetch('/ip-info').then(async (response) => {
             icon: 'house-signal',
             name: 'ISP',
             nameTooltip: 'Internet Service Provider',
-            value: `${data.connection.isp_name} ${data.connection.isp_name === data.connection.organization_name ? '' : `(${data.connection.organization_name}) `}(${data.connection.connection_type})`,
+            value: `${data.connection.isp_name}${!data.connection.organization_name || data.connection.isp_name === data.connection.organization_name ? '' : ` (${data.connection.organization_name})`}${data.connection.connection_type ? `(${data.connection.connection_type})` : ''}`,
         },
         {
             icon: 'location-dot',

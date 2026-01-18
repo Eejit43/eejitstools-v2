@@ -122,7 +122,7 @@ const preParsedPages: PreParsedPages = {
             description:
                 'Displays your current <span class="tooltip-bottom" data-tooltip="Internet Protocol">IP</span> address and IP provided information',
             toolboxTitle: '<span data-tooltip="Internet Protocol">IP</span> Info',
-            keywords: ['internet', 'isp'],
+            keywords: ['internet', 'isp', 'wifi'],
         },
         'keycode-info': {
             title: 'Keycode Information',
