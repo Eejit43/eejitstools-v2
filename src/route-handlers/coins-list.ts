@@ -174,6 +174,7 @@ export async function patchCoinDatabase(coinsData: DatabaseCoinDenomination[]) {
 const denominationParameterOrder: (keyof DatabaseCoinDenomination)[] = ['_id', 'name', 'id', 'value', 'constants', 'designs', '__v'];
 const designParameterOrder: (keyof CoinDesign<Coin>)[] = [
     'name',
+    'alternativeNames',
     'id',
     'nifc',
     'note',
