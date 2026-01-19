@@ -4,7 +4,6 @@
 
     "compilerOptions": {
         "moduleResolution": "Bundler", // Allow importing of dependencies for types
-        "baseUrl": "./",
         "paths": {
             "@route-handlers/*": ["../route-handlers/*"],
             "@/*": ["../*"],

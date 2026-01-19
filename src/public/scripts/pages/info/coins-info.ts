@@ -4,6 +4,7 @@ import { loadPopupImages } from '@scripts/functions.js';
 
 const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
 const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;
+const modal = document.querySelector<HTMLDivElement>('#modal')!;
 
 let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[] | undefined;
 
@@ -61,6 +62,8 @@ async function loadCoinsInfo() {
  * @param denomination The denomination to load information for.
  */
 function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<FilteredCoin>>) {
+    if (modal.style.display === 'block') modal.style.display = 'none';
+
     outputDiv.innerHTML = '';
     outputGridDiv.innerHTML = '';
 
