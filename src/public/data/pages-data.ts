@@ -433,7 +433,6 @@ export const toneIndicators = [
     { indicators: ['nbh'], meaning: 'nobody here; not about anybody that would see the message' },
     { indicators: ['nbr'], meaning: 'not being rude' },
     { indicators: ['nc', 'neg'], meaning: 'negative connotation' },
-    { indicators: ['neg'], meaning: 'negative connotation' },
     { indicators: ['neu'], meaning: 'neutral / neutral connotation' },
     { indicators: ['nf', 'nfta'], meaning: 'not forcing / not forced to answer' },
     { indicators: ['nm'], meaning: 'not mad' },
