@@ -20,9 +20,9 @@
         "esbuild-postcss": "^0.0.4",
         "fastify": "^5.7.1",
         "handlebars": "^4.7.8",
-        "mongoose": "^9.1.4",
+        "mongoose": "^9.1.5",
         "node-html-parser": "^7.0.2",
-        "postcss-preset-env": "^11.1.1"
+        "postcss-preset-env": "^11.1.2"
     },
     "devDependencies": {
         "@dword-design/eslint-plugin-import-alias": "^8.1.3",
