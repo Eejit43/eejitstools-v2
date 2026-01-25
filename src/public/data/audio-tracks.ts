@@ -189,6 +189,12 @@ export const audioTracks: AudioCategory[] = [
             { name: 'Cello Suite No. 1 (G Major) - Bach', file: 'Cello Suite', duration: '2:19' },
             { name: 'Clair de lune - Claude Debussy', file: 'Clair de lune', duration: '4:55' },
             { name: 'Morning Mood - Edvard Grieg', file: 'Morning Mood', duration: '3:49' },
+            { name: 'Sibelius Samba (Étude Op. 76, No. 2) - Jean Sibelius', file: 'Sibelius Samba', duration: '2:11' },
+            {
+                name: 'Times Square Ballet - Three Dance Episodes (From "On The Town") III - Leonard Bernstein',
+                file: 'Times Square Ballet',
+                duration: '4:39',
+            },
         ],
     },
     {
