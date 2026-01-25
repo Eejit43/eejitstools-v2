@@ -132,6 +132,7 @@
 .playlist-track {
     display: flex;
     margin-top: 15px !important;
+    align-items: center;
     background-color: var(--full-page-active);
     border-radius: 5px;
     cursor: pointer;
