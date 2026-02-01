@@ -205,6 +205,13 @@ button:not(.fake-input) {
     box-shadow: none;
 }
 
+/* Hide arrows in number input, Firefox */
+.invisible-input[type="number"],
+.no-arrow[type="number"] {
+    appearance: textfield;
+}
+
+/* Hide arrows in number input, WebKit/Blink */
 .invisible-input[type="number"]::-webkit-inner-spin-button,
 .invisible-input[type="number"]::-webkit-outer-spin-button,
 .no-arrow[type="number"]::-webkit-inner-spin-button,
