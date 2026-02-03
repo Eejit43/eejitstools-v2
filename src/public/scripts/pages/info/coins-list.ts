@@ -413,10 +413,12 @@ async function loadCoinsList() {
                 do id = Math.floor(Math.random() * 9_000_000_000 + 1_000_000_000).toString();
                 while (design.coins.some((coin) => coin.id === id));
 
-                const row = generateCoinRow(denomination, design, { year, id, obtained: false });
+                const newRowData = { year, id, obtained: false };
+
+                const row = generateCoinRow(denomination, design, newRowData);
                 newRowMessage.before(row);
 
-                coinsData[denomination.id].designs[design.id].coins.set(id, { year, id, obtained: false });
+                coinsData[denomination.id].designs[design.id].coins.set(id, newRowData);
 
                 loadDesignTotals(denomination.id, design.id);
 
@@ -517,6 +519,8 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         delete tooltipSpan.dataset.tooltip;
         tooltipSpan.classList.remove('tooltip-bottom');
 
+        const mintMarkData = coin.mintMark && coin.mintMark in MINT_MARKS ? MINT_MARKS[coin.mintMark as keyof typeof MINT_MARKS] : null;
+
         if (tooltipSpan.textContent.toLowerCase() === 'none') tooltipSpan.textContent = '';
         else if (Array.isArray(mintMarkData)) tooltipSpan.textContent = coin.mintMark!;
     });
@@ -527,12 +531,12 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
         tooltipSpan.textContent ||= 'None';
         tooltipSpan.dataset.tooltip =
-            mintMark === 'NONE'
+            tooltipSpan.textContent === 'None'
                 ? `Likely minted in ${MINT_MARKS.P}`
                 : mintMark in MINT_MARKS
                   ? `Minted in ${Array.isArray(mintMarkData) ? mintMarkData[1] : mintMarkData}`
                   : 'Unknown';
-        tooltipSpan.textContent = mintMark === 'NONE' ? 'None' : Array.isArray(mintMarkData) ? mintMarkData[0] : mintMark;
+        tooltipSpan.textContent = tooltipSpan.textContent === 'None' ? 'None' : Array.isArray(mintMarkData) ? mintMarkData[0] : mintMark;
         tooltipSpan.classList.add('tooltip-bottom');
 
         const newValue = Array.isArray(mintMarkData)
@@ -544,7 +548,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
         if (newValue === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
 
         addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', {
-            mintMark: Array.isArray(mintMarkData) ? mintMark : newValue,
+            mintMark: newValue,
         });
 
         coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark = newValue;
