@@ -47,15 +47,16 @@ loginButton.addEventListener('click', async () => {
     }
 });
 
-const mintMarks: Record<string, string> = {
+const MINT_MARKS = {
     P: 'Philadelphia (Pennsylvania)',
     D: 'Denver (Colorado)',
+    DAHLONEGA: ['D', 'Dahlonega (Georgia)'],
     S: 'San Francisco (California)',
     O: 'New Orleans (Louisiana)',
     W: 'West Point (New York)',
     CC: 'Carson City (Nevada)',
     C: 'Charlotte (North Carolina)',
-};
+} satisfies Record<string, string | [string, string]>;
 
 type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
 
@@ -500,39 +501,50 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 
     row.append(yearCell);
 
+    const mintMarkData = coin.mintMark && coin.mintMark in MINT_MARKS ? MINT_MARKS[coin.mintMark as keyof typeof MINT_MARKS] : null;
+
     const mintMarkCell = document.createElement('td');
     const tooltipSpan = document.createElement('span');
     tooltipSpan.classList.add('tooltip-bottom');
     tooltipSpan.dataset.tooltip = coin.mintMark
-        ? coin.mintMark in mintMarks
-            ? `Minted in ${mintMarks[coin.mintMark]}`
+        ? mintMarkData
+            ? `Minted in ${Array.isArray(mintMarkData) ? mintMarkData[1] : mintMarkData}`
             : 'Unknown'
-        : `Likely minted in ${mintMarks.P}`;
-    tooltipSpan.textContent = coin.mintMark ?? 'None';
+        : `Likely minted in ${MINT_MARKS.P}`;
+    tooltipSpan.textContent = Array.isArray(mintMarkData) ? mintMarkData[0] : (coin.mintMark ?? 'None');
     tooltipSpan.contentEditable = 'plaintext-only';
     tooltipSpan.addEventListener('focus', () => {
         delete tooltipSpan.dataset.tooltip;
         tooltipSpan.classList.remove('tooltip-bottom');
 
         if (tooltipSpan.textContent.toLowerCase() === 'none') tooltipSpan.textContent = '';
+        else if (Array.isArray(mintMarkData)) tooltipSpan.textContent = coin.mintMark!;
     });
     tooltipSpan.addEventListener('blur', async () => {
+        const mintMark = tooltipSpan.textContent.toUpperCase();
+
+        const mintMarkData = mintMark !== 'NONE' && mintMark in MINT_MARKS ? MINT_MARKS[mintMark as keyof typeof MINT_MARKS] : null;
+
         tooltipSpan.textContent ||= 'None';
         tooltipSpan.dataset.tooltip =
-            tooltipSpan.textContent.toLowerCase() === 'none'
-                ? `Likely minted in ${mintMarks.P}`
-                : tooltipSpan.textContent.toUpperCase() in mintMarks
-                  ? `Minted in ${mintMarks[tooltipSpan.textContent.toUpperCase()]}`
+            mintMark === 'NONE'
+                ? `Likely minted in ${MINT_MARKS.P}`
+                : mintMark in MINT_MARKS
+                  ? `Minted in ${Array.isArray(mintMarkData) ? mintMarkData[1] : mintMarkData}`
                   : 'Unknown';
-        tooltipSpan.textContent = tooltipSpan.textContent.toLowerCase() === 'none' ? 'None' : tooltipSpan.textContent.toUpperCase();
+        tooltipSpan.textContent = mintMark === 'NONE' ? 'None' : Array.isArray(mintMarkData) ? mintMarkData[0] : mintMark;
         tooltipSpan.classList.add('tooltip-bottom');
 
-        const newValue = tooltipSpan.textContent && tooltipSpan.textContent !== 'None' ? tooltipSpan.textContent : null;
+        const newValue = Array.isArray(mintMarkData)
+            ? mintMark
+            : tooltipSpan.textContent && tooltipSpan.textContent !== 'None'
+              ? tooltipSpan.textContent
+              : null;
 
-        if (tooltipSpan.textContent === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
+        if (newValue === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
 
         addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', {
-            mintMark: tooltipSpan.textContent,
+            mintMark: Array.isArray(mintMarkData) ? mintMark : newValue,
         });
 
         coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark = newValue;
