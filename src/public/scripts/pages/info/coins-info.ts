@@ -2,6 +2,17 @@ import type { FilteredCoin } from '@route-handlers/coins-info';
 import type { CoinDenomination, CoinDesign } from '@route-handlers/coins-list';
 import { loadPopupImages } from '@scripts/functions.js';
 
+const MINT_MARKS: Record<string, string | [string, string]> = {
+    P: 'Philadelphia, Pennsylvania',
+    D: 'Denver, Colorado',
+    S: 'San Francisco, California',
+    C: 'Charlotte, North Carolina',
+    DAHLONEGA: ['D', 'Dahlonega, Georgia'],
+    O: 'New Orleans, Louisiana',
+    CC: 'Carson City, Nevada',
+    W: 'West Point, New York',
+};
+
 const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
 const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;
 const modal = document.querySelector<HTMLDivElement>('#modal')!;
@@ -199,6 +210,44 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                 if (!lastDateWithMintage) return null;
 
                 return `${total.toLocaleString()}${lastDateWithMintage === design.coins.at(-1)!.year ? '' : ` (as of ${lastDateWithMintage})`}`;
+            },
+        },
+        {
+            icon: 'building-columns',
+            name: 'Mint Location',
+            value: () => {
+                const mintMarks = new Set<string>();
+
+                for (const coin of design.coins) mintMarks.add(coin.mintMark ?? 'None');
+
+                if (mintMarks.size === 0) return 'None';
+
+                const list = [...mintMarks]
+                    .toSorted((a, b) => Object.keys(MINT_MARKS).indexOf(a) - Object.keys(MINT_MARKS).indexOf(b))
+                    .filter((mintMark) => mintMark !== 'None' || !mintMarks.has('P'))
+                    .map((mintMark) => {
+                        const mintMarkData = MINT_MARKS[mintMark === 'None' ? 'P' : mintMark] ?? 'Unknown';
+
+                        const actualMintMark = Array.isArray(mintMarkData) ? mintMarkData[0] : mintMark;
+                        const mint = Array.isArray(mintMarkData) ? mintMarkData[1] : mintMarkData;
+
+                        const noMintMarkNote = mintMark === 'P' && mintMarks.has('None') ? ' or no mint mark' : '';
+
+                        return `${mint} (${actualMintMark === 'None' ? 'no mint mark' : `as "${actualMintMark}"${noMintMarkNote}`})`;
+                    });
+
+                if (list.length === 1) return list[0];
+
+                const listElement = document.createElement('ul');
+
+                for (const listItemText of list) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = listItemText;
+
+                    listElement.append(listItem);
+                }
+
+                return listElement;
             },
         },
         {

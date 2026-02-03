@@ -50,12 +50,12 @@ loginButton.addEventListener('click', async () => {
 const MINT_MARKS = {
     P: 'Philadelphia (Pennsylvania)',
     D: 'Denver (Colorado)',
-    DAHLONEGA: ['D', 'Dahlonega (Georgia)'],
     S: 'San Francisco (California)',
-    O: 'New Orleans (Louisiana)',
-    W: 'West Point (New York)',
-    CC: 'Carson City (Nevada)',
     C: 'Charlotte (North Carolina)',
+    DAHLONEGA: ['D', 'Dahlonega (Georgia)'],
+    O: 'New Orleans (Louisiana)',
+    CC: 'Carson City (Nevada)',
+    W: 'West Point (New York)',
 } satisfies Record<string, string | [string, string]>;
 
 type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
