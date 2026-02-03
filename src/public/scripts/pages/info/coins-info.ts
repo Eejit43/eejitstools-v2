@@ -235,14 +235,15 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             value: () => {
                 if (!design.mass) return null;
 
-                if (typeof design.mass === 'number') return `${design.mass.toFixed(2)} grams`;
+                if (typeof design.mass === 'number') return `${design.mass.toLocaleString(undefined, { minimumFractionDigits: 2 })} grams`;
 
                 const listElement = document.createElement('ul');
 
                 for (const yearRange of design.mass) {
                     const listItem = document.createElement('li');
 
-                    if (yearRange.value) listItem.append(`${yearRange.value.toFixed(2)} grams`);
+                    if (yearRange.value)
+                        listItem.append(`${yearRange.value.toLocaleString(undefined, { minimumFractionDigits: 2 })} grams`);
                     else {
                         const unknownSpan = document.createElement('span');
                         unknownSpan.dataset.unknown = 'true';
