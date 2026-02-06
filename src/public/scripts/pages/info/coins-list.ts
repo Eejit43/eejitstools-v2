@@ -545,7 +545,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
               ? tooltipSpan.textContent
               : null;
 
-        if (newValue === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? 'None')) return;
+        if (newValue === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintMark ?? null)) return;
 
         addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mint mark', {
             mintMark: newValue,
