@@ -13,6 +13,31 @@ const MINT_MARKS: Record<string, string | [string, string]> = {
     W: 'West Point, New York',
 };
 
+const DESIGNER_LINK_OVERRIDES: Record<string, string> = {
+    /* eslint-disable @typescript-eslint/naming-convention */
+    'John Reich': 'https://www.usacoinbook.com/encyclopedia/coin-designers/john-reich/',
+    'John Smith Gardner': 'https://www.coincommunity.com/numismatic_people/john-smith-gardner.asp',
+    'Richard Masters': 'https://en.wikipedia.org/wiki/Richard_Alan_Masters',
+    'Charles Vickers': 'https://www.coincommunity.com/numismatic_people/charles-vickers.asp',
+    'Susan Gamble': 'https://coinweek.com/memoriam-susan-gamble-1957-2015/',
+    'James Earle Fraser': 'https://en.wikipedia.org/wiki/James_Earle_Fraser_(sculptor)',
+    'Norman E. Nemeth': 'https://www.coincommunity.com/numismatic_people/norman-e-nemeth.asp',
+    'Al Maletsky': 'https://dickjohnsonsdatabank.com/maletsky-alfred-f.html',
+    'Joe Fitzgerald': 'https://en.wikipedia.org/wiki/Joe_Fitzgerald_(coin_designer)',
+    'Jamie Franki': 'https://mintedassets.com/pages/jamie-franki',
+    'Robert (Bob) Birch': 'https://www.earlyunitedstatescoins.com/engravers.html',
+    'Esao Andrews': 'https://www.usmint.gov/learn/artists/aip-esao-andrews',
+    'Eric David Custer': 'https://www.usmint.gov/learn/artists/sculptors-eric-custer',
+    'William Barber': 'https://en.wikipedia.org/wiki/William_Barber_(engraver)',
+    'John Flanagan': 'https://en.wikipedia.org/wiki/John_Flanagan_(sculptor)',
+    'Jack L. Ahr': 'https://www.usacoinbook.com/encyclopedia/coin-designers/jack-l-ahr/',
+    'Benjamin Sowards': 'https://www.usmint.gov/learn/artists/aip-ben-sowards',
+    'Beth Zaiken': 'https://www.usmint.gov/learn/artists/aip-beth-zaiken',
+    'Dennis R. Williams': 'https://www.usacoinbook.com/encyclopedia/coin-designers/dennis-r-williams/',
+    'Thomas D. Rogers, Sr.': 'https://en.wikipedia.org/wiki/Thomas_D._Rogers',
+    /* eslint-enable @typescript-eslint/naming-convention */
+};
+
 const outputDiv = document.querySelector<HTMLDivElement>('#output')!;
 const outputGridDiv = document.querySelector<HTMLDivElement>('#output-grid')!;
 const modal = document.querySelector<HTMLDivElement>('#modal')!;
@@ -251,9 +276,91 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             },
         },
         {
+            icon: 'user-pen',
+            name:
+                Array.isArray(design.designer) &&
+                (design.designer.every((designer) => typeof designer === 'string' || typeof designer === 'boolean') ||
+                    design.designer.some((yearRange) => Array.isArray(yearRange.value)))
+                    ? 'Designers'
+                    : 'Designer',
+            value: () => {
+                if (!design.designer && design.designer !== false) return null;
+
+                if (Array.isArray(design.designer) && design.designer.every((designer) => typeof designer === 'object')) {
+                    const listElement = document.createElement('ul');
+
+                    for (const yearRange of design.designer) {
+                        const listItem = document.createElement('li');
+
+                        const designers =
+                            typeof yearRange.value === 'string' || typeof yearRange.value === 'boolean'
+                                ? [yearRange.value]
+                                : yearRange.value;
+
+                        for (const [index, rawDesigner] of designers.entries()) {
+                            if (rawDesigner) {
+                                const { designer, note } = /^(?<designer>[ (),.A-Za-z-]+?)(?<note> \([ A-Za-z]+\))?$/.exec(rawDesigner)!
+                                    .groups as {
+                                    designer: string;
+                                    note?: string;
+                                };
+
+                                const linkElement = document.createElement('a');
+                                linkElement.href =
+                                    DESIGNER_LINK_OVERRIDES[designer] ?? `https://en.wikipedia.org/wiki/${designer.replaceAll(' ', '_')}`;
+                                linkElement.target = '_blank';
+                                linkElement.textContent = designer;
+
+                                listItem.append(linkElement);
+
+                                if (note) listItem.append(note);
+                            } else listItem.append(index === 0 ? 'Various' : 'various others');
+
+                            if (index !== designers.length - 1) listItem.append(', ');
+                        }
+
+                        listItem.append(` (${formatYearRange(yearRange.startYear, yearRange.endYear)})`);
+
+                        listElement.append(listItem);
+                    }
+
+                    return listElement;
+                } else {
+                    const linkContainer = document.createElement('span');
+
+                    const designers =
+                        typeof design.designer === 'string' || typeof design.designer === 'boolean' ? [design.designer] : design.designer;
+
+                    for (const [index, rawDesigner] of designers.entries()) {
+                        if (rawDesigner) {
+                            const { designer, note } = /^(?<designer>[ (),.A-Za-z-]+?)(?<note> \([ A-Za-z]+\))?$/.exec(rawDesigner)!
+                                .groups as {
+                                designer: string;
+                                note?: string;
+                            };
+
+                            const linkElement = document.createElement('a');
+                            linkElement.href =
+                                DESIGNER_LINK_OVERRIDES[designer] ?? `https://en.wikipedia.org/wiki/${designer.replaceAll(' ', '_')}`;
+                            linkElement.target = '_blank';
+                            linkElement.textContent = designer;
+
+                            linkContainer.append(linkElement);
+
+                            if (note) linkContainer.append(note);
+                        } else linkContainer.append(index === 0 ? 'Various' : 'various others');
+
+                        if (index !== designers.length - 1) linkContainer.append(', ');
+                    }
+
+                    return linkContainer;
+                }
+            },
+        },
+        {
             icon: 'dollar-sign',
             name: 'Value',
-            value: `$${denomination.value >= 0.01 ? denomination.value.toFixed(2) : denomination.value}`,
+            value: `$${denomination.value >= 0.01 ? denomination.value.toFixed(2) : denomination.value}${design.nifc ? ' (not intended for circulation)' : ''}`,
         },
         {
             icon: 'vial',
