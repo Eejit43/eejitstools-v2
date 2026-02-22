@@ -48,6 +48,7 @@ export const audioTracks: AudioCategory[] = [
                 file: 'The Ballad of Ambrose & Gunnel',
                 duration: '4:27',
             },
+            { name: 'Get Lucky by Daft Punk - The Mechanical Music Man', file: 'Get Lucky', duration: '2:36' },
         ],
     },
     {
