@@ -6,10 +6,10 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig(
     sharedConfig,
+    globalIgnores(['src/public/scripts/external/*.js']),
     {
         languageOptions: { parserOptions: { project: ['./tsconfig.json', './src/public/tsconfig.json'] } },
     },
-    globalIgnores(['eslint.config.js', 'src/public/scripts/external/*.js']),
     importAlias.configs.recommended,
     {
         rules: {
