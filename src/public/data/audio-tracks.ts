@@ -204,6 +204,7 @@ export const audioTracks: AudioCategory[] = [
                 duration: '5:00',
             },
             { name: 'Hungarian Dance No. 5 in G Minor - Johannes Brahms', file: 'Hungarian Dance No. 5', duration: '2:38' },
+            { name: 'Palladio: I. Allegretto - Karl Jenkins', file: 'Palladio I. Allegretto', duration: '3:46' },
         ],
     },
     {
