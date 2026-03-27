@@ -19,7 +19,7 @@
         "esbuild": "^0.27.4",
         "esbuild-postcss": "^0.0.4",
         "fastify": "^5.8.3",
-        "handlebars": "^4.7.8",
+        "handlebars": "^4.7.9",
         "mongoose": "^9.3.0",
         "node-html-parser": "^7.1.0",
         "postcss-preset-env": "^11.2.0"
