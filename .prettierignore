@@ -1,0 +1,4 @@
+*.hbs
+src/public/styles/external
+src/public/scripts/external
+pnpm-lock.yaml
