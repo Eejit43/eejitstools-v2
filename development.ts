@@ -30,7 +30,7 @@ async function spawnProcess() {
 
     consola.success('Successfully compiled TypeScript and CSS!');
 
-    running = spawn(config.command.name, config.command.args, { stdio: 'inherit', shell: true });
+    running = spawn(config.command.name, config.command.args, { stdio: 'inherit' });
 }
 
 await spawnProcess();
