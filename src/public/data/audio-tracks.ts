@@ -49,7 +49,7 @@ export const audioTracks: AudioCategory[] = [
                 duration: '4:27',
             },
             { name: 'Get Lucky by Daft Punk - The Mechanical Music Man', file: 'Get Lucky', duration: '2:36' },
-            { name: 'Proove Your Groove - Alan Baylock', file: 'Proove Your Groove', duration: '5:14' },
+            { name: 'Proove Your Groove - Alan Baylock', file: 'Proove Your Groove', duration: '5:10' },
         ],
     },
     {
