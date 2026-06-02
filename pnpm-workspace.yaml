@@ -1,4 +1,11 @@
 allowBuilds:
-  canvas: true
-  esbuild: false
+    canvas: true
+    esbuild: false
 minimumReleaseAgeStrict: true
+minimumReleaseAgeExclude:
+    - '@eejit/eslint-config-typescript'
+    - '@eejit/prettier-config'
+    - '@eejit/stylelint-config'
+publicHoistPattern:
+    - '*eslint*'
+    - '*prettier*'
