@@ -1,3 +1,4 @@
 allowBuilds:
   canvas: true
   esbuild: false
+minimumReleaseAgeStrict: true
