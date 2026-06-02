@@ -37,10 +37,5 @@
         "tree-kill": "^1.2.2",
         "tsc-alias": "^1.8.16",
         "typescript": "^6.0.2"
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "canvas"
-        ]
     }
 }
