@@ -9,3 +9,4 @@ minimumReleaseAgeExclude:
 publicHoistPattern:
     - '*eslint*'
     - '*prettier*'
+    - '@types/node'
