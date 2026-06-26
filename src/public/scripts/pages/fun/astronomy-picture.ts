@@ -94,7 +94,7 @@ function checkApod(yearInput: number, monthInput: number, dateInput: number) {
  * @param providedDate The provided date.
  */
 async function fetchApod(providedYear: number, providedMonth: number, providedDate: number) {
-    resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-pulse"></i>';
+    resultElement.innerHTML = 'Pulling data from the cosmos <i class="fa-solid fa-spinner fa-spin-pulse"></i>';
 
     const { success, error, source, date, title, credit, explanation, media } = (await (
         await fetch(
