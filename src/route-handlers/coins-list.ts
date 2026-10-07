@@ -23,11 +23,7 @@ export interface CoinDesign<Coin> {
     years?: string;
     active?: true;
     designer:
-        | string
-        | false
-        | (string | false)[]
-        | null
-        | { value: string | false | (string | false)[]; startYear: number; endYear?: number }[];
+        string | false | (string | false)[] | null | { value: string | false | (string | false)[]; startYear: number; endYear?: number }[];
     composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear?: number }[];
     mass: number | null | { value: number | null; startYear: number; endYear?: number }[];
     diameter: number | null | { value: number | null; startYear: number; endYear?: number }[];

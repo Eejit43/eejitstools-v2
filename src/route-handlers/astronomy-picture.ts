@@ -100,8 +100,8 @@ export default function setupApodRoute(fastify: FastifyInstance) {
                 else {
                     const imageElement = html.querySelector('a img, button img')!;
                     media.src = imageElement.getAttribute('src')!;
-                    media.highResolution = imageElement.parentNode.getAttribute('href');
-                    media.annotated = imageElement.parentNode.getAttribute('onmouseover')?.match(/src=["'](.*?)["']/)?.[1];
+                    media.highResolution = imageElement.parentNode!.getAttribute('href');
+                    media.annotated = imageElement.parentNode!.getAttribute('onmouseover')?.match(/src=["'](.*?)["']/)?.[1];
                     media.alt = imageElement
                         .getAttribute('alt')
                         ?.replace(/ please see the explanation for more detailed information./i, '');
