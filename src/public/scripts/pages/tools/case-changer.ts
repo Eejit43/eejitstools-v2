@@ -105,8 +105,8 @@ const uppercaseWords = ['Id', 'Tv'];
  * @param string The string to convert.
  */
 function titleCase(string: string) {
-    string = string.replaceAll(/([^\W_]+[^\s-]*) */g, (txt) => {
-        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+    string = string.replaceAll(/[^\W_][^\s-]* */g, (text) => {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     });
 
     for (const word of lowercaseWords) string = string.replaceAll(new RegExp(`\\s${word}\\s`, 'g'), (text) => text.toLowerCase());
@@ -140,14 +140,14 @@ function toSentence() {
     } else {
         result.value = input.value
             .toLowerCase()
-            .replaceAll(/(^\s*\w|[!.?]\s*\w)/gm, (char) => {
+            .replaceAll(/^\s*\w|[!.?]\s*\w/gm, (char) => {
                 return char.toUpperCase();
             })
-            .replaceAll(/(\s)i(\.|!|\?|\s|\n|$)/gim, '$1I$2')
-            .replaceAll(/(\s)i'm(\.|!|\?|\s|\n|$)/gim, "$1I'm$2")
-            .replaceAll(/(\s)i'd(\.|!|\?|\s|\n|$)/gim, "$1I'd$2")
-            .replaceAll(/(\s)i'll(\.|!|\?|\s|\n|$)/gim, "$1I'll$2")
-            .replaceAll(/(\s)i've(\.|!|\?|\s|\n|$)/gim, "$1I've$2");
+            .replaceAll(/(\s)i([.!?\s]|$)/gim, '$1I$2')
+            .replaceAll(/(\s)i'm([.!?\s]|$)/gim, "$1I'm$2")
+            .replaceAll(/(\s)i'd([.!?\s]|$)/gim, "$1I'd$2")
+            .replaceAll(/(\s)i'll([.!?\s]|$)/gim, "$1I'll$2")
+            .replaceAll(/(\s)i've([.!?\s]|$)/gim, "$1I've$2");
         showResult(toSentenceButton, 'success');
         copyResultButton.disabled = false;
     }

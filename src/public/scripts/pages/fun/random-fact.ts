@@ -1,4 +1,4 @@
-const getFactButton = document.querySelector<HTMLButtonElement>('#get-fact')!;
+const getFactButton = document.querySelector<HTMLButtonElement>('#get-fact')!; // eslint-disable-line unicorn/no-non-function-verb-prefix
 const factOutput = document.querySelector<HTMLDivElement>('#fact-output')!;
 
 /* Add event listeners */
@@ -16,4 +16,4 @@ async function fetchFact() {
     factOutput.textContent = data.text.replaceAll('`', "'").trim();
 }
 
-void fetchFact(); // eslint-disable-line unicorn/prefer-top-level-await
+void fetchFact();

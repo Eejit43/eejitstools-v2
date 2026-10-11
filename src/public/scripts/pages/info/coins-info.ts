@@ -50,8 +50,8 @@ let coinsInfo: CoinDenomination<CoinDesign<FilteredCoin>>[] | undefined;
 async function loadCoinsInfo() {
     coinsInfo ??= (await (await fetch('/coins-info')).json()) as CoinDenomination<CoinDesign<FilteredCoin>>[];
 
-    outputDiv.innerHTML = '';
-    outputGridDiv.innerHTML = '';
+    outputDiv.replaceChildren();
+    outputGridDiv.replaceChildren();
 
     const searchParameters = new URLSearchParams(window.location.search);
     const denominationSearch = searchParameters.get('denomination');
@@ -63,7 +63,8 @@ async function loadCoinsInfo() {
     if (foundDenomination && foundDesign) {
         loadCoinDesignInfo(foundDenomination, foundDesign);
         return;
-    } else if (foundDenomination) {
+    }
+    if (foundDenomination) {
         loadCoinDenominationInfo(foundDenomination);
         return;
     }
@@ -100,8 +101,8 @@ async function loadCoinsInfo() {
 function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<FilteredCoin>>) {
     if (modal.style.display === 'block') modal.style.display = 'none';
 
-    outputDiv.innerHTML = '';
-    outputGridDiv.innerHTML = '';
+    outputDiv.replaceChildren();
+    outputGridDiv.replaceChildren();
 
     const backButtonDiv = document.createElement('div');
     backButtonDiv.id = 'back-button-container';
@@ -109,7 +110,7 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
     const backButton = document.createElement('button');
     backButton.id = 'back-button';
     backButton.textContent = 'Back';
-    backButton.dataset.iconBefore = '\uF053';
+    backButton.dataset.iconBefore = '\u{F053}';
     backButton.addEventListener('click', () => {
         const searchParameters = new URLSearchParams(window.location.search);
         searchParameters.delete('denomination');
@@ -154,15 +155,15 @@ function loadCoinDenominationInfo(denomination: CoinDenomination<CoinDesign<Filt
 function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCoin>>, design: CoinDesign<FilteredCoin>) {
     if (denomination.constants) design = { ...denomination.constants, ...design };
 
-    outputDiv.innerHTML = '';
-    outputGridDiv.innerHTML = '';
+    outputDiv.replaceChildren();
+    outputGridDiv.replaceChildren();
 
     const backButtonDiv = document.createElement('div');
     backButtonDiv.id = 'back-button-container';
 
     const startOverButton = document.createElement('button');
     startOverButton.textContent = 'Start Over';
-    startOverButton.dataset.iconBefore = '\uF323';
+    startOverButton.dataset.iconBefore = '\u{F323}';
     startOverButton.addEventListener('click', () => {
         const searchParameters = new URLSearchParams(window.location.search);
         searchParameters.delete('denomination');
@@ -175,7 +176,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
     const backButton = document.createElement('button');
     backButton.id = 'back-button';
     backButton.textContent = 'Back';
-    backButton.dataset.iconBefore = '\uF053';
+    backButton.dataset.iconBefore = '\u{F053}';
     backButton.addEventListener('click', () => {
         const searchParameters = new URLSearchParams(window.location.search);
         searchParameters.delete('design');
@@ -299,7 +300,7 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
 
                         for (const [index, rawDesigner] of designers.entries()) {
                             if (rawDesigner) {
-                                const { designer, note } = /^(?<designer>[ (),.A-Za-z-]+?)(?<note> \([ A-Za-z]+\))?$/.exec(rawDesigner)!
+                                const { designer, note } = /^(?<designer>[ (),.A-Z-]+?)(?<note> \([ A-Z]+\))?$/i.exec(rawDesigner)!
                                     .groups as {
                                     designer: string;
                                     note?: string;
@@ -325,36 +326,35 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
                     }
 
                     return listElement;
-                } else {
-                    const linkContainer = document.createElement('span');
-
-                    const designers =
-                        typeof design.designer === 'string' || typeof design.designer === 'boolean' ? [design.designer] : design.designer;
-
-                    for (const [index, rawDesigner] of designers.entries()) {
-                        if (rawDesigner) {
-                            const { designer, note } = /^(?<designer>[ (),.A-Za-z-]+?)(?<note> \([ A-Za-z]+\))?$/.exec(rawDesigner)!
-                                .groups as {
-                                designer: string;
-                                note?: string;
-                            };
-
-                            const linkElement = document.createElement('a');
-                            linkElement.href =
-                                DESIGNER_LINK_OVERRIDES[designer] ?? `https://en.wikipedia.org/wiki/${designer.replaceAll(' ', '_')}`;
-                            linkElement.target = '_blank';
-                            linkElement.textContent = designer;
-
-                            linkContainer.append(linkElement);
-
-                            if (note) linkContainer.append(note);
-                        } else linkContainer.append(index === 0 ? 'Various' : 'various others');
-
-                        if (index !== designers.length - 1) linkContainer.append(', ');
-                    }
-
-                    return linkContainer;
                 }
+
+                const linkContainer = document.createElement('span');
+
+                const designers =
+                    typeof design.designer === 'string' || typeof design.designer === 'boolean' ? [design.designer] : design.designer;
+
+                for (const [index, rawDesigner] of designers.entries()) {
+                    if (rawDesigner) {
+                        const { designer, note } = /^(?<designer>[ (),.A-Z-]+?)(?<note> \([ A-Z]+\))?$/i.exec(rawDesigner)!.groups as {
+                            designer: string;
+                            note?: string;
+                        };
+
+                        const linkElement = document.createElement('a');
+                        linkElement.href =
+                            DESIGNER_LINK_OVERRIDES[designer] ?? `https://en.wikipedia.org/wiki/${designer.replaceAll(' ', '_')}`;
+                        linkElement.target = '_blank';
+                        linkElement.textContent = designer;
+
+                        linkContainer.append(linkElement);
+
+                        if (note) linkContainer.append(note);
+                    } else linkContainer.append(index === 0 ? 'Various' : 'various others');
+
+                    if (index !== designers.length - 1) linkContainer.append(', ');
+                }
+
+                return linkContainer;
             },
         },
         {
@@ -368,21 +368,20 @@ function loadCoinDesignInfo(denomination: CoinDenomination<CoinDesign<FilteredCo
             value: () => {
                 if ('amounts' in design.composition)
                     return design.composition.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ');
-                else {
-                    const listElement = document.createElement('ul');
 
-                    for (const yearRange of design.composition) {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${yearRange.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ')} (${formatYearRange(
-                            yearRange.startYear,
-                            yearRange.endYear,
-                        )})`;
+                const listElement = document.createElement('ul');
 
-                        listElement.append(listItem);
-                    }
+                for (const yearRange of design.composition) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${yearRange.amounts.map((entry) => formatComposition(entry.value, entry.type)).join(', ')} (${formatYearRange(
+                        yearRange.startYear,
+                        yearRange.endYear,
+                    )})`;
 
-                    return listElement;
+                    listElement.append(listItem);
                 }
+
+                return listElement;
             },
         },
         {
@@ -631,8 +630,9 @@ function formatYearRange(startYear: string | number, endYear: string | number | 
     return startYear === endYear ? startYear.toString() : `${startYear}–${endYear ?? 'date'}`;
 }
 
-void loadCoinsInfo(); // eslint-disable-line unicorn/prefer-top-level-await
+void loadCoinsInfo(); // eslint-disable-line unicorn/no-top-level-side-effects
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'ArrowLeft') return;
 
@@ -651,6 +651,7 @@ document.addEventListener('keydown', (event) => {
     if (backButton) backButton.click();
 });
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 window.addEventListener('popstate', () => {
     const searchParameters = new URLSearchParams(window.location.search);
     const denominationSearch = searchParameters.get('denomination');

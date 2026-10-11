@@ -67,7 +67,7 @@ window.math.createUnit('nauticalMile', { definition: '1852 meter' });
 function convert() {
     input.value = input.value.replaceAll(',', '');
 
-    if (/^-?(\d+)(\.\d*|,\d*)*$|^-?\d*\.\d+$/g.test(input.value)) {
+    if (/^-?\d+(?:\.\d*|,\d*)*$|^-?\d*\.\d+$/.test(input.value)) {
         message.textContent = '';
         output.value = window.math
             .number(

@@ -24,11 +24,11 @@ export interface CoinDesign<Coin> {
     active?: true;
     designer:
         string | false | (string | false)[] | null | { value: string | false | (string | false)[]; startYear: number; endYear?: number }[];
-    composition: { amounts: CoinComposition[] } | { amounts: CoinComposition[]; startYear: number; endYear?: number }[];
+    composition: { amounts: CoinComposition[]; startYear: number; endYear?: number }[] | { amounts: CoinComposition[] };
     mass: number | null | { value: number | null; startYear: number; endYear?: number }[];
     diameter: number | null | { value: number | null; startYear: number; endYear?: number }[];
     thickness: number | null | false | { value: number | null; startYear: number; endYear?: number }[];
-    edge: string | { reeds: number } | { value: string | { reeds: number }; startYear: number; endYear?: number }[];
+    edge: string | { value: string | { reeds: number }; startYear: number; endYear?: number }[] | { reeds: number };
     numistaEntry: number | number[] | false;
     wikipediaArticle: string | string[];
     coins: Coin[];

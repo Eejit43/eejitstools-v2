@@ -13,7 +13,7 @@ stopButton.addEventListener('click', stopStopwatch);
 resetButton.addEventListener('click', resetStopwatch);
 
 let offset = 0;
-let paused = true;
+let isPaused = true;
 
 displayTime();
 
@@ -23,34 +23,34 @@ stopButton.disabled = true;
  * Starts the stopwatch.
  */
 function startStopwatch() {
-    if (paused) {
-        paused = false;
-        offset -= Date.now();
-        displayTime();
+    if (!isPaused) return;
 
-        startButton.disabled = true;
-        stopButton.disabled = false;
-    }
+    isPaused = false;
+    offset -= Date.now();
+    displayTime();
+
+    startButton.disabled = true;
+    stopButton.disabled = false;
 }
 
 /**
  * Stops (pauses) the stopwatch.
  */
 function stopStopwatch() {
-    if (!paused) {
-        paused = true;
-        offset += Date.now();
+    if (isPaused) return;
 
-        startButton.disabled = false;
-        stopButton.disabled = true;
-    }
+    isPaused = true;
+    offset += Date.now();
+
+    startButton.disabled = false;
+    stopButton.disabled = true;
 }
 
 /**
  * Stops and resets the stopwatch.
  */
 function resetStopwatch() {
-    paused = true;
+    isPaused = true;
     offset = 0;
     displayTime();
 
@@ -62,14 +62,14 @@ function resetStopwatch() {
  * Displays the stopwatch's current time.
  */
 function displayTime() {
-    const value = paused ? offset : Date.now() + offset;
+    const value = isPaused ? offset : Date.now() + offset;
 
     millisecondsDisplay.textContent = format(value, 1, 1000, 3);
     secondsDisplay.textContent = format(value, 1000, 60, 2);
     minutesDisplay.textContent = format(value, 60_000, 60, 2);
     hoursDisplay.textContent = format(value, 3_600_000, null, 2);
 
-    if (!paused) requestAnimationFrame(displayTime);
+    if (!isPaused) requestAnimationFrame(displayTime);
 }
 
 /**

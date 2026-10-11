@@ -122,15 +122,15 @@ let audioIndex = 0;
  * Loads a new track.
  * @param category The category of the track.
  * @param index The index of the track.
- * @param play Whether to play the track (defaults to `true`).
+ * @param shouldPlay Whether to play the track (defaults to `true`).
  */
-function loadNewTrack(category: string, index: number, play = true) {
+function loadNewTrack(category: string, index: number, shouldPlay = true) {
     const track = tracksByCategory[category].tracks[index];
     audio.src = `https://raw.githubusercontent.com/Eejit43/eejitstools-v2-files/main/files/mp3-player/${category}/${encodeURIComponent(track.file)}.mp3`;
     title.textContent = track.name;
     audio.load();
-    if (play) toggleAudio();
-    updateActiveTrackStyle(audioCategory, audioIndex, category, index, play);
+    if (shouldPlay) toggleAudio();
+    updateActiveTrackStyle(audioCategory, audioIndex, category, index, shouldPlay);
     audioCategory = category;
     audioIndex = index;
 }
@@ -142,7 +142,7 @@ for (const track of document.querySelectorAll('.playlist-track')) track.addEvent
  * @param event The click event.
  */
 function loadClickedTrack(event: MouseEvent) {
-    shuffled = false;
+    isShuffled = false;
     shuffledQueue = [];
     shuffleStatusIcon.classList.remove('fa-check');
     shuffleStatusIcon.classList.add('fa-xmark');
@@ -186,7 +186,7 @@ function shuffleSection(category: string) {
     const oldCategory = audioCategory,
         oldIndex = audioIndex;
 
-    shuffled = true;
+    isShuffled = true;
     shuffleStatusIcon.classList.remove('fa-xmark');
     shuffleStatusIcon.classList.add('fa-check');
     if (!audio.paused) {
@@ -215,16 +215,17 @@ function shuffleSection(category: string) {
 function onTimeUpdate() {
     timer.textContent = formatTime(audio.currentTime);
     setBarProgress();
-    if (audio.ended) {
-        playPauseButton.classList.add('fa-play');
-        playPauseButton.classList.remove('fa-pause');
-        playToPause(audioCategory, audioIndex);
 
-        if (shuffled && shuffledQueue.length > 0) {
-            const nextTrack = shuffledQueue.shift()!;
-            loadNewTrack(audioCategory, nextTrack.index);
-        } else if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, audioIndex + 1);
-    }
+    if (!audio.ended) return;
+
+    playPauseButton.classList.add('fa-play');
+    playPauseButton.classList.remove('fa-pause');
+    playToPause(audioCategory, audioIndex);
+
+    if (isShuffled && shuffledQueue.length > 0) {
+        const nextTrack = shuffledQueue.shift()!;
+        loadNewTrack(audioCategory, nextTrack.index);
+    } else if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) loadNewTrack(audioCategory, audioIndex + 1);
 }
 
 /**
@@ -263,7 +264,7 @@ function handleProgressBarClick(event: MouseEvent) {
  * Increases the audio's current time by 5 seconds.
  */
 function forward() {
-    audio.currentTime = audio.currentTime + 5;
+    audio.currentTime += 5;
     setBarProgress();
 }
 
@@ -271,7 +272,7 @@ function forward() {
  * Rewinds the audio's current time by 5 seconds.
  */
 function rewind() {
-    audio.currentTime = audio.currentTime - 5;
+    audio.currentTime -= 5;
     setBarProgress();
 }
 
@@ -279,29 +280,29 @@ function rewind() {
  * Switches to the next song.
  */
 function next() {
-    if (shuffled) {
+    if (isShuffled) {
         loadNewTrack(audioCategory, Math.floor(Math.random() * tracksByCategory[audioCategory].tracks.length));
         return;
     }
 
-    if (audioIndex < tracksByCategory[audioCategory].tracks.length - 1) {
-        const oldIndex = audioIndex;
-        audioIndex++;
-        updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
-        loadNewTrack(audioCategory, audioIndex);
-    }
+    if (audioIndex === tracksByCategory[audioCategory].tracks.length - 1) return;
+
+    const oldIndex = audioIndex;
+    audioIndex++;
+    updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
+    loadNewTrack(audioCategory, audioIndex);
 }
 
 /**
  * Switches to the previous song.
  */
 function previous() {
-    if (audioIndex > 0 && tracksByCategory[audioCategory].tracks.length > 0) {
-        const oldIndex = audioIndex;
-        audioIndex--;
-        updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
-        loadNewTrack(audioCategory, audioIndex);
-    }
+    if (audioIndex === 0 || tracksByCategory[audioCategory].tracks.length === 0) return;
+
+    const oldIndex = audioIndex;
+    audioIndex--;
+    updateActiveTrackStyle(audioCategory, oldIndex, audioCategory, audioIndex);
+    loadNewTrack(audioCategory, audioIndex);
 }
 
 /**
@@ -310,28 +311,28 @@ function previous() {
  * @param oldIndex The index of the old track.
  * @param newCategory The category of the new track.
  * @param newIndex The index of the new track.
- * @param play Whether or not to mark the new track as playing (defaults to `true`).
+ * @param shouldPlay Whether or not to mark the new track as playing (defaults to `true`).
  */
-function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCategory: string, newIndex: number, play = true) {
+function updateActiveTrackStyle(oldCategory: string, oldIndex: number, newCategory: string, newIndex: number, shouldPlay = true) {
     document.querySelector(`#playlist-track-${oldCategory}-${oldIndex}`)?.classList.remove('active-track');
-    if (play) playToPause(oldCategory, oldIndex);
+    if (shouldPlay) playToPause(oldCategory, oldIndex);
     document.querySelector(`#playlist-track-${newCategory}-${newIndex}`)?.classList.add('active-track');
-    if (play) pauseToPlay(newCategory, newIndex);
+    if (shouldPlay) pauseToPlay(newCategory, newIndex);
 }
 
-let shuffled = false;
+let isShuffled = false;
 
 /**
  * Toggles shuffle mode.
  */
 function toggleShuffle() {
-    if (shuffled) {
-        shuffled = false;
+    if (isShuffled) {
+        isShuffled = false;
         shuffledQueue = [];
         shuffleStatusIcon.classList.remove('fa-check');
         shuffleStatusIcon.classList.add('fa-xmark');
     } else {
-        shuffled = true;
+        isShuffled = true;
         const tracks = tracksByCategory[audioCategory].tracks.map((track, index) => ({ ...track, index }));
         shuffledQueue = shuffleArray(tracks) as AudioTrackWithIndex[];
         shuffleStatusIcon.classList.remove('fa-xmark');
@@ -385,28 +386,42 @@ document.addEventListener('keydown', (event) => {
     )
         return;
 
-    if (event.code === 'Space') {
-        event.preventDefault();
-        toggleAudio();
-    }
-    if (event.code === 'ArrowRight') {
-        event.preventDefault();
-        forward();
-    }
-    if (event.code === 'ArrowLeft') {
-        event.preventDefault();
-        rewind();
-    }
-    if (event.code === 'ArrowUp') {
-        event.preventDefault();
-        previous();
-    }
-    if (event.code === 'ArrowDown') {
-        event.preventDefault();
-        next();
-    }
-    if (event.code === 'KeyM') {
-        event.preventDefault();
-        toggleMute();
+    switch (event.code) {
+        case 'Space': {
+            event.preventDefault();
+            toggleAudio();
+
+            break;
+        }
+        case 'ArrowRight': {
+            event.preventDefault();
+            forward();
+
+            break;
+        }
+        case 'ArrowLeft': {
+            event.preventDefault();
+            rewind();
+
+            break;
+        }
+        case 'ArrowUp': {
+            event.preventDefault();
+            previous();
+
+            break;
+        }
+        case 'ArrowDown': {
+            event.preventDefault();
+            next();
+
+            break;
+        }
+        case 'KeyM': {
+            event.preventDefault();
+            toggleMute();
+
+            break;
+        }
     }
 });

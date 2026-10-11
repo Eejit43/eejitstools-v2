@@ -43,8 +43,6 @@ export default function setupApodRoute(fastify: FastifyInstance) {
         async (request: FastifyRequest<{ Params: { year: string; month: string; date: string } }>, reply) => {
             logApiRequest(request);
 
-            let result: ApodEntry;
-
             let { year, month, date } = request.params;
 
             year = year.padStart(2, '0');
@@ -64,6 +62,8 @@ export default function setupApodRoute(fastify: FastifyInstance) {
             const response = await fetch(`https://eejitstools.com/cors-anywhere?url=${url}`);
             const apodPage = await response.text();
             if (!response.ok) return { success: false, error: 'No APOD data exists for the given date!', date: apodDate };
+
+            let result: ApodEntry;
 
             try {
                 const html = parse(
@@ -98,7 +98,7 @@ export default function setupApodRoute(fastify: FastifyInstance) {
                         .getAttribute('src')!
                         .replace(/\?rel=0$/, '');
                 else {
-                    const imageElement = html.querySelector('a img, button img')!;
+                    const imageElement = html.querySelector(':scope a img, :scope button img')!;
                     media.src = imageElement.getAttribute('src')!;
                     media.highResolution = imageElement.parentNode!.getAttribute('href');
                     media.annotated = imageElement.parentNode!.getAttribute('onmouseover')?.match(/src=["'](.*?)["']/)?.[1];
@@ -111,16 +111,16 @@ export default function setupApodRoute(fastify: FastifyInstance) {
                 }
 
                 const explanation = html.innerHTML
-                    .match(/explanation(<\/b>)?:.*?tomorrow(?!,)|explanation:.*?<hr>/gi)?.[0]
-                    .replaceAll(/(<p> ?<\/p>| ?<\/?p>)/g, '<br />')
+                    .match(/explanation(?:<\/b>)?:.*?tomorrow(?!,)|explanation:.*?<hr>/gi)?.[0]
+                    .replaceAll(/<p> ?<\/p>| ?<\/?p>/g, '<br />')
                     .replaceAll(/<b> (.*?) <\/b>/g, '$1')
                     .replaceAll(/(\w|>)\/ /g, '$1/')
                     .replaceAll(/ \.{3}/g, '...')
                     .replaceAll(
-                        /(explanation: ?<\/b> |explanation<\/b>: | explanation: | ?<br> ?<b> ?tomorrow|<b> tomorrow|<hr>|<center> |( ?<br \/>)*?$|<br \/><br \/> tomorrow|<br \/><br \/>birthday surprise.*?$|<br \/> +your sky surprise.*?$|<br \/> +apod in world languages:.*?$)/gi,
+                        /explanation: ?<\/b> |explanation<\/b>: | explanation: | ?<br> ?<b> ?tomorrow|<b> tomorrow|<hr>|<center> |(?: ?<br \/>)*$|<br \/><br \/> tomorrow|<br \/><br \/>birthday surprise.*$|<br \/> +your sky surprise.*$|<br \/> +apod in world languages:.*$/gi,
                         '',
                     )
-                    .replace(/<br( \/)?> *$/, '')
+                    .replace(/<br(?: \/)?> *$/, '')
                     .trim();
 
                 result = {

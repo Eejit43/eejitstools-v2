@@ -33,7 +33,7 @@ copyVerticalButton.addEventListener('click', () => {
     copyText(copyVerticalButton, result.value.replaceAll(' / ', ' | '));
 });
 copySpacesButton.addEventListener('click', () => {
-    copyText(copySpacesButton, result.value.replaceAll(' / ', '   '));
+    copyText(copySpacesButton, result.value.replaceAll(' / ', ' '.repeat(3)));
 });
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -110,7 +110,7 @@ function convertToMorse(string: string) {
  * Converts the provided string to Morse code and displays the result.
  */
 function toMorse() {
-    if (input.value.trim().length <= 0) {
+    if (input.value.trim().length === 0) {
         result.value = '';
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
@@ -159,14 +159,14 @@ function decodeMorse(morseCode: string) {
  */
 function fromMorse() {
     const inputValue = input.value.trim().replaceAll('_', '-').replaceAll('•', '.');
-    if (inputValue.length <= 0) {
+    if (inputValue.length === 0) {
         result.value = '';
         copyButton.disabled = true;
         copyVerticalButton.disabled = true;
         copySpacesButton.disabled = true;
         showResult(fromMorseButton, 'warning');
         showAlert('Empty input!', 'warning');
-    } else if (/^[.-]{1,7}( [.-]{1,7})*(( {2,}| *[/|] *)[.-]{1,7}( [.-]{1,7})*)*$/g.test(inputValue)) {
+    } else if (/^[.-]{1,7}(?: [.-]{1,7})*(?:(?: {2,}| *[/|] *)[.-]{1,7}(?: [.-]{1,7})*)*$/.test(inputValue)) {
         result.value = decodeMorse(inputValue);
         copyButton.disabled = false;
         copyVerticalButton.disabled = true;

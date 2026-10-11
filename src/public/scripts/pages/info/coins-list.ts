@@ -94,7 +94,7 @@ async function loadCoinsList() {
         ]),
     );
 
-    coinsList.innerHTML = '';
+    coinsList.replaceChildren();
     coinsList.classList.add('obtained-hidden');
 
     const buttonsDiv = document.createElement('div');
@@ -102,12 +102,12 @@ async function loadCoinsList() {
 
     const reloadButton = document.createElement('button');
     reloadButton.textContent = 'Reload';
-    reloadButton.dataset.iconAfter = '\uF2F9';
+    reloadButton.dataset.iconAfter = '\u{F2F9}';
     reloadButton.addEventListener('click', async () => {
         await loadCoinsList();
         showAlert('Reloaded!', 'success');
 
-        if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
+        if (changeHistory.querySelectorAll('li').length === 0) changeHistory.replaceChildren();
 
         const historyEntry = document.createElement('li');
         historyEntry.textContent = 'Reloaded coins list from database';
@@ -168,14 +168,12 @@ async function loadCoinsList() {
             toggleMissingCoinsButton.dataset.shown = 'false';
             coinsList.classList.add('missing-hidden');
 
-            toggleMissingCoinsButton.innerHTML = '';
-            toggleMissingCoinsButton.append('Show ', missingText, ' coins');
+            toggleMissingCoinsButton.replaceChildren('Show ', missingText, ' coins');
         } else {
             toggleMissingCoinsButton.dataset.shown = 'true';
             coinsList.classList.remove('missing-hidden');
 
-            toggleMissingCoinsButton.innerHTML = '';
-            toggleMissingCoinsButton.append('Hide ', missingText, ' coins');
+            toggleMissingCoinsButton.replaceChildren('Hide ', missingText, ' coins');
         }
     });
 
@@ -192,14 +190,12 @@ async function loadCoinsList() {
             toggleObtainedCoinsButton.dataset.shown = 'false';
             coinsList.classList.add('obtained-hidden');
 
-            toggleObtainedCoinsButton.innerHTML = '';
-            toggleObtainedCoinsButton.append('Show ', obtainedText, ' coins');
+            toggleObtainedCoinsButton.replaceChildren('Show ', obtainedText, ' coins');
         } else {
             toggleObtainedCoinsButton.dataset.shown = 'true';
             coinsList.classList.remove('obtained-hidden');
 
-            toggleObtainedCoinsButton.innerHTML = '';
-            toggleObtainedCoinsButton.append('Hide ', obtainedText, ' coins');
+            toggleObtainedCoinsButton.replaceChildren('Hide ', obtainedText, ' coins');
         }
     });
 
@@ -216,14 +212,12 @@ async function loadCoinsList() {
             toggleNeedsUpgradeCoinsButton.dataset.shown = 'false';
             coinsList.classList.add('upgrade-hidden');
 
-            toggleNeedsUpgradeCoinsButton.innerHTML = '';
-            toggleNeedsUpgradeCoinsButton.append('Show coins ', needingUpgradeText);
+            toggleNeedsUpgradeCoinsButton.replaceChildren('Show coins ', needingUpgradeText);
         } else {
             toggleNeedsUpgradeCoinsButton.dataset.shown = 'true';
             coinsList.classList.remove('upgrade-hidden');
 
-            toggleNeedsUpgradeCoinsButton.innerHTML = '';
-            toggleNeedsUpgradeCoinsButton.append('Hide coins ', needingUpgradeText);
+            toggleNeedsUpgradeCoinsButton.replaceChildren('Hide coins ', needingUpgradeText);
         }
     });
 
@@ -403,7 +397,7 @@ async function loadCoinsList() {
             newRowMessageCell.addEventListener('click', async () => {
                 if (newRowMessage.dataset.disabled === 'true') return;
 
-                const coinDesignCoins = [...coinsData[denomination.id].designs[design.id].coins.values()];
+                const coinDesignCoins = coinsData[denomination.id].designs[design.id].coins.values().toArray();
 
                 const year = coinDesignCoins.at(-1)?.year
                     ? (Number.parseInt(coinDesignCoins.at(-1)!.year!) + 1).toString()
@@ -569,7 +563,7 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
     });
     mintageCell.addEventListener('blur', async () => {
         const mintageNumber = mintageCell.textContent
-            ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ (all)$/, ''))
+            ? Number.parseInt(mintageCell.textContent.replaceAll(',', '').replace(/ \(all\)$/, ''))
             : null;
         const mintageForAllVarieties = mintageCell.textContent.endsWith(' (all)') || null;
 
@@ -586,18 +580,16 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
             await updateCoinData(denomination.id, design.id, coin.id, { mintage: mintageNumber });
         }
 
-        if (mintageForAllVarieties !== (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties ?? null)) {
-            addCoinChangeEntry(
-                coinsData[denomination.id].designs[design.id].coins.get(coin.id)!,
-                design.name,
-                'mintage "for all varieties"',
-                { mintageForAllVarieties },
-            );
+        if (mintageForAllVarieties === (coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties ?? null))
+            return;
 
-            coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
+        addCoinChangeEntry(coinsData[denomination.id].designs[design.id].coins.get(coin.id)!, design.name, 'mintage "for all varieties"', {
+            mintageForAllVarieties,
+        });
 
-            await updateCoinData(denomination.id, design.id, coin.id, { mintageForAllVarieties });
-        }
+        coinsData[denomination.id].designs[design.id].coins.get(coin.id)!.mintageForAllVarieties = mintageForAllVarieties;
+
+        await updateCoinData(denomination.id, design.id, coin.id, { mintageForAllVarieties });
     });
 
     row.append(mintageCell);
@@ -745,9 +737,15 @@ function generateCoinRow(denomination: CoinDenomination<CoinDesign<Coin>>, desig
 function loadDesignTotals(denomination: string, design: string) {
     const designData = coinsData[denomination].designs[design];
 
-    const obtainedCoins = [...designData.coins.values()].filter((coin) => coin.obtained).length;
-    const needsUpgradeCoins = [...designData.coins.values()].filter((coin) => coin.upgrade).length;
-    const totalCoins = [...designData.coins.values()].length;
+    const obtainedCoins = designData.coins
+        .values()
+        .filter((coin) => coin.obtained)
+        .toArray().length;
+    const needsUpgradeCoins = designData.coins
+        .values()
+        .filter((coin) => coin.upgrade)
+        .toArray().length;
+    const totalCoins = designData.coins.values().toArray().length;
 
     const amountTooltip = document.querySelector<HTMLSpanElement>(`#${design}-${denomination}-amount-tooltip`)!;
     const yearSpan = document.querySelector<HTMLSpanElement>(`#${design}-${denomination}-years`)!;
@@ -765,7 +763,7 @@ function loadDesignTotals(denomination: string, design: string) {
 
         const denominationData = coinsData[denomination];
 
-        if (Object.values(denominationData.designs).every((design) => [...design.coins.values()].every((coin) => !coin.obtained)))
+        if (Object.values(denominationData.designs).every((design) => design.coins.values().every((coin) => !coin.obtained)))
             amountTooltip.parentElement!.parentElement!.dataset.noneObtained = 'true';
         else delete amountTooltip.parentElement!.parentElement!.dataset.noneObtained;
     } else {
@@ -797,7 +795,7 @@ function getCoinYears(design: CoinDesignById): string {
 function formatMintage(mintage: number) {
     if (mintage >= 1_000_000_000) return `${Math.round((mintage / 1_000_000_000 + Number.EPSILON) * 100) / 100} billion`;
     if (mintage >= 1_000_000) return `${Math.round((mintage / 1_000_000 + Number.EPSILON) * 100) / 100} million`;
-    if (mintage >= 1000) return `${Math.round((mintage / 1000 + Number.EPSILON) * 100) / 100} thousand`;
+    if (mintage >= 1000) return `${Math.round((mintage / 1000 + Number.EPSILON) * 100) / 100} thousand`; // eslint-disable-line unicorn/prefer-ternary
     return mintage.toString();
 }
 
@@ -858,7 +856,7 @@ function addCoinChangeEntry(
 ) {
     const { year, mintMark, specification } = coinData as Coin;
 
-    if (changeHistory.querySelectorAll('li').length === 0) changeHistory.innerHTML = '';
+    if (changeHistory.querySelectorAll('li').length === 0) changeHistory.replaceChildren();
 
     const listEntry = document.createElement('li');
     listEntry.textContent = `${year}${mintMark ? ` ${mintMark}` : ''} ${designName}${specification ? ` (${specification})` : ''}${
@@ -973,7 +971,7 @@ async function handleGenerateNeededList(isSimplified: boolean) {
                         (coin) =>
                             (!coin.obtained || coin.upgrade) &&
                             Number.parseInt(coin.year) <= currentYear &&
-                            (isSimplified ? (coin.mintage ? coin.mintage > 5_000_000 : true) : true),
+                            (!isSimplified || !coin.mintage || coin.mintage > 5_000_000),
                     );
 
                     if (filteredCoins.length === 0) return null;
@@ -989,10 +987,10 @@ async function handleGenerateNeededList(isSimplified: boolean) {
                 })
                 .filter(Boolean);
 
-            if (filteredDesigns.length === 0) return null;
-
-            return `${header}\n${filteredDesigns.join('\n\n')}`;
+            return filteredDesigns.length === 0 //
+                ? null
+                : `${header}\n${filteredDesigns.join('\n\n')}`;
         })
         .filter(Boolean)
-        .join('\n\n\n');
+        .join('\n'.repeat(3));
 }

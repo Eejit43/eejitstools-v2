@@ -38,9 +38,9 @@ copyOutputButton.addEventListener('click', () => {
     copyValue(copyOutputButton, output);
 });
 
-let addSpacers = true;
+let shouldAddSpacers = true;
 toggleSpacersButton.addEventListener('click', () => {
-    addSpacers = !addSpacers;
+    shouldAddSpacers = !shouldAddSpacers;
     findInput();
 });
 
@@ -66,7 +66,7 @@ function findInput() {
                 break;
             }
             case 16: {
-                if (/^-?[\d.A-Fa-f]+$/.test(input.value)) convert(input.value, 16);
+                if (/^-?[\d.A-F]+$/i.test(input.value)) convert(input.value, 16);
                 else notValid();
                 break;
             }
@@ -105,11 +105,11 @@ function convert(value: string, radix: number) {
 
     switch (radices[outputType.value].name) {
         case 'binary': {
-            result = addSpacers ? addBinarySpacers(result) : result;
+            result = shouldAddSpacers ? addBinarySpacers(result) : result;
             break;
         }
         case 'decimal': {
-            result = addSpacers ? Number.parseInt(result).toLocaleString() : result;
+            result = shouldAddSpacers ? Number.parseInt(result).toLocaleString() : result;
             break;
         }
         default: {

@@ -149,8 +149,8 @@ function isBase64Image(base64: string): Promise<boolean> {
  * @param string The base64 of the image to display.
  */
 async function displayImage(string: string) {
-    const valid = await isBase64Image(string);
-    if (valid) imageResult.src = escapeHtml(string);
+    const isValid = await isBase64Image(string);
+    if (isValid) imageResult.src = escapeHtml(string);
     else {
         imageResult.src = '';
         showAlert('Malformed input!', 'error');

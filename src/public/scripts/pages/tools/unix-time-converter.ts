@@ -34,8 +34,7 @@ standardOutputCopyButton.addEventListener('click', () => {
     copyValue(standardOutputCopyButton, standardOutput);
 });
 
-let unixInputState = 's';
-let unixOutputState = 's';
+const currentState = { input: 's', output: 's' };
 
 /**
  * Updates the standard time input and triggers the update of the unix time output.
@@ -73,7 +72,8 @@ function updateUnixOutput() {
     } else {
         updateArrow(standardArrow, 'success', 'down');
 
-        unixOutput.value = unixOutputState === 'ms' ? standardTime.getTime().toString() : standardTime.getTime().toString().slice(0, -3);
+        unixOutput.value =
+            currentState.output === 'ms' ? standardTime.getTime().toString() : standardTime.getTime().toString().slice(0, -3);
         unixOutputCopyButton.disabled = false;
         unixOutputSwitchButton.disabled = false;
     }
@@ -83,7 +83,7 @@ function updateUnixOutput() {
  * Updates the unix time input and triggers the update of the standard time output.
  */
 function updateUnixTime() {
-    unixInput.value = unixInputState === 's' ? Date.now().toString().slice(0, -3) : Date.now().toString();
+    unixInput.value = currentState.input === 's' ? Date.now().toString().slice(0, -3) : Date.now().toString();
     updateStandardOutput();
 }
 
@@ -91,8 +91,7 @@ function updateUnixTime() {
  * Updates the standard time output.
  */
 function updateStandardOutput() {
-    const unixTime =
-        unixInputState === 'ms' ? new Date(Number.parseInt(unixInput.value)) : new Date(Number.parseInt(unixInput.value) * 1000);
+    const unixTime = new Date(currentState.input === 'ms' ? Number.parseInt(unixInput.value) : Number.parseInt(unixInput.value) * 1000);
     if (unixInput.value.length === 0) {
         updateArrow(unixArrow, 'reset', 'down');
         standardOutput.value = '';
@@ -106,7 +105,7 @@ function updateStandardOutput() {
 
         const timeString = unixTime.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' });
         standardOutput.value = `${
-            unixInputState === 'ms'
+            currentState.input === 'ms'
                 ? timeString.replace(/ (AM|PM)/, `.${unixTime.getMilliseconds().toString().padStart(3, '0')} $1`)
                 : timeString
         }, ${unixTime.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
@@ -118,12 +117,12 @@ function updateStandardOutput() {
  * Switches the state of the unix time output (seconds to milliseconds and vice versa).
  */
 function switchUnixOutput() {
-    if (unixOutputState === 's') {
-        unixOutputState = 'ms';
+    if (currentState.output === 's') {
+        currentState.output = 'ms';
         unixOutputTitle.textContent = 'UNIX Time (milliseconds):';
         unixOutputSwitchButton.textContent = 'Switch to seconds';
-    } else if (unixOutputState === 'ms') {
-        unixOutputState = 's';
+    } else if (currentState.output === 'ms') {
+        currentState.output = 's';
         unixOutputTitle.textContent = 'UNIX Time (seconds):';
         unixOutputSwitchButton.textContent = 'Switch to milliseconds';
     }
@@ -134,12 +133,12 @@ function switchUnixOutput() {
  * Switches the state of the unix time input (seconds to milliseconds and vice versa).
  */
 function switchUnixInput() {
-    if (unixInputState === 's') {
-        unixInputState = 'ms';
+    if (currentState.input === 's') {
+        currentState.input = 'ms';
         unixInputTitle.textContent = 'UNIX Time (milliseconds):';
         unixInputSwitchButton.textContent = 'Switch to seconds';
-    } else if (unixInputState === 'ms') {
-        unixInputState = 's';
+    } else if (currentState.input === 'ms') {
+        currentState.input = 's';
         unixInputTitle.textContent = 'UNIX Time (seconds):';
         unixInputSwitchButton.textContent = 'Switch to milliseconds';
     }

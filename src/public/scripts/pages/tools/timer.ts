@@ -12,8 +12,8 @@ const timerTime = document.querySelector<HTMLSpanElement>('#timer-time')!;
 /* Add event listeners */
 startTimerButton.addEventListener('click', startTimer);
 pauseResumeTimerButton.addEventListener('click', () => {
-    if (paused) {
-        paused = false;
+    if (isPaused) {
+        isPaused = false;
         pauseResumeTimerButton.textContent = 'Pause';
 
         targetTime = Date.now() + remaining * 1000;
@@ -21,7 +21,7 @@ pauseResumeTimerButton.addEventListener('click', () => {
     } else {
         if (timeout) clearTimeout(timeout);
         timeout = null;
-        paused = true;
+        isPaused = true;
         pauseResumeTimerButton.textContent = 'Resume';
     }
 });
@@ -29,7 +29,7 @@ resetButton.addEventListener('click', () => {
     if (timeout) clearTimeout(timeout);
     timeout = null;
 
-    paused = true;
+    isPaused = true;
     displayTime();
 
     audio.pause();
@@ -46,15 +46,15 @@ resetButton.addEventListener('click', () => {
     showAlert('Reset!', 'success');
 });
 hoursInput.addEventListener('input', () => {
-    hoursInput.value = hoursInput.value.replaceAll(/((?!\d).)/g, '');
+    hoursInput.value = hoursInput.value.replaceAll(/(?!\d)./g, '');
     checkInput(hoursInput);
 });
 minutesInput.addEventListener('input', () => {
-    minutesInput.value = minutesInput.value.replaceAll(/((?!\d).)/g, '');
+    minutesInput.value = minutesInput.value.replaceAll(/(?!\d)./g, '');
     checkInput(minutesInput);
 });
 secondsInput.addEventListener('input', () => {
-    secondsInput.value = secondsInput.value.replaceAll(/((?!\d).)/g, '');
+    secondsInput.value = secondsInput.value.replaceAll(/(?!\d)./g, '');
     checkInput(secondsInput);
 });
 
@@ -70,7 +70,7 @@ function checkInput(element: HTMLInputElement) {
 const audio = new Audio('/files/timer-alarm.mp3');
 audio.loop = true;
 
-let paused = true;
+let isPaused = true;
 
 let targetTime: number;
 
@@ -78,11 +78,11 @@ let targetTime: number;
  * Starts the timer.
  */
 function startTimer() {
-    if (!paused) return;
+    if (!isPaused) return;
 
     audio.pause();
     audio.currentTime = 0;
-    paused = false;
+    isPaused = false;
     const hours = Number.parseInt(hoursInput.value);
     const minutes = Number.parseInt(minutesInput.value);
     const seconds = Number.parseInt(secondsInput.value);
@@ -110,7 +110,7 @@ let timeout: number | null = null;
  * Displays the current timer time.
  */
 function displayTime() {
-    if (paused) return;
+    if (isPaused) return;
 
     remaining = (targetTime - Date.now()) / 1000;
 

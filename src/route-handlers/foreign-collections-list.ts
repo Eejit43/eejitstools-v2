@@ -16,15 +16,15 @@ const foreignCollectionsList = model('foreign-collections-list', new Schema({ da
 
 /**
  * Sorts foreign collection entries.
- * @param a The first entry to compare.
- * @param b The second entry to compare.
+ * @param first The first entry to compare.
+ * @param second The second entry to compare.
  */
-function sortData(a: ForeignCollectionEntry, b: ForeignCollectionEntry) {
-    const aStartsWithQuestionMark = a.name.startsWith('?');
-    const bStartsWithQuestionMark = b.name.startsWith('?');
-    if (aStartsWithQuestionMark && !bStartsWithQuestionMark) return 1;
-    if (!aStartsWithQuestionMark && bStartsWithQuestionMark) return -1;
-    return a.name.localeCompare(b.name);
+function sortData(first: ForeignCollectionEntry, second: ForeignCollectionEntry) {
+    const isFirstPrefixedWithQuestionMark = first.name.startsWith('?');
+    const isSecondPrefixedWithQuestionMark = second.name.startsWith('?');
+    if (isFirstPrefixedWithQuestionMark && !isSecondPrefixedWithQuestionMark) return 1;
+    if (!isFirstPrefixedWithQuestionMark && isSecondPrefixedWithQuestionMark) return -1; // eslint-disable-line unicorn/prefer-ternary
+    return first.name.localeCompare(second.name);
 }
 
 /**

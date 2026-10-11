@@ -34,11 +34,8 @@ decimalInput.addEventListener('input', () => {
 decimalInput.addEventListener('input', () => {
     decimalConvertButton.disabled = decimalInput.value.length === 0;
 
-    decimalResetButton.disabled = !(
-        decimalInput.value.length > 0 ||
-        scientificOutput.value.length > 0 ||
-        decimalArrow.style.color !== 'dimgray'
-    );
+    decimalResetButton.disabled =
+        decimalInput.value.length === 0 && scientificOutput.value.length === 0 && decimalArrow.style.color === 'dimgray';
 });
 decimalConvertButton.addEventListener('click', convertDecimal);
 decimalResetButton.addEventListener('click', () => {
@@ -63,11 +60,8 @@ scientificOutputCopy2Button.addEventListener('click', () => {
 scientificInput.addEventListener('input', () => {
     scientificConvertButton.disabled = scientificInput.value.length === 0;
 
-    scientificResetButton.disabled = !(
-        scientificInput.value.length > 0 ||
-        decimalOutput.value !== '' ||
-        scientificArrow.style.color !== 'dimgray'
-    );
+    scientificResetButton.disabled =
+        scientificInput.value.length === 0 && decimalOutput.value === '' && scientificArrow.style.color === 'dimgray';
 });
 scientificConvertButton.addEventListener('click', convertScientific);
 scientificResetButton.addEventListener('click', () => {
@@ -88,7 +82,7 @@ decimalOutputCopyButton.addEventListener('click', () => {
  * Converts a decimal to scientific notation and displays the result.
  */
 function convertDecimal() {
-    if (/^[+-]?(\d+)(\.\d*|,\d*)*$/g.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/g.test(decimalInput.value.trim())) {
+    if (/^[+-]?\d+(?:\.\d*|,\d*)*$/.test(decimalInput.value.trim()) || /^-?\d*\.\d+$/.test(decimalInput.value.trim())) {
         scientificOutput.value = window.math.bignumber(decimalInput.value).toExponential();
         scientificOutputValue = window.math.bignumber(decimalInput.value).toExponential();
         scientificOutputValue2 = window.math.bignumber(decimalInput.value).toExponential().replace('e+', ' x 10^').replace('e-', ' x 10^-');
@@ -108,27 +102,27 @@ function convertDecimal() {
  * Converts a number in scientific notation to a decimal and displays the result.
  */
 function convertScientific() {
-    if (/^[+-]?\d(\.\d+)?[Ee][+-]?\d+$/g.test(scientificInput.value.trim())) {
+    if (/^[+-]?\d(?:\.\d+)?E[+-]?\d+$/i.test(scientificInput.value.trim())) {
         decimalOutput.value = window.math.format(window.math.bignumber(scientificInput.value), { notation: 'fixed' });
         decimalOutputValue = Number(scientificInput.value).toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 });
         decimalOutputCopyButton.disabled = false;
         updateArrow(scientificArrow, 'success', 'right');
-    } else if (/^[+-]?\d(\.\d+)? ?[*Xx] ?10\^[+-]?\d+$/g.test(scientificInput.value.trim())) {
+    } else if (/^[+-]?\d(?:\.\d+)? ?[*X] ?10\^[+-]?\d+$/i.test(scientificInput.value.trim())) {
         decimalOutput.value = window.math.format(
             window.math.bignumber(
                 scientificInput.value
-                    .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
-                    .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
-                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e'),
+                    .replaceAll(/ ?[*X] ?10\^(\d)/gi, 'e+$1')
+                    .replaceAll(/ ?[*X] ?10\^-/gi, 'e-')
+                    .replaceAll(/ ?[*X] ?10\^\+/gi, 'e'),
             ),
             { notation: 'fixed' },
         );
         decimalOutputValue = window.math.format(
             window.math.bignumber(
                 scientificInput.value
-                    .replaceAll(/ ?[*Xx] ?10\^(\d)/g, 'e+$1')
-                    .replaceAll(/ ?[*Xx] ?10\^-/g, 'e-')
-                    .replaceAll(/ ?[*Xx] ?10\^\+/g, 'e'),
+                    .replaceAll(/ ?[*X] ?10\^(\d)/gi, 'e+$1')
+                    .replaceAll(/ ?[*X] ?10\^-/gi, 'e-')
+                    .replaceAll(/ ?[*X] ?10\^\+/gi, 'e'),
             ),
             { notation: 'fixed' },
         );

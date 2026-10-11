@@ -62,8 +62,8 @@ if (password) {
 
 document.addEventListener('keydown', (event) => {
     if (
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA' ||
+        document.activeElement?.tagName === 'INPUT' || // eslint-disable-line unicorn/no-optional-chaining-on-undeclared-variable
+        document.activeElement?.tagName === 'TEXTAREA' || // eslint-disable-line unicorn/no-optional-chaining-on-undeclared-variable
         event.ctrlKey ||
         event.metaKey ||
         event.altKey
@@ -191,7 +191,7 @@ function jump() {
  * @param year The year to display.
  */
 function showCalendar(date: number | null, month: number, year: number) {
-    jumpYearSelection.innerHTML = '';
+    jumpYearSelection.replaceChildren();
     for (let relativeYear = year - 10; relativeYear <= year + 10; relativeYear++) {
         const option = document.createElement('option');
         option.value = relativeYear.toString();
@@ -202,7 +202,7 @@ function showCalendar(date: number | null, month: number, year: number) {
     const firstDay = new Date(year, month).getDay();
     const daysInMonth = 32 - new Date(year, month, 32).getDate();
 
-    calendarBody.innerHTML = '';
+    calendarBody.replaceChildren();
 
     monthYearDisplay.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
     jumpYearSelection.value = year.toString();
@@ -212,13 +212,13 @@ function showCalendar(date: number | null, month: number, year: number) {
     for (let index = 0; index < 6; index++) {
         const row = document.createElement('tr');
 
-        for (let dayIndex = 0; dayIndex < 7; dayIndex++)
+        dayLoop: for (let dayIndex = 0; dayIndex < 7; dayIndex++)
             if (index === 0 && dayIndex < firstDay) {
                 const cell = document.createElement('td');
                 cell.classList.add('no-date');
                 row.append(cell);
             } else if (currentDate > daysInMonth) {
-                if (dayIndex === 0) break;
+                if (dayIndex === 0) break dayLoop;
 
                 const cell = document.createElement('td');
                 cell.classList.add('no-date');
@@ -262,11 +262,11 @@ function updateDisplayedDate(date: number, month: number, year: number) {
     displayDate.textContent = date.toString();
     displayMonthYear.textContent = new Date(year, month).toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
-    const dateCell = document.querySelector<HTMLTableCellElement>(`[data-date="${date}"]`)!;
+    const dateCell = document.querySelector<HTMLTableCellElement>(`[data-date="${date}"]`)!; // eslint-disable-line unicorn/require-css-escape
     dateCell.classList.add('selected-date');
 
     if (dateCell.dataset.holiday ?? dateCell.dataset.phase) {
-        eventsList.innerHTML = '';
+        eventsList.replaceChildren();
 
         const events = [
             dateCell.dataset.holiday
@@ -295,26 +295,28 @@ function updateDisplayedDate(date: number, month: number, year: number) {
 function loadCalendarEvents() {
     for (const holiday of events.holidays) {
         const date = new Date(`${holiday.date}T00:00:00`);
-        if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!;
-            cell.classList.add('holiday');
-            if (cell.dataset.holiday) cell.dataset.holiday += `, ${holiday.name}`;
-            else cell.dataset.holiday = holiday.name;
-        }
+
+        if (date.getMonth() !== currentMonth || date.getFullYear() !== currentYear) continue;
+
+        const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!; // eslint-disable-line unicorn/require-css-escape
+        cell.classList.add('holiday');
+        if (cell.dataset.holiday) cell.dataset.holiday += `, ${holiday.name}`;
+        else cell.dataset.holiday = holiday.name;
     }
 
     for (const moonPhase of events.moonPhases) {
         const date = new Date(`${moonPhase.date} ${moonPhase.time} UTC`);
-        if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-            const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!;
-            cell.dataset.phase = moonPhase.phase;
-            cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
-            const moonIcon = document.createElement('span');
-            moonIcon.classList.add('moon-icon');
-            moonIcon.textContent = moonEmojis[moonPhase.phase];
-            cell.append(moonIcon);
-        }
+        if (date.getMonth() !== currentMonth || date.getFullYear() !== currentYear) continue;
+
+        const cell = document.querySelector<HTMLTableCellElement>(`[data-date="${date.getDate()}"]`)!; // eslint-disable-line unicorn/require-css-escape
+        cell.dataset.phase = moonPhase.phase;
+        cell.dataset.time = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
+
+        const moonIcon = document.createElement('span');
+        moonIcon.classList.add('moon-icon');
+        moonIcon.textContent = moonEmojis[moonPhase.phase];
+        cell.append(moonIcon);
     }
 
     twemojiUpdate();
@@ -326,7 +328,7 @@ function loadCalendarEvents() {
 function loadTodoList() {
     const todoListDate = new Date(displayedYear, displayedMonth, displayedDate);
 
-    todoList.innerHTML = '';
+    todoList.replaceChildren();
 
     for (const todo of todoData!.todo)
         if (
@@ -354,9 +356,9 @@ function loadTodoList() {
                 for (const checkbox of todoList.querySelectorAll<HTMLInputElement>('.todo-checkbox'))
                     todoFinal[checkbox.dataset.id!] = checkbox.checked;
 
-                todoSaveButton.disabled = !Object.entries(todoFinal).some(
+                todoSaveButton.disabled = Object.entries(todoFinal).every(
                     ([id, checked]) =>
-                        !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] !==
+                        !!todoData!.data[todoListDate.getFullYear()]?.[todoListDate.getMonth() + 1]?.[todoListDate.getDate()]?.[id] ===
                         checked,
                 );
             });

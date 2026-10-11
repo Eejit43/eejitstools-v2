@@ -71,7 +71,9 @@ const searchInput = document.querySelector<HTMLInputElement>('.search-text')!;
 searchInput.addEventListener('input', () => {
     const value = searchInput.value.toLowerCase();
     const results = [];
-    for (const page of Object.values(allPages).flatMap((value) => Object.values(value)))
+
+    const mappedAllPages = Object.values(allPages).flatMap((value) => Object.values(value));
+    for (const page of mappedAllPages)
         if (
             page.title.toLowerCase().includes(value) ||
             page.id.toLowerCase().includes(value) ||
@@ -104,26 +106,26 @@ document.querySelector('.search-button')!.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        const firstResult = document.querySelector('.search-box a');
-        if (firstResult) {
-            const currentResult = document.querySelector('.search-box .search-result-selected');
+    if (!(event.key === 'ArrowUp' || event.key === 'ArrowDown')) return;
 
-            const nextTrElement = currentResult
-                ? event.key === 'ArrowUp'
-                    ? currentResult.parentElement!.parentElement!.previousElementSibling
-                    : currentResult.parentElement!.parentElement!.nextElementSibling
-                : null;
+    const firstResult = document.querySelector('.search-box a');
+    if (!firstResult) return;
 
-            if (nextTrElement) {
-                if (currentResult) currentResult.classList.remove('search-result-selected');
-                nextTrElement.querySelector('td a')!.classList.add('search-result-selected');
-            } else if (!currentResult) firstResult.classList.add('search-result-selected');
+    const currentResult = document.querySelector('.search-box .search-result-selected');
 
-            const selectedResult = document.querySelector('.search-box .search-result-selected');
-            if (selectedResult) selectedResult.parentElement!.parentElement!.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
+    const nextTrElement = currentResult
+        ? event.key === 'ArrowUp'
+            ? currentResult.parentElement!.parentElement!.previousElementSibling
+            : currentResult.parentElement!.parentElement!.nextElementSibling
+        : null;
+
+    if (nextTrElement) {
+        if (currentResult) currentResult.classList.remove('search-result-selected');
+        nextTrElement.querySelector(':scope td a')!.classList.add('search-result-selected');
+    } else if (!currentResult) firstResult.classList.add('search-result-selected');
+
+    const selectedResult = document.querySelector('.search-box .search-result-selected');
+    if (selectedResult) selectedResult.parentElement!.parentElement!.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 
 const githubUrl = 'https://github.com/Eejit43/eejitstools-v2';

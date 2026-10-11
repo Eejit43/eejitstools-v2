@@ -28,10 +28,10 @@ export function twemojiUpdate() {
  * @param type The alert type.
  * @param duration The duration for the popup to show (in milliseconds).
  */
-export function showAlert(text: string, type: 'success' | 'error' | 'warning' | 'info', duration?: number) {
+export function showAlert(text: string, type: 'success' | 'error' | 'warning' | 'info', duration = 2000) {
     toastify({
         text: text || 'No text specified!',
-        duration: duration ?? 2000,
+        duration,
         position: 'center',
         style: {
             background: '#333',
@@ -52,14 +52,14 @@ export function showAlert(text: string, type: 'success' | 'error' | 'warning' | 
  * Updates the icon of the specified element.
  * @param element The element to update.
  * @param type The type of icon to show.
- * @param remove Whether to the remove the icon after 2 seconds (defaults to `true`).
+ * @param shouldRemove Whether to the remove the icon after 2 seconds (defaults to `true`).
  */
-export function showResult(element: HTMLElement, type: 'success' | 'error' | 'warning', remove = true) {
+export function showResult(element: HTMLElement, type: 'success' | 'error' | 'warning', shouldRemove = true) {
     const className = `button-result-${type}`;
 
     element.classList.add(className);
 
-    if (remove)
+    if (shouldRemove)
         setTimeout(() => {
             element.classList.remove(className);
         }, 2000);
@@ -189,7 +189,7 @@ export function titleCase(string: string) {
 export function shuffleArray(array: unknown[]) {
     for (let index = array.length - 1; index > 0; index--) {
         const randomNumber = Math.floor(Math.random() * (index + 1));
-        [array[index], array[randomNumber]] = [array[randomNumber], array[index]];
+        [array[index], array[randomNumber]] = [array[randomNumber], array[index]]; // eslint-disable-line unicorn/no-unreadable-array-destructuring
     }
     return array;
 }
@@ -227,8 +227,7 @@ export function requestGeolocation(callback: (position: GeolocationPosition) => 
         errorSpan.classList.add('error');
         errorSpan.textContent = errorMessages[error.code] ?? 'Unable to fetch location data!';
 
-        errorElement.innerHTML = '';
-        errorElement.append(errorSpan);
+        errorElement.replaceChildren(errorSpan);
     });
 }
 

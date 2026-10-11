@@ -44,7 +44,7 @@ simplifyButton.addEventListener('click', () => {
     const operand = operandInput.value ? Number.parseInt(operandInput.value) : 1;
     const index = indexInput.value ? Number.parseInt(indexInput.value) : 2;
     const originalRadicand = Number.parseInt(radicandInput.value);
-    const negativeRadicand = originalRadicand < 0;
+    const isNegativeRadicand = originalRadicand < 0;
 
     let radicand = Math.abs(originalRadicand);
     radicand *= Math.pow(operand, index);
@@ -53,7 +53,7 @@ simplifyButton.addEventListener('click', () => {
 
     const primeFactorsObject = mapPrimeFactors(primeFactors);
 
-    if (negativeRadicand) primeFactors.unshift(-1);
+    if (isNegativeRadicand) primeFactors.unshift(-1);
 
     let outputOperand: number | string = 1,
         outputRadicand = 1;
@@ -71,14 +71,14 @@ simplifyButton.addEventListener('click', () => {
         if (amount / index < 1) outputRadicand *= Math.pow(Number(number), amount);
     }
 
-    if (negativeRadicand) {
+    if (isNegativeRadicand) {
         if (outputOperand === 1) outputOperand = '';
-        outputOperand = `${outputOperand}i`;
+        outputOperand = `${outputOperand}i`; // eslint-disable-line unicorn/operator-assignment
     }
 
     const original = `${operand && operand !== 1 ? `${operand} ` : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${originalRadicand}}`,
         factored = `\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${primeFactors.join(' \\cdot ')}}`,
-        mappedFactors = `${negativeRadicand ? 'i ' : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${Object.entries(
+        mappedFactors = `${isNegativeRadicand ? 'i ' : ''}\\sqrt${index && index !== 2 ? `[${index}]` : ''}{${Object.entries(
             primeFactorsObject,
         )
             .map(([number, amount]) => `${number}${amount === 1 ? '' : `^${amount}`}`)

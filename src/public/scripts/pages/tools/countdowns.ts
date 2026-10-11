@@ -69,8 +69,8 @@ if (result.length > 0) {
  */
 function formatTimeUnit(value: number, unit: string) {
     if (value === 1) return `${value} ${unit}`;
-    else if (value > 1) return `${value} ${unit}s`;
-    else return null;
+    if (value > 1) return `${value} ${unit}s`; // eslint-disable-line unicorn/prefer-ternary
+    return null;
 }
 
 /**

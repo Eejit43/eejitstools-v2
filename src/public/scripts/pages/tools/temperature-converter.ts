@@ -65,7 +65,7 @@ copyOutputButton.addEventListener('click', () => {
 function convert() {
     input.value = input.value.replaceAll(',', '');
 
-    if (/^-?(\d+)(\.\d*|,\d*)*$/g.test(input.value) || /^-?\d*\.\d+$/g.test(input.value)) {
+    if (/^-?\d+(?:\.\d*|,\d*)*$/.test(input.value) || /^-?\d*\.\d+$/.test(input.value)) {
         message.textContent = '';
         output.value = Number(
             window.math

@@ -14,12 +14,12 @@ const copyResultButton = document.querySelector<HTMLButtonElement>('#copy-result
 /* Add event listeners */
 for (const element of [regexInput, replaceInput])
     element.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            const oldPosition = (event.target as HTMLInputElement).selectionStart!;
-            const newPosition = oldPosition + 2;
-            element.value = [element.value.slice(0, oldPosition), '\\n', element.value.slice(oldPosition)].join('');
-            element.setSelectionRange(newPosition, newPosition);
-        }
+        if (event.key !== 'Enter') return;
+
+        const oldPosition = (event.target as HTMLInputElement).selectionStart!;
+        const newPosition = oldPosition + 2;
+        element.value = [element.value.slice(0, oldPosition), '\\n', element.value.slice(oldPosition)].join('');
+        element.setSelectionRange(newPosition, newPosition);
     });
 for (const element of [regexInput, replaceInput])
     element.addEventListener('paste', (event) => {

@@ -13,6 +13,8 @@ export default defineConfig(
     importAlias.configs.recommended,
     {
         rules: {
+            'unicorn/no-top-level-assignment-in-function': 'off',
+
             '@dword-design/import-alias/prefer-alias': ['error', { aliasForSubpaths: true }],
         },
     },

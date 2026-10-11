@@ -19,7 +19,6 @@ interface IPInformation {
 
 const ipInfo = document.querySelector<HTMLDivElement>('#ip-info')!;
 
-// eslint-disable-next-line unicorn/prefer-top-level-await
 void fetch('/ip-info').then(async (response) => {
     const data = (await response.json()) as IPInformation;
 
@@ -40,7 +39,7 @@ void fetch('/ip-info').then(async (response) => {
         { icon: 'globe', name: 'Longitude (east-west)', value: data.longitude.toString() },
     ];
 
-    ipInfo.innerHTML = '';
+    ipInfo.replaceChildren();
 
     for (const item of output) {
         const row = document.createElement('div');

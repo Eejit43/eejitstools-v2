@@ -88,7 +88,7 @@ export default function setupCalendarRoutes(fastify: FastifyInstance) {
             const { password, todo } = request.body;
             const year = Number.parseInt(request.body.year);
             const month = Number.parseInt(request.body.month);
-            const date = Number.parseInt(request.body.date);
+            const date = Number.parseInt(request.body.date); // eslint-disable-line unicorn/no-declarations-before-early-exit
 
             if (password !== process.env.CALENDAR_TODO_PASSWORD) return reply.send(JSON.stringify({ error: 'Invalid password!' }, null, 2));
 

@@ -36,10 +36,11 @@ resetButton.addEventListener('click', () => {
 });
 document.addEventListener('keyup', (event) => {
     blurAll();
-    if (event.code === key) {
-        number++;
-        numberDisplay.textContent = number.toString();
-    }
+
+    if (event.code !== key) return;
+
+    number++;
+    numberDisplay.textContent = number.toString();
 });
 manualActivationButton.addEventListener('click', () => {
     blurAll();

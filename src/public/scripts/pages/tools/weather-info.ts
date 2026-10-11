@@ -248,7 +248,7 @@ async function getData(position: GeolocationPosition) {
 
     twemojiUpdate();
 
-    message.innerHTML = '';
+    message.replaceChildren();
     result.classList.add('has-data');
 }
 

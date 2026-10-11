@@ -1,4 +1,4 @@
-const getJokeButton = document.querySelector<HTMLButtonElement>('#get-joke')!;
+const getJokeButton = document.querySelector<HTMLButtonElement>('#get-joke')!; // eslint-disable-line unicorn/no-non-function-verb-prefix
 const jokeOutput = document.querySelector<HTMLDivElement>('#joke-output')!;
 
 /* Add event listeners */
@@ -18,4 +18,4 @@ async function fetchJoke() {
         : `${data.setup.replaceAll('\n', '<br />')}<br />${data.delivery.replaceAll('\n', '<br />')}`;
 }
 
-void fetchJoke(); // eslint-disable-line unicorn/prefer-top-level-await
+void fetchJoke();

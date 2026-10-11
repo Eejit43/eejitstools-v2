@@ -4,7 +4,7 @@ const eventsTitle = document.querySelector<HTMLDivElement>('#events-title')!;
 const eventsDisplay = document.querySelector<HTMLUListElement>('#events')!;
 const monthInput = document.querySelector<HTMLInputElement>('#month-input')!;
 const dateInput = document.querySelector<HTMLInputElement>('#date-input')!;
-const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!;
+const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!; // eslint-disable-line unicorn/no-non-function-verb-prefix
 const resetDateButton = document.querySelector<HTMLButtonElement>('#reset-date')!;
 const yearOverview = document.querySelector<HTMLAnchorElement>('#year-overview')!;
 
@@ -15,7 +15,7 @@ resetDateButton.addEventListener('click', getCurrent);
 for (const element of [dateInput, monthInput])
     for (const event of ['input', 'paste'])
         element.addEventListener(event, () => {
-            element.value = element.value.replaceAll(/((?!\d).)/g, '');
+            element.value = element.value.replaceAll(/(?!\d)./g, '');
             checkInput(element);
         });
 
@@ -83,20 +83,18 @@ function getCurrent() {
  * @param month The month to fetch information for.
  * @param date The date to fetch information for.
  */
+// eslint-disable-next-line unicorn/no-unnecessary-parameters
 async function addEvents(year: string, month: string, date: string) {
     // Reset list
     const loadingSpan = document.createElement('span');
     loadingSpan.textContent = 'Loading data...';
 
-    eventsDisplay.innerHTML = '';
-    eventsDisplay.append(loadingSpan);
+    eventsDisplay.replaceChildren(loadingSpan);
 
     // Fetch data
     const response = await fetch(`https://en.pronouns.page/api/calendar/${year}-${month}-${date}`);
 
-    const data = (await response.json()) as CalendarData;
-
-    const { events, eventsRaw } = data;
+    const { events, eventsRaw } = (await response.json()) as CalendarData;
 
     const newEvents = [];
     for (const [index, eventText] of events.entries()) {
@@ -112,7 +110,7 @@ async function addEvents(year: string, month: string, date: string) {
         newEvents.push(listElement);
     }
 
-    eventsDisplay.innerHTML = '';
+    eventsDisplay.replaceChildren();
 
     if (newEvents.length === 0) eventsDisplay.textContent = 'No events found on this date!';
     else eventsDisplay.append(...newEvents);

@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-top-level-side-effects */
+
 import { euroImageAmounts, euroVariantImageAmounts, toneIndicators } from '@data/pages-data.js';
 import { allPages, blankProperties } from '@data/pages.js';
 import fastifyRateLimit from '@fastify/rate-limit';

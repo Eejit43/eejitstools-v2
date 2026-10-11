@@ -10,7 +10,6 @@ export default function setupTidesInfoRoute(fastify: FastifyInstance) {
 
         const data = await (
             await fetch(`https://tides.p.rapidapi.com/tides?longitude=${longitude}&latitude=${latitude}&interval=60&duration=10080`, {
-                method: 'GET',
                 headers: { 'x-rapidapi-host': 'tides.p.rapidapi.com', 'x-rapidapi-key': process.env.RAPID_API_API_KEY! },
             })
         ).text();

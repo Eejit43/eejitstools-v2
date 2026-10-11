@@ -34,7 +34,7 @@ resultCopyButton.addEventListener('click', () => {
  * Converts the provided string to binary and displays the result.
  */
 function toBinary() {
-    if (input.value.trim().length <= 0) {
+    if (input.value.trim().length === 0) {
         result.value = '';
         resultCopyButton.disabled = true;
         showResult(toBinaryButton, 'warning');
@@ -50,12 +50,12 @@ function toBinary() {
  * Converts the provided string from binary and displays the result.
  */
 function fromBinary() {
-    if (input.value.trim().length <= 0) {
+    if (input.value.trim().length === 0) {
         result.value = '';
         resultCopyButton.disabled = true;
         showResult(fromBinaryButton, 'warning');
         showAlert('Empty input!', 'warning');
-    } else if (/^[ 01]+$/gm.test(input.value.trim())) {
+    } else if (/^[ 01]+$/m.test(input.value.trim())) {
         result.value = binaryToString(input.value.trim());
         resultCopyButton.disabled = false;
         showResult(fromBinaryButton, 'success');

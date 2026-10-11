@@ -6,7 +6,7 @@ const alphabetizeButton = document.querySelector<HTMLButtonElement>('#alphabetiz
 const numericalOrderButton = document.querySelector<HTMLButtonElement>('#numerical-order')!;
 const randomizeButton = document.querySelector<HTMLButtonElement>('#randomize')!;
 const reverseButton = document.querySelector<HTMLButtonElement>('#reverse')!;
-const removeDuplicatesButton = document.querySelector<HTMLButtonElement>('#remove-duplicates')!;
+const removeDuplicatesButton = document.querySelector<HTMLButtonElement>('#remove-duplicates')!; // eslint-disable-line unicorn/no-non-function-verb-prefix
 const clearButton = document.querySelector<HTMLButtonElement>('#clear')!;
 const result = document.querySelector<HTMLTextAreaElement>('#result')!;
 const copyResultButton = document.querySelector<HTMLButtonElement>('#copy-result')!;
@@ -120,7 +120,7 @@ function removeDuplicates() {
         showResult(reverseButton, 'warning');
     } else {
         const set = new Set(input.value.split(JSON.parse(`"${separatorInput.value}"`) as string));
-        result.value = [...set.values()].join(JSON.parse(`"${separatorInput.value}"`) as string);
+        result.value = [...set].join(JSON.parse(`"${separatorInput.value}"`) as string);
 
         showResult(removeDuplicatesButton, 'success');
         copyResultButton.disabled = false;

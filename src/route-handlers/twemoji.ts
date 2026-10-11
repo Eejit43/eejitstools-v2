@@ -11,9 +11,9 @@ export default function setupTwemojiRoute(fastify: FastifyInstance) {
         logApiRequest(request);
 
         const emojiId = request.params.id;
-        const containsValidChars = /^[\da-f-]+$/.test(emojiId);
+        const doesContainValidCharacters = /^[\da-f-]+$/.test(emojiId);
 
-        if (!containsValidChars) return reply.type('image/png').send();
+        if (!doesContainValidCharacters) return reply.type('image/png').send();
 
         const response = await fetch(`https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${emojiId}.svg`);
         if (!response.ok) return reply.type('image/png').send();

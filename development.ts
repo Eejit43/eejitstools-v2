@@ -18,7 +18,7 @@ const config = {
 
 const kill = promisify(treeKill);
 
-let running: ChildProcess;
+let runningProcess: ChildProcess;
 
 /**
  * Starts the process.
@@ -30,7 +30,7 @@ async function spawnProcess() {
 
     consola.success('Successfully compiled TypeScript and CSS!');
 
-    running = spawn(config.command.name, config.command.args, { stdio: 'inherit' });
+    runningProcess = spawn(config.command.name, config.command.args, { stdio: 'inherit' });
 }
 
 await spawnProcess();
@@ -49,7 +49,7 @@ function logMessage(...message: string[]) {
 async function restartProcess() {
     logMessage('Restarting...');
 
-    await kill(running.pid!);
+    await kill(runningProcess.pid!);
 
     void spawnProcess();
 
@@ -101,21 +101,22 @@ process.stdin.on('keypress', (string, key: { ctrl: boolean; name: string }) => {
         }
 });
 
-let restarting = false;
+let isRestarting = false;
 
 const watcher = watch('.', {
     ignored: (path, stats) => {
         if (config.ignored.includes(path)) return true;
         if (!stats?.isFile()) return false;
 
-        if (config.watch.some((extension) => path.endsWith(extension))) return false;
+        if (config.watch.some((extension) => path.endsWith(extension))) return false; // eslint-disable-line unicorn/prefer-combined-guards
+
         return true;
     },
 });
 
 watcher.on('change', async () => {
-    if (restarting) return;
-    restarting = true;
+    if (isRestarting) return;
+    isRestarting = true;
     await restartProcess();
-    restarting = false;
+    isRestarting = false;
 });

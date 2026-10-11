@@ -17,7 +17,6 @@ const currencies = [
     { name: 'Japanese Yen', abbreviation: 'JPY', symbol: '¥' },
 ];
 
-// eslint-disable-next-line unicorn/prefer-top-level-await
 void fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/usd').then(async (response) => {
     const fullData = (await response.json()) as ExchangeRateData;
 
@@ -74,7 +73,5 @@ void fetch('https://v6.exchangerate-api.com/v6/822304e8ee8183e9de49f5df/latest/u
         }),
     );
 
-    ratesGrid.innerHTML = '';
-
-    ratesGrid.append(firstDiv, secondDiv);
+    ratesGrid.replaceChildren(firstDiv, secondDiv);
 });

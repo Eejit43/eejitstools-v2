@@ -79,16 +79,14 @@ async function loadCollectionList() {
             })
         ).json()) as { error?: string; data: ForeignCollectionsList };
 
-        if (result.error) {
-            showAlert(result.error, 'error');
-            reloadTableData();
-        } else {
+        if (result.error) showAlert(result.error, 'error');
+        else {
             showAlert('Successfully added a new entry row!', 'success');
 
             collectionData = result.data;
-
-            reloadTableData();
         }
+
+        reloadTableData();
 
         newRowMessage.dataset.disabled = 'false';
     });
@@ -98,7 +96,7 @@ async function loadCollectionList() {
  * Reloads the table's data from the stored variable.
  */
 function reloadTableData() {
-    while (collectionsListTableBody.children.length > 1) collectionsListTableBody.children[0].remove();
+    while (collectionsListTableBody.children.length > 1) collectionsListTableBody.firstElementChild!.remove();
 
     for (const entry of collectionData) {
         const row = document.createElement('tr');
@@ -130,16 +128,14 @@ function reloadTableData() {
                 })
             ).json()) as { error?: string; data: ForeignCollectionsList };
 
-            if (result.error) {
-                showAlert(result.error, 'error');
-                reloadTableData();
-            } else {
+            if (result.error) showAlert(result.error, 'error');
+            else {
                 showAlert('Successfully edited the entry name!', 'success');
 
                 collectionData = result.data;
-
-                reloadTableData();
             }
+
+            reloadTableData();
 
             newRowMessage.dataset.disabled = 'false';
         });
@@ -167,16 +163,14 @@ function reloadTableData() {
                 })
             ).json()) as { error?: string; data: ForeignCollectionsList };
 
-            if (result.error) {
-                showAlert(result.error, 'error');
-                reloadTableData();
-            } else {
+            if (result.error) showAlert(result.error, 'error');
+            else {
                 showAlert('Successfully edited the entry type!', 'success');
 
                 collectionData = result.data;
-
-                reloadTableData();
             }
+
+            reloadTableData();
 
             newRowMessage.dataset.disabled = 'false';
         });
@@ -249,16 +243,14 @@ function reloadTableData() {
                     })
                 ).json()) as { error?: string; data: ForeignCollectionsList };
 
-                if (result.error) {
-                    showAlert(result.error, 'error');
-                    reloadTableData();
-                } else {
+                if (result.error) showAlert(result.error, 'error');
+                else {
                     showAlert(`Successfully updated the entry's "${type}" obtained status!`, 'success');
 
                     collectionData = result.data;
-
-                    reloadTableData();
                 }
+
+                reloadTableData();
 
                 newRowMessage.dataset.disabled = 'false';
             });

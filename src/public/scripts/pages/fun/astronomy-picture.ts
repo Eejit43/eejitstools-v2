@@ -5,7 +5,7 @@ const resultElement = document.querySelector<HTMLDivElement>('#result')!;
 const monthInput = document.querySelector<HTMLInputElement>('#month-input')!;
 const dateInput = document.querySelector<HTMLInputElement>('#date-input')!;
 const yearInput = document.querySelector<HTMLInputElement>('#year-input')!;
-const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!;
+const getDateButton = document.querySelector<HTMLButtonElement>('#get-date')!; // eslint-disable-line unicorn/no-non-function-verb-prefix
 const resetDateButton = document.querySelector<HTMLButtonElement>('#reset-date')!;
 
 /* Add event listeners */
@@ -24,7 +24,7 @@ resetDateButton.addEventListener('click', () => {
 for (const element of [dateInput, monthInput, yearInput]) {
     for (const event of ['input', 'paste'])
         element.addEventListener(event, () => {
-            element.value = element.value.replaceAll(/((?!\d).)/g, '');
+            element.value = element.value.replaceAll(/(?!\d)./g, '');
             checkInput(element);
         });
 
@@ -133,7 +133,7 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
 
             const yearShort = Number.parseInt(dateString.slice(0, 2));
 
-            const year = yearShort < 95 ? 2000 + yearShort : 1900 + yearShort;
+            const year = (yearShort < 95 ? 2000 : 1900) + yearShort;
             const month = Number.parseInt(dateString.slice(2, 4));
             const date = Number.parseInt(dateString.slice(4, 6));
 

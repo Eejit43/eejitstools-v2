@@ -22,7 +22,7 @@ let keyValue: string,
     keyAsciiValue: string,
     keyUnicodeValue: string;
 
-let valuesExist = false;
+let doValuesExist = false;
 
 /* Add event listeners */
 document.addEventListener('keydown', keyInfo);
@@ -57,10 +57,10 @@ window.addEventListener('blur', () => {
  * @param string The text to copy.
  */
 function copyKeycodeInfo(string: string) {
-    if (valuesExist) {
-        void navigator.clipboard.writeText(string);
-        showAlert('Copied!', 'success');
-    }
+    if (!doValuesExist) return;
+
+    void navigator.clipboard.writeText(string);
+    showAlert('Copied!', 'success');
 }
 
 /**
@@ -68,12 +68,12 @@ function copyKeycodeInfo(string: string) {
  * @param event The event.
  */
 function keyInfo(event: KeyboardEvent) {
-    valuesExist = true;
+    doValuesExist = true;
     keyResults.className = 'keycodes-td-ready';
     key.textContent = event.key;
     keyValue = event.key;
     if (event.key === ' ') key.textContent = 'Space ( )';
-    else if (event.key === '\u00A0') key.innerHTML = '<span data-tooltip="Non breaking space">NBSP</span> (\u00A0)';
+    else if (event.key === '\u{A0}') key.innerHTML = '<span data-tooltip="Non breaking space">NBSP</span> (\u{A0})';
     keyRepeating.textContent = event.repeat.toString();
     keyRepeatingValue = event.repeat.toString();
     keyLocation.textContent = event.location.toString();
@@ -97,8 +97,8 @@ function keyInfo(event: KeyboardEvent) {
     }
     keyCode.textContent = event.code;
     keyCodeValue = event.code;
-    keyAscii.textContent = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
-    keyAsciiValue = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated
+    keyAscii.textContent = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated, unicorn/prefer-keyboard-event-key
+    keyAsciiValue = event.which.toString(); // eslint-disable-line @typescript-eslint/no-deprecated, unicorn/prefer-keyboard-event-key
     keyUnicode.textContent = event.key.codePointAt(0)!.toString();
     keyUnicodeValue = event.key.codePointAt(0)!.toString();
 }

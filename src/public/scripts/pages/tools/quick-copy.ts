@@ -13,37 +13,37 @@ const selectClipboardButton = document.querySelector<HTMLButtonElement>('#select
 /* Add event listeners */
 clearClipboardButton.addEventListener('click', clearClipboard);
 copyZwsButton.addEventListener('click', () => {
-    copyText(copyZwsButton, '\u200B');
+    copyText(copyZwsButton, '\u{200B}');
     void clipboardDisplay();
 });
 copyNbspButton.addEventListener('click', () => {
-    copyText(copyNbspButton, '\u00A0');
+    copyText(copyNbspButton, '\u{A0}');
     void clipboardDisplay();
 });
 copyEmsButton.addEventListener('click', () => {
-    copyText(copyEmsButton, '\u2003');
+    copyText(copyEmsButton, '\u{2003}');
     void clipboardDisplay();
 });
 copyEnsButton.addEventListener('click', () => {
-    copyText(copyEnsButton, '\u2002');
+    copyText(copyEnsButton, '\u{2002}');
     void clipboardDisplay();
 });
 copyTsButton.addEventListener('click', () => {
-    copyText(copyTsButton, '\u2009');
+    copyText(copyTsButton, '\u{2009}');
     void clipboardDisplay();
 });
 selectClipboardButton.addEventListener('click', () => {
     copiedText.select();
 });
 window.addEventListener('focus', () => {
-    if (clipboardReadAllowed) void clipboardDisplay();
+    if (isClipboardReadAllowed) void clipboardDisplay();
 });
 window.addEventListener('blur', () => {
-    if (clipboardReadAllowed)
+    if (isClipboardReadAllowed)
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
 });
 
-let clipboardReadAllowed = false;
+let isClipboardReadAllowed = false;
 
 /**
  * Displays the given message if that wasn't already displayed.
@@ -89,7 +89,7 @@ async function requestPermission() {
     }
 }
 
-void requestPermission(); // eslint-disable-line unicorn/prefer-top-level-await
+void requestPermission();
 
 let interval: number | null = null;
 
@@ -98,14 +98,14 @@ let interval: number | null = null;
  * @param state The state to handle.
  */
 function handlePermission(state: PermissionState) {
+    if (interval) clearInterval(interval);
+
     if (state === 'granted' || state === 'prompt') {
-        if (interval) clearInterval(interval);
         void clipboardDisplay();
-        if (!clipboardReadAllowed) interval = setInterval(clipboardDisplay, 500) as unknown as number;
-        clipboardReadAllowed = true;
+        if (!isClipboardReadAllowed) interval = setInterval(clipboardDisplay, 500) as unknown as number;
+        isClipboardReadAllowed = true;
     } else {
-        if (interval) clearInterval(interval);
-        clipboardReadAllowed = false;
+        isClipboardReadAllowed = false;
         showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Permission to read clipboard denied!<br />');
     }
 }
@@ -150,7 +150,8 @@ async function clipboardDisplay() {
         if ((error as Error).message.includes('focused')) {
             showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Tab not focused, unable to read clipboard!<br />');
             return;
-        } else if ((error as Error).message.includes('user gesture')) {
+        }
+        if ((error as Error).message.includes('user gesture')) {
             showWarning('<i class="fa-solid fa-exclamation-triangle"></i> Interact with this tab to start detection!<br />');
             return;
         }

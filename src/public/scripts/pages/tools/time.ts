@@ -19,7 +19,7 @@ setInterval(() => {
 
     updateInnerHtml(
         document.querySelector<HTMLSpanElement>('#timezone')!,
-        `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`,
+        `${new Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC${currentTime.getTimezoneOffset() < 0 ? '+' : '-'}${currentTime.getTimezoneOffset() / 60})`,
     );
 
     updateInnerHtml(document.querySelector<HTMLSpanElement>('#jp-time')!, currentTime.toLocaleString([], { timeZone: 'Japan' }));

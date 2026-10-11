@@ -57,4 +57,4 @@ export async function compileTypescript() {
     cpSync('src/public/favicon.ico', 'dist/public/favicon.ico');
 }
 
-await compileTypescript();
+await compileTypescript(); // eslint-disable-line unicorn/no-top-level-side-effects

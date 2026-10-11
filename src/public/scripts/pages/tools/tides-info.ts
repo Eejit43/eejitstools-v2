@@ -58,7 +58,7 @@ async function getData(position: GeolocationPosition) {
 
     const state = data.heights[0].state.toLowerCase();
     tideStateDisplay.textContent = state;
-    tideStateDisplay.dataset.iconAfter = state === 'rising' ? '\uF775' : '\uF774';
+    tideStateDisplay.dataset.iconAfter = state === 'rising' ? '\u{F775}' : '\u{F774}';
 
     closestExtremeTypeDisplay.textContent = data.extremes[0].timestamp > Math.floor(Date.now() / 1000) ? 'next' : 'most recent';
     closestExtremeDisplay.textContent = data.extremes[0].state.toLowerCase();
@@ -94,7 +94,7 @@ async function getData(position: GeolocationPosition) {
         upcomingExtremesTableBody.append(rowElement);
     }
 
-    message.innerHTML = '';
+    message.replaceChildren();
 
     result.classList.add('has-data');
 }
