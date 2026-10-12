@@ -62,8 +62,8 @@ if (password) {
 
 document.addEventListener('keydown', (event) => {
     if (
-        document.activeElement?.tagName === 'INPUT' || // eslint-disable-line unicorn/no-optional-chaining-on-undeclared-variable
-        document.activeElement?.tagName === 'TEXTAREA' || // eslint-disable-line unicorn/no-optional-chaining-on-undeclared-variable
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
         event.ctrlKey ||
         event.metaKey ||
         event.altKey

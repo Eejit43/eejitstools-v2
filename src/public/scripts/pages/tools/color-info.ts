@@ -36,7 +36,7 @@ const fullColor = document.querySelector<HTMLDivElement>('#full-color')!;
 generateRandomButton.addEventListener('click', generateRandomColor);
 
 document.addEventListener('keydown', (event) => {
-    if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return; // eslint-disable-line unicorn/no-optional-chaining-on-undeclared-variable
+    if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
     if (event.altKey && event.code === 'KeyR') generateRandomColor();
     // eslint-disable-next-line unicorn/prefer-early-return
     if (event.altKey && event.code === 'KeyL') {

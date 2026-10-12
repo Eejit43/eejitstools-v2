@@ -31,6 +31,7 @@
         "@eejit/stylelint-config": "^6.0.0",
         "@types/chroma-js": "^3.1.2",
         "@types/ua-parser-js": "^0.7.39",
+        "globals": "^17.13.0",
         "mathjs": "^15.1.1",
         "postcss": "^8.5.29",
         "stylelint": "^17.16.0",
@@ -38,5 +39,5 @@
         "tsc-alias": "^1.9.7",
         "typescript": "^6.0.2"
     },
-    "packageManager": "pnpm@11.5.1"
+    "packageManager": "pnpm@12.11.2"
 }
