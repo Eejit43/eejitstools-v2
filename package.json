@@ -37,7 +37,7 @@
         "stylelint": "^18.0.0",
         "tree-kill": "^1.2.2",
         "tsc-alias": "^1.9.10",
-        "typescript": "^6.0.3"
+        "typescript": "^7.0.2"
     },
     "packageManager": "pnpm@12.16.1"
 }
