@@ -32,12 +32,12 @@
         "@types/chroma-js": "^3.1.3",
         "@types/ua-parser-js": "^0.7.39",
         "globals": "^17.14.0",
-        "mathjs": "^15.1.1",
+        "mathjs": "^15.2.0",
         "postcss": "^8.5.32",
         "stylelint": "^18.0.0",
         "tree-kill": "^1.2.2",
         "tsc-alias": "^1.9.10",
-        "typescript": "^6.0.2"
+        "typescript": "^6.0.3"
     },
-    "packageManager": "pnpm@12.11.2"
+    "packageManager": "pnpm@12.16.1"
 }
