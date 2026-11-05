@@ -150,8 +150,8 @@ async function fetchApod(providedYear: number, providedMonth: number, providedDa
  * @param media The media to get the element for.
  */
 function getMediaElement(media: ApodEntryMedia) {
-    const { type, src, highResolution, alt } = media;
+    const { type, src, highResolution = src, alt } = media;
     return type === 'image'
-        ? `<a id="apod-link" href="${highResolution ?? src}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`
+        ? `<a id="apod-link" href="${highResolution}" target="_blank"><img src="${src}"${alt ? ` alt="${alt}"` : ''}></a>`
         : `<div id="apod-embed-container"><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }

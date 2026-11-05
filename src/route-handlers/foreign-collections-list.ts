@@ -10,7 +10,7 @@ interface ForeignCollectionEntry {
 
 export type ForeignCollectionsList = ForeignCollectionEntry[];
 
-type DatabaseForeignCollectionsList = { data: ForeignCollectionsList } & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
+type DatabaseForeignCollectionsList = { data: ForeignCollectionsList } & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention, unicorn/prefer-smaller-scope
 
 const foreignCollectionsList = model('foreign-collections-list', new Schema({ data: Array }, {}));
 
@@ -23,7 +23,7 @@ function sortData(first: ForeignCollectionEntry, second: ForeignCollectionEntry)
     const isFirstPrefixedWithQuestionMark = first.name.startsWith('?');
     const isSecondPrefixedWithQuestionMark = second.name.startsWith('?');
     if (isFirstPrefixedWithQuestionMark && !isSecondPrefixedWithQuestionMark) return 1;
-    if (!isFirstPrefixedWithQuestionMark && isSecondPrefixedWithQuestionMark) return -1; // eslint-disable-line unicorn/prefer-ternary
+    if (!isFirstPrefixedWithQuestionMark && isSecondPrefixedWithQuestionMark) return -1;
     return first.name.localeCompare(second.name);
 }
 

@@ -264,8 +264,9 @@ function showWeatherAlert(alert: Alert) {
         .replaceAll(/^\* (.*?)\.{3}/g, '– $1:\n   ')
         .replaceAll(/ \* (.*?)\.{3}/g, '\n\n– $1:\n   ')}`;
 
-    if (alertDisplay.value !== alertText || alertDisplay.style.display !== 'block') {
+    if (alertDisplay.value === alertText && alertDisplay.style.display === 'block') alertDisplay.style.display = 'none';
+    else {
         alertDisplay.style.display = 'block';
         alertDisplay.value = alertText;
-    } else alertDisplay.style.display = 'none';
+    }
 }

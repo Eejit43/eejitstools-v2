@@ -50,7 +50,7 @@ export interface Coin {
 
 export type DatabaseCoinDenomination = CoinDenomination<CoinDesign<Coin>> & { _id?: unknown; __v?: unknown }; // eslint-disable-line @typescript-eslint/naming-convention
 
-type PartialNullable<T> = { [K in keyof T]?: T[K] | null };
+type PartialNullable<T> = { [K in keyof T]?: T[K] | null }; // eslint-disable-line unicorn/prefer-smaller-scope
 
 export const coinsModel = model(
     'coins-data',

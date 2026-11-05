@@ -795,7 +795,7 @@ function getCoinYears(design: CoinDesignById): string {
 function formatMintage(mintage: number) {
     if (mintage >= 1_000_000_000) return `${Math.round((mintage / 1_000_000_000 + Number.EPSILON) * 100) / 100} billion`;
     if (mintage >= 1_000_000) return `${Math.round((mintage / 1_000_000 + Number.EPSILON) * 100) / 100} million`;
-    if (mintage >= 1000) return `${Math.round((mintage / 1000 + Number.EPSILON) * 100) / 100} thousand`; // eslint-disable-line unicorn/prefer-ternary
+    if (mintage >= 1000) return `${Math.round((mintage / 1000 + Number.EPSILON) * 100) / 100} thousand`;
     return mintage.toString();
 }
 

@@ -22,7 +22,7 @@ let keyValue: string,
     keyAsciiValue: string,
     keyUnicodeValue: string;
 
-let doValuesExist = false;
+let doValuesExist = false; // eslint-disable-line unicorn/consistent-boolean-name
 
 /* Add event listeners */
 document.addEventListener('keydown', keyInfo);

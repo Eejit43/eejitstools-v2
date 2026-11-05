@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-top-level-side-effects */
-
 import { euroImageAmounts, euroVariantImageAmounts, toneIndicators } from '@data/pages-data.js';
 import { allPages, blankProperties } from '@data/pages.js';
 import fastifyRateLimit from '@fastify/rate-limit';
@@ -91,6 +89,7 @@ const port = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 
 fastify.listen({ port, host: '0.0.0.0' }, (error) => {
     if (error) {
+        // eslint-disable-next-line unicorn/prefer-ternary
         if ((error as FastifyError).code === 'EADDRINUSE')
             consola.error(`${chalk.red('[Startup error]:')} Port ${chalk.yellow(port)} is already in use!`);
         else consola.error(error);

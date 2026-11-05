@@ -630,9 +630,8 @@ function formatYearRange(startYear: string | number, endYear: string | number | 
     return startYear === endYear ? startYear.toString() : `${startYear}–${endYear ?? 'date'}`;
 }
 
-void loadCoinsInfo(); // eslint-disable-line unicorn/no-top-level-side-effects
+void loadCoinsInfo();
 
-// eslint-disable-next-line unicorn/no-top-level-side-effects
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'ArrowLeft') return;
 
@@ -651,7 +650,6 @@ document.addEventListener('keydown', (event) => {
     if (backButton) backButton.click();
 });
 
-// eslint-disable-next-line unicorn/no-top-level-side-effects
 window.addEventListener('popstate', () => {
     const searchParameters = new URLSearchParams(window.location.search);
     const denominationSearch = searchParameters.get('denomination');
